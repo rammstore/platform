@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from '../shared/login/login.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,8 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -25,15 +27,16 @@ export class LoginComponent implements OnInit {
       password: ['', Validators.required]
     });
 
-    console.log(this.form);
   }
 
   submit(): void {
     if (!this.form.valid) {
       return;
     }
-    console.log(this.form.getRawValue());
 
-    // this.loginService.login()
+    this.loginService.login(this.form.getRawValue().login, this.form.getRawValue().password).subscribe((response) => {
+      console.log(response);
+      this.router.navigate(['/bill']);
+    });
   }
 }

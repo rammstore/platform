@@ -5,11 +5,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
+import { UserService } from './shared/user/user.service';
+import { AuthGuard } from './shared/login/auth.guard';
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: 'bill', pathMatch: 'full' },
   { path: 'login', loadChildren: './login/login.module#LoginModule' },
-  { path: 'bill', loadChildren: './bill/bill.module#BillModule'}
+  { path: 'bill', loadChildren: './bill/bill.module#BillModule', canActivate: [AuthGuard] }
 ];
 
 @NgModule({
@@ -23,7 +25,9 @@ const appRoutes: Routes = [
     SharedModule,
     HttpClientModule
   ],
-  providers: [ ],
+  providers: [
+    UserService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
