@@ -1,5 +1,18 @@
 $main-color: #e4e5e6;
 $text-color: #808083;
+$text-color-dark: rgba(0,0,0,.87);
+$border-color: #e1dddd;
+$negative-color: #ec151d;
+
+@font-face {
+  font-family: 'Proxima Nova Regular';
+  src: url('/assets/fonts/ProximaNova-Regular.eot');
+  src: url('/assets/fonts/ProximaNova-Regular.eot?#iefix') format('embedded-opentype'),
+  url('/assets/fonts/ProximaNova-Regular.woff') format('woff'),
+  url('/assets/fonts/ProximaNova-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 
 * {
   box-sizing: border-box;
