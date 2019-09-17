@@ -1,18 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule } from './app.routing';
 import { AppComponent } from './app.component';
-import { SharedModule } from './shared/shared.module';
+import { SharedModule } from '@app/shared.module';
 import { HttpClientModule } from '@angular/common/http';
-import { UserService } from './shared/user/user.service';
-import { AuthGuard } from './shared/login/auth.guard';
-
-const appRoutes: Routes = [
-  { path: '', redirectTo: 'bill', pathMatch: 'full' },
-  { path: 'login', loadChildren: './login/login.module#LoginModule' },
-  { path: 'bill', loadChildren: './bill/bill.module#BillModule', canActivate: [AuthGuard] }
-];
+import { UserService } from '@app/user/user.service';
 
 @NgModule({
   declarations: [
@@ -21,7 +13,6 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule,
     AppRoutingModule,
-    RouterModule.forRoot(appRoutes),
     SharedModule,
     HttpClientModule
   ],

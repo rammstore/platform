@@ -1,19 +1,15 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { SharedModule } from '@app/shared.module';
 import { LoginComponent } from './login.component';
-import { RouterModule, Routes } from '@angular/router';
-import { LoginService } from '../shared/login/login.service';
+import { LoginService } from '@app/login/login.service';
 import { ReactiveFormsModule } from '@angular/forms';
-
-const loginRoutes: Routes = [
-  { path: '', component: LoginComponent }
-];
+import { LoginRoutingModule } from './login.routing';
 
 @NgModule({
   declarations: [LoginComponent],
   imports: [
-    CommonModule,
-    RouterModule.forChild(loginRoutes),
+    SharedModule,
+    LoginRoutingModule,
     ReactiveFormsModule
   ],
   providers: [

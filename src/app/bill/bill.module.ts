@@ -1,17 +1,13 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { SharedModule } from '@app/shared.module';
 import { BillComponent } from './bill.component';
-import { RouterModule, Routes } from '@angular/router';
-
-const billRoutes: Routes = [
-  { path: '', component: BillComponent }
-];
+import { BillRoutingModule } from './bill.routing';
 
 @NgModule({
   declarations: [BillComponent],
   imports: [
-    CommonModule,
-    RouterModule.forChild(billRoutes)
+    SharedModule,
+    BillRoutingModule
   ]
 })
 export class BillModule { }
