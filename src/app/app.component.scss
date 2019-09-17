@@ -1,0 +1,39 @@
+@import "styles";
+
+header {
+  height: 40px;
+  background-color: $main-color;
+
+  .container {
+
+    img.logo {
+      height: 20px;
+      margin-right: 15px;
+      vertical-align: middle;
+    }
+
+    nav,
+    .bill-info {
+      display: inline-block;
+    }
+
+    i,
+    .bill-info {
+      float: right;
+    }
+
+    nav {
+      a {
+        color: $text-color;
+        padding: 12px;
+        line-height: 40px;
+
+        &.active {
+          background-color: $text-color;
+          color: $main-color;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}

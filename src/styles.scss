@@ -1,0 +1,16 @@
+$main-color: #e4e5e6;
+$text-color: #808083;
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Roboto, sans-serif;
+  margin: 0;
+
+  .container {
+    width: 1200px;
+    margin: 0 auto;
+  }
+}
