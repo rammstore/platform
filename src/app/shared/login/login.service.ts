@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs/index';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/internal/operators';
 import { User } from '../user/user';
+import { Wallet } from '../user/wallet';
 import { UserService } from '../user/user.service';
 import { Session } from '../user/session';
 
@@ -15,7 +16,8 @@ export class LoginService {
   // user: Observable<User>;
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private userService: UserService
   ) {
     // this.user$ = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
     // this.user = this.user$.asObservable();
@@ -39,15 +41,20 @@ export class LoginService {
         //   response.Session.ExpirationMinutes
         // );
         //
-        // const user: User = new User(
-        //   response.Client.FirstName,
-        //   response.Client.LastName,
-        //   response.Client.Login,
-        //   response.Client.PushToken,
-        //   response.Client.Language,
-        //   session
-        // );
-        //
+        const user: User = new User(
+          response.Client.FirstName,
+          response.Client.LastName,
+          response.Client.Login,
+          response.Client.PushToken,
+          response.Client.Language
+          // session
+        );
+
+        // const wallet: Wallet = new Wallet(
+        //   response.Wallets.ID
+        // )
+
+
         // this.user$.next(user);
         //
         // return user;
