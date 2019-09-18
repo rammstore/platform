@@ -4,8 +4,9 @@ import { MainComponent } from './main.component';
 
 const routes: Routes = [
   { path: '', component: MainComponent, children: [
-    { path: '', redirectTo: 'bill', pathMatch: 'full' },
-    { path: 'bill', loadChildren: '../bill/bill.module#BillModule' }
+    { path: '', redirectTo: 'bill' },
+    { path: 'bill', loadChildren: '../bill/bill.module#BillModule' },
+    { path: 'manage', loadChildren: '../manage/manage.module#ManageModule' }
   ] }
 ];
 

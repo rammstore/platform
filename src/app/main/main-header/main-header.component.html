@@ -19,7 +19,7 @@
       <i class="icon-hamburger" dropdownToggle></i>
 
       <ul id="dropdown-nested" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-nested">
-        <li role="menuitem"><a class="dropdown-item" href="#">Изменить пароль</a></li>
+        <li role="menuitem"><a [routerLink]="['/manage']" class="dropdown-item">Изменить пароль</a></li>
         <li class="divider dropdown-divider"></li>
         <!---->
         <li role="menuitem" dropdown triggers="mouseover" placement="right" container="body">
