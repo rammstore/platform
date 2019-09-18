@@ -3,6 +3,7 @@ import { AuthData } from '@app/user/auth-data';
 import { StorageService } from '@app/services/storage.service';
 import { Router } from '@angular/router';
 import * as Highcharts from 'highcharts';
+import { AuthService } from '@app/services/auth.service';
 
 @Component({
   selector: 'app-main-header',
@@ -14,8 +15,11 @@ export class MainHeaderComponent implements OnInit {
 
   chartOptions: any;
 
-  constructor(private storageService: StorageService,
-              private router: Router) {
+  constructor(
+    private storageService: StorageService,
+    private router: Router,
+    private authService: AuthService
+  ) {
   }
 
   ngOnInit() {
@@ -52,9 +56,13 @@ export class MainHeaderComponent implements OnInit {
     return this.router.url.includes(link);
   }
 
-  showChart() {
+  showChart(): void {
     setTimeout(() => {
       Highcharts.chart('headerChartContainer', this.chartOptions);
     }, 100);
+  }
+
+  logout(): void {
+    this.authService.logout();
   }
 }

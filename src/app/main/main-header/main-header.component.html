@@ -33,7 +33,7 @@
         </li>
         <!---->
         <li class="divider dropdown-divider"></li>
-        <li role="menuitem"><a class="dropdown-item" href="#">Выйти <span class="login">{{authData.client.login}}</span></a></li>
+        <li role="menuitem"><a (click)="logout()" class="dropdown-item">Выйти <span class="login">{{authData.client.login}}</span></a></li>
       </ul>
     </div>
 

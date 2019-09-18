@@ -31,8 +31,8 @@ export class StorageService {
     return this;
   }
 
-  removeToken(data: string ) {
-    window[this.storageName].removeItem('token', data);
+  removeToken() {
+    window[this.storageName].removeItem('token');
 
     return this;
   }

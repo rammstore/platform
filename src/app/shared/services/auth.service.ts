@@ -6,6 +6,7 @@ import { Company, Session, User, Wallet } from '@app/user';
 import { AuthData } from '@app/user/auth-data';
 import { StorageService } from '@app/services/storage.service';
 import { Observable } from 'rxjs/index';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,8 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private router: Router
     ) { }
 
   login(login: string, password: string): Observable<AuthData> {
@@ -74,5 +76,9 @@ export class AuthService {
     }));
   }
 
-
+  logout() {
+    this.storageService.removeAuthData();
+    this.storageService.removeToken();
+    this.router.navigate(['/login']);
+  }
 }
