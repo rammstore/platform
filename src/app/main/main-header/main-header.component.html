@@ -5,16 +5,67 @@
     </a>
 
     <nav>
-      <a>Счет</a>
-      <a class="active">Инвестиции</a>
-      <a>Рейтинг</a>
-      <a>Мои стратегии</a>
-      <a>Спецификация</a>
-      <a>Помощь</a>
+      <a [routerLink]="['/bill']" [class.active]="isLinkActive('bill')">Счет</a>
+      <a [routerLink]="['/investments']" [class.active]="isLinkActive('investments')">Инвестиции</a>
+      <a [routerLink]="['/rating']" [class.active]="isLinkActive('rating')">Рейтинг</a>
+      <a [routerLink]="['/strategies']" [class.active]="isLinkActive('strategies')">Мои стратегии</a>
+      <a [routerLink]="['/specification']" [class.active]="isLinkActive('specification')">Спецификация</a>
+      <a [routerLink]="['/help']" [class.active]="isLinkActive('help')">Помощь</a>
     </nav>
 
-    <i class="icon-hamburger"></i>
 
-    <div class="bill-info">money</div>
+    <div class="btn-group menu" dropdown>
+      <!-- Toggle button -->
+      <i class="icon-hamburger" dropdownToggle></i>
+
+      <ul id="dropdown-nested" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-nested">
+        <li role="menuitem"><a class="dropdown-item" href="#">Изменить пароль</a></li>
+        <li class="divider dropdown-divider"></li>
+        <!---->
+        <li role="menuitem" dropdown triggers="mouseover" placement="right" container="body">
+          <a dropdownToggle class="dropdown-item" (click)="false">Изменение языка <i class="icon-flag {{authData.client.language}} current-lang"></i></a>
+
+          <ul *dropdownMenu class="dropdown-menu langmenu" role="menu">
+            <li role="menuitem lang"><i class="icon-flag en"></i></li>
+            <li class="divider dropdown-divider"></li>
+            <li role="menuitem lang"><i class="icon-flag ru"></i></li>
+          </ul>
+        </li>
+        <!---->
+        <li class="divider dropdown-divider"></li>
+        <li role="menuitem"><a class="dropdown-item" href="#">Выйти <span class="login">{{authData.client.login}}</span></a></li>
+      </ul>
+    </div>
+
+    <!-- Chart -->
+    <ng-template #chartContainer>
+      <div class="legend">
+        <div>
+          <span>Доступно</span>
+          <span class="amount available">{{(authData.getWallets()[0].balance - authData.getWallets()[0].invested) | currency:'':'':'1.2-2'}} {{authData.getWallets()[0].asset}}</span>
+        </div>
+        <div>
+          <span>Инвестировано</span>
+          <span class="amount invested">{{authData.getWallets()[0].invested | currency:'':'':'1.2-2'}} {{authData.getWallets()[0].asset}}</span>
+        </div>
+        <div>
+          <span>Средства</span>
+          <span class="amount">{{authData.getWallets()[0].balance | currency:'':'':'1.2-2'}} {{authData.getWallets()[0].asset}}</span>
+        </div>
+
+        <div id="headerChartContainer"></div>
+
+        <button [routerLink]="['/bill/fund']" class="primary block">Пополнить</button>
+      </div>
+    </ng-template>
+
+    <div class="bill-info" *ngIf="authData" [popover]="chartContainer" [outsideClick]="true" placement="bottom"
+         (click)="showChart()">
+      <span class="available" title="Доступно">
+        {{authData.getWallets()[0].balance - authData.getWallets()[0].invested | currency:'':'':'1.2-2'}} {{authData.getWallets()[0].asset}}
+      </span>
+      |
+      <span title="Средства">{{authData?.getWallets()[0].balance | currency:'':'':'1.2-2'}} {{authData.getWallets()[0].asset}}</span>
+    </div>
   </div>
 </header>

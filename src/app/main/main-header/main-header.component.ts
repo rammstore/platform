@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthData } from '@app/user/auth-data';
+import { StorageService } from '@app/services/storage.service';
+import { Router } from '@angular/router';
+import * as Highcharts from 'highcharts';
 
 @Component({
   selector: 'app-main-header',
@@ -6,10 +10,51 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./main-header.component.scss']
 })
 export class MainHeaderComponent implements OnInit {
+  authData: AuthData;
 
-  constructor() { }
+  chartOptions: any;
 
-  ngOnInit() {
+  constructor(private storageService: StorageService,
+              private router: Router) {
   }
 
+  ngOnInit() {
+    this.authData = this.storageService.getAuthData();
+
+    this.chartOptions = {
+      chart: {
+        type: 'pie'
+      },
+      title: {
+        text: undefined
+      },
+      connectors: {enabled: false},
+      series: [{
+        data: [
+          ['Доступно', this.authData.getWallets()[0].balance - this.authData.getWallets()[0].invested],
+          ['Инвестировано', this.authData.getWallets()[0].invested]
+        ],
+        colors: ['#f7a35b', '#00a651'],
+        innerSize: '50%',
+        dataLabels: {
+          enabled: false
+        },
+        enableMouseTracking: false
+      }],
+      credits: {
+        enabled: false
+      }
+    };
+
+  }
+
+  isLinkActive(link: string): boolean {
+    return this.router.url.includes(link);
+  }
+
+  showChart() {
+    setTimeout(() => {
+      Highcharts.chart('headerChartContainer', this.chartOptions);
+    }, 100);
+  }
 }

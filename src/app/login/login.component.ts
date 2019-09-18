@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LoginService } from '../shared/login/login.service';
+import { LoginService } from '../shared/guards/login.service';
 import { Router } from '@angular/router';
+import { AuthService } from '@app/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private loginService: LoginService,
+    private authService: AuthService,
     private router: Router
   ) { }
 
@@ -34,8 +35,7 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    this.loginService.login(this.form.getRawValue().login, this.form.getRawValue().password).subscribe((response) => {
-      console.log(response);
+    this.authService.login(this.form.getRawValue().login, this.form.getRawValue().password).subscribe(() => {
       this.router.navigate(['/bill']);
     });
   }

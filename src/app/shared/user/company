@@ -1,5 +1,0 @@
-export class Company {
-  name: string;
-  isDemo: boolean;
-  contacts: object[];
-}

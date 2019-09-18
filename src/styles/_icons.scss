@@ -8,3 +8,16 @@ i.icon-hamburger {
   width: 19px;
   height: 15px;
 }
+
+i.icon-flag {
+  width: 23px;
+  height: 23px;
+
+  &.en {
+    background-position: -698px -19px;
+  }
+
+  &.ru {
+    background-position: -672px -19px;
+  }
+}

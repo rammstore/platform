@@ -3,8 +3,11 @@
 $main-color: #e4e5e6;
 $text-color: #808083;
 $text-color-dark: rgba(0,0,0,.87);
+$text-color-light: rgba(0,0,0,.54);
 $border-color: #e1dddd;
+$accent-color: #f7a35c;
 $negative-color: #ec151d;
+$positive-color: #00a651;
 
 @font-face {
   font-family: 'Proxima Nova Regular';
@@ -18,14 +21,52 @@ $negative-color: #ec151d;
 
 * {
   box-sizing: border-box;
+  font-family: Roboto, sans-serif !important;
 }
 
 body {
-  font-family: Roboto, sans-serif;
   margin: 0;
+  line-height: 16px !important;
+  font-size: 14px !important;
 
   .container {
     width: 1200px;
     margin: 0 auto;
+  }
+}
+
+button {
+  border: 1px solid $accent-color;
+  text-transform: uppercase;
+  height: 40px;
+  font-size: 14px;
+
+  &.primary {
+    background-color: $positive-color;
+    color: white;
+  }
+
+  &.block {
+    display: block;
+    width: 100%;
+  }
+}
+
+ul.dropdown-menu.langmenu {
+  min-width: 0;
+  padding: 0;
+
+  .divider {
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+    padding: 10px;
+    cursor: pointer;
+
+    i.icon-flag {
+      display: block;
+    }
   }
 }

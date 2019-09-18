@@ -17,16 +17,17 @@ header {
       display: inline-block;
     }
 
-    i,
+    .menu,
     .bill-info {
       float: right;
     }
 
     nav {
       a {
+        display: inline-block;
         color: $text-color;
-        padding: 12px;
-        line-height: 40px;
+        padding: 10px 12px;
+        line-height: 20px;
         cursor: pointer;
 
         &.active {
@@ -36,5 +37,68 @@ header {
         }
       }
     }
+
+    .bill-info {
+      font-size: 14px;
+      color: $text-color-light;
+      font-weight: bold;
+      border-bottom: 1px dashed $text-color-light;
+      padding-bottom: 3px;
+      margin-top: 10px;
+      cursor: pointer;
+      margin-right: 15px;
+
+      .available {
+        color: $accent-color;
+      }
+    }
+
+    .menu {
+      margin-top: 12px;
+      cursor: pointer;
+
+      ul.dropdown-menu {
+        left: auto !important;
+        right: 0 !important;
+        padding: 0;
+
+        .dropdown-item {
+          color: $text-color-dark;
+          font-size: 14px;
+          width: 250px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 15px;
+
+          .login {
+            color: $text-color-light;
+            font-size: 12px;
+          }
+        }
+
+        .divider.dropdown-divider {
+          margin: 0;
+        }
+      }
+    }
   }
+}
+.legend {
+  .amount {
+    float: right;
+
+    &.invested {
+      color: $positive-color
+    }
+
+    &.available {
+      color: $accent-color;
+    }
+  }
+}
+
+#headerChartContainer {
+  width: 220px;
+  height: 185px;
 }

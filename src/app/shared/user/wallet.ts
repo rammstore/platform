@@ -11,11 +11,11 @@ export class Wallet {
   status: number;
 
   constructor(
-    id: number,
     activeStrategiesCount: number,
     asset: string,
     balance: number,
     dt: Date,
+    id: number,
     idClient: number,
     internalPnL: number,
     invested: number,

@@ -14,20 +14,10 @@ export class UserService {
   // wallet: Observable<Wallet>;
 
   constructor() {
-    // this.user$ = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
-    // this.user = this.user$.asObservable();
-  }
-
-  setUser(user: User): void {
-    this.user$.next(user);
   }
 
   getUser(): Observable<User> {
     return this.user$.asObservable();
-  }
-
-  setWallet(wallet: Wallet): void {
-    this.wallet$.next(wallet);
   }
 
   getWallet(): Observable<Wallet> {
