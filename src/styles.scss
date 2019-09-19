@@ -32,6 +32,7 @@ body {
   .container {
     width: 1200px;
     margin: 0 auto;
+    padding: 0;
   }
 }
 
@@ -69,4 +70,49 @@ ul.dropdown-menu.langmenu {
       display: block;
     }
   }
+}
+.form-field {
+  display: flex;
+  align-items: center;
+  padding-bottom: 50px;
+
+  label.field-label {
+    font-size: 14px;
+    flex-grow: 1;
+    text-align: right;
+    margin-bottom: 0;
+  }
+
+  .input-wrapper {
+    max-width: 400px;
+    width: 100%;
+    margin-left: 15px;
+    position: relative;
+
+    input {
+      height: 30px;
+      font-size: 14px;
+      width: 100%;
+      padding: 0 5px;
+      border: 1px solid $text-color-light;
+
+      &.ng-touched.ng-invalid {
+        border: 1px solid $negative-color;
+      }
+    }
+
+    label.error-message {
+      color: $negative-color;
+      font-size: 12px;
+      margin-bottom: 0;
+      position: absolute;
+      left: 0;
+      bottom: -20px;
+    }
+  }
+}
+
+h2 {
+  font-size: 24px !important;
+  line-height: 32px !important;
 }
