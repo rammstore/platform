@@ -1,0 +1,23 @@
+i[class^="icon-"],
+i[class*=" icon-"] {
+  background-image: url('/assets/images/icons.png');
+}
+
+i.icon-hamburger {
+  background-position: -791px -19px;
+  width: 19px;
+  height: 15px;
+}
+
+i.icon-flag {
+  width: 23px;
+  height: 23px;
+
+  &.en {
+    background-position: -698px -19px;
+  }
+
+  &.ru {
+    background-position: -672px -19px;
+  }
+}
