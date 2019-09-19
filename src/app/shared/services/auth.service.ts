@@ -76,13 +76,19 @@ export class AuthService {
     }));
   }
 
-  logout() {
-    this.storageService.removeAuthData();
-    this.storageService.removeToken();
-    this.router.navigate(['/login']);
+  logout(): void {
+    this.http.get(`${CONFIG.baseApiUrl}/session.logout`).subscribe(() => {
+      this.storageService.removeAuthData();
+      this.storageService.removeToken();
+      this.router.navigate(['/login']);
+    });
   }
 
-  changePassword(password: string): Observable<void> {
+  changePassword(password: string): Observable<any> {
     return this.http.post(`${CONFIG.baseApiUrl}/password.set`, {Password: password});
+  }
+
+  getToken(): string {
+    return this.storageService.getToken();
   }
 }
