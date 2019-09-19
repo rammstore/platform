@@ -81,4 +81,8 @@ export class AuthService {
     this.storageService.removeToken();
     this.router.navigate(['/login']);
   }
+
+  changePassword(password: string): Observable<void> {
+    return this.http.post(`${CONFIG.baseApiUrl}/password.set`, {Password: password});
+  }
 }

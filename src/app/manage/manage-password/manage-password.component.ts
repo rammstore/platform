@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PasswordValidator } from '@app/validators/password.validator';
+import { AuthService } from '@app/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-manage-password',
@@ -10,7 +12,11 @@ import { PasswordValidator } from '@app/validators/password.validator';
 export class ManagePasswordComponent implements OnInit {
   form: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {
   }
 
   ngOnInit() {
@@ -32,6 +38,8 @@ export class ManagePasswordComponent implements OnInit {
       return;
     }
 
-
+    this.authService.changePassword(this.form.get('newPass').value).subscribe(() => {
+      this.router.navigate(['/bill']);
+    });
   }
 }
