@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../shared/user/user.service';
 import { Observable } from 'rxjs/index';
-import { User } from '../shared/user/user';
+import { ContentTabLink } from '@app/components/content-tabs/content-tab-link';
 
 @Component({
   selector: 'app-bill',
@@ -9,12 +8,17 @@ import { User } from '../shared/user/user';
   styleUrls: ['./bill.component.scss']
 })
 export class BillComponent implements OnInit {
-  user: Observable<User>;
+  links: ContentTabLink[] = [
+    new ContentTabLink('Результаты', '/bill'),
+    new ContentTabLink('Пополнить', '/bill/fund'),
+    new ContentTabLink('Вывести', '/bill/withdraw'),
+    new ContentTabLink('История переводов', '/bill/last-transfers')
+  ];
 
-  constructor(private userService: UserService) { }
+  constructor() { }
 
   ngOnInit() {
-    this.user = this.userService.getUser();
+
   }
 
 }

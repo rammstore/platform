@@ -2,20 +2,24 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BsDropdownModule, PopoverModule } from 'ngx-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ContentTabsComponent } from './components/content-tabs/content-tabs.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
-  declarations: [],
+  declarations: [ContentTabsComponent],
   imports: [
     CommonModule,
     PopoverModule.forRoot(),
     BsDropdownModule.forRoot(),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule
   ],
   exports: [
     CommonModule,
     PopoverModule,
     BsDropdownModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ContentTabsComponent
   ]
 })
 export class SharedModule { }
