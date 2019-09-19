@@ -6,6 +6,7 @@ const routes: Routes = [
   { path: '', component: MainComponent, children: [
     { path: '', redirectTo: 'bill' },
     { path: 'bill', loadChildren: '../bill/bill.module#BillModule' },
+    { path: 'strategies', loadChildren: '../strategy/strategy.module#StrategyModule' },
     { path: 'manage', loadChildren: '../manage/manage.module#ManageModule' }
   ] }
 ];

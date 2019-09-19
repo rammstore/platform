@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { BillComponent } from './bill.component';
-import { BillRoutingModule } from './bill.routing';
 import { BillResultsComponent } from './bill-results/bill-results.component';
 import { BillFundComponent } from './bill-fund/bill-fund.component';
 import { BillWithdrawComponent } from './bill-withdraw/bill-withdraw.component';

@@ -19,7 +19,8 @@ import { RouterModule } from '@angular/router';
     PopoverModule,
     BsDropdownModule,
     ReactiveFormsModule,
-    ContentTabsComponent
+    ContentTabsComponent,
+    RouterModule
   ]
 })
 export class SharedModule { }
