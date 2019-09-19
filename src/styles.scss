@@ -38,7 +38,7 @@ body {
 
 button {
   border: 1px solid $accent-color;
-  text-transform: uppercase;
+  text-transform: uppercase !important;
   height: 40px;
   font-size: 14px;
 
