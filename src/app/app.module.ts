@@ -10,6 +10,7 @@ import { AuthService } from '@app/services/auth.service';
 import { TokenInterceptor } from '@app/interceptors/token.interceptor';
 import { AccountService } from '@app/services/account.service';
 import { StrategyService } from '@app/services/strategy.service';
+import { OuterConfigModule } from '@app/modules/outer-config/outer-config.module';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { StrategyService } from '@app/services/strategy.service';
     BrowserModule,
     AppRoutingModule,
     SharedModule,
-    HttpClientModule
+    HttpClientModule,
+    OuterConfigModule
   ],
   providers: [
     AuthService,
