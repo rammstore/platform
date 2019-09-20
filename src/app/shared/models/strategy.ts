@@ -39,4 +39,9 @@ export class Strategy {
     this.account = account;
     this.offer = offer;
   }
+
+  isActive(): boolean {
+    // @TODO: declare type or create enum for status possible values
+    return this.status === 1;
+  }
 }

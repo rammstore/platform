@@ -8,7 +8,6 @@ import { UserService } from '@app/user/user.service';
 import { StorageService } from '@app/services/storage.service';
 import { AuthService } from '@app/services/auth.service';
 import { TokenInterceptor } from '@app/interceptors/token.interceptor';
-import { AccountService } from '@app/services/account.service';
 import { StrategyService } from '@app/services/strategy.service';
 import { OuterConfigModule } from '@app/modules/outer-config/outer-config.module';
 
@@ -27,7 +26,6 @@ import { OuterConfigModule } from '@app/modules/outer-config/outer-config.module
     AuthService,
     UserService,
     StorageService,
-    AccountService,
     StrategyService,
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
   ],

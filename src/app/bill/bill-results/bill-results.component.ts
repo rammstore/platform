@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AccountService } from '@app/services/account.service';
 import { Observable } from 'rxjs/index';
 
 @Component({
@@ -8,14 +7,12 @@ import { Observable } from 'rxjs/index';
   styleUrls: ['./bill-results.component.scss']
 })
 export class BillResultsComponent implements OnInit {
-  accountData: Observable<any>;
 
   constructor(
-    private accountService: AccountService
   ) { }
 
   ngOnInit() {
-     this.accountService.get().subscribe();
+     // this.accountService.get().subscribe();
     // console.log(this.accountData);
   }
 
