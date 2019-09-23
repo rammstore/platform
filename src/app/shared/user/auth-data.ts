@@ -1,9 +1,7 @@
-// import { User, Wallet, Company, Session } from '@app/user';
-
-import { User } from '@app/user/user';
-import { Company } from '@app/user/company';
-import { Wallet } from '@app/user/wallet';
-import { Session } from '@app/user/session';
+import { User } from '../user/user';
+import { Company } from '../user/company';
+import { Wallet } from '../user/wallet';
+import { Session } from '../user/session';
 
 export class AuthData {
   client: User;

@@ -78,4 +78,10 @@ export class StrategyService {
       offer
     );
   }
+
+  add(strategy: object) {
+    return this.http.post(`${CONFIG.baseApiUrl}/myStrategies.add`, strategy).pipe(map((response: any) => {
+      console.log(response);
+    }));
+  }
 }

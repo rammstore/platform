@@ -42,6 +42,13 @@ button {
   text-transform: uppercase !important;
   height: 40px;
   font-size: 14px;
+  cursor: pointer;
+
+  &[disabled] {
+    cursor: default;
+    background-color: $main-color !important;
+    border: none;
+  }
 
   &.primary {
     background-color: $positive-color;
@@ -72,10 +79,11 @@ ul.dropdown-menu.langmenu {
     }
   }
 }
+
 .form-field {
   display: flex;
-  align-items: center;
-  padding-bottom: 50px;
+  min-height: 70px;
+  margin-bottom: 10px;
 
   label.field-label {
     font-size: 14px;
@@ -86,29 +94,49 @@ ul.dropdown-menu.langmenu {
 
   .input-wrapper {
     max-width: 400px;
-    width: 100%;
     margin-left: 15px;
-    position: relative;
+    width: 400px;
+    min-width: 400px;
 
     input {
       height: 30px;
       font-size: 14px;
-      width: 100%;
+      max-width: 300px;
+      width: 300px;
       padding: 0 5px;
       border: 1px solid $text-color-light;
+
+      &[type='checkbox'] {
+        width: 15px;
+        height: 20px;
+      }
 
       &.ng-touched.ng-invalid {
         border: 1px solid $negative-color;
       }
     }
 
-    label.error-message {
-      color: $negative-color;
-      font-size: 12px;
-      margin-bottom: 0;
-      position: absolute;
-      left: 0;
-      bottom: -20px;
+    .messages {
+      margin-top: 5px;
+
+      label {
+        margin-bottom: 5px;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+
+      label.error-message {
+        color: $negative-color;
+        font-size: 12px;
+        margin-bottom: 0;
+      }
+
+      label.details-message {
+        font-size: 12px;
+        margin-bottom: 0;
+      }
     }
   }
 }
@@ -116,6 +144,15 @@ ul.dropdown-menu.langmenu {
 h2 {
   font-size: 24px !important;
   line-height: 32px !important;
+}
+
+h1.dialog-title {
+  font-size: 24px;
+  font-weight: normal;
+  line-height: 32px;
+  display: block;
+  text-align: center;
+  margin-bottom: 40px;
 }
 
 p {
@@ -177,13 +214,30 @@ table {
 
 modal-container.modal {
   .modal-dialog {
+    width: 660px;
+    max-width: none;
+
     .modal-content {
       .modal-header {
         border: none;
       }
 
       .modal-body {
+        padding: 0 40px 30px;
 
+        .modal-control {
+          display: flex;
+          justify-content: center;
+          margin-top: 40px;
+
+          button {
+            margin-right: 10px;
+
+            &:last-child {
+              margin-right: 0;
+            }
+          }
+        }
       }
     }
   }

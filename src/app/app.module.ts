@@ -20,7 +20,7 @@ import { OuterConfigModule } from '@app/modules/outer-config/outer-config.module
     AppRoutingModule,
     SharedModule,
     HttpClientModule,
-    OuterConfigModule
+    // OuterConfigModule
   ],
   providers: [
     AuthService,

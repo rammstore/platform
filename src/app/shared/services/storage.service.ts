@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AuthData } from '@app/user/auth-data';
+import { User } from '../user/user';
+import { Company } from '../user/company';
+import { Session } from '../user/session';
+import { Wallet } from '../user/wallet';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +20,26 @@ export class StorageService {
   }
 
   getAuthData(): AuthData {
-    return new AuthData(JSON.parse(window[this.storageName].getItem('auth')));
+    const authData = JSON.parse(window[this.storageName].getItem('auth'));
+
+    const client: User = new User();
+    Object.assign(client, authData.client);
+
+    const company: Company = new Company();
+    Object.assign(company, authData.company);
+
+    const session: Session = new Session();
+    Object.assign(session, authData.session);
+
+    const wallets: Wallet[] = [];
+    authData.wallets.forEach((w: any) => {
+      const wallet: Wallet = new Wallet();
+      Object.assign(wallet, w);
+
+      wallets.push(wallet);
+    });
+
+    return new AuthData({client: client, company: company, session: session, wallets: wallets});
   }
 
   removeAuthData() {
