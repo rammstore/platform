@@ -1,1 +1,25 @@
-<p>strategy-closed works!</p>
+<table>
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Название</th>
+    <th>Вознаграждение</th>
+    <th>Создана</th>
+    <th>Закрыта</th>
+    <th>Возраст, недель</th>
+    <th>Выплаченное вознаграждение, USD</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <tr *ngFor="let strategy of strategies">
+    <td>{{strategy.id}}</td>
+    <td><a>{{strategy.name}}</a></td>
+    <td>{{strategy.offer.fee | percent}}</td>
+    <td>{{strategy.dtCreated | date:'yyyy-MM-dd hh:mm:ss'}}</td>
+    <td>???</td>
+    <td>???</td>
+    <td>???</td>
+  </tr>
+  </tbody>
+</table>

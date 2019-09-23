@@ -15,7 +15,6 @@ export class StrategyActiveComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // this.strategies = this.strategyService.getActive();
     this.strategyService.getActive().subscribe((strategies: Strategy[]) => {
       this.strategies = strategies;
     });

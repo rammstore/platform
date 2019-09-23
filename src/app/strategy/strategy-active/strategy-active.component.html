@@ -16,10 +16,10 @@
     <tr *ngFor="let strategy of strategies">
       <td><a>{{strategy.name}}</a></td>
       <td>{{strategy.account.balance}}</td>
-      <td>1</td>
       <td>???</td>
+      <td>{{strategy.offer.fee | percent}}</td>
       <td>???</td>
-      <td>{{strategy.account.intervalPnL}}</td>
+      <td [class.positive]="strategy.account.intervalPnL > 0" [class.negative]="strategy.account.intervalPnL < 0">{{strategy.account.intervalPnL}}</td>
       <td>???</td>
       <td class="manage">
         <i title="Пополнение инвестиции" class="icon-add"></i>
@@ -34,7 +34,7 @@
       <td>???</td>
       <td></td>
       <td>???</td>
-      <td>{{getIntervalPnL()}}</td>
+      <td [class.positive]="getIntervalPnL() > 0" [class.negative]="getIntervalPnL() < 0">{{getIntervalPnL()}}</td>
       <td>???</td>
       <td></td>
     </tr>

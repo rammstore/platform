@@ -31,9 +31,22 @@ export class StrategyService {
     }));
   }
 
-  // getClosed(): Observable<Strategy[]> {
-  //   return this.http.post(`${CONFIG.baseApiUrl}/myStrategies.search`, {Filter: { IsActive: false }});
-  // }
+  getClosed(page: number = 1): Observable<Strategy[]> {
+    const options: object = {
+      Filter: { IsActive: false },
+      Pagination: { CurrentPage: page }
+    };
+
+    return this.http.post(`${CONFIG.baseApiUrl}/myStrategies.search`, options).pipe(map((response: any) => {
+      const strategies: Strategy[] = [];
+
+      response.Strategies.forEach((s: any) => {
+        strategies.push(this.createStrategy(s));
+      });
+
+      return strategies;
+    }));
+  }
 
   private createStrategy(strategyObj: any): Strategy {
     const account = new Account(
