@@ -7,7 +7,8 @@ const routes: Routes = [
     { path: '', redirectTo: 'bill' },
     { path: 'bill', loadChildren: '../bill/bill.module#BillModule' },
     { path: 'strategies', loadChildren: '../strategy/strategy.module#StrategyModule' },
-    { path: 'manage', loadChildren: '../manage/manage.module#ManageModule' }
+    { path: 'manage', loadChildren: '../manage/manage.module#ManageModule' },
+    { path: 'spec', loadChildren: '../specification/specification.module#SpecificationModule' }
   ] }
 ];
 
