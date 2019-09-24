@@ -1,0 +1,62 @@
+<table>
+  <thead>
+    <tr>
+      <th>Название</th>
+      <th>Средства, USD</th>
+      <th>Инвесторы</th>
+      <th>Вознаграждение</th>
+      <th>Выплаченное вознаграждение, USD</th>
+      <th>Прибыль, USD</th>
+      <th>Невыплаченное вознаграждение, USD</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let strategy of strategies">
+      <td><a>{{strategy.name}}</a></td>
+      <td>{{strategy.account.balance}}</td>
+      <td>???</td>
+      <td>{{strategy.offer.fee | percent}}</td>
+      <td>???</td>
+      <td [class.positive]="strategy.account.intervalPnL > 0" [class.negative]="strategy.account.intervalPnL < 0">{{strategy.account.intervalPnL}}</td>
+      <td>???</td>
+      <td class="manage">
+        <i (click)="openFundDialog(strategy)" title="Пополнение инвестиции" class="icon-add"></i>
+        <i (click)="openPauseDialog(strategy)" *ngIf="strategy.isActive()" title="Пауза" class="icon-pause"></i>
+        <i (click)="openResumeDialog(strategy)" *ngIf="!strategy.isActive()" title="Возобновить" class="icon-start"></i>
+
+        <div class="btn-group dropdown-container" dropdown>
+          <i class="icon-hamburger" dropdownToggle></i>
+
+          <ul *dropdownMenu class="dropdown-menu" role="menu">
+            <li role="menuitem"><i class="icon-percent-shield"></i>Изменить профиль инвестиции</li>
+            <li role="menuitem"><i class="icon-card"></i>Вывод средств из инвестиции</li>
+            <li role="menuitem"><i class="icon-doc"></i>Выписка по инвестиции</li>
+            <li role="menuitem"><i class="fa fa-list-alt"></i>Список инвестиций</li>
+            <li role="menuitem"><i class="fa fa-download"></i>Скачать оригинальный скрипт</li>
+            <li role="menuitem"><i class="fa fa-window-close"></i>Закрыть стратегию</li>
+          </ul>
+        </div>
+      </td>
+    </tr>
+    <tr *ngIf="strategies" class="total">
+      <td>Всего</td>
+      <td></td>
+      <td>???</td>
+      <td></td>
+      <td>???</td>
+      <td [class.positive]="getIntervalPnL() > 0" [class.negative]="getIntervalPnL() < 0">{{getIntervalPnL()}}</td>
+      <td>???</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
+<button class="primary">Создать стратегию</button>
+
+<p>В меню терминала “Сервис” - ”Настройки”, на вкладке “Советники” внесите адрес сервера RAMM в список разрешенных URL.</p>
+<p>Для этого добавьте адрес
+  <a href="https://maindc.ramm.store/api/trading/v1/signals.send">https://maindc.ramm.store/api/trading/v1/signals.send</a>
+  в таблицу “Разрешить WebRequest для следующих URL:”.</p>
+<p>Запустите советник на любом графике. Все изменения на вашем счете будут копироваться в вашу стратегию в RAMM.</p>

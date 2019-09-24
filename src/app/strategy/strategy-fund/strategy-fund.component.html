@@ -1,0 +1,49 @@
+<app-dialog-wrapper [modalRef]="modalRef" title="Пополнение инвестиции">
+  <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="form-field no-input">
+        <label class="field-label">Стратегия:</label>
+        <div class="input-wrapper">
+          <a>{{strategy.name}}</a>
+        </div>
+      </div>
+
+      <div class="form-field  no-input">
+        <label class="field-label">Средства:</label>
+        <div class="input-wrapper">
+          {{strategy.account.balance}}
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="amount" class="field-label">Сумма пополнения, USD:</label>
+        <div class="input-wrapper">
+          <input id="amount"
+                 type="number"
+                 formControlName="amount"
+                 [min]="0"
+                 [max]="authData.getWallets()[0].getAvailable()">
+          <div class="messages">
+            <label class="error-message"
+                   *ngIf="form.get('amount').touched && form.get('amount').hasError('min')">
+              Пожалуйста, введите корректную сумму инвестиции.
+            </label>
+            <label class="error-message"
+                   *ngIf="form.get('amount').touched && form.get('amount').hasError('max')">
+              Вы можете инвестировать только свободные средства.
+            </label>
+            <label class="details-message">
+              Доступно: {{authData.getWallets()[0].getAvailable()}}
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="dialog-actions">
+        <button class="primary"
+                type="submit"
+                [disabled]="!form.valid">
+          Пополнить {{form.valid ? '(' + (form.get('amount').value | currency:'':'':'1.2-2') + ' ' + strategy.account.asset + ')' : ''}}
+        </button>
+      </div>
+    </form>
+</app-dialog-wrapper>

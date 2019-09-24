@@ -1,0 +1,45 @@
+<div class="background">
+  <div class="overlay">
+    <div class="content-container">
+      <div class="content">
+        <h1>Вход в систему</h1>
+
+        <form [formGroup]="form" (ngSubmit)="submit()">
+          <div class="field">
+            <label>Ваш логин или почта</label>
+            <input type="text" formControlName="login">
+            <label *ngIf="form.get('login').touched && form.get('login').hasError('required')" class="error">
+              Пожалуйста, введите ваш логин или почту.
+            </label>
+          </div>
+
+          <div class="field">
+            <label>Ваш пароль</label>
+            <input type="password" formControlName="password">
+            <label *ngIf="form.get('password').touched && form.get('password').hasError('required')" class="error">
+              Пожалуйста, введите ваш пароль.
+            </label>
+          </div>
+
+          <button type="submit">Вход</button>
+        </form>
+
+        <div class="links">
+          <a href="#">
+            <img src="assets/images/appStore.png" style="opacity:0.4;">
+          </a>
+
+          <a href="https://t.me/rammstore">
+            <img src="assets/images/telegram.png">
+          </a>
+
+          <a href="https://play.google.com/store/apps/details?id=com.project.ramm">
+            <img src="assets/images/googlePlay.png">
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

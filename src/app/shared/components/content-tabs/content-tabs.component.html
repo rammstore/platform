@@ -1,0 +1,4 @@
+<div class="content-tab-links">
+  <div *ngFor="let link of links" [routerLink]="[link.url]" class="content-tab-link" [class.active]="isLinkActive(link.url)">{{link.name}}</div>
+</div>
+<ng-content></ng-content>
