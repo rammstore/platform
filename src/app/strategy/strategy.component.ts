@@ -1,6 +1,7 @@
 import { Component, TemplateRef } from '@angular/core';
 import { ContentTabLink } from '@app/components/content-tabs/content-tab-link';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
+import { StrategyAddComponent } from './strategy-add/strategy-add.component';
 
 @Component({
   selector: 'app-strategy',
@@ -18,7 +19,7 @@ export class StrategyComponent {
     private modalService: BsModalService
   ) { }
 
-  openAddStrategyDialog(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template);
+  openAddStrategyDialog() {
+    this.modalRef = this.modalService.show(StrategyAddComponent);
   }
 }

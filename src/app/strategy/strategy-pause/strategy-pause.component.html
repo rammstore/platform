@@ -1,20 +1,10 @@
-<div class="dialog-content">
-  <div class="dialog-header">
-    <h1 class="dialog-title">Пауза</h1>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-      <span aria-hidden="true">&times;</span>
-    </button>
+<app-dialog-wrapper title="Пауза" [modalRef]="modalRef">
+  <div class="text">
+    Все позиции всех инвесторов данной стратегии будут закрыты. Новые позиции не будут открываться до момента снятия с паузы.
   </div>
 
-  <div class="dialog-body">
-
-    <div class="text">
-      Все позиции всех инвесторов данной стратегии будут закрыты. Новые позиции не будут открываться до момента снятия с паузы.
-    </div>
-
-    <div class="dialog-actions">
-      <button class="primary" (click)="pause()">Ок</button>
-      <button class="primary" (click)="modalRef.hide()">Отмена</button>
-    </div>
+  <div class="dialog-actions">
+    <button class="primary" (click)="pause()">Ок</button>
+    <button class="primary" (click)="modalRef.hide()">Отмена</button>
   </div>
-</div>
+</app-dialog-wrapper>

@@ -24,6 +24,7 @@ import { StrategyFundComponent } from './strategy-fund/strategy-fund.component';
     StrategyRoutingModule
   ],
   entryComponents: [
+    StrategyAddComponent,
     StrategyPauseComponent,
     StrategyResumeComponent,
     StrategyFundComponent

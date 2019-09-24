@@ -1,13 +1,5 @@
-<div class="dialog-content">
-  <div class="dialog-header">
-    <h1 class="dialog-title">Пополнение инвестиции</h1>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-
-  <div class="dialog-body">
-    <form [formGroup]="form" (ngSubmit)="submit()">
+<app-dialog-wrapper [modalRef]="modalRef" title="Пополнение инвестиции">
+  <form [formGroup]="form" (ngSubmit)="submit()">
       <div class="form-field no-input">
         <label class="field-label">Стратегия:</label>
         <div class="input-wrapper">
@@ -47,12 +39,11 @@
       </div>
 
       <div class="dialog-actions">
-        <button class="primary centered"
+        <button class="primary"
                 type="submit"
                 [disabled]="!form.valid">
           Пополнить {{form.valid ? '(' + (form.get('amount').value | currency:'':'':'1.2-2') + ' ' + strategy.account.asset + ')' : ''}}
         </button>
       </div>
     </form>
-  </div>
-</div>
+</app-dialog-wrapper>

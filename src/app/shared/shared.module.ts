@@ -4,9 +4,10 @@ import { BsDropdownModule, ModalModule, PopoverModule } from 'ngx-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ContentTabsComponent } from './components/content-tabs/content-tabs.component';
 import { RouterModule } from '@angular/router';
+import { DialogWrapperComponent } from './components/dialog-wrapper/dialog-wrapper.component';
 
 @NgModule({
-  declarations: [ContentTabsComponent],
+  declarations: [ContentTabsComponent, DialogWrapperComponent],
   imports: [
     CommonModule,
     PopoverModule.forRoot(),
@@ -22,6 +23,7 @@ import { RouterModule } from '@angular/router';
     ModalModule,
     ReactiveFormsModule,
     ContentTabsComponent,
+    DialogWrapperComponent,
     RouterModule
   ]
 })

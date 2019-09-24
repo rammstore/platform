@@ -4,6 +4,7 @@ import { StorageService } from '../../shared/services/storage.service';
 import { AuthData } from '../../shared/user/auth-data';
 import { StrategyService } from '../../shared/services/strategy.service';
 import { Strategy } from '../../shared/models/strategy';
+import { BsModalRef } from 'ngx-bootstrap';
 
 @Component({
   selector: 'app-strategy-add',
@@ -19,7 +20,8 @@ export class StrategyAddComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private storageService: StorageService,
-    private strategyService: StrategyService
+    private strategyService: StrategyService,
+    public modalRef: BsModalRef
   ) { }
 
   ngOnInit() {
