@@ -4,7 +4,9 @@ import { SharedModule } from '@app/shared.module';
 import { ManageRoutingModule } from './manage.routing';
 
 @NgModule({
-  declarations: [ManagePasswordComponent],
+  declarations: [
+    ManagePasswordComponent
+  ],
   imports: [
     SharedModule,
     ManageRoutingModule

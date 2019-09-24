@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BsDropdownModule, ModalModule, PopoverModule } from 'ngx-bootstrap';
+import { AccordionModule, BsDropdownModule, ModalModule, PopoverModule } from 'ngx-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ContentTabsComponent } from './components/content-tabs/content-tabs.component';
 import { RouterModule } from '@angular/router';
@@ -18,6 +18,7 @@ import { SpecificationInfoBlockComponent } from './components/specification-info
     PopoverModule.forRoot(),
     BsDropdownModule.forRoot(),
     ModalModule.forRoot(),
+    AccordionModule.forRoot(),
     ReactiveFormsModule,
     RouterModule
   ],
@@ -25,6 +26,7 @@ import { SpecificationInfoBlockComponent } from './components/specification-info
     CommonModule,
     PopoverModule,
     BsDropdownModule,
+    AccordionModule,
     ModalModule,
     ReactiveFormsModule,
     ContentTabsComponent,
