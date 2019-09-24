@@ -84,8 +84,8 @@ export class AuthService {
     });
   }
 
-  changePassword(password: string): Observable<any> {
-    return this.http.post(`${CONFIG.baseApiUrl}/password.set`, {Password: password});
+  changePassword(оldPassword: string, password: string): Observable<any> {
+    return this.http.post(`${CONFIG.baseApiUrl}/password.set`, {OldPassword: оldPassword,Password: password});
   }
 
   getToken(): string {

@@ -4,12 +4,12 @@ export class Company {
   contacts: any;
 
   constructor(
-    name: string,
-    isDemo: boolean,
-    contacts: any
+    name?: string,
+    isDemo?: boolean,
+    contacts?: any
   ) {
-    this.name = name;
-    this.isDemo = isDemo;
-    this.contacts = contacts;
+    this.name = name || null;
+    this.isDemo = isDemo || null;
+    this.contacts = contacts || null;
   }
 }

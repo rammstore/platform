@@ -1,12 +1,23 @@
 i[class^="icon-"],
 i[class*=" icon-"] {
   background-image: url('/assets/images/icons.png');
+  display: inline-block;
+}
+
+i.fa {
+  font-family: FontAwesome !important;
+  color: #808080;
+  font-size: 28px;
 }
 
 i.icon-hamburger {
   background-position: -791px -19px;
   width: 19px;
   height: 15px;
+
+  &:hover {
+    background-position: -759px -19px;
+  }
 }
 
 i.icon-flag {
@@ -20,4 +31,56 @@ i.icon-flag {
   &.ru {
     background-position: -672px -19px;
   }
+}
+
+i.icon-add {
+  background-position: -938px -11px;
+  width: 34px;
+  height: 34px;
+
+  &:hover {
+    background-position: -896px -11px;
+  }
+}
+
+i.icon-pause {
+  background-position: -990px -13px;
+  width: 27px;
+  height: 27px;
+}
+
+i.icon-start {
+  background-position: -1064px -13px;
+  width: 27px;
+  height: 27px;
+}
+
+i.icon-percent-shield {
+  background-position: -560px -14px;
+  width: 27px;
+  height: 31px;
+}
+
+i.icon-card {
+  background-position: -857px -17px;
+  width: 28px;
+  height: 20px;
+}
+
+i.icon-doc {
+  background-position: -597px -17px;
+  width: 21px;
+  height: 26px;
+}
+
+i.icon-list {
+
+}
+
+i.icon-download {
+
+}
+
+i.icon-close {
+
 }

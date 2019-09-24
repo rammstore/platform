@@ -38,7 +38,7 @@ export class ManagePasswordComponent implements OnInit {
       return;
     }
 
-    this.authService.changePassword(this.form.get('newPass').value).subscribe(() => {
+    this.authService.changePassword(this.form.get('currentPass').value, this.form.get('newPass').value).subscribe(() => {
       this.router.navigate(['/bill']);
     });
   }

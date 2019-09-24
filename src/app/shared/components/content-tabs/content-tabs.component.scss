@@ -1,0 +1,26 @@
+@import "styles";
+
+.content-tab-links {
+  margin-bottom: 40px;
+
+  .content-tab-link {
+    display: inline-block;
+    border: 1px solid $main-color;
+    height: 40px;
+    min-width: 185px;
+    padding: 0 40px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 40px;
+    cursor: pointer;
+
+    &:focus {
+      outline: none;
+    }
+
+    &.active {
+      font-weight: bold;
+      background-color: $main-color;
+    }
+  }
+}

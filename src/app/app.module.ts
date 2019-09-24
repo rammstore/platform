@@ -8,6 +8,8 @@ import { UserService } from '@app/user/user.service';
 import { StorageService } from '@app/services/storage.service';
 import { AuthService } from '@app/services/auth.service';
 import { TokenInterceptor } from '@app/interceptors/token.interceptor';
+import { StrategyService } from '@app/services/strategy.service';
+import { OuterConfigModule } from '@app/modules/outer-config/outer-config.module';
 
 @NgModule({
   declarations: [
@@ -17,12 +19,14 @@ import { TokenInterceptor } from '@app/interceptors/token.interceptor';
     BrowserModule,
     AppRoutingModule,
     SharedModule,
-    HttpClientModule
+    HttpClientModule,
+    // OuterConfigModule
   ],
   providers: [
     AuthService,
     UserService,
     StorageService,
+    StrategyService,
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
