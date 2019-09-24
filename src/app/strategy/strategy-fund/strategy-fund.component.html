@@ -29,7 +29,7 @@
                  type="number"
                  formControlName="amount"
                  [min]="0"
-                 [max]="100">
+                 [max]="authData.getWallets()[0].getAvailable()">
           <div class="messages">
             <label class="error-message"
                    *ngIf="form.get('amount').touched && form.get('amount').hasError('min')">

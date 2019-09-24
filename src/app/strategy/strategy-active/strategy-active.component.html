@@ -23,8 +23,8 @@
       <td>???</td>
       <td class="manage">
         <i (click)="openFundDialog(strategy)" title="Пополнение инвестиции" class="icon-add"></i>
-        <i (click)="openDialog(dialogPause, strategy)" *ngIf="strategy.isActive()" title="Пауза" class="icon-pause"></i>
-        <i (click)="openDialog(dialogResume, strategy)" *ngIf="!strategy.isActive()" title="Возобновить" class="icon-start"></i>
+        <i (click)="openPauseDialog(strategy)" *ngIf="strategy.isActive()" title="Пауза" class="icon-pause"></i>
+        <i (click)="openResumeDialog(strategy)" *ngIf="!strategy.isActive()" title="Возобновить" class="icon-start"></i>
         <i class="icon-hamburger"></i>
       </td>
     </tr>
@@ -48,41 +48,3 @@
   <a href="https://maindc.ramm.store/api/trading/v1/signals.send">https://maindc.ramm.store/api/trading/v1/signals.send</a>
   в таблицу “Разрешить WebRequest для следующих URL:”.</p>
 <p>Запустите советник на любом графике. Все изменения на вашем счете будут копироваться в вашу стратегию в RAMM.</p>
-
-<!--DIALOGS-->
-
-<ng-template #dialogFund>
-  <div class="modal-header">
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-
-  <div class="modal-body">
-    <app-strategy-fund></app-strategy-fund>
-  </div>
-</ng-template>
-
-<ng-template #dialogPause>
-  <div class="modal-header">
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-
-  <div class="modal-body">
-    <app-strategy-pause></app-strategy-pause>
-  </div>
-</ng-template>
-
-<ng-template #dialogResume>
-  <div class="modal-header">
-    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-
-  <div class="modal-body">
-    <app-strategy-resume></app-strategy-resume>
-  </div>
-</ng-template>

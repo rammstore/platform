@@ -3,6 +3,8 @@ import { StrategyService } from '@app/services/strategy.service';
 import { Strategy } from '@app/models';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap';
 import { StrategyFundComponent } from '../strategy-fund/strategy-fund.component';
+import { StrategyPauseComponent } from '../strategy-pause/strategy-pause.component';
+import { StrategyResumeComponent } from '../strategy-resume/strategy-resume.component';
 
 @Component({
   selector: 'app-strategy-active',
@@ -35,12 +37,29 @@ export class StrategyActiveComponent implements OnInit {
   }
 
   openFundDialog(strategy: Strategy): void {
-    console.log(strategy);
     const options: ModalOptions = new ModalOptions();
     options.initialState = {
       strategy: strategy
     };
 
     this.modalRef = this.modalService.show(StrategyFundComponent, options);
+  }
+
+  openPauseDialog(strategy: Strategy): void {
+    const options: ModalOptions = new ModalOptions();
+    options.initialState = {
+      strategy: strategy
+    };
+
+    this.modalRef = this.modalService.show(StrategyPauseComponent, options);
+  }
+
+  openResumeDialog(strategy: Strategy): void {
+    const options: ModalOptions = new ModalOptions();
+    options.initialState = {
+      strategy: strategy
+    };
+
+    this.modalRef = this.modalService.show(StrategyResumeComponent, options);
   }
 }

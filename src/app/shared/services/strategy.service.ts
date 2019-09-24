@@ -103,4 +103,16 @@ export class StrategyService {
       console.log(response);
     }));
   }
+
+  pause(strategyId: number) {
+    return this.http.post(`${CONFIG.baseApiUrl}/myStrategies.pause`, {StrategyID: strategyId}).pipe(map((response: any) => {
+      console.log(response);
+    }));
+  }
+
+  resume(strategyId: number) {
+    return this.http.post(`${CONFIG.baseApiUrl}/myStrategies.resume`, {StrategyID: strategyId}).pipe(map((response: any) => {
+      console.log(response);
+    }));
+  }
 }
