@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { StrategyService } from '@app/services/strategy.service';
 import { Strategy } from '@app/models';
+import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap';
+import { StrategyFundComponent } from '../strategy-fund/strategy-fund.component';
 
 @Component({
   selector: 'app-strategy-active',
@@ -9,9 +11,11 @@ import { Strategy } from '@app/models';
 })
 export class StrategyActiveComponent implements OnInit {
   strategies: Strategy[];
+  modalRef: BsModalRef;
 
   constructor(
-    private strategyService: StrategyService
+    private strategyService: StrategyService,
+    private modalService: BsModalService
   ) { }
 
   ngOnInit() {
@@ -28,5 +32,15 @@ export class StrategyActiveComponent implements OnInit {
     });
 
     return sum;
+  }
+
+  openFundDialog(strategy: Strategy): void {
+    console.log(strategy);
+    const options: ModalOptions = new ModalOptions();
+    options.initialState = {
+      strategy: strategy
+    };
+
+    this.modalRef = this.modalService.show(StrategyFundComponent, options);
   }
 }

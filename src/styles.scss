@@ -59,6 +59,11 @@ button {
     display: block;
     width: 100%;
   }
+
+  &.centered {
+    display: block;
+    margin: 0 auto;
+  }
 }
 
 ul.dropdown-menu.langmenu {
@@ -84,6 +89,10 @@ ul.dropdown-menu.langmenu {
   display: flex;
   min-height: 70px;
   margin-bottom: 10px;
+
+  &.no-input {
+    min-height: 40px;
+  }
 
   label.field-label {
     font-size: 14px;
@@ -212,41 +221,45 @@ table {
   top: 40px;
 }
 
-modal-container.modal {
-  .modal-dialog {
-    width: 660px;
-    max-width: none;
-
-    .modal-content {
-      .modal-header {
-        border: none;
-      }
-
-      .modal-body {
-        padding: 0 40px 30px;
-
-        .modal-control {
-          display: flex;
-          justify-content: center;
-          margin-top: 40px;
-
-          button {
-            margin-right: 10px;
-
-            &:last-child {
-              margin-right: 0;
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
 .positive {
   color: $positive-color;
 }
 
 .negative {
   color: $negative-color;
+}
+
+.modal-dialog {
+  max-width: 700px !important;
+}
+
+.dialog-content {
+
+  .dialog-header {
+    padding-top: 30px;
+    position: relative;
+
+    .dialog-title {
+      font-size: 24px;
+      font-weight: normal;
+      line-height: 32px;
+      display: block;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    button.close {
+      position: absolute;
+      right: 20px;
+      top: 10px;
+    }
+  }
+
+  .dialog-body {
+    padding: 0 40px 30px;
+
+    .dialog-actions {
+      margin-top: 40px;
+    }
+  }
 }

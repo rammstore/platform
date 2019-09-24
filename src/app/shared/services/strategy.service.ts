@@ -3,7 +3,7 @@ import { Observable } from 'rxjs/index';
 import { HttpClient } from '@angular/common/http';
 import { CONFIG } from '../../../config';
 import { map } from 'rxjs/internal/operators';
-import { Account, Offer, Strategy } from '@app/models';
+import { Account, Offer, Strategy } from '../models';
 
 @Injectable({
   providedIn: 'root'
@@ -94,6 +94,12 @@ export class StrategyService {
 
   add(strategy: object) {
     return this.http.post(`${CONFIG.baseApiUrl}/myStrategies.add`, strategy).pipe(map((response: any) => {
+      console.log(response);
+    }));
+  }
+
+  fund(accountID: number, amount: number) {
+    return this.http.post(`${CONFIG.baseApiUrl}/accounts.fund`, {AccountID: accountID, Amount: amount}).pipe(map((response: any) => {
       console.log(response);
     }));
   }
