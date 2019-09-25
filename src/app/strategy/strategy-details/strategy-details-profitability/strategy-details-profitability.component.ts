@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { ChartOptions, Strategy } from '@app/models';
 import { StrategyService } from '@app/services/strategy.service';
 import * as Highcharts from 'highcharts';
-import { PercentPipe } from '@angular/common';
 
 @Component({
   selector: 'app-strategy-details-profitability',
@@ -16,8 +15,7 @@ export class StrategyDetailsProfitabilityComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private strategyService: StrategyService,
-    private percentPipe: PercentPipe
+    private strategyService: StrategyService
   ) { }
 
   ngOnInit() {
@@ -53,8 +51,9 @@ export class StrategyDetailsProfitabilityComponent implements OnInit {
           tooltip: {
             useHTML: true,
             formatter: function() {
-              console.log(this);
-              return `<div class="arearange-tooltip-header ${this.y < 0 ? 'negative' : ''} ${this.y > 0 ? 'positive' : ''}">${Highcharts.numberFormat((this.y), 2, '.')}%</div><div>${Highcharts.dateFormat('%A, %e %b %Y г., %H:%M', this.x)}</div>`;
+              return `<div class="arearange-tooltip-header ${this.y < 0 ? 'negative' : ''} ${this.y > 0 ? 'positive' : ''}">` +
+                `${Highcharts.numberFormat((this.y), 2, '.')}%</div>` +
+                `<div>${Highcharts.dateFormat('%A, %e %b %Y г., %H:%M', this.x)}</div>`;
             }
           },
           type: 'arearange',
