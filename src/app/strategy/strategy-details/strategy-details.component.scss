@@ -1,0 +1,34 @@
+@import 'styles';
+
+.caption {
+  display: flex;
+  align-items: center;
+  margin-bottom: 40px;
+
+  h2 {
+    margin-bottom: 0;
+    flex-grow: 1;
+  }
+
+  .info {
+    background-color: $background-color;
+    padding: 10px 15px;
+
+    .pnl {
+      font-size: 24px;
+    }
+
+    .item {
+      margin-right: 30px;
+      vertical-align: middle;
+
+      b {
+        margin-left: 15px;
+      }
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}
