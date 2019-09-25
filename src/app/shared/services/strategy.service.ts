@@ -3,7 +3,7 @@ import { Observable } from 'rxjs/index';
 import { HttpClient } from '@angular/common/http';
 import { CONFIG } from '../../../config';
 import { map } from 'rxjs/internal/operators';
-import { Account, Offer, Strategy } from '../models';
+import { Account, ChartOptions, Offer, Strategy } from '../models';
 
 @Injectable({
   providedIn: 'root'
@@ -57,6 +57,17 @@ export class StrategyService {
     return this.http.post(`${CONFIG.baseApiUrl}/myStrategies.search`, options).pipe(map((response: any) => {
       return this.createStrategy(response.Strategies.find(s => s.ID.toString() === id.toString()));
     }));
+  }
+
+  getChart(chartOptions: ChartOptions): Observable<any> {
+    const options: any = {
+      StrategyID: chartOptions.strategyID,
+      MaxPoints: chartOptions.maxPoints,
+      chartType: chartOptions.chartType,
+      chartSize: chartOptions.chartSize
+    };
+
+    return this.http.post(`${CONFIG.baseApiUrl}/charts.get`, options);
   }
 
   private createStrategy(strategyObj: any): Strategy {

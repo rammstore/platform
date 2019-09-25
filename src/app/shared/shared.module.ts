@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, PercentPipe } from '@angular/common';
 import { AccordionModule, BsDropdownModule, ModalModule, PopoverModule } from 'ngx-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ContentTabsComponent } from './components/content-tabs/content-tabs.component';
@@ -33,6 +33,9 @@ import { SpecificationInfoBlockComponent } from './components/specification-info
     DialogWrapperComponent,
     SpecificationInfoBlockComponent,
     RouterModule
+  ],
+  providers: [
+    PercentPipe
   ]
 })
 export class SharedModule { }

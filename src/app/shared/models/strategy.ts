@@ -44,4 +44,10 @@ export class Strategy {
     // @TODO: declare type or create enum for status possible values
     return this.status === 1;
   }
+
+  getAgeWeeks(): number {
+    const now: number = new Date().getTime();
+    const created: number = new Date(this.dtCreated).getTime();
+    return Math.round((now - created) / (1000 * 3600 * 24 * 7));
+  }
 }

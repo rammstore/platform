@@ -206,6 +206,8 @@ table {
         text-align: center;
         font-size: 14px;
         color: $text-color-dark;
+        min-height: 56px;
+        height: 56px;
 
         &:first-child {
           text-align: left;
@@ -228,11 +230,11 @@ table {
 }
 
 .positive {
-  color: $positive-color;
+  color: $positive-color !important;
 }
 
 .negative {
-  color: $negative-color;
+  color: $negative-color !important;
 }
 
 .modal-dialog {
@@ -324,4 +326,10 @@ table {
       margin-right: 0;
     }
   }
+}
+
+.arearange-tooltip-header {
+  font-size: 24px;
+  text-align: center;
+  padding: 10px 20px;
 }

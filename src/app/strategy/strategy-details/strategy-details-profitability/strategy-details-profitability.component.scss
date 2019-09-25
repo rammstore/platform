@@ -1,0 +1,14 @@
+@import "styles";
+
+.profitability-container {
+  display: flex;
+
+  .statistics {
+    width: 400px;
+    margin-right: 10px;
+  }
+
+  .chart-container {
+    flex-grow: 1;
+  }
+}
