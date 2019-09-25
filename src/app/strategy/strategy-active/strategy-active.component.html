@@ -14,14 +14,14 @@
 
   <tbody>
     <tr *ngFor="let strategy of strategies">
-      <td><a>{{strategy.name}}</a></td>
+      <td><a [routerLink]="['/strategies/details', strategy.id]">{{strategy.name}}</a></td>
       <td>{{strategy.account.balance}}</td>
       <td>???</td>
       <td>{{strategy.offer.fee | percent}}</td>
       <td>???</td>
       <td [class.positive]="strategy.account.intervalPnL > 0" [class.negative]="strategy.account.intervalPnL < 0">{{strategy.account.intervalPnL}}</td>
       <td>???</td>
-      <td class="manage">
+      <td class="manage-strategy">
         <i (click)="openFundDialog(strategy)" title="Пополнение инвестиции" class="icon-add"></i>
         <i (click)="openPauseDialog(strategy)" *ngIf="strategy.isActive()" title="Пауза" class="icon-pause"></i>
         <i (click)="openResumeDialog(strategy)" *ngIf="!strategy.isActive()" title="Возобновить" class="icon-start"></i>

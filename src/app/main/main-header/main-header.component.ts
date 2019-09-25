@@ -53,7 +53,7 @@ export class MainHeaderComponent implements OnInit {
   }
 
   isLinkActive(link: string): boolean {
-    return this.router.url.includes(link);
+    return this.router.url.startsWith(link);
   }
 
   showChart(): void {

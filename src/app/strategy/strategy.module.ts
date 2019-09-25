@@ -8,6 +8,11 @@ import { StrategyAddComponent } from './strategy-add/strategy-add.component';
 import { StrategyPauseComponent } from './strategy-pause/strategy-pause.component';
 import { StrategyResumeComponent } from './strategy-resume/strategy-resume.component';
 import { StrategyFundComponent } from './strategy-fund/strategy-fund.component';
+import { StrategyDetailsComponent } from './strategy-details/strategy-details.component';
+import { StrategyResolver } from './strategy-details/strategy-details.resolver';
+import { StrategyDetailsProfitabilityComponent } from './strategy-details/strategy-details-profitability/strategy-details-profitability.component';
+import { StrategyDetailsSymbolsComponent } from './strategy-details/strategy-details-symbols/strategy-details-symbols.component';
+import { StrategyDetailsInvestmentsComponent } from './strategy-details/strategy-details-investments/strategy-details-investments.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +22,11 @@ import { StrategyFundComponent } from './strategy-fund/strategy-fund.component';
     StrategyAddComponent,
     StrategyPauseComponent,
     StrategyResumeComponent,
-    StrategyFundComponent
+    StrategyFundComponent,
+    StrategyDetailsComponent,
+    StrategyDetailsProfitabilityComponent,
+    StrategyDetailsSymbolsComponent,
+    StrategyDetailsInvestmentsComponent
   ],
   imports: [
     SharedModule,
@@ -28,6 +37,9 @@ import { StrategyFundComponent } from './strategy-fund/strategy-fund.component';
     StrategyPauseComponent,
     StrategyResumeComponent,
     StrategyFundComponent
+  ],
+  providers: [
+    StrategyResolver
   ]
 })
 export class StrategyModule { }
