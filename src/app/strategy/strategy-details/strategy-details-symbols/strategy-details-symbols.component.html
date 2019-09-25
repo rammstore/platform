@@ -1,1 +1,18 @@
-<p>strategy-details-symbols works!</p>
+<table>
+  <tbody>
+  <tr>
+    <td>Доходность в месяц</td>
+    <td [class.positive]="false"
+        [class.negative]="false">
+      ???
+    </td>
+    <td>Доходность</td>
+    <td [class.positive]="strategy.account.intervalPnL > 0"
+        [class.negative]="strategy.account.intervalPnL < 0">
+      {{strategy.profit | percent}}
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<div id="symbolsChartContainer"></div>
