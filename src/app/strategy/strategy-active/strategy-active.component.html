@@ -15,8 +15,8 @@
   <tbody>
     <tr *ngFor="let strategy of strategies">
       <td><a [routerLink]="['/strategies/details', strategy.id]">{{strategy.name}}</a></td>
-      <td>{{strategy.account.balance}}</td>
-      <td>???</td>
+      <td>{{strategy.account.equity}}</td>
+      <td>{{strategy.accountsCount}}</td>
       <td>{{strategy.offer.fee | percent}}</td>
       <td>???</td>
       <td [class.positive]="strategy.account.intervalPnL > 0" [class.negative]="strategy.account.intervalPnL < 0">{{strategy.account.intervalPnL}}</td>
@@ -43,7 +43,7 @@
     <tr *ngIf="strategies" class="total">
       <td>Всего</td>
       <td></td>
-      <td>???</td>
+      <td>{{getInvestors()}}</td>
       <td></td>
       <td>???</td>
       <td [class.positive]="getIntervalPnL() > 0" [class.negative]="getIntervalPnL() < 0">{{getIntervalPnL()}}</td>
