@@ -1,6 +1,16 @@
 import { Account } from './account';
 import { Offer } from './offer';
 
+export class StrategyResumeOptions {
+  amount: number;
+  goal: number;
+  protection: number;
+
+  constructor(options: object) {
+    Object.assign(this, options);
+  }
+}
+
 export class Strategy {
   id: number;
   name: string;
@@ -49,5 +59,13 @@ export class Strategy {
     const now: number = new Date().getTime();
     const created: number = new Date(this.dtCreated).getTime();
     return Math.round((now - created) / (1000 * 3600 * 24 * 7));
+  }
+
+  pause(): void {
+    this.status = 4;
+  }
+
+  resume(): void {
+    this.status = 1;
   }
 }

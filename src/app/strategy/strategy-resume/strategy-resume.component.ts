@@ -5,6 +5,7 @@ import { StorageService } from '../../shared/services/storage.service';
 import { BsModalRef } from 'ngx-bootstrap';
 import { Strategy } from '../../shared/models/strategy';
 import { StrategyService } from '../../shared/services/strategy.service';
+import { StrategyResumeOptions } from '@app/models';
 
 @Component({
   selector: 'app-strategy-resume',
@@ -24,7 +25,9 @@ export class StrategyResumeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.authData = this.storageService.getAuthData();
+    this.storageService.getAuthData().subscribe((authData: AuthData) => {
+      this.authData = authData;
+    });
     this.buildForm();
   }
 
@@ -44,6 +47,7 @@ export class StrategyResumeComponent implements OnInit {
     }
 
     this.strategyService.resume(this.strategy.id).subscribe(() => {
+      this.strategy.resume();
       this.modalRef.hide();
     });
   }

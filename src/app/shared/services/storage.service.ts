@@ -4,24 +4,37 @@ import { User } from '../user/user';
 import { Company } from '../user/company';
 import { Session } from '../user/session';
 import { Wallet } from '../user/wallet';
+import { BehaviorSubject, Observable } from 'rxjs/index';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StorageService {
   private storageName = 'sessionStorage';
+  authDataSubject: BehaviorSubject<AuthData> = new BehaviorSubject(null);
 
   constructor() { }
 
-  setAuthData(data: string ) {
+  setAuthData(data: string) {
     window[this.storageName].setItem('auth', data);
-
+    this.authDataSubject.next(this.createAuthData(JSON.parse(data)));
     return this;
   }
 
-  getAuthData(): AuthData {
+  getAuthData(): Observable<AuthData> {
     const authData = JSON.parse(window[this.storageName].getItem('auth'));
+    this.authDataSubject.next(this.createAuthData(authData));
 
+    return this.authDataSubject.asObservable();
+  }
+
+  removeAuthData() {
+    window[this.storageName].removeItem('auth');
+    this.authDataSubject.next(null);
+    return this;
+  }
+
+  createAuthData(authData: any): AuthData {
     const client: User = new User();
     Object.assign(client, authData.client);
 
@@ -40,12 +53,6 @@ export class StorageService {
     });
 
     return new AuthData({client: client, company: company, session: session, wallets: wallets});
-  }
-
-  removeAuthData() {
-    window[this.storageName].removeItem('auth');
-
-    return this;
   }
 
   setToken(data: string ) {

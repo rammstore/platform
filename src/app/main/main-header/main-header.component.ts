@@ -23,33 +23,34 @@ export class MainHeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.authData = this.storageService.getAuthData();
+    this.storageService.getAuthData().subscribe((authData: AuthData) => {
+      this.authData = authData;
 
-    this.chartOptions = {
-      chart: {
-        type: 'pie'
-      },
-      title: {
-        text: undefined
-      },
-      connectors: {enabled: false},
-      series: [{
-        data: [
-          ['Доступно', this.authData.getWallets()[0].balance - this.authData.getWallets()[0].invested],
-          ['Инвестировано', this.authData.getWallets()[0].invested]
-        ],
-        colors: ['#f7a35b', '#00a651'],
-        innerSize: '50%',
-        dataLabels: {
-          enabled: false
+      this.chartOptions = {
+        chart: {
+          type: 'pie'
         },
-        enableMouseTracking: false
-      }],
-      credits: {
-        enabled: false
-      }
-    };
-
+        title: {
+          text: undefined
+        },
+        connectors: {enabled: false},
+        series: [{
+          data: [
+            ['Доступно', this.authData.getWallets()[0].balance - this.authData.getWallets()[0].invested],
+            ['Инвестировано', this.authData.getWallets()[0].invested]
+          ],
+          colors: ['#f7a35b', '#00a651'],
+          innerSize: '50%',
+          dataLabels: {
+            enabled: false
+          },
+          enableMouseTracking: false
+        }],
+        credits: {
+          enabled: false
+        }
+      };
+    });
   }
 
   isLinkActive(link: string): boolean {

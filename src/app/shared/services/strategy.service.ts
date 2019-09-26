@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/index';
+import { BehaviorSubject, Observable } from 'rxjs/index';
 import { HttpClient } from '@angular/common/http';
 import { CONFIG } from '../../../config';
 import { map } from 'rxjs/internal/operators';
@@ -9,6 +9,8 @@ import { Account, ChartOptions, Offer, Strategy } from '../models';
   providedIn: 'root'
 })
 export class StrategyService {
+  activeStrategiesSubject: BehaviorSubject<Strategy[]> = new BehaviorSubject<Strategy[]>([]);
+  closedStrategiesSubject: BehaviorSubject<Strategy[]> = new BehaviorSubject<Strategy[]>([]);
 
   constructor(
     private http: HttpClient
@@ -20,15 +22,17 @@ export class StrategyService {
       Pagination: { CurrentPage: page }
     };
 
-    return this.http.post(`${CONFIG.baseApiUrl}/myStrategies.search`, options).pipe(map((response: any) => {
+    this.http.post(`${CONFIG.baseApiUrl}/myStrategies.search`, options).subscribe((response: any) => {
       const strategies: Strategy[] = [];
 
       response.Strategies.forEach((s: any) => {
         strategies.push(this.createStrategy(s));
       });
 
-      return strategies;
-    }));
+      this.activeStrategiesSubject.next(strategies);
+    });
+
+    return this.activeStrategiesSubject.asObservable();
   }
 
   getClosed(page: number = 1): Observable<Strategy[]> {
@@ -37,15 +41,17 @@ export class StrategyService {
       Pagination: { CurrentPage: page }
     };
 
-    return this.http.post(`${CONFIG.baseApiUrl}/myStrategies.search`, options).pipe(map((response: any) => {
+    this.http.post(`${CONFIG.baseApiUrl}/myStrategies.search`, options).subscribe((response: any) => {
       const strategies: Strategy[] = [];
 
       response.Strategies.forEach((s: any) => {
         strategies.push(this.createStrategy(s));
       });
 
-      return strategies;
-    }));
+      this.closedStrategiesSubject.next(strategies);
+    });
+
+    return this.closedStrategiesSubject.asObservable();
   }
 
   get(id: number): Observable<Strategy> {
@@ -127,14 +133,10 @@ export class StrategyService {
   }
 
   pause(strategyId: number) {
-    return this.http.post(`${CONFIG.baseApiUrl}/myStrategies.pause`, {StrategyID: strategyId}).pipe(map((response: any) => {
-      console.log(response);
-    }));
+    return this.http.post(`${CONFIG.baseApiUrl}/myStrategies.pause`, {StrategyID: strategyId});
   }
 
   resume(strategyId: number) {
-    return this.http.post(`${CONFIG.baseApiUrl}/myStrategies.resume`, {StrategyID: strategyId}).pipe(map((response: any) => {
-      console.log(response);
-    }));
+    return this.http.post(`${CONFIG.baseApiUrl}/myStrategies.resume`, {StrategyID: strategyId});
   }
 }
