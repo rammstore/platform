@@ -1,44 +1,4 @@
-<!--<table>-->
-  <!--<thead>-->
-    <!--<tr>-->
-      <!--<th>Название</th>-->
-      <!--<th>Средства, USD</th>-->
-      <!--<th>Инвесторы</th>-->
-      <!--<th>Вознаграждение</th>-->
-      <!--<th>Выплаченное вознаграждение, USD</th>-->
-      <!--<th>Прибыль, USD</th>-->
-      <!--<th>Невыплаченное вознаграждение, USD</th>-->
-      <!--<th></th>-->
-    <!--</tr>-->
-  <!--</thead>-->
-
-  <!--<tbody>-->
-    <!--<tr *ngFor="let strategy of strategies">-->
-      <!--<td><a [routerLink]="['/strategies/details', strategy.id]">{{strategy.name}}</a></td>-->
-      <!--<td>{{strategy.account.equity}}</td>-->
-      <!--<td>{{strategy.accountsCount}}</td>-->
-      <!--<td>{{strategy.offer.fee | percent}}</td>-->
-      <!--<td>???</td>-->
-      <!--<td [class.positive]="strategy.account.intervalPnL > 0" [class.negative]="strategy.account.intervalPnL < 0">{{strategy.account.intervalPnL}}</td>-->
-      <!--<td>???</td>-->
-      <!--<td>-->
-        <!--<app-strategy-manage [strategy]="strategy"></app-strategy-manage>-->
-      <!--</td>-->
-    <!--</tr>-->
-    <!--<tr *ngIf="strategies" class="total">-->
-      <!--<td>Всего</td>-->
-      <!--<td></td>-->
-      <!--<td>{{getInvestors()}}</td>-->
-      <!--<td></td>-->
-      <!--<td>???</td>-->
-      <!--<td [class.positive]="getIntervalPnL() > 0" [class.negative]="getIntervalPnL() < 0">{{getIntervalPnL()}}</td>-->
-      <!--<td>???</td>-->
-      <!--<td></td>-->
-    <!--</tr>-->
-  <!--</tbody>-->
-<!--</table>-->
-
-<app-data-table [tableHeader]=""></app-data-table>
+<app-data-table [tableHeader]="tableHeader" [data]="strategies"></app-data-table>
 
 <button class="primary">Создать стратегию</button>
 

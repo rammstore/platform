@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, CurrencyPipe, DatePipe, PercentPipe } from '@angular/common';
 import { AccordionModule, BsDropdownModule, ModalModule, PopoverModule, TooltipModule } from 'ngx-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ContentTabsComponent } from './components/content-tabs/content-tabs.component';
@@ -9,6 +9,7 @@ import { SpecificationInfoBlockComponent } from './components/specification-info
 import { ChartWalletInfoComponent } from './components/chart/chart-wallet-info/chart-wallet-info.component';
 import { DataTableComponent } from './components/data-table/data-table.component';
 import { StrategyManageComponent } from './components/strategy-manage/strategy-manage.component';
+import { DynamicPipe } from './pipes/dynamic.pipe';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { StrategyManageComponent } from './components/strategy-manage/strategy-m
     SpecificationInfoBlockComponent,
     ChartWalletInfoComponent,
     DataTableComponent,
-    StrategyManageComponent
+    StrategyManageComponent,
+    DynamicPipe
   ],
   imports: [
     CommonModule,
@@ -44,6 +46,12 @@ import { StrategyManageComponent } from './components/strategy-manage/strategy-m
     ChartWalletInfoComponent,
     DataTableComponent,
     StrategyManageComponent
+  ],
+  providers: [
+    DynamicPipe,
+    PercentPipe,
+    CurrencyPipe,
+    DatePipe
   ]
 })
 export class SharedModule { }

@@ -12,7 +12,7 @@
   <tr *ngFor="let item of data">
     <ng-container *ngFor="let row of tableHeader">
       <ng-container *ngFor="let column of row.columns">
-        <ng-container *ngIf="column.property" >
+        <ng-container *ngIf="column.property || column.property === ''" >
           <td [ngSwitch]="column.property">
             <!-- Strategy special data -->
             <ng-container *ngSwitchCase="'age'">{{item.getAgeWeeks()}}</ng-container>
@@ -22,7 +22,17 @@
             </ng-container>
 
             <ng-container *ngSwitchCase="'profit'">
-              <span [class.positive]="item.profit > 0" [class.negative]="item.profit < 0">{{item.profit | percent:'1.0-2'}}</span>
+              <span [class.positive]="item.profit > 0"
+                    [class.negative]="item.profit < 0">
+                {{item.profit | percent:'1.0-2'}}
+              </span>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'account.intervalPnL'">
+              <span [class.positive]="item.account.intervalPnL > 0"
+                    [class.negative]="item.account.intervalPnL < 0">
+                {{item.account.intervalPnL}}
+              </span>
             </ng-container>
 
             <ng-container *ngSwitchCase="'account'">
@@ -36,8 +46,14 @@
               <app-strategy-manage [strategy]="item"></app-strategy-manage>
             </ng-container>
 
+            <ng-container *ngSwitchCase="''">
+              ???
+            </ng-container>
+
             <!-- Just show property value -->
-            <ng-container *ngSwitchDefault>{{item[column.property]}}</ng-container>
+            <ng-container *ngSwitchDefault>
+              {{getPropertyValue(item, column.property) | dynamic:column.pipe.pipe:column.pipe.args}}
+            </ng-container>
           </td>
         </ng-container>
       </ng-container>

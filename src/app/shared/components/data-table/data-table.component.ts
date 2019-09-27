@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Strategy, TableColumn } from '@app/models';
+import { Strategy } from '@app/models';
 import { TableHeaderRow } from '@app/models/table-header-row';
 
 @Component({
@@ -9,6 +9,7 @@ import { TableHeaderRow } from '@app/models/table-header-row';
 })
 export class DataTableComponent implements OnInit {
   @Input() tableHeader: TableHeaderRow[];
+  @Input() data: object[];
 
   constructor() { }
 
@@ -20,12 +21,37 @@ export class DataTableComponent implements OnInit {
 
     switch (true) {
       case (item instanceof Strategy):
-        link = 'strategies';
+        link = 'strategies/details';
         break;
       default:
         link = '';
     }
 
     return `/${link}/${item.id}`;
+  }
+
+  /**
+   * Метод для отображения вложенных свойств объекта.
+   * Например, если нужно отобразить вознаграждение для стратегии (strategy.offer.fee).
+   * Тогда item - это стратегия, property - путь по вложенности до нужного свойства ('offer.fee')
+   * @param item
+   * @param {string} property
+   * @returns {any}
+   */
+  getPropertyValue(item: any, property: string): any {
+    const splittedPropertyName: string[] = property.split('.');
+
+    let res = {};
+    Object.assign(res, item);
+
+    splittedPropertyName.forEach((key: string) => {
+      if (typeof res[key] === 'object') {
+        Object.assign(res, res[key]);
+      } else {
+        res = res[key];
+      }
+    });
+
+    return res;
   }
 }
