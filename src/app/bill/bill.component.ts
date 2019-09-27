@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/index';
 import { ContentTabLink } from '@app/components/content-tabs/content-tab-link';
+import { AuthData } from '@app/user/auth-data';
+import { StorageService } from '@app/services/storage.service';
 
 @Component({
   selector: 'app-bill',
@@ -14,11 +16,16 @@ export class BillComponent implements OnInit {
     new ContentTabLink('Вывести', '/bill/withdraw'),
     new ContentTabLink('История переводов', '/bill/last-transfers')
   ];
+  authData: AuthData;
 
-  constructor() { }
+  constructor(
+    private storageService: StorageService
+  ) { }
 
   ngOnInit() {
-
+    this.storageService.getAuthData().subscribe((authData: AuthData) => {
+      this.authData = authData;
+    });
   }
 
 }

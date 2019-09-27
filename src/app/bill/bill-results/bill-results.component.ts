@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/index';
+import { Wallet } from '@app/user';
 
 @Component({
   selector: 'app-bill-results',
@@ -7,13 +8,12 @@ import { Observable } from 'rxjs/index';
   styleUrls: ['./bill-results.component.scss']
 })
 export class BillResultsComponent implements OnInit {
+  @Input() wallet: Wallet;
 
   constructor(
   ) { }
 
   ngOnInit() {
-     // this.accountService.get().subscribe();
-    // console.log(this.accountData);
   }
 
 }

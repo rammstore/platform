@@ -1,0 +1,27 @@
+@import "styles";
+
+.wallet-container {
+  display: flex;
+  align-items: center;
+
+  table,
+  .chart-container {
+   flex: 1 1 50%;
+  }
+
+  .chart-container {
+    position: relative;
+
+    i {
+      z-index: 5;
+      position: absolute;
+      right: 30px;
+      top: 30px;
+      cursor: help;
+    }
+  }
+}
+
+.buttons-group {
+  margin: 40px 0;
+}

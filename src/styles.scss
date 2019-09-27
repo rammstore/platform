@@ -68,6 +68,20 @@ button {
   }
 }
 
+.buttons-group {
+  margin: 0 auto;
+  text-align: center;
+
+  a,
+  button {
+    margin-right: 15px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
 ul.dropdown-menu.langmenu {
   min-width: 0;
   padding: 0;
@@ -235,6 +249,10 @@ table {
 
 .negative {
   color: $negative-color !important;
+}
+
+.accent {
+  color: $accent-color !important;
 }
 
 .modal-dialog {

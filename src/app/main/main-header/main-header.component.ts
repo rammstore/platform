@@ -13,7 +13,7 @@ import { AuthService } from '@app/services/auth.service';
 export class MainHeaderComponent implements OnInit {
   authData: AuthData;
 
-  chartOptions: any;
+  // chartOptions: any;
 
   constructor(
     private storageService: StorageService,
@@ -26,30 +26,30 @@ export class MainHeaderComponent implements OnInit {
     this.storageService.getAuthData().subscribe((authData: AuthData) => {
       this.authData = authData;
 
-      this.chartOptions = {
-        chart: {
-          type: 'pie'
-        },
-        title: {
-          text: undefined
-        },
-        connectors: {enabled: false},
-        series: [{
-          data: [
-            ['Доступно', this.authData.getWallets()[0].balance - this.authData.getWallets()[0].invested],
-            ['Инвестировано', this.authData.getWallets()[0].invested]
-          ],
-          colors: ['#f7a35b', '#00a651'],
-          innerSize: '50%',
-          dataLabels: {
-            enabled: false
-          },
-          enableMouseTracking: false
-        }],
-        credits: {
-          enabled: false
-        }
-      };
+      // this.chartOptions = {
+      //   chart: {
+      //     type: 'pie'
+      //   },
+      //   title: {
+      //     text: undefined
+      //   },
+      //   connectors: {enabled: false},
+      //   series: [{
+      //     data: [
+      //       ['Доступно', this.authData.getWallets()[0].balance - this.authData.getWallets()[0].invested],
+      //       ['Инвестировано', this.authData.getWallets()[0].invested]
+      //     ],
+      //     colors: ['#f7a35b', '#00a651'],
+      //     innerSize: '50%',
+      //     dataLabels: {
+      //       enabled: false
+      //     },
+      //     enableMouseTracking: false
+      //   }],
+      //   credits: {
+      //     enabled: false
+      //   }
+      // };
     });
   }
 
@@ -59,7 +59,7 @@ export class MainHeaderComponent implements OnInit {
 
   showChart(): void {
     setTimeout(() => {
-      Highcharts.chart('headerChartContainer', this.chartOptions);
+      // Highcharts.chart('headerChartContainer', this.chartOptions);
     }, 100);
   }
 

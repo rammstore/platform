@@ -42,7 +42,7 @@ export class StrategyAddComponent implements OnInit {
 
   buildFormStep2(): void {
     this.formStep2 = this.fb.group({
-      money: [(Math.round(this.authData.getWallets()[0].getAvailable() / 10)), [Validators.min(0), Validators.max(this.authData.getWallets()[0].getAvailable())]],
+      money: [(Math.round(this.authData.getWallets()[0].getEquity() / 10)), [Validators.min(0), Validators.max(this.authData.getWallets()[0].getEquity())]],
       target: [100, [Validators.min(0)]],
       protection: [0, [Validators.min(0), Validators.max(99)]]
     });

@@ -33,8 +33,8 @@ export class StrategyFundComponent implements OnInit {
   buildForm(): void {
     this.form = this.fb.group({
       amount: [
-        (Math.round(this.authData.getWallets()[0].getAvailable() / 10)),
-        [Validators.min(0), Validators.max(this.authData.getWallets()[0].getAvailable())]
+        (Math.round(this.authData.getWallets()[0].getEquity() / 10)),
+        [Validators.min(0), Validators.max(this.authData.getWallets()[0].getEquity())]
       ]
     });
   }
