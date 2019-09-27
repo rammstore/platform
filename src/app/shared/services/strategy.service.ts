@@ -11,6 +11,7 @@ import { Account, ChartOptions, Offer, Strategy } from '../models';
 export class StrategyService {
   activeStrategiesSubject: BehaviorSubject<Strategy[]> = new BehaviorSubject<Strategy[]>([]);
   closedStrategiesSubject: BehaviorSubject<Strategy[]> = new BehaviorSubject<Strategy[]>([]);
+  strategiesSubject: BehaviorSubject<Strategy[]> = new BehaviorSubject<Strategy[]>([]);
 
   constructor(
     private http: HttpClient
@@ -52,6 +53,25 @@ export class StrategyService {
     });
 
     return this.closedStrategiesSubject.asObservable();
+  }
+
+  getAll(page: number = 1): Observable<Strategy[]> {
+    const options: object = {
+      Filter: { IsActive: false },
+      Pagination: { CurrentPage: page }
+    };
+
+    this.http.post(`${CONFIG.baseApiUrl}/myStrategies.search`, options).subscribe((response: any) => {
+      const strategies: Strategy[] = [];
+
+      response.Strategies.forEach((s: any) => {
+        strategies.push(this.createStrategy(s));
+      });
+
+      this.strategiesSubject.next(strategies);
+    });
+
+    return this.strategiesSubject.asObservable();
   }
 
   get(id: number): Observable<Strategy> {

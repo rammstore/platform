@@ -45,31 +45,4 @@ export class StrategyActiveComponent implements OnInit {
 
     return sum;
   }
-
-  openFundDialog(strategy: Strategy): void {
-    const options: ModalOptions = new ModalOptions();
-    options.initialState = {
-      strategy: strategy
-    };
-
-    this.modalRef = this.modalService.show(StrategyFundComponent, options);
-  }
-
-  openPauseDialog(strategy: Strategy): void {
-    const options: ModalOptions = new ModalOptions();
-    options.initialState = {
-      strategy: strategy
-    };
-
-    this.modalRef = this.modalService.show(StrategyPauseComponent, options);
-  }
-
-  openResumeDialog(strategy: Strategy): void {
-    const options: ModalOptions = new ModalOptions();
-    options.initialState = {
-      strategy: strategy
-    };
-
-    this.modalRef = this.modalService.show(StrategyResumeComponent, options);
-  }
 }

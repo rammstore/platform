@@ -21,23 +21,8 @@
       <td>???</td>
       <td [class.positive]="strategy.account.intervalPnL > 0" [class.negative]="strategy.account.intervalPnL < 0">{{strategy.account.intervalPnL}}</td>
       <td>???</td>
-      <td class="manage-strategy">
-        <i (click)="openFundDialog(strategy)" title="Пополнение инвестиции" class="icon-add"></i>
-        <i (click)="openPauseDialog(strategy)" *ngIf="strategy.isActive()" title="Пауза" class="icon-pause"></i>
-        <i (click)="openResumeDialog(strategy)" *ngIf="!strategy.isActive()" title="Возобновить" class="icon-start"></i>
-
-        <div class="btn-group dropdown-container" dropdown>
-          <i class="icon-hamburger" dropdownToggle></i>
-
-          <ul *dropdownMenu class="dropdown-menu" role="menu">
-            <li role="menuitem"><i class="icon-percent-shield"></i>Изменить профиль инвестиции</li>
-            <li role="menuitem"><i class="icon-card"></i>Вывод средств из инвестиции</li>
-            <li role="menuitem"><i class="icon-doc"></i>Выписка по инвестиции</li>
-            <li role="menuitem"><i class="fa fa-list-alt"></i>Список инвестиций</li>
-            <li role="menuitem"><i class="fa fa-download"></i>Скачать оригинальный скрипт</li>
-            <li role="menuitem"><i class="fa fa-window-close"></i>Закрыть стратегию</li>
-          </ul>
-        </div>
+      <td>
+        <app-strategy-manage [strategy]="strategy"></app-strategy-manage>
       </td>
     </tr>
     <tr *ngIf="strategies" class="total">
