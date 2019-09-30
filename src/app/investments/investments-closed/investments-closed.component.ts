@@ -21,7 +21,7 @@ export class InvestmentsClosedComponent implements OnInit {
       new TableColumn({ property: 'age', label: 'Возраст' }),
       new TableColumn({ property: 'account.protection', label: 'Защита', pipe: { pipe: PercentPipe }}),
       new TableColumn({ property: 'account.intervalPnL', label: 'Прибыль, USD' }),
-      new TableColumn({ property: '', label: '@TODO list button' })
+      new TableColumn({ property: 'investmentDetails', label: '' })
     ]),
   ];
 

@@ -1,0 +1,94 @@
+<div class="details-container">
+  <div class="strategy">
+    <h2>Стратегия</h2>
+    <table>
+      <tbody>
+      <tr>
+        <td>ID</td>
+        <td>{{investment.strategy.id}}</td>
+      </tr>
+      <tr>
+        <td>Название</td>
+        <td><a [routerLink]="['/strategies/details', investment.strategy.id]">{{investment.strategy.name}}</a></td>
+      </tr>
+      <tr>
+        <td>Комиссия</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Вознаграждение</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Период оплаты</td>
+        <td></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="investment">
+    <h2>Инвестиция</h2>
+    <table>
+      <tbody>
+      <tr>
+        <td>ID</td>
+        <td>{{investment.id}}</td>
+      </tr>
+      <tr>
+        <td>Создана</td>
+        <td>{{investment.dtCreated | date:'yyyy-MM-dd hh:mm:ss' }}</td>
+      </tr>
+      <tr>
+        <td>Закрыта</td>
+        <td>{{investment.dtClosed | date:'yyyy-MM-dd hh:mm:ss' }}</td>
+      </tr>
+      <tr>
+        <td>Валюта</td>
+        <td>{{investment.asset}}</td>
+      </tr>
+      <tr>
+        <td>Плечо</td>
+        <td>???</td>
+      </tr>
+      <tr>
+        <td>Стоп</td>
+        <td>protection ???</td>
+      </tr>
+      <tr>
+        <td>Статус</td>
+        <td>{{investment.getStatus()}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="profile">
+    <h2>Инвестиционный профиль</h2>
+    <table>
+      <tbody>
+      <tr>
+        <td>Множитель</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Цель</td>
+        <td>{{investment.target | percent:'1.0-2'}}</td>
+      </tr>
+      <tr>
+        <td>Защита</td>
+        <td>{{investment.protection | percent:'1.0-2'}}</td>
+      </tr>
+      <tr><td></td><td></td></tr>
+      <tr>
+        <td>Цель, USD</td>
+        <td>{{investment.targetEquity | currency:'':'':'1.2-2'}} targetEquity ???</td>
+      </tr>
+      <tr>
+        <td>Защита, USD</td>
+        <td>{{investment.protectionEquity | currency:'':'':'1.2-2'}} protectionEquity ???</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

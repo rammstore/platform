@@ -1,0 +1,21 @@
+.details-container {
+  display: flex;
+
+  .strategy,
+  .investment,
+  .profile {
+    flex: 1 1 100%;
+
+    table {
+      tbody {
+        tr {
+          td {
+            &:last-child {
+              text-align: right;
+            }
+          }
+        }
+      }
+    }
+  }
+}

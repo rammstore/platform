@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { CONFIG } from '../../../config';
 import { map } from 'rxjs/internal/operators';
 import { Account, ChartOptions, Offer, Strategy } from '../models';
+import { InvestmentsService } from '@app/services/investments.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,8 @@ export class StrategyService {
   strategiesSubject: BehaviorSubject<Strategy[]> = new BehaviorSubject<Strategy[]>([]);
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private investmentsService: InvestmentsService
   ) { }
 
   getActive(page: number = 1): Observable<Strategy[]> {
@@ -97,28 +99,8 @@ export class StrategyService {
   }
 
   private createStrategy(strategyObj: any): Strategy {
-    const account = new Account(
-      strategyObj.Account.ID,
-      strategyObj.Account.AccountSpecAssetID,
-      strategyObj.Account.Asset,
-      strategyObj.Account.TradingIntervalCurrentID,
-      strategyObj.Account.Type,
-      strategyObj.Account.DTCreated,
-      strategyObj.Account.Balance,
-      strategyObj.Account.Equity,
-      strategyObj.Account.Margin,
-      strategyObj.Account.MarginLevel,
-      strategyObj.Account.IntervalPnL,
-      strategyObj.Account.Status,
-      strategyObj.Account.Factor,
-      strategyObj.Account.MCReached,
-      strategyObj.Account.Protection,
-      strategyObj.Account.ProtectionEquity,
-      strategyObj.Account.ProtectionReached,
-      strategyObj.Account.Target,
-      strategyObj.Account.TargetEquity,
-      strategyObj.Account.TargetReached
-    );
+    const account = this.investmentsService.createInvestment(strategyObj.Account);
+    account.strategy = { id: strategyObj.ID, name: strategyObj.Name };
 
     const offer: Offer = new Offer(
       strategyObj.Offer.Commission,

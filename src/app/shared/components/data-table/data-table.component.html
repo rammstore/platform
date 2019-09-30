@@ -46,6 +46,10 @@
               <app-strategy-manage [strategy]="item"></app-strategy-manage>
             </ng-container>
 
+            <ng-container *ngSwitchCase="'investmentDetails'">
+              <a [routerLink]="['/investments/details', item.account.id]"><i class="icon-doc"></i></a>
+            </ng-container>
+
             <ng-container *ngSwitchCase="''">
               ???
             </ng-container>
