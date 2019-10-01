@@ -62,24 +62,18 @@ export class DataTableComponent {
     const splittedPropertyName: string[] = property.split('.');
     let sum: number = 0;
 
-    if (!splittedPropertyName.length) {
-      this.data.forEach((data: Strategy | Account) => {
-        sum = sum + data[property];
-      });
-    } else {
-      this.data.forEach((data: Strategy | Account) => {
-        let nestedObj = {};
-        Object.assign(nestedObj, data);
+    this.data.forEach((data: Strategy | Account) => {
+      let nestedObj = {};
+      Object.assign(nestedObj, data);
 
-        splittedPropertyName.forEach((key: string) => {
-          if (typeof nestedObj[key] === 'object') {
-            Object.assign(nestedObj, nestedObj[key]);
-          } else {
-            sum = sum + nestedObj[key];
-          }
-        });
+      splittedPropertyName.forEach((key: string) => {
+        if (typeof nestedObj[key] === 'object') {
+          Object.assign(nestedObj, nestedObj[key]);
+        } else {
+          sum = sum + nestedObj[key];
+        }
       });
-    }
+    });
 
     return sum;
   }
