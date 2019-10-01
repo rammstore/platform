@@ -26,7 +26,9 @@ export class StrategyAddComponent implements OnInit {
 
   ngOnInit() {
     this.buildFormStep1();
-    this.authData = this.storageService.getAuthData();
+    this.storageService.getAuthData().subscribe((authData: AuthData) => {
+      this.authData = authData;
+    });
   }
 
   buildFormStep1(): void {

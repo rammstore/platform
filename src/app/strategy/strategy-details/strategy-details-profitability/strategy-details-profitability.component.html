@@ -1,0 +1,46 @@
+<div class="profitability-container">
+  <div class="statistics">
+    <table>
+      <tbody>
+      <tr>
+        <td>Доходность в месяц</td>
+        <td [class.positive]="false"
+            [class.negative]="false">
+          ???
+        </td>
+      </tr>
+      <tr>
+        <td>Доходность</td>
+        <td [class.positive]="strategy.account.intervalPnL > 0"
+            [class.negative]="strategy.account.intervalPnL < 0">
+          {{strategy.profit | percent}}
+        </td>
+      </tr>
+      <tr><td></td><td></td></tr>
+      <tr>
+        <td>Вознаграждение</td>
+        <td>{{strategy.offer.fee | percent}}</td>
+      </tr>
+      <tr>
+        <td>Возраст, недель</td>
+        <td>{{strategy.getAgeWeeks()}}</td>
+      </tr>
+      <tr>
+        <td>Инвестиции, USD</td>
+        <td>{{strategy.account.equity}}</td>
+      </tr>
+      <tr>
+        <td>Количество инвесторов</td>
+        <td>{{strategy.accountsCount}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="yieldChartContainer" class="chart-container"></div>
+</div>
+
+<p>График отображает <b>доходность</b> стратегии по инвестиции трейдера. Доходность рассчитана без учета выплаты Вознаграждения трейдера.</p>
+
+<p>Месячная доходность стратегии — средняя доходность за один месяц без учета Вознаграждения трейдера,
+  рассчитанная по историческим данным с момента создания стратегии.<br><br></p>

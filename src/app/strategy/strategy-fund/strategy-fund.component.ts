@@ -24,7 +24,9 @@ export class StrategyFundComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.authData = this.storageService.getAuthData();
+    this.storageService.getAuthData().subscribe((authData: AuthData) => {
+      this.authData = authData;
+    });
     this.buildForm();
   }
 
@@ -45,6 +47,10 @@ export class StrategyFundComponent implements OnInit {
     }
 
     this.strategyService.fund(this.strategy.account.id, this.form.get('amount').value).subscribe(() => {
+      this.strategy.account.equity = this.strategy.account.equity + this.form.get('amount').value;
+      this.strategy.account.balance = this.strategy.account.balance + this.form.get('amount').value;
+      this.authData.getWallets()[0].balance = this.authData.getWallets()[0].balance - this.form.get('amount').value;
+      this.storageService.setAuthData(JSON.stringify(this.authData));
       this.modalRef.hide();
     });
   }

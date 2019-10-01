@@ -36,6 +36,16 @@ export class StrategyActiveComponent implements OnInit {
     return sum;
   }
 
+  getInvestors(): number {
+    let sum: number = 0;
+
+    this.strategies.forEach((strategy: Strategy) => {
+      sum = sum + strategy.accountsCount;
+    });
+
+    return sum;
+  }
+
   openFundDialog(strategy: Strategy): void {
     const options: ModalOptions = new ModalOptions();
     options.initialState = {

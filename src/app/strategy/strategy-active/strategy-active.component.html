@@ -14,14 +14,14 @@
 
   <tbody>
     <tr *ngFor="let strategy of strategies">
-      <td><a>{{strategy.name}}</a></td>
-      <td>{{strategy.account.balance}}</td>
-      <td>???</td>
+      <td><a [routerLink]="['/strategies/details', strategy.id]">{{strategy.name}}</a></td>
+      <td>{{strategy.account.equity}}</td>
+      <td>{{strategy.accountsCount}}</td>
       <td>{{strategy.offer.fee | percent}}</td>
       <td>???</td>
       <td [class.positive]="strategy.account.intervalPnL > 0" [class.negative]="strategy.account.intervalPnL < 0">{{strategy.account.intervalPnL}}</td>
       <td>???</td>
-      <td class="manage">
+      <td class="manage-strategy">
         <i (click)="openFundDialog(strategy)" title="Пополнение инвестиции" class="icon-add"></i>
         <i (click)="openPauseDialog(strategy)" *ngIf="strategy.isActive()" title="Пауза" class="icon-pause"></i>
         <i (click)="openResumeDialog(strategy)" *ngIf="!strategy.isActive()" title="Возобновить" class="icon-start"></i>
@@ -43,7 +43,7 @@
     <tr *ngIf="strategies" class="total">
       <td>Всего</td>
       <td></td>
-      <td>???</td>
+      <td>{{getInvestors()}}</td>
       <td></td>
       <td>???</td>
       <td [class.positive]="getIntervalPnL() > 0" [class.negative]="getIntervalPnL() < 0">{{getIntervalPnL()}}</td>

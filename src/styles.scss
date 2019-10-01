@@ -5,6 +5,7 @@ $text-color: #808083;
 $text-color-dark: rgba(0,0,0,.87);
 $text-color-light: rgba(0,0,0,.54);
 $border-color: #e1dddd;
+$background-color: #f8f8f8;
 $accent-color: #f7a35c;
 $negative-color: #ec151d;
 $positive-color: #00a651;
@@ -205,6 +206,8 @@ table {
         text-align: center;
         font-size: 14px;
         color: $text-color-dark;
+        min-height: 56px;
+        height: 56px;
 
         &:first-child {
           text-align: left;
@@ -227,11 +230,11 @@ table {
 }
 
 .positive {
-  color: $positive-color;
+  color: $positive-color !important;
 }
 
 .negative {
-  color: $negative-color;
+  color: $negative-color !important;
 }
 
 .modal-dialog {
@@ -307,4 +310,26 @@ table {
       }
     }
   }
+}
+
+.manage-strategy {
+  text-align: center;
+  min-width: 130px;
+
+  i[class^="icon-"],
+  i[class*=" icon-"] {
+    vertical-align: middle;
+    margin-right: 5px;
+    cursor: pointer;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.arearange-tooltip-header {
+  font-size: 24px;
+  text-align: center;
+  padding: 10px 20px;
 }
