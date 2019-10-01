@@ -10,7 +10,7 @@ export class MainComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     Highcharts.setOptions({
       lang: {
         months: [
@@ -30,5 +30,4 @@ export class MainComponent implements OnInit {
       }
     });
   }
-
 }

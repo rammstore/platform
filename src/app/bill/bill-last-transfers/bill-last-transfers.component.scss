@@ -1,0 +1,12 @@
+@import "styles";
+
+.filter-container {
+  text-align: right;
+
+  a.filter-value {
+    color: $link-color;
+    text-decoration: underline;
+    text-decoration-style: dashed;
+  }
+}
+

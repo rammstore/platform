@@ -1,0 +1,111 @@
+<table>
+  <thead>
+  <tr *ngFor="let row of tableHeader">
+    <th *ngFor="let column of row.columns"
+        [attr.colspan]="column.colspan"
+        [attr.rowspan]="column.rowspan">
+      {{column.label}}
+    </th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let item of data">
+    <ng-container *ngFor="let row of tableHeader">
+      <ng-container *ngFor="let column of row.columns">
+        <ng-container *ngIf="column.property || column.property === ''" >
+          <td [ngSwitch]="column.property">
+            <!-- Strategy special data -->
+            <ng-container *ngSwitchCase="'age'">{{item.getAgeWeeks()}}</ng-container>
+
+            <ng-container *ngSwitchCase="'name'">
+              <a [routerLink]="[getItemLink(item)]">{{item.name}}</a>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'profit'">
+              <span [class.positive]="item.profit > 0"
+                    [class.negative]="item.profit < 0">
+                {{item.profit | percent:'1.0-2'}}
+              </span>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'yield'">
+              <span [class.positive]="item.yield > 0"
+                    [class.negative]="item.yield < 0">
+                {{item.yield}}
+              </span>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'totalProfit'">
+              <span [class.positive]="item.totalProfit > 0"
+                    [class.negative]="item.totalProfit < 0">
+                {{item.totalProfit}}
+              </span>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'account.intervalPnL'">
+              <span [class.positive]="item.account.intervalPnL > 0"
+                    [class.negative]="item.account.intervalPnL < 0">
+                {{item.account.intervalPnL}}
+              </span>
+            </ng-container>
+
+            <div class="strategy-account"
+                 *ngSwitchCase="'account'">
+              <div class="strategy-account-intervalPnL"><span>Прибыль:</span><span>{{item.account.intervalPnL}}</span></div>
+              <div class="strategy-account-target"><span>Цель:</span><span>{{item.account.target}}</span></div>
+              <div class="strategy-account-equity"><span>Средства:</span><span>{{item.account.equity}}</span></div>
+              <div class="strategy-account-protection"><span>Защита:</span><span>{{item.account.protection}}</span></div>
+            </div>
+
+            <ng-container *ngSwitchCase="'manage'">
+              <app-strategy-manage [strategy]="item"></app-strategy-manage>
+            </ng-container>
+
+            <!-- Investment special data-->
+            <ng-container *ngSwitchCase="'investmentDetails'">
+              <a [routerLink]="['/investments/details', item.account.id]"><i class="icon-doc"></i></a>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'type'">
+              {{item.getType()}}
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'entry'">
+              {{item.getEntry()}}
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'yieldChart'">
+              <app-chart-yield-table [strategy]="item"></app-chart-yield-table>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="''">
+              ???
+            </ng-container>
+
+            <!-- Just show property value -->
+            <ng-container *ngSwitchDefault>
+              {{getPropertyValue(item, column.property) | dynamic:column.pipe.pipe:column.pipe.args}}
+            </ng-container>
+          </td>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+  </tr>
+  <tr *ngIf="totalFields && data">
+
+    <ng-container *ngFor="let row of tableHeader">
+      <ng-container *ngFor="let column of row.columns">
+        <ng-container *ngIf="isTotal(column.property)">
+          <td [class.positive]="getTotal(column.property) > 0 && isColored(column.property)"
+              [class.negative]="getTotal(column.property) < 0 && isColored(column.property)">
+            {{getTotal(column.property) | number:'1.0-2'}}
+          </td>
+        </ng-container>
+        <ng-container *ngIf="!isTotal(column.property)">
+          <td></td>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+  </tr>
+  </tbody>
+</table>

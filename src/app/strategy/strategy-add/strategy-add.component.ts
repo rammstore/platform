@@ -1,17 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StorageService } from '../../shared/services/storage.service';
 import { AuthData } from '../../shared/user/auth-data';
 import { StrategyService } from '../../shared/services/strategy.service';
 import { Strategy } from '../../shared/models/strategy';
 import { BsModalRef } from 'ngx-bootstrap';
+import { Subject } from 'rxjs/index';
+import { takeUntil } from 'rxjs/internal/operators';
 
 @Component({
   selector: 'app-strategy-add',
   templateUrl: './strategy-add.component.html',
   styleUrls: ['./strategy-add.component.scss']
 })
-export class StrategyAddComponent implements OnInit {
+export class StrategyAddComponent implements OnInit, OnDestroy {
+  // https://blog.strongbrew.io/rxjs-best-practices-in-angular/#avoiding-memory-leaks
+  // here we will unsubscribe from all subscriptions
+  destroy$ = new Subject();
+
+  // component data
   currentStep: number = 1;
   formStep1: FormGroup;
   formStep2: FormGroup;
@@ -24,11 +31,13 @@ export class StrategyAddComponent implements OnInit {
     public modalRef: BsModalRef
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.buildFormStep1();
-    this.storageService.getAuthData().subscribe((authData: AuthData) => {
-      this.authData = authData;
-    });
+    this.storageService.getAuthData()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((authData: AuthData) => {
+        this.authData = authData;
+      });
   }
 
   buildFormStep1(): void {
@@ -42,7 +51,7 @@ export class StrategyAddComponent implements OnInit {
 
   buildFormStep2(): void {
     this.formStep2 = this.fb.group({
-      money: [(Math.round(this.authData.getWallets()[0].getAvailable() / 10)), [Validators.min(0), Validators.max(this.authData.getWallets()[0].getAvailable())]],
+      money: [(Math.round(this.authData.getWallets()[0].getEquity() / 10)), [Validators.min(0), Validators.max(this.authData.getWallets()[0].getEquity())]],
       target: [100, [Validators.min(0)]],
       protection: [0, [Validators.min(0), Validators.max(99)]]
     });
@@ -76,12 +85,18 @@ export class StrategyAddComponent implements OnInit {
       Money: this.formStep2.get('money').value,
     };
 
-    this.strategyService.add(strategy).subscribe(r => {
-      console.log(r);
-    });
+    this.strategyService.add(strategy)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(r => {
+        console.log(r);
+      });
   }
 
   back(): void {
     this.currentStep = 1;
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
   }
 }

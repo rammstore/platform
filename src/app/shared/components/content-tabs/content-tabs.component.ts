@@ -10,8 +10,9 @@ import { Router } from '@angular/router';
 export class ContentTabsComponent {
   @Input() links: ContentTabLink[];
 
-  constructor(private router: Router) {
-  }
+  constructor(
+    private router: Router
+  ) {}
 
   isLinkActive(url: string): boolean {
     return this.router.url === url;

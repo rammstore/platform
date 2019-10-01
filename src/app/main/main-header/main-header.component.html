@@ -42,7 +42,7 @@
       <div class="legend">
         <div>
           <span>Доступно</span>
-          <span class="amount available">{{(authData.getWallets()[0].balance - authData.getWallets()[0].invested) | currency:'':'':'1.2-2'}} {{authData.getWallets()[0].asset}}</span>
+          <span class="amount available">{{(authData.getWallets()[0].balance) | currency:'':'':'1.2-2'}} {{authData.getWallets()[0].asset}}</span>
         </div>
         <div>
           <span>Инвестировано</span>
@@ -50,17 +50,17 @@
         </div>
         <div>
           <span>Средства</span>
-          <span class="amount">{{authData.getWallets()[0].balance | currency:'':'':'1.2-2'}} {{authData.getWallets()[0].asset}}</span>
+          <span class="amount">{{authData.getWallets()[0].getEquity() | currency:'':'':'1.2-2'}} {{authData.getWallets()[0].asset}}</span>
         </div>
 
         <div id="headerChartContainer"></div>
+        <app-chart-wallet-info [wallet]="authData.getWallets()[0]" containerID="headerChartContainer"></app-chart-wallet-info>
 
         <button [routerLink]="['/bill/fund']" class="primary block">Пополнить</button>
       </div>
     </ng-template>
 
-    <div class="bill-info" *ngIf="authData" [popover]="chartContainer" [outsideClick]="true" placement="bottom"
-         (click)="showChart()">
+    <div class="bill-info" *ngIf="authData" [popover]="chartContainer" [outsideClick]="true" placement="bottom">
       <span class="available" title="Доступно">
         {{authData.getWallets()[0].balance - authData.getWallets()[0].invested | currency:'':'':'1.2-2'}} {{authData.getWallets()[0].asset}}
       </span>

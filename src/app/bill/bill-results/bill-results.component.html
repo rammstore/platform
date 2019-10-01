@@ -1,2 +1,25 @@
-<p>bill-results works!</p>
-{{accountData}}
+<div class="wallet-container">
+  <table>
+    <thead><tr></tr></thead>
+    <tbody>
+    <tr>
+      <td>Доступно</td>
+      <td class="accent">{{wallet.balance | currency:'':'':'1.2-2'}} {{wallet.asset}}</td>
+    </tr>
+    <tr>
+      <td>Инвестировано</td>
+      <td class="positive">{{wallet.invested | currency:'':'':'1.2-2'}} {{wallet.asset}}</td>
+    </tr>
+    <tr>
+      <td>Средства</td>
+      <td>{{wallet.getEquity() | currency:'':'':'1.2-2'}} {{wallet.asset}}</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div class="chart-container">
+    <i class="fa fa-question-circle-o" tooltip="Вы также можете посмотреть эти значения в верхнем правом углу."></i>
+    <div id="billWalletChartContainer"></div>
+    <app-chart-wallet-info [wallet]="wallet" containerID="billWalletChartContainer"></app-chart-wallet-info>
+  </div>
+</div>

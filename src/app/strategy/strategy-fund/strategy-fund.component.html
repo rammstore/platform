@@ -21,7 +21,7 @@
                  type="number"
                  formControlName="amount"
                  [min]="0"
-                 [max]="authData.getWallets()[0].getAvailable()">
+                 [max]="authData.getWallets()[0].getEquity()">
           <div class="messages">
             <label class="error-message"
                    *ngIf="form.get('amount').touched && form.get('amount').hasError('min')">
@@ -32,7 +32,7 @@
               Вы можете инвестировать только свободные средства.
             </label>
             <label class="details-message">
-              Доступно: {{authData.getWallets()[0].getAvailable()}}
+              Доступно: {{authData.getWallets()[0].getEquity()}}
             </label>
           </div>
         </div>

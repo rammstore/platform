@@ -68,6 +68,20 @@ button {
   }
 }
 
+.buttons-group {
+  margin: 0 auto;
+  text-align: center;
+
+  a,
+  button {
+    margin-right: 15px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
 ul.dropdown-menu.langmenu {
   min-width: 0;
   padding: 0;
@@ -237,6 +251,10 @@ table {
   color: $negative-color !important;
 }
 
+.accent {
+  color: $accent-color !important;
+}
+
 .modal-dialog {
   max-width: 700px !important;
 }
@@ -312,21 +330,7 @@ table {
   }
 }
 
-.manage-strategy {
-  text-align: center;
-  min-width: 130px;
 
-  i[class^="icon-"],
-  i[class*=" icon-"] {
-    vertical-align: middle;
-    margin-right: 5px;
-    cursor: pointer;
-
-    &:last-child {
-      margin-right: 0;
-    }
-  }
-}
 
 .arearange-tooltip-header {
   font-size: 24px;

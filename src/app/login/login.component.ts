@@ -1,14 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '@app/services/auth.service';
+import { Subject } from 'rxjs/index';
+import { takeUntil } from 'rxjs/internal/operators';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
+  // https://blog.strongbrew.io/rxjs-best-practices-in-angular/#avoiding-memory-leaks
+  // here we will unsubscribe from all subscriptions
+  destroy$ = new Subject();
+
+  // component data
   form: FormGroup;
 
   constructor(
@@ -17,7 +24,7 @@ export class LoginComponent implements OnInit {
     private router: Router
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.buildForm();
   }
 
@@ -26,7 +33,6 @@ export class LoginComponent implements OnInit {
       login: ['', Validators.required],
       password: ['', Validators.required]
     });
-
   }
 
   submit(): void {
@@ -34,8 +40,14 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    this.authService.login(this.form.getRawValue().login, this.form.getRawValue().password).subscribe(() => {
-      this.router.navigate(['/bill']);
-    });
+    this.authService.login(this.form.getRawValue().login, this.form.getRawValue().password)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.router.navigate(['/bill']);
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
   }
 }

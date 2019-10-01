@@ -1,4 +1,4 @@
-import { Component, TemplateRef } from '@angular/core';
+import { Component } from '@angular/core';
 import { ContentTabLink } from '@app/components/content-tabs/content-tab-link';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap';
 import { StrategyAddComponent } from './strategy-add/strategy-add.component';

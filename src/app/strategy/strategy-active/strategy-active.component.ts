@@ -1,29 +1,48 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { StrategyService } from '@app/services/strategy.service';
-import { Strategy } from '@app/models';
-import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap';
-import { StrategyFundComponent } from '../strategy-fund/strategy-fund.component';
-import { StrategyPauseComponent } from '../strategy-pause/strategy-pause.component';
-import { StrategyResumeComponent } from '../strategy-resume/strategy-resume.component';
+import { Strategy, TableColumn } from '@app/models';
+import { TableHeaderRow } from '@app/models/table-header-row';
+import { CurrencyPipe, PercentPipe } from '@angular/common';
+import { Subject } from 'rxjs/index';
+import { takeUntil } from 'rxjs/internal/operators';
 
 @Component({
   selector: 'app-strategy-active',
   templateUrl: './strategy-active.component.html',
   styleUrls: ['./strategy-active.component.scss']
 })
-export class StrategyActiveComponent implements OnInit {
+export class StrategyActiveComponent implements OnInit, OnDestroy {
+  // https://blog.strongbrew.io/rxjs-best-practices-in-angular/#avoiding-memory-leaks
+  // here we will unsubscribe from all subscriptions
+  destroy$ = new Subject();
+
+  // component data
   strategies: Strategy[];
-  modalRef: BsModalRef;
+
+  // table settings
+  tableHeader: TableHeaderRow[] = [
+    new TableHeaderRow([
+      new TableColumn({ property: 'name', label: 'Название'}),
+      new TableColumn({ property: 'account.equity', label: 'Средства, USD', pipe: { pipe: CurrencyPipe, args: ['', '', '1.2-2'] }}),
+      new TableColumn({ property: 'accountsCount', label: 'Инвесторы'}),
+      new TableColumn({ property: 'offer.fee', label: 'Вознаграждение', pipe: { pipe: PercentPipe }}),
+      new TableColumn({ property: '', label: 'Выплаченное вознаграждение, USD' }),
+      new TableColumn({ property: 'account.intervalPnL', label: 'Прибыль, USD' }),
+      new TableColumn({ property: '', label: 'Невыплаченное вознаграждение, USD' }),
+      new TableColumn({ property: 'manage', label: '' })
+    ]),
+  ];
 
   constructor(
-    private strategyService: StrategyService,
-    private modalService: BsModalService
+    private strategyService: StrategyService
   ) { }
 
-  ngOnInit() {
-    this.strategyService.getActive().subscribe((strategies: Strategy[]) => {
-      this.strategies = strategies;
-    });
+  ngOnInit(): void {
+    this.strategyService.getActive()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((strategies: Strategy[]) => {
+        this.strategies = strategies;
+      });
   }
 
   getIntervalPnL(): number {
@@ -46,30 +65,7 @@ export class StrategyActiveComponent implements OnInit {
     return sum;
   }
 
-  openFundDialog(strategy: Strategy): void {
-    const options: ModalOptions = new ModalOptions();
-    options.initialState = {
-      strategy: strategy
-    };
-
-    this.modalRef = this.modalService.show(StrategyFundComponent, options);
-  }
-
-  openPauseDialog(strategy: Strategy): void {
-    const options: ModalOptions = new ModalOptions();
-    options.initialState = {
-      strategy: strategy
-    };
-
-    this.modalRef = this.modalService.show(StrategyPauseComponent, options);
-  }
-
-  openResumeDialog(strategy: Strategy): void {
-    const options: ModalOptions = new ModalOptions();
-    options.initialState = {
-      strategy: strategy
-    };
-
-    this.modalRef = this.modalService.show(StrategyResumeComponent, options);
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
   }
 }

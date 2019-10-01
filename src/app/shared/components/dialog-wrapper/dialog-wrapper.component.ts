@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap';
 
 @Component({
@@ -6,13 +6,7 @@ import { BsModalRef } from 'ngx-bootstrap';
   templateUrl: './dialog-wrapper.component.html',
   styleUrls: ['./dialog-wrapper.component.scss']
 })
-export class DialogWrapperComponent implements OnInit {
+export class DialogWrapperComponent {
   @Input() title: string;
   @Input() modalRef: BsModalRef;
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
 }

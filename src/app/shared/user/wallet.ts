@@ -34,7 +34,7 @@ export class Wallet {
     this.status = status || null;
   }
 
-  getAvailable(): number {
-    return Math.round((this.balance - this.invested) * 100) / 100;
+  getEquity(): number {
+    return Math.round((this.balance + this.invested) * 100) / 100;
   }
 }

@@ -1,3 +1,16 @@
-<app-content-tabs [links]="links">
-  <router-outlet></router-outlet>
-</app-content-tabs>
+<!--<app-content-tabs [links]="links">-->
+  <!--<router-outlet></router-outlet>-->
+<!--</app-content-tabs>-->
+<app-bill-results [wallet]="authData.getWallets()[0]"></app-bill-results>
+
+<div class="buttons-group">
+  <a href="https://grandcapital.net/account/payments/deposit" target="_blank">
+    <button class="primary">Пополнить</button>
+  </a>
+
+  <a href="https://grandcapital.net/account/payments/withdraw" target="_blank">
+    <button class="primary">Вывести</button>
+  </a>
+</div>
+
+<app-bill-last-transfers [walletID]="authData.getWallets()[0].id"></app-bill-last-transfers>

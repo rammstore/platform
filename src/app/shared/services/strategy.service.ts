@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { CONFIG } from '../../../config';
 import { map } from 'rxjs/internal/operators';
 import { Account, ChartOptions, Offer, Strategy } from '../models';
+import { InvestmentsService } from '@app/services/investments.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,9 +12,11 @@ import { Account, ChartOptions, Offer, Strategy } from '../models';
 export class StrategyService {
   activeStrategiesSubject: BehaviorSubject<Strategy[]> = new BehaviorSubject<Strategy[]>([]);
   closedStrategiesSubject: BehaviorSubject<Strategy[]> = new BehaviorSubject<Strategy[]>([]);
+  strategiesSubject: BehaviorSubject<Strategy[]> = new BehaviorSubject<Strategy[]>([]);
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private investmentsService: InvestmentsService
   ) { }
 
   getActive(page: number = 1): Observable<Strategy[]> {
@@ -54,8 +57,26 @@ export class StrategyService {
     return this.closedStrategiesSubject.asObservable();
   }
 
+  getAll(page: number = 1): Observable<Strategy[]> {
+    const options: object = {
+      Filter: { IsActive: false },
+      Pagination: { CurrentPage: page }
+    };
+
+    this.http.post(`${CONFIG.baseApiUrl}/myStrategies.search`, options).subscribe((response: any) => {
+      const strategies: Strategy[] = [];
+
+      response.Strategies.forEach((s: any) => {
+        strategies.push(this.createStrategy(s));
+      });
+
+      this.strategiesSubject.next(strategies);
+    });
+
+    return this.strategiesSubject.asObservable();
+  }
+
   get(id: number): Observable<Strategy> {
-    // search parameter doesn't work in API
     const options: object = {
       Filter: { ID: id }
     };
@@ -77,28 +98,8 @@ export class StrategyService {
   }
 
   private createStrategy(strategyObj: any): Strategy {
-    const account = new Account(
-      strategyObj.Account.ID,
-      strategyObj.Account.AccountSpecAssetID,
-      strategyObj.Account.Asset,
-      strategyObj.Account.TradingIntervalCurrentID,
-      strategyObj.Account.Type,
-      strategyObj.Account.DTCreated,
-      strategyObj.Account.Balance,
-      strategyObj.Account.Equity,
-      strategyObj.Account.Margin,
-      strategyObj.Account.MarginLevel,
-      strategyObj.Account.IntervalPnL,
-      strategyObj.Account.Status,
-      strategyObj.Account.Factor,
-      strategyObj.Account.MCReached,
-      strategyObj.Account.Protection,
-      strategyObj.Account.ProtectionEquity,
-      strategyObj.Account.ProtectionReached,
-      strategyObj.Account.Target,
-      strategyObj.Account.TargetEquity,
-      strategyObj.Account.TargetReached
-    );
+    const account = this.investmentsService.createInvestment(strategyObj.Account);
+    account.strategy = { id: strategyObj.ID, name: strategyObj.Name };
 
     const offer: Offer = new Offer(
       strategyObj.Offer.Commission,
