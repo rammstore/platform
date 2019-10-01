@@ -1,0 +1,46 @@
+@import "styles";
+
+.paginator-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 40px;
+
+  .per-page-container {
+    display: flex;
+    align-items: center;
+
+    input {
+      display: inline-block;
+      width: 50px;
+      margin: 0 5px;
+    }
+  }
+
+  .pages-container {
+    margin-left: 100px;
+
+    .prev-page,
+    .page-number,
+    .next-page {
+      color: $link-color;
+      margin-right: 10px;
+      cursor: pointer;
+      padding: 10px;
+
+      &.current-page {
+        color: $text-color-dark;
+        background-color: $main-color;
+        cursor: default;
+        font-weight: bold;
+        pointer-events: none;
+      }
+
+      &.disabled {
+        color: $text-color-light;
+        cursor: default;
+        pointer-events: none;
+      }
+    }
+  }
+}

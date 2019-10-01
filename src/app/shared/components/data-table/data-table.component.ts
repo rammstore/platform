@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Account, Strategy } from '@app/models';
 import { TableHeaderRow } from '@app/models/table-header-row';
+import { Paginator } from '@app/models/paginator';
 
 @Component({
   selector: 'app-data-table',
@@ -11,7 +12,9 @@ export class DataTableComponent {
   @Input() tableHeader: TableHeaderRow[];
   @Input() data: Array<Strategy | Account>;
   @Input() totalFields: Array<string> = null;
-  coloredFields: string[] = ['yield', 'totalProfit', 'account.intervalPnL'];
+  coloredFields: string[] = ['yield', 'profit', 'totalProfit', 'account.intervalPnL', 'amount'];
+  @Input() paginator: Paginator;
+  @Output() paginationChanged: EventEmitter<void> = new EventEmitter();
 
   constructor() { }
 
@@ -80,5 +83,9 @@ export class DataTableComponent {
 
   isColored(field: string): boolean {
     return this.coloredFields.includes(field);
+  }
+
+  paginatorChanged(): void {
+    this.paginationChanged.emit();
   }
 }

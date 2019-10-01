@@ -2,7 +2,12 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs/index';
 import { HttpClient } from '@angular/common/http';
 import { CONFIG } from '../../../config';
-import { WalletTransfer } from '@app/models';
+import { Paginator, WalletTransfer } from '@app/models';
+
+class DealsSearchOptions {
+  OrderBy: { Field?: string, Direction?: string };
+  Pagination: { CurrentPage?: number, PerPage?: number };
+}
 
 @Injectable({
   providedIn: 'root'
@@ -14,23 +19,21 @@ export class WalletService {
     private http: HttpClient
   ) { }
 
-  getDeals(accountID: number, page: number = 1): Observable<WalletTransfer[]> {
-    const options: object = {
-      // Filter: {
-      //   AccountID: 156
-      // },
-      Pagination: {
-        CurrentPage: page,
-        PerPage: 100
-      },
-      OrderBy: {
-        Field: 'ID',
-        Direction: 'Desc'
-      }
+  getDeals(accountID: number, pagination?: Paginator): Observable<WalletTransfer[]> {
+    const options: DealsSearchOptions = new DealsSearchOptions();
+    options.OrderBy = {
+      Field: 'ID',
+      Direction: 'Desc'
     };
 
+    if (pagination) {
+      options.Pagination = {
+        CurrentPage: pagination.currentPage,
+        PerPage: pagination.perPage
+      };
+    }
+
     this.http.post(`${CONFIG.baseApiUrl}/walletTransfers.search`, options).subscribe((response: any) => {
-      console.log(response);
       const transfers: WalletTransfer[] = [];
 
       response.WalletTransfers.forEach((transfer: any) => {
@@ -39,14 +42,16 @@ export class WalletService {
           transfer.StrategyID,
           transfer.AccountID,
           transfer.DealID,
-          new Date(transfer.DT),
-          new Date(transfer.AccrualDate),
+          transfer.DT,
+          transfer.AccrualDate,
           transfer.Amount,
           transfer.Type,
           transfer.Comment
         ));
       });
 
+      pagination.totalItems = response.Pagination.TotalRecords;
+      pagination.totalPages = response.Pagination.TotalPages;
       this.dealsSubject.next(transfers);
     });
 

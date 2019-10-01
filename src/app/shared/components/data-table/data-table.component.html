@@ -8,6 +8,7 @@
     </th>
   </tr>
   </thead>
+
   <tbody>
   <tr *ngFor="let item of data">
     <ng-container *ngFor="let row of tableHeader">
@@ -19,34 +20,6 @@
 
             <ng-container *ngSwitchCase="'name'">
               <a [routerLink]="[getItemLink(item)]">{{item.name}}</a>
-            </ng-container>
-
-            <ng-container *ngSwitchCase="'profit'">
-              <span [class.positive]="item.profit > 0"
-                    [class.negative]="item.profit < 0">
-                {{item.profit | percent:'1.0-2'}}
-              </span>
-            </ng-container>
-
-            <ng-container *ngSwitchCase="'yield'">
-              <span [class.positive]="item.yield > 0"
-                    [class.negative]="item.yield < 0">
-                {{item.yield}}
-              </span>
-            </ng-container>
-
-            <ng-container *ngSwitchCase="'totalProfit'">
-              <span [class.positive]="item.totalProfit > 0"
-                    [class.negative]="item.totalProfit < 0">
-                {{item.totalProfit}}
-              </span>
-            </ng-container>
-
-            <ng-container *ngSwitchCase="'account.intervalPnL'">
-              <span [class.positive]="item.account.intervalPnL > 0"
-                    [class.negative]="item.account.intervalPnL < 0">
-                {{item.account.intervalPnL}}
-              </span>
             </ng-container>
 
             <div class="strategy-account"
@@ -84,7 +57,10 @@
 
             <!-- Just show property value -->
             <ng-container *ngSwitchDefault>
-              {{getPropertyValue(item, column.property) | dynamic:column.pipe.pipe:column.pipe.args}}
+              <span [class.positive]="getPropertyValue(item, column.property) > 0 && isColored(column.property)"
+                    [class.negative]="getPropertyValue(item, column.property) < 0 && isColored(column.property)">
+                {{getPropertyValue(item, column.property) | dynamic:column.pipe.pipe:column.pipe.args}}
+              </span>
             </ng-container>
           </td>
         </ng-container>
@@ -110,3 +86,7 @@
   </tr>
   </tbody>
 </table>
+
+<div *ngIf="paginator">
+  <app-data-table-paginator [paginator]="paginator" (paginationChanged)="paginatorChanged()"></app-data-table-paginator>
+</div>

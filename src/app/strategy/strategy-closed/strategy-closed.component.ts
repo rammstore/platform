@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Strategy } from '../../shared/models/strategy';
 import { StrategyService } from '../../shared/services/strategy.service';
 import { TableHeaderRow } from '@app/models/table-header-row';
-import { TableColumn } from '@app/models';
+import { Paginator, TableColumn } from '@app/models';
 import { DatePipe, PercentPipe } from '@angular/common';
 import { Subject } from 'rxjs/index';
 import { takeUntil } from 'rxjs/internal/operators';
@@ -32,13 +32,21 @@ export class StrategyClosedComponent implements OnInit, OnDestroy {
       new TableColumn({ property: '', label: 'Выплаченное вознаграждение, USD' })
     ]),
   ];
+  paginator: Paginator = new Paginator({
+    perPage: 10,
+    currentPage: 1
+  });
 
   constructor(
     private strategyService: StrategyService
   ) { }
 
   ngOnInit(): void {
-    this.strategyService.getClosed()
+    this.getStrategies();
+  }
+
+  getStrategies(): void {
+    this.strategyService.getClosed(this.paginator)
       .pipe(takeUntil(this.destroy$))
       .subscribe((strategies: Strategy[]) => {
         this.strategies = strategies;

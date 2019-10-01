@@ -11,6 +11,10 @@ import { DataTableComponent } from './components/data-table/data-table.component
 import { StrategyManageComponent } from './components/strategy-manage/strategy-manage.component';
 import { DynamicPipe } from './pipes/dynamic.pipe';
 import { ChartYieldTableComponent } from './components/chart/chart-yield-table/chart-yield-table.component';
+import { registerLocaleData } from '@angular/common';
+import localeRu from '@angular/common/locales/ru';
+import { DataTablePaginatorComponent } from './components/data-table/data-table-paginator/data-table-paginator.component';
+registerLocaleData(localeRu);
 
 @NgModule({
   declarations: [
@@ -21,7 +25,8 @@ import { ChartYieldTableComponent } from './components/chart/chart-yield-table/c
     DataTableComponent,
     StrategyManageComponent,
     DynamicPipe,
-    ChartYieldTableComponent
+    ChartYieldTableComponent,
+    DataTablePaginatorComponent
   ],
   imports: [
     CommonModule,

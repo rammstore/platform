@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { StrategyService } from '@app/services/strategy.service';
-import { Strategy, TableColumn } from '@app/models';
+import { Paginator, Strategy, TableColumn } from '@app/models';
 import { TableHeaderRow } from '@app/models/table-header-row';
 import { CurrencyPipe, PercentPipe } from '@angular/common';
 import { Subject } from 'rxjs/index';
@@ -33,13 +33,21 @@ export class StrategyActiveComponent implements OnInit, OnDestroy {
     ]),
   ];
   totalFields: string[] = ['accountsCount', 'account.intervalPnL'];
+  paginator: Paginator = new Paginator({
+    perPage: 10,
+    currentPage: 1
+  });
 
   constructor(
     private strategyService: StrategyService
   ) { }
 
   ngOnInit(): void {
-    this.strategyService.getActive()
+    this.getStrategies();
+  }
+
+  getStrategies(): void {
+    this.strategyService.getActive(this.paginator)
       .pipe(takeUntil(this.destroy$))
       .subscribe((strategies: Strategy[]) => {
         this.strategies = strategies;
