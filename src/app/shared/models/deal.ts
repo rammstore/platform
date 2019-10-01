@@ -3,7 +3,7 @@ export class Deal {
   signalID: number;
   commandID: number;
   stopOutID: number;
-  tradinfIntervalID: number;
+  tradingIntervalID: number;
   dtCreated: Date;
   type: number;
   symbol: string;
@@ -11,7 +11,7 @@ export class Deal {
   price: number;
   comission: number;
   entry: number;
-  profit: number;
+  yield: number;
   swap: number;
   totalProfit: number;
   dealToID: number;
@@ -19,45 +19,65 @@ export class Deal {
   precisionVolume: number;
   netting: number;
 
-  constructor(
-    id: number,
-    signalID: number,
-    commandID: number,
-    stopOutID: number,
-    tradinfIntervalID: number,
-    dtCreated: Date,
-    type: number,
-    symbol: string,
-    volume: number,
-    price: number,
-    comission: number,
-    entry: number,
-    profit: number,
-    swap: number,
-    totalProfit: number,
-    dealToID: number,
-    precisionPrice: number,
-    precisionVolume: number,
-    netting: number
-  ) {
-    this.id = id;
-    this.signalID = signalID;
-    this.commandID = commandID;
-    this.stopOutID = stopOutID;
-    this.tradinfIntervalID = tradinfIntervalID;
-    this.dtCreated = dtCreated;
-    this.type = type;
-    this.symbol = symbol;
-    this.volume = volume;
-    this.price = price;
-    this.comission = comission;
-    this.entry = entry;
-    this.profit = profit;
-    this.swap = swap;
-    this.totalProfit = totalProfit;
-    this.dealToID = dealToID;
-    this.precisionPrice = precisionPrice;
-    this.precisionVolume = precisionVolume;
-    this.netting = netting;
+  constructor(options: any) {
+    Object.assign(this, options);
+  }
+
+  getType(): string {
+    switch (this.type) {
+      case 0:
+        return 'Buy';
+        break;
+      case 1:
+        return 'Sell';
+        break;
+      case 2:
+        return 'Balance';
+        break;
+      case 3:
+        return 'Credit';
+        break;
+      case 4:
+        return 'Additional charge';
+        break;
+      case 5:
+        return 'Correction';
+        break;
+      case 6:
+        return 'Bonus';
+        break;
+      case 7:
+        return 'Fee';
+        break;
+      case 8:
+        return 'Dividend';
+        break;
+      case 9:
+        return 'Interest';
+        break;
+      case 10:
+        return 'Canceled/Rejected buy deal';
+        break;
+      case 11:
+        return 'Canceled/Rejected sell deal';
+        break;
+      case 12:
+        return 'Periodical comission';
+        break;
+    }
+  }
+
+  getEntry(): string {
+    switch (this.entry) {
+      case 0:
+        return 'In';
+        break;
+      case 1:
+        return 'Out';
+        break;
+      case 2:
+        return 'InOut';
+        break;
+    }
   }
 }

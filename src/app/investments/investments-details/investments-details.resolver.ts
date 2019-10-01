@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
-import { Strategy } from '@app/models';
+import { Account } from '@app/models';
 import { InvestmentsService } from '@app/services/investments.service';
 
 @Injectable()
-export class InvestmentResolver implements Resolve<Strategy> {
+export class InvestmentResolver implements Resolve<Account> {
 
   constructor(
     private investmentsService: InvestmentsService

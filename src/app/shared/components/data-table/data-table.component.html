@@ -1,12 +1,12 @@
 <table>
   <thead>
-    <tr *ngFor="let row of tableHeader">
-      <th *ngFor="let column of row.columns"
-          [attr.colspan]="column.colspan"
-          [attr.rowspan]="column.rowspan">
-        {{column.label}}
-      </th>
-    </tr>
+  <tr *ngFor="let row of tableHeader">
+    <th *ngFor="let column of row.columns"
+        [attr.colspan]="column.colspan"
+        [attr.rowspan]="column.rowspan">
+      {{column.label}}
+    </th>
+  </tr>
   </thead>
   <tbody>
   <tr *ngFor="let item of data">
@@ -28,6 +28,20 @@
               </span>
             </ng-container>
 
+            <ng-container *ngSwitchCase="'yield'">
+              <span [class.positive]="item.yield > 0"
+                    [class.negative]="item.yield < 0">
+                {{item.yield}}
+              </span>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'totalProfit'">
+              <span [class.positive]="item.totalProfit > 0"
+                    [class.negative]="item.totalProfit < 0">
+                {{item.totalProfit}}
+              </span>
+            </ng-container>
+
             <ng-container *ngSwitchCase="'account.intervalPnL'">
               <span [class.positive]="item.account.intervalPnL > 0"
                     [class.negative]="item.account.intervalPnL < 0">
@@ -46,8 +60,17 @@
               <app-strategy-manage [strategy]="item"></app-strategy-manage>
             </ng-container>
 
+            <!-- Investment special data-->
             <ng-container *ngSwitchCase="'investmentDetails'">
               <a [routerLink]="['/investments/details', item.account.id]"><i class="icon-doc"></i></a>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'type'">
+              {{item.getType()}}
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'entry'">
+              {{item.getEntry()}}
             </ng-container>
 
             <ng-container *ngSwitchCase="''">
@@ -62,16 +85,22 @@
         </ng-container>
       </ng-container>
     </ng-container>
-    <!--<td *ngFor="let column of columns">-->
-      <!--<ng-container [ngSwitch]="column.property">-->
-        <!--&lt;!&ndash; Strategy special data &ndash;&gt;-->
-        <!--<ng-container *ngSwitchCase="'age'">{{item.getAgeWeeks()}}</ng-container>-->
+  </tr>
+  <tr *ngIf="totalFields">
 
-        <!--&lt;!&ndash; Just show property value &ndash;&gt;-->
-        <!--<ng-container *ngSwitchDefault>{{item[column.property]}}</ng-container>-->
-      <!--</ng-container>-->
-
-    <!--</td>-->
+    <ng-container *ngFor="let row of tableHeader">
+      <ng-container *ngFor="let column of row.columns">
+        <ng-container *ngIf="isTotal(column.property)">
+          <td [class.positive]="getTotal(column.property) > 0 && isColored(column.property)"
+              [class.negative]="getTotal(column.property) < 0 && isColored(column.property)">
+            {{getTotal(column.property) | number:'1.0-2'}}
+          </td>
+        </ng-container>
+        <ng-container *ngIf="!isTotal(column.property)">
+          <td></td>
+        </ng-container>
+      </ng-container>
+    </ng-container>
   </tr>
   </tbody>
 </table>

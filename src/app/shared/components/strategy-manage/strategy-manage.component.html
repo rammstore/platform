@@ -8,7 +8,7 @@
     <ul *dropdownMenu class="dropdown-menu" role="menu">
       <li role="menuitem"><i class="icon-percent-shield"></i>Изменить профиль инвестиции</li>
       <li role="menuitem"><i class="icon-card"></i>Вывод средств из инвестиции</li>
-      <li role="menuitem"><i class="icon-doc"></i>Выписка по инвестиции</li>
+      <li role="menuitem" [routerLink]="['/investments/details', strategy.account.id]"><i class="icon-doc"></i>Выписка по инвестиции</li>
       <li role="menuitem"><i class="fa fa-list-alt"></i>Список инвестиций</li>
       <li role="menuitem"><i class="fa fa-download"></i>Скачать оригинальный скрипт</li>
       <li role="menuitem"><i class="fa fa-window-close"></i>Закрыть стратегию</li>

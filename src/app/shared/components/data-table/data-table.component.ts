@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Strategy } from '@app/models';
+import { Account, Strategy } from '@app/models';
 import { TableHeaderRow } from '@app/models/table-header-row';
 
 @Component({
@@ -9,7 +9,9 @@ import { TableHeaderRow } from '@app/models/table-header-row';
 })
 export class DataTableComponent implements OnInit {
   @Input() tableHeader: TableHeaderRow[];
-  @Input() data: object[];
+  @Input() data: Array<Strategy | Account>;
+  @Input() totalFields: Array<string> = null;
+  coloredFields: string[] = ['yield', 'totalProfit'];
 
   constructor() { }
 
@@ -53,5 +55,23 @@ export class DataTableComponent implements OnInit {
     });
 
     return res;
+  }
+
+  isTotal(field: string): boolean {
+    return this.totalFields.includes(field);
+  }
+
+  getTotal(field: string): number {
+    let sum: number = 0;
+
+    this.data.forEach((data: Strategy | Account) => {
+      sum = sum + data[field];
+    });
+
+    return sum;
+  }
+
+  isColored(field: string): boolean {
+    return this.coloredFields.includes(field);
   }
 }

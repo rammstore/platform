@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/index';
-import { Account } from '@app/models';
+import { Account, Deal } from '@app/models';
 import { CONFIG } from '../../../config';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/internal/operators';
@@ -18,6 +18,46 @@ export class InvestmentsService {
     return this.http.post(`${CONFIG.baseApiUrl}/accounts.get`, { AccountID: id }).pipe(map((response: any) => {
       return this.createInvestment(response);
     }));
+  }
+
+  getDeals(id: number): Observable<Deal[]> {
+    const options: object = {
+      Filter: { AccountID: id }
+    };
+
+    return this.http.post(`${CONFIG.baseApiUrl}/deals.search`, options).pipe(map((response: any) => {
+      const deals: Deal[] = [];
+
+      response.Deals.forEach((deal: any) => {
+        deals.push(this.createDeal(deal));
+      });
+
+      return deals;
+    }));
+  }
+
+  createDeal(dealObj: any): Deal {
+    return new Deal({
+      id: dealObj.ID,
+      signalID: dealObj.SignalID,
+      commandID: dealObj.CommanfID,
+      stopOutID: dealObj.SOID,
+      tradingIntervalID: dealObj.TradingIntervalID,
+      dtCreated: dealObj.DT,
+      type: dealObj.Type,
+      symbol: dealObj.Symbol,
+      volume: dealObj.Volume,
+      price: dealObj.Price,
+      comission: dealObj.Commission,
+      entry: dealObj.Entry,
+      yield: dealObj.Profit,
+      swap: dealObj.Swap,
+      totalProfit: dealObj.TotalProfit,
+      dealToID: dealObj.DealToID,
+      precisionPrice: dealObj.PrecisionPrice,
+      precisionVolume: dealObj.PrecisionVolume,
+      netting: dealObj.Netting
+    });
   }
 
   createInvestment(accountObj: any): Account {

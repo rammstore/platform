@@ -77,7 +77,6 @@ export class StrategyService {
   }
 
   get(id: number): Observable<Strategy> {
-    // search parameter doesn't work in API
     const options: object = {
       Filter: { ID: id }
     };
