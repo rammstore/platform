@@ -7,14 +7,14 @@ import * as Highcharts from 'highcharts';
   template: ''
 })
 export class ChartWalletInfoComponent implements OnInit {
+  // component data
   @Input() wallet: Wallet;
   @Input() containerID: string;
-
   chartOptions: object;
 
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.chartOptions = {
       chart: {
         type: 'pie'
@@ -44,5 +44,4 @@ export class ChartWalletInfoComponent implements OnInit {
 
     Highcharts.chart(this.containerID, this.chartOptions);
   }
-
 }

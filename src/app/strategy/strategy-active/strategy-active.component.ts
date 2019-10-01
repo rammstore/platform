@@ -1,17 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { StrategyService } from '@app/services/strategy.service';
 import { Strategy, TableColumn } from '@app/models';
 import { TableHeaderRow } from '@app/models/table-header-row';
 import { CurrencyPipe, PercentPipe } from '@angular/common';
+import { Subject } from 'rxjs/index';
+import { takeUntil } from 'rxjs/internal/operators';
 
 @Component({
   selector: 'app-strategy-active',
   templateUrl: './strategy-active.component.html',
   styleUrls: ['./strategy-active.component.scss']
 })
-export class StrategyActiveComponent implements OnInit {
+export class StrategyActiveComponent implements OnInit, OnDestroy {
+  // https://blog.strongbrew.io/rxjs-best-practices-in-angular/#avoiding-memory-leaks
+  // here we will unsubscribe from all subscriptions
+  destroy$ = new Subject();
+
+  // component data
   strategies: Strategy[];
 
+  // table settings
   tableHeader: TableHeaderRow[] = [
     new TableHeaderRow([
       new TableColumn({ property: 'name', label: 'Название'}),
@@ -29,10 +37,12 @@ export class StrategyActiveComponent implements OnInit {
     private strategyService: StrategyService
   ) { }
 
-  ngOnInit() {
-    this.strategyService.getActive().subscribe((strategies: Strategy[]) => {
-      this.strategies = strategies;
-    });
+  ngOnInit(): void {
+    this.strategyService.getActive()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((strategies: Strategy[]) => {
+        this.strategies = strategies;
+      });
   }
 
   getIntervalPnL(): number {
@@ -53,5 +63,9 @@ export class StrategyActiveComponent implements OnInit {
     });
 
     return sum;
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
   }
 }

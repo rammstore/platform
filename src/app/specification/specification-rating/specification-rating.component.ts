@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-specification-rating',
   templateUrl: './specification-rating.component.html',
   styleUrls: ['./specification-rating.component.scss']
 })
-export class SpecificationRatingComponent implements OnInit {
+export class SpecificationRatingComponent {
   data: any = {
     title: 'Условия для попадания в рейтинг',
     items: [
@@ -15,10 +15,4 @@ export class SpecificationRatingComponent implements OnInit {
       {label: 'Минимальная доходность', value: 'Положительная'}
     ]
   };
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
 }

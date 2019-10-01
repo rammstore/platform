@@ -1,16 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-specification-info-block',
   templateUrl: './specification-info-block.component.html',
   styleUrls: ['./specification-info-block.component.scss']
 })
-export class SpecificationInfoBlockComponent implements OnInit {
+export class SpecificationInfoBlockComponent {
   @Input() data: any;
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
 }

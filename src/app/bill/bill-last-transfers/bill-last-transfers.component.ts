@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { WalletTransfer } from '@app/models';
 import { WalletService } from '@app/services/wallet.service';
+import { Subject } from 'rxjs/index';
+import { takeUntil } from 'rxjs/internal/operators';
 
 declare type FilterValue = 'all' | 'internal' | 'external';
 
@@ -10,6 +12,11 @@ declare type FilterValue = 'all' | 'internal' | 'external';
   styleUrls: ['./bill-last-transfers.component.scss']
 })
 export class BillLastTransfersComponent implements OnInit {
+  // https://blog.strongbrew.io/rxjs-best-practices-in-angular/#avoiding-memory-leaks
+  // here we will unsubscribe from all subscriptions
+  destroy$ = new Subject();
+
+  // component data
   @Input() walletID: number;
   transfers: WalletTransfer[];
   filter: {value: FilterValue, name: string} = {
@@ -21,10 +28,12 @@ export class BillLastTransfersComponent implements OnInit {
     private walletService: WalletService
   ) { }
 
-  ngOnInit() {
-    this.walletService.getDeals(this.walletID).subscribe((transfers: WalletTransfer[]) => {
-      this.transfers = transfers;
-    });
+  ngOnInit(): void {
+    this.walletService.getDeals(this.walletID)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((transfers: WalletTransfer[]) => {
+        this.transfers = transfers;
+      });
   }
 
   changeFilter(filter: FilterValue): void {
@@ -53,5 +62,9 @@ export class BillLastTransfersComponent implements OnInit {
         return transfer.isExternal();
         break;
     }
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
   }
 }

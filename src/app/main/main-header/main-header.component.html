@@ -60,8 +60,7 @@
       </div>
     </ng-template>
 
-    <div class="bill-info" *ngIf="authData" [popover]="chartContainer" [outsideClick]="true" placement="bottom"
-         (click)="showChart()">
+    <div class="bill-info" *ngIf="authData" [popover]="chartContainer" [outsideClick]="true" placement="bottom">
       <span class="available" title="Доступно">
         {{authData.getWallets()[0].balance - authData.getWallets()[0].invested | currency:'':'':'1.2-2'}} {{authData.getWallets()[0].asset}}
       </span>

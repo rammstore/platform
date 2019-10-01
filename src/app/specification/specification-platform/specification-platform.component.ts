@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-specification-platform',
   templateUrl: './specification-platform.component.html',
   styleUrls: ['./specification-platform.component.scss']
 })
-export class SpecificationPlatformComponent implements OnInit {
+export class SpecificationPlatformComponent {
   datas: any[] = [{
     title: 'Счет',
     items: [
@@ -30,10 +30,4 @@ export class SpecificationPlatformComponent implements OnInit {
       {label: 'Конец', value: 'вторник 18:09'}
     ]
   }];
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
 }

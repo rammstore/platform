@@ -86,7 +86,7 @@
       </ng-container>
     </ng-container>
   </tr>
-  <tr *ngIf="totalFields">
+  <tr *ngIf="totalFields && data">
 
     <ng-container *ngFor="let row of tableHeader">
       <ng-container *ngFor="let column of row.columns">

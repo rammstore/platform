@@ -1,5 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Observable } from 'rxjs/index';
+import { Component, Input } from '@angular/core';
 import { Wallet } from '@app/user';
 
 @Component({
@@ -7,13 +6,6 @@ import { Wallet } from '@app/user';
   templateUrl: './bill-results.component.html',
   styleUrls: ['./bill-results.component.scss']
 })
-export class BillResultsComponent implements OnInit {
+export class BillResultsComponent {
   @Input() wallet: Wallet;
-
-  constructor(
-  ) { }
-
-  ngOnInit() {
-  }
-
 }

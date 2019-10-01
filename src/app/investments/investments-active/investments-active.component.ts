@@ -1,15 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Strategy, TableColumn } from '@app/models';
 import { StrategyService } from '@app/services/strategy.service';
 import { TableHeaderRow } from '@app/models/table-header-row';
+import { Subject } from 'rxjs/index';
+import { takeUntil } from 'rxjs/internal/operators';
 
 @Component({
   selector: 'app-investments-active',
   templateUrl: './investments-active.component.html',
   styleUrls: ['./investments-active.component.scss']
 })
-export class InvestmentsActiveComponent implements OnInit {
+export class InvestmentsActiveComponent implements OnInit, OnDestroy {
+  // https://blog.strongbrew.io/rxjs-best-practices-in-angular/#avoiding-memory-leaks
+  // here we will unsubscribe from all subscriptions
+  destroy$ = new Subject();
+
+  // component data
   strategies: Strategy[];
+
+  // table settings
   tableHeader: TableHeaderRow[] = [
     new TableHeaderRow([
       new TableColumn({ property: 'name', label: 'Стратегия', rowspan: 2}),
@@ -29,10 +38,15 @@ export class InvestmentsActiveComponent implements OnInit {
     private strategyService: StrategyService
   ) { }
 
-  ngOnInit() {
-    this.strategyService.getActive().subscribe((strategies: Strategy[]) => {
-      this.strategies = strategies;
-    });
+  ngOnInit(): void {
+    this.strategyService.getActive()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((strategies: Strategy[]) => {
+        this.strategies = strategies;
+      });
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
+  }
 }

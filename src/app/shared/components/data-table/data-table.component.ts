@@ -7,16 +7,13 @@ import { TableHeaderRow } from '@app/models/table-header-row';
   templateUrl: './data-table.component.html',
   styleUrls: ['./data-table.component.scss']
 })
-export class DataTableComponent implements OnInit {
+export class DataTableComponent {
   @Input() tableHeader: TableHeaderRow[];
   @Input() data: Array<Strategy | Account>;
   @Input() totalFields: Array<string> = null;
   coloredFields: string[] = ['yield', 'totalProfit'];
 
   constructor() { }
-
-  ngOnInit() {
-  }
 
   getItemLink(item: any): string {
     let link: string = '';

@@ -1,15 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PasswordValidator } from '@app/validators/password.validator';
 import { AuthService } from '@app/services/auth.service';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs/index';
+import { takeUntil } from 'rxjs/internal/operators';
 
 @Component({
   selector: 'app-manage-password',
   templateUrl: './manage-password.component.html',
   styleUrls: ['./manage-password.component.scss']
 })
-export class ManagePasswordComponent implements OnInit {
+export class ManagePasswordComponent implements OnInit, OnDestroy {
+  // https://blog.strongbrew.io/rxjs-best-practices-in-angular/#avoiding-memory-leaks
+  // here we will unsubscribe from all subscriptions
+  destroy$ = new Subject();
+
+  // component data
   form: FormGroup;
 
   constructor(
@@ -19,7 +26,7 @@ export class ManagePasswordComponent implements OnInit {
   ) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.buildForm();
   }
 
@@ -38,8 +45,14 @@ export class ManagePasswordComponent implements OnInit {
       return;
     }
 
-    this.authService.changePassword(this.form.get('currentPass').value, this.form.get('newPass').value).subscribe(() => {
-      this.router.navigate(['/bill']);
-    });
+    this.authService.changePassword(this.form.get('currentPass').value, this.form.get('newPass').value)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.router.navigate(['/bill']);
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
   }
 }

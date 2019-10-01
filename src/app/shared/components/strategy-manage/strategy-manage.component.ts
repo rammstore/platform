@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Strategy } from '@app/models';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap';
 import { StrategyFundComponent } from '../../../strategy/strategy-fund/strategy-fund.component';
@@ -10,16 +10,13 @@ import { StrategyResumeComponent } from '../../../strategy/strategy-resume/strat
   templateUrl: './strategy-manage.component.html',
   styleUrls: ['./strategy-manage.component.scss']
 })
-export class StrategyManageComponent implements OnInit {
+export class StrategyManageComponent {
   @Input() strategy: Strategy;
   modalRef: BsModalRef;
 
   constructor(
     private modalService: BsModalService
   ) { }
-
-  ngOnInit() {
-  }
 
   openFundDialog(strategy: Strategy): void {
     const options: ModalOptions = new ModalOptions();
