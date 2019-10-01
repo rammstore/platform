@@ -1,0 +1,28 @@
+@import "styles";
+
+.yield-chart-container {
+  position: relative;
+  width: 230px;
+  height: 115px;
+  margin: 0 auto;
+
+  .yield-chart {
+    width: 100%;
+    height: 100%;
+  }
+
+  .yield {
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    z-index: 10;
+    padding: 5px;
+    background-color: $positive-color;
+    color: white !important;
+
+    &.negative {
+      background-color: $negative-color;
+      color: white !important;
+    }
+  }
+}

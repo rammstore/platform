@@ -26,7 +26,9 @@ export class StrategyDetailsProfitabilityComponent implements OnInit , OnDestroy
   ) { }
 
   ngOnInit(): void {
-    this.route.data.subscribe((data: object) => {
+    this.route.data
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data: object) => {
       this.strategy = data['strategy'];
       this.strategyService.getChart(new ChartOptions(this.strategy.id))
         .pipe(takeUntil(this.destroy$))

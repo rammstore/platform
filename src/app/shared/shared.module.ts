@@ -10,6 +10,7 @@ import { ChartWalletInfoComponent } from './components/chart/chart-wallet-info/c
 import { DataTableComponent } from './components/data-table/data-table.component';
 import { StrategyManageComponent } from './components/strategy-manage/strategy-manage.component';
 import { DynamicPipe } from './pipes/dynamic.pipe';
+import { ChartYieldTableComponent } from './components/chart/chart-yield-table/chart-yield-table.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { DynamicPipe } from './pipes/dynamic.pipe';
     ChartWalletInfoComponent,
     DataTableComponent,
     StrategyManageComponent,
-    DynamicPipe
+    DynamicPipe,
+    ChartYieldTableComponent
   ],
   imports: [
     CommonModule,
@@ -45,7 +47,8 @@ import { DynamicPipe } from './pipes/dynamic.pipe';
     RouterModule,
     ChartWalletInfoComponent,
     DataTableComponent,
-    StrategyManageComponent
+    StrategyManageComponent,
+    ChartYieldTableComponent
   ],
   providers: [
     DynamicPipe,

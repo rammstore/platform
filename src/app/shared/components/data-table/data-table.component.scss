@@ -1,0 +1,23 @@
+@import "styles";
+
+.strategy-account {
+  .strategy-account-intervalPnL {
+    color: $text-color-dark;
+    font-size: 14px;
+    line-height: 24px;
+    text-align: justify;
+  }
+
+  .strategy-account-target,
+  .strategy-account-equity,
+  .strategy-account-protection {
+    color: $text-color-light;
+    font-size: 12px;
+    line-height: 20px;
+    text-align: justify;
+  }
+
+  span:last-child {
+    float: right;
+  }
+}
