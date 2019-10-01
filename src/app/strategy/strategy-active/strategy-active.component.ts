@@ -32,6 +32,7 @@ export class StrategyActiveComponent implements OnInit, OnDestroy {
       new TableColumn({ property: 'manage', label: '' })
     ]),
   ];
+  totalFields: string[] = ['accountsCount', 'account.intervalPnL'];
 
   constructor(
     private strategyService: StrategyService

@@ -27,7 +27,6 @@ export class ChartYieldTableComponent implements OnInit, OnDestroy {
     this.strategyService.getChart(new ChartOptions(this.strategy.id, 10, 'yield', 'small'))
       .pipe(takeUntil(this.destroy$))
       .subscribe(response => {
-        console.log(response);
 
         this.chartOptions = {
           chart: {

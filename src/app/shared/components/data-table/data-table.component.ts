@@ -11,7 +11,7 @@ export class DataTableComponent {
   @Input() tableHeader: TableHeaderRow[];
   @Input() data: Array<Strategy | Account>;
   @Input() totalFields: Array<string> = null;
-  coloredFields: string[] = ['yield', 'totalProfit'];
+  coloredFields: string[] = ['yield', 'totalProfit', 'account.intervalPnL'];
 
   constructor() { }
 
@@ -58,12 +58,28 @@ export class DataTableComponent {
     return this.totalFields.includes(field);
   }
 
-  getTotal(field: string): number {
+  getTotal(property: string): number {
+    const splittedPropertyName: string[] = property.split('.');
     let sum: number = 0;
 
-    this.data.forEach((data: Strategy | Account) => {
-      sum = sum + data[field];
-    });
+    if (!splittedPropertyName.length) {
+      this.data.forEach((data: Strategy | Account) => {
+        sum = sum + data[property];
+      });
+    } else {
+      this.data.forEach((data: Strategy | Account) => {
+        let nestedObj = {};
+        Object.assign(nestedObj, data);
+
+        splittedPropertyName.forEach((key: string) => {
+          if (typeof nestedObj[key] === 'object') {
+            Object.assign(nestedObj, nestedObj[key]);
+          } else {
+            sum = sum + nestedObj[key];
+          }
+        });
+      });
+    }
 
     return sum;
   }

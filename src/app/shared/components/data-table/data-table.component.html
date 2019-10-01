@@ -96,7 +96,8 @@
     <ng-container *ngFor="let row of tableHeader">
       <ng-container *ngFor="let column of row.columns">
         <ng-container *ngIf="isTotal(column.property)">
-          <td [class.positive]="getTotal(column.property) > 0 && isColored(column.property)"
+          <td class="total-cell"
+              [class.positive]="getTotal(column.property) > 0 && isColored(column.property)"
               [class.negative]="getTotal(column.property) < 0 && isColored(column.property)">
             {{getTotal(column.property) | number:'1.0-2'}}
           </td>
