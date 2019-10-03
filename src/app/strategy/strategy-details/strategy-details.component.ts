@@ -2,10 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Strategy } from '@app/models';
 import { ContentTabLink } from '@app/components/content-tabs/content-tab-link';
-import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap';
-import { StrategyPauseComponent } from '../strategy-pause/strategy-pause.component';
-import { StrategyFundComponent } from '../strategy-fund/strategy-fund.component';
-import { StrategyResumeComponent } from '../strategy-resume/strategy-resume.component';
+import { BsModalRef } from 'ngx-bootstrap';
 import { Subject } from 'rxjs/index';
 import { map, takeUntil } from 'rxjs/internal/operators';
 
@@ -24,8 +21,9 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
   modalRef: BsModalRef;
   links: ContentTabLink[];
 
-  constructor(private route: ActivatedRoute,
-              private modalService: BsModalService) {
+  constructor(
+    private route: ActivatedRoute
+  ) {
   }
 
   ngOnInit(): void {
@@ -46,33 +44,6 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
           this.links.push(new ContentTabLink('Инвестиции', '/strategies/details/' + this.strategy.id + '/investments'));
         }
       });
-  }
-
-  openFundDialog(): void {
-    const options: ModalOptions = new ModalOptions();
-    options.initialState = {
-      strategy: this.strategy
-    };
-
-    this.modalRef = this.modalService.show(StrategyFundComponent, options);
-  }
-
-  openPauseDialog(): void {
-    const options: ModalOptions = new ModalOptions();
-    options.initialState = {
-      strategy: this.strategy
-    };
-
-    this.modalRef = this.modalService.show(StrategyPauseComponent, options);
-  }
-
-  openResumeDialog(): void {
-    const options: ModalOptions = new ModalOptions();
-    options.initialState = {
-      strategy: this.strategy
-    };
-
-    this.modalRef = this.modalService.show(StrategyResumeComponent, options);
   }
 
   ngOnDestroy(): void {

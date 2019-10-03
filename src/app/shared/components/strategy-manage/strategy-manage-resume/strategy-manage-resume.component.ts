@@ -9,11 +9,11 @@ import { Subject } from 'rxjs/index';
 import { takeUntil } from 'rxjs/internal/operators';
 
 @Component({
-  selector: 'app-strategy-resume',
-  templateUrl: './strategy-resume.component.html',
-  styleUrls: ['./strategy-resume.component.scss']
+  selector: 'app-strategy-manage-resume',
+  templateUrl: './strategy-manage-resume.component.html',
+  styleUrls: ['./strategy-manage-resume.component.scss']
 })
-export class StrategyResumeComponent implements OnInit, OnDestroy {
+export class StrategyManageResumeComponent implements OnInit, OnDestroy {
   // https://blog.strongbrew.io/rxjs-best-practices-in-angular/#avoiding-memory-leaks
   // here we will unsubscribe from all subscriptions
   destroy$ = new Subject();
@@ -60,6 +60,10 @@ export class StrategyResumeComponent implements OnInit, OnDestroy {
         this.strategy.resume();
         this.modalRef.hide();
       });
+  }
+
+  cancel(): void {
+    this.modalRef.hide();
   }
 
   ngOnDestroy(): void {

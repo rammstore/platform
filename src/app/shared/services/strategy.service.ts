@@ -41,8 +41,12 @@ export class StrategyService {
       response.Strategies.forEach((s: any) => {
         strategies.push(this.createStrategy(s));
       });
-      pagination.totalItems = response.Pagination.TotalRecords;
-      pagination.totalPages = response.Pagination.TotalPages;
+
+      if (pagination) {
+        pagination.totalItems = response.Pagination.TotalRecords;
+        pagination.totalPages = response.Pagination.TotalPages;
+      }
+
       this.activeStrategiesSubject.next(strategies);
     });
 
@@ -67,8 +71,11 @@ export class StrategyService {
         strategies.push(this.createStrategy(s));
       });
 
-      pagination.totalItems = response.Pagination.TotalRecords;
-      pagination.totalPages = response.Pagination.TotalPages;
+      if (pagination) {
+        pagination.totalItems = response.Pagination.TotalRecords;
+        pagination.totalPages = response.Pagination.TotalPages;
+      }
+
       this.closedStrategiesSubject.next(strategies);
     });
 
@@ -151,11 +158,15 @@ export class StrategyService {
     }));
   }
 
-  pause(strategyId: number) {
+  pause(strategyId: number): Observable<any> {
     return this.http.post(`${CONFIG.baseApiUrl}/myStrategies.pause`, {StrategyID: strategyId});
   }
 
-  resume(strategyId: number) {
+  resume(strategyId: number): Observable<any> {
     return this.http.post(`${CONFIG.baseApiUrl}/myStrategies.resume`, {StrategyID: strategyId});
+  }
+
+  close(strategyId: number): Observable<any> {
+    return this.http.post(`${CONFIG.baseApiUrl}/myStrategies.close`, {StrategyID: strategyId});
   }
 }

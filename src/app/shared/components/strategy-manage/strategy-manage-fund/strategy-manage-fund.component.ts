@@ -1,19 +1,19 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Strategy } from '../../shared/models/strategy';
-import { BsModalRef } from 'ngx-bootstrap';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthData } from '../../shared/user/auth-data';
-import { StorageService } from '../../shared/services/storage.service';
-import { StrategyService } from '../../shared/services/strategy.service';
-import { Subject } from 'rxjs/index';
 import { takeUntil } from 'rxjs/internal/operators';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthData } from '@app/user/auth-data';
+import { StrategyService } from '@app/services/strategy.service';
+import { StorageService } from '@app/services/storage.service';
+import { BsModalRef } from 'ngx-bootstrap';
+import { Strategy } from '@app/models';
+import { Subject } from 'rxjs/index';
 
 @Component({
-  selector: 'app-strategy-fund',
-  templateUrl: './strategy-fund.component.html',
-  styleUrls: ['./strategy-fund.component.scss']
+  selector: 'app-strategy-manage-fund',
+  templateUrl: './strategy-manage-fund.component.html',
+  styleUrls: ['./strategy-manage-fund.component.scss']
 })
-export class StrategyFundComponent implements OnInit, OnDestroy {
+export class StrategyManageFundComponent implements OnInit, OnDestroy {
   // https://blog.strongbrew.io/rxjs-best-practices-in-angular/#avoiding-memory-leaks
   // here we will unsubscribe from all subscriptions
   destroy$ = new Subject();
@@ -61,7 +61,7 @@ export class StrategyFundComponent implements OnInit, OnDestroy {
         this.authData.getWallets()[0].balance = this.authData.getWallets()[0].balance - this.form.get('amount').value;
         this.storageService.setAuthData(JSON.stringify(this.authData));
         this.modalRef.hide();
-    });
+      });
   }
 
   ngOnDestroy(): void {

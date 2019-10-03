@@ -6,13 +6,19 @@ import { InvestmentsRoutingModule } from './investments.routing';
 import { SharedModule } from '@app/shared.module';
 import { InvestmentsDetailsComponent } from './investments-details/investments-details.component';
 import { InvestmentResolver } from './investments-details/investments-details.resolver';
+import { InvestmentsProfileChangeComponent } from './investments-profile-change/investments-profile-change.component';
+import { InvestmentsWithdrawComponent } from './investments-withdraw/investments-withdraw.component';
+import { InvestmentsDownloadScriptComponent } from './investments-download-script/investments-download-script.component';
 
 @NgModule({
   declarations: [
     InvestmentsComponent,
     InvestmentsActiveComponent,
     InvestmentsClosedComponent,
-    InvestmentsDetailsComponent
+    InvestmentsDetailsComponent,
+    InvestmentsProfileChangeComponent,
+    InvestmentsWithdrawComponent,
+    InvestmentsDownloadScriptComponent
   ],
   imports: [
     SharedModule,
@@ -20,6 +26,11 @@ import { InvestmentResolver } from './investments-details/investments-details.re
   ],
   providers: [
     InvestmentResolver
+  ],
+  entryComponents: [
+    InvestmentsProfileChangeComponent,
+    InvestmentsWithdrawComponent,
+    InvestmentsDownloadScriptComponent
   ]
 })
 export class InvestmentsModule { }
