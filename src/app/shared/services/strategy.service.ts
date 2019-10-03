@@ -3,8 +3,13 @@ import { BehaviorSubject, Observable } from 'rxjs/index';
 import { HttpClient } from '@angular/common/http';
 import { CONFIG } from '../../../config';
 import { map } from 'rxjs/internal/operators';
-import { Account, ChartOptions, Offer, Strategy } from '../models';
+import { Account, ChartOptions, Offer, Paginator, Strategy } from '../models';
 import { InvestmentsService } from '@app/services/investments.service';
+
+class StrategiesSearchOptions {
+  Filter: { IsActive?: boolean, Value?: string };
+  Pagination: { CurrentPage?: number, PerPage?: number };
+}
 
 @Injectable({
   providedIn: 'root'
@@ -19,11 +24,16 @@ export class StrategyService {
     private investmentsService: InvestmentsService
   ) { }
 
-  getActive(page: number = 1): Observable<Strategy[]> {
-    const options: object = {
-      Filter: { IsActive: true },
-      Pagination: { CurrentPage: page }
-    };
+  getActive(pagination?: Paginator): Observable<Strategy[]> {
+    const options: StrategiesSearchOptions = new StrategiesSearchOptions();
+    options.Filter = { IsActive: true };
+
+    if (pagination) {
+      options.Pagination = {
+        CurrentPage: pagination.currentPage,
+        PerPage: pagination.perPage
+      };
+    }
 
     this.http.post(`${CONFIG.baseApiUrl}/myStrategies.search`, options).subscribe((response: any) => {
       const strategies: Strategy[] = [];
@@ -31,6 +41,11 @@ export class StrategyService {
       response.Strategies.forEach((s: any) => {
         strategies.push(this.createStrategy(s));
       });
+
+      if (pagination) {
+        pagination.totalItems = response.Pagination.TotalRecords;
+        pagination.totalPages = response.Pagination.TotalPages;
+      }
 
       this.activeStrategiesSubject.next(strategies);
     });
@@ -38,11 +53,16 @@ export class StrategyService {
     return this.activeStrategiesSubject.asObservable();
   }
 
-  getClosed(page: number = 1): Observable<Strategy[]> {
-    const options: object = {
-      Filter: { IsActive: false },
-      Pagination: { CurrentPage: page }
-    };
+  getClosed(pagination?: Paginator): Observable<Strategy[]> {
+    const options: StrategiesSearchOptions = new StrategiesSearchOptions();
+    options.Filter = { IsActive: false };
+
+    if (pagination) {
+      options.Pagination = {
+        CurrentPage: pagination.currentPage,
+        PerPage: pagination.perPage
+      };
+    }
 
     this.http.post(`${CONFIG.baseApiUrl}/myStrategies.search`, options).subscribe((response: any) => {
       const strategies: Strategy[] = [];
@@ -50,6 +70,11 @@ export class StrategyService {
       response.Strategies.forEach((s: any) => {
         strategies.push(this.createStrategy(s));
       });
+
+      if (pagination) {
+        pagination.totalItems = response.Pagination.TotalRecords;
+        pagination.totalPages = response.Pagination.TotalPages;
+      }
 
       this.closedStrategiesSubject.next(strategies);
     });
@@ -133,11 +158,15 @@ export class StrategyService {
     }));
   }
 
-  pause(strategyId: number) {
+  pause(strategyId: number): Observable<any> {
     return this.http.post(`${CONFIG.baseApiUrl}/myStrategies.pause`, {StrategyID: strategyId});
   }
 
-  resume(strategyId: number) {
+  resume(strategyId: number): Observable<any> {
     return this.http.post(`${CONFIG.baseApiUrl}/myStrategies.resume`, {StrategyID: strategyId});
+  }
+
+  close(strategyId: number): Observable<any> {
+    return this.http.post(`${CONFIG.baseApiUrl}/myStrategies.close`, {StrategyID: strategyId});
   }
 }

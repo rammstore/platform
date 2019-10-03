@@ -36,6 +36,14 @@ export class InvestmentsService {
     }));
   }
 
+  withdraw(id: number, amount: number): Observable<any> {
+    return this.http.post(`${CONFIG.baseApiUrl}/accounts.withdraw`, { AccountID: id, Amount: amount });
+  }
+
+  close(id: number): Observable<any> {
+    return this.http.post(`${CONFIG.baseApiUrl}/accounts.close`, { AccountID: id });
+  }
+
   createDeal(dealObj: any): Deal {
     return new Deal({
       id: dealObj.ID,
@@ -83,7 +91,7 @@ export class InvestmentsService {
       targetEquity: accountObj.TargetEquity,
       dtTargetReached: accountObj.TargetReached ? new Date(accountObj.TargetReached) : undefined,
       profitBase: accountObj.ProfitBase,
-      asset: accountObj.AssetName,
+      asset: accountObj.AssetName || accountObj.Asset,
       precision: accountObj.Precision,
       positionsCount: accountObj.PositionsCount,
       accountSpecAssetID: accountObj.AccountSpecAssetID,

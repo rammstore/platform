@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Account, Strategy } from '@app/models';
 import { TableHeaderRow } from '@app/models/table-header-row';
+import { Paginator } from '@app/models/paginator';
 
 @Component({
   selector: 'app-data-table',
@@ -11,7 +12,9 @@ export class DataTableComponent {
   @Input() tableHeader: TableHeaderRow[];
   @Input() data: Array<Strategy | Account>;
   @Input() totalFields: Array<string> = null;
-  coloredFields: string[] = ['yield', 'totalProfit'];
+  coloredFields: string[] = ['yield', 'profit', 'totalProfit', 'account.intervalPnL', 'amount'];
+  @Input() paginator: Paginator;
+  @Output() paginationChanged: EventEmitter<void> = new EventEmitter();
 
   constructor() { }
 
@@ -58,11 +61,21 @@ export class DataTableComponent {
     return this.totalFields.includes(field);
   }
 
-  getTotal(field: string): number {
+  getTotal(property: string): number {
+    const splittedPropertyName: string[] = property.split('.');
     let sum: number = 0;
 
     this.data.forEach((data: Strategy | Account) => {
-      sum = sum + data[field];
+      let nestedObj = {};
+      Object.assign(nestedObj, data);
+
+      splittedPropertyName.forEach((key: string) => {
+        if (typeof nestedObj[key] === 'object') {
+          Object.assign(nestedObj, nestedObj[key]);
+        } else {
+          sum = sum + nestedObj[key];
+        }
+      });
     });
 
     return sum;
@@ -70,5 +83,9 @@ export class DataTableComponent {
 
   isColored(field: string): boolean {
     return this.coloredFields.includes(field);
+  }
+
+  paginatorChanged(): void {
+    this.paginationChanged.emit();
   }
 }

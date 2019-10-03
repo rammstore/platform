@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StrategyFundComponent } from './strategy-fund.component';
+import { DataTablePaginatorComponent } from './data-table-paginator.component';
 
-describe('StrategyFundComponent', () => {
-  let component: StrategyFundComponent;
-  let fixture: ComponentFixture<StrategyFundComponent>;
+describe('DataTablePaginatorComponent', () => {
+  let component: DataTablePaginatorComponent;
+  let fixture: ComponentFixture<DataTablePaginatorComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StrategyFundComponent ]
+      declarations: [ DataTablePaginatorComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(StrategyFundComponent);
+    fixture = TestBed.createComponent(DataTablePaginatorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

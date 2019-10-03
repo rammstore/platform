@@ -6,11 +6,11 @@ import { Subject } from 'rxjs/index';
 import { takeUntil } from 'rxjs/internal/operators';
 
 @Component({
-  selector: 'app-strategy-pause',
-  templateUrl: './strategy-pause.component.html',
-  styleUrls: ['./strategy-pause.component.scss']
+  selector: 'app-strategy-manage-pause',
+  templateUrl: './strategy-manage-pause.component.html',
+  styleUrls: ['./strategy-manage-pause.component.scss']
 })
-export class StrategyPauseComponent implements OnDestroy {
+export class StrategyManagePauseComponent implements OnDestroy {
   // https://blog.strongbrew.io/rxjs-best-practices-in-angular/#avoiding-memory-leaks
   // here we will unsubscribe from all subscriptions
   destroy$ = new Subject();

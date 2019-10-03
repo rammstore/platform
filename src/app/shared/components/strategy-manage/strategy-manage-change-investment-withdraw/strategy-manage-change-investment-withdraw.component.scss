@@ -1,0 +1,19 @@
+@import "styles";
+
+.messages {
+  label {
+    display: block;
+    margin-bottom: 10px;
+  }
+}
+
+.pause-link {
+  cursor: pointer;
+  color: $link-color !important;
+}
+
+.withdraw-amount {
+  font-size: 14px;
+  text-align: center;
+  margin: 15px 0;
+}

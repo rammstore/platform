@@ -1,35 +1,5 @@
-<div class="filter-container">
-  <div >Фильтр:</div>
-  <div class="btn-group dropdown-container" dropdown>
-    <a dropdownToggle class="filter-value">{{filter.name}}</a>
-
-    <ul *dropdownMenu class="dropdown-menu" role="menu">
-      <li role="menuitem" (click)="changeFilter('all')">Все</li>
-      <li role="menuitem" (click)="changeFilter('external')">Внешние</li>
-      <li role="menuitem" (click)="changeFilter('internal')">Внутренние</li>
-    </ul>
-  </div>
-</div>
-
-<table>
-  <thead>
-  <tr>
-    <th>ID</th>
-    <th>Счет</th>
-    <th>Дата</th>
-    <th>Сумма</th>
-    <th>Тип</th>
-  </tr>
-  </thead>
-  <tbody>
-  <ng-container *ngFor="let transfer of transfers">
-    <tr *ngIf="isTransferVisible(transfer)">
-      <td>{{transfer.id}}</td>
-      <td>{{transfer.accountID}}</td>
-      <td>{{transfer.dtCreated | date:'yyyy-MM-dd hh:mm:ss'}}</td>
-      <td [class.positive]="transfer.amount > 0" [class.negative]="transfer.amount < 0">{{transfer.amount | currency:'':'':'1.2-2'}}</td>
-      <td [class.positive]="transfer.amount > 0" [class.negative]="transfer.amount < 0">{{transfer.getType()}}</td>
-    </tr>
-  </ng-container>
-  </tbody>
-</table>
+<app-data-table [data]="transfers"
+                [tableHeader]="tableHeader"
+                [paginator]="paginator"
+                (paginationChanged)="getDeals()">
+</app-data-table>
