@@ -23,20 +23,20 @@
             </ng-container>
 
             <div class="strategy-account"
-                 *ngSwitchCase="'account'">
-              <div class="strategy-account-intervalPnL"><span>Прибыль:</span><span>{{item.account.intervalPnL}}</span></div>
-              <div class="strategy-account-target"><span>Цель:</span><span>{{item.account.target}}</span></div>
-              <div class="strategy-account-equity"><span>Средства:</span><span>{{item.account.equity}}</span></div>
-              <div class="strategy-account-protection"><span>Защита:</span><span>{{item.account.protection}}</span></div>
+                 *ngSwitchCase="'investmentInfo'">
+              <div class="strategy-account-intervalPnL"><span>Прибыль:</span><span>{{item.intervalPnL}}</span></div>
+              <div class="strategy-account-target"><span>Цель:</span><span>{{item.target}}</span></div>
+              <div class="strategy-account-equity"><span>Средства:</span><span>{{item.equity}}</span></div>
+              <div class="strategy-account-protection"><span>Защита:</span><span>{{item.protection}}</span></div>
             </div>
 
             <ng-container *ngSwitchCase="'manage'">
-              <app-strategy-manage [strategy]="item"></app-strategy-manage>
+              <app-manage [data]="item"></app-manage>
             </ng-container>
 
             <!-- Investment special data-->
             <ng-container *ngSwitchCase="'investmentDetails'">
-              <a [routerLink]="['/investments/details', item.account.id]"><i class="icon-doc"></i></a>
+              <a [routerLink]="['/investments/details', item.id]"><i class="icon-doc"></i></a>
             </ng-container>
 
             <ng-container *ngSwitchCase="'type'">
@@ -48,7 +48,7 @@
             </ng-container>
 
             <ng-container *ngSwitchCase="'yieldChart'">
-              <app-chart-yield-table [strategy]="item"></app-chart-yield-table>
+              <app-chart-yield-table [account]="item"></app-chart-yield-table>
             </ng-container>
 
             <ng-container *ngSwitchCase="''">

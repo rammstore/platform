@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Account, Strategy } from '@app/models';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Account, Deal, Strategy, WalletTransfer } from '@app/models';
 import { TableHeaderRow } from '@app/models/table-header-row';
 import { Paginator } from '@app/models/paginator';
 
@@ -8,15 +8,33 @@ import { Paginator } from '@app/models/paginator';
   templateUrl: './data-table.component.html',
   styleUrls: ['./data-table.component.scss']
 })
-export class DataTableComponent {
+export class DataTableComponent implements OnInit {
   @Input() tableHeader: TableHeaderRow[];
-  @Input() data: Array<Strategy | Account>;
+  @Input() data: Array<Strategy | Account | Deal | WalletTransfer>;
   @Input() totalFields: Array<string> = null;
-  coloredFields: string[] = ['yield', 'profit', 'totalProfit', 'account.intervalPnL', 'amount'];
+  coloredFields: string[] = ['yield', 'profit', 'totalProfit', 'intervalPnL', 'account.intervalPnL', 'amount'];
   @Input() paginator: Paginator;
   @Output() paginationChanged: EventEmitter<void> = new EventEmitter();
+  // dataType: string;
 
   constructor() { }
+
+  ngOnInit(): void {
+    // switch (true) {
+    //   case this.data && this.data[0] instanceof Strategy:
+    //     this.dataType = 'strategy';
+    //     break;
+    //   case this.data && this.data[0] instanceof Account:
+    //     this.dataType = 'account';
+    //     break;
+    //   case this.data && this.data[0] instanceof Deal:
+    //     this.dataType = 'deal';
+    //     break;
+    //   case this.data && this.data[0] instanceof WalletTransfer:
+    //     this.dataType = 'walletTransfer';
+    //     break;
+    // }
+  }
 
   getItemLink(item: any): string {
     let link: string = '';

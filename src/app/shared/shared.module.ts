@@ -10,8 +10,8 @@ import { DataTableComponent } from './components/data-table/data-table.component
 import { DynamicPipe } from './pipes/dynamic.pipe';
 import { ChartYieldTableComponent } from './components/chart/chart-yield-table/chart-yield-table.component';
 import { DataTablePaginatorComponent } from './components/data-table/data-table-paginator/data-table-paginator.component';
-import { StrategyManageModule } from '@app/components/strategy-manage/strategy-manage.module';
 import { DialogWrapperModule } from '@app/components/dialog-wrapper/dialog-wrapper.module';
+import { ManageModule } from '@app/components/manage/manage.module';
 
 @NgModule({
   declarations: [
@@ -32,8 +32,8 @@ import { DialogWrapperModule } from '@app/components/dialog-wrapper/dialog-wrapp
     TooltipModule.forRoot(),
     ReactiveFormsModule,
     RouterModule,
-    StrategyManageModule,
-    DialogWrapperModule
+    DialogWrapperModule,
+    ManageModule
   ],
   exports: [
     CommonModule,
@@ -49,8 +49,8 @@ import { DialogWrapperModule } from '@app/components/dialog-wrapper/dialog-wrapp
     ChartWalletInfoComponent,
     DataTableComponent,
     ChartYieldTableComponent,
-    StrategyManageModule,
-    DialogWrapperModule
+    DialogWrapperModule,
+    ManageModule
   ],
   providers: [
     DynamicPipe,
