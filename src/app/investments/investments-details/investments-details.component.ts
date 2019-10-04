@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Account, Deal, Strategy, TableColumn } from '@app/models';
 import { ActivatedRoute } from '@angular/router';
 import { StrategyService } from '@app/services/strategy.service';
-import { InvestmentsService } from '@app/services/investments.service';
+import { AccountService } from '@app/services/account.service';
 import { TableHeaderRow } from '@app/models/table-header-row';
 import { DatePipe } from '@angular/common';
 import { map, takeUntil } from 'rxjs/internal/operators';
@@ -44,7 +44,7 @@ export class InvestmentsDetailsComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private strategyService: StrategyService,
-    private investmentService: InvestmentsService
+    private investmentService: AccountService
   ) { }
 
   ngOnInit(): void {

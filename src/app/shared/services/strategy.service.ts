@@ -4,7 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { CONFIG } from '../../../config';
 import { map } from 'rxjs/internal/operators';
 import { Account, ChartOptions, Offer, Paginator, Strategy } from '../models';
-import { InvestmentsService } from '@app/services/investments.service';
+import { AccountService } from '@app/services/account.service';
+import { CreateInstanceService } from '@app/services/create-instance.service';
 
 class StrategiesSearchOptions {
   Filter: { IsActive?: boolean, Value?: string };
@@ -21,7 +22,7 @@ export class StrategyService {
 
   constructor(
     private http: HttpClient,
-    private investmentsService: InvestmentsService
+    private createInstanceService: CreateInstanceService
   ) { }
 
   getActive(pagination?: Paginator): Observable<Strategy[]> {
@@ -39,7 +40,7 @@ export class StrategyService {
       const strategies: Strategy[] = [];
 
       response.Strategies.forEach((s: any) => {
-        strategies.push(this.createStrategy(s));
+        strategies.push(this.createInstanceService.createStrategy(s));
       });
 
       if (pagination) {
@@ -68,7 +69,7 @@ export class StrategyService {
       const strategies: Strategy[] = [];
 
       response.Strategies.forEach((s: any) => {
-        strategies.push(this.createStrategy(s));
+        strategies.push(this.createInstanceService.createStrategy(s));
       });
 
       if (pagination) {
@@ -92,7 +93,7 @@ export class StrategyService {
       const strategies: Strategy[] = [];
 
       response.Strategies.forEach((s: any) => {
-        strategies.push(this.createStrategy(s));
+        strategies.push(this.createInstanceService.createStrategy(s));
       });
 
       this.strategiesSubject.next(strategies);
@@ -107,7 +108,7 @@ export class StrategyService {
     };
 
     return this.http.post(`${CONFIG.baseApiUrl}/myStrategies.search`, options).pipe(map((response: any) => {
-      return this.createStrategy(response.Strategies.find(s => s.ID.toString() === id.toString()));
+      return this.createInstanceService.createStrategy(response.Strategies.find(s => s.ID.toString() === id.toString()));
     }));
   }
 
@@ -120,30 +121,6 @@ export class StrategyService {
     };
 
     return this.http.post(`${CONFIG.baseApiUrl}/charts.get`, options);
-  }
-
-  private createStrategy(strategyObj: any): Strategy {
-    const account = this.investmentsService.createInvestment(strategyObj.Account);
-    account.strategy = { id: strategyObj.ID, name: strategyObj.Name };
-
-    const offer: Offer = new Offer(
-      strategyObj.Offer.Commission,
-      strategyObj.Offer.Fee
-    );
-
-    return new Strategy(
-      strategyObj.ID,
-      strategyObj.Name,
-      strategyObj.DTCreated,
-      strategyObj.DTStat,
-      strategyObj.PartnerShare,
-      strategyObj.Status,
-      strategyObj.Yield,
-      strategyObj.Accounts,
-      strategyObj.Symbols,
-      account,
-      offer
-    );
   }
 
   add(strategy: object) {
@@ -168,5 +145,17 @@ export class StrategyService {
 
   close(strategyId: number): Observable<any> {
     return this.http.post(`${CONFIG.baseApiUrl}/myStrategies.close`, {StrategyID: strategyId});
+  }
+
+  invest(id: number, data: object): Observable<any> {
+    const options: any = {
+      StrategyID: id,
+      Factor: data['factor'],
+      Protection: data['protection'],
+      Target: data['target'],
+      Money: data['amount']
+    };
+
+    return this.http.post(`${CONFIG.baseApiUrl}/accounts.add`, options);
   }
 }

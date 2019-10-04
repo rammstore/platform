@@ -12,7 +12,7 @@ import { StrategyService } from '@app/services/strategy.service';
 import { OuterConfigModule } from '@app/modules/outer-config/outer-config.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { WalletService } from '@app/services/wallet.service';
-import { InvestmentsService } from '@app/services/investments.service';
+import { AccountService } from '@app/services/account.service';
 
 @NgModule({
   declarations: [
@@ -32,7 +32,7 @@ import { InvestmentsService } from '@app/services/investments.service';
     StorageService,
     StrategyService,
     WalletService,
-    InvestmentsService,
+    AccountService,
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]

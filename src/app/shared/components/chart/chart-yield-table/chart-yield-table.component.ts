@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { ChartOptions, Strategy } from '@app/models';
+import { Account, ChartOptions, Strategy } from '@app/models';
 import { Subject } from 'rxjs/index';
 import { StrategyService } from '@app/services/strategy.service';
 import { takeUntil } from 'rxjs/internal/operators';
@@ -16,7 +16,7 @@ export class ChartYieldTableComponent implements OnInit, OnDestroy {
   destroy$ = new Subject();
 
   // component data
-  @Input() strategy: Strategy;
+  @Input() account: Account;
   chartOptions: any;
 
   constructor(
@@ -24,7 +24,7 @@ export class ChartYieldTableComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.strategyService.getChart(new ChartOptions(this.strategy.id, 10, 'yield', 'small'))
+    this.strategyService.getChart(new ChartOptions(this.account.strategy.id, 10, 'yield', 'small'))
       .pipe(takeUntil(this.destroy$))
       .subscribe(response => {
 
@@ -81,7 +81,7 @@ export class ChartYieldTableComponent implements OnInit, OnDestroy {
           }]
         };
 
-        Highcharts.chart(`yieldChartContainer${this.strategy.id}`, this.chartOptions);
+        Highcharts.chart(`yieldChartContainer${this.account.strategy.id}`, this.chartOptions);
       });
   }
 
