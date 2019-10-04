@@ -22,6 +22,10 @@
               <a [routerLink]="[getItemLink(item)]">{{item.name}}</a>
             </ng-container>
 
+            <ng-container *ngSwitchCase="'strategy.name'">
+              <a [routerLink]="[getItemLink(item.strategy)]">{{item.strategy.name}}</a>
+            </ng-container>
+
             <div class="strategy-account"
                  *ngSwitchCase="'investmentInfo'">
               <div class="strategy-account-intervalPnL"><span>Прибыль:</span><span>{{item.intervalPnL}}</span></div>
@@ -67,8 +71,8 @@
       </ng-container>
     </ng-container>
   </tr>
-  <tr *ngIf="totalFields && data">
 
+  <tr *ngIf="totalFields && data">
     <ng-container *ngFor="let row of tableHeader">
       <ng-container *ngFor="let column of row.columns">
         <ng-container *ngIf="isTotal(column.property)">
