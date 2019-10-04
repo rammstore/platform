@@ -39,7 +39,7 @@ export class ManageComponent implements OnInit {
   openAccountChangeProfileDialog(): void {
     const options: ModalOptions = new ModalOptions();
     options.initialState = {
-      account: this.data
+      account: this.dataType === 'account' ? this.data : this.data['account']
     };
 
     this.modalRef = this.modalService.show(ManageAccountChangeProfileComponent, options);
@@ -58,7 +58,8 @@ export class ManageComponent implements OnInit {
   openAccountFundDialog(): void {
     const options: ModalOptions = new ModalOptions();
     options.initialState = {
-      account: this.data
+      account: this.dataType === 'account' ? this.data : this.data['account'],
+      strategy: this.dataType === 'account' ? this.data['strategy'] : this.data
     };
 
     this.modalRef = this.modalService.show(ManageAccountFundComponent, options);
@@ -85,7 +86,7 @@ export class ManageComponent implements OnInit {
   openAccountWithdrawDialog(): void {
     const options: ModalOptions = new ModalOptions();
     options.initialState = {
-      account: this.data
+      account: this.dataType === 'account' ? this.data : this.data['account']
     };
 
     this.modalRef = this.modalService.show(ManageAccountWithdrawComponent, options);
