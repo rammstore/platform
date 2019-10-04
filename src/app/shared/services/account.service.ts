@@ -83,6 +83,12 @@ export class AccountService {
     }));
   }
 
+  fund(accountID: number, amount: number) {
+    return this.http.post(`${CONFIG.baseApiUrl}/accounts.fund`, {AccountID: accountID, Amount: amount}).pipe(map((response: any) => {
+      console.log(response);
+    }));
+  }
+
   pause(id: number): Observable<any> {
     return this.http.post(`${CONFIG.baseApiUrl}/accounts.pause`, {AccountID: id});
   }
