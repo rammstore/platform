@@ -65,6 +65,26 @@ export class CreateInstanceService {
   }
 
   createDeal(options: any): Deal {
-    return new Deal({});
+    return new Deal({
+      id: options.ID,
+      signalID: options.SignalID,
+      commandID: options.CommanfID,
+      stopOutID: options.SOID,
+      tradingIntervalID: options.TradingIntervalID,
+      dtCreated: options.DT,
+      type: options.Type,
+      symbol: options.Symbol,
+      volume: options.Volume,
+      price: options.Price,
+      comission: options.Commission,
+      entry: options.Entry,
+      yield: options.Profit,
+      swap: options.Swap,
+      totalProfit: options.TotalProfit,
+      dealToID: options.DealToID,
+      precisionPrice: options.PrecisionPrice,
+      precisionVolume: options.PrecisionVolume,
+      netting: options.Netting
+    });
   }
 }

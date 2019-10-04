@@ -147,7 +147,7 @@ export class AccountService {
       const deals: Deal[] = [];
 
       response.Deals.forEach((deal: any) => {
-        deals.push(this.createDeal(deal));
+        deals.push(this.createInstanceService.createDeal(deal));
       });
 
       return deals;
@@ -160,30 +160,6 @@ export class AccountService {
         this.updateAccount(id, new Command(response.CommandID, id));
       })
     );
-  }
-
-  createDeal(dealObj: any): Deal {
-    return new Deal({
-      id: dealObj.ID,
-      signalID: dealObj.SignalID,
-      commandID: dealObj.CommanfID,
-      stopOutID: dealObj.SOID,
-      tradingIntervalID: dealObj.TradingIntervalID,
-      dtCreated: dealObj.DT,
-      type: dealObj.Type,
-      symbol: dealObj.Symbol,
-      volume: dealObj.Volume,
-      price: dealObj.Price,
-      comission: dealObj.Commission,
-      entry: dealObj.Entry,
-      yield: dealObj.Profit,
-      swap: dealObj.Swap,
-      totalProfit: dealObj.TotalProfit,
-      dealToID: dealObj.DealToID,
-      precisionPrice: dealObj.PrecisionPrice,
-      precisionVolume: dealObj.PrecisionVolume,
-      netting: dealObj.Netting
-    });
   }
 
   // Получение статуса команды и запрос обновленной стратегии после завершения обработки изменений
