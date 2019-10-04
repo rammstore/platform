@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
-import { forkJoin, Observable, of } from 'rxjs/index';
+import { BehaviorSubject, forkJoin, Observable, of } from 'rxjs/index';
 import { Account, Deal, Paginator } from '@app/models';
 import { CONFIG } from '../../../config';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/internal/operators';
 import { StrategyService } from '@app/services/strategy.service';
 import { CreateInstanceService } from '@app/services/create-instance.service';
+import { Command } from '@app/models/command';
+import { CommandService } from '@app/services/command.service';
 
 class InvestmentsSearchOptions {
   Filter: { MyActiveAccounts?: boolean, Value?: string };
@@ -17,10 +19,15 @@ class InvestmentsSearchOptions {
   providedIn: 'root'
 })
 export class AccountService {
+  // Активные инвестиции
+  activeAccountsSubject: BehaviorSubject<Account[]> = new BehaviorSubject<Account[]>([]);
+  // Закрытые инвестиции
+  closedAccountsSubject: BehaviorSubject<Account[]> = new BehaviorSubject<Account[]>([]);
 
   constructor(
     private http: HttpClient,
-    private createInstanceService: CreateInstanceService
+    private createInstanceService: CreateInstanceService,
+    private commandService: CommandService
   ) { }
 
   get(id: number): Observable<Account> {
@@ -39,11 +46,11 @@ export class AccountService {
       };
     }
 
-    return this.http.post(`${CONFIG.baseApiUrl}/accounts.search`, options).pipe(map((response: any) => {
-      const investments: Account[] = [];
+    this.http.post(`${CONFIG.baseApiUrl}/accounts.search`, options).subscribe((response: any) => {
+      const accounts: Account[] = [];
 
       response.Accounts.forEach((account: any) => {
-        investments.push(new Account(this.createInstanceService.createAccount(account)));
+        accounts.push(new Account(this.createInstanceService.createAccount(account)));
       });
 
       if (pagination) {
@@ -51,8 +58,10 @@ export class AccountService {
         pagination.totalPages = response.Pagination.TotalPages;
       }
 
-      return investments.filter((a: Account) => a.isActive());
-    }));
+      this.activeAccountsSubject.next(accounts.filter((a: Account) => a.isActive()));
+    });
+
+    return this.activeAccountsSubject.asObservable();
   }
 
   getClosed(pagination?: Paginator): Observable<Account[]> {
@@ -65,13 +74,13 @@ export class AccountService {
       };
     }
 
-    return this.http.post(`${CONFIG.baseApiUrl}/accounts.search`, options).pipe(map((response: any) => {
-      const investments: Account[] = [];
+    this.http.post(`${CONFIG.baseApiUrl}/accounts.search`, options).subscribe((response: any) => {
+      const accounts: Account[] = [];
 
       response.Accounts
         .filter((a: any) => a.Status === 6)
         .forEach((account: any) => {
-          investments.push(new Account(this.createInstanceService.createAccount(account)));
+          accounts.push(new Account(this.createInstanceService.createAccount(account)));
         });
 
       if (pagination) {
@@ -79,22 +88,34 @@ export class AccountService {
         pagination.totalPages = response.Pagination.TotalPages;
       }
 
-      return investments;
-    }));
+      this.closedAccountsSubject.next(accounts.filter((a: Account) => !a.isActive()));
+    });
+
+    return this.closedAccountsSubject.asObservable();
   }
 
   fund(accountID: number, amount: number) {
-    return this.http.post(`${CONFIG.baseApiUrl}/accounts.fund`, {AccountID: accountID, Amount: amount}).pipe(map((response: any) => {
-      console.log(response);
-    }));
+    return this.http.post(`${CONFIG.baseApiUrl}/accounts.fund`, {AccountID: accountID, Amount: amount}).pipe(
+      map((response: any) => {
+        this.updateAccount(accountID, new Command(response.CommandBalanceID, accountID));
+      })
+    );
   }
 
   pause(id: number): Observable<any> {
-    return this.http.post(`${CONFIG.baseApiUrl}/accounts.pause`, {AccountID: id});
+    return this.http.post(`${CONFIG.baseApiUrl}/accounts.pause`, {AccountID: id}).pipe(
+      map((response: any) => {
+        this.updateAccount(id, new Command(response.CommandID, id));
+      })
+    );
   }
 
   resume(id: number): Observable<any> {
-    return this.http.post(`${CONFIG.baseApiUrl}/accounts.resume`, {AccountID: id});
+    return this.http.post(`${CONFIG.baseApiUrl}/accounts.resume`, {AccountID: id}).pipe(
+      map((response: any) => {
+        this.updateAccount(id, new Command(response.CommandID, id));
+      })
+    );
   }
 
   changeProfile(id: number, valueObj: {[key: string]: number}): Observable<any> {
@@ -102,11 +123,19 @@ export class AccountService {
       this.http.post(`${CONFIG.baseApiUrl}/accounts.setFactor`, {AccountID: id, Factor: valueObj['factor']}),
       this.http.post(`${CONFIG.baseApiUrl}/accounts.setProtection`, {AccountID: id, Protection: valueObj['protection']}),
       this.http.post(`${CONFIG.baseApiUrl}/accounts.setTarget`, {AccountID: id, Target: valueObj['target']})
-    ]);
+    ]).pipe(
+      map((response: any) => {
+        this.updateAccount(id, new Command(response.CommandID, id));
+      })
+    );
   }
 
   withdraw(id: number, amount: number): Observable<any> {
-    return this.http.post(`${CONFIG.baseApiUrl}/accounts.withdraw`, { AccountID: id, Amount: amount });
+    return this.http.post(`${CONFIG.baseApiUrl}/accounts.withdraw`, { AccountID: id, Amount: amount }).pipe(
+      map((response: any) => {
+        this.updateAccount(id, new Command(response.CommandID, id));
+      })
+    );
   }
 
   getDeals(id: number): Observable<Deal[]> {
@@ -126,7 +155,11 @@ export class AccountService {
   }
 
   close(id: number): Observable<any> {
-    return this.http.post(`${CONFIG.baseApiUrl}/accounts.close`, { AccountID: id });
+    return this.http.post(`${CONFIG.baseApiUrl}/accounts.close`, { AccountID: id }).pipe(
+      map((response: any) => {
+        this.updateAccount(id, new Command(response.CommandID, id));
+      })
+    );
   }
 
   createDeal(dealObj: any): Deal {
@@ -151,5 +184,24 @@ export class AccountService {
       precisionVolume: dealObj.PrecisionVolume,
       netting: dealObj.Netting
     });
+  }
+
+  // Получение статуса команды и запрос обновленной стратегии после завершения обработки изменений
+  // Работает с активными стратегиями, так как закрытые изменять нельзя
+  updateAccount(accountId: number, command: Command): void {
+    const interval = setInterval(() => {
+      this.commandService.checkAccountCommand(command).subscribe((commandStatus: number) => {
+        if (commandStatus !== 0) {
+          clearInterval(interval);
+          this.get(accountId).subscribe((account: Account) => {
+            if (account.isActive()) {
+              Object.assign(this.activeAccountsSubject.value.find((s: Account) => s.id === account.id), account);
+            } else {
+              this.activeAccountsSubject.value.splice(this.activeAccountsSubject.value.findIndex((s: Account) => s.id === account.id), 1);
+            }
+          });
+        }
+      });
+    }, 1000);
   }
 }

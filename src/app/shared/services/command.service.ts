@@ -9,13 +9,12 @@ import { map, takeUntil, takeWhile, timeInterval } from 'rxjs/internal/operators
   providedIn: 'root'
 })
 export class CommandService {
-  checkStatusInterval: number = 1000;
 
   constructor(
     private http: HttpClient
   ) { }
 
-  checkStrategyCommand(command: Command): Observable<any> {
+  checkStrategyCommand(command: Command): Observable<number> {
     const options: object = {
       StrategyCommandID: command.id,
       StrategyID: command.dataID
@@ -24,6 +23,20 @@ export class CommandService {
     return this.http.post(`${CONFIG.baseApiUrl}/strategyCommands.get`, options).pipe(
       map((response: any) => {
         return response.StrategyCommandStatus;
+      })
+    );
+  }
+
+  checkAccountCommand(command: Command): Observable<number> {
+    const options: object = {
+      AccountCommandID: command.id,
+      AccountID: command.dataID,
+      CommandBalanceID: command.id
+    };
+
+    return this.http.post(`${CONFIG.baseApiUrl}/accountCommands.get`, options).pipe(
+      map((response: any) => {
+        return response.AccountCommandStatus;
       })
     );
   }

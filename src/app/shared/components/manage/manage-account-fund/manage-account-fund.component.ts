@@ -58,8 +58,8 @@ export class ManageAccountFundComponent implements OnInit, OnDestroy {
     this.accountService.fund(this.account.id, this.form.get('amount').value)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
-        this.account.equity = this.account.equity + this.form.get('amount').value;
-        this.account.balance = this.account.balance + this.form.get('amount').value;
+        // this.account.equity = this.account.equity + this.form.get('amount').value;
+        // this.account.balance = this.account.balance + this.form.get('amount').value;
         this.authData.getWallets()[0].balance = this.authData.getWallets()[0].balance - this.form.get('amount').value;
         this.storageService.setAuthData(JSON.stringify(this.authData));
         this.modalRef.hide();
