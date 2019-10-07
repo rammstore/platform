@@ -1,12 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Account, Deal, Strategy, TableColumn } from '@app/models';
+import { Account, Strategy } from '@app/models';
 import { ActivatedRoute } from '@angular/router';
 import { StrategyService } from '@app/services/strategy.service';
-import { AccountService } from '@app/services/account.service';
-import { TableHeaderRow } from '@app/models/table-header-row';
-import { DatePipe } from '@angular/common';
 import { map, takeUntil } from 'rxjs/internal/operators';
 import { Subject } from 'rxjs/index';
+import { ContentTabLink } from '@app/components/content-tabs/content-tab-link';
 
 @Component({
   selector: 'app-investments-details',
@@ -21,30 +19,11 @@ export class InvestmentsDetailsComponent implements OnInit, OnDestroy {
   // component data
   account: Account;
   strategy: Strategy;
-  deals: Deal[];
-
-  // table settings
-  tableHeader: TableHeaderRow[] = [
-    new TableHeaderRow([
-      new TableColumn({ property: 'dtCreated', label: 'Время', pipe: { pipe: DatePipe, args: ['yyyy-MM-dd hh:mm:ss'] }}),
-      new TableColumn({ property: 'id', label: 'Сделка'}),
-      new TableColumn({ property: 'Symbol', label: 'Инструмент' }),
-      new TableColumn({ property: 'type', label: 'Тип' }),
-      new TableColumn({ property: 'entry', label: 'Направление' }),
-      new TableColumn({ property: 'volume', label: 'Объем' }),
-      new TableColumn({ property: 'price', label: 'Цена' }),
-      new TableColumn({ property: 'yield', label: 'Прибыль, USD' }),
-      new TableColumn({ property: 'comission', label: 'Комиссия, USD' }),
-      new TableColumn({ property: 'swap', label: 'Своп, USD' }),
-      new TableColumn({ property: 'totalProfit', label: 'Итого прибыль, USD' })
-    ]),
-  ];
-  totalFields: string[] = ['yield', 'comission', 'swap', 'totalProfit'];
+  links: ContentTabLink[] = [];
 
   constructor(
     private route: ActivatedRoute,
-    private strategyService: StrategyService,
-    private investmentService: AccountService
+    private strategyService: StrategyService
   ) { }
 
   ngOnInit(): void {
@@ -56,17 +35,17 @@ export class InvestmentsDetailsComponent implements OnInit, OnDestroy {
       .subscribe((account: Account) => {
         this.account = account;
 
+        this.links = [
+          new ContentTabLink('Позиции', `/investments/details/${this.account.id}`),
+          new ContentTabLink('Сделки', `/investments/details/${this.account.id}/deals`)
+        ];
+
         this.strategyService.get(this.account.strategy.id)
           .pipe(takeUntil(this.destroy$))
           .subscribe((strategy: Strategy) => {
             this.strategy = strategy;
           });
 
-        this.investmentService.getDeals(this.account.id)
-          .pipe(takeUntil(this.destroy$))
-          .subscribe((deals: Deal[]) => {
-            this.deals = deals;
-          });
       });
   }
 

@@ -93,4 +93,6 @@
   </div>
 </div>
 
-<app-data-table [data]="deals" [tableHeader]="tableHeader" [totalFields]="totalFields"></app-data-table>
+<app-content-tabs [links]="links">
+  <router-outlet></router-outlet>
+</app-content-tabs>

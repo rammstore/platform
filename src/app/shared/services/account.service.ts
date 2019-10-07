@@ -15,6 +15,12 @@ class InvestmentsSearchOptions {
   OrderBy: { Field?: string, Direction?: string };
 }
 
+class DealsSearchOptions {
+  Filter: { AccountID: number };
+  Pagination: { CurrentPage?: number, PerPage?: number };
+  OrderBy: { Field?: string, Direction?: string };
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -138,10 +144,17 @@ export class AccountService {
     );
   }
 
-  getDeals(id: number): Observable<Deal[]> {
-    const options: object = {
-      Filter: { AccountID: id }
-    };
+  getDeals(id: number, pagination?: Paginator): Observable<Deal[]> {
+    const options: DealsSearchOptions = new DealsSearchOptions();
+
+    options.Filter = { AccountID: id };
+
+    if (pagination) {
+      options.Pagination = {
+        CurrentPage: pagination.currentPage,
+        PerPage: pagination.perPage
+      };
+    }
 
     return this.http.post(`${CONFIG.baseApiUrl}/deals.search`, options).pipe(map((response: any) => {
       const deals: Deal[] = [];
@@ -149,6 +162,11 @@ export class AccountService {
       response.Deals.forEach((deal: any) => {
         deals.push(this.createInstanceService.createDeal(deal));
       });
+
+      if (pagination) {
+        pagination.totalItems = response.Pagination.TotalRecords;
+        pagination.totalPages = response.Pagination.TotalPages;
+      }
 
       return deals;
     }));
