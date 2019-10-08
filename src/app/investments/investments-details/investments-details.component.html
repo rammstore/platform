@@ -39,7 +39,7 @@
         <td>Создана</td>
         <td>{{account.dtCreated | date:'yyyy-MM-dd hh:mm:ss' }}</td>
       </tr>
-      <tr>
+      <tr *ngIf="!account.isActive()">
         <td>Закрыта</td>
         <td>{{account.dtClosed | date:'yyyy-MM-dd hh:mm:ss' }}</td>
       </tr>
@@ -90,6 +90,10 @@
       </tr>
       </tbody>
     </table>
+  </div>
+
+  <div class="manage-container">
+    <app-manage *ngIf="account.isActive()" [data]="account"></app-manage>
   </div>
 </div>
 
