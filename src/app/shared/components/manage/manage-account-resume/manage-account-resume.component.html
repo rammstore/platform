@@ -1,0 +1,96 @@
+<app-dialog-wrapper title="Возобновить" [modalRef]="modalRef">
+  <form [formGroup]="form" (ngSubmit)="resume()">
+
+    <div class="form-field">
+      <label for="amount" class="field-label">Добавить в инвестицию, USD:</label>
+      <div class="input-wrapper">
+        <input id="amount"
+               type="number"
+               formControlName="amount"
+               [min]="0"
+               [max]="authData.getWallets()[0].getEquity()">
+        <div class="messages">
+          <label class="error-message"
+                 *ngIf="form.get('amount').touched && form.get('amount').hasError('required')">
+            Пожалуйста, введите сумму инвестиции.
+          </label>
+          <label class="error-message"
+                 *ngIf="form.get('amount').touched && form.get('amount').hasError('min')">
+            Пожалуйста, введите корректную сумму инвестиции.
+          </label>
+          <label class="error-message"
+                 *ngIf="form.get('amount').touched && form.get('amount').hasError('max')">
+            Вы можете инвестировать только свободные средства.
+          </label>
+          <label class="details-message">
+            Доступно: {{authData.getWallets()[0].getEquity()  | currency:'':'':'1.2-2'}} {{account.asset}}
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-field">
+      <label class="field-label">Множитель:</label>
+      <div class="input-wrapper">
+        <input value="1" disabled>
+      </div>
+    </div>
+
+    <div class="form-field">
+      <label for="goal" class="field-label">Цель, %:</label>
+      <div class="input-wrapper">
+        <input id="goal"
+               type="number"
+               formControlName="goal"
+               [min]="0"
+               [max]="100">
+        <div class="messages">
+          <label class="error-message"
+                 *ngIf="form.get('goal').touched && form.get('goal').hasError('required')">
+            Цель не задана
+          </label>
+          <label class="error-message"
+                 *ngIf="form.get('goal').touched && form.get('goal').hasError('min')">
+            Пожалуйста, введите корректное значение цели.
+          </label>
+          <label class="details-message" *ngIf="form.get('amount').value && form.get('goal').value">
+            {{((form.get('amount').value * form.get('goal').value) / 100) | currency:'':'':'1.2-2'}} {{account.asset}}
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-field">
+      <label for="protection" class="field-label">Защита, %:</label>
+      <div class="input-wrapper">
+        <input id="protection"
+               type="number"
+               formControlName="protection"
+               [min]="0"
+               [max]="100">
+        <div class="messages">
+          <label class="error-message"
+                 *ngIf="form.get('protection').touched && form.get('protection').hasError('required')">
+            Защита не задана
+          </label>
+          <label class="error-message"
+                 *ngIf="form.get('protection').touched && form.get('protection').hasError('min')">
+            Пожалуйста, введите корректное значение защиты.
+          </label>
+          <label class="error-message"
+                 *ngIf="form.get('amount').touched && form.get('amount').hasError('max')">
+            Пожалуйста, введите корректное значение защиты.
+          </label>
+          <label class="details-message" *ngIf="form.get('amount').value && form.get('protection').value">
+            {{((form.get('amount').value * form.get('protection').value) / 100) | currency:'':'':'1.2-2'}} {{account.asset}}
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="dialog-actions">
+      <button type="submit" class="primary">Ок</button>
+      <button class="primary" (click)="cancel()">Отмена</button>
+    </div>
+  </form>
+</app-dialog-wrapper>

@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Strategy, TableColumn } from '@app/models';
-import { StrategyService } from '@app/services/strategy.service';
+import { Account, TableColumn } from '@app/models';
 import { TableHeaderRow } from '@app/models/table-header-row';
 import { Subject } from 'rxjs/index';
 import { takeUntil } from 'rxjs/internal/operators';
+import { AccountService } from '@app/services/account.service';
 
 @Component({
   selector: 'app-investments-active',
@@ -16,12 +16,12 @@ export class InvestmentsActiveComponent implements OnInit, OnDestroy {
   destroy$ = new Subject();
 
   // component data
-  strategies: Strategy[];
+  accounts: Account[];
 
   // table settings
   tableHeader: TableHeaderRow[] = [
     new TableHeaderRow([
-      new TableColumn({ property: 'name', label: 'Стратегия', rowspan: 2}),
+      new TableColumn({ property: 'strategy.name', label: 'Стратегия', rowspan: 2}),
       new TableColumn({ label: 'Доходность стратегии', colspan: 2}),
       new TableColumn({ label: 'Инвестиция', colspan: 3})
     ]),
@@ -29,20 +29,21 @@ export class InvestmentsActiveComponent implements OnInit, OnDestroy {
       new TableColumn({ property: '', label: 'в месяц' }),
       new TableColumn({ property: 'yieldChart', label: 'Всего' }),
       new TableColumn({ property: 'age', label: 'Возраст, недель' }),
-      new TableColumn({ property: 'account', label: 'Моя инвестиция, USD' }),
+      new TableColumn({ property: 'investmentInfo', label: 'Моя инвестиция, USD' }),
       new TableColumn({ property: 'manage', label: '' })
     ]),
   ];
 
   constructor(
-    private strategyService: StrategyService
+    private accountService: AccountService
   ) { }
 
   ngOnInit(): void {
-    this.strategyService.getActive()
+    this.accountService.getActive()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((strategies: Strategy[]) => {
-        this.strategies = strategies;
+      .subscribe((accounts: Account[]) => {
+      console.log(accounts);
+        this.accounts = accounts;
       });
   }
 

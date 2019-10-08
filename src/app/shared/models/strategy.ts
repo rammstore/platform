@@ -1,58 +1,32 @@
 import { Account } from './account';
 import { Offer } from './offer';
 
-export class StrategyResumeOptions {
-  amount: number;
-  goal: number;
-  protection: number;
-
-  constructor(options: object) {
-    Object.assign(this, options);
-  }
-}
-
 export class Strategy {
-  id: number;
-  name: string;
-  dtCreated: Date;
-  dtStat: Date;
-  partnerShare: number;
-  status: number;
-  profit: number;
-  accountsCount: number;
-  symbols: string;
-  account: Account;
-  offer: Offer;
+  id: number;             // ID стратегии
+  name: string;           // Название стратегии
+  dtCreated: Date;        // Дата создания стратегии
+  dtStat: Date;           // Дата сбора статистики
+  partnerShare: number;   // Доля партнера
+  status: number;         // Статус
+  profit: number;         // Прибыль в % (Yield)
+  accountsCount: number;  // Количество счетов
+  symbols: string;        // Строка с перечислением самых используемых торговых инструментов (не более 3-х)
+  account: Account;       // Инвестиция
+  offer: Offer;           // Оффер
 
   constructor(
-    id: number,
-    name: string,
-    dtCreated: Date,
-    dtStat: Date,
-    partnerShare: number,
-    status: number,
-    profit: number,
-    accountsCount: number,
-    symbols: string,
-    account: Account,
-    offer: Offer
+    options: any
   ) {
-    this.id = id;
-    this.name = name;
-    this.dtCreated = dtCreated;
-    this.dtStat = dtStat;
-    this.partnerShare = partnerShare;
-    this.status = status;
-    this.profit = profit;
-    this.accountsCount = accountsCount;
-    this.symbols = symbols;
-    this.account = account;
-    this.offer = offer;
+    Object.assign(this, options);
   }
 
   isActive(): boolean {
     // @TODO: declare type or create enum for status possible values
-    return this.status === 1;
+    return this.status !== 4;
+  }
+
+  isPaused(): boolean {
+    return this.status === 2;
   }
 
   getAgeWeeks(): number {
@@ -62,10 +36,14 @@ export class Strategy {
   }
 
   pause(): void {
-    this.status = 4;
+    this.status = 2;
   }
 
   resume(): void {
     this.status = 1;
+  }
+
+  close(): void {
+    this.status = 4;
   }
 }

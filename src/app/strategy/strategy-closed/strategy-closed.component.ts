@@ -27,7 +27,7 @@ export class StrategyClosedComponent implements OnInit, OnDestroy {
       new TableColumn({ property: 'name', label: 'Название' }),
       new TableColumn({ property: 'offer.fee', label: 'Вознаграждение', pipe: { pipe: PercentPipe }}),
       new TableColumn({ property: 'dtCreated', label: 'Создана', pipe: { pipe: DatePipe, args: ['yyyy-MM-dd hh:mm:ss'] }}),
-      new TableColumn({ property: '', label: 'Закрыта' }),
+      new TableColumn({ property: 'dtClosed', label: 'Закрыта' }),
       new TableColumn({ property: 'age', label: 'Возраст' }),
       new TableColumn({ property: '', label: 'Выплаченное вознаграждение, USD' })
     ]),

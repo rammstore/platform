@@ -1,0 +1,79 @@
+<app-dialog-wrapper title="Возобновить" [modalRef]="modalRef">
+  <form [formGroup]="form" (ngSubmit)="changeProfile()">
+
+    <div class="form-field">
+      <label for="factor" class="field-label">Множитель:</label>
+      <div class="input-wrapper">
+        <input id="factor"
+               type="number"
+               formControlName="factor"
+               [min]="-1000"
+               [max]="1000">
+        <div class="messages">
+          <label class="error-message"
+                 *ngIf="form.get('factor').touched && form.get('factor').hasError('incorrect')">
+            Пожалуйста, введите корректное значение множителя.
+          </label>
+          <label class="error-message"
+                 *ngIf="form.get('factor').touched && form.get('factor').hasError('min')">
+            Максимальное значение множителя - -1000.
+          </label>
+          <label class="error-message"
+                 *ngIf="form.get('factor').touched && form.get('factor').hasError('max')">
+            Максимальное значение множителя - 1000.
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-field">
+      <label for="target" class="field-label">Цель, %:</label>
+      <div class="input-wrapper">
+        <input id="target"
+               type="number"
+               formControlName="target"
+               [min]="0.001"
+               [max]="99.999">
+        <div class="messages">
+          <label class="error-message"
+                 *ngIf="form.get('target').touched && form.get('target').hasError('required')">
+            Цель не задана
+          </label>
+          <label class="error-message"
+                 *ngIf="form.get('target').touched && form.get('target').hasError('min')">
+            Пожалуйста, введите корректное значение цели.
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-field">
+      <label for="protection" class="field-label">Защита, %:</label>
+      <div class="input-wrapper">
+        <input id="protection"
+               type="number"
+               formControlName="protection"
+               [min]="0"
+               [max]="99">
+        <div class="messages">
+          <label class="error-message"
+                 *ngIf="form.get('protection').touched && form.get('protection').hasError('required')">
+            Защита не задана
+          </label>
+          <label class="error-message"
+                 *ngIf="form.get('protection').touched && form.get('protection').hasError('min')">
+            Пожалуйста, введите корректное значение защиты.
+          </label>
+          <label class="error-message"
+                 *ngIf="form.get('protection').touched && form.get('protection').hasError('max')">
+            Максимальное значение защиты - 99.
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="dialog-actions">
+      <button type="submit" class="primary" [disabled]="!form.valid">Изменить профиль инвестиции</button>
+    </div>
+  </form>
+</app-dialog-wrapper>

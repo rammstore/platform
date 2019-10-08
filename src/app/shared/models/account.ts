@@ -1,31 +1,34 @@
+import { Strategy } from '@app/models/strategy';
+
 export class Account {
-  id: number;
-  strategy: { id: number, name: string };
-  dtCreated: Date;
-  dtClosed: Date;
-  type: number;
-  status: number;
-  balance: number;
-  bonus: number;
-  equity: number;
-  availableToWithDraw: number;
-  factor: number;
-  margin: number;
-  marginLevel: number;
-  dtMCReached: Date;
-  protection: number;
-  protectionEquity: number;
-  dtProtectionReached: Date;
-  target: number;
-  targetEquity: number;
-  dtTargetReached: number;
-  profitBase: number;
-  asset: string;
-  precision: number;
-  positionsCount: number;
-  accountSpecAssetID: number;
-  tradingIntervalCurrentID: number;
-  intervalPnL: number;
+  id: number;                       // ID счета (инвестиции)
+  strategy: Strategy;               // Стратегия
+  isSecurity: boolean;              // Признак счета управляющего
+  type: number;                     // Тип инвестиции
+  accountSpecAssetID: number;       // Спецификация счета для заданного актива
+  asset: string;                    // Название валюты счета
+  tradingIntervalCurrentID: number; // ID текущего торгового интервала
+  dtCreated: Date;                  // Дата создания
+  balance: number;                  // Баланс счета
+  equity: number;                   // Эквити (средства)
+  margin: number;                   // Задействованная маржа
+  marginLevel: number;              // Уровень маржи
+  intervalPnL: number;              // Прибыль/убыток в текущем торговом интервале
+  status: number;                   // Статус
+  factor: number;                   // Повышающий/понижающий коэффициент копирования
+  dtMCReached: Date;                // Дата/время срабатывания StopOut
+  protection: number;               // Процент защиты счета
+  protectionEquity: number;         // Значение эквити, при котором сработает защита счета
+  dtProtectionReached: Date;        // Дата/время срабатывания защиты счета
+  target: number;                   // Целевая доходность
+  targetEquity: number;             // Целевая доходность в валюте счета
+  dtTargetReached: number;          // Дата/время достижения целевой доходности
+  dtClosed: Date;                   // Дата закрытия
+  bonus: number;                    // Бонус
+  availableToWithDraw: number;      // Доступно для снятия
+  profitBase: number;               // База для подсчета вознаграждения
+  precision: number;                // Точность округления, знаки после запятой
+  positionsCount: number;           // Количество позиций
 
   constructor(
     options: any
@@ -33,28 +36,36 @@ export class Account {
     Object.assign(this, options);
   }
 
+  isActive(): boolean {
+    return this.status !== 6;
+  }
+
+  isPaused(): boolean {
+    return this.status === 4;
+  }
+
   getStatus(): string {
     switch (this.status) {
       case 0:
-        return 'New';
+        return 'New (without money)';
         break;
       case 1:
-        return 'Active';
+        return 'Active (trading)';
         break;
       case 2:
-        return 'Paused (MC)';
+        return 'MC';
         break;
       case 3:
-        return 'Paused (SLTP)';
+        return 'Protection target';
         break;
       case 4:
-        return 'Paused (Client)';
+        return 'Pause';
         break;
       case 5:
-        return 'Disabled';
+        return 'Disabled (can\'t trade)';
         break;
       case 6:
-        return 'Closed';
+        return 'Closed (can\'t activate)';
         break;
     }
   }
@@ -62,20 +73,35 @@ export class Account {
   getType(): string {
     switch (this.status) {
       case 0:
-        return 'master investment';
+        return 'Real security';
         break;
       case 1:
-        return 'slave investment';
+        return 'Virtual master';
         break;
       case 2:
-        return 'usual investment';
+        return 'Real internal ramm account';
         break;
       case 3:
-        return 'external investment';
-        break;
-      case 4:
-        return 'external trader account';
+        return 'Real external account';
         break;
     }
+  }
+
+  getAgeWeeks(): number {
+    const now: number = new Date().getTime();
+    const created: number = new Date(this.dtCreated).getTime();
+    return Math.round((now - created) / (1000 * 3600 * 24 * 7));
+  }
+
+  pause(): void {
+    this.status = 4;
+  }
+
+  resume(): void {
+    this.status = 1;
+  }
+
+  close(): void {
+    this.status = 6;
   }
 }

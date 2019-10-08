@@ -1,7 +1,7 @@
 <div class="yield-chart-container">
-  <div id="yieldChartContainer{{strategy.id}}" class="yield-chart"></div>
+  <div id="yieldChartContainer{{account.strategy.id}}" class="yield-chart"></div>
   <div class="yield"
-       [class.negative]="strategy.profit < 0">
-    {{strategy.profit | percent:'1.0-2'}}
+       [class.negative]="account.strategy.profit < 0">
+    {{account.strategy.profit | percent:'1.0-2'}}
   </div>
 </div>

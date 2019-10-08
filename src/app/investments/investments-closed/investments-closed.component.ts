@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Strategy, TableColumn } from '@app/models';
-import { StrategyService } from '@app/services/strategy.service';
+import { Account, TableColumn } from '@app/models';
 import { TableHeaderRow } from '@app/models/table-header-row';
 import { DatePipe, PercentPipe } from '@angular/common';
 import { Subject } from 'rxjs/index';
 import { takeUntil } from 'rxjs/internal/operators';
+import { AccountService } from '@app/services/account.service';
 
 @Component({
   selector: 'app-investments-closed',
@@ -17,31 +17,31 @@ export class InvestmentsClosedComponent implements OnInit, OnDestroy {
   destroy$ = new Subject();
 
   // component data
-  strategies: Strategy[];
+  accounts: Account[];
 
   // table settings
   tableHeader: TableHeaderRow[] = [
     new TableHeaderRow([
-      new TableColumn({ property: 'name', label: 'Стратегия' }),
-      new TableColumn({ property: 'account.id', label: 'Инвестиция'}),
+      new TableColumn({ property: 'strategy.name', label: 'Стратегия' }),
+      new TableColumn({ property: 'id', label: 'Инвестиция'}),
       new TableColumn({ property: 'dtCreated', label: 'Создана', pipe: { pipe: DatePipe, args: ['yyyy-MM-dd hh:mm:ss'] }}),
-      new TableColumn({ property: '', label: 'Закрыта'}),
+      new TableColumn({ property: 'dtClosed', label: 'Закрыта', pipe: { pipe: DatePipe, args: ['yyyy-MM-dd hh:mm:ss'] }}),
       new TableColumn({ property: 'age', label: 'Возраст' }),
-      new TableColumn({ property: 'account.protection', label: 'Защита', pipe: { pipe: PercentPipe }}),
-      new TableColumn({ property: 'account.intervalPnL', label: 'Прибыль, USD' }),
+      new TableColumn({ property: 'protection', label: 'Защита', pipe: { pipe: PercentPipe }}),
+      new TableColumn({ property: 'intervalPnL', label: 'Прибыль, USD' }),
       new TableColumn({ property: 'investmentDetails', label: '' })
     ]),
   ];
 
   constructor(
-    private strategyService: StrategyService
+    private accountService: AccountService
   ) { }
 
   ngOnInit(): void {
-    this.strategyService.getClosed()
+    this.accountService.getClosed()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((strategies: Strategy[]) => {
-        this.strategies = strategies;
+      .subscribe((accounts: Account[]) => {
+        this.accounts = accounts;
       });
   }
 

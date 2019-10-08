@@ -3,10 +3,8 @@ export class Offer {
   fee: number;
 
   constructor(
-    comission: number,
-    fee: number
+    options: any
   ) {
-    this.comission = comission;
-    this.fee = fee;
+    Object.assign(this, options);
   }
 }
