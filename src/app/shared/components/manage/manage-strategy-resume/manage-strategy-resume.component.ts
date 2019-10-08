@@ -57,7 +57,7 @@ export class ManageStrategyResumeComponent implements OnInit, OnDestroy {
     this.strategyService.resume(this.strategy.id)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
-        this.strategy.resume();
+        // this.strategy.resume();
         this.modalRef.hide();
       });
   }

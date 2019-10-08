@@ -19,7 +19,7 @@ export class InvestmentsDetailsComponent implements OnInit, OnDestroy {
   destroy$ = new Subject();
 
   // component data
-  investment: Account;
+  account: Account;
   strategy: Strategy;
   deals: Deal[];
 
@@ -53,16 +53,16 @@ export class InvestmentsDetailsComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$),
         map((data: object) => data['investment'])
       )
-      .subscribe((investment: Account) => {
-        this.investment = investment;
+      .subscribe((account: Account) => {
+        this.account = account;
 
-        this.strategyService.get(this.investment.strategy.id)
+        this.strategyService.get(this.account.strategy.id)
           .pipe(takeUntil(this.destroy$))
           .subscribe((strategy: Strategy) => {
             this.strategy = strategy;
           });
 
-        this.investmentService.getDeals(this.investment.id)
+        this.investmentService.getDeals(this.account.id)
           .pipe(takeUntil(this.destroy$))
           .subscribe((deals: Deal[]) => {
             this.deals = deals;

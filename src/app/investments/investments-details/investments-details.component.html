@@ -5,11 +5,11 @@
       <tbody>
       <tr>
         <td>ID</td>
-        <td>{{investment.strategy.id}}</td>
+        <td>{{account.strategy.id}}</td>
       </tr>
       <tr>
         <td>Название</td>
-        <td><a [routerLink]="['/strategies/details', investment.strategy.id]">{{investment.strategy.name}}</a></td>
+        <td><a [routerLink]="['/strategies/details', account.strategy.id]">{{account.strategy.name}}</a></td>
       </tr>
       <tr>
         <td>Комиссия</td>
@@ -33,19 +33,19 @@
       <tbody>
       <tr>
         <td>ID</td>
-        <td>{{investment.id}}</td>
+        <td>{{account.id}}</td>
       </tr>
       <tr>
         <td>Создана</td>
-        <td>{{investment.dtCreated | date:'yyyy-MM-dd hh:mm:ss' }}</td>
+        <td>{{account.dtCreated | date:'yyyy-MM-dd hh:mm:ss' }}</td>
       </tr>
       <tr>
         <td>Закрыта</td>
-        <td>{{investment.dtClosed | date:'yyyy-MM-dd hh:mm:ss' }}</td>
+        <td>{{account.dtClosed | date:'yyyy-MM-dd hh:mm:ss' }}</td>
       </tr>
       <tr>
         <td>Валюта</td>
-        <td>{{investment.asset}}</td>
+        <td>{{account.asset}}</td>
       </tr>
       <tr>
         <td>Плечо</td>
@@ -57,7 +57,7 @@
       </tr>
       <tr>
         <td>Статус</td>
-        <td>{{investment.getStatus()}}</td>
+        <td>{{account.getStatus()}}</td>
       </tr>
       </tbody>
     </table>
@@ -69,24 +69,24 @@
       <tbody>
       <tr>
         <td>Множитель</td>
-        <td></td>
+        <td>{{account.factor}}</td>
       </tr>
       <tr>
         <td>Цель</td>
-        <td>{{investment.target | percent:'1.0-2'}}</td>
+        <td>{{account.target | percent:'1.0-2'}}</td>
       </tr>
       <tr>
         <td>Защита</td>
-        <td>{{investment.protection | percent:'1.0-2'}}</td>
+        <td>{{account.protection | percent:'1.0-2'}}</td>
       </tr>
       <tr><td></td><td></td></tr>
       <tr>
         <td>Цель, USD</td>
-        <td>{{investment.targetEquity | currency:'':'':'1.2-2'}} targetEquity ???</td>
+        <td>{{account.targetEquity | currency:'':'':'1.2-2'}} targetEquity ???</td>
       </tr>
       <tr>
         <td>Защита, USD</td>
-        <td>{{investment.protectionEquity | currency:'':'':'1.2-2'}} protectionEquity ???</td>
+        <td>{{account.protectionEquity | currency:'':'':'1.2-2'}} protectionEquity ???</td>
       </tr>
       </tbody>
     </table>

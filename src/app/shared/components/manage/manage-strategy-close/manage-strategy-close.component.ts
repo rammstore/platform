@@ -27,7 +27,7 @@ export class ManageStrategyCloseComponent implements OnDestroy {
     this.strategyService.close(this.strategy.id)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
-        this.strategy.close();
+        // this.strategy.close();
         this.modalRef.hide();
       });
   }

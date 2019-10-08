@@ -27,7 +27,7 @@ export class ManageStrategyPauseComponent implements OnDestroy {
     this.strategyService.pause(this.strategy.id)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
-        this.strategy.pause();
+        // this.strategy.pause();
         this.modalRef.hide();
       });
   }

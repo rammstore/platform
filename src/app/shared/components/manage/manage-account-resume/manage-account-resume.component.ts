@@ -58,7 +58,7 @@ export class ManageAccountResumeComponent implements OnInit, OnDestroy {
     this.accountService.resume(this.account.id)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
-        this.account.resume();
+        // this.account.resume();
         this.modalRef.hide();
       });
   }

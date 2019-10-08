@@ -30,7 +30,6 @@ export class ManageAccountWithdrawComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.buildForm();
-    console.log(this.account);
   }
 
   buildForm(): void {
@@ -59,7 +58,7 @@ export class ManageAccountWithdrawComponent implements OnInit, OnDestroy {
     this.accountService.withdraw(this.account.id, this.form.get('amount').value)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
-        this.account.equity = this.account.equity - this.form.get('amount').value;
+        // this.account.equity = this.account.equity - this.form.get('amount').value;
         this.modalRef.hide();
       });
   }
