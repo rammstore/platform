@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, forkJoin, Observable, of } from 'rxjs/index';
-import { Account, Deal, Paginator } from '@app/models';
+import { BehaviorSubject, forkJoin, Observable } from 'rxjs/index';
+import { Account, Deal, Paginator, Position } from '@app/models';
 import { CONFIG } from '../../../config';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/internal/operators';
-import { StrategyService } from '@app/services/strategy.service';
 import { CreateInstanceService } from '@app/services/create-instance.service';
 import { Command } from '@app/models/command';
 import { CommandService } from '@app/services/command.service';
@@ -169,6 +168,36 @@ export class AccountService {
       }
 
       return deals;
+    }));
+  }
+
+  getPositions(id: number, pagination?: Paginator): Observable<Position[]> {
+    const options: DealsSearchOptions = new DealsSearchOptions();
+
+    options.Filter = { AccountID: id };
+
+    if (pagination) {
+      options.Pagination = {
+        CurrentPage: pagination.currentPage,
+        PerPage: pagination.perPage
+      };
+    }
+
+    return this.http.post(`${CONFIG.baseApiUrl}/positions.search`, options).pipe(map((response: any) => {
+      const positions: Position[] = [];
+
+      if (response.Positions.length) {
+        response.Positions.forEach((position: any) => {
+          positions.push(this.createInstanceService.createPosition(position));
+        });
+
+        if (pagination) {
+          pagination.totalItems = response.Pagination.TotalRecords;
+          pagination.totalPages = response.Pagination.TotalPages;
+        }
+      }
+
+      return positions;
     }));
   }
 
