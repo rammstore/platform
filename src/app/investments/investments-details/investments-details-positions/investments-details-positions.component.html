@@ -1,0 +1,27 @@
+<app-data-table [data]="positions"
+                [tableHeader]="tableHeader"
+                [totalFields]="totalFields"
+                [paginator]="paginator"
+                (paginationChanged)="getDeals()">
+</app-data-table>
+
+<table>
+  <tbody>
+  <tr>
+    <td>Средства, USD</td>
+    <td>{{account.equity}}</td>
+    <td>Баланс, USD</td>
+    <td>{{account.balance}}</td>
+  </tr>
+  <tr>
+    <td>Свободная маржа, USD</td>
+    <td>???</td>
+    <td>Маржа, USD</td>
+    <td>{{account.margin}}</td>
+  </tr>
+  <tr>
+    <td>Уровень маржи</td>
+    <td>{{account.marginLevel}}</td>
+  </tr>
+  </tbody>
+</table>

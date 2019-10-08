@@ -1,5 +1,6 @@
 .details-container {
   display: flex;
+  position: relative;
 
   .strategy,
   .investment,
@@ -17,5 +18,11 @@
         }
       }
     }
+  }
+
+  .manage-container {
+    position: absolute;
+    right: 0;
+    bottom: -40px;
   }
 }

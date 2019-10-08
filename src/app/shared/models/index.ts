@@ -6,3 +6,4 @@ export * from './deal';
 export * from './wallet-transfer';
 export * from './table-column';
 export * from './paginator';
+export * from './position';

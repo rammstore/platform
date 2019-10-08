@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Account, Deal, Offer, Strategy } from '@app/models';
+import { Account, Deal, Offer, Position, Strategy } from '@app/models';
 
 @Injectable({
   providedIn: 'root'
@@ -31,9 +31,9 @@ export class CreateInstanceService {
       isSecurity: options.IsSecurity,
       type: options.Type,
       accountSpecAssetID: options.AccountSpecAssetID,
-      asset: options.Asset,
+      asset: options.Asset || options.AssetName,
       tradingIntervalCurrentID: options.TradingIntervalCurrentID,
-      dtCreated: options.DTCreated,
+      dtCreated: options.DTCreated || options.DT,
       balance: options.Balance,
       equity: options.Equity,
       margin: options.Margin,
@@ -85,6 +85,22 @@ export class CreateInstanceService {
       precisionPrice: options.PrecisionPrice,
       precisionVolume: options.PrecisionVolume,
       netting: options.Netting
+    });
+  }
+
+  createPosition(options: any): Position {
+    return new Position({
+      id: options.ID,
+      symbol: options.Symbol,
+      volume: options.Volume,
+      price: options.Price,
+      margin: options.Margin,
+      swap: options.Swap,
+      profit: options.Profit,
+      totalProfit: options.TotalProfit,
+      profitCalcQuote: options.ProfitCalcQuote,
+      precisionPrice: options.PrecisionPrice,
+      precisionVolume: options.PrecisionVolume
     });
   }
 }
