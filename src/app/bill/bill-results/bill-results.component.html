@@ -1,21 +1,33 @@
 <div class="wallet-container">
-  <table>
-    <thead><tr></tr></thead>
-    <tbody>
-    <tr>
-      <td>Доступно</td>
-      <td class="accent">{{wallet.balance | currency:'':'':'1.2-2'}} {{wallet.asset}}</td>
-    </tr>
-    <tr>
-      <td>Инвестировано</td>
-      <td class="positive">{{wallet.invested | currency:'':'':'1.2-2'}} {{wallet.asset}}</td>
-    </tr>
-    <tr>
-      <td>Средства</td>
-      <td>{{wallet.getEquity() | currency:'':'':'1.2-2'}} {{wallet.asset}}</td>
-    </tr>
-    </tbody>
-  </table>
+  <div class="wallet-info">
+    <table>
+      <thead><tr></tr></thead>
+      <tbody>
+      <tr>
+        <td>Доступно</td>
+        <td class="accent">{{wallet.balance | currency:'':'':'1.2-2'}} {{wallet.asset}}</td>
+      </tr>
+      <tr>
+        <td>Инвестировано</td>
+        <td class="positive">{{wallet.invested | currency:'':'':'1.2-2'}} {{wallet.asset}}</td>
+      </tr>
+      <tr>
+        <td>Средства</td>
+        <td>{{wallet.getEquity() | currency:'':'':'1.2-2'}} {{wallet.asset}}</td>
+      </tr>
+      </tbody>
+    </table>
+
+    <div class="buttons-group">
+      <a href="https://grandcapital.net/account/payments/deposit" target="_blank">
+        <button class="primary">Пополнить</button>
+      </a>
+
+      <a href="https://grandcapital.net/account/payments/withdraw" target="_blank">
+        <button class="primary">Вывести</button>
+      </a>
+    </div>
+  </div>
 
   <div class="chart-container">
     <i class="fa fa-question-circle-o" tooltip="Вы также можете посмотреть эти значения в верхнем правом углу."></i>

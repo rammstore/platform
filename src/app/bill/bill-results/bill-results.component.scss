@@ -1,27 +1,73 @@
 @import "styles";
 
-.wallet-container {
-  display: flex;
-  align-items: center;
+  .wallet-container {
+    display: flex;
+    margin-bottom: 40px;
 
-  table,
-  .chart-container {
-   flex: 1 1 50%;
+    .wallet-info,
+    .chart-container {
+      flex: 1 1 0;
+    }
+
+    .wallet-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .chart-container {
+      position: relative;
+      width: 400px;
+
+      i {
+        z-index: 5;
+        position: absolute;
+        right: 30px;
+        top: 30px;
+        cursor: help;
+      }
+    }
   }
 
-  .chart-container {
-    position: relative;
+.buttons-group {
+  margin: 40px 0 0;
 
-    i {
-      z-index: 5;
-      position: absolute;
-      right: 30px;
-      top: 30px;
-      cursor: help;
+  button {
+    width: 200px;
+  }
+}
+
+@mixin vertical-results() {
+  .wallet-container {
+    flex-direction: column;
+
+    .buttons-group {
+      margin-top: 0;
+      margin-bottom: 40px;
+    }
+
+    .chart-container {
+      width: 100%;
     }
   }
 }
 
-.buttons-group {
-  margin: 40px 0;
+@media (max-width: 576px) {
+  @include vertical-results();
+}
+
+@media (min-width: 576px) and (max-width: 768px) {
+  @include vertical-results();
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+  @include vertical-results();
+}
+
+@media (min-width: 992px) and (max-width: 1200px) {
+
+}
+
+@media (min-width: 1200px) {
+
 }
