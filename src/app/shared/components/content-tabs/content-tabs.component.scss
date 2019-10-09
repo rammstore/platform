@@ -24,3 +24,19 @@
     }
   }
 }
+
+@media (max-width: 768px) {
+  .content-tab-links {
+    .content-tab-link {
+      min-width: 160px;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .content-tab-links {
+    .content-tab-link {
+      padding: 0 10px;
+    }
+  }
+}
