@@ -1,0 +1,19 @@
+@import "variables";
+
+body {
+  margin: 0;
+  line-height: 16px !important;
+  font-size: 14px !important;
+
+  .container {
+    width: 1200px;
+    margin: 0 auto;
+    padding: 0;
+  }
+}
+
+.header-control {
+  position: absolute;
+  right: 0;
+  top: 40px;
+}

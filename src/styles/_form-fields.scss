@@ -1,0 +1,87 @@
+@import "variables";
+
+.form-field {
+  display: flex;
+  min-height: 70px;
+  margin-bottom: 10px;
+
+  &.no-input {
+    min-height: 40px;
+  }
+
+  label.field-label {
+    font-size: 14px;
+    flex-grow: 1;
+    text-align: right;
+    margin-bottom: 0;
+  }
+
+  .input-wrapper {
+    max-width: 400px;
+    margin-left: 15px;
+    width: 400px;
+    min-width: 400px;
+
+    input {
+      height: 30px;
+      font-size: 14px;
+      max-width: 300px;
+      width: 300px;
+      padding: 0 5px;
+      border: 1px solid $text-color-light;
+
+      &[type='checkbox'] {
+        width: 15px;
+        height: 20px;
+      }
+
+      &.ng-touched.ng-invalid {
+        border: 1px solid $negative-color;
+      }
+    }
+
+    .messages {
+      margin-top: 5px;
+
+      label {
+        margin-bottom: 5px;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+
+      label.error-message {
+        color: $negative-color;
+        font-size: 12px;
+        margin-bottom: 0;
+      }
+
+      label.details-message {
+        font-size: 12px;
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+.radio-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+
+  input[type="radio"] {
+    margin-right: 15px;
+  }
+
+  .radio-label {
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 0;
+  }
+}
+
+.radio-hint {
+  padding-left: 28px;
+  margin-bottom: 40px;
+}
