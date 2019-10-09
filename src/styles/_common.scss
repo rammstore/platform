@@ -24,6 +24,12 @@ ul.dropdown-menu.langmenu {
   }
 }
 
+@media (max-width: 992px) {
+  .langmenu {
+    transform: none !important;
+  }
+}
+
 .dropdown-container.btn-group {
   ul.dropdown-menu.show {
     right: 0 !important;
