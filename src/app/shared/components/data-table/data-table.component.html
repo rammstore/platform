@@ -3,7 +3,8 @@
   <tr *ngFor="let row of tableHeader">
     <th *ngFor="let column of row.columns"
         [attr.colspan]="column.colspan"
-        [attr.rowspan]="column.rowspan">
+        [attr.rowspan]="column.rowspan"
+        class="{{column.property}}">
       {{column.label}}
     </th>
   </tr>
@@ -14,16 +15,18 @@
     <ng-container *ngFor="let row of tableHeader">
       <ng-container *ngFor="let column of row.columns">
         <ng-container *ngIf="column.property || column.property === ''" >
-          <td [ngSwitch]="column.property">
+          <td [ngSwitch]="column.property" class="{{column.property}}">
             <!-- Strategy special data -->
             <ng-container *ngSwitchCase="'age'">{{item.getAgeWeeks()}}</ng-container>
 
             <ng-container *ngSwitchCase="'name'">
-              <a [routerLink]="[getItemLink(item)]">{{item.name}}</a>
+              <a class="detail-link" [routerLink]="[getItemLink(item)]">{{item.name}}</a>
+              <app-manage *ngIf="item.isActive()" [data]="item"></app-manage>
             </ng-container>
 
             <ng-container *ngSwitchCase="'strategy.name'">
-              <a [routerLink]="[getItemLink(item.strategy)]">{{item.strategy.name}}</a>
+              <a class="detail-link" [routerLink]="[getItemLink(item.strategy)]">{{item.strategy.name}}</a>
+              <app-manage *ngIf="item.isActive()" [data]="item"></app-manage>
             </ng-container>
 
             <div class="strategy-account"

@@ -1,6 +1,8 @@
 @import "styles";
 
 .strategy-account {
+  width: 130px;
+
   .strategy-account-intervalPnL {
     color: $text-color-dark;
     font-size: 14px;
@@ -26,3 +28,44 @@
   font-weight: bold;
 }
 
+td {
+  &.name,
+  &[class*='strategy.name'] {
+    app-manage {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  th,
+  td {
+    &.yieldChart {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  th,
+  td {
+    padding: 15px 0 !important;
+
+    &.manage {
+      display: none;
+    }
+
+    &.name,
+    &[class*='strategy.name'] {
+      app-manage {
+        display: block;
+      }
+    }
+
+    a.detail-link {
+      display: block !important;
+      text-align: center !important;
+      margin-bottom: 10px !important;
+    }
+  }
+}
