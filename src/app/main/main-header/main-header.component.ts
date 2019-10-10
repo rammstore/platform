@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { AuthData } from '@app/user/auth-data';
 import { StorageService } from '@app/services/storage.service';
 import { Router } from '@angular/router';
@@ -18,6 +18,23 @@ export class MainHeaderComponent implements OnInit, OnDestroy {
 
   // component data
   authData: AuthData;
+  isAsideOpen: boolean = false;
+
+  @HostListener('document:click', ['$event'])
+  public onClick(event) {
+    event.stopPropagation();
+
+    if (event.target.tagName.toLowerCase() === 'aside') {
+      return;
+    }
+
+    if (event.target.className.toString().includes('sidebar-toggler')) {
+      this.toggleAside();
+      return;
+    }
+
+    this.closeAside();
+  }
 
   constructor(
     private storageService: StorageService,
@@ -44,5 +61,13 @@ export class MainHeaderComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.destroy$.next(true);
+  }
+
+  toggleAside(): void {
+    this.isAsideOpen = !this.isAsideOpen;
+  }
+
+  closeAside(): void {
+    this.isAsideOpen = false;
   }
 }

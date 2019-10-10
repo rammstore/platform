@@ -44,3 +44,19 @@
     }
   }
 }
+
+@media (max-width: 768px) {
+  .per-page-container {
+    margin-bottom: 20px;
+  }
+
+  .paginator-container {
+    display: flex;
+    flex-direction: column;
+
+    .pages-container {
+      margin-left: 0;
+      margin-top: 40px;
+    }
+  }
+}

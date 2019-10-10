@@ -12,3 +12,13 @@
     flex-grow: 1;
   }
 }
+
+@media (max-width: 768px) {
+  .profitability-container {
+    flex-direction: column;
+
+    .statistics {
+      width: 100%;
+    }
+  }
+}

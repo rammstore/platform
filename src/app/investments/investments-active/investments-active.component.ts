@@ -4,6 +4,7 @@ import { TableHeaderRow } from '@app/models/table-header-row';
 import { Subject } from 'rxjs/index';
 import { takeUntil } from 'rxjs/internal/operators';
 import { AccountService } from '@app/services/account.service';
+import { PercentPipe } from '@angular/common';
 
 @Component({
   selector: 'app-investments-active',
@@ -26,7 +27,7 @@ export class InvestmentsActiveComponent implements OnInit, OnDestroy {
       new TableColumn({ label: 'Инвестиция', colspan: 3})
     ]),
     new TableHeaderRow([
-      new TableColumn({ property: '', label: 'в месяц' }),
+      new TableColumn({ property: 'strategy.profit', label: 'в месяц', pipe: { pipe: PercentPipe }}),
       new TableColumn({ property: 'yieldChart', label: 'Всего' }),
       new TableColumn({ property: 'age', label: 'Возраст, недель' }),
       new TableColumn({ property: 'investmentInfo', label: 'Моя инвестиция, USD' }),

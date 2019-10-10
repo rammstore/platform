@@ -10,6 +10,7 @@ header {
   z-index: 10;
 
   .container {
+    height: 100%;
 
     img.logo {
       height: 20px;
@@ -41,6 +42,10 @@ header {
           font-weight: bold;
         }
       }
+    }
+
+    aside {
+      display: none;
     }
 
     .bill-info {
@@ -87,8 +92,13 @@ header {
         }
       }
     }
+
+    .sidebar-toggler {
+      display: none;
+    }
   }
 }
+
 .legend {
   .amount {
     float: right;
@@ -106,4 +116,96 @@ header {
 #headerChartContainer {
   width: 220px;
   height: 185px;
+}
+
+@mixin compact() {
+  header .container {
+    padding: 0 15px;
+
+    img.logo {
+      margin-top: 10px;
+    }
+
+    nav {
+      display: none;
+    }
+
+    .btn-group.menu {
+      display: none;
+    }
+
+    .sidebar-toggler {
+      display: inline-block;
+      float: right;
+      margin-top: 12px;
+      cursor: pointer;
+    }
+
+    aside {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: fixed;
+      left: -200px;
+      top: 40px;
+      bottom: 0;
+      background-color: $main-color;
+      width: 200px;
+      transition: .3s;
+
+      &.open {
+        left: 0;
+        transition: .3s;
+      }
+
+      ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        li {
+          a {
+            color: $text-color;
+            padding: 10px 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            &.active {
+              background-color: $text-color;
+              color: $main-color;
+              font-weight: bold;
+            }
+
+            .langmenu {
+              .lang {
+                background-color: red;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  @include compact();
+}
+
+@media (min-width: 576px) and (max-width: 768px) {
+  @include compact();
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+  @include compact();
+}
+
+@media (min-width: 992px) and (max-width: 1200px) {
+
+}
+
+@media (min-width: 1200px) {
+
 }
