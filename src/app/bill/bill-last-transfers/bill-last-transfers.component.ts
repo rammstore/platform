@@ -37,7 +37,7 @@ export class BillLastTransfersComponent implements OnInit, OnDestroy {
     ])
   ];
   paginator: Paginator = new Paginator({
-    perPage: 100,
+    perPage: 10,
     currentPage: 1
   });
 

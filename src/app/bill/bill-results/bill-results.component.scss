@@ -54,6 +54,16 @@
 
 @media (max-width: 576px) {
   @include vertical-results();
+
+  .buttons-group {
+    margin-bottom: 10px;
+
+    a {
+      display: block;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  }
 }
 
 @media (min-width: 576px) and (max-width: 768px) {

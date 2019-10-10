@@ -57,6 +57,10 @@
     .pages-container {
       margin-left: 0;
       margin-top: 40px;
+
+      .page-number:not(.current-page) {
+        display: none;
+      }
     }
   }
 }

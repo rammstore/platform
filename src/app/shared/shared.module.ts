@@ -50,7 +50,8 @@ import { ManageModule } from '@app/components/manage/manage.module';
     DataTableComponent,
     ChartYieldTableComponent,
     DialogWrapperModule,
-    ManageModule
+    ManageModule,
+    DataTablePaginatorComponent
   ],
   providers: [
     DynamicPipe,
