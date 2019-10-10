@@ -18,6 +18,7 @@ export class ChartYieldTableComponent implements OnInit, OnDestroy {
   // component data
   @Input() account: Account;
   chartOptions: any;
+  @Input() containerID: string;
 
   constructor(
     private strategyService: StrategyService
@@ -81,7 +82,13 @@ export class ChartYieldTableComponent implements OnInit, OnDestroy {
           }]
         };
 
-        Highcharts.chart(`yieldChartContainer${this.account.strategy.id}`, this.chartOptions);
+        let containerID: string = `yieldChartContainer${this.account.strategy.id}`;
+
+        if (this.containerID) {
+          containerID = this.containerID;
+        }
+
+        Highcharts.chart(containerID, this.chartOptions);
       });
   }
 

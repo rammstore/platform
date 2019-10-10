@@ -26,3 +26,9 @@
     }
   }
 }
+
+@media (max-width: 992px) {
+  .yield-chart-container {
+    display: none;
+  }
+}

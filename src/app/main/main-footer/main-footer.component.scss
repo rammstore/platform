@@ -23,3 +23,13 @@
   border: 1px solid $text-color-dark;
   margin-bottom: 40px;
 }
+
+@media (max-width: 576px) {
+  .info {
+    flex-direction: column;
+
+    .copyright {
+      margin: 20px 0;
+    }
+  }
+}
