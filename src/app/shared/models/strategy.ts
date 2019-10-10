@@ -5,6 +5,7 @@ export class Strategy {
   id: number;             // ID стратегии
   name: string;           // Название стратегии
   dtCreated: Date;        // Дата создания стратегии
+  dtClosed: Date;         // Дата закрытия стратегии
   dtStat: Date;           // Дата сбора статистики
   partnerShare: number;   // Доля партнера
   status: number;         // Статус
