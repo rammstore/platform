@@ -27,8 +27,27 @@
   }
 }
 
+app-data-table-paginator {
+  display: none;
+}
+
 @media (max-width: 992px) {
   .details-container {
     flex-direction: column;
+  }
+}
+
+@media (max-width: 576px) {
+  .details-container {
+    margin-top: 30px;
+  }
+
+  app-data-table-paginator {
+    display: block;
+  }
+
+  .manage-container {
+    bottom: auto;
+    top: 0;
   }
 }
