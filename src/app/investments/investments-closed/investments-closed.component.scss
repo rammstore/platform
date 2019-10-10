@@ -1,0 +1,44 @@
+@import "styles";
+
+.accounts {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  app-data-table {
+    display: none;
+  }
+
+  .accounts {
+    display: block;
+    padding-top: 15px;
+
+    .account {
+      border-bottom: 5px solid $border-color;
+      padding: 15px 10px;
+
+      &:last-child {
+        margin-bottom: 20px;
+      }
+
+      .caption {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: 15px;
+        margin-bottom: 15px;
+        border-bottom: 1px solid $border-color;
+      }
+
+      .info {
+        .item {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 10px;
+        }
+      }
+    }
+  }
+}
+
