@@ -44,7 +44,7 @@ export class ManageAccountWithdrawComponent implements OnInit, OnDestroy {
 
     const options: ModalOptions = new ModalOptions();
     options.initialState = {
-      account: this.account
+      strategy: this.account.strategy
     };
 
     this.modalRef = this.modalService.show(ManageStrategyPauseComponent, options);
