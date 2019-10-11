@@ -5,17 +5,69 @@
                 (paginationChanged)="getDeals()">
 </app-data-table>
 
+
+<div class="positions">
+  <div class="position" *ngFor="let position of positions">
+    <div class="info">
+      <div class="item">
+        <span>Инструмент</span>
+        <span>{{position.symbol}}</span>
+      </div>
+
+      <div class="item">
+        <span>Тип</span>
+        <span>{{position.id}}</span>
+      </div>
+
+      <div class="item">
+        <span>Объем</span>
+        <span>{{position.volume}}</span>
+      </div>
+
+      <div class="item">
+        <span>Цена открытия</span>
+        <span>{{position.price}}</span>
+      </div>
+
+      <div class="item">
+        <span>Текущая цена</span>
+        <span></span>
+      </div>
+
+      <div class="item">
+        <span>Прибыль, USD</span>
+        <span>{{position.profit}}</span>
+      </div>
+
+      <div class="item">
+        <span>Своп, USD</span>
+        <span>{{position.swap}}</span>
+      </div>
+
+      <div class="item">
+        <span>Итого прибыль, USD</span>
+        <span>{{position.totalProfit}}</span>
+      </div>
+    </div>
+  </div>
+</div>
+<app-data-table-paginator *ngIf="positions.length" [paginator]="paginator" (paginationChanged)="getDeals()"></app-data-table-paginator>
+
 <table>
   <tbody>
   <tr>
     <td>Средства, USD</td>
     <td>{{account.equity}}</td>
+  </tr>
+  <tr>
     <td>Баланс, USD</td>
     <td>{{account.balance}}</td>
   </tr>
   <tr>
     <td>Свободная маржа, USD</td>
     <td>???</td>
+  </tr>
+  <tr>
     <td>Маржа, USD</td>
     <td>{{account.margin}}</td>
   </tr>

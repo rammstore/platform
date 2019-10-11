@@ -14,6 +14,7 @@ export class CreateInstanceService {
       name: options.Name,
       dtCreated: options.DTCreated,
       dtStat: options.DTStat,
+      dtClosed: options.DTClosed,
       partnerShare: options.PartnerShare,
       status: options.Status,
       profit: options.Yield,

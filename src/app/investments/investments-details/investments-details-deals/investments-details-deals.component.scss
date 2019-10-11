@@ -1,0 +1,45 @@
+@import "styles";
+
+app-data-table-paginator {
+  display: none;
+}
+
+.deals,
+h5 {
+  display: none;
+}
+
+@media (max-width: 576px) {
+  app-data-table {
+    display: none;
+  }
+
+  h5 {
+    display: block;
+    text-align: center;
+  }
+
+  app-data-table-paginator {
+    display: block;
+  }
+
+  .deals {
+    display: block;
+    border-top: 5px solid $border-color;
+    margin-bottom: 20px;
+
+    .deal {
+      border-bottom: 5px solid $border-color;
+      padding: 15px 10px;
+
+      .info {
+        .item {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 10px;
+        }
+      }
+    }
+  }
+}

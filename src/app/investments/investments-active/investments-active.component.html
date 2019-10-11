@@ -1,1 +1,36 @@
 <app-data-table [tableHeader]="tableHeader" [data]="accounts"></app-data-table>
+
+<div class="accounts">
+  <div class="account" *ngFor="let account of accounts">
+    <div class="caption">
+      <a [routerLink]="['/strategies/details', account.strategy.id]">{{account.strategy.name}}</a>
+      <app-manage [data]="account"></app-manage>
+    </div>
+
+    <div>
+      <app-chart-yield-table [account]="account" [containerID]="'mobileYieldChartContainer' + account.strategy.id"></app-chart-yield-table>
+      <div id="mobileYieldChartContainer{{account.strategy.id}}"></div>
+    </div>
+
+    <div class="account-info">
+      <div class="item intervalPnL"><div>Прибыль</div><div>{{account.intervalPnL}}</div></div>
+      <div class="item target"><div>Цель</div><div>{{account.target}}</div></div>
+      <div class="item equity"><div>Средства</div><div>{{account.equity}}</div></div>
+      <div class="item protection"><div>Защита</div><div>{{account.protection}}</div></div>
+    </div>
+
+    <div class="strategy">
+      <div class="item">
+        <span>Доходность стратегии:</span>
+        <span [class.negative]="account.strategy.profit < 0"
+              [class.positive]="account.strategy.profit > 0">
+          {{account.strategy.profit | percent}}
+        </span>
+      </div>
+      <div class="item">
+        <span>Возраст инвестиции:</span>
+        <span>{{account.getAgeWeeks()}}</span>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,61 @@
+@import "styles";
+
+.accounts {
+  display: none;
+}
+
+@media (max-width: 992px) {
+  app-data-table {
+    display: none;
+  }
+
+  .accounts {
+    display: block;
+    padding-top: 15px;
+
+    .account {
+      border-bottom: 5px solid $border-color;
+      margin-bottom: 30px;
+      padding: 15px 10px;
+
+      .caption {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .account-info {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 15px;
+
+        .item {
+          text-align: center;
+          border-right: 1px solid $border-color;
+          padding: 10px;
+          line-height: 20px;
+          flex-grow: 1;
+
+          &:last-child {
+            border: none;
+          }
+        }
+      }
+
+      .strategy {
+        .item {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 10px;
+        }
+      }
+    }
+  }
+
+  div[id*="mobileYieldChartContainer"] {
+    height: 150px;
+  }
+}
+

@@ -4,3 +4,63 @@
                 [paginator]="paginator"
                 (paginationChanged)="getDeals()">
 </app-data-table>
+
+<h5>Сделки</h5>
+<div class="deals">
+  <div class="deal" *ngFor="let deal of deals">
+    <div class="info">
+      <div class="item">
+        <span>Время</span>
+        <span>{{deal.dtCreated | date:'yyyy-MM-dd hh:mm:ss'}}</span>
+      </div>
+
+      <div class="item">
+        <span>Сделка</span>
+        <span>{{deal.id}}</span>
+      </div>
+
+      <div class="item">
+        <span>Инструмент</span>
+        <span>{{deal.symbol}}</span>
+      </div>
+
+      <div class="item">
+        <span>Тип</span>
+        <span>{{deal.getType()}}</span>
+      </div>
+
+      <div class="item">
+        <span>Направление</span>
+        <span>{{deal.getEntry()}}</span>
+      </div>
+
+      <div class="item">
+        <span>Объем</span>
+        <span>{{deal.volume}}</span>
+      </div>
+
+      <div class="item">
+        <span>Цена</span>
+        <span>{{deal.price}}</span>
+      </div>
+
+      <div class="item">
+        <span>Прибыль, USD</span>
+        <span [class.negative]="deal.yield < 0"
+              [class.positive]="deal.yield > 0">{{deal.yield}}</span>
+      </div>
+
+      <div class="item">
+        <span>Своп, USD</span>
+        <span>{{deal.swap}}</span>
+      </div>
+
+      <div class="item">
+        <span>Итого прибыль, USD</span>
+        <span [class.negative]="deal.totalProfit < 0"
+              [class.positive]="deal.totalProfit > 0">{{deal.totalProfit}}</span>
+      </div>
+    </div>
+  </div>
+</div>
+<app-data-table-paginator [paginator]="paginator" (paginationChanged)="getDeals()"></app-data-table-paginator>

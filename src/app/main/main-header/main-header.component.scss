@@ -152,6 +152,7 @@ header {
       background-color: $main-color;
       width: 200px;
       transition: .3s;
+      z-index: 100;
 
       &.open {
         left: 0;
@@ -192,6 +193,10 @@ header {
 
 @media (max-width: 576px) {
   @include compact();
+
+  header .container .bill-info {
+    display: none;
+  }
 }
 
 @media (min-width: 576px) and (max-width: 768px) {

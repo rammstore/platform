@@ -5,7 +5,39 @@
                 (paginationChanged)="getStrategies()">
 </app-data-table>
 
-<button class="primary">Создать стратегию</button>
+<div class="strategies">
+  <div class="strategy" *ngFor="let strategy of strategies">
+    <div class="caption">
+      <a [routerLink]="['/strategies/details', strategy.id]">{{strategy.name}}</a>
+      <app-manage [data]="strategy"></app-manage>
+    </div>
+
+    <div class="info">
+      <div class="item">
+        <span>Средства:</span>
+        <span>{{strategy.account.equity | currency:'':'':'1.2-2'}}</span>
+      </div>
+
+      <div class="item">
+        <span>Инвесторы:</span>
+        <span>{{strategy.accountsCount}}</span>
+      </div>
+
+      <div class="item">
+        <span>Вознаграждение:</span>
+        <span>{{strategy.offer.fee | percent}}</span>
+      </div>
+
+      <div class="item">
+        <span>Доходность стратегии:</span>
+        <span [class.negative]="strategy.profit < 0"
+              [class.positive]="strategy.profit > 0">
+          {{strategy.account.intervalPnL}}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
 
 <p>В меню терминала “Сервис” - ”Настройки”, на вкладке “Советники” внесите адрес сервера RAMM в список разрешенных URL.</p>
 <p>Для этого добавьте адрес

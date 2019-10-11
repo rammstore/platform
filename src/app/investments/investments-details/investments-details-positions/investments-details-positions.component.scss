@@ -1,0 +1,21 @@
+@import "styles";
+
+.positions {
+  display: none;
+}
+
+@media (max-width: 576px) {
+  app-data-table {
+    display: none;
+  }
+
+  .positions {
+    display: block;
+
+    .position {
+
+    }
+  }
+
+}
+

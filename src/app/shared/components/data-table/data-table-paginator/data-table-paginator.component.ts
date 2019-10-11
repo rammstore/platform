@@ -28,4 +28,24 @@ export class DataTablePaginatorComponent {
     this.paginator.perPage = perPage;
     this.paginationChanged.emit();
   }
+
+  shouldDisplayLink(index: number): boolean {
+    if (this.paginator.totalPages <= 5) {
+      return true;
+    }
+
+    if (index === this.paginator.currentPage) {
+      return true;
+    }
+
+    if (index === this.paginator.currentPage + 1 || index === this.paginator.currentPage - 1) {
+      return true;
+    }
+
+    if (index === 1 || index === this.paginator.totalPages) {
+      return true;
+    }
+
+    return false;
+  }
 }

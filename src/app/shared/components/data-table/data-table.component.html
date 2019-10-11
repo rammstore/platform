@@ -94,6 +94,6 @@
   </tbody>
 </table>
 
-<div *ngIf="paginator">
+<div *ngIf="paginator" class="pagination">
   <app-data-table-paginator [paginator]="paginator" (paginationChanged)="paginatorChanged()"></app-data-table-paginator>
 </div>
