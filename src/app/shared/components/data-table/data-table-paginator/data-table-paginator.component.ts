@@ -10,8 +10,44 @@ export class DataTablePaginatorComponent {
   @Input() paginator: Paginator;
   @Output() paginationChanged: EventEmitter<void> = new EventEmitter();
 
-  getPages(): number[] {
-    return Array(this.paginator.totalPages).fill('').map((x, i) => i + 1);
+  getPages(): Array<string | number> {
+    const pagesArray: number[] = Array(this.paginator.totalPages).fill('').map((x, i) => i + 1);
+
+    if (pagesArray.length <= 5) {
+      return pagesArray;
+    }
+
+    const result: any[] = [];
+
+    if (!result.includes[pagesArray[0]]) {
+      result.push(pagesArray[0]);
+    }
+
+    if (!result.includes(this.paginator.currentPage - 1) && (this.paginator.currentPage - 1) > 1) {
+      result.push(this.paginator.currentPage - 1);
+    }
+
+    if (!result.includes(this.paginator.currentPage)) {
+      result.push(this.paginator.currentPage);
+    }
+
+    if (!result.includes(this.paginator.currentPage + 1) && (this.paginator.currentPage + 1) < this.paginator.totalPages) {
+      result.push(this.paginator.currentPage + 1);
+    }
+
+    if (!result.includes(this.paginator.totalPages)) {
+      result.push(this.paginator.totalPages);
+    }
+
+    if (result[1] !== 2) {
+      result.splice(1, 0, '...');
+    }
+
+    if (result[result.length - 2] !== this.paginator.totalPages - 1) {
+      result.splice(result.length - 1, 0, '...');
+    }
+
+    return result;
   }
 
   selectPage(pageNumber: number) {

@@ -138,7 +138,7 @@ export class AccountService {
   withdraw(id: number, amount: number): Observable<any> {
     return this.http.post(`${CONFIG.baseApiUrl}/accounts.withdraw`, { AccountID: id, Amount: amount }).pipe(
       map((response: any) => {
-        this.updateAccount(id, new Command(response.CommandID, id));
+        this.updateAccount(id, new Command(response.CommandBalanceID, id));
       })
     );
   }

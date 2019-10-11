@@ -1,9 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { StorageService } from '../../shared/services/storage.service';
-import { AuthData } from '../../shared/user/auth-data';
-import { StrategyService } from '../../shared/services/strategy.service';
-import { Strategy } from '../../shared/models/strategy';
+import { StorageService } from '@app/services/storage.service';
+import { AuthData } from '@app/user/auth-data';
+import { StrategyService } from '@app/services/strategy.service';
 import { BsModalRef } from 'ngx-bootstrap';
 import { Subject } from 'rxjs/index';
 import { takeUntil } from 'rxjs/internal/operators';
@@ -77,18 +76,18 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
 
     const strategy: object = {
       Name: this.formStep1.get('name').value,
-      FeeRate: this.formStep1.get('fee').value,
+      FeeRate: this.formStep1.get('fee').value / 100,
       CommissionRate: this.formStep1.get('comission').value,
       Shared: this.formStep1.get('isShared').value,
-      Protection: this.formStep2.get('protection').value,
-      Target: this.formStep2.get('target').value,
+      Protection: this.formStep2.get('protection').value / 100,
+      Target: this.formStep2.get('target').value / 100,
       Money: this.formStep2.get('money').value,
     };
 
     this.strategyService.add(strategy)
       .pipe(takeUntil(this.destroy$))
-      .subscribe(r => {
-        console.log(r);
+      .subscribe(() => {
+        this.modalRef.hide();
       });
   }
 

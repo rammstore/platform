@@ -26,7 +26,8 @@ export class StrategyService {
   constructor(
     private http: HttpClient,
     private createInstanceService: CreateInstanceService,
-    private commandService: CommandService
+    private commandService: CommandService,
+    private accountService: AccountService
   ) { }
 
   // Получение списка активных стратегий
@@ -115,7 +116,8 @@ export class StrategyService {
   // Создание новой стратегии
   add(strategy: object) {
     return this.http.post(`${CONFIG.baseApiUrl}/myStrategies.add`, strategy).pipe(map((response: any) => {
-      console.log(response);
+      response.Strategy.Account = response.Account;
+      this.activeStrategiesSubject.value.push(this.createInstanceService.createStrategy(response.Strategy));
     }));
   }
 
@@ -172,6 +174,7 @@ export class StrategyService {
             } else {
               this.activeStrategiesSubject.value.splice(this.activeStrategiesSubject.value.findIndex((s: Strategy) => s.id === strategy.id), 1);
             }
+            this.accountService.getActive().subscribe();
           });
         }
       });
