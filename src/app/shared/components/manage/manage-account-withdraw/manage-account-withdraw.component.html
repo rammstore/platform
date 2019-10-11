@@ -4,12 +4,12 @@
       <p>Я хочу:</p>
 
       <div class="radio-container">
-        <input type="radio"
+        <input #withdrawRadio
+               type="radio"
                name="withdrawType"
                id="withdraw-radio"
                value="withdraw"
-               formControlName="withdrawType"
-               [attr.disabled]="account.strategy.isPaused()">
+               formControlName="withdrawType">
         <label for="withdraw-radio" class="radio-label">Вывести часть средств из инвестиции</label>
       </div>
 
@@ -22,7 +22,7 @@
         <div *ngIf="account.strategy.isPaused() && !(form.get('withdrawType').value === 'withdraw')">
           Сумма, доступная для частичного вывода: {{account.equity | currency:'':'':'1.2-2'}} {{account.asset}}.
         </div>
-        <div class="form-field" *ngIf="!account.strategy.isPaused() && form.get('withdrawType').value === 'withdraw'">
+        <div class="form-field" *ngIf="account.strategy.isPaused() && form.get('withdrawType').value === 'withdraw'">
           <label for="amount" class="field-label">Сумма вывода, USD:</label>
           <div class="input-wrapper">
             <input id="amount"
@@ -44,7 +44,7 @@
                 Укажите сумму вывода.
               </label>
               <label class="details-message">
-                Баланс вашей инвестиции в вашу стратегию после вывода должен быть не меньше 200 USD.
+                Баланс вашей инвестиции в вашу стратегию после вывода должен быть не меньше 200,00 USD.
               </label>
               <label class="details-message">
                 Сумма, доступная для вывода: {{account.equity | currency:'':'':'1.2-2'}}
@@ -87,7 +87,7 @@
               *ngIf="form.get('withdrawType').value === 'withdraw'"
               (click)="withdraw()">
         Вывести
-        <span *ngIf="form.get('amount').value > 0">({{form.get('amount').value}} {{account.asset}})</span>
+        <span *ngIf="form.get('amount').value > 0">({{form.get('amount').value | currency:'':'':'1.2-2'}} {{account.asset}})</span>
       </button>
 
       <button class="warning"

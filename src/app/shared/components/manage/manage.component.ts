@@ -47,8 +47,10 @@ export class ManageComponent implements OnInit {
 
   openAccountCloseDialog(): void {
     const options: ModalOptions = new ModalOptions();
+
     options.initialState = {
-      account: this.data,
+      account: this.dataType === 'account' ? this.data : this.data['account'],
+      strategy: this.dataType === 'account' ? this.data['strategy'] : this.data,
       forClose: true
     };
 
@@ -85,6 +87,13 @@ export class ManageComponent implements OnInit {
 
   openAccountWithdrawDialog(): void {
     const options: ModalOptions = new ModalOptions();
+    if (this.dataType === 'strategy') {
+      this.data['account'].strategy = new Strategy({
+        id: this.data.id,
+        status: this.data.status
+      });
+    }
+
     options.initialState = {
       account: this.dataType === 'account' ? this.data : this.data['account']
     };

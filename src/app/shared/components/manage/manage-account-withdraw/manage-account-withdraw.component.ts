@@ -1,5 +1,5 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Account } from '@app/models';
+import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Account, Strategy } from '@app/models';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap';
 import { Subject } from 'rxjs/index';
@@ -12,7 +12,7 @@ import { ManageStrategyPauseComponent } from '@app/components/manage/manage-stra
   templateUrl: './manage-account-withdraw.component.html',
   styleUrls: ['./manage-account-withdraw.component.scss']
 })
-export class ManageAccountWithdrawComponent implements OnInit, OnDestroy {
+export class ManageAccountWithdrawComponent implements OnInit, AfterViewInit, OnDestroy {
   // here we will unsubscribe from all subscriptions
   destroy$ = new Subject();
 
@@ -20,6 +20,7 @@ export class ManageAccountWithdrawComponent implements OnInit, OnDestroy {
   account: Account;
   form: FormGroup;
   @Input() forClose: boolean = false;
+  @ViewChild('withdrawRadio', {static: false}) withdrawRadio: ElementRef;
 
   constructor(
     public modalRef: BsModalRef,
@@ -30,6 +31,10 @@ export class ManageAccountWithdrawComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.buildForm();
+  }
+
+  ngAfterViewInit(): void {
+    this.withdrawRadio.nativeElement.disabled = !this.account.strategy.isPaused();
   }
 
   buildForm(): void {
@@ -58,7 +63,6 @@ export class ManageAccountWithdrawComponent implements OnInit, OnDestroy {
     this.accountService.withdraw(this.account.id, this.form.get('amount').value)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
-        // this.account.equity = this.account.equity - this.form.get('amount').value;
         this.modalRef.hide();
       });
   }
