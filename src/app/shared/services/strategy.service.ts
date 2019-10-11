@@ -116,7 +116,8 @@ export class StrategyService {
   // Создание новой стратегии
   add(strategy: object) {
     return this.http.post(`${CONFIG.baseApiUrl}/myStrategies.add`, strategy).pipe(map((response: any) => {
-      console.log(response);
+      response.Strategy.Account = response.Account;
+      this.activeStrategiesSubject.value.push(this.createInstanceService.createStrategy(response.Strategy));
     }));
   }
 
