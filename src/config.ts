@@ -1,3 +1,3 @@
 export const CONFIG = {
-  baseApiUrl: 'https://maindc.ramm.store/api/client/v1'
+  baseApiUrl: 'http://136.243.13.109/api/client/v1'
 };
