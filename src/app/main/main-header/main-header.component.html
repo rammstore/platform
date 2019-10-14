@@ -25,9 +25,9 @@
           <a dropdownToggle class="dropdown-item" (click)="false">Изменить язык <i class="icon-flag {{authData.client.language}} current-lang"></i></a>
 
           <ul *dropdownMenu class="dropdown-menu langmenu" role="menu">
-            <li role="menuitem lang"><i class="icon-flag en"></i></li>
+            <li role="menuitem lang" (click)="setLanguage('en')"><i class="icon-flag en"></i></li>
             <li class="divider dropdown-divider"></li>
-            <li role="menuitem lang"><i class="icon-flag ru"></i></li>
+            <li role="menuitem lang" (click)="setLanguage('ru')"><i class="icon-flag ru"></i></li>
           </ul>
         </li>
         <!---->
@@ -78,9 +78,9 @@
           <a dropdownToggle class="dropdown-item" (click)="false">Изменить язык <i class="icon-flag {{authData.client.language}} current-lang"></i></a>
 
           <ul *dropdownMenu class="dropdown-menu langmenu" role="menu">
-            <li role="menuitem lang"><i class="icon-flag en"></i></li>
+            <li role="menuitem lang" (click)="setLanguage('en')"><i class="icon-flag en"></i></li>
             <li class="divider dropdown-divider"></li>
-            <li role="menuitem lang"><i class="icon-flag ru"></i></li>
+            <li role="menuitem lang" (click)="setLanguage('ru')"><i class="icon-flag ru"></i></li>
           </ul>
         </li>
 

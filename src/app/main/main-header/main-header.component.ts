@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '@app/services/auth.service';
 import { Subject } from 'rxjs/index';
 import { takeUntil } from 'rxjs/internal/operators';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-main-header',
@@ -39,7 +40,8 @@ export class MainHeaderComponent implements OnInit, OnDestroy {
   constructor(
     private storageService: StorageService,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private translateService: TranslateService
   ) {
   }
 
@@ -69,5 +71,10 @@ export class MainHeaderComponent implements OnInit, OnDestroy {
 
   closeAside(): void {
     this.isAsideOpen = false;
+  }
+
+  setLanguage(lang: string) {
+    this.translateService.setDefaultLang(lang);
+    this.translateService.use(lang);
   }
 }
