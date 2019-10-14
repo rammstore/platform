@@ -20,7 +20,7 @@
           Поставьте стратегию на паузу и повторите операцию.
         </div>
         <div *ngIf="account.strategy.isPaused() && !(form.get('withdrawType').value === 'withdraw')">
-          Сумма, доступная для частичного вывода: {{account.equity | currency:'':'':'1.2-2'}} {{account.asset}}.
+          Сумма, доступная для частичного вывода: {{account.availableToWithDraw | currency:'':'':'1.2-2'}} {{account.asset}}.
         </div>
         <div class="form-field" *ngIf="account.strategy.isPaused() && form.get('withdrawType').value === 'withdraw'">
           <label for="amount" class="field-label">Сумма вывода, USD:</label>
@@ -29,7 +29,7 @@
                    type="number"
                    formControlName="amount"
                    [min]="0"
-                   [max]="account.equity">
+                   [max]="account.availableToWithDraw">
             <div class="messages">
               <label class="error-message"
                      *ngIf="form.get('amount').touched && form.get('amount').hasError('min')">
@@ -47,7 +47,7 @@
                 Баланс вашей инвестиции в вашу стратегию после вывода должен быть не меньше 200,00 USD.
               </label>
               <label class="details-message">
-                Сумма, доступная для вывода: {{account.equity | currency:'':'':'1.2-2'}}
+                Сумма, доступная для вывода: {{account.availableToWithDraw | currency:'':'':'1.2-2'}}
               </label>
             </div>
           </div>
