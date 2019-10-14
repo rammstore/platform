@@ -21,7 +21,7 @@
       </tr>
       <tr>
         <td>Период оплаты</td>
-        <td>???</td>
+        <td>1 неделя</td>
       </tr>
       </tbody>
     </table>
@@ -82,11 +82,11 @@
       <tr><td></td><td></td></tr>
       <tr>
         <td>Цель, USD</td>
-        <td>{{account.targetEquity | currency:'':'':'1.2-2'}} targetEquity ???</td>
+        <td>{{account.getTargetAmount() | currency:'':'':'1.2-2'}}</td>
       </tr>
       <tr>
         <td>Защита, USD</td>
-        <td>{{account.protectionEquity | currency:'':'':'1.2-2'}} protectionEquity ???</td>
+        <td>{{account.getProtectionAmount() | currency:'':'':'1.2-2'}}</td>
       </tr>
       </tbody>
     </table>
