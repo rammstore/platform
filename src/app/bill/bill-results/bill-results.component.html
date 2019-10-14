@@ -4,15 +4,15 @@
       <thead><tr></tr></thead>
       <tbody>
       <tr>
-        <td>Доступно</td>
+        <td>{{'Доступно' | translate}}</td>
         <td class="accent">{{wallet.balance | currency:'':'':'1.2-2'}} {{wallet.asset}}</td>
       </tr>
       <tr>
-        <td>Инвестировано</td>
+        <td>{{'Инвестировано' | translate}}</td>
         <td class="positive">{{wallet.invested | currency:'':'':'1.2-2'}} {{wallet.asset}}</td>
       </tr>
       <tr>
-        <td>Средства</td>
+        <td>{{'Средства' | translate}}</td>
         <td>{{wallet.getEquity() | currency:'':'':'1.2-2'}} {{wallet.asset}}</td>
       </tr>
       </tbody>
@@ -20,17 +20,17 @@
 
     <div class="buttons-group">
       <a href="https://grandcapital.net/account/payments/deposit" target="_blank">
-        <button class="primary">Пополнить</button>
+        <button class="primary">{{'Пополнить' | translate}}</button>
       </a>
 
       <a href="https://grandcapital.net/account/payments/withdraw" target="_blank">
-        <button class="primary">Вывести</button>
+        <button class="primary">{{'Вывести' | translate}}</button>
       </a>
     </div>
   </div>
 
   <div class="chart-container">
-    <i class="fa fa-question-circle-o" tooltip="Вы также можете посмотреть эти значения в верхнем правом углу."></i>
+    <i class="fa fa-question-circle-o" [tooltip]="'Вы также можете посмотреть эти значения в верхнем правом углу' | translate"></i>
     <div id="billWalletChartContainer"></div>
     <app-chart-wallet-info [wallet]="wallet" containerID="billWalletChartContainer"></app-chart-wallet-info>
   </div>
