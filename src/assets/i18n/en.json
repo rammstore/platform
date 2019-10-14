@@ -7,5 +7,20 @@
   "Пожалуйста, введите текущий пароль": "Please enter your current password",
   "Пожалуйста, введите новый пароль": "Please enter a new password",
   "Пожалуйста, подтвердите новый пароль": "Please confirm the new password",
-  "Пароли не совпадают": "Passwords do not match"
+  "Пароли не совпадают": "Passwords do not match",
+  "Счет": "Account",
+  "Инвестиции": "Investment",
+  "Рейтинг": "Rating",
+  "Мои стратегии": "My strategies",
+  "Спецификация": "Specification",
+  "Помощь": "Help",
+  "Изменить пароль": "Change password",
+  "Изменить язык": "Change language",
+  "Выйти": "Log out",
+  "Доступно": "Available",
+  "Инвестировано": "Invested",
+  "Средства": "Equity",
+  "": "",
+
+  "Юридическая информация": "LEGAL: Grand Capital is a brand name owned and operated by Grand Capital Ltd. (Reg. no. 036046), a member of FinCom, an international regulatory body for financial markets. Grand Capital Ltd. is located at 106 Premier Building Victoria, Mahe, Seychelles. Email at: info@grandcapital.net"
 }
