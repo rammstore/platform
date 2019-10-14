@@ -41,7 +41,7 @@ export class ManageStrategyInvestComponent implements OnInit, OnDestroy {
 
   buildForm(): void {
     this.form = this.fb.group({
-      amount: [Math.round(this.authData.getWallets()[0].getEquity() / 10), [Validators.required, Validators.min(0), Validators.max(this.authData.getWallets()[0].getEquity())]],
+      amount: [(this.authData.getWallets()[0].getEquity() / 10).toFixed(2), [Validators.required, Validators.min(0), Validators.max(this.authData.getWallets()[0].getEquity())]],
       factor: [1, [Validators.min(-1000), Validators.max(1000)]],
       target: [100, [Validators.required, Validators.min(0)]],
       protection: [50, [Validators.required, Validators.min(0), Validators.max(99)]]

@@ -42,7 +42,7 @@ export class ManageAccountResumeComponent implements OnInit, OnDestroy {
 
   buildForm(): void {
     this.form = this.fb.group({
-      amount: [0, [Validators.required, Validators.min(0), Validators.max(this.authData.getWallets()[0].getEquity())]],
+      amount: [0.00, [Validators.required, Validators.min(0), Validators.max(this.authData.getWallets()[0].getEquity())]],
       goal: [100, [Validators.required, Validators.min(0)]],
       protection: [50, [Validators.required, Validators.min(0), Validators.max(99)]]
     });
