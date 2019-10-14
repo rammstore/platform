@@ -26,9 +26,9 @@ export class InvestmentsClosedComponent implements OnInit, OnDestroy {
       new TableColumn({ property: 'id', label: 'Инвестиция'}),
       new TableColumn({ property: 'dtCreated', label: 'Создана', pipe: { pipe: DatePipe, args: ['yyyy-MM-dd hh:mm:ss'] }}),
       new TableColumn({ property: 'dtClosed', label: 'Закрыта', pipe: { pipe: DatePipe, args: ['yyyy-MM-dd hh:mm:ss'] }}),
-      new TableColumn({ property: 'age', label: 'Возраст' }),
+      new TableColumn({ property: 'age', label: 'Возраст, недель' }),
       new TableColumn({ property: 'protection', label: 'Защита', pipe: { pipe: PercentPipe }}),
-      new TableColumn({ property: 'intervalPnL', label: 'Прибыль, USD', pipe: { pipe: CurrencyPipe, args: ['', '', '1.2-2'] } }),
+      new TableColumn({ property: 'intervalPnL', label: 'Прибыль', pipe: { pipe: CurrencyPipe, args: ['', '', '1.2-2'] } }),
       new TableColumn({ property: 'investmentDetails', label: '' })
     ]),
   ];

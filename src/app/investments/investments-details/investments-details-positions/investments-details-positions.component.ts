@@ -29,9 +29,9 @@ export class InvestmentsDetailsPositionsComponent implements OnInit, OnDestroy {
       new TableColumn({ property: 'volume', label: 'Объем' }),
       new TableColumn({ property: 'price', label: 'Цена открытия' }),
       new TableColumn({ property: '', label: 'Текущая цена' }),
-      new TableColumn({ property: 'profit', label: 'Прибыль, USD' }),
-      new TableColumn({ property: 'swap', label: 'Своп, USD' }),
-      new TableColumn({ property: 'totalProfit', label: 'Итого прибыль, USD' }),
+      new TableColumn({ property: 'profit', label: 'Прибыль' }),
+      new TableColumn({ property: 'swap', label: 'Своп' }),
+      new TableColumn({ property: 'totalProfit', label: 'Итого прибыль' }),
     ]),
   ];
   totalFields: string[] = ['profit', 'swap', 'totalProfit'];
