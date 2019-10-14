@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app.routing';
 import { AppComponent } from './app.component';
 import { SharedModule } from '@app/shared.module';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { UserService } from '@app/user/user.service';
 import { StorageService } from '@app/services/storage.service';
 import { AuthService } from '@app/services/auth.service';
@@ -14,6 +14,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { WalletService } from '@app/services/wallet.service';
 import { AccountService } from '@app/services/account.service';
 import { CommandService } from '@app/services/command.service';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+// AoT requires an exported function for factories
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
 
 @NgModule({
   declarations: [
@@ -25,7 +32,14 @@ import { CommandService } from '@app/services/command.service';
     SharedModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    OuterConfigModule
+    OuterConfigModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    })
   ],
   providers: [
     AuthService,

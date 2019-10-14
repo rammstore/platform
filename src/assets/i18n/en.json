@@ -1,0 +1,11 @@
+{
+  "Смена пароля": "Change password",
+  "Текущий пароль": "Current password",
+  "Новый пароль": "New password",
+  "Подтвердите пароль": "Confirm password",
+  "Сменить пароль": "Change password",
+  "Пожалуйста, введите текущий пароль": "Please enter your current password",
+  "Пожалуйста, введите новый пароль": "Please enter a new password",
+  "Пожалуйста, подтвердите новый пароль": "Please confirm the new password",
+  "Пароли не совпадают": "Passwords do not match"
+}

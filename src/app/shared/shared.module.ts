@@ -12,6 +12,7 @@ import { ChartYieldTableComponent } from './components/chart/chart-yield-table/c
 import { DataTablePaginatorComponent } from './components/data-table/data-table-paginator/data-table-paginator.component';
 import { DialogWrapperModule } from '@app/components/dialog-wrapper/dialog-wrapper.module';
 import { ManageModule } from '@app/components/manage/manage.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { ManageModule } from '@app/components/manage/manage.module';
     ReactiveFormsModule,
     RouterModule,
     DialogWrapperModule,
-    ManageModule
+    ManageModule,
+    TranslateModule
   ],
   exports: [
     CommonModule,
@@ -51,7 +53,8 @@ import { ManageModule } from '@app/components/manage/manage.module';
     ChartYieldTableComponent,
     DialogWrapperModule,
     ManageModule,
-    DataTablePaginatorComponent
+    DataTablePaginatorComponent,
+    TranslateModule
   ],
   providers: [
     DynamicPipe,
