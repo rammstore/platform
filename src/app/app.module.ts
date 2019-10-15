@@ -39,7 +39,9 @@ export function HttpLoaderFactory(http: HttpClient) {
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       }
-    })
+    }),
+    BrowserAnimationsModule
+    // OuterConfigModule
   ],
   providers: [
     AuthService,
