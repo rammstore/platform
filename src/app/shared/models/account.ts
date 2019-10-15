@@ -94,11 +94,11 @@ export class Account {
   }
 
   getTargetAmount(): number {
-    return this.target * this.equity;
+    return (1 + this.target) * this.equity;
   }
 
   getProtectionAmount(): number {
-    return this.target * this.equity;
+    return this.protection * this.equity;
   }
 
   pause(): void {
