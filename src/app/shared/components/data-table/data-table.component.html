@@ -4,8 +4,9 @@
     <th *ngFor="let column of row.columns"
         [attr.colspan]="column.colspan"
         [attr.rowspan]="column.rowspan"
-        class="{{column.property}}">
-      {{column.label | translate}}
+        class="{{column.property}}"
+        translate>
+      {{column.label}}
     </th>
   </tr>
   </thead>

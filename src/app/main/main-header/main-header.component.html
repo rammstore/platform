@@ -5,12 +5,12 @@
     </a>
 
     <nav>
-      <a [routerLink]="['/bill']" [class.active]="isLinkActive('/bill')">{{'Счет' | translate}}</a>
-      <a [routerLink]="['/investments']" [class.active]="isLinkActive('/investments')">{{'Инвестиции' | translate}}</a>
-      <a [routerLink]="['/rating']" [class.active]="isLinkActive('/rating')">{{'Рейтинг' | translate}}</a>
-      <a [routerLink]="['/strategies']" [class.active]="isLinkActive('/strategies')">{{'Мои стратегии' | translate}}</a>
-      <a [routerLink]="['/spec']" [class.active]="isLinkActive('/specification')">{{'Спецификация' | translate}}</a>
-      <a [routerLink]="['/help']" [class.active]="isLinkActive('/help')">{{'Помощь' | translate}}</a>
+      <a [routerLink]="['/bill']" [class.active]="isLinkActive('/bill')" translate>Счет</a>
+      <a [routerLink]="['/investments']" [class.active]="isLinkActive('/investments')" translate>Инвестиции</a>
+      <a [routerLink]="['/rating']" [class.active]="isLinkActive('/rating')" translate>Рейтинг</a>
+      <a [routerLink]="['/strategies']" [class.active]="isLinkActive('/strategies')" translate>Мои стратегии</a>
+      <a [routerLink]="['/spec']" [class.active]="isLinkActive('/specification')" translate>Спецификация</a>
+      <a [routerLink]="['/help']" [class.active]="isLinkActive('/help')" translate>Помощь</a>
     </nav>
 
     <div class="btn-group menu" dropdown>
@@ -18,11 +18,11 @@
       <i class="icon-hamburger" dropdownToggle></i>
 
       <ul id="dropdown-nested" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-nested">
-        <li role="menuitem"><a [routerLink]="['/manage']" class="dropdown-item">{{'Изменить пароль' | translate}}</a></li>
+        <li role="menuitem"><a [routerLink]="['/manage']" class="dropdown-item" translate>Изменить пароль</a></li>
         <li class="divider dropdown-divider"></li>
         <!---->
         <li role="menuitem" dropdown triggers="mouseover" placement="right" container="body">
-          <a dropdownToggle class="dropdown-item" (click)="false">{{'Изменить язык' | translate}}<i class="icon-flag {{authData.client.language}} current-lang"></i></a>
+          <a dropdownToggle class="dropdown-item" (click)="false" translate>Изменить язык<i class="icon-flag {{authData.client.language}} current-lang"></i></a>
 
           <ul *dropdownMenu class="dropdown-menu langmenu" role="menu">
             <li role="menuitem lang" (click)="setLanguage('en')"><i class="icon-flag en"></i></li>
@@ -32,7 +32,7 @@
         </li>
         <!---->
         <li class="divider dropdown-divider"></li>
-        <li role="menuitem"><a (click)="logout()" class="dropdown-item">{{'Выйти' | translate}}<span class="login">{{authData.client.login}}</span></a></li>
+        <li role="menuitem"><a (click)="logout()" class="dropdown-item" translate>Выйти<span class="login">{{authData.client.login}}</span></a></li>
       </ul>
     </div>
 
@@ -42,40 +42,40 @@
     <ng-template #chartContainer>
       <div class="legend">
         <div>
-          <span>{{'Доступно' | translate}}</span>
+          <span translate>Доступно</span>
           <span class="amount available">{{(authData.getWallets()[0].balance) | currency:'':'':'1.2-2'}} {{authData.getWallets()[0].asset}}</span>
         </div>
         <div>
-          <span>{{'Инвестировано' | translate}}</span>
+          <span translate>Инвестировано</span>
           <span class="amount invested">{{authData.getWallets()[0].invested | currency:'':'':'1.2-2'}} {{authData.getWallets()[0].asset}}</span>
         </div>
         <div>
-          <span>{{'Средства' | translate}}</span>
+          <span translate>Средства</span>
           <span class="amount">{{authData.getWallets()[0].getEquity() | currency:'':'':'1.2-2'}} {{authData.getWallets()[0].asset}}</span>
         </div>
 
         <div id="headerChartContainer"></div>
         <app-chart-wallet-info [wallet]="authData.getWallets()[0]" containerID="headerChartContainer"></app-chart-wallet-info>
 
-        <button [routerLink]="['/bill/fund']" class="primary block">{{'Пополнить' | translate}}</button>
+        <button [routerLink]="['/bill/fund']" class="primary block" translate>Пополнить</button>
       </div>
     </ng-template>
 
     <aside [class.open]="isAsideOpen">
       <ul>
-        <li><a [routerLink]="['/bill']" [class.active]="isLinkActive('/bill')">{{'Счет' | translate}}</a></li>
-        <li><a [routerLink]="['/investments']" [class.active]="isLinkActive('/investments')">{{'Инвестиции' | translate}}</a></li>
-        <li><a [routerLink]="['/rating']" [class.active]="isLinkActive('/rating')">{{'Рейтинг' | translate}}</a></li>
-        <li><a [routerLink]="['/strategies']" [class.active]="isLinkActive('/strategies')">{{'Мои стратегии' | translate}}</a></li>
-        <li><a [routerLink]="['/spec']" [class.active]="isLinkActive('/specification')">{{'Спецификация' | translate}}</a></li>
-        <li><a [routerLink]="['/help']" [class.active]="isLinkActive('/help')">{{'Помощь' | translate}}</a></li>
+        <li><a [routerLink]="['/bill']" [class.active]="isLinkActive('/bill')" translate>Счет</a></li>
+        <li><a [routerLink]="['/investments']" [class.active]="isLinkActive('/investments')" translate>Инвестиции</a></li>
+        <li><a [routerLink]="['/rating']" [class.active]="isLinkActive('/rating')" translate>Рейтинг</a></li>
+        <li><a [routerLink]="['/strategies']" [class.active]="isLinkActive('/strategies')" translate>Мои стратегии</a></li>
+        <li><a [routerLink]="['/spec']" [class.active]="isLinkActive('/specification')" translate>Спецификация</a></li>
+        <li><a [routerLink]="['/help']" [class.active]="isLinkActive('/help')" translate>Помощь</a></li>
       </ul>
 
       <ul>
-        <li><a [routerLink]="['/manage']" class="dropdown-item">{{'Изменить пароль' | translate}}</a></li>
+        <li><a [routerLink]="['/manage']" class="dropdown-item" translate>Изменить пароль</a></li>
 
         <li dropdown triggers="mouseover" placement="right" container="body" [dropup]="true">
-          <a dropdownToggle class="dropdown-item" (click)="false">{{'Изменить язык' | translate}}
+          <a dropdownToggle class="dropdown-item" (click)="false" translate>Изменить язык
             <i class="icon-flag {{authData.client.language}} current-lang"></i>
           </a>
 
@@ -86,7 +86,7 @@
           </ul>
         </li>
 
-        <li><a (click)="logout()">{{'Выйти' | translate}}</a></li>
+        <li><a (click)="logout()" translate>Выйти</a></li>
 
         <li><a>{{authData.client.login}}</a></li>
       </ul>
