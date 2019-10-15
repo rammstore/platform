@@ -24,8 +24,8 @@ import { CommandService } from '@app/services/command.service';
     AppRoutingModule,
     SharedModule,
     HttpClientModule,
-    BrowserAnimationsModule,
-    OuterConfigModule
+    BrowserAnimationsModule
+    // OuterConfigModule
   ],
   providers: [
     AuthService,
