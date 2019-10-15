@@ -32,7 +32,7 @@
             Вы можете инвестировать только свободные средства.
           </label>
           <label class="details-message">
-            Доступно: {{authData.getWallets()[0].balance}}
+            Доступно: {{authData.getWallets()[0].balance | currency:'':'':'1.2-2'}} USD
           </label>
         </div>
       </div>

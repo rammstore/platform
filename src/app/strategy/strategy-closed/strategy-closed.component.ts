@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Strategy } from '../../shared/models/strategy';
-import { StrategyService } from '../../shared/services/strategy.service';
+import { Strategy } from '@app/models/strategy';
+import { StrategyService } from '@app/services/strategy.service';
 import { TableHeaderRow } from '@app/models/table-header-row';
 import { Paginator, TableColumn } from '@app/models';
 import { DatePipe, PercentPipe } from '@angular/common';
@@ -27,7 +27,7 @@ export class StrategyClosedComponent implements OnInit, OnDestroy {
       new TableColumn({ property: 'name', label: 'Название' }),
       new TableColumn({ property: 'offer.fee', label: 'Вознаграждение', pipe: { pipe: PercentPipe }}),
       new TableColumn({ property: 'dtCreated', label: 'Создана', pipe: { pipe: DatePipe, args: ['yyyy-MM-dd hh:mm:ss'] }}),
-      new TableColumn({ property: 'dtClosed', label: 'Закрыта' }),
+      new TableColumn({ property: 'dtClosed', label: 'Закрыта', pipe: { pipe: DatePipe, args: ['yyyy-MM-dd hh:mm:ss'] } }),
       new TableColumn({ property: 'age', label: 'Возраст' })
     ]),
   ];

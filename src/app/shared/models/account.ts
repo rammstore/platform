@@ -93,6 +93,14 @@ export class Account {
     return Math.round((now - created) / (1000 * 3600 * 24 * 7));
   }
 
+  getTargetAmount(): number {
+    return (1 + this.target) * this.equity;
+  }
+
+  getProtectionAmount(): number {
+    return this.protection * this.equity;
+  }
+
   pause(): void {
     this.status = 4;
   }

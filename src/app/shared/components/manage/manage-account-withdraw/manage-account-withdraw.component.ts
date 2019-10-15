@@ -40,7 +40,7 @@ export class ManageAccountWithdrawComponent implements OnInit, AfterViewInit, On
   buildForm(): void {
     this.form = this.fb.group({
       withdrawType: [this.forClose ? 'close' : ''],
-      amount: [0, [Validators.min(0.01), Validators.max(this.account.equity), Validators.required]]
+      amount: [0, [Validators.min(0.01), Validators.max(this.account.availableToWithDraw), Validators.required]]
     });
   }
 
@@ -56,7 +56,7 @@ export class ManageAccountWithdrawComponent implements OnInit, AfterViewInit, On
   }
 
   withdraw(): void {
-    if (this.form.get('amount').value < 0.01 && this.form.get('amount').value > this.account.equity) {
+    if (this.form.get('amount').value < 0.01 && this.form.get('amount').value > this.account.availableToWithDraw) {
       return;
     }
 
@@ -71,8 +71,6 @@ export class ManageAccountWithdrawComponent implements OnInit, AfterViewInit, On
     this.accountService.close(this.account.id)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
-        this.account.status = 6;
-        this.account.equity = 0;
         this.modalRef.hide();
       });
   }

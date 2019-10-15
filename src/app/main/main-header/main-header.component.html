@@ -22,7 +22,7 @@
         <li class="divider dropdown-divider"></li>
         <!---->
         <li role="menuitem" dropdown triggers="mouseover" placement="right" container="body">
-          <a dropdownToggle class="dropdown-item" (click)="false">Изменение языка <i class="icon-flag {{authData.client.language}} current-lang"></i></a>
+          <a dropdownToggle class="dropdown-item" (click)="false">Изменить язык <i class="icon-flag {{authData.client.language}} current-lang"></i></a>
 
           <ul *dropdownMenu class="dropdown-menu langmenu" role="menu">
             <li role="menuitem lang"><i class="icon-flag en"></i></li>
@@ -75,7 +75,7 @@
         <li><a [routerLink]="['/manage']" class="dropdown-item">Изменить пароль</a></li>
 
         <li dropdown triggers="mouseover" placement="right" container="body" [dropup]="true">
-          <a dropdownToggle class="dropdown-item" (click)="false">Изменение языка <i class="icon-flag {{authData.client.language}} current-lang"></i></a>
+          <a dropdownToggle class="dropdown-item" (click)="false">Изменить язык <i class="icon-flag {{authData.client.language}} current-lang"></i></a>
 
           <ul *dropdownMenu class="dropdown-menu langmenu" role="menu">
             <li role="menuitem lang"><i class="icon-flag en"></i></li>
@@ -84,7 +84,9 @@
           </ul>
         </li>
 
-        <li><a (click)="logout()">Выйти <span class="login">{{authData.client.login}}</span></a></li>
+        <li><a (click)="logout()">Выйти</a></li>
+
+        <li><a>{{authData.client.login}}</a></li>
       </ul>
     </aside>
 
