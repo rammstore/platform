@@ -32,7 +32,9 @@
     <div class="form-field">
       <label class="field-label">Множитель:</label>
       <div class="input-wrapper">
-        <input value="1" disabled>
+        <input value="1"
+               disabled
+               title="Коэффициент копирования. При соотношении более 1,0 копирование идет более агрессивно; увеличивается не только потенциальный доход, но и риск потери. Когда коэффициент меньше 1,0 - наоборот">
       </div>
     </div>
 
@@ -43,7 +45,8 @@
                type="number"
                formControlName="goal"
                [min]="0"
-               [max]="100">
+               [max]="100"
+               title="Целевой доход. При достижении целевого дохода инвестиция будет приостановлена">
         <div class="messages">
           <label class="error-message"
                  *ngIf="form.get('goal').touched && form.get('goal').hasError('required')">
@@ -67,7 +70,8 @@
                type="number"
                formControlName="protection"
                [min]="0"
-               [max]="100">
+               [max]="100"
+               title="При снижении средств до заданного значения инвестиция будет приостановлена">
         <div class="messages">
           <label class="error-message"
                  *ngIf="form.get('protection').touched && form.get('protection').hasError('required')">
