@@ -32,16 +32,14 @@ export function HttpLoaderFactory(http: HttpClient) {
     SharedModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    OuterConfigModule,
+    // OuterConfigModule
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       }
-    }),
-    BrowserAnimationsModule
-    // OuterConfigModule
+    })
   ],
   providers: [
     AuthService,
