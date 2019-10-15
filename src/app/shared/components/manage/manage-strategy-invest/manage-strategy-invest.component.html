@@ -36,7 +36,8 @@
                type="number"
                formControlName="factor"
                [min]="-1000"
-               [max]="1000">
+               [max]="1000"
+               title="Коэффициент копирования. При соотношении более 1,0 копирование идет более агрессивно; увеличивается не только потенциальный доход, но и риск потери. Когда коэффициент меньше 1,0 - наоборот">
         <div class="messages">
           <label class="error-message"
                  *ngIf="form.get('factor').touched && form.get('factor').hasError('incorrect')">
@@ -61,7 +62,8 @@
                type="number"
                formControlName="target"
                [min]="0"
-               [max]="100">
+               [max]="100"
+               title="Целевой доход. При достижении целевого дохода инвестиция будет приостановлена">
         <div class="messages">
           <label class="error-message"
                  *ngIf="form.get('target').touched && form.get('target').hasError('required')">
@@ -85,7 +87,8 @@
                type="number"
                formControlName="protection"
                [min]="0"
-               [max]="100">
+               [max]="100"
+               title="При снижении средств до заданного значения инвестиция будет приостановлена">
         <div class="messages">
           <label class="error-message"
                  *ngIf="form.get('protection').touched && form.get('protection').hasError('required')">

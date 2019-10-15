@@ -7,6 +7,6 @@ import { BsModalRef } from 'ngx-bootstrap';
   styleUrls: ['./dialog-wrapper.component.scss']
 })
 export class DialogWrapperComponent {
-  @Input() title: string;
+  @Input() titleText: string;
   @Input() modalRef: BsModalRef;
 }
