@@ -12,6 +12,7 @@ import { ChartYieldTableComponent } from './components/chart/chart-yield-table/c
 import { DataTablePaginatorComponent } from './components/data-table/data-table-paginator/data-table-paginator.component';
 import { DialogWrapperModule } from '@app/components/dialog-wrapper/dialog-wrapper.module';
 import { ManageModule } from '@app/components/manage/manage.module';
+import { CustomCurrencyPipe } from './pipes/custom-currency.pipe';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { ManageModule } from '@app/components/manage/manage.module';
     DataTableComponent,
     DynamicPipe,
     ChartYieldTableComponent,
-    DataTablePaginatorComponent
+    DataTablePaginatorComponent,
+    CustomCurrencyPipe
   ],
   imports: [
     CommonModule,
@@ -51,13 +53,15 @@ import { ManageModule } from '@app/components/manage/manage.module';
     ChartYieldTableComponent,
     DialogWrapperModule,
     ManageModule,
-    DataTablePaginatorComponent
+    DataTablePaginatorComponent,
+    CustomCurrencyPipe
   ],
   providers: [
     DynamicPipe,
     PercentPipe,
     CurrencyPipe,
-    DatePipe
+    DatePipe,
+    CustomCurrencyPipe
   ]
 })
 export class SharedModule { }
