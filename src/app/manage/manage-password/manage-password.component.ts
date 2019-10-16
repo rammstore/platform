@@ -18,6 +18,8 @@ export class ManagePasswordComponent implements OnInit, OnDestroy {
 
   // component data
   form: FormGroup;
+  isSuccessful: boolean;
+  isDone: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -48,7 +50,14 @@ export class ManagePasswordComponent implements OnInit, OnDestroy {
     this.authService.changePassword(this.form.get('currentPass').value, this.form.get('newPass').value)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
-        this.router.navigate(['/bill']);
+        this.isDone = true;
+        this.isSuccessful = true;
+        setTimeout(() => {
+          this.router.navigate(['/bill']);
+        }, 1000);
+      }, () => {
+        this.isDone = true;
+        this.isSuccessful = false;
       });
   }
 
