@@ -274,9 +274,17 @@
   "Минимальный размер цели": "Minimal target is",
   "Минимальный размер защиты": "Minimal protection is",
   "Максимальный размер защиты": "Maximal protection is",
-  "": "",
-  "": "",
-  "": "",
+
+  "Пауза": "Pause",
+  "Возобновить": "Resume",
+  "Изменить профиль инвестиции": "Change investment profile",
+  "Вывод средств из инвестиции": "Withdraw",
+  "Выписка по инвестиции": "Investment statement",
+  "Скачать сигнальный скрипт": "Download signal script",
+  "Закрыть инвестицию": "Close investment",
+  "Закрыть стратегию": "Close strategy",
+  "Инвестировать": "Invest",
+  "Список инвестиций": "List of investments",
   "": "",
   "": ""
 }
