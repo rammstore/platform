@@ -23,7 +23,7 @@
             Вы можете инвестировать только свободные средства.
           </label>
           <label class="details-message">
-            Доступно: {{authData.getWallets()[0].getEquity()  | currency:'':'':'1.2-2'}} {{strategy.account.asset}}
+            Доступно: {{authData.getWallets()[0].getEquity()  | customCurrency}}
           </label>
         </div>
       </div>
@@ -74,7 +74,7 @@
             Пожалуйста, введите корректное значение цели.
           </label>
           <label class="details-message" *ngIf="form.get('amount').value && form.get('target').value">
-            {{((form.get('amount').value * form.get('target').value) / 100) | currency:'':'':'1.2-2'}} {{strategy.account.asset}}
+            {{((form.get('amount').value * form.get('target').value) / 100) | customCurrency}}
           </label>
         </div>
       </div>
@@ -103,7 +103,7 @@
             Пожалуйста, введите корректное значение защиты.
           </label>
           <label class="details-message" *ngIf="form.get('amount').value && form.get('protection').value">
-            {{((form.get('amount').value * form.get('protection').value) / 100) | currency:'':'':'1.2-2'}} {{strategy.account.asset}}
+            {{((form.get('amount').value * form.get('protection').value) / 100) | customCurrency}}
           </label>
         </div>
       </div>

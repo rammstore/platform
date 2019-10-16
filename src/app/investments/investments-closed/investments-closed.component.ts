@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Account, TableColumn } from '@app/models';
 import { TableHeaderRow } from '@app/models/table-header-row';
-import { CurrencyPipe, DatePipe, PercentPipe } from '@angular/common';
+import { DatePipe, PercentPipe } from '@angular/common';
 import { Subject } from 'rxjs/index';
 import { takeUntil } from 'rxjs/internal/operators';
 import { AccountService } from '@app/services/account.service';
+import { CustomCurrencyPipe } from '@app/pipes/custom-currency.pipe';
 
 @Component({
   selector: 'app-investments-closed',
@@ -28,7 +29,7 @@ export class InvestmentsClosedComponent implements OnInit, OnDestroy {
       new TableColumn({ property: 'dtClosed', label: 'Закрыта', pipe: { pipe: DatePipe, args: ['yyyy-MM-dd hh:mm:ss'] }}),
       new TableColumn({ property: 'age', label: 'Возраст' }),
       new TableColumn({ property: 'protection', label: 'Защита', pipe: { pipe: PercentPipe }}),
-      new TableColumn({ property: 'intervalPnL', label: 'Прибыль, USD', pipe: { pipe: CurrencyPipe, args: ['', '', '1.2-2'] } }),
+      new TableColumn({ property: 'intervalPnL', label: 'Прибыль, USD', pipe: { pipe: CustomCurrencyPipe } }),
       new TableColumn({ property: 'investmentDetails', label: '' })
     ]),
   ];

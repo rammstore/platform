@@ -5,9 +5,9 @@
     <span class="pnl item"
           [class.positive]="strategy.account.intervalPnL > 0"
           [class.negative]="strategy.account.intervalPnL < 0">
-      {{strategy.account.intervalPnL | currency:'':'':'1.2-2'}} {{strategy.account.asset}}
+      {{strategy.account.intervalPnL | customCurrency}}
     </span>
-    <span class="item">Средства: <b>{{strategy.account.balance | currency:'':'':'1.2-2'}} {{strategy.account.asset}}</b></span>
+    <span class="item">Средства: <b>{{strategy.account.balance | customCurrency}}</b></span>
     <span class="item">Цель: <b>{{(strategy.account.target | percent)}}</b></span>
     <span class="item">Защита: <b>{{strategy.account.protection | percent}}</b></span>
   </div>

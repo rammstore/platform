@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule, CurrencyPipe, DatePipe, PercentPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { AccordionModule, BsDropdownModule, ModalModule, PopoverModule, TooltipModule } from 'ngx-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ContentTabsComponent } from './components/content-tabs/content-tabs.component';
@@ -7,12 +7,11 @@ import { RouterModule } from '@angular/router';
 import { SpecificationInfoBlockComponent } from './components/specification-info-block/specification-info-block.component';
 import { ChartWalletInfoComponent } from './components/chart/chart-wallet-info/chart-wallet-info.component';
 import { DataTableComponent } from './components/data-table/data-table.component';
-import { DynamicPipe } from './pipes/dynamic.pipe';
 import { ChartYieldTableComponent } from './components/chart/chart-yield-table/chart-yield-table.component';
 import { DataTablePaginatorComponent } from './components/data-table/data-table-paginator/data-table-paginator.component';
 import { DialogWrapperModule } from '@app/components/dialog-wrapper/dialog-wrapper.module';
 import { ManageModule } from '@app/components/manage/manage.module';
-import { CustomCurrencyPipe } from './pipes/custom-currency.pipe';
+import { PipesModule } from '@app/pipes/pipes.module';
 
 @NgModule({
   declarations: [
@@ -20,10 +19,8 @@ import { CustomCurrencyPipe } from './pipes/custom-currency.pipe';
     SpecificationInfoBlockComponent,
     ChartWalletInfoComponent,
     DataTableComponent,
-    DynamicPipe,
     ChartYieldTableComponent,
-    DataTablePaginatorComponent,
-    CustomCurrencyPipe
+    DataTablePaginatorComponent
   ],
   imports: [
     CommonModule,
@@ -35,7 +32,8 @@ import { CustomCurrencyPipe } from './pipes/custom-currency.pipe';
     ReactiveFormsModule,
     RouterModule,
     DialogWrapperModule,
-    ManageModule
+    ManageModule,
+    PipesModule
   ],
   exports: [
     CommonModule,
@@ -54,14 +52,7 @@ import { CustomCurrencyPipe } from './pipes/custom-currency.pipe';
     DialogWrapperModule,
     ManageModule,
     DataTablePaginatorComponent,
-    CustomCurrencyPipe
-  ],
-  providers: [
-    DynamicPipe,
-    PercentPipe,
-    CurrencyPipe,
-    DatePipe,
-    CustomCurrencyPipe
+    PipesModule
   ]
 })
 export class SharedModule { }

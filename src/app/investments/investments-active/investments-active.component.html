@@ -13,10 +13,10 @@
     </div>
 
     <div class="account-info">
-      <div class="item intervalPnL"><div>Прибыль</div><div>{{account.intervalPnL | currency:'':'':'1.2-2'}}</div></div>
-      <div class="item target"><div>Цель</div><div>{{account.getTargetAmount() | currency:'':'':'1.2-2'}}</div></div>
-      <div class="item equity"><div>Средства</div><div>{{account.equity | currency:'':'':'1.2-2'}}</div></div>
-      <div class="item protection"><div>Защита</div><div>{{account.getProtectionAmount() | currency:'':'':'1.2-2'}}</div></div>
+      <div class="item intervalPnL"><div>Прибыль</div><div>{{account.intervalPnL | customCurrency}}</div></div>
+      <div class="item target"><div>Цель</div><div>{{account.getTargetAmount() | customCurrency}}</div></div>
+      <div class="item equity"><div>Средства</div><div>{{account.equity | customCurrency}}</div></div>
+      <div class="item protection"><div>Защита</div><div>{{account.getProtectionAmount() | customCurrency}}</div></div>
     </div>
 
     <div class="strategy">

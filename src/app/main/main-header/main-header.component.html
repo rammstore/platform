@@ -43,15 +43,15 @@
       <div class="legend">
         <div>
           <span>Доступно</span>
-          <span class="amount available">{{(authData.getWallets()[0].balance) | currency:'':'':'1.2-2'}} {{authData.getWallets()[0].asset}}</span>
+          <span class="amount available">{{(authData.getWallets()[0].balance)  | customCurrency}}</span>
         </div>
         <div>
           <span>Инвестировано</span>
-          <span class="amount invested">{{authData.getWallets()[0].invested | currency:'':'':'1.2-2'}} {{authData.getWallets()[0].asset}}</span>
+          <span class="amount invested">{{authData.getWallets()[0].invested | customCurrency}}</span>
         </div>
         <div>
           <span>Средства</span>
-          <span class="amount">{{authData.getWallets()[0].getEquity() | currency:'':'':'1.2-2'}} {{authData.getWallets()[0].asset}}</span>
+          <span class="amount">{{authData.getWallets()[0].getEquity() | customCurrency}}</span>
         </div>
 
         <div id="headerChartContainer"></div>
@@ -92,10 +92,10 @@
 
     <div class="bill-info" *ngIf="authData" [popover]="chartContainer" [outsideClick]="true" placement="bottom">
       <span class="available" title="Доступно">
-        {{authData.getWallets()[0].balance | currency:'':'':'1.2-2'}} {{authData.getWallets()[0].asset}}
+        {{authData.getWallets()[0].balance | customCurrency}}
       </span>
       |
-      <span title="Средства">{{authData?.getWallets()[0].getEquity() | currency:'':'':'1.2-2'}} {{authData.getWallets()[0].asset}}</span>
+      <span title="Средства">{{authData?.getWallets()[0].getEquity() | customCurrency}}</span>
     </div>
   </div>
 </header>

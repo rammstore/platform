@@ -37,7 +37,7 @@
         <span>Прибыль</span>
         <span [class.negative]="account.intervalPnL < 0"
               [class.positive]="account.intervalPnL > 0">
-          {{account.intervalPnL | currency:'':'':'1.2-2'}}
+          {{account.intervalPnL  | customCurrency}}
         </span>
       </div>
     </div>
