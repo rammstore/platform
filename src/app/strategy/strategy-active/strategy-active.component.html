@@ -14,22 +14,22 @@
 
     <div class="info">
       <div class="item">
-        <span>Средства:</span>
+        <span translate>Средства</span>
         <span>{{strategy.account.equity | currency:'':'':'1.2-2'}}</span>
       </div>
 
       <div class="item">
-        <span>Инвесторы:</span>
+        <span translate>Инвесторы</span>
         <span>{{strategy.accountsCount}}</span>
       </div>
 
       <div class="item">
-        <span>Вознаграждение:</span>
+        <span translate>Вознаграждение</span>
         <span>{{strategy.offer.fee | percent}}</span>
       </div>
 
       <div class="item">
-        <span>Доходность стратегии:</span>
+        <span translate>Доходность стратегии</span>
         <span [class.negative]="strategy.profit < 0"
               [class.positive]="strategy.profit > 0">
           {{strategy.account.intervalPnL}}

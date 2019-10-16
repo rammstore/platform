@@ -1,51 +1,52 @@
 <app-dialog-wrapper [modalRef]="modalRef"
-                    title="Шаг {{currentStep}}: {{currentStep === 1 ? 'Параметры стратегии' : 'Параметры инвестиции'}}">
+                    titleText="Шаг {{currentStep}}: {{currentStep === 1 ? 'Параметры стратегии' : 'Параметры инвестиции'}}">
 
   <form [formGroup]="formStep1" (ngSubmit)="submitStep1()" *ngIf="currentStep === 1">
     <div class="form-field">
-      <label for="name" class="field-label">Название стратегии:</label>
+      <label for="name" class="field-label" translate>Название стратегии</label>
       <div class="input-wrapper">
         <input id="name" formControlName="name">
         <div class="messages">
           <label *ngIf="formStep1.get('name').touched && formStep1.get('name').hasError('required')"
-                 class="error-message">
+                 class="error-message"
+                 translate>
             Введите название стратегии
           </label>
-          <label class="details-message">Название стратегии может быть изменено только в течение первых 1 недель.</label>
+          <label class="details-message" translate>Название стратегии может быть изменено только в течение первых 1 недель.</label>
         </div>
       </div>
     </div>
 
     <div class="form-field">
-      <label for="fee" class="field-label">Вознаграждение, %:</label>
+      <label for="fee" class="field-label"><span translate>Вознаграждение</span>, %:</label>
       <div class="input-wrapper">
         <input id="fee" type="number" formControlName="fee" [min]="0" [max]="50">
         <div class="messages">
-          <label *ngIf="formStep1.get('fee').touched && formStep1.get('fee').hasError('min')" class="error-message">
-            Минимальный размер вознаграждения - 0
+          <label *ngIf="formStep1.get('fee').touched && formStep1.get('fee').hasError('min')" class="error-message" translate>
+            <span translate>Минимальный размер вознаграждения</span> - 0
           </label>
-          <label *ngIf="formStep1.get('fee').touched && formStep1.get('fee').hasError('max')" class="error-message">
-            Максимальный размер вознаграждения — 50% в неделю
+          <label *ngIf="formStep1.get('fee').touched && formStep1.get('fee').hasError('max')" class="error-message" translate>
+            <span translate>Максимальный размер вознаграждения</span> — 50% <span translate>в неделю</span>
           </label>
-          <label class="details-message">Изменение вознаграждения после создания стратегии невозможно.</label>
+          <label class="details-message" translate>Изменение вознаграждения после создания стратегии невозможно.</label>
         </div>
       </div>
     </div>
 
     <div class="form-field">
-      <label for="comission" class="field-label">Комиссия за оборот, USD / 1mln.:</label>
+      <label for="comission" class="field-label"><span translate>Комиссия за оборот</span>, USD / 1mln.:</label>
       <div class="input-wrapper">
         <input id="comission" type="number" formControlName="comission" [min]="0" [max]="100">
         <div class="messages">
           <label *ngIf="formStep1.get('comission').touched && formStep1.get('comission').hasError('min')"
                  class="error-message">
-            Минимальная комиссия за оборот — 0
+            <span translate>Минимальная комиссия за оборот</span> — 0
           </label>
           <label *ngIf="formStep1.get('comission').touched && formStep1.get('comission').hasError('max')"
                  class="error-message">
-            Максимальная комиссия за оборот — 100 USD
+            <span translate>Максимальная комиссия за оборот</span> — 100 USD
           </label>
-          <label class="details-message">
+          <label class="details-message" translate>
             В дополнение к вознаграждению от прибыли вы можете задать комиссию за оборот ваших инвесторов.
             Величина комиссии не может быть изменена после создания стратегии.
           </label>
@@ -58,73 +59,74 @@
       <div class="input-wrapper">
         <input id="isShared" type="checkbox" formControlName="isShared">
         <div class="messages">
-          <label class="details-message">
-            Опция Shared Strategy позволяет <a>копировать вашу стратегию другим брокерам.</a>
+          <label class="details-message" translate>
+            Опция Shared Strategy позволяет <a translate>копировать вашу стратегию другим брокерам.</a>
           </label>
         </div>
       </div>
     </div>
 
     <div class="dialog-actions">
-      <button type="submit" class="primary" [disabled]="!formStep1.valid">Дальше</button>
+      <button type="submit" class="primary" [disabled]="!formStep1.valid" translate>Дальше</button>
     </div>
   </form>
 
   <form [formGroup]="formStep2" (ngSubmit)="submitStep2()" *ngIf="currentStep === 2">
+    <p translate>При создании стратегии вы должны создать и инвестицию в нее. Эта инвестиция может быть закрыта только при закрытии стратегии.</p>
     <div class="form-field">
-      <label for="money" class="field-label">Сумма инвестиции, USD:</label>
+      <label for="money" class="field-label"><span translate>Сумма инвестиции</span>, USD:</label>
       <div class="input-wrapper">
         <input id="money" type="number" formControlName="money" [min]="0" [max]="authData.getWallets()[0].getEquity()">
         <div class="messages">
-          <label *ngIf="formStep2.get('money').touched && formStep2.get('money').hasError('min')" class="error-message">
+          <label *ngIf="formStep2.get('money').touched && formStep2.get('money').hasError('min')" class="error-message" translate>
             Пожалуйста, введите корректную сумму инвестиции.
           </label>
-          <label *ngIf="formStep2.get('money').touched && formStep2.get('money').hasError('max')" class="error-message">
+          <label *ngIf="formStep2.get('money').touched && formStep2.get('money').hasError('max')" class="error-message" translate>
             Вы можете инвестировать только свободные средства.
           </label>
           <label class="details-message">
-            Доступно: {{authData.getWallets()[0].getEquity()}}
+            <span translate>Доступно</span>: {{authData.getWallets()[0].getEquity()}}
           </label>
         </div>
       </div>
     </div>
 
     <div class="form-field">
-      <label for="target" class="field-label">Цель, %:</label>
+      <label for="target" class="field-label"><span translate>Цель</span>, %:</label>
       <div class="input-wrapper">
         <input id="target" type="number" formControlName="target" [min]="0">
         <div class="messages">
           <label *ngIf="formStep2.get('target').touched && formStep2.get('target').hasError('min')" class="error-message">
-            Минимальный размер Цели - 0%
+            <span translate>Минимальный размер цели</span> - 0%
           </label>
         </div>
       </div>
     </div>
 
     <div class="form-field">
-      <label for="protection" class="field-label">Защита, %:</label>
+      <label for="protection" class="field-label"><span translate>Защита</span>, %:</label>
       <div class="input-wrapper">
         <input id="protection" type="number" formControlName="protection" [min]="0" [max]="99">
         <div class="messages">
           <label *ngIf="formStep2.get('protection').touched && formStep2.get('protection').hasError('min')"
                  class="error-message">
-            Минимальный размер защиты - 0%
+            <span translate>Минимальный размер защиты</span> - 0%
           </label>
           <label *ngIf="formStep2.get('protection').touched && formStep2.get('protection').hasError('max')"
                  class="error-message">
-            Максимальный размер защиты - 99%
+            <span translate>Максимальный размер защиты</span> - 99%
           </label>
           <label class="details-message">
-            В дополнение к вознаграждению от прибыли вы можете задать комиссию за оборот ваших инвесторов.
-            Величина комиссии не может быть изменена после создания стратегии.
+            <span translate>В дополнение к вознаграждению от прибыли вы можете задать комиссию за оборот ваших инвесторов.
+              Величина комиссии не может быть изменена после создания стратегии.</span>
           </label>
         </div>
       </div>
     </div>
 
     <div class="dialog-actions">
-      <button class="primary inverted" (click)="back()">Назад</button>
-      <button type="submit" class="primary" [disabled]="!formStep2.valid">Создать стретегию</button>
+      <button class="primary inverted" (click)="back()" translate>Назад</button>
+      <button type="submit" class="primary" [disabled]="!formStep2.valid" translate>Создать стратегию</button>
     </div>
   </form>
 
