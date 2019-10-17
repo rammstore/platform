@@ -97,7 +97,7 @@
     </div>
 
     <div class="dialog-actions">
-      <button type="submit" class="primary">Ок</button>
+      <button type="submit" class="primary" [disabled]="!form.valid">Ок</button>
       <button class="primary" (click)="cancel()">Отмена</button>
     </div>
   </form>
