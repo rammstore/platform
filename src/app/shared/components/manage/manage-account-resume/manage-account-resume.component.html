@@ -22,6 +22,10 @@
                  *ngIf="form.get('amount').touched && form.get('amount').hasError('max')">
             Вы можете инвестировать только свободные средства.
           </label>
+          <label class="error-message"
+                 *ngIf="form.get('amount').touched && form.get('amount').hasError('pattern')">
+            Пожалуйста, введите корректную сумму вывода.
+          </label>
           <label class="details-message">
             Доступно: {{authData.getWallets()[0].getEquity()  | customCurrency}}
           </label>
