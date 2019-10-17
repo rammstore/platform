@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Account, Strategy } from '@app/models';
+import { Account } from '@app/models';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap';
 import { Subject } from 'rxjs/index';
@@ -40,7 +40,7 @@ export class ManageAccountWithdrawComponent implements OnInit, AfterViewInit, On
   buildForm(): void {
     this.form = this.fb.group({
       withdrawType: [this.forClose ? 'close' : ''],
-      amount: [0, [Validators.min(0.01), Validators.max(this.account.availableToWithDraw), Validators.required]]
+      amount: [0, [Validators.min(0.01), Validators.max(this.account.availableToWithDraw), Validators.required, Validators.pattern('^\d*(\.\d{0,2})?$')]]
     });
   }
 

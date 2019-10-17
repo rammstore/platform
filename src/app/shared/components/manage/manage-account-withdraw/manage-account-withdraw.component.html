@@ -43,6 +43,10 @@
                      *ngIf="form.get('amount').touched && form.get('amount').hasError('required')">
                 Укажите сумму вывода.
               </label>
+              <label class="error-message"
+                     *ngIf="form.get('amount').touched && form.get('amount').hasError('pattern')">
+                Пожалуйста, введите корректную сумму вывода.
+              </label>
               <label class="details-message">
                 Баланс вашей инвестиции в вашу стратегию после вывода должен быть не меньше 200,00 USD.
               </label>
@@ -85,7 +89,8 @@
     <div class="dialog-actions">
       <button class="primary"
               *ngIf="form.get('withdrawType').value === 'withdraw'"
-              (click)="withdraw()">
+              (click)="withdraw()"
+              [disabled]="!form.valid">
         Вывести
         <span *ngIf="form.get('amount').value > 0">({{form.get('amount').value | customCurrency}})</span>
       </button>
