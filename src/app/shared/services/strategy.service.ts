@@ -3,14 +3,13 @@ import { BehaviorSubject, Observable } from 'rxjs/index';
 import { HttpClient } from '@angular/common/http';
 import { CONFIG } from '../../../config';
 import { map } from 'rxjs/internal/operators';
-import { Account, ChartOptions, Offer, Paginator, Strategy } from '../models';
-import { AccountService } from '@app/services/account.service';
+import { ChartOptions, Paginator, Strategy } from '../models';
 import { CreateInstanceService } from '@app/services/create-instance.service';
 import { Command } from '@app/models/command';
 import { CommandService } from '@app/services/command.service';
 
 class StrategiesSearchOptions {
-  Filter: { IsActive?: boolean, Value?: string };
+  Filter: { Name?: string, MyActiveAccounts?: boolean, MyStrategies?: boolean, ActiveStrategies?: boolean };
   Pagination: { CurrentPage?: number, PerPage?: number };
 }
 
@@ -32,7 +31,10 @@ export class StrategyService {
   // Получение списка активных стратегий
   getActive(pagination?: Paginator): Observable<Strategy[]> {
     const options: StrategiesSearchOptions = new StrategiesSearchOptions();
-    options.Filter = { IsActive: true };
+    options.Filter = {
+      ActiveStrategies: true,
+      MyStrategies: true
+    };
 
     if (pagination) {
       options.Pagination = {
@@ -41,7 +43,7 @@ export class StrategyService {
       };
     }
 
-    this.http.post(`${CONFIG.baseApiUrl}/myStrategies.search`, options).subscribe((response: any) => {
+    this.http.post(`${CONFIG.baseApiUrl}/strategies.search`, options).subscribe((response: any) => {
       const strategies: Strategy[] = [];
 
       response.Strategies.forEach((s: any) => {
@@ -62,7 +64,10 @@ export class StrategyService {
   // Получение списка закрытых стратегий
   getClosed(pagination?: Paginator): Observable<Strategy[]> {
     const options: StrategiesSearchOptions = new StrategiesSearchOptions();
-    options.Filter = { IsActive: false };
+    options.Filter = {
+      ActiveStrategies: false,
+      MyStrategies: true
+    };
 
     if (pagination) {
       options.Pagination = {
@@ -71,7 +76,7 @@ export class StrategyService {
       };
     }
 
-    this.http.post(`${CONFIG.baseApiUrl}/myStrategies.search`, options).subscribe((response: any) => {
+    this.http.post(`${CONFIG.baseApiUrl}/strategies.search`, options).subscribe((response: any) => {
       const strategies: Strategy[] = [];
 
       response.Strategies.forEach((s: any) => {

@@ -21,7 +21,8 @@ export class CreateInstanceService {
       accountsCount: options.Accounts,
       symbols: options.Symbols,
       account: options.Account ? this.createAccount(options.Account) : undefined,
-      offer: options.Offer ? this.createOffer(options.Offer) : undefined
+      offer: options.Offer ? this.createOffer(options.Offer) : undefined,
+      isMyStrategy: options.IsMyStrategy
     });
   }
 
