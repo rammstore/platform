@@ -29,6 +29,7 @@ export class Account {
   profitBase: number;               // База для подсчета вознаграждения
   precision: number;                // Точность округления, знаки после запятой
   positionsCount: number;           // Количество позиций
+  accountMinBalance: number;        // Минимальный баланс инвестиции
 
   constructor(
     options: any

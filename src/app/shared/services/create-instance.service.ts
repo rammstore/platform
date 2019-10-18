@@ -54,7 +54,8 @@ export class CreateInstanceService {
       availableToWithDraw: options.AvailableToWithdraw,
       profitBase: options.ProfitBase,
       precision: options.Precision,
-      positionsCount: options.PositionsCount
+      positionsCount: options.PositionsCount,
+      accountMinBalance: options.AccountMinBalance
     });
   }
 
