@@ -26,8 +26,7 @@ export class StrategyService {
   constructor(
     private http: HttpClient,
     private createInstanceService: CreateInstanceService,
-    private commandService: CommandService,
-    private accountService: AccountService
+    private commandService: CommandService
   ) { }
 
   // Получение списка активных стратегий
@@ -168,14 +167,7 @@ export class StrategyService {
       this.commandService.checkStrategyCommand(command).subscribe((commandStatus: number) => {
         if (commandStatus !== 0) {
           clearInterval(interval);
-          this.get(strategyId).subscribe((strategy: Strategy) => {
-            if (strategy.isActive()) {
-              Object.assign(this.activeStrategiesSubject.value.find((s: Strategy) => s.id === strategy.id), strategy);
-            } else {
-              this.activeStrategiesSubject.value.splice(this.activeStrategiesSubject.value.findIndex((s: Strategy) => s.id === strategy.id), 1);
-            }
-            this.accountService.getActive().subscribe();
-          });
+          this.getActive().subscribe();
         }
       });
     }, 1000);

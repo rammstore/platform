@@ -15,6 +15,9 @@ import { DialogWrapperModule } from '@app/components/dialog-wrapper/dialog-wrapp
 import { BsDropdownModule, ModalModule } from 'ngx-bootstrap';
 import { RouterModule } from '@angular/router';
 import { ManageStrategyInvestComponent } from './manage-strategy-invest/manage-strategy-invest.component';
+import { CustomCurrencyPipe } from '@app/pipes/custom-currency.pipe';
+import { SharedModule } from '@app/shared.module';
+import { PipesModule } from '@app/pipes/pipes.module';
 
 @NgModule({
   declarations: [
@@ -36,7 +39,8 @@ import { ManageStrategyInvestComponent } from './manage-strategy-invest/manage-s
     ModalModule.forRoot(),
     BsDropdownModule.forRoot(),
     DialogWrapperModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    PipesModule
   ],
   exports: [
     ManageComponent

@@ -5,15 +5,15 @@
       <tbody>
       <tr>
         <td>Доступно</td>
-        <td class="accent">{{wallet.balance | currency:'':'':'1.2-2'}} {{wallet.asset}}</td>
+        <td class="accent">{{wallet.balance | customCurrency}}</td>
       </tr>
       <tr>
         <td>Инвестировано</td>
-        <td class="positive">{{wallet.invested | currency:'':'':'1.2-2'}} {{wallet.asset}}</td>
+        <td class="positive">{{wallet.invested | customCurrency}}</td>
       </tr>
       <tr>
         <td>Средства</td>
-        <td>{{wallet.getEquity() | currency:'':'':'1.2-2'}} {{wallet.asset}}</td>
+        <td>{{wallet.getEquity() | customCurrency}}</td>
       </tr>
       </tbody>
     </table>

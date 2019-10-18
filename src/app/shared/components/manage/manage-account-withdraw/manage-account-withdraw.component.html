@@ -20,7 +20,7 @@
           Поставьте стратегию на паузу и повторите операцию.
         </div>
         <div *ngIf="account.strategy.isPaused() && !(form.get('withdrawType').value === 'withdraw')">
-          Сумма, доступная для частичного вывода: {{account.availableToWithDraw | currency:'':'':'1.2-2'}} {{account.asset}}.
+          Сумма, доступная для частичного вывода: {{account.availableToWithDraw | customCurrency}}.
         </div>
         <div class="form-field" *ngIf="account.strategy.isPaused() && form.get('withdrawType').value === 'withdraw'">
           <label for="amount" class="field-label">Сумма вывода, USD:</label>
@@ -43,11 +43,15 @@
                      *ngIf="form.get('amount').touched && form.get('amount').hasError('required')">
                 Укажите сумму вывода.
               </label>
+              <label class="error-message"
+                     *ngIf="form.get('amount').touched && form.get('amount').hasError('pattern')">
+                Пожалуйста, введите корректную сумму вывода.
+              </label>
               <label class="details-message">
                 Баланс вашей инвестиции в вашу стратегию после вывода должен быть не меньше 200,00 USD.
               </label>
               <label class="details-message">
-                Сумма, доступная для вывода: {{account.availableToWithDraw | currency:'':'':'1.2-2'}}
+                Сумма, доступная для вывода: {{account.availableToWithDraw | customCurrency}}
               </label>
             </div>
           </div>
@@ -73,7 +77,7 @@
         <div *ngIf="(form.get('withdrawType').value === 'close')">
           <p>Вы можете закрыть вашу инвестицию в любой момент.
             Позже вы сможете создать новую инвестицию в ту же стратегию, при этом просадка инвестиции будет обнулена.</p>
-          <div class="withdraw-amount">Текущая сумма средств: {{account.equity | currency:'':'':'1.2-2'}} {{account.asset}}</div>
+          <div class="withdraw-amount">Текущая сумма средств: {{account.equity | customCurrency}}</div>
           <p>Средства вашей инвестиции рассчитаны по индикативным ценам.
             При закрытии инвестиции все открытые позиции будут закрыты по текущим рыночным ценам,
             которые могут незначительно отличаться от индикативных.</p>
@@ -85,9 +89,10 @@
     <div class="dialog-actions">
       <button class="primary"
               *ngIf="form.get('withdrawType').value === 'withdraw'"
-              (click)="withdraw()">
+              (click)="withdraw()"
+              [disabled]="!form.valid">
         Вывести
-        <span *ngIf="form.get('amount').value > 0">({{form.get('amount').value | currency:'':'':'1.2-2'}} {{account.asset}})</span>
+        <span *ngIf="form.get('amount').value > 0">({{form.get('amount').value | customCurrency}})</span>
       </button>
 
       <button class="warning"

@@ -7,6 +7,7 @@ import { map } from 'rxjs/internal/operators';
 import { CreateInstanceService } from '@app/services/create-instance.service';
 import { Command } from '@app/models/command';
 import { CommandService } from '@app/services/command.service';
+import { StrategyService } from '@app/services/strategy.service';
 
 class InvestmentsSearchOptions {
   Filter: { MyActiveAccounts?: boolean, Value?: string };
@@ -32,7 +33,8 @@ export class AccountService {
   constructor(
     private http: HttpClient,
     private createInstanceService: CreateInstanceService,
-    private commandService: CommandService
+    private commandService: CommandService,
+    private strategyService: StrategyService
   ) { }
 
   get(id: number): Observable<Account> {
@@ -216,13 +218,8 @@ export class AccountService {
       this.commandService.checkAccountCommand(command).subscribe((commandStatus: number) => {
         if (commandStatus !== 0) {
           clearInterval(interval);
-          this.get(accountId).subscribe((account: Account) => {
-            if (account.isActive()) {
-              Object.assign(this.activeAccountsSubject.value.find((s: Account) => s.id === account.id), account);
-            } else {
-              this.activeAccountsSubject.value.splice(this.activeAccountsSubject.value.findIndex((s: Account) => s.id === account.id), 1);
-            }
-          });
+          this.getActive().subscribe();
+          this.strategyService.getActive().subscribe();
         }
       });
     }, 1000);

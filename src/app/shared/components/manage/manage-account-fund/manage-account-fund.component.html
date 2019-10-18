@@ -10,7 +10,7 @@
     <div class="form-field  no-input">
       <label class="field-label">Средства:</label>
       <div class="input-wrapper">
-        {{account.balance | currency:'':'':'1.2-2'}} {{account.asset}}
+        {{account.balance | customCurrency}}
       </div>
     </div>
 
@@ -31,8 +31,12 @@
                  *ngIf="form.get('amount').touched && form.get('amount').hasError('max')">
             Вы можете инвестировать только свободные средства.
           </label>
+          <label class="error-message"
+                 *ngIf="form.get('amount').touched && form.get('amount').hasError('pattern')">
+            Пожалуйста, введите корректную сумму пополнения.
+          </label>
           <label class="details-message">
-            Доступно: {{authData.getWallets()[0].balance | currency:'':'':'1.2-2'}} USD
+            Доступно: {{authData.getWallets()[0].balance | customCurrency}}
           </label>
         </div>
       </div>
@@ -42,7 +46,7 @@
       <button class="primary"
               type="submit"
               [disabled]="!form.valid">
-        Пополнить {{form.valid ? '(' + (form.get('amount').value | currency:'':'':'1.2-2') + ' ' + account.asset + ')' : ''}}
+        Пополнить {{form.valid ? '(' + (form.get('amount').value | customCurrency) + ')' : ''}}
       </button>
     </div>
   </form>
