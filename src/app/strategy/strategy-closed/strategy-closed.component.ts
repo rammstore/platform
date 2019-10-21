@@ -4,7 +4,7 @@ import { StrategyService } from '@app/services/strategy.service';
 import { TableHeaderRow } from '@app/models/table-header-row';
 import { Paginator, TableColumn } from '@app/models';
 import { DatePipe, PercentPipe } from '@angular/common';
-import { Subject } from 'rxjs/index';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
 
 @Component({

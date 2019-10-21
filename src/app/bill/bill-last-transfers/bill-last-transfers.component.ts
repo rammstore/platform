@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Paginator, TableColumn, WalletTransfer } from '@app/models';
 import { WalletService } from '@app/services/wallet.service';
-import { Subject } from 'rxjs/index';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
 import { TableHeaderRow } from '@app/models/table-header-row';
 import { DatePipe } from '@angular/common';

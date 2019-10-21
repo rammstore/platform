@@ -4,7 +4,7 @@ import { StorageService } from '@app/services/storage.service';
 import { BsModalRef } from 'ngx-bootstrap';
 import { AuthData, Strategy } from '@app/models';
 import { StrategyService } from '@app/services/strategy.service';
-import { Subject } from 'rxjs/index';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
 
 @Component({

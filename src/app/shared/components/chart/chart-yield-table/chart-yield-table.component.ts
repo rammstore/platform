@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Account, ChartOptions, Strategy } from '@app/models';
-import { Subject } from 'rxjs/index';
+import { Subject } from 'rxjs';
 import { StrategyService } from '@app/services/strategy.service';
 import { takeUntil } from 'rxjs/internal/operators';
 import * as Highcharts from 'highcharts';

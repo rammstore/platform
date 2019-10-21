@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import { Subject } from 'rxjs/index';
+import { Subject } from 'rxjs';
 import { Strategy } from '@app/models';
 import { StrategyService } from '@app/services/strategy.service';
 import { BsModalRef } from 'ngx-bootstrap';

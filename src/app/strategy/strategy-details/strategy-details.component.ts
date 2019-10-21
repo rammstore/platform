@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Strategy } from '@app/models';
 import { ContentTabLink } from '@app/components/content-tabs/content-tab-link';
 import { BsModalRef } from 'ngx-bootstrap';
-import { Subject } from 'rxjs/index';
+import { Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/internal/operators';
 
 @Component({

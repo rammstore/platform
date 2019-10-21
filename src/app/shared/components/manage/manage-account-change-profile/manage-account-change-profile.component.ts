@@ -4,8 +4,8 @@ import { StorageService } from '@app/services/storage.service';
 import { BsModalRef } from 'ngx-bootstrap';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
-import { AccountService } from '@app/services/account.service';
 import { AuthData, Account } from '@app/models';
+import { DataService } from '@app/services/data.service';
 
 @Component({
   selector: 'app-manage-account-change-profile',
@@ -25,7 +25,7 @@ export class ManageAccountChangeProfileComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private storageService: StorageService,
-    private accountService: AccountService,
+    private dataService: DataService,
     public modalRef: BsModalRef
   ) { }
 
@@ -62,10 +62,9 @@ export class ManageAccountChangeProfileComponent implements OnInit, OnDestroy {
     values.protection = values.protection / 100;
     values.target = values.target ? values.target / 100 : null;
 
-    this.accountService.changeProfile(this.account.id, values)
+    this.dataService.changeAccountProfile(this.account.id, values)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
-        // this.account.resume();
         this.modalRef.hide();
       });
   }

@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject } from 'rxjs/index';
+import { Subject } from 'rxjs';
 import { TableHeaderRow } from '@app/models/table-header-row';
 import { Account, Paginator, Position, TableColumn } from '@app/models';
 import { ActivatedRoute } from '@angular/router';
-import { AccountService } from '@app/services/account.service';
 import { takeUntil } from 'rxjs/internal/operators';
+import { DataService } from '@app/services/data.service';
 
 @Component({
   selector: 'app-investments-details-positions',
@@ -42,7 +42,7 @@ export class InvestmentsDetailsPositionsComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private accountService: AccountService
+    private dataService: DataService
   ) { }
 
   ngOnInit() {
@@ -56,7 +56,7 @@ export class InvestmentsDetailsPositionsComponent implements OnInit, OnDestroy {
   }
 
   getPositions(): void {
-    this.accountService.getPositions(this.id, this.paginator)
+    this.dataService.getAccountPositions(this.id, this.paginator)
       .pipe(takeUntil(this.destroy$))
       .subscribe((positions: Position[]) => {
         this.positions = positions;

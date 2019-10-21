@@ -3,7 +3,7 @@ import { Account, Strategy } from '@app/models';
 import { ActivatedRoute } from '@angular/router';
 import { StrategyService } from '@app/services/strategy.service';
 import { map, takeUntil } from 'rxjs/internal/operators';
-import { Subject } from 'rxjs/index';
+import { Subject } from 'rxjs';
 import { ContentTabLink } from '@app/components/content-tabs/content-tab-link';
 
 @Component({

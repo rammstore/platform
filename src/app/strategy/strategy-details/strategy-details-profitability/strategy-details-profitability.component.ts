@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ChartOptions, Strategy } from '@app/models';
 import { StrategyService } from '@app/services/strategy.service';
 import * as Highcharts from 'highcharts';
-import { Subject } from 'rxjs/index';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
 
 @Component({

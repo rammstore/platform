@@ -1,9 +1,9 @@
 import { Component, OnDestroy } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap';
 import { Account } from '@app/models';
-import { Subject } from 'rxjs/index';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
-import { AccountService } from '@app/services/account.service';
+import { DataService } from '@app/services/data.service';
 
 @Component({
   selector: 'app-manage-account-pause',
@@ -19,12 +19,12 @@ export class ManageAccountPauseComponent implements OnDestroy {
   account: Account;
 
   constructor(
-    private accountService: AccountService,
+    private dataService: DataService,
     public modalRef: BsModalRef,
   ) { }
 
   pause(): void {
-    this.accountService.pause(this.account.id)
+    this.dataService.pauseAccount(this.account.id)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
         this.modalRef.hide();

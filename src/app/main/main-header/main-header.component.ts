@@ -3,7 +3,7 @@ import { AuthData } from '@app/models';
 import { StorageService } from '@app/services/storage.service';
 import { Router } from '@angular/router';
 import { AuthService } from '@app/services/auth.service';
-import { Subject } from 'rxjs/index';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
 
 @Component({

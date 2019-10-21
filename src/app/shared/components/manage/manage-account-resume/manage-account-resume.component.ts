@@ -2,11 +2,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StorageService } from '@app/services/storage.service';
 import { BsModalRef } from 'ngx-bootstrap';
-import { StrategyService } from '@app/services/strategy.service';
-import { Subject } from 'rxjs/index';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
 import { Account, AuthData } from '@app/models';
-import { AccountService } from '@app/services/account.service';
+import { DataService } from '@app/services/data.service';
 
 @Component({
   selector: 'app-manage-account-resume',
@@ -26,7 +25,7 @@ export class ManageAccountResumeComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private storageService: StorageService,
-    private accountService: AccountService,
+    private dataService: DataService,
     public modalRef: BsModalRef
   ) { }
 
@@ -54,7 +53,7 @@ export class ManageAccountResumeComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.accountService.resume(this.account.id)
+    this.dataService.resumeAccount(this.account.id)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
         // this.account.resume();

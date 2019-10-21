@@ -204,7 +204,7 @@ export class DataService {
   // Получение списка закрытых инвестиций
   getClosedMyAccounts(pagination?: Paginator): Observable<Account[]> {
     const options: AccountsSearchOptions = new AccountsSearchOptions();
-    options.Filter = { MyActiveAccounts: true };
+    options.Filter = { MyActiveAccounts: false };
 
     if (pagination) {
       options.Pagination = {

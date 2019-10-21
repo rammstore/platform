@@ -2,7 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { StrategyService } from '@app/services/strategy.service';
 import { BsModalRef } from 'ngx-bootstrap';
 import { Strategy } from '@app/models';
-import { Subject } from 'rxjs/index';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
 
 @Component({
