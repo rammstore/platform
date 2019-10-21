@@ -21,7 +21,7 @@
                type="number"
                formControlName="amount"
                [min]="0"
-               [max]="wallet.balance">
+               [max]="wallet.getAvailableMoney()">
         <div class="messages">
           <label class="error-message"
                  *ngIf="form.get('amount').touched && form.get('amount').hasError('min')">
@@ -36,7 +36,7 @@
             Пожалуйста, введите корректную сумму пополнения.
           </label>
           <label class="details-message">
-            Доступно: <span class="available-clickable" (click)="setAllMoney()">{{wallet.balance | customCurrency}}</span>
+            Доступно: <span class="available-clickable" (click)="setAllMoney()">{{wallet.getAvailableMoney() | customCurrency}}</span>
           </label>
         </div>
       </div>

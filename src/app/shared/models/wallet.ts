@@ -17,4 +17,8 @@ export class Wallet {
   getEquity(): number {
     return Math.round((this.balance + this.invested) * 100) / 100;
   }
+
+  getAvailableMoney(): number {
+    return Math.floor(this.balance * 100) / 100;
+  }
 }

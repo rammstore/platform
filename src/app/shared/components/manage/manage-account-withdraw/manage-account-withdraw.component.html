@@ -51,7 +51,7 @@
                 Баланс вашей инвестиции в вашу стратегию после вывода должен быть не меньше {{account.accountMinBalance | customCurrency}}.
               </label>
               <label class="details-message">
-                Сумма, доступная для вывода: {{account.availableToWithDraw | customCurrency}}
+                Сумма, доступная для вывода: <span class="available-clickable" (click)="setAllMoney()">{{account.availableToWithDraw | customCurrency}}</span>
               </label>
             </div>
           </div>

@@ -40,8 +40,8 @@ export class ManageAccountFundComponent implements OnInit, OnDestroy {
   buildForm(): void {
     this.form = this.fb.group({
       amount: [
-        ((this.wallet.balance / 10).toFixed(2)),
-        [Validators.min(0), Validators.max(this.wallet.balance), Validators.pattern('^[0-9]+([\\,\\.][0-9]{1,2})?$')]
+        ((this.wallet.getAvailableMoney() / 10).toFixed(2)),
+        [Validators.min(0), Validators.max(this.wallet.getAvailableMoney()), Validators.pattern('^[0-9]+([\\,\\.][0-9]{1,2})?$')]
       ]
     });
   }
@@ -61,7 +61,7 @@ export class ManageAccountFundComponent implements OnInit, OnDestroy {
   }
 
   setAllMoney(): void {
-    this.form.get('amount').setValue(this.wallet.balance);
+    this.form.get('amount').setValue(this.wallet.getAvailableMoney());
   }
 
   ngOnDestroy(): void {

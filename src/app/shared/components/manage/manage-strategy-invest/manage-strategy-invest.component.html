@@ -1,5 +1,5 @@
 <app-dialog-wrapper title="Возобновить" [modalRef]="modalRef">
-  <form [formGroup]="form" (ngSubmit)="invest()">
+  <form [formGroup]="form">
 
     <div class="form-field">
       <label for="amount" class="field-label">Добавить в инвестицию, USD:</label>
@@ -27,7 +27,7 @@
             Пожалуйста, введите корректную сумму вывода.
           </label>
           <label class="details-message">
-            Доступно: {{wallet.balance | customCurrency}}
+            Доступно: <span class="available-clickable" (click)="setAllMoney()">{{wallet.getAvailableMoney() | customCurrency}}</span>
           </label>
         </div>
       </div>
@@ -114,7 +114,7 @@
     </div>
 
     <div class="dialog-actions">
-      <button type="submit" class="primary" [disabled]="!form.valid">Ок</button>
+      <button class="primary" (click)="invest()" [disabled]="!form.valid">Ок</button>
       <button class="primary" (click)="cancel()">Отмена</button>
     </div>
   </form>

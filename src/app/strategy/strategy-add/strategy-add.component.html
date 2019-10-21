@@ -83,7 +83,7 @@
             Вы можете инвестировать только свободные средства.
           </label>
           <label class="details-message">
-            Доступно: {{wallet.balance}}
+            Доступно: <span class="available-clickable" (click)="setAllMoney()">{{wallet.getAvailableMoney() | customCurrency}}</span>
           </label>
         </div>
       </div>

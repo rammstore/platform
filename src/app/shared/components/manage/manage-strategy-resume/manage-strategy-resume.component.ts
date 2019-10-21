@@ -64,6 +64,10 @@ export class ManageStrategyResumeComponent implements OnInit, OnDestroy {
     this.modalRef.hide();
   }
 
+  setAllMoney(): void {
+    this.form.get('amount').setValue(this.wallet.getAvailableMoney());
+  }
+
   ngOnDestroy(): void {
     this.destroy$.next(true);
   }

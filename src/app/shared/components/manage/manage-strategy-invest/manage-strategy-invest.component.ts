@@ -67,6 +67,10 @@ export class ManageStrategyInvestComponent implements OnInit, OnDestroy {
     });
   }
 
+  setAllMoney(): void {
+    this.form.get('amount').setValue(this.wallet.getAvailableMoney());
+  }
+
   ngOnDestroy(): void {
     this.destroy$.next(true);
   }
