@@ -114,8 +114,7 @@ export class DataService {
   // Создание новой стратегии
   addStrategy(strategy: object) {
     return this.http.post(`${CONFIG.baseApiUrl}/myStrategies.add`, strategy).pipe(map((response: any) => {
-      response.Strategy.Account = response.Account;
-      this.activeMyStrategiesSubject.value.push(this.createInstanceService.createStrategy(response.Strategy));
+      this.getActiveMyStrategies().subscribe();
     }));
   }
 
@@ -255,7 +254,11 @@ export class DataService {
       Money: data['amount']
     };
 
-    return this.http.post(`${CONFIG.baseApiUrl}/accounts.add`, options);
+    return this.http.post(`${CONFIG.baseApiUrl}/accounts.add`, options).pipe(
+      map((response: any) => {
+        this.getActiveMyStrategies().subscribe();
+      })
+    );;
   }
 
   // Пополнить инвестицию

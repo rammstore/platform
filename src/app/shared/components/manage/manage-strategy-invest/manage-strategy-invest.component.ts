@@ -62,7 +62,9 @@ export class ManageStrategyInvestComponent implements OnInit, OnDestroy {
     values.protection = values.protection / 100;
     values.target = values.target ? values.target / 100 : null;
 
-    this.dataService.addAccount(this.strategy.id, values).subscribe();
+    this.dataService.addAccount(this.strategy.id, values).subscribe(() => {
+      this.modalRef.hide();
+    });
   }
 
   ngOnDestroy(): void {
