@@ -12,6 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { WalletService } from '@app/services/wallet.service';
 import { CommandService } from '@app/services/command.service';
 import {DataService} from "@app/services/data.service";
+import { LoaderService } from '@app/services/loader.service';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import {DataService} from "@app/services/data.service";
     WalletService,
     CommandService,
     DataService,
+    LoaderService,
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]

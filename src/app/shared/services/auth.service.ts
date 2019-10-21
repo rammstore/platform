@@ -7,6 +7,7 @@ import { AuthData } from '@app/models/auth-data';
 import { StorageService } from '@app/services/storage.service';
 import { Observable } from 'rxjs/index';
 import { Router } from '@angular/router';
+import { LoaderService } from '@app/services/loader.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,10 +17,12 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private storageService: StorageService,
-    private router: Router
+    private router: Router,
+    private loaderService: LoaderService
     ) { }
 
   login(login: string, password: string): Observable<AuthData> {
+    this.loaderService.showLoader();
     return this.http.post(`${CONFIG.baseApiUrl}/session.login`, {Login: login, Password: password}).pipe(map((response: any) => {
 
       const session: Session = new Session(
@@ -72,6 +75,7 @@ export class AuthService {
       this.storageService.setAuthData(JSON.stringify(authData));
       this.storageService.setToken(authData.session.token);
 
+      this.loaderService.hideLoader();
       return authData;
     }));
   }
@@ -85,7 +89,12 @@ export class AuthService {
   }
 
   changePassword(оldPassword: string, password: string): Observable<any> {
-    return this.http.post(`${CONFIG.baseApiUrl}/password.set`, {OldPassword: оldPassword,Password: password});
+    this.loaderService.showLoader();
+    return this.http.post(`${CONFIG.baseApiUrl}/password.set`, {OldPassword: оldPassword,Password: password}).pipe(
+      map(() => {
+        this.loaderService.hideLoader();
+      })
+    );
   }
 
   getToken(): string {

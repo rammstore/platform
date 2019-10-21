@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { LoaderService } from '@app/services/loader.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -6,4 +8,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  isLoading: Observable<boolean>;
+
+  constructor(private loaderService: LoaderService) {
+    this.isLoading = loaderService.isLoading();
+  }
 }

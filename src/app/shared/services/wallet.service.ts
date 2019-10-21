@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs/index';
 import { HttpClient } from '@angular/common/http';
 import { CONFIG } from '../../../config';
 import { Paginator, WalletTransfer } from '@app/models';
+import { LoaderService } from '@app/services/loader.service';
 
 class DealsSearchOptions {
   OrderBy: { Field?: string, Direction?: string };
@@ -16,10 +17,12 @@ export class WalletService {
   dealsSubject: BehaviorSubject<WalletTransfer[]> = new BehaviorSubject<WalletTransfer[]>([]);
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private loaderService: LoaderService
   ) { }
 
   getDeals(accountID: number, pagination?: Paginator): Observable<WalletTransfer[]> {
+    this.loaderService.showLoader();
     const options: DealsSearchOptions = new DealsSearchOptions();
     options.OrderBy = {
       Field: 'ID',
@@ -52,6 +55,7 @@ export class WalletService {
 
       pagination.totalItems = response.Pagination.TotalRecords;
       pagination.totalPages = response.Pagination.TotalPages;
+      this.loaderService.hideLoader();
       this.dealsSubject.next(transfers);
     });
 
