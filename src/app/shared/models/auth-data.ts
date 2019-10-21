@@ -18,4 +18,8 @@ export class AuthData {
   getWallets(): Wallet[] {
     return this.wallets;
   }
+
+  getAvailableMoney(): number {
+    return Math.floor((this.getWallets()[0].balance - this.getWallets()[0].invested) * 100) / 100;
+  }
 }

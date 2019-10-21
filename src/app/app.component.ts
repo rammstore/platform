@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewChecked, ChangeDetectorRef, Component } from '@angular/core';
 import { LoaderService } from '@app/services/loader.service';
 import { Observable } from 'rxjs';
 
@@ -7,10 +7,16 @@ import { Observable } from 'rxjs';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements AfterViewChecked {
   isLoading: Observable<boolean>;
 
-  constructor(private loaderService: LoaderService) {
-    this.isLoading = loaderService.isLoading();
+  constructor(
+    private cdRef: ChangeDetectorRef,
+    private loaderService: LoaderService
+  ) {}
+
+  ngAfterViewChecked(): void {
+    this.isLoading = this.loaderService.isLoading();
+    this.cdRef.detectChanges();
   }
 }

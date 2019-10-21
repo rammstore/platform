@@ -6,16 +6,8 @@ export class User {
   pushToken: string;
 
   constructor(
-    firstName?: string,
-    lastName?: string,
-    login?: string,
-    pushToken?: string,
-    language?: string
+    options: any
   ) {
-    this.firstName = firstName || null;
-    this.lastName = lastName || null;
-    this.login = login || null;
-    this.pushToken = pushToken || null;
-    this.language = language || 'ru';
+    Object.assign(this, options);
   }
 }

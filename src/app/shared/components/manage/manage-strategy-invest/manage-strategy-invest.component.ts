@@ -1,11 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { StorageService } from '@app/services/storage.service';
 import { BsModalRef } from 'ngx-bootstrap';
-import { AuthData, Strategy } from '@app/models';
+import { Strategy, Wallet } from '@app/models';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
 import { DataService } from '@app/services/data.service';
+import { WalletService } from '@app/services/wallet.service';
 
 @Component({
   selector: 'app-manage-strategy-invest',
@@ -19,28 +19,28 @@ export class ManageStrategyInvestComponent implements OnInit, OnDestroy {
 
   // component data
   form: FormGroup;
-  authData: AuthData;
+  wallet: Wallet;
   strategy: Strategy;
 
   constructor(
     private fb: FormBuilder,
-    private storageService: StorageService,
     private dataService: DataService,
+    private walletService: WalletService,
     public modalRef: BsModalRef
   ) { }
 
   ngOnInit(): void {
-    this.storageService.getAuthData()
+    this.walletService.getWallet()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((authData: AuthData) => {
-        this.authData = authData;
-      });
-    this.buildForm();
+      .subscribe((wallet: Wallet) => {
+      this.wallet = wallet;
+      this.buildForm();
+    });
   }
 
   buildForm(): void {
     this.form = this.fb.group({
-      amount: [(this.authData.getWallets()[0].getEquity() / 10).toFixed(2), [Validators.required, Validators.min(0), Validators.max(this.authData.getWallets()[0].getEquity()), Validators.pattern('^[0-9]+([\\,\\.][0-9]{1,2})?$')]],
+      amount: [(this.wallet.balance / 10).toFixed(2), [Validators.required, Validators.min(0), Validators.max(this.wallet.balance), Validators.pattern('^[0-9]+([\\,\\.][0-9]{1,2})?$')]],
       factor: [1, [Validators.min(-1000), Validators.max(1000)]],
       target: [100, [Validators.required, Validators.min(0)]],
       protection: [50, [Validators.required, Validators.min(0), Validators.max(99)]]
