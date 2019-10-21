@@ -12,4 +12,5 @@ export * from './company';
 export * from './session';
 export * from './user';
 export * from './wallet';
+export * from './command';
 export * from './search-options';
