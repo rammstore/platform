@@ -14,6 +14,7 @@ export class Strategy {
   symbols: string;        // Строка с перечислением самых используемых торговых инструментов (не более 3-х)
   account: Account;       // Инвестиция
   offer: Offer;           // Оффер
+  isMyStrategy: boolean;  // Признак собственной стратегии
 
   constructor(
     options: any
@@ -46,5 +47,22 @@ export class Strategy {
 
   close(): void {
     this.status = 4;
+  }
+
+  getType(): string {
+    switch (this.account.status) {
+      case 0:
+        return 'Real security';
+        break;
+      case 1:
+        return 'Virtual master';
+        break;
+      case 2:
+        return 'Real internal ramm account';
+        break;
+      case 3:
+        return 'Real external account';
+        break;
+    }
   }
 }

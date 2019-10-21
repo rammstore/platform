@@ -40,7 +40,7 @@ export class ManageAccountWithdrawComponent implements OnInit, AfterViewInit, On
   buildForm(): void {
     this.form = this.fb.group({
       withdrawType: [this.forClose ? 'close' : ''],
-      amount: [0, [Validators.min(0.01), Validators.max(this.account.availableToWithDraw), Validators.required, Validators.pattern('^\d*(\.\d{0,2})?$')]]
+      amount: [0, [Validators.min(0.01), Validators.max(this.account.availableToWithDraw), Validators.required, Validators.pattern('^[0-9]+([\\,\\.][0-9]{1,2})?$')]]
     });
   }
 
