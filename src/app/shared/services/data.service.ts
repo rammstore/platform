@@ -171,6 +171,22 @@ export class DataService {
     return this.http.post(`${CONFIG.baseApiUrl}/charts.get`, options);
   }
 
+  getSymbolsChart(strategyID: number): Observable<any> {
+    const options: any = {
+      StrategyID: strategyID
+    };
+
+    return this.http.post(`${CONFIG.baseApiUrl}/strategysymbolstat.get`, options).pipe(
+      map((response: any) => {
+        const chart: object[] = [];
+        response.StrategySymbolStat.forEach((stat: any) => {
+          chart.push({name: stat.Symbol, y: stat.Share});
+        });
+        return chart;
+      })
+    );
+  }
+
   //
   // Методы работы со инвестициями
   //
@@ -258,7 +274,7 @@ export class DataService {
       map((response: any) => {
         this.getActiveMyStrategies().subscribe();
       })
-    );;
+    );
   }
 
   // Пополнить инвестицию
