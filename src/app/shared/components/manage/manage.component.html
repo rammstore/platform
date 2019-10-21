@@ -1,10 +1,11 @@
 <div class="manage-container">
   <ng-container *ngIf="dataType === 'account' || (dataType === 'strategy' && data.accountsCount !== 0)">
     <i (click)="openAccountFundDialog()" title="Пополнение инвестиции" class="icon-add"></i>
-    <i (click)="openAccountPauseDialog()" *ngIf="dataType === 'account' && !data.isPaused()" title="Пауза" class="icon-pause"></i>
-    <i (click)="openAccountResumeDialog()" *ngIf="dataType === 'account' && data.isPaused()" title="Возобновить" class="icon-start"></i>
-    <i (click)="openStrategyPauseDialog()" *ngIf="dataType === 'strategy' && !data.isPaused()" title="Пауза" class="icon-pause"></i>
-    <i (click)="openStrategyResumeDialog()" *ngIf="dataType === 'strategy' && data.isPaused()" title="Возобновить" class="icon-start"></i>
+
+    <i (click)="openAccountPauseDialog()" *ngIf="!data.isSecured() && !data.isPaused()" title="Пауза" class="icon-pause"></i>
+    <i (click)="openAccountResumeDialog()" *ngIf="!data.isSecured() && data.isPaused()" title="Возобновить" class="icon-start"></i>
+    <i (click)="openStrategyPauseDialog()" *ngIf="data.isSecured() && !data.isPaused()" title="Пауза" class="icon-pause"></i>
+    <i (click)="openStrategyResumeDialog()" *ngIf="data.isSecured() && data.isPaused()" title="Возобновить" class="icon-start"></i>
 
     <div class="btn-group dropdown-container" dropdown>
       <i class="icon-hamburger" dropdownToggle></i>
@@ -51,7 +52,7 @@
     </div>
   </ng-container>
 
-  <ng-container *ngIf="dataType === 'strategy' && data.accountsCount === 0">
+  <ng-container *ngIf="dataType === 'strategy' && !data.account">
     <button class="primary inverted" (click)="openStrategyInvestDialog()">Инвестировать</button>
     <button class="primary inverted"><i class="fa fa-caret-down"></i></button>
   </ng-container>

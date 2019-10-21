@@ -64,7 +64,7 @@ export class ManageStrategyInvestComponent implements OnInit, OnDestroy {
     values.target = values.target ? values.target / 100 : null;
 
     this.strategyService.invest(this.strategy.id, values).subscribe((r) => {
-      console.log(r);
+
     });
   }
 

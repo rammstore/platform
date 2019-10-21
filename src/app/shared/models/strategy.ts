@@ -49,20 +49,7 @@ export class Strategy {
     this.status = 4;
   }
 
-  getType(): string {
-    switch (this.account.status) {
-      case 0:
-        return 'Real security';
-        break;
-      case 1:
-        return 'Virtual master';
-        break;
-      case 2:
-        return 'Real internal ramm account';
-        break;
-      case 3:
-        return 'Real external account';
-        break;
-    }
+  isSecured(): boolean {
+    return this.account.isSecurity;
   }
 }

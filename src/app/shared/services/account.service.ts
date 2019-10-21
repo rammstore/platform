@@ -9,7 +9,7 @@ import { Command } from '@app/models/command';
 import { CommandService } from '@app/services/command.service';
 import { StrategyService } from '@app/services/strategy.service';
 
-class InvestmentsSearchOptions {
+class AccountsSearchOptions {
   Filter: { MyActiveAccounts?: boolean, Value?: string };
   Pagination: { CurrentPage?: number, PerPage?: number };
   OrderBy: { Field?: string, Direction?: string };
@@ -37,14 +37,17 @@ export class AccountService {
     private strategyService: StrategyService
   ) { }
 
+  // Получение инвестиции по ID
   get(id: number): Observable<Account> {
     return this.http.post(`${CONFIG.baseApiUrl}/accounts.get`, { AccountID: id }).pipe(map((response: any) => {
       return this.createInstanceService.createAccount(response);
     }));
   }
 
+
   getActive(pagination?: Paginator): Observable<Account[]> {
-    const options: InvestmentsSearchOptions = new InvestmentsSearchOptions();
+    const options: AccountsSearchOptions = new AccountsSearchOptions();
+    options.Filter = { MyActiveAccounts: true };
 
     if (pagination) {
       options.Pagination = {
@@ -72,7 +75,8 @@ export class AccountService {
   }
 
   getClosed(pagination?: Paginator): Observable<Account[]> {
-    const options: InvestmentsSearchOptions = new InvestmentsSearchOptions();
+    const options: AccountsSearchOptions = new AccountsSearchOptions();
+    options.Filter = { MyActiveAccounts: true };
 
     if (pagination) {
       options.Pagination = {

@@ -39,7 +39,7 @@ export class ManageComponent implements OnInit {
   openAccountChangeProfileDialog(): void {
     const options: ModalOptions = new ModalOptions();
     options.initialState = {
-      account: this.dataType === 'account' ? this.data : this.data['account']
+      account: this.data['account'] || this.data
     };
 
     this.modalRef = this.modalService.show(ManageAccountChangeProfileComponent, options);
@@ -49,8 +49,8 @@ export class ManageComponent implements OnInit {
     const options: ModalOptions = new ModalOptions();
 
     options.initialState = {
-      account: this.dataType === 'account' ? this.data : this.data['account'],
-      strategy: this.dataType === 'account' ? this.data['strategy'] : this.data,
+      account: this.data['account'] || this.data,
+      strategy: this.data['strategy'] || this.data,
       forClose: true
     };
 
@@ -60,8 +60,8 @@ export class ManageComponent implements OnInit {
   openAccountFundDialog(): void {
     const options: ModalOptions = new ModalOptions();
     options.initialState = {
-      account: this.dataType === 'account' ? this.data : this.data['account'],
-      strategy: this.dataType === 'account' ? this.data['strategy'] : this.data
+      account: this.data['account'] || this.data,
+      strategy: this.data['strategy'] || this.data
     };
 
     this.modalRef = this.modalService.show(ManageAccountFundComponent, options);
@@ -70,7 +70,7 @@ export class ManageComponent implements OnInit {
   openAccountPauseDialog(): void {
     const options: ModalOptions = new ModalOptions();
     options.initialState = {
-      account: this.data
+      account: this.data['account'] || this.data
     };
 
     this.modalRef = this.modalService.show(ManageAccountPauseComponent, options);
@@ -79,7 +79,7 @@ export class ManageComponent implements OnInit {
   openAccountResumeDialog(): void {
     const options: ModalOptions = new ModalOptions();
     options.initialState = {
-      account: this.data
+      account: this.data['account'] || this.data
     };
 
     this.modalRef = this.modalService.show(ManageAccountResumeComponent, options);
@@ -95,7 +95,7 @@ export class ManageComponent implements OnInit {
     }
 
     options.initialState = {
-      account: this.dataType === 'account' ? this.data : this.data['account']
+      account: this.data['account'] || this.data
     };
 
     this.modalRef = this.modalService.show(ManageAccountWithdrawComponent, options);
@@ -122,7 +122,7 @@ export class ManageComponent implements OnInit {
   openStrategyPauseDialog(): void {
     const options: ModalOptions = new ModalOptions();
     options.initialState = {
-      strategy: this.data
+      strategy: this.data['strategy'] || this.data
     };
 
     this.modalRef = this.modalService.show(ManageStrategyPauseComponent, options);
@@ -131,7 +131,7 @@ export class ManageComponent implements OnInit {
   openStrategyResumeDialog(): void {
     const options: ModalOptions = new ModalOptions();
     options.initialState = {
-      strategy: this.data
+      strategy: this.data['strategy'] || this.data
     };
 
     this.modalRef = this.modalService.show(ManageStrategyResumeComponent, options);

@@ -30,6 +30,7 @@ export class ManageAccountWithdrawComponent implements OnInit, AfterViewInit, On
   ) { }
 
   ngOnInit(): void {
+    console.log(this.account);
     this.buildForm();
   }
 

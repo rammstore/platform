@@ -43,7 +43,6 @@ export class InvestmentsActiveComponent implements OnInit, OnDestroy {
     this.accountService.getActive()
       .pipe(takeUntil(this.destroy$))
       .subscribe((accounts: Account[]) => {
-      console.log(accounts);
         this.accounts = accounts;
       });
   }
