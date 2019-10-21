@@ -2,10 +2,10 @@ import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChi
 import { Account } from '@app/models';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap';
-import { Subject } from 'rxjs/index';
-import { AccountService } from '@app/services/account.service';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
 import { ManageStrategyPauseComponent } from '@app/components/manage/manage-strategy-pause/manage-strategy-pause.component';
+import { DataService } from '@app/services/data.service';
 
 @Component({
   selector: 'app-manage-account-withdraw',
@@ -25,11 +25,12 @@ export class ManageAccountWithdrawComponent implements OnInit, AfterViewInit, On
   constructor(
     public modalRef: BsModalRef,
     private fb: FormBuilder,
-    private accountService: AccountService,
+    private dataService: DataService,
     private modalService: BsModalService
   ) { }
 
   ngOnInit(): void {
+    console.log(this.account);
     this.buildForm();
   }
 
@@ -60,7 +61,7 @@ export class ManageAccountWithdrawComponent implements OnInit, AfterViewInit, On
       return;
     }
 
-    this.accountService.withdraw(this.account.id, this.form.get('amount').value)
+    this.dataService.withdrawFromAccount(this.account.id, this.form.get('amount').value)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
         this.modalRef.hide();
@@ -68,7 +69,7 @@ export class ManageAccountWithdrawComponent implements OnInit, AfterViewInit, On
   }
 
   close(): void {
-    this.accountService.close(this.account.id)
+    this.dataService.closeAccount(this.account.id)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
         this.modalRef.hide();

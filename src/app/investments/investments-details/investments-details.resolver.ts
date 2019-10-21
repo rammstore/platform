@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { Account } from '@app/models';
-import { AccountService } from '@app/services/account.service';
+import { DataService } from '@app/services/data.service';
 
 @Injectable()
 export class InvestmentResolver implements Resolve<Account> {
 
   constructor(
-    private accountService: AccountService
+    private dataService: DataService
   ) {}
 
   public resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): any {
-    return this.accountService.get(route.params['id']);
+    return this.dataService.getAccount(route.params['id']);
   }
 }

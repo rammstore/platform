@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Wallet } from '@app/user';
+import { Wallet } from '@app/models';
 import * as Highcharts from 'highcharts';
 
 @Component({

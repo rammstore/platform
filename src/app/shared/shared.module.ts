@@ -12,6 +12,7 @@ import { DataTablePaginatorComponent } from './components/data-table/data-table-
 import { DialogWrapperModule } from '@app/components/dialog-wrapper/dialog-wrapper.module';
 import { ManageModule } from '@app/components/manage/manage.module';
 import { PipesModule } from '@app/pipes/pipes.module';
+import { ProgressbarModule } from 'ngx-bootstrap';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { PipesModule } from '@app/pipes/pipes.module';
     ModalModule.forRoot(),
     AccordionModule.forRoot(),
     TooltipModule.forRoot(),
+    ProgressbarModule.forRoot(),
     ReactiveFormsModule,
     RouterModule,
     DialogWrapperModule,
@@ -52,7 +54,8 @@ import { PipesModule } from '@app/pipes/pipes.module';
     DialogWrapperModule,
     ManageModule,
     DataTablePaginatorComponent,
-    PipesModule
+    PipesModule,
+    ProgressbarModule
   ]
 })
 export class SharedModule { }

@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PasswordValidator } from '@app/validators/password.validator';
 import { AuthService } from '@app/services/auth.service';
 import { Router } from '@angular/router';
-import { Subject } from 'rxjs/index';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
 
 @Component({

@@ -1,19 +1,16 @@
 import { Injectable } from '@angular/core';
-import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot, Router } from '@angular/router';
-import { StrategyService } from '@app/services/strategy.service';
+import { Resolve, RouterStateSnapshot, ActivatedRouteSnapshot } from '@angular/router';
 import { Strategy } from '@app/models';
-import { of } from 'rxjs/index';
-import { map } from 'rxjs/internal/operators';
+import { DataService } from '@app/services/data.service';
 
 @Injectable()
 export class StrategyResolver implements Resolve<Strategy> {
 
   constructor(
-    private strategyService: StrategyService,
-    private router: Router
+    private dataService: DataService
   ) {}
 
   public resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): any {
-    return this.strategyService.get(route.params['id']);
+    return this.dataService.getStrategy(route.params['id']);
   }
 }

@@ -45,6 +45,10 @@ export class Account {
     return this.status === 4;
   }
 
+  isSecured(): boolean {
+    return this.isSecurity;
+  }
+
   getStatus(): string {
     switch (this.status) {
       case 0:

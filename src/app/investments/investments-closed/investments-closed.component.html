@@ -1,4 +1,8 @@
-<app-data-table [tableHeader]="tableHeader" [data]="accounts"></app-data-table>
+<app-data-table
+  [tableHeader]="tableHeader"
+  [data]="accounts"
+  [paginator]="paginator">
+</app-data-table>
 
 <div class="accounts">
   <div class="account" *ngFor="let account of accounts">

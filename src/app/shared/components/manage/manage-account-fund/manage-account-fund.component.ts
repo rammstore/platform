@@ -1,12 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { takeUntil } from 'rxjs/internal/operators';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthData } from '@app/user/auth-data';
 import { StorageService } from '@app/services/storage.service';
 import { BsModalRef } from 'ngx-bootstrap';
-import { Account, Strategy } from '@app/models';
-import { Subject } from 'rxjs/index';
-import { AccountService } from '@app/services/account.service';
+import { Account, AuthData, Strategy } from '@app/models';
+import { Subject } from 'rxjs';
+import { DataService } from '@app/services/data.service';
 
 @Component({
   selector: 'app-manage-account-fund',
@@ -27,7 +26,7 @@ export class ManageAccountFundComponent implements OnInit, OnDestroy {
   constructor(
     public modalRef: BsModalRef,
     private storageService: StorageService,
-    private accountService: AccountService,
+    private dataService: DataService,
     private fb: FormBuilder
   ) { }
 
@@ -54,11 +53,9 @@ export class ManageAccountFundComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.accountService.fund(this.account.id, this.form.get('amount').value)
+    this.dataService.fundAccount(this.account.id, this.form.get('amount').value)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
-        // this.account.equity = this.account.equity + this.form.get('amount').value;
-        // this.account.balance = this.account.balance + this.form.get('amount').value;
         this.authData.getWallets()[0].balance = this.authData.getWallets()[0].balance - this.form.get('amount').value;
         this.storageService.setAuthData(JSON.stringify(this.authData));
         this.modalRef.hide();

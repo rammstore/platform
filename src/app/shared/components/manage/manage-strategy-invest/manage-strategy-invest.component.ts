@@ -1,12 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthData } from '@app/user/auth-data';
 import { StorageService } from '@app/services/storage.service';
 import { BsModalRef } from 'ngx-bootstrap';
-import { Strategy } from '@app/models/strategy';
-import { StrategyService } from '@app/services/strategy.service';
-import { Subject } from 'rxjs/index';
+import { AuthData, Strategy } from '@app/models';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
+import { DataService } from '@app/services/data.service';
 
 @Component({
   selector: 'app-manage-strategy-invest',
@@ -26,7 +25,7 @@ export class ManageStrategyInvestComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private storageService: StorageService,
-    private strategyService: StrategyService,
+    private dataService: DataService,
     public modalRef: BsModalRef
   ) { }
 
@@ -63,8 +62,8 @@ export class ManageStrategyInvestComponent implements OnInit, OnDestroy {
     values.protection = values.protection / 100;
     values.target = values.target ? values.target / 100 : null;
 
-    this.strategyService.invest(this.strategy.id, values).subscribe((r) => {
-      console.log(r);
+    this.dataService.addAccount(this.strategy.id, values).subscribe(() => {
+      this.modalRef.hide();
     });
   }
 

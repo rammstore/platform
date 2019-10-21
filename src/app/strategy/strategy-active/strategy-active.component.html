@@ -15,7 +15,7 @@
     <div class="info">
       <div class="item">
         <span>Средства:</span>
-        <span>{{strategy.account.equity | customCurrency}}</span>
+        <span *ngIf="strategy.account">{{strategy.account.equity | customCurrency}}</span>
       </div>
 
       <div class="item">
@@ -30,8 +30,9 @@
 
       <div class="item">
         <span>Доходность стратегии:</span>
-        <span [class.negative]="strategy.profit < 0"
-              [class.positive]="strategy.profit > 0">
+        <span  *ngIf="strategy.account"
+               [class.negative]="strategy.profit < 0"
+               [class.positive]="strategy.profit > 0">
           {{strategy.account.intervalPnL}}
         </span>
       </div>

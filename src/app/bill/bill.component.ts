@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs/index';
 import { ContentTabLink } from '@app/components/content-tabs/content-tab-link';
-import { AuthData } from '@app/user/auth-data';
+import { AuthData } from '@app/models';
 import { StorageService } from '@app/services/storage.service';
 import { takeUntil } from 'rxjs/internal/operators';
 

@@ -1,7 +1,7 @@
-import { User } from '../user/user';
-import { Company } from '../user/company';
-import { Wallet } from '../user/wallet';
-import { Session } from '../user/session';
+import { User } from './user';
+import { Company } from './company';
+import { Wallet } from './wallet';
+import { Session } from './session';
 
 export class AuthData {
   client: User;
