@@ -7,7 +7,6 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { StorageService } from '@app/services/storage.service';
 import { AuthService } from '@app/services/auth.service';
 import { TokenInterceptor } from '@app/interceptors/token.interceptor';
-import { StrategyService } from '@app/services/strategy.service';
 import { OuterConfigModule } from '@app/modules/outer-config/outer-config.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { WalletService } from '@app/services/wallet.service';
@@ -29,7 +28,6 @@ import {DataService} from "@app/services/data.service";
   providers: [
     AuthService,
     StorageService,
-    StrategyService,
     WalletService,
     CommandService,
     DataService,

@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ChartOptions, Strategy } from '@app/models';
-import { StrategyService } from '@app/services/strategy.service';
 import * as Highcharts from 'highcharts';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
+import { DataService } from '@app/services/data.service';
 
 @Component({
   selector: 'app-strategy-details-profitability',
@@ -22,7 +22,7 @@ export class StrategyDetailsProfitabilityComponent implements OnInit , OnDestroy
 
   constructor(
     private route: ActivatedRoute,
-    private strategyService: StrategyService
+    private dataService: DataService
   ) { }
 
   ngOnInit(): void {
@@ -30,7 +30,7 @@ export class StrategyDetailsProfitabilityComponent implements OnInit , OnDestroy
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: object) => {
       this.strategy = data['strategy'];
-      this.strategyService.getChart(new ChartOptions(this.strategy.id))
+      this.dataService.getStrategyChart(new ChartOptions(this.strategy.id))
         .pipe(takeUntil(this.destroy$))
         .subscribe(response => {
 

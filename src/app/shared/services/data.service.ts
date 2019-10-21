@@ -7,7 +7,7 @@ import {
   Strategy,
   StrategiesSearchOptions,
   Command,
-  Deal, Position, DealsSearchOptions, PositionsSearchOptions
+  Deal, Position, DealsSearchOptions, PositionsSearchOptions, ChartOptions
 } from "@app/models";
 import { HttpClient } from "@angular/common/http";
 import { CreateInstanceService } from "@app/services/create-instance.service";
@@ -158,6 +158,18 @@ export class DataService {
         }
       });
     }, 1000);
+  }
+
+  // Получение графика для стратегий
+  getStrategyChart(chartOptions: ChartOptions): Observable<any> {
+    const options: any = {
+      StrategyID: chartOptions.strategyID,
+      MaxPoints: chartOptions.maxPoints,
+      chartType: chartOptions.chartType,
+      chartSize: chartOptions.chartSize
+    };
+
+    return this.http.post(`${CONFIG.baseApiUrl}/charts.get`, options);
   }
 
   //

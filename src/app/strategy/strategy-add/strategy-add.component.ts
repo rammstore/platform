@@ -2,10 +2,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StorageService } from '@app/services/storage.service';
 import { AuthData } from '@app/models';
-import { StrategyService } from '@app/services/strategy.service';
 import { BsModalRef } from 'ngx-bootstrap';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
+import { DataService } from '@app/services/data.service';
 
 @Component({
   selector: 'app-strategy-add',
@@ -26,7 +26,7 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private storageService: StorageService,
-    private strategyService: StrategyService,
+    private dataService: DataService,
     public modalRef: BsModalRef
   ) { }
 
@@ -84,7 +84,7 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
       Money: this.formStep2.get('money').value,
     };
 
-    this.strategyService.add(strategy)
+    this.dataService.addStrategy(strategy)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
         this.modalRef.hide();

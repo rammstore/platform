@@ -1,9 +1,9 @@
 import { Component, OnDestroy } from '@angular/core';
-import { StrategyService } from '@app/services/strategy.service';
 import { BsModalRef } from 'ngx-bootstrap';
 import { Strategy } from '@app/models';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
+import { DataService } from '@app/services/data.service';
 
 @Component({
   selector: 'app-manage-strategy-pause',
@@ -19,12 +19,12 @@ export class ManageStrategyPauseComponent implements OnDestroy {
   strategy: Strategy;
 
   constructor(
-    private strategyService: StrategyService,
+    private dataService: DataService,
     public modalRef: BsModalRef,
   ) { }
 
   pause(): void {
-    this.strategyService.pause(this.strategy.id)
+    this.dataService.pauseStrategy(this.strategy.id)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
         this.modalRef.hide();

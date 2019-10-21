@@ -1,11 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { StrategyService } from '@app/services/strategy.service';
 import { Paginator, Strategy, TableColumn } from '@app/models';
 import { TableHeaderRow } from '@app/models/table-header-row';
 import { PercentPipe } from '@angular/common';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
 import { CustomCurrencyPipe } from '@app/pipes/custom-currency.pipe';
+import { DataService } from '@app/services/data.service';
 
 @Component({
   selector: 'app-strategy-active',
@@ -38,7 +38,7 @@ export class StrategyActiveComponent implements OnInit, OnDestroy {
   });
 
   constructor(
-    private strategyService: StrategyService
+    private dataService: DataService
   ) { }
 
   ngOnInit(): void {
@@ -46,31 +46,11 @@ export class StrategyActiveComponent implements OnInit, OnDestroy {
   }
 
   getStrategies(): void {
-    this.strategyService.getActive(this.paginator)
+    this.dataService.getActiveMyStrategies(this.paginator)
       .pipe(takeUntil(this.destroy$))
       .subscribe((strategies: Strategy[]) => {
         this.strategies = strategies;
       });
-  }
-
-  getIntervalPnL(): number {
-    let sum: number = 0;
-
-    this.strategies.forEach((strategy: Strategy) => {
-      sum = sum + strategy.account.intervalPnL;
-    });
-
-    return sum;
-  }
-
-  getInvestors(): number {
-    let sum: number = 0;
-
-    this.strategies.forEach((strategy: Strategy) => {
-      sum = sum + strategy.accountsCount;
-    });
-
-    return sum;
   }
 
   ngOnDestroy(): void {

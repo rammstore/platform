@@ -1,11 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Strategy } from '@app/models/strategy';
-import { StrategyService } from '@app/services/strategy.service';
 import { TableHeaderRow } from '@app/models/table-header-row';
 import { Paginator, TableColumn } from '@app/models';
 import { DatePipe, PercentPipe } from '@angular/common';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
+import { DataService } from '@app/services/data.service';
 
 @Component({
   selector: 'app-strategy-closed',
@@ -37,7 +37,7 @@ export class StrategyClosedComponent implements OnInit, OnDestroy {
   });
 
   constructor(
-    private strategyService: StrategyService
+    private dataService: DataService
   ) { }
 
   ngOnInit(): void {
@@ -45,7 +45,7 @@ export class StrategyClosedComponent implements OnInit, OnDestroy {
   }
 
   getStrategies(): void {
-    this.strategyService.getClosed(this.paginator)
+    this.dataService.getClosedMyStrategies(this.paginator)
       .pipe(takeUntil(this.destroy$))
       .subscribe((strategies: Strategy[]) => {
         this.strategies = strategies;

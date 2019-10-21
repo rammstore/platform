@@ -3,9 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StorageService } from '@app/services/storage.service';
 import { BsModalRef } from 'ngx-bootstrap';
 import { AuthData, Strategy } from '@app/models';
-import { StrategyService } from '@app/services/strategy.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
+import { DataService } from '@app/services/data.service';
 
 @Component({
   selector: 'app-manage-strategy-resume',
@@ -25,7 +25,7 @@ export class ManageStrategyResumeComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private storageService: StorageService,
-    private strategyService: StrategyService,
+    private dataService: DataService,
     public modalRef: BsModalRef
   ) { }
 
@@ -53,10 +53,9 @@ export class ManageStrategyResumeComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.strategyService.resume(this.strategy.id)
+    this.dataService.resumeStrategy(this.strategy.id)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
-        // this.strategy.resume();
         this.modalRef.hide();
       });
   }
