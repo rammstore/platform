@@ -1,10 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { takeUntil } from 'rxjs/internal/operators';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthData } from '@app/user/auth-data';
 import { StorageService } from '@app/services/storage.service';
 import { BsModalRef } from 'ngx-bootstrap';
-import { Account, Strategy } from '@app/models';
+import { Account, AuthData, Strategy } from '@app/models';
 import { Subject } from 'rxjs/index';
 import { AccountService } from '@app/services/account.service';
 

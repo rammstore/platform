@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StorageService } from '@app/services/storage.service';
-import { AuthData } from '@app/user/auth-data';
+import { AuthData } from '@app/models';
 import { StrategyService } from '@app/services/strategy.service';
 import { BsModalRef } from 'ngx-bootstrap';
 import { Subject } from 'rxjs/index';

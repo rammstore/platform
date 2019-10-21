@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { AuthData } from '@app/user/auth-data';
-import { User } from '../user/user';
-import { Company } from '../user/company';
-import { Session } from '../user/session';
-import { Wallet } from '../user/wallet';
+import { AuthData } from '@app/models/auth-data';
+import { User } from '@app/models/user';
+import { Company } from '@app/models/company';
+import { Session } from '@app/models/session';
+import { Wallet } from '@app/models/wallet';
 import { BehaviorSubject, Observable } from 'rxjs/index';
 
 @Injectable({

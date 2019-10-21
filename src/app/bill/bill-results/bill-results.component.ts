@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Wallet } from '@app/user';
+import { Wallet } from '@app/models';
 
 @Component({
   selector: 'app-bill-results',
