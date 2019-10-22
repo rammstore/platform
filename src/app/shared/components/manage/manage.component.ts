@@ -77,8 +77,15 @@ export class ManageComponent implements OnInit {
 
   openAccountResumeDialog(): void {
     const options: ModalOptions = new ModalOptions();
+    let accountTemp: Account = new Account({});
+    if (this.dataType === 'strategy') {
+      Object.assign(accountTemp, this.data['account']);
+      this.data['account'].strategy = null;
+      accountTemp.strategy = new Strategy(this.data);
+      console.log(accountTemp);
+    }
     options.initialState = {
-      account: this.data['account'] || this.data
+      account: this.dataType === 'strategy' ? accountTemp : this.data
     };
 
     this.modalRef = this.modalService.show(ManageAccountResumeComponent, options);

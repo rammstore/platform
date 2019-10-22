@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef } from 'ngx-bootstrap';
-import { Subject } from 'rxjs';
+import { forkJoin, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
 import { Account, Wallet } from '@app/models';
 import { DataService } from '@app/services/data.service';
@@ -41,8 +41,9 @@ export class ManageAccountResumeComponent implements OnInit, OnDestroy {
   buildForm(): void {
     this.form = this.fb.group({
       amount: [0.00, [Validators.required, Validators.min(0), Validators.max(this.wallet.balance), Validators.pattern('^[0-9]+([\\,\\.][0-9]{1,2})?$')]],
-      goal: [100, [Validators.required, Validators.min(0)]],
-      protection: [50, [Validators.required, Validators.min(0), Validators.max(99)]]
+      factor: [{value: this.account.factor, disabled: this.account.isMy()}, [Validators.min(-1000), Validators.max(1000)]],
+      target: [this.account.target * 100, [Validators.required, Validators.min(0)]],
+      protection: [this.account.protection * 100, [Validators.required, Validators.min(0), Validators.max(99)]]
     });
   }
 
@@ -53,11 +54,23 @@ export class ManageAccountResumeComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.dataService.resumeAccount(this.account.id)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(() => {
-        this.modalRef.hide();
-      });
+    const queries: any[] = [this.dataService.resumeAccount(this.account.id)];
+
+    const values = this.form.getRawValue();
+    values.protection = values.protection / 100;
+    values.target = values.target ? values.target / 100 : null;
+
+    if (values.amount) {
+      queries.push(this.dataService.fundAccount(this.account.id, values.amount))
+    }
+
+    if (values.protection !== this.account.protection || values.target !== this.account.target || values.factor !== this.account.factor) {
+      queries.push(this.dataService.changeAccountProfile(this.account.id, values));
+    }
+
+    forkJoin(queries).pipe(takeUntil(this.destroy$)).subscribe(() => {
+      this.modalRef.hide();
+    });
   }
 
   cancel(): void {
