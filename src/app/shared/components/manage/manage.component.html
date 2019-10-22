@@ -2,10 +2,29 @@
   <ng-container *ngIf="dataType === 'account' || (dataType === 'strategy' && data.accountsCount !== 0)">
     <i (click)="openAccountFundDialog()" title="Пополнение инвестиции" class="icon-add"></i>
 
-    <i (click)="openAccountPauseDialog()" *ngIf="!data.isSecured() && !data.isPaused()" title="Пауза" class="icon-pause"></i>
-    <i (click)="openAccountResumeDialog()" *ngIf="!data.isSecured() && data.isPaused()" title="Возобновить" class="icon-start"></i>
-    <i (click)="openStrategyPauseDialog()" *ngIf="data.isSecured() && !data.isPaused()" title="Пауза" class="icon-pause"></i>
-    <i (click)="openStrategyResumeDialog()" *ngIf="data.isSecured() && data.isPaused()" title="Возобновить" class="icon-start"></i>
+    <ng-container *ngIf="dataType === 'account'">
+      <ng-container *ngIf="data.isSecured() && data.isMy()">
+        <i (click)="openStrategyPauseDialog()" *ngIf="!data.strategy.isPaused()" title="Пауза" class="icon-pause"></i>
+        <i (click)="openStrategyResumeDialog()" *ngIf="data.strategy.isPaused()" title="Возобновить" class="icon-start"></i>
+      </ng-container>
+
+      <ng-container *ngIf="!data.isSecured()">
+        <i (click)="openAccountPauseDialog()" *ngIf="!data.isPaused()" title="Пауза" class="icon-pause"></i>
+        <i (click)="openAccountResumeDialog()" *ngIf="data.isPaused()" title="Возобновить" class="icon-start"></i>
+      </ng-container>
+    </ng-container>
+
+    <ng-container *ngIf="dataType === 'strategy'">
+      <ng-container *ngIf="data.isSecured() && data.isMy()">
+        <i (click)="openStrategyPauseDialog()" *ngIf="!data.isPaused()" title="Пауза" class="icon-pause"></i>
+        <i (click)="openStrategyResumeDialog()" *ngIf="data.isPaused()" title="Возобновить" class="icon-start"></i>
+      </ng-container>
+
+      <ng-container *ngIf="!data.isSecured()">
+        <i (click)="openAccountPauseDialog()" *ngIf="!data.account.isPaused()" title="Пауза" class="icon-pause"></i>
+        <i (click)="openAccountResumeDialog()" *ngIf="data.account.isPaused()" title="Возобновить" class="icon-start"></i>
+      </ng-container>
+    </ng-container>
 
     <div class="btn-group dropdown-container" dropdown>
       <i class="icon-hamburger" dropdownToggle></i>
@@ -40,11 +59,11 @@
           Скачать сигнальный скрипт
         </li>
 
-        <li *ngIf="dataType === 'account'" (click)="openAccountCloseDialog()">
+        <li *ngIf="!data.isSecured()" (click)="openAccountCloseDialog()">
           <i class="fa fa-window-close"></i>
           Закрыть инвестицию
         </li>
-        <li *ngIf="dataType === 'strategy'" (click)="openStrategyCloseDialog()">
+        <li *ngIf="data.isSecured()" (click)="openStrategyCloseDialog()">
           <i class="fa fa-window-close"></i>
           Закрыть стратегию
         </li>

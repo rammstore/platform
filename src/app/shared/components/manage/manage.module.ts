@@ -15,8 +15,6 @@ import { DialogWrapperModule } from '@app/components/dialog-wrapper/dialog-wrapp
 import { BsDropdownModule, ModalModule } from 'ngx-bootstrap';
 import { RouterModule } from '@angular/router';
 import { ManageStrategyInvestComponent } from './manage-strategy-invest/manage-strategy-invest.component';
-import { CustomCurrencyPipe } from '@app/pipes/custom-currency.pipe';
-import { SharedModule } from '@app/shared.module';
 import { PipesModule } from '@app/pipes/pipes.module';
 
 @NgModule({
@@ -54,8 +52,7 @@ import { PipesModule } from '@app/pipes/pipes.module';
     ManageStrategyPauseComponent,
     ManageStrategyResumeComponent,
     ManageStrategyCloseComponent,
-    ManageStrategyDownloadScriptComponent,
-    ManageStrategyInvestComponent
+    ManageStrategyDownloadScriptComponent
   ]
 })
 export class ManageModule { }

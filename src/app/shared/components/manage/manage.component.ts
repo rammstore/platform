@@ -50,7 +50,6 @@ export class ManageComponent implements OnInit {
 
     options.initialState = {
       account: this.data['account'] || this.data,
-      strategy: this.data['strategy'] || this.data,
       forClose: true
     };
 
@@ -104,7 +103,7 @@ export class ManageComponent implements OnInit {
   openStrategyCloseDialog(): void {
     const options: ModalOptions = new ModalOptions();
     options.initialState = {
-      strategy: this.data
+      strategy: this.data['strategy'] || this.data
     };
 
     this.modalRef = this.modalService.show(ManageStrategyCloseComponent, options);

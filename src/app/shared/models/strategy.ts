@@ -37,19 +37,11 @@ export class Strategy {
     return Math.round((now - created) / (1000 * 3600 * 24 * 7));
   }
 
-  pause(): void {
-    this.status = 2;
-  }
-
-  resume(): void {
-    this.status = 1;
-  }
-
-  close(): void {
-    this.status = 4;
-  }
-
   isSecured(): boolean {
     return this.account.isSecurity;
+  }
+
+  isMy(): boolean {
+    return this.isMyStrategy;
   }
 }
