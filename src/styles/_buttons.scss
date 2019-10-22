@@ -39,6 +39,16 @@ button {
     display: block;
     margin: 0 auto;
   }
+
+  &.caret {
+    min-width: 0;
+    border-left: none;
+
+    i {
+      color: #00a651;
+      font-size: 14px;
+    }
+  }
 }
 
 .buttons-group {

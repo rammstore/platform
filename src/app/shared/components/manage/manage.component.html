@@ -53,7 +53,22 @@
   </ng-container>
 
   <ng-container *ngIf="dataType === 'strategy' && !data.account">
-    <button class="primary inverted" (click)="openStrategyInvestDialog()">Инвестировать</button>
-    <button class="primary inverted"><i class="fa fa-caret-down"></i></button>
+
+    <div class="btn-group dropdown-container" dropdown>
+      <button class="primary inverted" (click)="openStrategyInvestDialog()">Инвестировать</button>
+      <button class="primary inverted caret" dropdownToggle><i class="fa fa-caret-down"></i></button>
+
+      <ul *dropdownMenu class="dropdown-menu" role="menu">
+        <li *ngIf="dataType === 'strategy'" [routerLink]="['/strategies/details', data.id, 'investments']">
+          <i class="fa fa-list-alt"></i>
+          Список инвестиций
+        </li>
+
+        <li *ngIf="dataType === 'strategy'" (click)="openStrategyCloseDialog()">
+          <i class="fa fa-window-close"></i>
+          Закрыть стратегию
+        </li>
+      </ul>
+    </div>
   </ng-container>
 </div>
