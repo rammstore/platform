@@ -4,6 +4,27 @@
   display: none;
 }
 
+@media (min-width: 576px) and (max-width: 992px) {
+  .accounts {
+    .account {
+      .strategy {
+        .item {
+          display: flex;
+
+          span {
+            flex: 1 1 50%;
+
+            &:first-child {
+              margin-right: 10px;
+              text-align: right;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 @media (max-width: 992px) {
   app-data-table {
     display: none;

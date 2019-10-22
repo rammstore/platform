@@ -49,6 +49,10 @@ export class Account {
     return this.isSecurity;
   }
 
+  isMy(): boolean {
+    return this.strategy.isMyStrategy;
+  }
+
   getStatus(): string {
     switch (this.status) {
       case 0:
@@ -104,17 +108,5 @@ export class Account {
 
   getProtectionAmount(): number {
     return this.protection * this.equity;
-  }
-
-  pause(): void {
-    this.status = 4;
-  }
-
-  resume(): void {
-    this.status = 1;
-  }
-
-  close(): void {
-    this.status = 6;
   }
 }

@@ -346,14 +346,22 @@ export class DataService {
   changeAccountProfile(id: number, valueObj: {[key: string]: number}): Observable<any> {
     this.loaderService.showLoader();
     return forkJoin([
-      this.http.post(`${CONFIG.baseApiUrl}/accounts.setFactor`, {AccountID: id, Factor: valueObj['factor']}),
-      this.http.post(`${CONFIG.baseApiUrl}/accounts.setProtection`, {AccountID: id, Protection: valueObj['protection']}),
-      this.http.post(`${CONFIG.baseApiUrl}/accounts.setTarget`, {AccountID: id, Target: valueObj['target']})
-    ]).pipe(
-      map((response: any) => {
-        this.updateAccount(id, new Command(response.CommandID, id));
-      })
-    );
+      this.http.post(`${CONFIG.baseApiUrl}/accounts.setFactor`, {AccountID: id, Factor: valueObj['factor']}).pipe(
+        map((response: any) => {
+          this.updateAccount(id, new Command(response.CommandID, id));
+        })
+      ),
+      this.http.post(`${CONFIG.baseApiUrl}/accounts.setProtection`, {AccountID: id, Protection: valueObj['protection']}).pipe(
+        map((response: any) => {
+          this.updateAccount(id, new Command(response.CommandID, id));
+        })
+      ),
+      this.http.post(`${CONFIG.baseApiUrl}/accounts.setTarget`, {AccountID: id, Target: valueObj['target']}).pipe(
+        map((response: any) => {
+          this.updateAccount(id, new Command(response.CommandID, id));
+        })
+      )
+    ]);
   }
 
   // Вывести средства из инвестиции
