@@ -37,9 +37,15 @@ export class ManageComponent implements OnInit {
   }
 
   openAccountChangeProfileDialog(): void {
+    let accountTemp: Account = new Account({});
+    if (this.dataType === 'strategy') {
+      Object.assign(accountTemp, this.data['account']);
+      this.data['account'].strategy = null;
+      accountTemp.strategy = new Strategy(this.data);
+    }
     const options: ModalOptions = new ModalOptions();
     options.initialState = {
-      account: this.data['account'] || this.data
+      account: this.dataType === 'strategy' ? accountTemp : this.data
     };
 
     this.modalRef = this.modalService.show(ManageAccountChangeProfileComponent, options);
@@ -82,7 +88,6 @@ export class ManageComponent implements OnInit {
       Object.assign(accountTemp, this.data['account']);
       this.data['account'].strategy = null;
       accountTemp.strategy = new Strategy(this.data);
-      console.log(accountTemp);
     }
     options.initialState = {
       account: this.dataType === 'strategy' ? accountTemp : this.data
