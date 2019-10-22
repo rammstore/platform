@@ -1,5 +1,5 @@
 <app-dialog-wrapper titleText="Возобновить" [modalRef]="modalRef">
-  <form [formGroup]="form" (ngSubmit)="resume()">
+  <form [formGroup]="form">
 
     <div class="form-field">
       <label for="amount" class="field-label">Добавить в инвестицию, USD:</label>
@@ -8,7 +8,7 @@
                type="number"
                formControlName="amount"
                [min]="0"
-               [max]="authData.getWallets()[0].getEquity()">
+               [max]="wallet.balance">
         <div class="messages">
           <label class="error-message"
                  *ngIf="form.get('amount').touched && form.get('amount').hasError('required')">
@@ -27,7 +27,7 @@
             Пожалуйста, введите корректную сумму вывода.
           </label>
           <label class="details-message">
-            Доступно: {{authData.getWallets()[0].getEquity()  | customCurrency}}
+            Доступно: <span class="available-clickable" (click)="setAllMoney()">{{wallet.getAvailableMoney() | customCurrency}}</span>
           </label>
         </div>
       </div>
@@ -97,7 +97,7 @@
     </div>
 
     <div class="dialog-actions">
-      <button type="submit" class="primary" [disabled]="!form.valid">Ок</button>
+      <button class="primary" (click)="resume()" [disabled]="!form.valid">Ок</button>
       <button class="primary" (click)="cancel()">Отмена</button>
     </div>
   </form>

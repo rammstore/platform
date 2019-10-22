@@ -5,14 +5,8 @@ export class Session {
   walletID: number;
 
   constructor(
-    token?: string,
-    walletID?: number,
-    dtLastActivity?: Date,
-    expirationMinutes?: number
+    options: any
   ) {
-    this.token = token || null;
-    this.walletID = walletID || null;
-    this.dtLastActivity = dtLastActivity || null;
-    this.expirationMinutes = expirationMinutes || null;
+    Object.assign(this, options);
   }
 }

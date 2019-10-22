@@ -1,10 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { StorageService } from '@app/services/storage.service';
 import { BsModalRef } from 'ngx-bootstrap';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
-import { AuthData, Account } from '@app/models';
+import { Account } from '@app/models';
 import { DataService } from '@app/services/data.service';
 
 @Component({
@@ -19,22 +18,15 @@ export class ManageAccountChangeProfileComponent implements OnInit, OnDestroy {
 
   // component data
   form: FormGroup;
-  authData: AuthData;
   account: Account;
 
   constructor(
     private fb: FormBuilder,
-    private storageService: StorageService,
     private dataService: DataService,
     public modalRef: BsModalRef
   ) { }
 
   ngOnInit(): void {
-    this.storageService.getAuthData()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((authData: AuthData) => {
-        this.authData = authData;
-      });
     this.buildForm();
   }
 

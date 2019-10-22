@@ -22,7 +22,7 @@
         <li class="divider dropdown-divider"></li>
         <!---->
         <li role="menuitem" dropdown triggers="mouseover" placement="right" container="body">
-          <a dropdownToggle class="dropdown-item" (click)="false">Изменить язык <i class="icon-flag {{authData.client.language}} current-lang"></i></a>
+          <a dropdownToggle class="dropdown-item" (click)="false">Изменить язык <i class="icon-flag {{client.language}} current-lang"></i></a>
 
           <ul *dropdownMenu class="dropdown-menu langmenu" role="menu">
             <li role="menuitem lang"><i class="icon-flag en"></i></li>
@@ -32,7 +32,7 @@
         </li>
         <!---->
         <li class="divider dropdown-divider"></li>
-        <li role="menuitem"><a (click)="logout()" class="dropdown-item">Выйти <span class="login">{{authData.client.login}}</span></a></li>
+        <li role="menuitem"><a (click)="logout()" class="dropdown-item">Выйти <span class="login">{{client.login}}</span></a></li>
       </ul>
     </div>
 
@@ -40,22 +40,22 @@
 
     <!-- Chart -->
     <ng-template #chartContainer>
-      <div class="legend">
+      <div class="legend" *ngIf="wallet">
         <div>
           <span>Доступно</span>
-          <span class="amount available">{{(authData.getWallets()[0].balance)  | customCurrency}}</span>
+          <span class="amount available">{{wallet.balance | customCurrency}}</span>
         </div>
         <div>
           <span>Инвестировано</span>
-          <span class="amount invested">{{authData.getWallets()[0].invested | customCurrency}}</span>
+          <span class="amount invested">{{wallet.invested | customCurrency}}</span>
         </div>
         <div>
           <span>Средства</span>
-          <span class="amount">{{authData.getWallets()[0].getEquity() | customCurrency}}</span>
+          <span class="amount">{{wallet.getEquity() | customCurrency}}</span>
         </div>
 
         <div id="headerChartContainer"></div>
-        <app-chart-wallet-info [wallet]="authData.getWallets()[0]" containerID="headerChartContainer"></app-chart-wallet-info>
+        <app-chart-wallet-info *ngIf="wallet" [wallet]="wallet" containerID="headerChartContainer"></app-chart-wallet-info>
 
         <button [routerLink]="['/bill/fund']" class="primary block">Пополнить</button>
       </div>
@@ -75,7 +75,7 @@
         <li><a [routerLink]="['/manage']" class="dropdown-item">Изменить пароль</a></li>
 
         <li dropdown triggers="mouseover" placement="right" container="body" [dropup]="true">
-          <a dropdownToggle class="dropdown-item" (click)="false">Изменить язык <i class="icon-flag {{authData.client.language}} current-lang"></i></a>
+          <a dropdownToggle class="dropdown-item" (click)="false">Изменить язык <i class="icon-flag {{client.language}} current-lang"></i></a>
 
           <ul *dropdownMenu class="dropdown-menu langmenu" role="menu">
             <li role="menuitem lang"><i class="icon-flag en"></i></li>
@@ -86,16 +86,16 @@
 
         <li><a (click)="logout()">Выйти</a></li>
 
-        <li><a>{{authData.client.login}}</a></li>
+        <li><a>{{client.login}}</a></li>
       </ul>
     </aside>
 
-    <div class="bill-info" *ngIf="authData" [popover]="chartContainer" [outsideClick]="true" placement="bottom">
+    <div class="bill-info" *ngIf="wallet" [popover]="chartContainer" [outsideClick]="true" placement="bottom">
       <span class="available" title="Доступно">
-        {{authData.getWallets()[0].balance | customCurrency}}
+        {{wallet.balance | customCurrency}}
       </span>
       |
-      <span title="Средства">{{authData?.getWallets()[0].getEquity() | customCurrency}}</span>
+      <span title="Средства">{{wallet.getEquity() | customCurrency}}</span>
     </div>
   </div>
 </header>

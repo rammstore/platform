@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subject } from 'rxjs/index';
+import { Subject } from 'rxjs';
 import { ContentTabLink } from '@app/components/content-tabs/content-tab-link';
-import { AuthData } from '@app/models';
-import { StorageService } from '@app/services/storage.service';
+import { Wallet } from '@app/models';
 import { takeUntil } from 'rxjs/internal/operators';
+import { WalletService } from '@app/services/wallet.service';
 
 @Component({
   selector: 'app-bill',
@@ -22,17 +22,17 @@ export class BillComponent implements OnInit, OnDestroy {
     new ContentTabLink('Вывести', '/bill/withdraw'),
     new ContentTabLink('История переводов', '/bill/last-transfers')
   ];
-  authData: AuthData;
+  wallet: Wallet;
 
   constructor(
-    private storageService: StorageService
+    private walletService: WalletService
   ) { }
 
   ngOnInit(): void {
-    this.storageService.getAuthData()
+    this.walletService.getWallet()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((authData: AuthData) => {
-        this.authData = authData;
+      .subscribe((wallet: Wallet) => {
+        this.wallet = wallet;
       });
   }
 

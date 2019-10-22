@@ -74,7 +74,7 @@
     <div class="form-field">
       <label for="money" class="field-label">Сумма инвестиции, USD:</label>
       <div class="input-wrapper">
-        <input id="money" type="number" formControlName="money" [min]="0" [max]="authData.getWallets()[0].getEquity()">
+        <input id="money" type="number" formControlName="money" [min]="0" [max]="wallet.balance">
         <div class="messages">
           <label *ngIf="formStep2.get('money').touched && formStep2.get('money').hasError('min')" class="error-message">
             Пожалуйста, введите корректную сумму инвестиции.
@@ -83,7 +83,7 @@
             Вы можете инвестировать только свободные средства.
           </label>
           <label class="details-message">
-            Доступно: {{authData.getWallets()[0].getEquity()}}
+            Доступно: <span class="available-clickable" (click)="setAllMoney()">{{wallet.getAvailableMoney() | customCurrency}}</span>
           </label>
         </div>
       </div>

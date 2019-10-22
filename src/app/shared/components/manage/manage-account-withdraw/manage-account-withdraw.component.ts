@@ -76,6 +76,10 @@ export class ManageAccountWithdrawComponent implements OnInit, AfterViewInit, On
       });
   }
 
+  setAllMoney(): void {
+    this.form.get('amount').setValue(this.account.availableToWithDraw);
+  }
+
   ngOnDestroy(): void {
     this.destroy$.next(true);
   }

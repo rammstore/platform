@@ -19,6 +19,7 @@ import { CommandService } from "@app/services/command.service";
 import { CONFIG } from "../../../config";
 import { map } from "rxjs/operators";
 import { LoaderService } from '@app/services/loader.service';
+import { WalletService } from '@app/services/wallet.service';
 
 @Injectable({
   providedIn: 'root'
@@ -37,7 +38,8 @@ export class DataService {
     private http: HttpClient,
     private createInstanceService: CreateInstanceService,
     private commandService: CommandService,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private walletService: WalletService
   ) { }
 
   //
@@ -129,6 +131,7 @@ export class DataService {
     this.loaderService.showLoader();
     return this.http.post(`${CONFIG.baseApiUrl}/myStrategies.add`, strategy).pipe(map((response: any) => {
       this.loaderService.hideLoader();
+      this.walletService.updateWallet().subscribe();
       this.getActiveMyStrategies().subscribe();
     }));
   }
@@ -172,6 +175,7 @@ export class DataService {
           clearInterval(interval);
           this.getActiveMyStrategies().subscribe();
           this.getActiveMyAccounts().subscribe();
+          this.walletService.updateWallet().subscribe();
           this.loaderService.hideLoader();
         }
       });
@@ -303,6 +307,7 @@ export class DataService {
     return this.http.post(`${CONFIG.baseApiUrl}/accounts.add`, options).pipe(
       map((response: any) => {
         this.getActiveMyStrategies().subscribe();
+        this.walletService.updateWallet().subscribe();
       })
     );
   }
@@ -379,6 +384,7 @@ export class DataService {
           clearInterval(interval);
           this.getActiveMyStrategies().subscribe();
           this.getActiveMyAccounts().subscribe();
+          this.walletService.updateWallet().subscribe();
           this.loaderService.hideLoader();
         }
       });

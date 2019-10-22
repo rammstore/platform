@@ -1,12 +1,17 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { CONFIG } from '../../../config';
+import { StorageService } from '@app/services/storage.service';
 
 @Pipe({
   name: 'customCurrency'
 })
 export class CustomCurrencyPipe implements PipeTransform {
+  constructor(
+    private storageService: StorageService
+  ) {}
+
   transform(value: number): string {
-    const asset: string = JSON.parse(window.sessionStorage.auth).wallets[0].asset;
+    const asset: string = this.storageService.getWallet().asset;
 
     if (!value) {
       return `0${CONFIG.currencyFormat.fractionSeparator}00 ${asset}`;
