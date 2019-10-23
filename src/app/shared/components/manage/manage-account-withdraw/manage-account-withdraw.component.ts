@@ -6,6 +6,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
 import { ManageStrategyPauseComponent } from '@app/components/manage/manage-strategy-pause/manage-strategy-pause.component';
 import { DataService } from '@app/services/data.service';
+import { ManageAccountPauseComponent } from '@app/components/manage/manage-account-pause/manage-account-pause.component';
 
 @Component({
   selector: 'app-manage-account-withdraw',
@@ -34,7 +35,11 @@ export class ManageAccountWithdrawComponent implements OnInit, AfterViewInit, On
   }
 
   ngAfterViewInit(): void {
-    this.withdrawRadio.nativeElement.disabled = !this.account.strategy.isPaused();
+    if (this.account.isSecured() && this.account.strategy.isMy()) {
+      this.withdrawRadio.nativeElement.disabled = !this.account.strategy.isPaused();
+    } else {
+      this.withdrawRadio.nativeElement.disabled = !this.account.isPaused();
+    }
   }
 
   buildForm(): void {
@@ -53,6 +58,17 @@ export class ManageAccountWithdrawComponent implements OnInit, AfterViewInit, On
     };
 
     this.modalRef = this.modalService.show(ManageStrategyPauseComponent, options);
+  }
+
+  openAccountPauseDialog(): void {
+    this.modalRef.hide();
+
+    const options: ModalOptions = new ModalOptions();
+    options.initialState = {
+      account: this.account
+    };
+
+    this.modalRef = this.modalService.show(ManageAccountPauseComponent, options);
   }
 
   withdraw(): void {
