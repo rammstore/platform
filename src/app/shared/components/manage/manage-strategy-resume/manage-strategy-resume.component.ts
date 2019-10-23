@@ -30,6 +30,7 @@ export class ManageStrategyResumeComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    console.log(this.strategy);
     this.walletService.getWallet()
       .pipe(takeUntil(this.destroy$))
       .subscribe((wallet: Wallet) => {

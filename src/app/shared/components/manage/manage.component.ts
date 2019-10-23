@@ -141,8 +141,14 @@ export class ManageComponent implements OnInit {
 
   openStrategyResumeDialog(): void {
     const options: ModalOptions = new ModalOptions();
+    let strategyTemp: Strategy = new Strategy({});
+    if (this.dataType === 'account') {
+      Object.assign(strategyTemp, this.data['strategy']);
+      this.data['strategy'].account = null;
+      strategyTemp.account = new Account(this.data);
+    }
     options.initialState = {
-      strategy: this.data['strategy'] || this.data
+      strategy: this.dataType === 'account' ? strategyTemp : this.data
     };
 
     this.modalRef = this.modalService.show(ManageStrategyResumeComponent, options);
