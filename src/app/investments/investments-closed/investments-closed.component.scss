@@ -17,6 +17,10 @@
       border-bottom: 5px solid $border-color;
       padding: 15px 10px;
 
+      &.my {
+        background-color: $background-color;
+      }
+
       &:last-child {
         margin-bottom: 20px;
       }

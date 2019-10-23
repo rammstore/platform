@@ -7,6 +7,11 @@
 @media (min-width: 576px) and (max-width: 992px) {
   .accounts {
     .account {
+
+      &.my {
+        background-color: $background-color;
+      }
+
       .strategy {
         .item {
           display: flex;

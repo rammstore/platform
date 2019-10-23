@@ -11,7 +11,7 @@
   </thead>
 
   <tbody>
-  <tr *ngFor="let item of data">
+  <tr *ngFor="let item of data" [class.my]="shouldHighlightMyStrategies && item.isMy()">
     <ng-container *ngFor="let row of tableHeader">
       <ng-container *ngFor="let column of row.columns">
         <ng-container *ngIf="column.property || column.property === ''" >
