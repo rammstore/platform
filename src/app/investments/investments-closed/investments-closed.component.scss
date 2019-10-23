@@ -40,6 +40,11 @@
           align-items: center;
           justify-content: space-between;
           margin-bottom: 10px;
+
+          &>span {
+            flex: 0 0 50%;
+            text-align: left;
+          }
         }
       }
     }

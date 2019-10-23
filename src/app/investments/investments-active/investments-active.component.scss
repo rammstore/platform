@@ -4,32 +4,6 @@
   display: none;
 }
 
-@media (min-width: 576px) and (max-width: 992px) {
-  .accounts {
-    .account {
-
-      &.my {
-        background-color: $background-color;
-      }
-
-      .strategy {
-        .item {
-          display: flex;
-
-          span {
-            flex: 1 1 50%;
-
-            &:first-child {
-              margin-right: 10px;
-              text-align: right;
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
 @media (max-width: 992px) {
   app-data-table {
     display: none;
@@ -44,6 +18,10 @@
       margin-bottom: 30px;
       padding: 15px 10px;
 
+      &.my {
+        background-color: $background-color;
+      }
+
       .caption {
         display: flex;
         align-items: center;
@@ -53,7 +31,6 @@
       .account-info {
         display: flex;
         align-items: center;
-        justify-content: space-between;
         margin-bottom: 15px;
 
         .item {
@@ -61,8 +38,8 @@
           border-right: 1px solid $border-color;
           padding: 10px;
           line-height: 20px;
-          flex-grow: 1;
           font-size: 12px;
+          display: flex;
 
           &:last-child {
             border: none;
@@ -76,6 +53,11 @@
           align-items: center;
           justify-content: space-between;
           margin-bottom: 10px;
+
+          &>span {
+            flex: 0 0 50%;
+            text-align: left;
+          }
         }
       }
     }
