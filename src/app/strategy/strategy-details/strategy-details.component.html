@@ -1,7 +1,7 @@
 <div class="caption">
   <h2>{{strategy.name}}</h2>
 
-  <div class="info">
+  <div class="info" *ngIf="strategy.account">
     <span class="pnl item"
           [class.positive]="strategy.account.intervalPnL > 0"
           [class.negative]="strategy.account.intervalPnL < 0">
