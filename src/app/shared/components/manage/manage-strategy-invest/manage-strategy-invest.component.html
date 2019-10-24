@@ -1,4 +1,4 @@
-<app-dialog-wrapper title="Возобновить" [modalRef]="modalRef">
+<app-dialog-wrapper titleText="Инвестировать в стратегию" [modalRef]="modalRef">
   <form [formGroup]="form">
 
     <div class="form-field">
@@ -114,8 +114,11 @@
     </div>
 
     <div class="dialog-actions">
-      <button class="primary" (click)="invest()" [disabled]="!form.valid">Ок</button>
-      <button class="primary" (click)="cancel()">Отмена</button>
+      <button class="primary"
+              [disabled]="!form.valid"
+              (click)="invest()">
+        Инвестировать {{form.valid ? '(' + (form.get('amount').value | customCurrency) + ')' : ''}}
+      </button>
     </div>
   </form>
 </app-dialog-wrapper>
