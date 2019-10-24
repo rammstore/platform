@@ -11,10 +11,12 @@
       </tr>
       <tr>
         <td>Доходность</td>
-        <td [class.positive]="strategy.account.intervalPnL > 0"
+        <td *ngIf="strategy.account"
+            [class.positive]="strategy.account.intervalPnL > 0"
             [class.negative]="strategy.account.intervalPnL < 0">
           {{strategy.profit | percent}}
         </td>
+        <td *ngIf="!strategy.account">{{0 | percent}}</td>
       </tr>
       <tr><td></td><td></td></tr>
       <tr>
@@ -27,7 +29,8 @@
       </tr>
       <tr>
         <td>Инвестиции, USD</td>
-        <td>{{strategy.account.equity}}</td>
+        <td *ngIf="strategy.account">{{strategy.account.equity | customCurrency}}</td>
+        <td *ngIf="!strategy.account">{{0 | customCurrency}}</td>
       </tr>
       <tr>
         <td>Количество инвесторов</td>

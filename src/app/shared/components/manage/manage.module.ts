@@ -52,7 +52,8 @@ import { PipesModule } from '@app/pipes/pipes.module';
     ManageStrategyPauseComponent,
     ManageStrategyResumeComponent,
     ManageStrategyCloseComponent,
-    ManageStrategyDownloadScriptComponent
+    ManageStrategyDownloadScriptComponent,
+    ManageStrategyInvestComponent
   ]
 })
 export class ManageModule { }

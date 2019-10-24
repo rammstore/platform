@@ -31,7 +31,8 @@ export class ChartYieldTableComponent implements OnInit, OnDestroy {
 
         this.chartOptions = {
           chart: {
-            zoomType: 'x'
+            zoomType: 'x',
+            backgroundColor: 'transparent'
           },
           credits: {
             enabled: false

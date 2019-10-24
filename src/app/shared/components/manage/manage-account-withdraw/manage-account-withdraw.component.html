@@ -14,10 +14,15 @@
       </div>
 
       <div class="radio-hint">
-        <div *ngIf="!account.strategy.isPaused()" class="negative">
+        <div *ngIf="account.isSecured() && account.isMy() && !account.strategy.isPaused()" class="negative">
           Частичное снятие возможно только в режиме
           <a class="pause-link" (click)="openStrategyPauseDialog()">Паузы</a>.
           Поставьте стратегию на паузу и повторите операцию.
+        </div>
+        <div *ngIf="!account.isSecured() && !account.isPaused()" class="negative">
+          Частичное снятие возможно только в режиме
+          <a class="pause-link" (click)="openAccountPauseDialog()">Паузы</a>.
+          Поставьте инвестицию на паузу и повторите операцию.
         </div>
         <div *ngIf="account.strategy.isPaused() && !(form.get('withdrawType').value === 'withdraw')">
           Сумма, доступная для частичного вывода: {{account.availableToWithDraw | customCurrency}}.

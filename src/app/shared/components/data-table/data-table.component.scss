@@ -28,6 +28,10 @@
   font-weight: bold;
 }
 
+tr.my {
+  background-color: $background-color;
+}
+
 td {
   &.name,
   &[class*='strategy.name'] {

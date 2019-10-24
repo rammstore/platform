@@ -2,10 +2,12 @@
   <tbody>
   <tr>
     <td>Доходность</td>
-    <td [class.positive]="strategy.account.intervalPnL > 0"
+    <td *ngIf="strategy.account"
+        [class.positive]="strategy.account.intervalPnL > 0"
         [class.negative]="strategy.account.intervalPnL < 0">
       {{strategy.profit | percent}}
     </td>
+    <td *ngIf="!strategy.account">{{0 | percent}}</td>
   </tr>
   </tbody>
 </table>

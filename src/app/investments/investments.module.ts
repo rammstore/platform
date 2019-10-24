@@ -6,9 +6,6 @@ import { InvestmentsRoutingModule } from './investments.routing';
 import { SharedModule } from '@app/shared.module';
 import { InvestmentsDetailsComponent } from './investments-details/investments-details.component';
 import { InvestmentResolver } from './investments-details/investments-details.resolver';
-import { InvestmentsProfileChangeComponent } from './investments-profile-change/investments-profile-change.component';
-import { InvestmentsWithdrawComponent } from './investments-withdraw/investments-withdraw.component';
-import { InvestmentsDownloadScriptComponent } from './investments-download-script/investments-download-script.component';
 import { InvestmentsDetailsDealsComponent } from './investments-details/investments-details-deals/investments-details-deals.component';
 import { InvestmentsDetailsPositionsComponent } from './investments-details/investments-details-positions/investments-details-positions.component';
 
@@ -18,9 +15,6 @@ import { InvestmentsDetailsPositionsComponent } from './investments-details/inve
     InvestmentsActiveComponent,
     InvestmentsClosedComponent,
     InvestmentsDetailsComponent,
-    InvestmentsProfileChangeComponent,
-    InvestmentsWithdrawComponent,
-    InvestmentsDownloadScriptComponent,
     InvestmentsDetailsDealsComponent,
     InvestmentsDetailsPositionsComponent
   ],
@@ -30,11 +24,6 @@ import { InvestmentsDetailsPositionsComponent } from './investments-details/inve
   ],
   providers: [
     InvestmentResolver
-  ],
-  entryComponents: [
-    InvestmentsProfileChangeComponent,
-    InvestmentsWithdrawComponent,
-    InvestmentsDownloadScriptComponent
   ]
 })
 export class InvestmentsModule { }
