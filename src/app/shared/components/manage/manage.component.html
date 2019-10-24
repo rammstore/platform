@@ -1,7 +1,9 @@
 <div class="manage-container">
   <ng-container *ngIf="dataType === 'account' || (dataType === 'strategy' && data.accountsCount !== 0)">
+    <!--  Fund button  -->
     <i (click)="openAccountFundDialog()" title="Пополнение инвестиции" class="icon-add"></i>
 
+    <!--  Pause/Resume buttons  -->
     <ng-container *ngIf="dataType === 'account'">
       <ng-container *ngIf="data.isSecured() && data.isMy()">
         <i (click)="openStrategyPauseDialog()" *ngIf="!data.strategy.isPaused()" title="Пауза" class="icon-pause"></i>
@@ -49,23 +51,27 @@
           Выписка по инвестиции
         </li>
 
-        <li *ngIf="dataType === 'strategy'" [routerLink]="['/strategies/details', data.id, 'investments']">
+        <li *ngIf="dataType === 'strategy' && data.isMy()" [routerLink]="['/strategies/details', data.id, 'investments']">
+          <i class="fa fa-list-alt"></i>
+          Список инвестиций
+        </li>
+        <li *ngIf="dataType === 'account' && data.isMy()" [routerLink]="['/strategies/details', data.strategy.id, 'investments']">
           <i class="fa fa-list-alt"></i>
           Список инвестиций
         </li>
 
-        <li *ngIf="dataType === 'strategy'" (click)="openStrategyDownloadScriptDialog()">
+        <li *ngIf="data.isMy() && data.isSecured()" (click)="openStrategyDownloadScriptDialog()">
           <i class="fa fa-download"></i>
           Скачать сигнальный скрипт
         </li>
 
-        <li *ngIf="!data.isSecured()" (click)="openAccountCloseDialog()">
-          <i class="fa fa-window-close"></i>
-          Закрыть инвестицию
-        </li>
-        <li *ngIf="data.isSecured()" (click)="openStrategyCloseDialog()">
+        <li *ngIf="data.isMy()" (click)="openStrategyCloseDialog()">
           <i class="fa fa-window-close"></i>
           Закрыть стратегию
+        </li>
+        <li *ngIf="!data.isMy()" (click)="openAccountCloseDialog()">
+          <i class="fa fa-window-close"></i>
+          Закрыть инвестицию
         </li>
       </ul>
     </div>
@@ -78,12 +84,12 @@
       <button class="primary inverted caret" dropdownToggle><i class="fa fa-caret-down"></i></button>
 
       <ul *dropdownMenu class="dropdown-menu" role="menu">
-        <li *ngIf="dataType === 'strategy'" [routerLink]="['/strategies/details', data.id, 'investments']">
+        <li [routerLink]="['/strategies/details', data.id, 'investments']">
           <i class="fa fa-list-alt"></i>
           Список инвестиций
         </li>
 
-        <li *ngIf="dataType === 'strategy'" (click)="openStrategyCloseDialog()">
+        <li (click)="openStrategyCloseDialog()">
           <i class="fa fa-window-close"></i>
           Закрыть стратегию
         </li>

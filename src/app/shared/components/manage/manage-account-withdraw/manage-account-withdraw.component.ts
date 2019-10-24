@@ -95,6 +95,18 @@ export class ManageAccountWithdrawComponent implements OnInit, AfterViewInit, On
     this.form.get('amount').setValue(this.account.availableToWithDraw);
   }
 
+  getTitleText(): string {
+    let title = 'Вывод средств';
+    if (this.form.get('withdrawType').value === 'close') {
+      if (this.account.strategy.isMy() && this.account.isSecured()) {
+        title = 'Закрытие стратегии';
+      } else {
+        title = 'Закрытие инвестиции';
+      }
+    }
+    return title;
+  }
+
   ngOnDestroy(): void {
     this.destroy$.next(true);
   }

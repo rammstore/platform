@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { takeUntil } from 'rxjs/internal/operators';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef } from 'ngx-bootstrap';
-import { Account, Strategy, Wallet } from '@app/models';
+import { Account, Wallet } from '@app/models';
 import { Subject } from 'rxjs';
 import { DataService } from '@app/services/data.service';
 import { WalletService } from '@app/services/wallet.service';
@@ -17,10 +17,9 @@ export class ManageAccountFundComponent implements OnInit, OnDestroy {
   // here we will unsubscribe from all subscriptions
   destroy$ = new Subject();
 
-  // strategy data
+  // component data
   account: Account;
   form: FormGroup;
-  strategy: Strategy;
   wallet: Wallet;
 
   constructor(

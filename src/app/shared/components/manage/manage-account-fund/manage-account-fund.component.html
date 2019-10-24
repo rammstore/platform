@@ -1,9 +1,9 @@
-<app-dialog-wrapper [modalRef]="modalRef" title="Пополнение инвестиции">
+<app-dialog-wrapper [modalRef]="modalRef" titleText="Пополнение инвестиции">
   <form [formGroup]="form" (ngSubmit)="submit()">
     <div class="form-field no-input">
       <label class="field-label">Стратегия:</label>
       <div class="input-wrapper">
-        <a [routerLink]="['/strategies/details', strategy.id]" (click)="modalRef.hide()">{{strategy.name}}</a>
+        <a [routerLink]="['/strategies/details', account.strategy.id]" (click)="modalRef.hide()">{{account.strategy.name}}</a>
       </div>
     </div>
 
