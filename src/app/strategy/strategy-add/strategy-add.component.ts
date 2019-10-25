@@ -46,6 +46,9 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
       comission: [0, [Validators.min(0), Validators.max(100)]],
       isShared: [true]
     });
+
+    this.formStep1.get('name').setErrors({isUniq: true});
+    console.log(this.formStep1);
   }
 
   buildFormStep2(): void {
@@ -97,6 +100,22 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
 
   setAllMoney(): void {
     this.formStep2.get('money').setValue(this.wallet.getAvailableMoney());
+  }
+
+  isStrategyNameUniq(name: string, isSubmitClicked: boolean = false): void {
+    this.dataService.searchStrategy(name)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((isUniq: boolean) => {
+        if (isUniq) {
+          this.formStep1.get('name').setErrors(null);
+          if (isSubmitClicked) {
+            this.submitStep1();
+          }
+        }
+        else {
+          this.formStep1.get('name').setErrors({isUniq: true});
+        }
+      });
   }
 
   ngOnDestroy(): void {

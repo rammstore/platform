@@ -2,7 +2,8 @@
   [tableHeader]="tableHeader"
   [data]="accounts"
   [paginator]="paginator"
-  [shouldHighlightMyStrategies]="true">
+  [shouldHighlightMyStrategies]="true"
+  (paginationChanged)="getAccounts()">
 </app-data-table>
 
 <div class="accounts">

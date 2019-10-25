@@ -44,6 +44,10 @@ export class InvestmentsClosedComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.getAccounts();
+  }
+
+  getAccounts(): void {
     this.dataService.getClosedMyAccounts(this.paginator)
       .pipe(takeUntil(this.destroy$))
       .subscribe((accounts: Account[]) => {
