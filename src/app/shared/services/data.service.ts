@@ -166,6 +166,28 @@ export class DataService {
     );
   }
 
+  searchStrategy(strategyName: string): Observable<boolean> {
+    this.loaderService.showLoader();
+
+    const options: StrategiesSearchOptions = new StrategiesSearchOptions();
+    options.Filter = {
+      Name: strategyName
+    };
+
+    return this.http.post(`${CONFIG.baseApiUrl}/strategies.search`, options).pipe(
+      map((response: any) => {
+        this.loaderService.hideLoader();
+        let result: boolean = true;
+        response.Strategies.forEach((s: any) => {
+          if (s.Name === strategyName) {
+            result = false;
+          }
+        });
+        return result;
+      })
+    );
+  }
+
   // Получение статуса команды стратегии и запрос обновленного списка стратегий после завершения обработки изменений
   // Работает с активными стратегиями, так как закрытые изменять нельзя
   updateStrategy(strategyId: number, command: Command): void {

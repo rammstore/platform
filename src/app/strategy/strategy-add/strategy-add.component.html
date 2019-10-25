@@ -1,15 +1,19 @@
 <app-dialog-wrapper [modalRef]="modalRef"
                     titleText="Шаг {{currentStep}}: {{currentStep === 1 ? 'Параметры стратегии' : 'Параметры инвестиции'}}">
 
-  <form [formGroup]="formStep1" (ngSubmit)="submitStep1()" *ngIf="currentStep === 1">
+  <form [formGroup]="formStep1" *ngIf="currentStep === 1">
     <div class="form-field">
       <label for="name" class="field-label">Название стратегии:</label>
       <div class="input-wrapper">
-        <input id="name" formControlName="name">
+        <input id="name" formControlName="name" (change)="isStrategyNameUniq($event.target.value)">
         <div class="messages">
           <label *ngIf="formStep1.get('name').touched && formStep1.get('name').hasError('required')"
                  class="error-message">
             Введите название стратегии
+          </label>
+          <label *ngIf="formStep1.get('name').touched && formStep1.get('name').hasError('isUniq')"
+                 class="error-message">
+            Данное имя стратегии уже используется. Пожалуйста, введите другое имя.
           </label>
           <label class="details-message">Название стратегии может быть изменено только в течение первых 1 недель.</label>
         </div>
@@ -66,11 +70,11 @@
     </div>
 
     <div class="dialog-actions">
-      <button type="submit" class="primary" [disabled]="!formStep1.valid">Дальше</button>
+      <button class="primary" (click)="isStrategyNameUniq(formStep1.get('name').value, true)" [disabled]="!formStep1.valid">Дальше</button>
     </div>
   </form>
 
-  <form [formGroup]="formStep2" (ngSubmit)="submitStep2()" *ngIf="currentStep === 2">
+  <form [formGroup]="formStep2" *ngIf="currentStep === 2">
     <div class="form-field">
       <label for="money" class="field-label">Сумма инвестиции, USD:</label>
       <div class="input-wrapper">
@@ -124,7 +128,7 @@
 
     <div class="dialog-actions">
       <button class="primary inverted" (click)="back()">Назад</button>
-      <button type="submit" class="primary" [disabled]="!formStep2.valid">Создать стретегию</button>
+      <button (click)="submitStep2()" class="primary" [disabled]="!formStep2.valid">Создать стретегию</button>
     </div>
   </form>
 
