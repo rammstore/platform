@@ -17,8 +17,12 @@ export class CustomCurrencyPipe implements PipeTransform {
       return `0${CONFIG.currencyFormat.fractionSeparator}00 ${asset}`;
     }
 
+    // отсекаем лишние числа после запятой
+    value = Math.floor(value * 100) / 100;
+
     const integers: string = Math.floor(Math.abs(value)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, CONFIG.currencyFormat.groupSeparator);
     const decimals: string = ((Math.abs(value) - Math.floor(Math.abs(value))).toFixed(CONFIG.currencyFormat.fractionSize)).toString().split('.')[1];
+
     const minus: string = value < 0 ? '-' : '';
     return `${minus}${integers}${CONFIG.currencyFormat.fractionSeparator}${decimals} ${asset}`;
   }
