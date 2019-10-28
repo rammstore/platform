@@ -18,6 +18,10 @@
       margin-bottom: 30px;
       padding: 15px 10px;
 
+      &.my {
+        background-color: $background-color;
+      }
+
       .caption {
         display: flex;
         align-items: center;
@@ -27,7 +31,6 @@
       .account-info {
         display: flex;
         align-items: center;
-        justify-content: space-between;
         margin-bottom: 15px;
 
         .item {
@@ -35,8 +38,8 @@
           border-right: 1px solid $border-color;
           padding: 10px;
           line-height: 20px;
-          flex-grow: 1;
           font-size: 12px;
+          display: flex;
 
           &:last-child {
             border: none;
@@ -50,6 +53,11 @@
           align-items: center;
           justify-content: space-between;
           margin-bottom: 10px;
+
+          &>span {
+            flex: 0 0 50%;
+            text-align: left;
+          }
         }
       }
     }

@@ -1,16 +1,20 @@
 <app-dialog-wrapper [modalRef]="modalRef"
                     titleText="Шаг {{currentStep}}: {{currentStep === 1 ? 'Параметры стратегии' : 'Параметры инвестиции'}}">
 
-  <form [formGroup]="formStep1" (ngSubmit)="submitStep1()" *ngIf="currentStep === 1">
+  <form [formGroup]="formStep1" *ngIf="currentStep === 1">
     <div class="form-field">
       <label for="name" class="field-label" translate>Название стратегии</label>
       <div class="input-wrapper">
-        <input id="name" formControlName="name">
+        <input id="name" formControlName="name" (change)="isStrategyNameUniq($event.target.value)">
         <div class="messages">
           <label *ngIf="formStep1.get('name').touched && formStep1.get('name').hasError('required')"
                  class="error-message"
                  translate>
             Введите название стратегии
+          </label>
+          <label *ngIf="formStep1.get('name').touched && formStep1.get('name').hasError('isUniq')"
+                 class="error-message" translate>
+            Данное имя стратегии уже используется. Пожалуйста, введите другое имя.
           </label>
           <label class="details-message" translate>Название стратегии может быть изменено только в течение первых 1 недель.</label>
         </div>
@@ -67,16 +71,16 @@
     </div>
 
     <div class="dialog-actions">
-      <button type="submit" class="primary" [disabled]="!formStep1.valid" translate>Дальше</button>
+      <button class="primary" (click)="isStrategyNameUniq(formStep1.get('name').value, true)" [disabled]="!formStep1.valid" translate>Дальше</button>
     </div>
   </form>
 
-  <form [formGroup]="formStep2" (ngSubmit)="submitStep2()" *ngIf="currentStep === 2">
+  <form [formGroup]="formStep2" *ngIf="currentStep === 2">
     <p translate>При создании стратегии вы должны создать и инвестицию в нее. Эта инвестиция может быть закрыта только при закрытии стратегии.</p>
     <div class="form-field">
       <label for="money" class="field-label"><span translate>Сумма инвестиции</span>, USD:</label>
       <div class="input-wrapper">
-        <input id="money" type="number" formControlName="money" [min]="0" [max]="authData.getWallets()[0].getEquity()">
+        <input id="money" type="number" formControlName="money" [min]="0" [max]="wallet.balance">
         <div class="messages">
           <label *ngIf="formStep2.get('money').touched && formStep2.get('money').hasError('min')" class="error-message" translate>
             Пожалуйста, введите корректную сумму инвестиции.
@@ -85,7 +89,7 @@
             Вы можете инвестировать только свободные средства.
           </label>
           <label class="details-message">
-            <span translate>Доступно</span>: {{authData.getWallets()[0].getEquity()}}
+            <span translate>Доступно</span>: <span class="available-clickable" (click)="setAllMoney()">{{wallet.getAvailableMoney() | customCurrency}}</span>
           </label>
         </div>
       </div>
@@ -126,7 +130,7 @@
 
     <div class="dialog-actions">
       <button class="primary inverted" (click)="back()" translate>Назад</button>
-      <button type="submit" class="primary" [disabled]="!formStep2.valid" translate>Создать стратегию</button>
+      <button (click)="submitStep2()" class="primary" [disabled]="!formStep2.valid" translate>Создать стретегию</button>
     </div>
   </form>
 

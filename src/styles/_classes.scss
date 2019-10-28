@@ -11,3 +11,9 @@
 .accent {
   color: $accent-color !important;
 }
+
+.available-clickable {
+  color: $accent-color;
+  text-decoration: underline;
+  cursor: pointer;
+}

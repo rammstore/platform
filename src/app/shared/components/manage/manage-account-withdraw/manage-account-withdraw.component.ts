@@ -1,11 +1,12 @@
 import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Account, Strategy } from '@app/models';
+import { Account } from '@app/models';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap';
-import { Subject } from 'rxjs/index';
-import { AccountService } from '@app/services/account.service';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
 import { ManageStrategyPauseComponent } from '@app/components/manage/manage-strategy-pause/manage-strategy-pause.component';
+import { DataService } from '@app/services/data.service';
+import { ManageAccountPauseComponent } from '@app/components/manage/manage-account-pause/manage-account-pause.component';
 
 @Component({
   selector: 'app-manage-account-withdraw',
@@ -25,7 +26,7 @@ export class ManageAccountWithdrawComponent implements OnInit, AfterViewInit, On
   constructor(
     public modalRef: BsModalRef,
     private fb: FormBuilder,
-    private accountService: AccountService,
+    private dataService: DataService,
     private modalService: BsModalService
   ) { }
 
@@ -34,13 +35,17 @@ export class ManageAccountWithdrawComponent implements OnInit, AfterViewInit, On
   }
 
   ngAfterViewInit(): void {
-    this.withdrawRadio.nativeElement.disabled = !this.account.strategy.isPaused();
+    if (this.account.isSecured() && this.account.strategy.isMy()) {
+      this.withdrawRadio.nativeElement.disabled = !this.account.strategy.isPaused();
+    } else {
+      this.withdrawRadio.nativeElement.disabled = !this.account.isPaused();
+    }
   }
 
   buildForm(): void {
     this.form = this.fb.group({
       withdrawType: [this.forClose ? 'close' : ''],
-      amount: [0, [Validators.min(0.01), Validators.max(this.account.availableToWithDraw), Validators.required]]
+      amount: [0, [Validators.min(0.01), Validators.max(this.account.availableToWithDraw), Validators.required, Validators.pattern('^[0-9]+([\\,\\.][0-9]{1,2})?$')]]
     });
   }
 
@@ -55,12 +60,23 @@ export class ManageAccountWithdrawComponent implements OnInit, AfterViewInit, On
     this.modalRef = this.modalService.show(ManageStrategyPauseComponent, options);
   }
 
+  openAccountPauseDialog(): void {
+    this.modalRef.hide();
+
+    const options: ModalOptions = new ModalOptions();
+    options.initialState = {
+      account: this.account
+    };
+
+    this.modalRef = this.modalService.show(ManageAccountPauseComponent, options);
+  }
+
   withdraw(): void {
     if (this.form.get('amount').value < 0.01 && this.form.get('amount').value > this.account.availableToWithDraw) {
       return;
     }
 
-    this.accountService.withdraw(this.account.id, this.form.get('amount').value)
+    this.dataService.withdrawFromAccount(this.account.id, this.form.get('amount').value)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
         this.modalRef.hide();
@@ -68,11 +84,27 @@ export class ManageAccountWithdrawComponent implements OnInit, AfterViewInit, On
   }
 
   close(): void {
-    this.accountService.close(this.account.id)
+    this.dataService.closeAccount(this.account.id)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
         this.modalRef.hide();
       });
+  }
+
+  setAllMoney(): void {
+    this.form.get('amount').setValue(this.account.availableToWithDraw);
+  }
+
+  getTitleText(): string {
+    let title = 'Вывод средств';
+    if (this.form.get('withdrawType').value === 'close') {
+      if (this.account.strategy.isMy() && this.account.isSecured()) {
+        title = 'Закрытие стратегии';
+      } else {
+        title = 'Закрытие инвестиции';
+      }
+    }
+    return title;
   }
 
   ngOnDestroy(): void {

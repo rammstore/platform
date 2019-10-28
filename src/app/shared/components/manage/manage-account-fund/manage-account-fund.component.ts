@@ -1,12 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { takeUntil } from 'rxjs/internal/operators';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthData } from '@app/user/auth-data';
-import { StorageService } from '@app/services/storage.service';
 import { BsModalRef } from 'ngx-bootstrap';
-import { Account, Strategy } from '@app/models';
-import { Subject } from 'rxjs/index';
-import { AccountService } from '@app/services/account.service';
+import { Account, Wallet } from '@app/models';
+import { Subject } from 'rxjs';
+import { DataService } from '@app/services/data.service';
+import { WalletService } from '@app/services/wallet.service';
 
 @Component({
   selector: 'app-manage-account-fund',
@@ -18,32 +17,30 @@ export class ManageAccountFundComponent implements OnInit, OnDestroy {
   // here we will unsubscribe from all subscriptions
   destroy$ = new Subject();
 
-  // strategy data
+  // component data
   account: Account;
   form: FormGroup;
-  authData: AuthData;
-  strategy: Strategy;
+  wallet: Wallet;
 
   constructor(
     public modalRef: BsModalRef,
-    private storageService: StorageService,
-    private accountService: AccountService,
+    private walletService: WalletService,
+    private dataService: DataService,
     private fb: FormBuilder
   ) { }
 
   ngOnInit(): void {
-    console.log(this.account);
-    this.storageService.getAuthData().subscribe((authData: AuthData) => {
-      this.authData = authData;
+    this.walletService.getWallet().subscribe((wallet: Wallet) => {
+      this.wallet = wallet;
+      this.buildForm();
     });
-    this.buildForm();
   }
 
   buildForm(): void {
     this.form = this.fb.group({
       amount: [
-        ((this.authData.getWallets()[0].balance / 10).toFixed(2)),
-        [Validators.min(0), Validators.max(this.authData.getWallets()[0].balance)]
+        ((this.wallet.getAvailableMoney() / 10).toFixed(2)),
+        [Validators.min(0), Validators.max(this.wallet.getAvailableMoney()), Validators.pattern('^[0-9]+([\\,\\.][0-9]{1,2})?$')]
       ]
     });
   }
@@ -55,15 +52,15 @@ export class ManageAccountFundComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.accountService.fund(this.account.id, this.form.get('amount').value)
+    this.dataService.fundAccount(this.account.id, this.form.get('amount').value)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
-        // this.account.equity = this.account.equity + this.form.get('amount').value;
-        // this.account.balance = this.account.balance + this.form.get('amount').value;
-        this.authData.getWallets()[0].balance = this.authData.getWallets()[0].balance - this.form.get('amount').value;
-        this.storageService.setAuthData(JSON.stringify(this.authData));
         this.modalRef.hide();
       });
+  }
+
+  setAllMoney(): void {
+    this.form.get('amount').setValue(this.wallet.getAvailableMoney());
   }
 
   ngOnDestroy(): void {

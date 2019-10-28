@@ -16,6 +16,7 @@ import { BsDropdownModule, ModalModule } from 'ngx-bootstrap';
 import { RouterModule } from '@angular/router';
 import { ManageStrategyInvestComponent } from './manage-strategy-invest/manage-strategy-invest.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { PipesModule } from '@app/pipes/pipes.module';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { TranslateModule } from '@ngx-translate/core';
     BsDropdownModule.forRoot(),
     DialogWrapperModule,
     ReactiveFormsModule,
-    TranslateModule
+    TranslateModule,
+    PipesModule
   ],
   exports: [
     ManageComponent

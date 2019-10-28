@@ -1,73 +1,55 @@
 import { Injectable } from '@angular/core';
-import { AuthData } from '@app/user/auth-data';
-import { User } from '../user/user';
-import { Company } from '../user/company';
-import { Session } from '../user/session';
-import { Wallet } from '../user/wallet';
-import { BehaviorSubject, Observable } from 'rxjs/index';
+import { AuthData } from '@app/models/auth-data';
+import { User, Company, Session, Wallet } from '@app/models';
+import { CreateInstanceService } from '@app/services/create-instance.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StorageService {
   private storageName = 'sessionStorage';
-  authDataSubject: BehaviorSubject<AuthData> = new BehaviorSubject(null);
 
-  constructor() { }
+  constructor(
+    private createInstanceService: CreateInstanceService
+  ) { }
 
-  setAuthData(data: string) {
+  setAuthData(data: string): void {
     window[this.storageName].setItem('auth', data);
-    this.authDataSubject.next(this.createAuthData(JSON.parse(data)));
-    return this;
   }
 
-  getAuthData(): Observable<AuthData> {
-    const authData = JSON.parse(window[this.storageName].getItem('auth'));
-    this.authDataSubject.next(this.createAuthData(authData));
-
-    return this.authDataSubject.asObservable();
+  getAuthData(): AuthData {
+    return JSON.parse(window[this.storageName].getItem('auth'));
   }
 
-  removeAuthData() {
+  removeAuthData(): void {
     window[this.storageName].removeItem('auth');
-    this.authDataSubject.next(null);
-    return this;
   }
 
-  createAuthData(authData: any): AuthData {
-    const client: User = new User();
-    Object.assign(client, authData.client);
-
-    const company: Company = new Company();
-    Object.assign(company, authData.company);
-
-    const session: Session = new Session();
-    Object.assign(session, authData.session);
-
-    const wallets: Wallet[] = [];
-    authData.wallets.forEach((w: any) => {
-      const wallet: Wallet = new Wallet();
-      Object.assign(wallet, w);
-
-      wallets.push(wallet);
-    });
-
-    return new AuthData({client: client, company: company, session: session, wallets: wallets});
-  }
-
-  setToken(data: string ) {
+  setToken(data: string ): void {
     window[this.storageName].setItem('token', data);
-
-    return this;
   }
 
-  removeToken() {
+  removeToken(): void {
     window[this.storageName].removeItem('token');
-
-    return this;
   }
 
   getToken(): string {
     return window[this.storageName].getItem('token');
+  }
+
+  getWallet(): Wallet {
+    return this.getAuthData().wallets[0];
+  }
+
+  getClient(): User {
+    return this.getAuthData().client;
+  }
+
+  getSession(): Session {
+    return this.getAuthData().session;
+  }
+
+  getCompany(): Company {
+    return this.getAuthData().company;
   }
 }

@@ -29,6 +29,7 @@ export class Account {
   profitBase: number;               // База для подсчета вознаграждения
   precision: number;                // Точность округления, знаки после запятой
   positionsCount: number;           // Количество позиций
+  accountMinBalance: number;        // Минимальный баланс инвестиции
 
   constructor(
     options: any
@@ -42,6 +43,14 @@ export class Account {
 
   isPaused(): boolean {
     return this.status === 4;
+  }
+
+  isSecured(): boolean {
+    return this.isSecurity;
+  }
+
+  isMy(): boolean {
+    return this.strategy.isMyStrategy;
   }
 
   getStatus(): string {
@@ -99,17 +108,5 @@ export class Account {
 
   getProtectionAmount(): number {
     return this.protection * this.equity;
-  }
-
-  pause(): void {
-    this.status = 4;
-  }
-
-  resume(): void {
-    this.status = 1;
-  }
-
-  close(): void {
-    this.status = 6;
   }
 }

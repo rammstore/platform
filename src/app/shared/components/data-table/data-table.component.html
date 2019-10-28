@@ -12,7 +12,7 @@
   </thead>
 
   <tbody>
-  <tr *ngFor="let item of data">
+  <tr *ngFor="let item of data" [class.my]="shouldHighlightMyStrategies && item.isMy()">
     <ng-container *ngFor="let row of tableHeader">
       <ng-container *ngFor="let column of row.columns">
         <ng-container *ngIf="column.property || column.property === ''" >
@@ -32,10 +32,16 @@
 
             <div class="strategy-account"
                  *ngSwitchCase="'investmentInfo'">
-              <div class="strategy-account-intervalPnL"><span>Прибыль:</span><span>{{item.intervalPnL | currency:'':'':'1.2-2'}}</span></div>
-              <div class="strategy-account-target"><span>Цель:</span><span>{{item.getTargetAmount() | currency:'':'':'1.2-2'}}</span></div>
-              <div class="strategy-account-equity"><span>Средства:</span><span>{{item.equity | currency:'':'':'1.2-2'}}</span></div>
-              <div class="strategy-account-protection"><span>Защита:</span><span>{{item.getProtectionAmount() | currency:'':'':'1.2-2'}}</span></div>
+              <div class="strategy-account-intervalPnL">
+                <span>Прибыль:</span>
+                <span [class.positive]="item.intervalPnL > 0"
+                      [class.negative]="item.intervalPnL < 0">
+                  {{item.intervalPnL | customCurrency}}
+                </span>
+              </div>
+              <div class="strategy-account-target"><span>Цель:</span><span>{{item.getTargetAmount() | customCurrency}}</span></div>
+              <div class="strategy-account-equity"><span>Средства:</span><span>{{item.equity | customCurrency}}</span></div>
+              <div class="strategy-account-protection"><span>Защита:</span><span>{{item.getProtectionAmount() | customCurrency}}</span></div>
             </div>
 
             <ng-container *ngSwitchCase="'manage'">

@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Account, Strategy } from '@app/models';
 import { ActivatedRoute } from '@angular/router';
-import { StrategyService } from '@app/services/strategy.service';
 import { map, takeUntil } from 'rxjs/internal/operators';
-import { Subject } from 'rxjs/index';
+import { Subject } from 'rxjs';
 import { ContentTabLink } from '@app/components/content-tabs/content-tab-link';
+import { DataService } from '@app/services/data.service';
 
 @Component({
   selector: 'app-investments-details',
@@ -23,7 +23,7 @@ export class InvestmentsDetailsComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private strategyService: StrategyService
+    private dataService: DataService
   ) { }
 
   ngOnInit(): void {
@@ -40,7 +40,7 @@ export class InvestmentsDetailsComponent implements OnInit, OnDestroy {
           new ContentTabLink('Сделки', `/investments/details/${this.account.id}/deals`)
         ];
 
-        this.strategyService.get(this.account.strategy.id)
+        this.dataService.getStrategy(this.account.strategy.id)
           .pipe(takeUntil(this.destroy$))
           .subscribe((strategy: Strategy) => {
             this.strategy = strategy;

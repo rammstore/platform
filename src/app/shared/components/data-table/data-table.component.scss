@@ -1,7 +1,7 @@
 @import "styles";
 
 .strategy-account {
-  width: 130px;
+  width: 200px;
 
   .strategy-account-intervalPnL {
     color: $text-color-dark;
@@ -26,6 +26,10 @@
 
 .total-cell {
   font-weight: bold;
+}
+
+tr.my {
+  background-color: $background-color;
 }
 
 td {

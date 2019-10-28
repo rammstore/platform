@@ -14,6 +14,7 @@ export class Strategy {
   symbols: string;        // Строка с перечислением самых используемых торговых инструментов (не более 3-х)
   account: Account;       // Инвестиция
   offer: Offer;           // Оффер
+  isMyStrategy: boolean;  // Признак собственной стратегии
 
   constructor(
     options: any
@@ -36,15 +37,11 @@ export class Strategy {
     return Math.round((now - created) / (1000 * 3600 * 24 * 7));
   }
 
-  pause(): void {
-    this.status = 2;
+  isSecured(): boolean {
+    return this.account.isSecurity;
   }
 
-  resume(): void {
-    this.status = 1;
-  }
-
-  close(): void {
-    this.status = 4;
+  isMy(): boolean {
+    return this.isMyStrategy;
   }
 }

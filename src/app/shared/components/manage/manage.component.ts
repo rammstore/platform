@@ -37,112 +37,102 @@ export class ManageComponent implements OnInit {
   }
 
   openAccountChangeProfileDialog(): void {
-    const options: ModalOptions = new ModalOptions();
-    options.initialState = {
-      account: this.dataType === 'account' ? this.data : this.data['account']
-    };
-
-    this.modalRef = this.modalService.show(ManageAccountChangeProfileComponent, options);
+    this.modalRef = this.modalService.show(ManageAccountChangeProfileComponent, this.getAccountDialogOptions());
   }
 
   openAccountCloseDialog(): void {
-    const options: ModalOptions = new ModalOptions();
-
-    options.initialState = {
-      account: this.dataType === 'account' ? this.data : this.data['account'],
-      strategy: this.dataType === 'account' ? this.data['strategy'] : this.data,
-      forClose: true
-    };
-
+    const options: ModalOptions = this.getAccountDialogOptions();
+    options.initialState['forClose'] = true;
     this.modalRef = this.modalService.show(ManageAccountWithdrawComponent, options);
   }
 
   openAccountFundDialog(): void {
-    const options: ModalOptions = new ModalOptions();
-    options.initialState = {
-      account: this.dataType === 'account' ? this.data : this.data['account'],
-      strategy: this.dataType === 'account' ? this.data['strategy'] : this.data
-    };
-
-    this.modalRef = this.modalService.show(ManageAccountFundComponent, options);
+    this.modalRef = this.modalService.show(ManageAccountFundComponent, this.getAccountDialogOptions());
   }
 
   openAccountPauseDialog(): void {
-    const options: ModalOptions = new ModalOptions();
-    options.initialState = {
-      account: this.data
-    };
-
-    this.modalRef = this.modalService.show(ManageAccountPauseComponent, options);
+    this.modalRef = this.modalService.show(ManageAccountPauseComponent, this.getAccountDialogOptions());
   }
 
   openAccountResumeDialog(): void {
-    const options: ModalOptions = new ModalOptions();
-    options.initialState = {
-      account: this.data
-    };
-
-    this.modalRef = this.modalService.show(ManageAccountResumeComponent, options);
+    this.modalRef = this.modalService.show(ManageAccountResumeComponent, this.getAccountDialogOptions());
   }
 
   openAccountWithdrawDialog(): void {
-    const options: ModalOptions = new ModalOptions();
-    if (this.dataType === 'strategy') {
-      this.data['account'].strategy = new Strategy({
-        id: this.data.id,
-        status: this.data.status
-      });
-    }
-
-    options.initialState = {
-      account: this.dataType === 'account' ? this.data : this.data['account']
-    };
-
-    this.modalRef = this.modalService.show(ManageAccountWithdrawComponent, options);
+    this.modalRef = this.modalService.show(ManageAccountWithdrawComponent, this.getAccountDialogOptions());
   }
 
   openStrategyCloseDialog(): void {
-    const options: ModalOptions = new ModalOptions();
-    options.initialState = {
-      strategy: this.data
-    };
-
-    this.modalRef = this.modalService.show(ManageStrategyCloseComponent, options);
+    this.modalRef = this.modalService.show(ManageStrategyCloseComponent, this.getStrategyDialogOptions());
   }
 
   openStrategyDownloadScriptDialog(): void {
-    const options: ModalOptions = new ModalOptions();
-    options.initialState = {
-      strategy: this.data
-    };
-
-    this.modalRef = this.modalService.show(ManageStrategyDownloadScriptComponent, options);
+    this.modalRef = this.modalService.show(ManageStrategyDownloadScriptComponent, this.getStrategyDialogOptions());
   }
 
   openStrategyPauseDialog(): void {
-    const options: ModalOptions = new ModalOptions();
-    options.initialState = {
-      strategy: this.data
-    };
-
-    this.modalRef = this.modalService.show(ManageStrategyPauseComponent, options);
+    this.modalRef = this.modalService.show(ManageStrategyPauseComponent, this.getStrategyDialogOptions());
   }
 
   openStrategyResumeDialog(): void {
-    const options: ModalOptions = new ModalOptions();
-    options.initialState = {
-      strategy: this.data
-    };
-
-    this.modalRef = this.modalService.show(ManageStrategyResumeComponent, options);
+    this.modalRef = this.modalService.show(ManageStrategyResumeComponent, this.getStrategyDialogOptions());
   }
 
   openStrategyInvestDialog(): void {
+    this.modalRef = this.modalService.show(ManageStrategyInvestComponent, this.getStrategyDialogOptions());
+  }
+
+  // Приведение инвестиции с вложенной стратегией к стратегии с вложенной инвестицией
+  swapStrategy(): Strategy {
+    let strategy: Strategy = new Strategy({});
+    Object.assign(strategy, this.data['strategy']);
+    this.data['strategy'].account = null;
+    strategy.account = new Account(this.data);
+    return strategy;
+  }
+
+  // Приведение стратегии с вложенной инвестицией к инвестиции с вложенной стратегией
+  swapAccount(): Account {
+    let account: Account = new Account({});
+    Object.assign(account, this.data['account']);
+    this.data['account'].strategy = null;
+    account.strategy = new Strategy(this.data);
+    return account;
+  }
+
+  // Настройка параметров диалогов стратегий
+  getStrategyDialogOptions(): ModalOptions {
     const options: ModalOptions = new ModalOptions();
+    let data: Strategy = new Strategy({});
+
+    if (this.data instanceof Account) {
+      data = this.swapStrategy();
+    } else {
+      Object.assign(data, this.data);
+    }
+
     options.initialState = {
-      strategy: this.data
+      strategy: data
     };
 
-    this.modalRef = this.modalService.show(ManageStrategyInvestComponent, options);
+    return options;
+  }
+
+  // Настройка параметров диалогов инвестиций
+  getAccountDialogOptions(): ModalOptions {
+    const options: ModalOptions = new ModalOptions();
+    let data: Account = new Account({});
+
+    if (this.data instanceof Strategy) {
+      data = this.swapAccount();
+    } else {
+      Object.assign(data, this.data);
+    }
+
+    options.initialState = {
+      account: data
+    };
+
+    return options;
   }
 }

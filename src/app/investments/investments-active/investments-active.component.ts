@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Account, TableColumn } from '@app/models';
+import { Account, Paginator, TableColumn } from '@app/models';
 import { TableHeaderRow } from '@app/models/table-header-row';
-import { Subject } from 'rxjs/index';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
-import { AccountService } from '@app/services/account.service';
 import { PercentPipe } from '@angular/common';
+import { DataService } from '@app/services/data.service';
 
 @Component({
   selector: 'app-investments-active',
@@ -35,15 +35,23 @@ export class InvestmentsActiveComponent implements OnInit, OnDestroy {
     ]),
   ];
 
+  paginator: Paginator = new Paginator({
+    perPage: 10,
+    currentPage: 1
+  });
+
   constructor(
-    private accountService: AccountService
+    private dataService: DataService
   ) { }
 
   ngOnInit(): void {
-    this.accountService.getActive()
+    this.getAccounts();
+  }
+
+  getAccounts(): void {
+    this.dataService.getActiveMyAccounts(this.paginator)
       .pipe(takeUntil(this.destroy$))
       .subscribe((accounts: Account[]) => {
-      console.log(accounts);
         this.accounts = accounts;
       });
   }

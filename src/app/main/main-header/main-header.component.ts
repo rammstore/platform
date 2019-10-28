@@ -1,11 +1,12 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
-import { AuthData } from '@app/user/auth-data';
+import { User, Wallet } from '@app/models';
 import { StorageService } from '@app/services/storage.service';
 import { Router } from '@angular/router';
 import { AuthService } from '@app/services/auth.service';
-import { Subject } from 'rxjs/index';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
 import { TranslateService } from '@ngx-translate/core';
+import { WalletService } from '@app/services/wallet.service';
 
 @Component({
   selector: 'app-main-header',
@@ -18,7 +19,8 @@ export class MainHeaderComponent implements OnInit, OnDestroy {
   destroy$ = new Subject();
 
   // component data
-  authData: AuthData;
+  client: User;
+  wallet: Wallet;
   isAsideOpen: boolean = false;
 
   @HostListener('document:click', ['$event'])
@@ -41,15 +43,18 @@ export class MainHeaderComponent implements OnInit, OnDestroy {
     private storageService: StorageService,
     private router: Router,
     private authService: AuthService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private walletService: WalletService
   ) {
   }
 
   ngOnInit(): void {
-    this.storageService.getAuthData()
+    this.client = this.storageService.getClient();
+
+    this.walletService.getWallet()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((authData: AuthData) => {
-        this.authData = authData;
+      .subscribe((wallet: Wallet) => {
+        this.wallet = wallet;
       });
   }
 

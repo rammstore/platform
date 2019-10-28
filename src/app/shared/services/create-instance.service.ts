@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Account, Deal, Offer, Position, Strategy } from '@app/models';
+import { Account, AuthData, Company, Deal, Offer, Position, Session, Strategy, User, Wallet } from '@app/models';
 
 @Injectable({
   providedIn: 'root'
@@ -20,8 +20,9 @@ export class CreateInstanceService {
       profit: options.Yield,
       accountsCount: options.Accounts,
       symbols: options.Symbols,
-      account: options.Account ? this.createAccount(options.Account) : undefined,
-      offer: options.Offer ? this.createOffer(options.Offer) : undefined
+      account: options.Account ? this.createAccount(options.Account) : null,
+      offer: options.Offer ? this.createOffer(options.Offer) : undefined,
+      isMyStrategy: options.IsMyStrategy
     });
   }
 
@@ -54,7 +55,8 @@ export class CreateInstanceService {
       availableToWithDraw: options.AvailableToWithdraw,
       profitBase: options.ProfitBase,
       precision: options.Precision,
-      positionsCount: options.PositionsCount
+      positionsCount: options.PositionsCount,
+      accountMinBalance: options.AccountMinBalance
     });
   }
 
@@ -102,6 +104,54 @@ export class CreateInstanceService {
       profitCalcQuote: options.ProfitCalcQuote,
       precisionPrice: options.PrecisionPrice,
       precisionVolume: options.PrecisionVolume
+    });
+  }
+
+  createWallet(options: any): Wallet {
+    return new Wallet({
+      activeStrategiesCount: options.ActiveStrategiesCount,
+      asset: options.Asset,
+      balance: options.Balance,
+      id: options.ID,
+      intervalPnL: options.IntervalPnL,
+      invested: options.Invested,
+      margin: options.Margin
+    });
+  }
+
+  createSession(options: any): Session {
+    return new Session({
+      token: options.Token,
+      walletID: options.WalletID,
+      dtLastActivity: options.DTLastActivity,
+      expirationMinutes: options.ExpirationMinutes
+    });
+  }
+
+  createCompany(options: any): Company {
+    return new Company({
+      name: options.Name,
+      isDemo: options.Demo,
+      contacts: options.contacts
+    });
+  }
+
+  createUser(options: any): User {
+    return new User({
+      firstName: options.FirstName,
+      lastName: options.LastName,
+      login: options.Login,
+      language: options.Language,
+      pushToken: options.PushToken
+    });
+  }
+
+  createAuthData(options: any): AuthData {
+    return new AuthData({
+      session: options.session,
+      client: options.client,
+      company: options.company,
+      wallets: options.wallets
     });
   }
 }

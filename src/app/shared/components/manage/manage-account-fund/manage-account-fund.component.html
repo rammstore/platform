@@ -1,16 +1,16 @@
-<app-dialog-wrapper [modalRef]="modalRef" title="Пополнение инвестиции">
+<app-dialog-wrapper [modalRef]="modalRef" titleText="Пополнение инвестиции">
   <form [formGroup]="form" (ngSubmit)="submit()">
     <div class="form-field no-input">
       <label class="field-label">Стратегия:</label>
       <div class="input-wrapper">
-        <a [routerLink]="['/strategies/details', strategy.id]" (click)="modalRef.hide()">{{strategy.name}}</a>
+        <a [routerLink]="['/strategies/details', account.strategy.id]" (click)="modalRef.hide()">{{account.strategy.name}}</a>
       </div>
     </div>
 
     <div class="form-field  no-input">
       <label class="field-label">Средства:</label>
       <div class="input-wrapper">
-        {{account.balance | currency:'':'':'1.2-2'}} {{account.asset}}
+        {{account.balance | customCurrency}}
       </div>
     </div>
 
@@ -21,7 +21,7 @@
                type="number"
                formControlName="amount"
                [min]="0"
-               [max]="authData.getWallets()[0].getEquity()">
+               [max]="wallet.getAvailableMoney()">
         <div class="messages">
           <label class="error-message"
                  *ngIf="form.get('amount').touched && form.get('amount').hasError('min')">
@@ -31,8 +31,12 @@
                  *ngIf="form.get('amount').touched && form.get('amount').hasError('max')">
             Вы можете инвестировать только свободные средства.
           </label>
+          <label class="error-message"
+                 *ngIf="form.get('amount').touched && form.get('amount').hasError('pattern')">
+            Пожалуйста, введите корректную сумму пополнения.
+          </label>
           <label class="details-message">
-            Доступно: {{authData.getWallets()[0].balance | currency:'':'':'1.2-2'}} USD
+            Доступно: <span class="available-clickable" (click)="setAllMoney()">{{wallet.getAvailableMoney() | customCurrency}}</span>
           </label>
         </div>
       </div>
@@ -42,7 +46,7 @@
       <button class="primary"
               type="submit"
               [disabled]="!form.valid">
-        Пополнить {{form.valid ? '(' + (form.get('amount').value | currency:'':'':'1.2-2') + ' ' + account.asset + ')' : ''}}
+        Пополнить {{form.valid ? '(' + (form.get('amount').value | customCurrency) + ')' : ''}}
       </button>
     </div>
   </form>

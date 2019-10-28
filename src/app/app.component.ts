@@ -1,22 +1,22 @@
-import { Component } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { StorageService } from '@app/services/storage.service';
-import { AuthData } from '@app/user/auth-data';
+import { AfterViewChecked, ChangeDetectorRef, Component } from '@angular/core';
+import { LoaderService } from '@app/services/loader.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements AfterViewChecked {
+  isLoading: Observable<boolean>;
 
   constructor(
-    private translateService: TranslateService,
-    private storageService: StorageService
-  ) {
-    this.storageService.getAuthData().subscribe((authData: AuthData) => {
-      translateService.setDefaultLang(authData.client.language);
-      translateService.use(authData.client.language);
-    });
+    private cdRef: ChangeDetectorRef,
+    private loaderService: LoaderService
+  ) {}
+
+  ngAfterViewChecked(): void {
+    this.isLoading = this.loaderService.isLoading();
+    this.cdRef.detectChanges();
   }
 }

@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Account, TableColumn } from '@app/models';
+import { Account, Paginator, TableColumn } from '@app/models';
 import { TableHeaderRow } from '@app/models/table-header-row';
-import { CurrencyPipe, DatePipe, PercentPipe } from '@angular/common';
-import { Subject } from 'rxjs/index';
+import { DatePipe, PercentPipe } from '@angular/common';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
-import { AccountService } from '@app/services/account.service';
+import { CustomCurrencyPipe } from '@app/pipes/custom-currency.pipe';
+import { DataService } from '@app/services/data.service';
 
 @Component({
   selector: 'app-investments-closed',
@@ -28,17 +29,26 @@ export class InvestmentsClosedComponent implements OnInit, OnDestroy {
       new TableColumn({ property: 'dtClosed', label: 'Закрыта', pipe: { pipe: DatePipe, args: ['yyyy-MM-dd hh:mm:ss'] }}),
       new TableColumn({ property: 'age', label: 'Возраст, недель' }),
       new TableColumn({ property: 'protection', label: 'Защита', pipe: { pipe: PercentPipe }}),
-      new TableColumn({ property: 'intervalPnL', label: 'Прибыль', pipe: { pipe: CurrencyPipe, args: ['', '', '1.2-2'] } }),
+      new TableColumn({ property: 'intervalPnL', label: 'Прибыль, USD', pipe: { pipe: CustomCurrencyPipe } }),
       new TableColumn({ property: 'investmentDetails', label: '' })
     ]),
   ];
 
+  paginator: Paginator = new Paginator({
+    perPage: 10,
+    currentPage: 1
+  });
+
   constructor(
-    private accountService: AccountService
+    private dataService: DataService
   ) { }
 
   ngOnInit(): void {
-    this.accountService.getClosed()
+    this.getAccounts();
+  }
+
+  getAccounts(): void {
+    this.dataService.getClosedMyAccounts(this.paginator)
       .pipe(takeUntil(this.destroy$))
       .subscribe((accounts: Account[]) => {
         this.accounts = accounts;

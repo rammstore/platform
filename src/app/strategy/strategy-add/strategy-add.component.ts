@@ -1,11 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { StorageService } from '@app/services/storage.service';
-import { AuthData } from '@app/user/auth-data';
-import { StrategyService } from '@app/services/strategy.service';
+import { Wallet } from '@app/models';
 import { BsModalRef } from 'ngx-bootstrap';
-import { Subject } from 'rxjs/index';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
+import { DataService } from '@app/services/data.service';
+import { WalletService } from '@app/services/wallet.service';
 
 @Component({
   selector: 'app-strategy-add',
@@ -21,21 +21,21 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
   currentStep: number = 1;
   formStep1: FormGroup;
   formStep2: FormGroup;
-  authData: AuthData;
+  wallet: Wallet;
 
   constructor(
     private fb: FormBuilder,
-    private storageService: StorageService,
-    private strategyService: StrategyService,
+    private walletService: WalletService,
+    private dataService: DataService,
     public modalRef: BsModalRef
   ) { }
 
   ngOnInit(): void {
     this.buildFormStep1();
-    this.storageService.getAuthData()
+    this.walletService.getWallet()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((authData: AuthData) => {
-        this.authData = authData;
+      .subscribe((wallet: Wallet) => {
+        this.wallet = wallet;
       });
   }
 
@@ -46,11 +46,14 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
       comission: [0, [Validators.min(0), Validators.max(100)]],
       isShared: [true]
     });
+
+    this.formStep1.get('name').setErrors({isUniq: true});
+    console.log(this.formStep1);
   }
 
   buildFormStep2(): void {
     this.formStep2 = this.fb.group({
-      money: [(Math.round(this.authData.getWallets()[0].getEquity() / 10)), [Validators.min(0), Validators.max(this.authData.getWallets()[0].getEquity())]],
+      money: [(Math.round(this.wallet.balance / 10)), [Validators.min(0), Validators.max(this.wallet.balance)]],
       target: [100, [Validators.min(0)]],
       protection: [0, [Validators.min(0), Validators.max(99)]]
     });
@@ -84,7 +87,7 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
       Money: this.formStep2.get('money').value,
     };
 
-    this.strategyService.add(strategy)
+    this.dataService.addStrategy(strategy)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
         this.modalRef.hide();
@@ -93,6 +96,26 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
 
   back(): void {
     this.currentStep = 1;
+  }
+
+  setAllMoney(): void {
+    this.formStep2.get('money').setValue(this.wallet.getAvailableMoney());
+  }
+
+  isStrategyNameUniq(name: string, isSubmitClicked: boolean = false): void {
+    this.dataService.searchStrategy(name)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((isUniq: boolean) => {
+        if (isUniq) {
+          this.formStep1.get('name').setErrors(null);
+          if (isSubmitClicked) {
+            this.submitStep1();
+          }
+        }
+        else {
+          this.formStep1.get('name').setErrors({isUniq: true});
+        }
+      });
   }
 
   ngOnDestroy(): void {

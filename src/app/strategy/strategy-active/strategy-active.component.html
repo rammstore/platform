@@ -14,8 +14,8 @@
 
     <div class="info">
       <div class="item">
-        <span translate>Средства</span>
-        <span>{{strategy.account.equity | currency:'':'':'1.2-2'}}</span>
+        <span translate>Средства</span>:
+        <span *ngIf="strategy.account">{{strategy.account.equity | customCurrency}}</span>
       </div>
 
       <div class="item">
@@ -29,9 +29,10 @@
       </div>
 
       <div class="item">
-        <span translate>Доходность стратегии</span>
-        <span [class.negative]="strategy.profit < 0"
-              [class.positive]="strategy.profit > 0">
+        <span translate>Доходность стратегии</span>:
+        <span  *ngIf="strategy.account"
+               [class.negative]="strategy.profit < 0"
+               [class.positive]="strategy.profit > 0">
           {{strategy.account.intervalPnL}}
         </span>
       </div>

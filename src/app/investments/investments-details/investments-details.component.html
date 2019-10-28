@@ -82,11 +82,11 @@
       <tr><td></td><td></td></tr>
       <tr>
         <td>Цель, USD</td>
-        <td>{{account.getTargetAmount() | currency:'':'':'1.2-2'}}</td>
+        <td>{{account.getTargetAmount() | customCurrency}}</td>
       </tr>
       <tr>
         <td>Защита, USD</td>
-        <td>{{account.getProtectionAmount() | currency:'':'':'1.2-2'}}</td>
+        <td>{{account.getProtectionAmount() | customCurrency}}</td>
       </tr>
       </tbody>
     </table>

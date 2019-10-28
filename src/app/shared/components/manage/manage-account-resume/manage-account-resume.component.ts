@@ -1,13 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthData } from '@app/user/auth-data';
-import { StorageService } from '@app/services/storage.service';
 import { BsModalRef } from 'ngx-bootstrap';
-import { StrategyService } from '@app/services/strategy.service';
-import { Subject } from 'rxjs/index';
+import { forkJoin, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
-import { Account } from '@app/models';
-import { AccountService } from '@app/services/account.service';
+import { Account, Wallet } from '@app/models';
+import { DataService } from '@app/services/data.service';
+import { WalletService } from '@app/services/wallet.service';
 
 @Component({
   selector: 'app-manage-account-resume',
@@ -21,30 +19,31 @@ export class ManageAccountResumeComponent implements OnInit, OnDestroy {
 
   // component data
   form: FormGroup;
-  authData: AuthData;
+  wallet: Wallet;
   account: Account;
 
   constructor(
     private fb: FormBuilder,
-    private storageService: StorageService,
-    private accountService: AccountService,
+    private walletService: WalletService,
+    private dataService: DataService,
     public modalRef: BsModalRef
   ) { }
 
   ngOnInit(): void {
-    this.storageService.getAuthData()
+    this.walletService.getWallet()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((authData: AuthData) => {
-        this.authData = authData;
+      .subscribe((wallet: Wallet) => {
+        this.wallet = wallet;
+        this.buildForm();
       });
-    this.buildForm();
   }
 
   buildForm(): void {
     this.form = this.fb.group({
-      amount: [0.00, [Validators.required, Validators.min(0), Validators.max(this.authData.getWallets()[0].getEquity())]],
-      goal: [100, [Validators.required, Validators.min(0)]],
-      protection: [50, [Validators.required, Validators.min(0), Validators.max(99)]]
+      amount: [0.00, [Validators.required, Validators.min(0), Validators.max(this.wallet.balance), Validators.pattern('^[0-9]+([\\,\\.][0-9]{1,2})?$')]],
+      factor: [{value: this.account.factor, disabled: this.account.isMy()}, [Validators.min(-1000), Validators.max(1000)]],
+      target: [this.account.target * 100, [Validators.required, Validators.min(0)]],
+      protection: [this.account.protection * 100, [Validators.required, Validators.min(0), Validators.max(99)]]
     });
   }
 
@@ -55,16 +54,31 @@ export class ManageAccountResumeComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.accountService.resume(this.account.id)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(() => {
-        // this.account.resume();
-        this.modalRef.hide();
-      });
+    const queries: any[] = [this.dataService.resumeAccount(this.account.id)];
+
+    const values = this.form.getRawValue();
+    values.protection = values.protection / 100;
+    values.target = values.target ? values.target / 100 : null;
+
+    if (values.amount) {
+      queries.push(this.dataService.fundAccount(this.account.id, values.amount))
+    }
+
+    if (values.protection !== this.account.protection || values.target !== this.account.target || values.factor !== this.account.factor) {
+      queries.push(this.dataService.changeAccountProfile(this.account.id, values));
+    }
+
+    forkJoin(queries).pipe(takeUntil(this.destroy$)).subscribe(() => {
+      this.modalRef.hide();
+    });
   }
 
   cancel(): void {
     this.modalRef.hide();
+  }
+
+  setAllMoney(): void {
+    this.form.get('amount').setValue(this.wallet.getAvailableMoney());
   }
 
   ngOnDestroy(): void {

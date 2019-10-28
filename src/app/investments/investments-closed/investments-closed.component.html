@@ -1,7 +1,13 @@
-<app-data-table [tableHeader]="tableHeader" [data]="accounts"></app-data-table>
+<app-data-table
+  [tableHeader]="tableHeader"
+  [data]="accounts"
+  [paginator]="paginator"
+  [shouldHighlightMyStrategies]="true"
+  (paginationChanged)="getAccounts()">
+</app-data-table>
 
 <div class="accounts">
-  <div class="account" *ngFor="let account of accounts">
+  <div class="account" [class.my]="account.isMy()"  *ngFor="let account of accounts">
     <div class="caption">
       <a [routerLink]="['/strategies/details', account.strategy.id]">{{account.strategy.name}}</a>
       <a [routerLink]="['/investments/details', account.id]"><i class="icon-doc"></i></a>
@@ -37,7 +43,7 @@
         <span>Прибыль</span>
         <span [class.negative]="account.intervalPnL < 0"
               [class.positive]="account.intervalPnL > 0">
-          {{account.intervalPnL | currency:'':'':'1.2-2'}}
+          {{account.intervalPnL  | customCurrency}}
         </span>
       </div>
     </div>

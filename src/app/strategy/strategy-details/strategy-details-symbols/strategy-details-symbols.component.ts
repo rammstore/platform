@@ -2,8 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Strategy } from '@app/models';
 import * as Highcharts from 'highcharts';
-import { Subject } from 'rxjs/index';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
+import { DataService } from '@app/services/data.service';
 
 @Component({
   selector: 'app-strategy-details-symbols',
@@ -20,7 +21,8 @@ export class StrategyDetailsSymbolsComponent implements OnInit, OnDestroy {
   chartOptions: any;
 
   constructor(
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private dataService: DataService
   ) { }
 
   ngOnInit(): void {
@@ -28,33 +30,29 @@ export class StrategyDetailsSymbolsComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: object) => {
         this.strategy = data['strategy'];
-
-        this.chartOptions = {
-          title: {
-            text: ''
-          },
-          legend: {
-            enabled: false
-          },
-          tooltip: {
-            useHTML: true,
-            headerFormat: '',
-            pointFormatter: function () {
-              return `<div class="arearange-tooltip-header">${Highcharts.numberFormat((this.y), 2, '.')}%</div>`;
-            }
-          },
-          type: 'arearange',
-          series: [{
-            type: 'pie',
-            name: this.strategy.symbols,
-            data: [{
-              y: 100,
-              name: this.strategy.symbols
+        this.dataService.getSymbolsChart(this.strategy.id).subscribe((strategySymbolsStat: object[]) => {
+          this.chartOptions = {
+            title: {
+              text: ''
+            },
+            legend: {
+              enabled: false
+            },
+            tooltip: {
+              useHTML: true,
+              headerFormat: '',
+              pointFormatter: function() {
+                return `<div class="arearange-tooltip-header">${Highcharts.numberFormat((this.y * 100), 2, '.')}%</div>`;
+              }
+            },
+            series: [{
+              type: 'pie',
+              data: this.strategy.account ? strategySymbolsStat : [{symbol: '', share: 0}]
             }]
-          }]
-        };
+          };
 
-        Highcharts.chart('symbolsChartContainer', this.chartOptions);
+          Highcharts.chart('symbolsChartContainer', this.chartOptions);
+        });
       });
   }
 
