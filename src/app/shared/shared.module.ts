@@ -56,11 +56,9 @@ import { ProgressbarModule } from 'ngx-bootstrap';
     DialogWrapperModule,
     ManageModule,
     DataTablePaginatorComponent,
-    TranslateModule
-  ],
-  providers: [
-    PipesModule,
-    ProgressbarModule
+    TranslateModule,
+    ProgressbarModule,
+    PipesModule
   ]
 })
 export class SharedModule { }
