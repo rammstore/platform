@@ -8,6 +8,10 @@
     font-size: 14px;
     line-height: 24px;
     text-align: justify;
+
+    &>span:last-child {
+      float: right;
+    }
   }
 
   .strategy-account-target,
@@ -17,10 +21,10 @@
     font-size: 12px;
     line-height: 20px;
     text-align: justify;
-  }
 
-  span:last-child {
-    float: right;
+    &>span:last-child {
+      float: right;
+    }
   }
 }
 
