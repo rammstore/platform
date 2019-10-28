@@ -22,7 +22,7 @@
         <li class="divider dropdown-divider"></li>
         <!---->
         <li role="menuitem" dropdown triggers="mouseover" placement="right" container="body">
-          <a dropdownToggle class="dropdown-item" (click)="false" translate>Изменить язык<i class="icon-flag {{client.language}} current-lang"></i></a>
+          <a dropdownToggle class="dropdown-item" (click)="false" translate>Изменить язык<i class="icon-flag {{language}} current-lang"></i></a>
 
           <ul *dropdownMenu class="dropdown-menu langmenu" role="menu">
             <li role="menuitem lang" (click)="setLanguage('en')"><i class="icon-flag en"></i></li>
@@ -77,7 +77,7 @@
         <li dropdown triggers="mouseover" placement="right" container="body" [dropup]="true">
           <a dropdownToggle class="dropdown-item" (click)="false" translate>
             Изменить язык
-            <i class="icon-flag {{client.language}} current-lang"></i>
+            <i class="icon-flag {{language}} current-lang"></i>
           </a>
 
           <ul *dropdownMenu class="dropdown-menu langmenu" role="menu">
