@@ -40,7 +40,7 @@ export class ManageAccountFundComponent implements OnInit, OnDestroy {
     this.form = this.fb.group({
       amount: [
         ((this.wallet.getAvailableMoney() / 10).toFixed(2)),
-        [Validators.min(0), Validators.max(this.wallet.getAvailableMoney()), Validators.pattern('^[0-9]+([\\,\\.][0-9]{1,2})?$')]
+        [Validators.required, Validators.min(0), Validators.max(this.wallet.getAvailableMoney()), Validators.pattern('^[0-9]+([\\,\\.][0-9]{1,2})?$')]
       ]
     });
   }

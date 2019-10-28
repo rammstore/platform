@@ -24,6 +24,10 @@
                [max]="wallet.getAvailableMoney()">
         <div class="messages">
           <label class="error-message"
+                 *ngIf="form.get('amount').touched && form.get('amount').hasError('required')" translate>
+            Пожалуйста, введите сумму инвестиции.
+          </label>
+          <label class="error-message"
                  *ngIf="form.get('amount').touched && form.get('amount').hasError('min')" translate>
             Пожалуйста, введите корректную сумму инвестиции.
           </label>
@@ -33,7 +37,7 @@
           </label>
           <label class="error-message"
                  *ngIf="form.get('amount').touched && form.get('amount').hasError('pattern')" translate>
-            Пожалуйста, введите корректную сумму пополнения.
+            Пожалуйста, введите корректную сумму инвестиции.
           </label>
           <label class="details-message">
             <span translate>Доступно</span>: <span class="available-clickable" (click)="setAllMoney()">{{wallet.getAvailableMoney() | customCurrency}}</span>
@@ -46,7 +50,7 @@
       <button class="primary"
               type="submit"
               [disabled]="!form.valid">
-        Пополнить {{form.valid ? '(' + (form.get('amount').value | customCurrency) + ')' : ''}}
+        <span translate>Пополнить</span> {{form.valid ? '(' + (form.get('amount').value | customCurrency) + ')' : ''}}
       </button>
     </div>
   </form>
