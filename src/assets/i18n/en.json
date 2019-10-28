@@ -98,6 +98,25 @@
   "Пауза инвестиции": "Pause investment",
   "Все позиции будут закрыты. Новые позиции не будут открываться до момента снятия с паузы.": "All positions will be closed. New positions will not be opened until the pause removal.",
 
+  "Возобновить инвестицию": "Resume investment",
+  "Добавить в инвестицию": "Add to investment",
+  "Множитель": "Factor",
+  "Коэффициент копирования. При соотношении более 1,0 копирование идет более агрессивно; увеличивается не только потенциальный доход, но и риск потери. Когда коэффициент меньше 1,0 - наоборот": "Copy ratio. With a ratio of more than 1.0, copying goes more aggressively; not only potential income increases, but also the risk of loss. When the coefficient is less than 1.0 - vice versa",
+  "Пожалуйста, введите корректное значение множителя.": "Please enter correct factor value",
+  "Максимальное значение множителя": "Maximal factor is",
+  "Минимальное значение множителя": "Minimal factor is",
+  "Целевой доход. При достижении целевого дохода инвестиция будет приостановлена": "Target income. Upon reaching the target income, the investment will pause",
+  "Цель не задана": "Target is not defined",
+  "Пожалуйста, введите корректное значение цели.": "Please enter correct target value",
+  "При снижении средств до заданного значения инвестиция будет приостановлена": "At decrease in equity to the preset value the investment will pause",
+  "Защита не задана": "Protection is not defined",
+  "Пожалуйста, введите корректное значение защиты.": "Please enter correct protection value",
+  "": "",
+  "": "",
+  "": "",
+  "": "",
+
+
   "Вы также можете посмотреть эти значения в верхнем правом углу": "You can also check it up in the upper right corner",
   "Юридическая информация": "LEGAL: Grand Capital is a brand name owned and operated by Grand Capital Ltd. (Reg. no. 036046), a member of FinCom, an international regulatory body for financial markets. Grand Capital Ltd. is located at 106 Premier Building Victoria, Mahe, Seychelles. Email at: info@grandcapital.net",
 
