@@ -77,11 +77,12 @@ export class DataTableComponent implements OnInit {
         if (typeof nestedObj[key] === 'object') {
           Object.assign(nestedObj, nestedObj[key]);
         } else {
-          sum = sum + nestedObj[key];
+          if (nestedObj[key]) {
+            sum = sum + nestedObj[key];
+          }
         }
       });
     });
-
     return sum;
   }
 
