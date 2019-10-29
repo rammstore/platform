@@ -1,6 +1,10 @@
 <ng-container *ngIf="strategy">
   <div class="caption">
-    <h2>{{strategy.name}}</h2>
+    <h2>
+      {{strategy.name}}
+      <span class="closed-info" *ngIf="!strategy.isActive()">Стратегия была закрыта трейдером и более недоступна для инвестирования.</span>
+    </h2>
+
 
     <div class="info" *ngIf="strategy.account">
     <span class="pnl item"
@@ -13,7 +17,7 @@
       <span class="item">Защита: <b>{{strategy.account.protection | percent}}</b></span>
     </div>
 
-    <app-manage [data]="strategy"></app-manage>
+    <app-manage [data]="strategy" *ngIf="strategy.isActive()"></app-manage>
   </div>
 
   <app-content-tabs [links]="links">
