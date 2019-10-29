@@ -1,5 +1,5 @@
 <div class="manage-container">
-  <ng-container *ngIf="dataType === 'account' || (dataType === 'strategy' && data.accountsCount !== 0)">
+  <ng-container *ngIf="dataType === 'account' || (dataType === 'strategy' && data.account)">
     <!--  Fund button  -->
     <i (click)="openAccountFundDialog()" title="Пополнение инвестиции" class="icon-add"></i>
 
