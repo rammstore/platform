@@ -41,6 +41,7 @@
         h1 {
           color: $text-color-dark;
           font-size: 40px;
+          margin-bottom: 40px;
         }
 
         form {
@@ -82,17 +83,22 @@
             }
           }
 
-            button {
-              text-transform: uppercase;
-              border-radius: 20px;
-              height: 51px;
-              width: 223px;
-              font-size: 24px;
-              border: 1px solid $main-color;
-              background-image: linear-gradient(180deg, #35bee5, #18a6dc);
-              margin-top: 20px;
-              cursor: pointer;
-            }
+          div.error-message {
+            color: $negative-color;
+            text-transform: none;
+          }
+
+          button {
+            text-transform: uppercase;
+            border-radius: 20px;
+            height: 51px;
+            width: 223px;
+            font-size: 24px;
+            border: 1px solid $main-color;
+            background-image: linear-gradient(180deg, #35bee5, #18a6dc);
+            margin-top: 20px;
+            cursor: pointer;
+          }
         }
 
         .links {
