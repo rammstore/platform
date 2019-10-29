@@ -24,7 +24,7 @@ export class ManageAccountPauseComponent implements OnDestroy {
   ) { }
 
   pause(): void {
-    this.dataService.pauseAccount(this.account.id)
+    this.dataService.pauseAccount(this.account.id, this.account.strategy.id)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
         this.modalRef.hide();

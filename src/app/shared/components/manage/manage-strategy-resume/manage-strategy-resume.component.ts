@@ -61,11 +61,11 @@ export class ManageStrategyResumeComponent implements OnInit, OnDestroy {
     values.target = values.target ? values.target / 100 : null;
 
     if (values.amount) {
-      queries.push(this.dataService.fundAccount(this.strategy.account.id, values.amount))
+      queries.push(this.dataService.fundAccount(this.strategy.account.id, values.amount, this.strategy.id));
     }
 
     if (values.protection !== this.strategy.account.protection || values.target !== this.strategy.account.target) {
-      queries.push(this.dataService.changeAccountProfile(this.strategy.account.id, values));
+      queries.push(this.dataService.changeAccountProfile(this.strategy.account.id, values, this.strategy.id));
     }
 
     forkJoin(queries).pipe(takeUntil(this.destroy$)).subscribe(() => {
