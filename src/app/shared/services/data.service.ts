@@ -179,7 +179,7 @@ export class DataService {
         this.loaderService.hideLoader();
         let result: boolean = true;
         response.Strategies.forEach((s: any) => {
-          if (s.Name === strategyName) {
+          if (s.Name.toLocaleLowerCase() === strategyName.toLocaleLowerCase()) {
             result = false;
           }
         });
