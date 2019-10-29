@@ -14,7 +14,7 @@ const routes: Routes = [
     { path: '', component: StrategyActiveComponent },
     { path: 'closed', component: StrategyClosedComponent }
   ] },
-  { path: 'details/:id', component: StrategyDetailsComponent, resolve: { strategy: StrategyResolver }, children: [
+  { path: 'details/:id', component: StrategyDetailsComponent, children: [
     { path: '', component: StrategyDetailsProfitabilityComponent},
     { path: 'symbols', component: StrategyDetailsSymbolsComponent},
     { path: 'investments', component: StrategyDetailsInvestmentsComponent}

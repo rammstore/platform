@@ -24,10 +24,10 @@
           <a class="pause-link" (click)="openAccountPauseDialog()">Паузы</a>.
           Поставьте инвестицию на паузу и повторите операцию.
         </div>
-        <div *ngIf="account.strategy.isPaused() && !(form.get('withdrawType').value === 'withdraw')">
+        <div *ngIf="((account.isSecured() && account.isMy() && account.strategy.isPaused()) || (!account.isSecured() && account.isPaused())) && (form.get('withdrawType').value !== 'withdraw')">
           Сумма, доступная для частичного вывода: {{account.availableToWithDraw | customCurrency}}.
         </div>
-        <div class="form-field" *ngIf="account.strategy.isPaused() && form.get('withdrawType').value === 'withdraw'">
+        <div class="form-field" *ngIf="((account.isSecured() && account.isMy() && account.strategy.isPaused()) || (!account.isSecured() && account.isPaused())) && form.get('withdrawType').value === 'withdraw'">
           <label for="amount" class="field-label">Сумма вывода, USD:</label>
           <div class="input-wrapper">
             <input id="amount"
@@ -37,11 +37,11 @@
                    [max]="account.availableToWithDraw">
             <div class="messages">
               <label class="error-message"
-                     *ngIf="form.get('amount').touched && form.get('amount').hasError('min')">
+                     *ngIf="form.get('amount').touched && form.get('amount').hasError('min') && !form.get('amount').hasError('pattern')">
                 Сумма вывода должна быть больше 0,01 USD.
               </label>
               <label class="error-message"
-                     *ngIf="form.get('amount').touched && form.get('amount').hasError('max')">
+                     *ngIf="form.get('amount').touched && form.get('amount').hasError('max') && !form.get('amount').hasError('pattern')">
                 Указанное значение превышает доступную для вывода сумму.
               </label>
               <label class="error-message"

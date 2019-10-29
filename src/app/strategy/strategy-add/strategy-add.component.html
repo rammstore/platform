@@ -37,15 +37,15 @@
     </div>
 
     <div class="form-field">
-      <label for="comission" class="field-label">Комиссия за оборот, USD / 1mln.:</label>
+      <label for="commission" class="field-label">Комиссия за оборот, USD / 1mln.:</label>
       <div class="input-wrapper">
-        <input id="comission" type="number" formControlName="comission" [min]="0" [max]="100">
+        <input id="commission" type="number" formControlName="commission" [min]="0" [max]="100">
         <div class="messages">
-          <label *ngIf="formStep1.get('comission').touched && formStep1.get('comission').hasError('min')"
+          <label *ngIf="formStep1.get('commission').touched && formStep1.get('commission').hasError('min')"
                  class="error-message">
             Минимальная комиссия за оборот — 0
           </label>
-          <label *ngIf="formStep1.get('comission').touched && formStep1.get('comission').hasError('max')"
+          <label *ngIf="formStep1.get('commission').touched && formStep1.get('commission').hasError('max')"
                  class="error-message">
             Максимальная комиссия за оборот — 100 USD
           </label>

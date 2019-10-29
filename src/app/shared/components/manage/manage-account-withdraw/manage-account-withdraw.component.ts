@@ -76,7 +76,7 @@ export class ManageAccountWithdrawComponent implements OnInit, AfterViewInit, On
       return;
     }
 
-    this.dataService.withdrawFromAccount(this.account.id, this.form.get('amount').value)
+    this.dataService.withdrawFromAccount(this.account.id, this.form.get('amount').value, this.account.strategy.id)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
         this.modalRef.hide();
@@ -84,7 +84,7 @@ export class ManageAccountWithdrawComponent implements OnInit, AfterViewInit, On
   }
 
   close(): void {
-    this.dataService.closeAccount(this.account.id)
+    this.dataService.closeAccount(this.account.id, this.account.strategy.id)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
         this.modalRef.hide();

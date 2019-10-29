@@ -54,18 +54,18 @@ export class ManageAccountResumeComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const queries: any[] = [this.dataService.resumeAccount(this.account.id)];
+    const queries: any[] = [this.dataService.resumeAccount(this.account.id, this.account.strategy.id)];
 
     const values = this.form.getRawValue();
     values.protection = values.protection / 100;
     values.target = values.target ? values.target / 100 : null;
 
     if (values.amount) {
-      queries.push(this.dataService.fundAccount(this.account.id, values.amount))
+      queries.push(this.dataService.fundAccount(this.account.id, values.amount, this.account.strategy.id))
     }
 
     if (values.protection !== this.account.protection || values.target !== this.account.target || values.factor !== this.account.factor) {
-      queries.push(this.dataService.changeAccountProfile(this.account.id, values));
+      queries.push(this.dataService.changeAccountProfile(this.account.id, values, this.account.strategy.id));
     }
 
     forkJoin(queries).pipe(takeUntil(this.destroy$)).subscribe(() => {

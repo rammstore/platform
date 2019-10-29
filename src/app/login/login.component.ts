@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '@app/services/auth.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +18,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   // component data
   form: FormGroup;
+  isWrongCredentials: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -40,10 +42,16 @@ export class LoginComponent implements OnInit, OnDestroy {
       return;
     }
 
+    this.isWrongCredentials = false;
+
     this.authService.login(this.form.getRawValue().login, this.form.getRawValue().password)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
         this.router.navigate(['/bill']);
+      }, (e: HttpErrorResponse) => {
+        if (e.status === 401) {
+          this.isWrongCredentials = true;
+        }
       });
   }
 

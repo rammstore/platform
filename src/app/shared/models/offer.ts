@@ -1,5 +1,5 @@
 export class Offer {
-  comission: number;
+  commission: number;
   fee: number;
 
   constructor(

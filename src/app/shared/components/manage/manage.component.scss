@@ -21,7 +21,7 @@
       display: inline-block;
     }
 
-    &:last-child {
+    &.caret {
       display: inline-block;
       min-width: 0;
       border-left: none;

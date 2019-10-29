@@ -54,7 +54,7 @@ export class ManageAccountChangeProfileComponent implements OnInit, OnDestroy {
     values.protection = values.protection / 100;
     values.target = values.target ? values.target / 100 : null;
 
-    this.dataService.changeAccountProfile(this.account.id, values)
+    this.dataService.changeAccountProfile(this.account.id, values, this.account.strategy.id)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
         this.modalRef.hide();
