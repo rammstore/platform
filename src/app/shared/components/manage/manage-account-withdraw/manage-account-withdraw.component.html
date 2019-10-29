@@ -1,7 +1,7 @@
-<app-dialog-wrapper [titleText]="this.getTitleText()" [modalRef]="modalRef">
+<app-dialog-wrapper [titleText]="this.getTitleText() | translate" [modalRef]="modalRef">
   <form [formGroup]="form">
     <div class="text">
-      <p>Я хочу:</p>
+      <p translate>Я хочу:</p>
 
       <div class="radio-container">
         <input #withdrawRadio
@@ -10,25 +10,25 @@
                id="withdraw-radio"
                value="withdraw"
                formControlName="withdrawType">
-        <label for="withdraw-radio" class="radio-label">Вывести часть средств из инвестиции</label>
+        <label for="withdraw-radio" class="radio-label" translate>Вывести часть средств из инвестиции</label>
       </div>
 
       <div class="radio-hint">
-        <div *ngIf="account.isSecured() && account.isMy() && !account.strategy.isPaused()" class="negative">
+        <div *ngIf="account.isSecured() && account.isMy() && !account.strategy.isPaused()" class="negative" translate>
           Частичное снятие возможно только в режиме
-          <a class="pause-link" (click)="openStrategyPauseDialog()">Паузы</a>.
+          <a class="pause-link" (click)="openStrategyPauseDialog()" translate>Паузы</a>.
           Поставьте стратегию на паузу и повторите операцию.
         </div>
-        <div *ngIf="!account.isSecured() && !account.isPaused()" class="negative">
+        <div *ngIf="!account.isSecured() && !account.isPaused()" class="negative" translate>
           Частичное снятие возможно только в режиме
-          <a class="pause-link" (click)="openAccountPauseDialog()">Паузы</a>.
+          <a class="pause-link" (click)="openAccountPauseDialog()" translate>Паузы</a>.
           Поставьте инвестицию на паузу и повторите операцию.
         </div>
         <div *ngIf="account.strategy.isPaused() && !(form.get('withdrawType').value === 'withdraw')">
-          Сумма, доступная для частичного вывода: {{account.availableToWithDraw | customCurrency}}.
+          <span translate>Сумма, доступная для частичного вывода</span>: {{account.availableToWithDraw | customCurrency}}.
         </div>
         <div class="form-field" *ngIf="account.strategy.isPaused() && form.get('withdrawType').value === 'withdraw'">
-          <label for="amount" class="field-label">Сумма вывода, USD:</label>
+          <label for="amount" class="field-label"><span translate>Сумма вывода</span>, USD:</label>
           <div class="input-wrapper">
             <input id="amount"
                    type="number"
@@ -38,25 +38,25 @@
             <div class="messages">
               <label class="error-message"
                      *ngIf="form.get('amount').touched && form.get('amount').hasError('min')">
-                Сумма вывода должна быть больше 0,01 USD.
+                <span translate>Сумма вывода должна быть больше</span> 0,01 USD.
               </label>
               <label class="error-message"
-                     *ngIf="form.get('amount').touched && form.get('amount').hasError('max')">
+                     *ngIf="form.get('amount').touched && form.get('amount').hasError('max')" translate>
                 Указанное значение превышает доступную для вывода сумму.
               </label>
               <label class="error-message"
-                     *ngIf="form.get('amount').touched && form.get('amount').hasError('required')">
+                     *ngIf="form.get('amount').touched && form.get('amount').hasError('required')" translate>
                 Укажите сумму вывода.
               </label>
               <label class="error-message"
-                     *ngIf="form.get('amount').touched && form.get('amount').hasError('pattern')">
+                     *ngIf="form.get('amount').touched && form.get('amount').hasError('pattern')" translate>
                 Пожалуйста, введите корректную сумму вывода.
               </label>
               <label class="details-message">
-                Баланс вашей инвестиции в вашу стратегию после вывода должен быть не меньше {{account.accountMinBalance | customCurrency}}.
+                <span translate>Баланс вашей инвестиции в вашу стратегию после вывода должен быть не меньше</span> {{account.accountMinBalance | customCurrency}}.
               </label>
               <label class="details-message">
-                Сумма, доступная для вывода: <span class="available-clickable" (click)="setAllMoney()">{{account.availableToWithDraw | customCurrency}}</span>
+                <span translate>Сумма, доступная для вывода</span>: <span class="available-clickable" (click)="setAllMoney()">{{account.availableToWithDraw | customCurrency}}</span>
               </label>
             </div>
           </div>
