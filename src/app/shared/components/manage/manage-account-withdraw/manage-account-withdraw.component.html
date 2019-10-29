@@ -37,11 +37,11 @@
                    [max]="account.availableToWithDraw">
             <div class="messages">
               <label class="error-message"
-                     *ngIf="form.get('amount').touched && form.get('amount').hasError('min')">
+                     *ngIf="form.get('amount').touched && form.get('amount').hasError('min') && !form.get('amount').hasError('pattern')">
                 Сумма вывода должна быть больше 0,01 USD.
               </label>
               <label class="error-message"
-                     *ngIf="form.get('amount').touched && form.get('amount').hasError('max')">
+                     *ngIf="form.get('amount').touched && form.get('amount').hasError('max') && !form.get('amount').hasError('pattern')">
                 Указанное значение превышает доступную для вывода сумму.
               </label>
               <label class="error-message"
