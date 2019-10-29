@@ -23,6 +23,10 @@
         <td>Вознаграждение</td>
         <td>{{strategy.offer.fee | percent}}</td>
       </tr>
+      <tr *ngIf="strategy.offer.commission">
+        <td>Комиссия за оборот</td>
+        <td>{{strategy.offer.commission * 1000000}} / 1 mln.</td>
+      </tr>
       <tr>
         <td>Возраст, недель</td>
         <td>{{strategy.getAgeWeeks()}}</td>

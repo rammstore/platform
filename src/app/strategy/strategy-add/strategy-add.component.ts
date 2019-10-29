@@ -43,7 +43,7 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
     this.formStep1 = this.fb.group({
       name: ['', Validators.required],
       fee: [25, [Validators.min(0), Validators.max(50)]],
-      comission: [0, [Validators.min(0), Validators.max(100)]],
+      commission: [0, [Validators.min(0), Validators.max(100)]],
       isShared: [true]
     });
 
@@ -80,7 +80,7 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
     const strategy: object = {
       Name: this.formStep1.get('name').value,
       FeeRate: this.formStep1.get('fee').value / 100,
-      CommissionRate: this.formStep1.get('comission').value,
+      CommissionRate: this.formStep1.get('commission').value,
       Shared: this.formStep1.get('isShared').value,
       Protection: this.formStep2.get('protection').value / 100,
       Target: this.formStep2.get('target').value / 100,
