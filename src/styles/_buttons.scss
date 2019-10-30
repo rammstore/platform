@@ -22,12 +22,29 @@ button {
       color: $positive-color;
       border: 1px solid $positive-color;
       background-color: white;
+
+      &:hover {
+        background-color: $positive-color;
+        color: white;
+      }
+    }
+
+    &:hover {
+      color: $positive-color;
+      border-color: $positive-color;
+      background-color: white;
     }
   }
 
   &.warning {
     background-color: $negative-color;
     color: white;
+
+    &:hover {
+      color: $negative-color;
+      border-color: $negative-color;
+      background-color: white;
+    }
   }
 
   &.block {
@@ -45,9 +62,15 @@ button {
     border-left: none;
 
     i {
-      color: #00a651;
+      color: inherit !important;
       font-size: 14px;
     }
+
+    //&:hover {
+    //  i {
+    //    color: white;
+    //  }
+    //}
   }
 }
 

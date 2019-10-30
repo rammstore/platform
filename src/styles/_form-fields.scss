@@ -91,11 +91,22 @@
 
 @media (max-width: 576px) {
   .form-field {
+    flex-direction: column;
+    margin-bottom: 20px;
+
+    &.no-input {
+      flex-direction: row;
+    }
+
+    label.field-label {
+      text-align: left;
+      margin-bottom: 5px;
+    }
 
     .input-wrapper {
-      max-width: 120px;
-      width: 120px;
-      min-width: 120px;
+      max-width: none;
+      width: 100%;
+      min-width: 0;
 
       input {
         max-width: none;

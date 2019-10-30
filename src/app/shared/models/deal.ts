@@ -9,7 +9,7 @@ export class Deal {
   symbol: string;
   volume: number;
   price: number;
-  comission: number;
+  commission: number;
   entry: number;
   yield: number;
   swap: number;
@@ -62,7 +62,7 @@ export class Deal {
         return 'Canceled/Rejected sell deal';
         break;
       case 12:
-        return 'Periodical comission';
+        return 'Periodical commission';
         break;
     }
   }

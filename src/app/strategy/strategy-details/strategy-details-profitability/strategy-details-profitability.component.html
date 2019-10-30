@@ -1,5 +1,5 @@
 <div class="profitability-container">
-  <div class="statistics">
+  <div class="statistics" *ngIf="strategy">
     <table>
       <tbody>
       <tr>
@@ -22,6 +22,10 @@
       <tr>
         <td>Вознаграждение</td>
         <td>{{strategy.offer.fee | percent}}</td>
+      </tr>
+      <tr *ngIf="strategy.offer.commission">
+        <td>Комиссия за оборот</td>
+        <td>{{strategy.offer.commission * 1000000}} / 1 mln.</td>
       </tr>
       <tr>
         <td>Возраст, недель</td>

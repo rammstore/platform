@@ -24,10 +24,10 @@
           <a class="pause-link" (click)="openAccountPauseDialog()" translate>Паузы</a>.
           Поставьте инвестицию на паузу и повторите операцию.
         </div>
-        <div *ngIf="account.strategy.isPaused() && !(form.get('withdrawType').value === 'withdraw')">
+        <div *ngIf="((account.isSecured() && account.isMy() && account.strategy.isPaused()) || (!account.isSecured() && account.isPaused())) && (form.get('withdrawType').value !== 'withdraw')">
           <span translate>Сумма, доступная для частичного вывода</span>: {{account.availableToWithDraw | customCurrency}}.
         </div>
-        <div class="form-field" *ngIf="account.strategy.isPaused() && form.get('withdrawType').value === 'withdraw'">
+        <div class="form-field" *ngIf="((account.isSecured() && account.isMy() && account.strategy.isPaused()) || (!account.isSecured() && account.isPaused())) && form.get('withdrawType').value === 'withdraw'">
           <label for="amount" class="field-label"><span translate>Сумма вывода</span>, USD:</label>
           <div class="input-wrapper">
             <input id="amount"
@@ -37,11 +37,11 @@
                    [max]="account.availableToWithDraw">
             <div class="messages">
               <label class="error-message"
-                     *ngIf="form.get('amount').touched && form.get('amount').hasError('min')">
+                     *ngIf="form.get('amount').touched && form.get('amount').hasError('min') && !form.get('amount').hasError('pattern')">
                 <span translate>Сумма вывода должна быть больше</span> 0,01 USD.
               </label>
               <label class="error-message"
-                     *ngIf="form.get('amount').touched && form.get('amount').hasError('max')" translate>
+                     *ngIf="form.get('amount').touched && form.get('amount').hasError('max') && !form.get('amount').hasError('pattern')">
                 Указанное значение превышает доступную для вывода сумму.
               </label>
               <label class="error-message"

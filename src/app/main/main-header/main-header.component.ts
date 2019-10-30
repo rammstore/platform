@@ -68,7 +68,7 @@ export class MainHeaderComponent implements OnInit, OnDestroy {
   }
 
   isLinkActive(link: string): boolean {
-    return this.router.url.startsWith(link);
+    return this.router.url === link;
   }
 
   logout(): void {

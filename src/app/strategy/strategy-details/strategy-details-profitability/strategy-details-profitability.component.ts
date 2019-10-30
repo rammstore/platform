@@ -26,65 +26,67 @@ export class StrategyDetailsProfitabilityComponent implements OnInit , OnDestroy
   ) { }
 
   ngOnInit(): void {
-    this.route.data
+    this.dataService.getStrategy(this.route.parent.params['_value'].id)
       .pipe(takeUntil(this.destroy$))
-      .subscribe((data: object) => {
-      this.strategy = data['strategy'];
-      this.dataService.getStrategyChart(new ChartOptions(this.strategy.id))
-        .pipe(takeUntil(this.destroy$))
-        .subscribe(response => {
+      .subscribe((strategy: Strategy) => {
+        this.strategy = strategy;
+        console.log(this.strategy);
+      });
 
-          this.chartOptions = {
-            chart: {
-              zoomType: 'x'
+    this.dataService.getStrategyChart(new ChartOptions(this.route.parent.params['_value'].id))
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(response => {
+
+        this.chartOptions = {
+          chart: {
+            zoomType: 'x'
+          },
+          title: {
+            text: ''
+          },
+          xAxis: {
+            type: 'datetime',
+            dateTimeLabelFormats: {
+              day: '%e<br>%b',
+              month: '%y<br>%b'
+            }
+          },
+          yAxis: {
+            labels: {
+              format: '{value}%'
             },
             title: {
               text: ''
-            },
-            xAxis: {
-              type: 'datetime',
-              dateTimeLabelFormats: {
-                day: '%e<br>%b',
-                month: '%y<br>%b'
-              }
-            },
-            yAxis: {
-              labels: {
-                format: '{value}%'
-              },
-              title: {
-                text: ''
-              }
-            },
-            legend: {
-              enabled: false
-            },
-            tooltip: {
-              useHTML: true,
-              formatter: function() {
-                return `<div class="arearange-tooltip-header ${this.y < 0 ? 'negative' : ''} ${this.y > 0 ? 'positive' : ''}">` +
-                  `${Highcharts.numberFormat((this.y), 2, '.')}%</div>` +
-                  `<div>${Highcharts.dateFormat('%A, %e %b %Y г., %H:%M', this.x)}</div>`;
-              }
-            },
-            type: 'arearange',
-            series: [{
-              type: 'area',
-              data: this.getChartDataValues(response.Chart),
-              zones: [{
-                value: 0,
-                color: '#ec151d',
-                fillColor: 'rgba(236, 21, 29, .1)'
-              }, {
-                color: '#00a651',
-                fillColor: 'rgba(0, 166, 81, .1'
-              }]
+            }
+          },
+          legend: {
+            enabled: false
+          },
+          tooltip: {
+            useHTML: true,
+            formatter: function() {
+              return `<div class="arearange-tooltip-header ${this.y < 0 ? 'negative' : ''} ${this.y > 0 ? 'positive' : ''}">` +
+                `${Highcharts.numberFormat((this.y), 2, '.')}%</div>` +
+                `<div>${Highcharts.dateFormat('%A, %e %b %Y г., %H:%M', this.x)}</div>`;
+            }
+          },
+          type: 'arearange',
+          series: [{
+            type: 'area',
+            data: this.getChartDataValues(response.Chart),
+            zones: [{
+              value: 0,
+              color: '#ec151d',
+              fillColor: 'rgba(236, 21, 29, .1)'
+            }, {
+              color: '#00a651',
+              fillColor: 'rgba(0, 166, 81, .1'
             }]
-          };
+          }]
+        };
 
-          Highcharts.chart('yieldChartContainer', this.chartOptions);
-        });
-    });
+        Highcharts.chart('yieldChartContainer', this.chartOptions);
+      });
   }
 
   getChartDataValues(chartData: any[]) {

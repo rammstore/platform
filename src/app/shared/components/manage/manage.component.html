@@ -1,5 +1,5 @@
 <div class="manage-container">
-  <ng-container *ngIf="dataType === 'account' || (dataType === 'strategy' && data.accountsCount !== 0)">
+  <ng-container *ngIf="dataType === 'account' || (dataType === 'strategy' && data.account)">
     <!--  Fund button  -->
     <i (click)="openAccountFundDialog()" title="{{'Пополнение инвестиции' | translate}}" class="icon-add"></i>
 
@@ -81,7 +81,7 @@
 
     <div class="btn-group dropdown-container" dropdown>
       <button class="primary inverted" (click)="openStrategyInvestDialog()" translate>Инвестировать</button>
-      <button class="primary inverted caret" dropdownToggle><i class="fa fa-caret-down"></i></button>
+      <button class="primary inverted caret" dropdownToggle *ngIf="data.isMy()"><i class="fa fa-caret-down"></i></button>
 
       <ul *dropdownMenu class="dropdown-menu" role="menu">
         <li [routerLink]="['/strategies/details', data.id, 'investments']" translate>

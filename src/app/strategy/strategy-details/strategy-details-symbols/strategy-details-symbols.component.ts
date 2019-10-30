@@ -26,33 +26,36 @@ export class StrategyDetailsSymbolsComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.route.parent.data
+    this.dataService.getStrategy(this.route.parent.params['_value'].id)
       .pipe(takeUntil(this.destroy$))
-      .subscribe((data: object) => {
-        this.strategy = data['strategy'];
-        this.dataService.getSymbolsChart(this.strategy.id).subscribe((strategySymbolsStat: object[]) => {
-          this.chartOptions = {
-            title: {
-              text: ''
-            },
-            legend: {
-              enabled: false
-            },
-            tooltip: {
-              useHTML: true,
-              headerFormat: '',
-              pointFormatter: function() {
-                return `<div class="arearange-tooltip-header">${Highcharts.numberFormat((this.y * 100), 2, '.')}%</div>`;
-              }
-            },
-            series: [{
-              type: 'pie',
-              data: this.strategy.account ? strategySymbolsStat : [{symbol: '', share: 0}]
-            }]
-          };
+      .subscribe((strategy: Strategy) => {
+        this.strategy = strategy;
+      });
 
-          Highcharts.chart('symbolsChartContainer', this.chartOptions);
-        });
+    this.dataService.getSymbolsChart(this.route.parent.params['_value'].id)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((strategySymbolsStat: object[]) => {
+        this.chartOptions = {
+          title: {
+            text: ''
+          },
+          legend: {
+            enabled: false
+          },
+          tooltip: {
+            useHTML: true,
+            headerFormat: '',
+            pointFormatter: function() {
+              return `<div class="arearange-tooltip-header">${Highcharts.numberFormat((this.y * 100), 2, '.')}%</div>`;
+            }
+          },
+          series: [{
+            type: 'pie',
+            data: this.strategy.account ? strategySymbolsStat : [{symbol: '', share: 0}]
+          }]
+        };
+
+        Highcharts.chart('symbolsChartContainer', this.chartOptions);
       });
   }
 

@@ -5,6 +5,7 @@ import { ContentTabLink } from '@app/components/content-tabs/content-tab-link';
 import { BsModalRef } from 'ngx-bootstrap';
 import { Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/internal/operators';
+import { DataService } from '@app/services/data.service';
 
 @Component({
   selector: 'app-strategy-details',
@@ -22,16 +23,14 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
   links: ContentTabLink[];
 
   constructor(
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private dataService: DataService
   ) {
   }
 
   ngOnInit(): void {
-    this.route.data
-      .pipe(
-        takeUntil(this.destroy$),
-        map((data: object) => data['strategy'])
-      )
+    this.dataService.getStrategy(this.route.params['_value'].id)
+      .pipe(takeUntil(this.destroy$))
       .subscribe((strategy: Strategy) => {
         this.strategy = strategy;
 

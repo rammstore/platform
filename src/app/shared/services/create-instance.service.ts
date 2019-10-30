@@ -62,7 +62,7 @@ export class CreateInstanceService {
 
   createOffer(options: any): Offer {
     return new Offer({
-      comission: options.Comission,
+      commission: options.Commission,
       fee: options.Fee
     });
   }
@@ -79,7 +79,7 @@ export class CreateInstanceService {
       symbol: options.Symbol,
       volume: options.Volume,
       price: options.Price,
-      comission: options.Commission,
+      commission: options.Commission,
       entry: options.Entry,
       yield: options.Profit,
       swap: options.Swap,
