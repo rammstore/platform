@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '@app/services/auth.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
+import { TranslateService } from '@ngx-translate/core';
 import { WalletService } from '@app/services/wallet.service';
 
 @Component({
@@ -21,6 +22,7 @@ export class MainHeaderComponent implements OnInit, OnDestroy {
   client: User;
   wallet: Wallet;
   isAsideOpen: boolean = false;
+  language: string;
 
   @HostListener('document:click', ['$event'])
   public onClick(event) {
@@ -42,6 +44,7 @@ export class MainHeaderComponent implements OnInit, OnDestroy {
     private storageService: StorageService,
     private router: Router,
     private authService: AuthService,
+    private translateService: TranslateService,
     private walletService: WalletService
   ) {
   }
@@ -54,6 +57,14 @@ export class MainHeaderComponent implements OnInit, OnDestroy {
       .subscribe((wallet: Wallet) => {
         this.wallet = wallet;
       });
+
+    if (window.localStorage.getItem('language')) {
+      this.language = window.localStorage.getItem('language');
+    } else {
+      this.language = this.client.language;
+    }
+
+    console.log(this.language);
   }
 
   isLinkActive(link: string): boolean {
@@ -74,5 +85,12 @@ export class MainHeaderComponent implements OnInit, OnDestroy {
 
   closeAside(): void {
     this.isAsideOpen = false;
+  }
+
+  setLanguage(lang: string) {
+    this.translateService.setDefaultLang(lang);
+    this.translateService.use(lang);
+    this.language = lang;
+    localStorage.setItem('language', lang);
   }
 }

@@ -1,6 +1,6 @@
 <div class="details-container">
   <div class="strategy">
-    <h2>Стратегия</h2>
+    <h2 translate>Стратегия</h2>
     <table>
       <tbody>
       <tr>
@@ -8,27 +8,27 @@
         <td>{{account.strategy.id}}</td>
       </tr>
       <tr>
-        <td>Название</td>
+        <td translate>Название</td>
         <td><a [routerLink]="['/strategies/details', account.strategy.id]">{{account.strategy.name}}</a></td>
       </tr>
       <tr>
-        <td>Комиссия</td>
+        <td translate>Комиссия</td>
         <td *ngIf="strategy">{{strategy.offer.commission}} USD / mln (How to calculate???)</td>
       </tr>
       <tr>
-        <td>Вознаграждение</td>
+        <td translate>Вознаграждение</td>
         <td *ngIf="strategy">{{strategy.offer.fee | percent:'1.0-2'}}</td>
       </tr>
       <tr>
-        <td>Период оплаты</td>
-        <td>1 неделя</td>
+        <td translate>Период оплаты</td>
+        <td>1 <span translate>неделя</span></td>
       </tr>
       </tbody>
     </table>
   </div>
 
   <div class="investment">
-    <h2>Инвестиция</h2>
+    <h2 translate>Инвестиция</h2>
     <table>
       <tbody>
       <tr>
@@ -36,27 +36,27 @@
         <td>{{account.id}}</td>
       </tr>
       <tr>
-        <td>Создана</td>
+        <td translate>Создана</td>
         <td>{{account.dtCreated | date:'yyyy-MM-dd hh:mm:ss' }}</td>
       </tr>
       <tr *ngIf="!account.isActive()">
-        <td>Закрыта</td>
+        <td translate>Закрыта</td>
         <td>{{account.dtClosed | date:'yyyy-MM-dd hh:mm:ss' }}</td>
       </tr>
       <tr>
-        <td>Валюта</td>
+        <td translate>Валюта</td>
         <td>{{account.asset}}</td>
       </tr>
       <tr>
-        <td>Плечо</td>
+        <td translate>Плечо</td>
         <td>???</td>
       </tr>
       <tr>
-        <td>Стоп</td>
+        <td translate>Стоп</td>
         <td>protection ???</td>
       </tr>
       <tr>
-        <td>Статус</td>
+        <td translate>Статус</td>
         <td>{{account.getStatus()}}</td>
       </tr>
       </tbody>
@@ -64,28 +64,28 @@
   </div>
 
   <div class="profile">
-    <h2>Инвестиционный профиль</h2>
+    <h2 translate>Инвестиционный профиль</h2>
     <table>
       <tbody>
       <tr>
-        <td>Множитель</td>
+        <td translate>Множитель</td>
         <td>{{account.factor}}</td>
       </tr>
       <tr>
-        <td>Цель</td>
+        <td translate>Цель</td>
         <td>{{account.target | percent:'1.0-2'}}</td>
       </tr>
       <tr>
-        <td>Защита</td>
+        <td translate>Защита</td>
         <td>{{account.protection | percent:'1.0-2'}}</td>
       </tr>
       <tr><td></td><td></td></tr>
       <tr>
-        <td>Цель, USD</td>
+        <td><span translate>Цель</span>, USD</td>
         <td>{{account.getTargetAmount() | customCurrency}}</td>
       </tr>
       <tr>
-        <td>Защита, USD</td>
+        <td><span translate>Защита</span>, USD</td>
         <td>{{account.getProtectionAmount() | customCurrency}}</td>
       </tr>
       </tbody>

@@ -5,6 +5,7 @@ import * as Highcharts from 'highcharts';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
 import { DataService } from '@app/services/data.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-strategy-details-profitability',
@@ -22,15 +23,21 @@ export class StrategyDetailsProfitabilityComponent implements OnInit , OnDestroy
 
   constructor(
     private route: ActivatedRoute,
-    private dataService: DataService
+    private dataService: DataService,
+    private translateService: TranslateService
   ) { }
 
   ngOnInit(): void {
+    this.translateService.onDefaultLangChange
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        Highcharts.chart('yieldChartContainer', this.chartOptions);
+      });
+
     this.dataService.getStrategy(this.route.parent.params['_value'].id)
       .pipe(takeUntil(this.destroy$))
       .subscribe((strategy: Strategy) => {
         this.strategy = strategy;
-        console.log(this.strategy);
       });
 
     this.dataService.getStrategyChart(new ChartOptions(this.route.parent.params['_value'].id))
@@ -38,6 +45,9 @@ export class StrategyDetailsProfitabilityComponent implements OnInit , OnDestroy
       .subscribe(response => {
 
         this.chartOptions = {
+          credits: {
+            enabled: false
+          },
           chart: {
             zoomType: 'x'
           },
@@ -67,7 +77,7 @@ export class StrategyDetailsProfitabilityComponent implements OnInit , OnDestroy
             formatter: function() {
               return `<div class="arearange-tooltip-header ${this.y < 0 ? 'negative' : ''} ${this.y > 0 ? 'positive' : ''}">` +
                 `${Highcharts.numberFormat((this.y), 2, '.')}%</div>` +
-                `<div>${Highcharts.dateFormat('%A, %e %b %Y г., %H:%M', this.x)}</div>`;
+                `<div>${Highcharts.dateFormat('%A, %e %b %Y, %H:%M', this.x)}</div>`;
             }
           },
           type: 'arearange',

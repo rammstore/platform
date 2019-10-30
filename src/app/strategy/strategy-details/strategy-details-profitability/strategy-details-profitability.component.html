@@ -3,14 +3,14 @@
     <table>
       <tbody>
       <tr>
-        <td>Доходность в месяц</td>
+        <td translate>Доходность в месяц</td>
         <td [class.positive]="false"
             [class.negative]="false">
           ???
         </td>
       </tr>
       <tr>
-        <td>Доходность</td>
+        <td translate>Доходность</td>
         <td *ngIf="strategy.account"
             [class.positive]="strategy.account.intervalPnL > 0"
             [class.negative]="strategy.account.intervalPnL < 0">
@@ -20,24 +20,24 @@
       </tr>
       <tr><td></td><td></td></tr>
       <tr>
-        <td>Вознаграждение</td>
+        <td translate>Вознаграждение</td>
         <td>{{strategy.offer.fee | percent}}</td>
       </tr>
       <tr *ngIf="strategy.offer.commission">
-        <td>Комиссия за оборот</td>
+        <td translate>Комиссия за оборот</td>
         <td>{{strategy.offer.commission * 1000000}} / 1 mln.</td>
       </tr>
       <tr>
-        <td>Возраст, недель</td>
+        <td translate>Возраст, недель</td>
         <td>{{strategy.getAgeWeeks()}}</td>
       </tr>
       <tr>
-        <td>Инвестиции, USD</td>
+        <td><span translate>Инвестиции</span>, USD</td>
         <td *ngIf="strategy.account">{{strategy.account.equity | customCurrency}}</td>
         <td *ngIf="!strategy.account">{{0 | customCurrency}}</td>
       </tr>
       <tr>
-        <td>Количество инвесторов</td>
+        <td translate>Количество инвесторов</td>
         <td>{{strategy.accountsCount}}</td>
       </tr>
       </tbody>
@@ -47,7 +47,6 @@
   <div id="yieldChartContainer" class="chart-container"></div>
 </div>
 
-<p>График отображает <b>доходность</b> стратегии по инвестиции трейдера. Доходность рассчитана без учета выплаты Вознаграждения трейдера.</p>
+<p><span  translate>График отображает </span> <b translate>доходность</b> <span translate> стратегии по инвестиции трейдера. Доходность рассчитана без учета выплаты Вознаграждения трейдера.</span></p>
 
-<p>Месячная доходность стратегии — средняя доходность за один месяц без учета Вознаграждения трейдера,
-  рассчитанная по историческим данным с момента создания стратегии.<br><br></p>
+<p translate>Месячная доходность стратегии — средняя доходность за один месяц без учета Вознаграждения трейдера, рассчитанная по историческим данным с момента создания стратегии.</p><br><br>

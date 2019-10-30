@@ -1,21 +1,21 @@
-<app-dialog-wrapper [modalRef]="modalRef" titleText="Пополнение инвестиции">
+<app-dialog-wrapper [modalRef]="modalRef" titleText="{{'Пополнение инвестиции' | translate}}">
   <form [formGroup]="form" (ngSubmit)="submit()">
     <div class="form-field no-input">
-      <label class="field-label">Стратегия:</label>
+      <label class="field-label"><span translate>Стратегия</span>:</label>
       <div class="input-wrapper">
         <a [routerLink]="['/strategies/details', account.strategy.id]" (click)="modalRef.hide()">{{account.strategy.name}}</a>
       </div>
     </div>
 
     <div class="form-field  no-input">
-      <label class="field-label">Средства:</label>
+      <label class="field-label"><span translate>Средства</span>:</label>
       <div class="input-wrapper">
         {{account.balance | customCurrency}}
       </div>
     </div>
 
     <div class="form-field">
-      <label for="amount" class="field-label">Сумма пополнения, USD:</label>
+      <label for="amount" class="field-label"><span translate>Сумма пополнения</span>, USD:</label>
       <div class="input-wrapper">
         <input id="amount"
                type="number"
@@ -24,19 +24,23 @@
                [max]="wallet.getAvailableMoney()">
         <div class="messages">
           <label class="error-message"
-                 *ngIf="form.get('amount').touched && form.get('amount').hasError('min')">
+                 *ngIf="form.get('amount').touched && form.get('amount').hasError('required')" translate>
+            Пожалуйста, введите сумму инвестиции.
+          </label>
+          <label class="error-message"
+                 *ngIf="form.get('amount').touched && form.get('amount').hasError('min')" translate>
             Пожалуйста, введите корректную сумму инвестиции.
           </label>
           <label class="error-message"
-                 *ngIf="form.get('amount').touched && form.get('amount').hasError('max')">
+                 *ngIf="form.get('amount').touched && form.get('amount').hasError('max')" translate>
             Вы можете инвестировать только свободные средства.
           </label>
           <label class="error-message"
-                 *ngIf="form.get('amount').touched && form.get('amount').hasError('pattern')">
-            Пожалуйста, введите корректную сумму пополнения.
+                 *ngIf="form.get('amount').touched && form.get('amount').hasError('pattern')" translate>
+            Пожалуйста, введите корректную сумму инвестиции.
           </label>
           <label class="details-message">
-            Доступно: <span class="available-clickable" (click)="setAllMoney()">{{wallet.getAvailableMoney() | customCurrency}}</span>
+            <span translate>Доступно</span>: <span class="available-clickable" (click)="setAllMoney()">{{wallet.getAvailableMoney() | customCurrency}}</span>
           </label>
         </div>
       </div>
@@ -46,7 +50,7 @@
       <button class="primary"
               type="submit"
               [disabled]="!form.valid">
-        Пополнить {{form.valid ? '(' + (form.get('amount').value | customCurrency) + ')' : ''}}
+        <span translate>Пополнить</span> {{form.valid ? '(' + (form.get('amount').value | customCurrency) + ')' : ''}}
       </button>
     </div>
   </form>

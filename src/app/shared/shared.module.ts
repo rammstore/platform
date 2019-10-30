@@ -11,6 +11,7 @@ import { ChartYieldTableComponent } from './components/chart/chart-yield-table/c
 import { DataTablePaginatorComponent } from './components/data-table/data-table-paginator/data-table-paginator.component';
 import { DialogWrapperModule } from '@app/components/dialog-wrapper/dialog-wrapper.module';
 import { ManageModule } from '@app/components/manage/manage.module';
+import { TranslateModule } from '@ngx-translate/core';
 import { PipesModule } from '@app/pipes/pipes.module';
 import { ProgressbarModule } from 'ngx-bootstrap';
 
@@ -35,6 +36,7 @@ import { ProgressbarModule } from 'ngx-bootstrap';
     RouterModule,
     DialogWrapperModule,
     ManageModule,
+    TranslateModule,
     PipesModule
   ],
   exports: [
@@ -54,8 +56,9 @@ import { ProgressbarModule } from 'ngx-bootstrap';
     DialogWrapperModule,
     ManageModule,
     DataTablePaginatorComponent,
-    PipesModule,
-    ProgressbarModule
+    TranslateModule,
+    ProgressbarModule,
+    PipesModule
   ]
 })
 export class SharedModule { }
