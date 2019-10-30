@@ -2,7 +2,7 @@
                 [tableHeader]="tableHeader"
                 [totalFields]="totalFields"
                 [paginator]="paginator"
-                (paginationChanged)="getDeals()">
+                (paginationChanged)="getPositions()">
 </app-data-table>
 
 
@@ -10,42 +10,42 @@
   <div class="position" *ngFor="let position of positions">
     <div class="info">
       <div class="item">
-        <span>Инструмент</span>
+        <span translate>Инструмент</span>
         <span>{{position.symbol}}</span>
       </div>
 
       <div class="item">
-        <span>Тип</span>
+        <span translate>Тип</span>
         <span>{{position.id}}</span>
       </div>
 
       <div class="item">
-        <span>Объем</span>
+        <span translate>Объем</span>
         <span>{{position.volume}}</span>
       </div>
 
       <div class="item">
-        <span>Цена открытия</span>
+        <span translate>Цена открытия</span>
         <span>{{position.price}}</span>
       </div>
 
       <div class="item">
-        <span>Текущая цена</span>
+        <span translate>Текущая цена</span>
         <span></span>
       </div>
 
       <div class="item">
-        <span>Прибыль, USD</span>
+        <span><span translate>Прибыль</span>, USD</span>
         <span>{{position.profit}}</span>
       </div>
 
       <div class="item">
-        <span>Своп, USD</span>
+        <span><span translate>Своп</span>, USD</span>
         <span>{{position.swap}}</span>
       </div>
 
       <div class="item">
-        <span>Итого прибыль, USD</span>
+        <span><span translate>Итого прибыль</span>, USD</span>
         <span>{{position.totalProfit}}</span>
       </div>
     </div>
@@ -56,19 +56,19 @@
 <table>
   <tbody>
   <tr>
-    <td>Средства, USD</td>
+    <td><span translate>Средства</span>, USD</td>
     <td>{{account.equity}}</td>
-    <td>Баланс, USD</td>
+    <td><span translate>Баланс</span>, USD</td>
     <td>{{account.balance}}</td>
   </tr>
   <tr>
-    <td>Свободная маржа, USD</td>
+    <td><span translate>Свободная маржа</span>, USD</td>
     <td>???</td>
-    <td>Маржа, USD</td>
+    <td><span translate>Маржа</span>, USD</td>
     <td>{{account.margin}}</td>
   </tr>
   <tr>
-    <td>Уровень маржи</td>
+    <td translate>Уровень маржи</td>
     <td>{{account.marginLevel}}</td>
   </tr>
   </tbody>
