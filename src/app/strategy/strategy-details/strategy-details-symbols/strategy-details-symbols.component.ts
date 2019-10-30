@@ -30,32 +30,35 @@ export class StrategyDetailsSymbolsComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe((strategy: Strategy) => {
         this.strategy = strategy;
-      });
 
-    this.dataService.getSymbolsChart(this.route.parent.params['_value'].id)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((strategySymbolsStat: object[]) => {
-        this.chartOptions = {
-          title: {
-            text: ''
-          },
-          legend: {
-            enabled: false
-          },
-          tooltip: {
-            useHTML: true,
-            headerFormat: '',
-            pointFormatter: function() {
-              return `<div class="arearange-tooltip-header">${Highcharts.numberFormat((this.y * 100), 2, '.')}%</div>`;
-            }
-          },
-          series: [{
-            type: 'pie',
-            data: this.strategy.account ? strategySymbolsStat : [{symbol: '', share: 0}]
-          }]
-        };
+        this.dataService.getSymbolsChart(this.strategy.id)
+          .pipe(takeUntil(this.destroy$))
+          .subscribe((strategySymbolsStat: object[]) => {
+            this.chartOptions = {
+              credits: {
+                enabled: false
+              },
+              title: {
+                text: ''
+              },
+              legend: {
+                enabled: false
+              },
+              tooltip: {
+                useHTML: true,
+                headerFormat: '',
+                pointFormatter: function() {
+                  return `<div class="arearange-tooltip-header">${Highcharts.numberFormat((this.y * 100), 2, '.')}%</div>`;
+                }
+              },
+              series: [{
+                type: 'pie',
+                data: this.strategy.account ? strategySymbolsStat : [{symbol: '', share: 0}]
+              }]
+            };
 
-        Highcharts.chart('symbolsChartContainer', this.chartOptions);
+            Highcharts.chart('symbolsChartContainer', this.chartOptions);
+          });
       });
   }
 

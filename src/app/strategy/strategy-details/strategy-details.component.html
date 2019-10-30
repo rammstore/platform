@@ -2,7 +2,7 @@
   <div class="caption">
     <h2>
       {{strategy.name}}
-      <span class="closed-info" *ngIf="!strategy.isActive()">Стратегия была закрыта трейдером и более недоступна для инвестирования.</span>
+      <span class="closed-info" *ngIf="!strategy.isActive()" translate>Стратегия была закрыта трейдером и более недоступна для инвестирования.</span>
     </h2>
 
 
@@ -12,9 +12,9 @@
           [class.negative]="strategy.account.intervalPnL < 0">
       {{strategy.account.intervalPnL | customCurrency}}
     </span>
-      <span class="item">Средства: <b>{{strategy.account.balance | customCurrency}}</b></span>
-      <span class="item">Цель: <b>{{(strategy.account.target | percent)}}</b></span>
-      <span class="item">Защита: <b>{{strategy.account.protection | percent}}</b></span>
+      <span class="item"><span translate>Средства</span>: <b>{{strategy.account.balance | customCurrency}}</b></span>
+      <span class="item"><span translate>Цель</span>: <b>{{(strategy.account.target | percent)}}</b></span>
+      <span class="item"><span translate>Защита</span>: <b>{{strategy.account.protection | percent}}</b></span>
     </div>
 
     <app-manage [data]="strategy" *ngIf="strategy.isActive()"></app-manage>
@@ -25,4 +25,4 @@
   </app-content-tabs>
 </ng-container>
 
-<p><b>Предупреждение о рисках: итоги предыдущих торговых операций не гарантируют получение идентичных результатов в будущем.</b></p>
+<p><b translate>Предупреждение о рисках: итоги предыдущих торговых операций не гарантируют получение идентичных результатов в будущем.</b></p>
