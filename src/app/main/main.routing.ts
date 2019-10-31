@@ -10,7 +10,8 @@ const routes: Routes = [
     { path: 'manage', loadChildren: '../manage/manage.module#ManageModule' },
     { path: 'spec', loadChildren: '../specification/specification.module#SpecificationModule' },
     { path: 'help', loadChildren: '../help/help.module#HelpModule' },
-    { path: 'investments', loadChildren: '../investments/investments.module#InvestmentsModule' }
+    { path: 'investments', loadChildren: '../investments/investments.module#InvestmentsModule' },
+    { path: 'rating', loadChildren: '../rating/rating.module#RatingModule' }
   ] }
 ];
 

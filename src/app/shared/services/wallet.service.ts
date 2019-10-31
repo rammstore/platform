@@ -37,7 +37,6 @@ export class WalletService {
 
   updateWallet(): Observable<Wallet> {
     this.loaderService.showLoader();
-    console.log(this.storageService.getSession());
     const walletID: number = this.storageService.getSession().walletID;
 
     return this.http.post(`${CONFIG.baseApiUrl}/wallets.get`, { ID: walletID }).pipe(
