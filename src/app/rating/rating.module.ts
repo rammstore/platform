@@ -5,6 +5,7 @@ import { RatingPopularComponent } from './rating-popular/rating-popular.componen
 import { RatingAllComponent } from './rating-all/rating-all.component';
 import { SharedModule } from '@app/shared.module';
 import { RatingRoutingModule } from './rating.routing';
+import { MobileDataViewModule } from '@app/components/mobile-data-view/mobile-data-view.module';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { RatingRoutingModule } from './rating.routing';
   ],
   imports: [
     SharedModule,
-    RatingRoutingModule
+    RatingRoutingModule,
+    MobileDataViewModule
   ]
 })
 export class RatingModule { }
