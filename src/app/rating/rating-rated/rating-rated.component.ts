@@ -24,7 +24,7 @@ export class RatingRatedComponent implements OnInit, OnDestroy {
   tableHeader: TableHeaderRow[] = [
     new TableHeaderRow([
       new TableColumn({ property: 'nameRating', label: 'Стратегия'}),
-      new TableColumn({ property: 'monthlyYield', label: 'Доходность в месяц', pipe: { pipe: CustomCurrencyPipe }}),
+      new TableColumn({ property: 'monthlyYield', label: 'Доходность в месяц', pipe: { pipe: PercentPipe, args: ['1.0-2'] }}),
       new TableColumn({ property: 'strategy.yieldChart', label: 'Всего' }),
       new TableColumn({ property: 'accountsCount', label: 'Инвесторы'}),
       new TableColumn({ property: 'age', label: 'Возраст, недель' }),
