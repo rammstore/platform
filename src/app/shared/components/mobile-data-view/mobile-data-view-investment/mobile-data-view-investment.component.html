@@ -1,1 +1,48 @@
-<p>mobile-data-view-investment works!</p>
+<div class="accounts">
+  <div class="account" [class.my]="account.isMy()" *ngFor="let account of accounts">
+    <div class="caption">
+      <a [routerLink]="['/strategies/details', account.strategy.id]">{{account.strategy.name}}</a>
+      <app-manage [data]="account"></app-manage>
+    </div>
+
+    <app-chart-yield-table [strategy]="account.strategy" [containerID]="'mobileYieldChartContainer' + account.strategy.id"></app-chart-yield-table>
+    <div class="chart-container" id="mobileYieldChartContainer{{account.strategy.id}}"></div>
+
+    <div class="account-info">
+      <div class="item intervalPnL">
+        <div translate>Прибыль</div>
+        <div [class.positive]="account.intervalPnL > 0"
+             [class.negative]="account.intervalPnL < 0">
+          {{account.intervalPnL | customCurrency}}
+        </div>
+      </div>
+      <div class="item target">
+        <div translate>Цель</div>
+        <div>{{account.getTargetAmount() | customCurrency}}</div>
+      </div>
+      <div class="item equity">
+        <div translate>Средства</div>
+        <div>{{account.equity | customCurrency}}</div>
+      </div>
+      <div class="item protection">
+        <div translate>Защита</div>
+        <div>{{account.getProtectionAmount() | customCurrency}}</div>
+      </div>
+    </div>
+
+    <div class="properties">
+      <div class="property">
+        <span class="property-name" translate>Доходность стратегии</span>
+        <span class="property-value"
+              [class.negative]="account.strategy.profit < 0"
+              [class.positive]="account.strategy.profit > 0">
+          {{account.strategy.profit | percent:'1.0-2'}}
+        </span>
+      </div>
+      <div class="property">
+        <span class="property-name" translate>Возраст, недель</span>
+        <span class="property-value">{{account.getAgeWeeks()}}</span>
+      </div>
+    </div>
+  </div>
+</div>

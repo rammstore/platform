@@ -8,6 +8,7 @@ import { InvestmentsDetailsComponent } from './investments-details/investments-d
 import { InvestmentResolver } from './investments-details/investments-details.resolver';
 import { InvestmentsDetailsDealsComponent } from './investments-details/investments-details-deals/investments-details-deals.component';
 import { InvestmentsDetailsPositionsComponent } from './investments-details/investments-details-positions/investments-details-positions.component';
+import { MobileDataViewModule } from '@app/components/mobile-data-view/mobile-data-view.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { InvestmentsDetailsPositionsComponent } from './investments-details/inve
   ],
   imports: [
     SharedModule,
-    InvestmentsRoutingModule
+    InvestmentsRoutingModule,
+    MobileDataViewModule
   ],
   providers: [
     InvestmentResolver
