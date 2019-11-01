@@ -30,6 +30,16 @@ ul.dropdown-menu.langmenu {
   }
 }
 
+app-mobile-data-view-rating {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  app-mobile-data-view-rating {
+    display: block;
+  }
+}
+
 .dropdown-container.btn-group {
   ul.dropdown-menu.show {
     right: 0 !important;
