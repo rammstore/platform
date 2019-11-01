@@ -14,7 +14,7 @@
     </div>
 
     <div>
-      <app-chart-yield-table [account]="account" [containerID]="'mobileYieldChartContainer' + account.strategy.id"></app-chart-yield-table>
+      <app-chart-yield-table [strategy]="account.strategy" [containerID]="'mobileYieldChartContainer' + account.strategy.id"></app-chart-yield-table>
       <div id="mobileYieldChartContainer{{account.strategy.id}}"></div>
     </div>
 

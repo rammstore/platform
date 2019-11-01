@@ -10,7 +10,7 @@ export class CreateInstanceService {
 
   createStrategy(options: any): Strategy {
     return new Strategy({
-      id: options.ID,
+      id: options.ID || options.strategyID || options.IDStrategy,
       name: options.Name,
       dtCreated: options.DTCreated,
       dtStat: options.DTStat,
@@ -22,7 +22,9 @@ export class CreateInstanceService {
       symbols: options.Symbols,
       account: options.Account ? this.createAccount(options.Account) : null,
       offer: options.Offer ? this.createOffer(options.Offer) : undefined,
-      isMyStrategy: options.IsMyStrategy
+      isMyStrategy: options.IsMyStrategy,
+      ageByDays: options.AgeByDays,
+      monthlyYield: options.MonthlyYield
     });
   }
 

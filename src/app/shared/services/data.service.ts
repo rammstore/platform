@@ -11,7 +11,7 @@ import {
   Position,
   DealsSearchOptions,
   PositionsSearchOptions,
-  ChartOptions
+  ChartOptions, RatingSearchOptions
 } from "@app/models";
 import { HttpClient } from "@angular/common/http";
 import { CreateInstanceService } from "@app/services/create-instance.service";
@@ -35,6 +35,8 @@ export class DataService {
   closedMyAccountsSubject: BehaviorSubject<Account[]> = new BehaviorSubject<Account[]>([]);
   // Детали текущей стратегии
   currentStrategyDetailsSubject: ReplaySubject<Strategy> = new ReplaySubject<Strategy>();
+  // Рейтинг стратегий
+  ratingStrategiesSubject: BehaviorSubject<Strategy[]> = new BehaviorSubject<Strategy[]>([]);
 
   constructor(
     private http: HttpClient,
@@ -488,5 +490,45 @@ export class DataService {
       this.loaderService.hideLoader();
       return positions;
     }));
+  }
+
+  //
+  // Методы ддля работы с рейтингом
+  //
+
+  getRating(ratingType: 0 | 1 | 2, pagination: Paginator): Observable<Strategy[]> {
+    this.loaderService.showLoader();
+    const options: RatingSearchOptions = new RatingSearchOptions();
+    options.Filter = {
+      RatingType: ratingType,
+    };
+
+    if (pagination) {
+      options.Pagination = {
+        CurrentPage: pagination.currentPage,
+        PerPage: pagination.perPage
+      };
+    }
+
+    this.http.post(`${CONFIG.baseApiUrl}/ratings.get`, options).subscribe((response: any) => {
+      const strategies: Strategy[] = [];
+
+      response.Strategies.forEach((s: any) => {
+        if (s.Account) {
+          s.Strategy.Account = s.Account;
+        }
+        strategies.push(this.createInstanceService.createStrategy(s.Strategy));
+      });
+
+      if (pagination) {
+        pagination.totalItems = response.Pagination.TotalRecords;
+        pagination.totalPages = response.Pagination.TotalPages;
+      }
+
+      this.loaderService.hideLoader();
+      this.ratingStrategiesSubject.next(strategies);
+    });
+
+    return this.ratingStrategiesSubject.asObservable();
   }
 }

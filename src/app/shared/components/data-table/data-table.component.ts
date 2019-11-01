@@ -12,7 +12,7 @@ export class DataTableComponent implements OnInit {
   @Input() tableHeader: TableHeaderRow[];
   @Input() data: Array<Strategy | Account | Deal | WalletTransfer>;
   @Input() totalFields: Array<string> = null;
-  coloredFields: string[] = ['yield', 'profit', 'totalProfit', 'intervalPnL', 'account.intervalPnL', 'amount', 'strategy.profit'];
+  coloredFields: string[] = ['yield', 'profit', 'totalProfit', 'intervalPnL', 'account.intervalPnL', 'amount', 'strategy.profit', 'monthlyYield'];
   @Input() paginator: Paginator;
   @Input() shouldHighlightMyStrategies: boolean = false;
   @Output() paginationChanged: EventEmitter<void> = new EventEmitter();

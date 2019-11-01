@@ -1,1 +1,8 @@
-<p>rating-rated works!</p>
+<app-data-table
+  [tableHeader]="tableHeader"
+  [data]="strategies"
+  [paginator]="paginator"
+  [shouldHighlightMyStrategies]="true"
+  (paginationChanged)="getRating()">
+</app-data-table>
+

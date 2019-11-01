@@ -6,8 +6,6 @@ import { RatingAllComponent } from './rating-all/rating-all.component';
 import { SharedModule } from '@app/shared.module';
 import { RatingRoutingModule } from './rating.routing';
 
-
-
 @NgModule({
   declarations: [
     RatingComponent,
