@@ -1,40 +1,12 @@
-<app-data-table [tableHeader]="tableHeader"
-                [data]="strategies"
-                [paginator]="paginator"
-                (paginationChanged)="getStrategies()">
+<app-data-table
+  [tableHeader]="tableHeader"
+  [data]="strategies"
+  [paginator]="paginator"
+  (paginationChanged)="getStrategies()">
 </app-data-table>
 
-<div class="strategies">
-  <div class="strategy" *ngFor="let strategy of strategies">
-    <div class="caption">
-      <a [routerLink]="['/strategies/details', strategy.id]">{{strategy.name}}</a>
-    </div>
-
-    <div class="info">
-      <div class="item">
-        <span>ID:</span>
-        <span>{{strategy.id}}</span>
-      </div>
-
-      <div class="item">
-        <span translate>Вознаграждение</span>
-        <span>{{strategy.offer.fee | percent}}</span>
-      </div>
-
-      <div class="item">
-        <span translate>Создана</span>
-        <span>{{strategy.dtCreated | date:'yyyy-MM-dd hh:mm:ss'}}</span>
-      </div>
-
-      <div class="item">
-        <span translate>Закрыта</span>
-        <span>{{strategy.dtClosed | date:'yyyy-MM-dd hh:mm:ss'}}</span>
-      </div>
-
-      <div class="item">
-        <span translate>Возраст, недель</span>
-        <span>{{strategy.getAgeWeeks()}}</span>
-      </div>
-    </div>
-  </div>
-</div>
+<app-mobile-data-view-strategies-closed
+  [strategies]="strategies"
+  [paginator]="paginator"
+  (paginationChanged)="getStrategies()">
+</app-mobile-data-view-strategies-closed>
