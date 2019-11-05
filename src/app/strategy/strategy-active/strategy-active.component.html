@@ -1,44 +1,16 @@
-<app-data-table [tableHeader]="tableHeader"
-                [data]="strategies"
-                [totalFields]="totalFields"
-                [paginator]="paginator"
-                (paginationChanged)="getStrategies()">
+<app-data-table
+  [tableHeader]="tableHeader"
+  [data]="strategies"
+  [totalFields]="totalFields"
+  [paginator]="paginator"
+  (paginationChanged)="getStrategies()">
 </app-data-table>
 
-<div class="strategies">
-  <div class="strategy" *ngFor="let strategy of strategies">
-    <div class="caption">
-      <a [routerLink]="['/strategies/details', strategy.id]">{{strategy.name}}</a>
-      <app-manage [data]="strategy"></app-manage>
-    </div>
-
-    <div class="info">
-      <div class="item">
-        <span translate>Средства</span>:
-        <span *ngIf="strategy.account">{{strategy.account.equity | customCurrency}}</span>
-      </div>
-
-      <div class="item">
-        <span translate>Инвесторы</span>
-        <span>{{strategy.accountsCount}}</span>
-      </div>
-
-      <div class="item">
-        <span translate>Вознаграждение</span>
-        <span>{{strategy.offer.fee | percent}}</span>
-      </div>
-
-      <div class="item">
-        <span translate>Доходность стратегии</span>:
-        <span  *ngIf="strategy.account"
-               [class.negative]="strategy.profit < 0"
-               [class.positive]="strategy.profit > 0">
-          {{strategy.account.intervalPnL}}
-        </span>
-      </div>
-    </div>
-  </div>
-</div>
+<app-mobile-data-view-strategy
+  [strategies]="strategies"
+  [paginator]="paginator"
+  (paginationChanged)="getStrategies()">
+</app-mobile-data-view-strategy>
 
 <p translate>В меню терминала “Сервис” - ”Настройки”, на вкладке “Советники” внесите адрес сервера RAMM в список разрешенных URL.</p>
 <p translate>Для этого добавьте адрес
