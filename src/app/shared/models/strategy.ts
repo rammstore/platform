@@ -15,6 +15,9 @@ export class Strategy {
   account: Account;       // Инвестиция
   offer: Offer;           // Оффер
   isMyStrategy: boolean;  // Признак собственной стратегии
+  ageByDays: number;      // Возраст в днях
+  monthlyYield: number;   // Месячная прибыль в %
+
 
   constructor(
     options: any
@@ -34,6 +37,11 @@ export class Strategy {
   getAgeWeeks(): number {
     const now: number = new Date().getTime();
     const created: number = new Date(this.dtCreated).getTime();
+
+    if (this.ageByDays) {
+      return Math.round(this.ageByDays / 7);
+    }
+
     return Math.round((now - created) / (1000 * 3600 * 24 * 7));
   }
 

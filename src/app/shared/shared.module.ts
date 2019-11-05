@@ -14,15 +14,13 @@ import { ManageModule } from '@app/components/manage/manage.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { PipesModule } from '@app/pipes/pipes.module';
 import { ProgressbarModule } from 'ngx-bootstrap';
+import { DataTableModule } from '@app/components/data-table/data-table.module';
+import { ChartModule } from '@app/components/chart/chart.module';
 
 @NgModule({
   declarations: [
     ContentTabsComponent,
-    SpecificationInfoBlockComponent,
-    ChartWalletInfoComponent,
-    DataTableComponent,
-    ChartYieldTableComponent,
-    DataTablePaginatorComponent
+    SpecificationInfoBlockComponent
   ],
   imports: [
     CommonModule,
@@ -37,7 +35,9 @@ import { ProgressbarModule } from 'ngx-bootstrap';
     DialogWrapperModule,
     ManageModule,
     TranslateModule,
-    PipesModule
+    PipesModule,
+    DataTableModule,
+    ChartModule
   ],
   exports: [
     CommonModule,
@@ -51,14 +51,14 @@ import { ProgressbarModule } from 'ngx-bootstrap';
     SpecificationInfoBlockComponent,
     RouterModule,
     ChartWalletInfoComponent,
-    DataTableComponent,
     ChartYieldTableComponent,
     DialogWrapperModule,
     ManageModule,
-    DataTablePaginatorComponent,
     TranslateModule,
     ProgressbarModule,
-    PipesModule
+    PipesModule,
+    DataTableModule,
+    ChartModule
   ]
 })
 export class SharedModule { }

@@ -48,7 +48,6 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
     });
 
     this.formStep1.get('name').setErrors({isUniq: true});
-    console.log(this.formStep1);
   }
 
   buildFormStep2(): void {

@@ -63,8 +63,6 @@ export class MainHeaderComponent implements OnInit, OnDestroy {
     } else {
       this.language = this.client.language;
     }
-
-    console.log(this.language);
   }
 
   isLinkActive(link: string): boolean {

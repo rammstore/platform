@@ -1,6 +1,6 @@
 @import "styles";
 
-.accounts {
+app-mobile-data-view-investment-closed {
   display: none;
 }
 
@@ -9,45 +9,8 @@
     display: none;
   }
 
-  .accounts {
+  app-mobile-data-view-investment-closed {
     display: block;
-    padding-top: 15px;
-
-    .account {
-      border-bottom: 5px solid $border-color;
-      padding: 15px 10px;
-
-      &.my {
-        background-color: $background-color;
-      }
-
-      &:last-child {
-        margin-bottom: 20px;
-      }
-
-      .caption {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding-bottom: 15px;
-        margin-bottom: 15px;
-        border-bottom: 1px solid $border-color;
-      }
-
-      .info {
-        .item {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          margin-bottom: 10px;
-
-          &>span {
-            flex: 0 0 50%;
-            text-align: left;
-          }
-        }
-      }
-    }
   }
 }
 

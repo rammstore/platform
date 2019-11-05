@@ -1,0 +1,13 @@
+<app-data-table
+  [tableHeader]="tableHeader"
+  [data]="strategies"
+  [paginator]="paginator"
+  [shouldHighlightMyStrategies]="true"
+  (paginationChanged)="getRating()">
+</app-data-table>
+
+<app-mobile-data-view-rating
+  [strategies]="strategies"
+  [paginator]="paginator"
+  (paginationChanged)="getRating()">
+</app-mobile-data-view-rating>

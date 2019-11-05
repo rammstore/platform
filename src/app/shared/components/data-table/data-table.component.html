@@ -22,12 +22,15 @@
 
             <ng-container *ngSwitchCase="'name'">
               <a class="detail-link" [routerLink]="[getItemLink(item)]">{{item.name}}</a>
-              <app-manage *ngIf="item.isActive()" [data]="item"></app-manage>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'nameRating'">
+              <a class="detail-link" [routerLink]="[getItemLink(item)]">{{item.name}}</a>
+              <div class="symbols">{{item.symbols}}</div>
             </ng-container>
 
             <ng-container *ngSwitchCase="'strategy.name'">
               <a class="detail-link" [routerLink]="[getItemLink(item.strategy)]">{{item.strategy.name}}</a>
-              <app-manage *ngIf="item.isActive()" [data]="item"></app-manage>
             </ng-container>
 
             <div class="strategy-account"
@@ -53,6 +56,31 @@
               </div>
             </div>
 
+            <div class="strategy-account"
+                 *ngSwitchCase="'strategy.investmentInfo'">
+              <ng-container *ngIf="item.isMy() && item.account">
+                <div class="strategy-account-intervalPnL">
+                  <span><span translate>Прибыль</span>:</span>
+                  <span [class.positive]="item.account.intervalPnL > 0"
+                        [class.negative]="item.account.intervalPnL < 0">
+                  {{item.account.intervalPnL | customCurrency}}
+                </span>
+                </div>
+                <div class="strategy-account-target">
+                  <span><span translate>Цель</span>:</span>
+                  <span>{{item.account.getTargetAmount() | customCurrency}}</span>
+                </div>
+                <div class="strategy-account-equity">
+                  <span><span translate>Средства</span>:</span>
+                  <span>{{item.account.equity | customCurrency}}</span>
+                </div>
+                <div class="strategy-account-protection">
+                  <span><span translate>Защита</span>:</span>
+                  <span>{{item.account.getProtectionAmount() | customCurrency}}</span>
+                </div>
+              </ng-container>
+            </div>
+
             <ng-container *ngSwitchCase="'manage'">
               <app-manage [data]="item"></app-manage>
             </ng-container>
@@ -71,7 +99,11 @@
             </ng-container>
 
             <ng-container *ngSwitchCase="'yieldChart'">
-              <app-chart-yield-table [account]="item"></app-chart-yield-table>
+              <app-chart-yield-table [strategy]="item.strategy"></app-chart-yield-table>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'strategy.yieldChart'">
+              <app-chart-yield-table [strategy]="item"></app-chart-yield-table>
             </ng-container>
 
             <ng-container *ngSwitchCase="''">

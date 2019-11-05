@@ -10,21 +10,16 @@
   }
 }
 
-.transfers,
 h5 {
   display: none;
 }
 
-app-data-table-paginator {
+app-mobile-data-view-last-transfers {
   display: none;
 }
 
-@media (max-width: 576px) {
-  app-data-table {
-    display: none;
-  }
-
-  app-data-table-paginator {
+@media (max-width: 768px) {
+  app-mobile-data-view-last-transfers {
     display: block;
   }
 
@@ -33,25 +28,4 @@ app-data-table-paginator {
     width: 100%;
     text-align: center;
   }
-
-  .transfers {
-    display: block;
-    border-top: 5px solid $border-color;
-    margin-bottom: 20px;
-
-    .transfer {
-      border-bottom: 5px solid $border-color;
-      padding: 10px 10px 0;
-
-      .info {
-        .item {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          margin-bottom: 10px;
-        }
-      }
-    }
-  }
-
 }

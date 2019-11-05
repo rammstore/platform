@@ -65,3 +65,15 @@ export class PositionsSearchOptions {
     Direction?: string
   };
 }
+
+export class RatingSearchOptions {
+  Filter: {
+    RatingType: number,
+    StrategyName?: string
+  };
+
+  Pagination: {
+    CurrentPage?: number,
+    PerPage?: number
+  };
+}

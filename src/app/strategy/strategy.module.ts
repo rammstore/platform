@@ -10,6 +10,7 @@ import { StrategyResolver } from './strategy-details/strategy-details.resolver';
 import { StrategyDetailsProfitabilityComponent } from './strategy-details/strategy-details-profitability/strategy-details-profitability.component';
 import { StrategyDetailsSymbolsComponent } from './strategy-details/strategy-details-symbols/strategy-details-symbols.component';
 import { StrategyDetailsInvestmentsComponent } from './strategy-details/strategy-details-investments/strategy-details-investments.component';
+import { MobileDataViewModule } from '@app/components/mobile-data-view/mobile-data-view.module';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { StrategyDetailsInvestmentsComponent } from './strategy-details/strategy
   ],
   imports: [
     SharedModule,
-    StrategyRoutingModule
+    StrategyRoutingModule,
+    MobileDataViewModule
   ],
   entryComponents: [
     StrategyAddComponent

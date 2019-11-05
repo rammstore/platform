@@ -1,0 +1,32 @@
+<div class="transfers">
+  <div class="transfer" *ngFor="let transfer of transfers">
+    <div class="info">
+      <div class="item">
+        <span>ID</span>
+        <span>{{transfer.id}}</span>
+      </div>
+
+      <div class="item">
+        <span>Счет</span>
+        <span>{{transfer.accountID}}</span>
+      </div>
+
+      <div class="item">
+        <span>Дата</span>
+        <span>{{transfer.dtCreated | date:'yyyy-MM-dd hh:mm:ss'}}</span>
+      </div>
+
+      <div class="item">
+        <span>Сумма</span>
+        <span>{{transfer.amount}}</span>
+      </div>
+
+      <div class="item">
+        <span>Тип</span>
+        <span>{{transfer.getType()}}</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-data-table-paginator [paginator]="paginator" (paginationChanged)="paginatorChanged()"></app-data-table-paginator>
