@@ -6,47 +6,9 @@
   (paginationChanged)="getAccounts()">
 </app-data-table>
 
-<div class="accounts">
-  <div class="account" [class.my]="account.isMy()"  *ngFor="let account of accounts">
-    <div class="caption">
-      <a [routerLink]="['/strategies/details', account.strategy.id]">{{account.strategy.name}}</a>
-      <a [routerLink]="['/investments/details', account.id]"><i class="icon-doc"></i></a>
-    </div>
+<app-mobile-data-view-investment-closed
+  [accounts]="accounts"
+  [paginator]="paginator"
+  (paginationChanged)="getAccounts()">
+</app-mobile-data-view-investment-closed>
 
-    <div class="info">
-      <div class="item">
-        <span>ID</span>
-        <span>{{account.id}}</span>
-      </div>
-
-      <div class="item">
-        <span>Открыта</span>
-        <span>{{account.dtCreated | date:'yyyy-MM-dd hh:mm:ss'}}</span>
-      </div>
-
-      <div class="item">
-        <span>Закрыта</span>
-        <span>{{account.dtClosed | date:'yyyy-MM-dd hh:mm:ss'}}</span>
-      </div>
-
-      <div class="item">
-        <span>Возраст</span>
-        <span>{{account.getAgeWeeks()}}</span>
-      </div>
-
-      <div class="item">
-        <span>Защита:</span>
-        <span>{{account.protection | percent}}</span>
-      </div>
-
-      <div class="item">
-        <span>Прибыль</span>
-        <span [class.negative]="account.intervalPnL < 0"
-              [class.positive]="account.intervalPnL > 0">
-          {{account.intervalPnL  | customCurrency}}
-        </span>
-      </div>
-    </div>
-
-  </div>
-</div>
