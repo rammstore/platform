@@ -5,15 +5,15 @@
       <tbody>
       <tr>
         <td>ID</td>
-        <td>{{account.strategy.id}}</td>
+        <td *ngIf="strategy">{{strategy.id}}</td>
       </tr>
       <tr>
         <td translate>Название</td>
-        <td><a [routerLink]="['/strategies/details', account.strategy.id]">{{account.strategy.name}}</a></td>
+        <td *ngIf="strategy"><a [routerLink]="['/strategies/details', strategy.id]">{{strategy.name}}</a></td>
       </tr>
       <tr>
         <td translate>Комиссия</td>
-        <td *ngIf="strategy">{{strategy.offer.commission}} USD / mln (How to calculate???)</td>
+        <td *ngIf="strategy">{{strategy.offer.getComission()}}</td>
       </tr>
       <tr>
         <td translate>Вознаграждение</td>
@@ -33,31 +33,31 @@
       <tbody>
       <tr>
         <td>ID</td>
-        <td>{{account.id}}</td>
+        <td *ngIf="account">{{account.id}}</td>
       </tr>
       <tr>
         <td translate>Создана</td>
-        <td>{{account.dtCreated | date:'yyyy-MM-dd hh:mm:ss' }}</td>
+        <td *ngIf="account">{{account.dtCreated | date:'yyyy-MM-dd hh:mm:ss' }}</td>
       </tr>
-      <tr *ngIf="!account.isActive()">
+      <tr *ngIf="account && !account.isActive()">
         <td translate>Закрыта</td>
         <td>{{account.dtClosed | date:'yyyy-MM-dd hh:mm:ss' }}</td>
       </tr>
       <tr>
         <td translate>Валюта</td>
-        <td>{{account.asset}}</td>
+        <td *ngIf="account">{{account.asset}}</td>
       </tr>
       <tr>
         <td translate>Плечо</td>
-        <td>???</td>
+        <td *ngIf="account">1:{{account.leverageMax}}</td>
       </tr>
       <tr>
-        <td translate>Стоп</td>
-        <td>protection ???</td>
+        <td translate>StopOut</td>
+        <td *ngIf="account">{{account.MCLevel}}</td>
       </tr>
       <tr>
         <td translate>Статус</td>
-        <td>{{account.getStatus()}}</td>
+        <td *ngIf="account">{{account.getState()}}</td>
       </tr>
       </tbody>
     </table>
@@ -69,31 +69,31 @@
       <tbody>
       <tr>
         <td translate>Множитель</td>
-        <td>{{account.factor}}</td>
+        <td *ngIf="account">{{account.factor}}</td>
       </tr>
       <tr>
         <td translate>Цель</td>
-        <td>{{account.target | percent:'1.0-2'}}</td>
+        <td *ngIf="account">{{account.target | percent:'1.0-2'}}</td>
       </tr>
       <tr>
         <td translate>Защита</td>
-        <td>{{account.protection | percent:'1.0-2'}}</td>
+        <td *ngIf="account">{{account.protection | percent:'1.0-2'}}</td>
       </tr>
       <tr><td></td><td></td></tr>
       <tr>
         <td><span translate>Цель</span>, USD</td>
-        <td>{{account.getTargetAmount() | customCurrency}}</td>
+        <td *ngIf="account">{{account.getTargetAmount() | customCurrency}}</td>
       </tr>
       <tr>
         <td><span translate>Защита</span>, USD</td>
-        <td>{{account.getProtectionAmount() | customCurrency}}</td>
+        <td *ngIf="account">{{account.getProtectionAmount() | customCurrency}}</td>
       </tr>
       </tbody>
     </table>
   </div>
 
   <div class="manage-container">
-    <app-manage *ngIf="account.isActive()" [data]="account"></app-manage>
+    <app-manage *ngIf="account && account.isActive()" [data]="account"></app-manage>
   </div>
 </div>
 

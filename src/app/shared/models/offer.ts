@@ -7,4 +7,8 @@ export class Offer {
   ) {
     Object.assign(this, options);
   }
+
+  getComission(): string {
+    return (this.commission * 1000000) + ' USD / 1 mln.';
+  }
 }

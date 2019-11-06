@@ -30,6 +30,10 @@ export class Account {
   precision: number;                // Точность округления, знаки после запятой
   positionsCount: number;           // Количество позиций
   accountMinBalance: number;        // Минимальный баланс инвестиции
+  leverageMax: number;              // Плечо
+  freeMargin: number;               // Свободная маржа
+  MCLevel: number;                  // StopOut
+  state: number;                    // Состояние
 
   constructor(
     options: any
@@ -108,5 +112,58 @@ export class Account {
 
   getProtectionAmount(): number {
     return this.protection * this.equity;
+  }
+
+  getState(): string {
+    switch (this.state) {
+      case 0:
+        return 'New';
+        break;
+      case 1:
+        return '(not used)';
+        break;
+      case 2:
+        return 'Active, no positions';
+        break;
+      case 3:
+        return 'Active, with positions';
+        break;
+      case 4:
+        return 'Margin call, with positions';
+        break;
+      case 5:
+        return 'Margin call, no positions';
+        break;
+      case 6:
+        return 'Protection, with positions';
+        break;
+      case 7:
+        return 'Protection, no positions';
+        break;
+      case 8:
+        return 'Target, with positions';
+        break;
+      case 9:
+        return 'Target, no positions';
+        break;
+      case 10:
+        return 'Pause, with positions';
+        break;
+      case 11:
+        return 'Pause, no positions';
+        break;
+      case 12:
+        return 'Disabled, with positions';
+        break;
+      case 13:
+        return 'Disabled, no positions';
+        break;
+      case 14:
+        return 'Closed, with positions';
+        break;
+      case 15:
+        return 'Closed, no positions';
+        break;
+    }
   }
 }

@@ -24,7 +24,8 @@ export class CreateInstanceService {
       offer: options.Offer ? this.createOffer(options.Offer) : undefined,
       isMyStrategy: options.IsMyStrategy,
       ageByDays: options.AgeByDays,
-      monthlyYield: options.MonthlyYield
+      monthlyYield: options.MonthlyYield,
+      MCLevel: options.MCLevel
     });
   }
 
@@ -58,7 +59,11 @@ export class CreateInstanceService {
       profitBase: options.ProfitBase,
       precision: options.Precision,
       positionsCount: options.PositionsCount,
-      accountMinBalance: options.AccountMinBalance
+      accountMinBalance: options.AccountMinBalance,
+      leverageMax: options.LeverageMax,
+      freeMargin: options.FreeMargin,
+      MCLevel: options.MCLevel,
+      state: options.State
     });
   }
 
