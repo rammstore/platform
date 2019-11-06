@@ -37,6 +37,8 @@ export class DataService {
   currentStrategyDetailsSubject: ReplaySubject<Strategy> = new ReplaySubject<Strategy>();
   // Рейтинг стратегий
   ratingStrategiesSubject: BehaviorSubject<Strategy[]> = new BehaviorSubject<Strategy[]>([]);
+  // Детали текущей инвестиции
+  currentAccountStatementSubject: ReplaySubject<any> = new ReplaySubject<any>();
 
   constructor(
     private http: HttpClient,
@@ -320,6 +322,23 @@ export class DataService {
     });
 
     return this.closedMyAccountsSubject.asObservable();
+  }
+
+  // Получение деталей инвестиции
+  getAccountStatement(id: number): Observable<any> {
+    this.http.post(`${CONFIG.baseApiUrl}/accounts.getStatement`, {AccountID: id}).subscribe((response: any) => {
+      response.Statement[0].Strategy.Offer = {
+        Commission: response.Statement[0].Strategy.Commission,
+        Fee: response.Statement[0].Strategy.Fee
+      };
+
+      this.currentAccountStatementSubject.next({
+        strategy: this.createInstanceService.createStrategy(response.Statement[0].Strategy),
+        account: this.createInstanceService.createAccount(response.Statement[0].Account)
+      });
+    });
+
+    return this.currentAccountStatementSubject.asObservable();
   }
 
   // Инвестировать в стратегию (Создать инвестицию)

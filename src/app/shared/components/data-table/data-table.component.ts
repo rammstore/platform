@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Account, Deal, Strategy, WalletTransfer } from '@app/models';
+import { Account, Deal, Strategy, WalletTransfer, Position } from '@app/models';
 import { TableHeaderRow } from '@app/models/table-header-row';
 import { Paginator } from '@app/models/paginator';
 
@@ -10,7 +10,7 @@ import { Paginator } from '@app/models/paginator';
 })
 export class DataTableComponent implements OnInit {
   @Input() tableHeader: TableHeaderRow[];
-  @Input() data: Array<Strategy | Account | Deal | WalletTransfer>;
+  @Input() data: Array<Strategy | Account | Deal | WalletTransfer | Position>;
   @Input() totalFields: Array<string> = null;
   coloredFields: string[] = ['yield', 'profit', 'totalProfit', 'intervalPnL', 'account.intervalPnL', 'amount', 'strategy.profit', 'monthlyYield'];
   @Input() paginator: Paginator;

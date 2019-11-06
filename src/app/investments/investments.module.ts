@@ -5,7 +5,6 @@ import { InvestmentsClosedComponent } from './investments-closed/investments-clo
 import { InvestmentsRoutingModule } from './investments.routing';
 import { SharedModule } from '@app/shared.module';
 import { InvestmentsDetailsComponent } from './investments-details/investments-details.component';
-import { InvestmentResolver } from './investments-details/investments-details.resolver';
 import { InvestmentsDetailsDealsComponent } from './investments-details/investments-details-deals/investments-details-deals.component';
 import { InvestmentsDetailsPositionsComponent } from './investments-details/investments-details-positions/investments-details-positions.component';
 import { MobileDataViewModule } from '@app/components/mobile-data-view/mobile-data-view.module';
@@ -23,9 +22,6 @@ import { MobileDataViewModule } from '@app/components/mobile-data-view/mobile-da
     SharedModule,
     InvestmentsRoutingModule,
     MobileDataViewModule
-  ],
-  providers: [
-    InvestmentResolver
   ]
 })
 export class InvestmentsModule { }

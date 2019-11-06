@@ -46,17 +46,22 @@ export class InvestmentsDetailsPositionsComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.route.parent.params.subscribe((params) => {
-      this.id = params['id'];
-      this.getPositions();
-    });
-    this.route.parent.data.subscribe((data) => {
-      this.account = data['investment'];
-    });
+    this.route.parent.params
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((params) => {
+        this.id = params['id'];
+        this.getPositions();
+
+        this.dataService.getAccountStatement(this.id)
+          .pipe(takeUntil(this.destroy$))
+          .subscribe((response: any) => {
+            this.account = response.account;
+          });
+      });
   }
 
   getPositions(): void {
-    this.dataService.getAccountPositions(this.id, this.paginator)
+    this.dataService.getAccountPositions(this.route.parent.params['_value'].id, this.paginator)
       .pipe(takeUntil(this.destroy$))
       .subscribe((positions: Position[]) => {
         this.positions = positions;

@@ -27,26 +27,10 @@ export class InvestmentsDetailsComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.route.data
-      .pipe(
-        takeUntil(this.destroy$),
-        map((data: object) => data['investment'])
-      )
-      .subscribe((account: Account) => {
-        this.account = account;
-
-        this.links = [
-          new ContentTabLink('Позиции', `/investments/details/${this.account.id}`),
-          new ContentTabLink('Сделки', `/investments/details/${this.account.id}/deals`)
-        ];
-
-        this.dataService.getStrategy(this.account.strategy.id)
-          .pipe(takeUntil(this.destroy$))
-          .subscribe((strategy: Strategy) => {
-            this.strategy = strategy;
-          });
-
-      });
+    this.dataService.getAccountStatement(this.route.params['_value'].id).subscribe((response: any) => {
+      this.strategy = response.strategy;
+      this.account = response.account;
+    });
   }
 
   ngOnDestroy(): void {
