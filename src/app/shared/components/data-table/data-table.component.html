@@ -20,6 +20,10 @@
             <!-- Strategy special data -->
             <ng-container *ngSwitchCase="'age'">{{item.getAgeWeeks()}}</ng-container>
 
+            <ng-container *ngSwitchCase="'account.id'">
+              <a class="detail-link" [routerLink]="[getItemLink(item)]">{{item.id}}</a>
+            </ng-container>
+
             <ng-container *ngSwitchCase="'name'">
               <a class="detail-link" [routerLink]="[getItemLink(item)]">{{item.name}}</a>
             </ng-container>

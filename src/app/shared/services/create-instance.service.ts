@@ -63,7 +63,12 @@ export class CreateInstanceService {
       leverageMax: options.LeverageMax,
       freeMargin: options.FreeMargin,
       MCLevel: options.MCLevel,
-      state: options.State
+      state: options.State,
+      isMyStrategy: options.IsMyStrategy,
+      profitCurrentIntervalGross: options.ProfitCurrentIntervalGross,
+      feeToPay: options.FeeToPay,
+      totalCommissionTrader: options.TotalCommissionTrader,
+      feePaid: options.FeePaid
     });
   }
 
