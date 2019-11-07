@@ -1,0 +1,7 @@
+<app-data-table
+  [data]="accounts"
+  [tableHeader]="tableHeader"
+  [paginator]="paginator"
+  (paginationChanged)="getAccounts()"
+  [shouldHighlightMyStrategies]="true"
+></app-data-table>
