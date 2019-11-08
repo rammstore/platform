@@ -5,3 +5,9 @@
   (paginationChanged)="getAccounts()"
   [shouldHighlightMyStrategies]="true"
 ></app-data-table>
+
+<app-mobile-data-view-strategy-investment-closed
+  [accounts]="accounts"
+  [paginator]="paginator"
+  (paginationChanged)="getAccounts()"
+></app-mobile-data-view-strategy-investment-closed>
