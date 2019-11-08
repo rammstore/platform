@@ -77,3 +77,12 @@ export class RatingSearchOptions {
     PerPage?: number
   };
 }
+
+export class StrategyAccontsOptions {
+  StrategyID: number;
+
+  Pagination: {
+    CurrentPage?: number,
+    PerPage?: number
+  };
+}

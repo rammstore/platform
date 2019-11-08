@@ -11,7 +11,7 @@ import {
   Position,
   DealsSearchOptions,
   PositionsSearchOptions,
-  ChartOptions, RatingSearchOptions
+  ChartOptions, RatingSearchOptions, StrategyAccontsOptions
 } from "@app/models";
 import { HttpClient } from "@angular/common/http";
 import { CreateInstanceService } from "@app/services/create-instance.service";
@@ -250,7 +250,8 @@ export class DataService {
   getStrategyAccounts(strategyID: number, isActive: boolean = true, pagination?: Paginator): Observable<Account[]> {
     const method: string = isActive ? 'myStrategies.getActiveAccounts' : 'myStrategies.getClosedAccounts';
     this.loaderService.showLoader();
-    const options = { StrategyID: strategyID };
+    const options: StrategyAccontsOptions = new StrategyAccontsOptions();
+    options.StrategyID = strategyID;
 
     if (pagination) {
       options.Pagination = {
