@@ -11,6 +11,8 @@ import { StrategyDetailsProfitabilityComponent } from './strategy-details/strate
 import { StrategyDetailsSymbolsComponent } from './strategy-details/strategy-details-symbols/strategy-details-symbols.component';
 import { StrategyDetailsInvestmentsComponent } from './strategy-details/strategy-details-investments/strategy-details-investments.component';
 import { MobileDataViewModule } from '@app/components/mobile-data-view/mobile-data-view.module';
+import { StrategyDetailsInvestmentsActiveComponent } from './strategy-details/strategy-details-investments/strategy-details-investments-active/strategy-details-investments-active.component';
+import { StrategyDetailsInvestmentsClosedComponent } from './strategy-details/strategy-details-investments/strategy-details-investments-closed/strategy-details-investments-closed.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { MobileDataViewModule } from '@app/components/mobile-data-view/mobile-da
     StrategyDetailsComponent,
     StrategyDetailsProfitabilityComponent,
     StrategyDetailsSymbolsComponent,
-    StrategyDetailsInvestmentsComponent
+    StrategyDetailsInvestmentsComponent,
+    StrategyDetailsInvestmentsActiveComponent,
+    StrategyDetailsInvestmentsClosedComponent
   ],
   imports: [
     SharedModule,

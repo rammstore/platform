@@ -39,6 +39,8 @@ export class DataService {
   ratingStrategiesSubject: BehaviorSubject<Strategy[]> = new BehaviorSubject<Strategy[]>([]);
   // Детали текущей инвестиции
   currentAccountStatementSubject: ReplaySubject<any> = new ReplaySubject<any>();
+  // Инвестиции текущей стратегии
+  currentStrategyAccountsSubject: BehaviorSubject<Account[]> = new BehaviorSubject<Account[]>([]);
 
   constructor(
     private http: HttpClient,
@@ -243,6 +245,37 @@ export class DataService {
         return chart;
       })
     );
+  }
+
+  getStrategyAccounts(strategyID: number, isActive: boolean = true, pagination?: Paginator): Observable<Account[]> {
+    const method: string = isActive ? 'myStrategies.getActiveAccounts' : 'myStrategies.getClosedAccounts';
+    this.loaderService.showLoader();
+    const options = { StrategyID: strategyID };
+
+    if (pagination) {
+      options.Pagination = {
+        CurrentPage: pagination.currentPage,
+        PerPage: pagination.perPage
+      };
+    }
+
+    this.http.post(`${CONFIG.baseApiUrl}/${method}`, options).subscribe((response: any) => {
+      const accounts: Account[] = [];
+
+      response.Accounts.forEach((a: any) => {
+        accounts.push(this.createInstanceService.createAccount(a));
+      });
+
+      if (pagination) {
+        pagination.totalItems = response.Pagination.TotalRecords;
+        pagination.totalPages = response.Pagination.TotalPages;
+      }
+
+      this.loaderService.hideLoader();
+      this.currentStrategyAccountsSubject.next(accounts);
+    });
+
+    return this.currentStrategyAccountsSubject.asObservable();
   }
 
   //

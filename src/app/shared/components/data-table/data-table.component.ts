@@ -29,6 +29,9 @@ export class DataTableComponent implements OnInit {
       case (item instanceof Strategy):
         link = 'strategies/details';
         break;
+      case (item instanceof Account):
+        link = 'investments/details';
+        break;
       default:
         link = '';
     }

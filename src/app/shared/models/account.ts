@@ -34,6 +34,12 @@ export class Account {
   freeMargin: number;               // Свободная маржа
   MCLevel: number;                  // StopOut
   state: number;                    // Состояние
+  isMyStrategy: boolean;            // Моя стратегия
+  profitCurrentIntervalGross: number;
+  feeToPay: number;                 // Невыплаченное вознаграждение
+  totalCommissionTrader: number;
+  feePaid: number;
+
 
   constructor(
     options: any
@@ -54,6 +60,10 @@ export class Account {
   }
 
   isMy(): boolean {
+    if (!this.strategy) {
+      return this.isMyStrategy;
+    }
+
     return this.strategy.isMyStrategy;
   }
 

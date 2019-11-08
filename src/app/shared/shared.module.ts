@@ -6,9 +6,7 @@ import { ContentTabsComponent } from './components/content-tabs/content-tabs.com
 import { RouterModule } from '@angular/router';
 import { SpecificationInfoBlockComponent } from './components/specification-info-block/specification-info-block.component';
 import { ChartWalletInfoComponent } from './components/chart/chart-wallet-info/chart-wallet-info.component';
-import { DataTableComponent } from './components/data-table/data-table.component';
 import { ChartYieldTableComponent } from './components/chart/chart-yield-table/chart-yield-table.component';
-import { DataTablePaginatorComponent } from './components/data-table/data-table-paginator/data-table-paginator.component';
 import { DialogWrapperModule } from '@app/components/dialog-wrapper/dialog-wrapper.module';
 import { ManageModule } from '@app/components/manage/manage.module';
 import { TranslateModule } from '@ngx-translate/core';

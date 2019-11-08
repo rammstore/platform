@@ -7,6 +7,8 @@ import { MobileDataViewRatingComponent } from './mobile-data-view-rating/mobile-
 import { MobileDataViewLastTransfersComponent } from './mobile-data-view-last-transfers/mobile-data-view-last-transfers.component';
 import { SharedModule } from '@app/shared.module';
 import { DataTableModule } from '@app/components/data-table/data-table.module';
+import { MobileDataViewStrategyInvestmentClosedComponent } from './mobile-data-view-strategy-investment-closed/mobile-data-view-strategy-investment-closed.component';
+import { MobileDataViewStrategyInvestmentComponent } from './mobile-data-view-strategy-investment/mobile-data-view-strategy-investment.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +17,9 @@ import { DataTableModule } from '@app/components/data-table/data-table.module';
     MobileDataViewStrategyComponent,
     MobileDataViewStrategiesClosedComponent,
     MobileDataViewRatingComponent,
-    MobileDataViewLastTransfersComponent
+    MobileDataViewLastTransfersComponent,
+    MobileDataViewStrategyInvestmentClosedComponent,
+    MobileDataViewStrategyInvestmentComponent
   ],
   imports: [
     SharedModule,
@@ -27,7 +31,9 @@ import { DataTableModule } from '@app/components/data-table/data-table.module';
     MobileDataViewStrategyComponent,
     MobileDataViewStrategiesClosedComponent,
     MobileDataViewRatingComponent,
-    MobileDataViewLastTransfersComponent
+    MobileDataViewLastTransfersComponent,
+    MobileDataViewStrategyInvestmentClosedComponent,
+    MobileDataViewStrategyInvestmentComponent
   ]
 })
 export class MobileDataViewModule { }
