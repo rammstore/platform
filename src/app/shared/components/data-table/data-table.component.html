@@ -127,7 +127,7 @@
     </ng-container>
   </tr>
 
-  <tr *ngIf="totalFields && data">
+  <tr *ngIf="totalFields && data && data.length">
     <ng-container *ngFor="let row of tableHeader">
       <ng-container *ngFor="let column of row.columns; let i = index">
         <td class="total-cell" *ngIf="i === 0" translate>Всего</td>
@@ -146,6 +146,10 @@
   </tr>
   </tbody>
 </table>
+
+<div class="empty-data" *ngIf="!data.length">
+  Нет данных для отображения
+</div>
 
 <div *ngIf="paginator" class="pagination-container">
   <app-data-table-paginator [paginator]="paginator" (paginationChanged)="paginatorChanged()"></app-data-table-paginator>
