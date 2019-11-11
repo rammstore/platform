@@ -45,6 +45,12 @@ tr.my {
   background-color: $background-color;
 }
 
+.empty-data {
+  text-align: center;
+  font-weight: bold;
+
+}
+
 td {
   &.name,
   &[class*='strategy.name'] {
