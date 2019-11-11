@@ -12,13 +12,13 @@ export class HelpComponent {
       setTimeout(() => {
         document.getElementById(id).scrollIntoView({
           behavior: 'smooth',
-          block: 'center'
+          block: 'start'
         });
       }, 200);
     } else {
       document.getElementById(id).scrollIntoView({
         behavior: 'smooth',
-        block: 'center'
+        block: 'start'
       });
     }
   }
