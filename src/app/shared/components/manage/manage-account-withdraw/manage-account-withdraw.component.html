@@ -41,7 +41,7 @@
                 <span translate>Сумма вывода должна быть больше</span> 0,01 USD.
               </label>
               <label class="error-message"
-                     *ngIf="form.get('amount').touched && form.get('amount').hasError('max') && !form.get('amount').hasError('pattern')">
+                     *ngIf="form.get('amount').touched && form.get('amount').hasError('max') && !form.get('amount').hasError('pattern')" translate>
                 Указанное значение превышает доступную для вывода сумму.
               </label>
               <label class="error-message"
@@ -71,24 +71,30 @@
                id="close-radio"
                value="close"
                formControlName="withdrawType">
-        <label for="close-radio" class="radio-label">Закрыть {{account.isSecured() && account.isMy() ? 'стратегию' : 'инвестицию'}}</label>
+        <label for="close-radio" class="radio-label" translate>Закрыть {{account.isSecured() && account.isMy() ? 'стратегию' : 'инвестицию'}}</label>
       </div>
 
       <div class="radio-hint">
         <ng-container  *ngIf="account.isSecured() && account.isMy()">
-          <p>
+          <p translate>
             Полное закрытие инвестиции в вашу собственную стратегию возможно только при ликвидации стратегии.
             Обратите внимание, что это необратимое действие.
           </p>
-          <div *ngIf="(form.get('withdrawType').value === 'close')" class="withdraw-amount">Текущая сумма средств: {{account.equity | customCurrency}}</div>
+          <div *ngIf="(form.get('withdrawType').value === 'close')" class="withdraw-amount">
+            <span translate>Текущая сумма средств</span>:
+            {{account.equity | customCurrency}}
+          </div>
         </ng-container>
         <ng-container *ngIf="!account.isSecured()">
-          <p>
+          <p translate>
             Вы можете закрыть вашу инвестицию в любой момент.
             Позже вы сможете создать новую инвестицию в ту же стратегию, при этом просадка инвестиции будет обнулена.
           </p>
-          <div *ngIf="(form.get('withdrawType').value === 'close')" class="withdraw-amount">Текущая сумма средств: {{account.equity | customCurrency}}</div>
-          <p *ngIf="(form.get('withdrawType').value === 'close')">Средства вашей инвестиции рассчитаны по индикативным ценам.
+          <div *ngIf="(form.get('withdrawType').value === 'close')" class="withdraw-amount">
+            <span translate>Текущая сумма средств</span>:
+            {{account.equity | customCurrency}}
+          </div>
+          <p *ngIf="(form.get('withdrawType').value === 'close')" translate>Средства вашей инвестиции рассчитаны по индикативным ценам.
             При закрытии инвестиции все открытые позиции будут закрыты по текущим рыночным ценам,
             которые могут незначительно отличаться от индикативных.</p>
         </ng-container>
@@ -100,13 +106,13 @@
               *ngIf="form.get('withdrawType').value === 'withdraw'"
               (click)="withdraw()"
               [disabled]="!form.valid">
-        Вывести
+        <span translate>Вывести</span>
         <span *ngIf="form.get('amount').value > 0">({{form.get('amount').value | customCurrency}})</span>
       </button>
 
       <button class="warning"
               *ngIf="form.get('withdrawType').value === 'close'"
-              (click)="close()">
+              (click)="close()" translate>
         Закрыть {{account.isSecured() && account.isMy() ? 'стратегию' : 'инвестицию'}}
       </button>
     </div>

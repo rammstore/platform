@@ -358,5 +358,10 @@
   "Инвестировать": "Invest",
   "Список инвестиций": "List of investments",
   "Популярные": "Popular",
-  "Все стратегии": "All strategies"
+  "Все стратегии": "All strategies",
+
+  "Полное закрытие инвестиции в вашу собственную стратегию возможно только при ликвидации стратегии. Обратите внимание, что это необратимое действие.": "You can close an investment into your strategy only by closing the strategy itself. Please note that this action is irreversible.",
+  "Вы можете закрыть вашу инвестицию в любой момент. Позже вы сможете создать новую инвестицию в ту же стратегию, при этом просадка инвестиции будет обнулена.": "You can close your investment at any moment. Later you will be able to create a new investment into the same strategy. Note that after closing the investment drawdown will become 0.",
+  "Текущая сумма средств": "Withdraw amount",
+  "Средства вашей инвестиции рассчитаны по индикативным ценам. При закрытии инвестиции все открытые позиции будут закрыты по текущим рыночным ценам, которые могут незначительно отличаться от индикативных.": "Current equity of your investment is calculated by indicative quotes. When your investment is closed, all open positions will be closed by current market quotes, that can slightly differ from the indicative."
 }
