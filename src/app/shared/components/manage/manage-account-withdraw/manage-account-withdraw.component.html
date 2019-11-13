@@ -38,7 +38,7 @@
             <div class="messages">
               <label class="error-message"
                      *ngIf="form.get('amount').touched && form.get('amount').hasError('min') && !form.get('amount').hasError('pattern')">
-                <span translate>Сумма вывода должна быть больше</span> 0,01 USD.
+                <span translate>Сумма вывода должна быть больше или равна</span> 0,01 USD.
               </label>
               <label class="error-message"
                      *ngIf="form.get('amount').touched && form.get('amount').hasError('max') && !form.get('amount').hasError('pattern')" translate>
