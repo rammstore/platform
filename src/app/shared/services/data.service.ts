@@ -20,6 +20,7 @@ import { CONFIG } from "../../../config";
 import { map } from "rxjs/operators";
 import { LoaderService } from '@app/services/loader.service';
 import { WalletService } from '@app/services/wallet.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -47,7 +48,8 @@ export class DataService {
     private createInstanceService: CreateInstanceService,
     private commandService: CommandService,
     private loaderService: LoaderService,
-    private walletService: WalletService
+    private walletService: WalletService,
+    private router: Router
   ) { }
 
   //
@@ -210,6 +212,7 @@ export class DataService {
           this.walletService.updateWallet().subscribe();
           this.loaderService.hideLoader();
           this.getStrategy(strategyId);
+          this.updateRatingList();
         }
       });
     }, 1000);
@@ -391,6 +394,7 @@ export class DataService {
         this.getActiveMyStrategies().subscribe();
         this.walletService.updateWallet().subscribe();
         this.getStrategy(id);
+        this.updateRatingList();
       })
     );
   }
@@ -478,9 +482,24 @@ export class DataService {
           this.walletService.updateWallet().subscribe();
           this.loaderService.hideLoader();
           this.getStrategy(strategyID);
+          this.updateRatingList();
         }
       });
     }, 1000);
+  }
+
+  updateRatingList() {
+    switch (this.router.url) {
+      case '/rating':
+        this.getRating(0).subscribe();
+        break;
+      case '/rating/popular':
+        this.getRating(2).subscribe();
+        break;
+      case '/rating/all':
+        this.getRating(1).subscribe();
+        break;
+    }
   }
 
   // Получение списка сделок по инвестиции
@@ -549,7 +568,7 @@ export class DataService {
   // Методы ддля работы с рейтингом
   //
 
-  getRating(ratingType: 0 | 1 | 2, pagination: Paginator): Observable<Strategy[]> {
+  getRating(ratingType: 0 | 1 | 2, pagination?: Paginator): Observable<Strategy[]> {
     this.loaderService.showLoader();
     const options: RatingSearchOptions = new RatingSearchOptions();
     options.Filter = {
