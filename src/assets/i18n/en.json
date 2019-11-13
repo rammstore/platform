@@ -328,8 +328,6 @@
   "Максимальный размер вознаграждения": "Maximal fee rate is",
   "Изменение вознаграждения после создания стратегии невозможно.": "It won't be possible to change the fee rate later.",
   "в неделю": "a week",
-  "Шаг 1: Параметры стратегии": "Step 1: Strategy settings",
-  "Шаг 2: Параметры инвестиции": "Step 2: Investment settings",
   "Комиссия за оборот": "Turnover fee",
   "В дополнение к вознаграждению от прибыли вы можете задать комиссию за оборот ваших инвесторов. Величина комиссии не может быть изменена после создания стратегии.": "In addition to performance fee you can set up turnover fee for your strategy's investors. It cannot be changed after you create a strategy.",
   "Опция Shared Strategy позволяет": "This option allows your strategy to be copied to",
@@ -363,5 +361,8 @@
   "Полное закрытие инвестиции в вашу собственную стратегию возможно только при ликвидации стратегии. Обратите внимание, что это необратимое действие.": "You can close an investment into your strategy only by closing the strategy itself. Please note that this action is irreversible.",
   "Вы можете закрыть вашу инвестицию в любой момент. Позже вы сможете создать новую инвестицию в ту же стратегию, при этом просадка инвестиции будет обнулена.": "You can close your investment at any moment. Later you will be able to create a new investment into the same strategy. Note that after closing the investment drawdown will become 0.",
   "Текущая сумма средств": "Withdraw amount",
-  "Средства вашей инвестиции рассчитаны по индикативным ценам. При закрытии инвестиции все открытые позиции будут закрыты по текущим рыночным ценам, которые могут незначительно отличаться от индикативных.": "Current equity of your investment is calculated by indicative quotes. When your investment is closed, all open positions will be closed by current market quotes, that can slightly differ from the indicative."
+  "Средства вашей инвестиции рассчитаны по индикативным ценам. При закрытии инвестиции все открытые позиции будут закрыты по текущим рыночным ценам, которые могут незначительно отличаться от индикативных.": "Current equity of your investment is calculated by indicative quotes. When your investment is closed, all open positions will be closed by current market quotes, that can slightly differ from the indicative.",
+  "Шаг 1: Параметры стратегии": "Step 1: Strategy settings",
+  "Шаг 2: Параметры инвестиции": "Step 2: Investment settings",
+  "Данное имя стратегии уже используется. Пожалуйста, введите другое имя.": "This strategy name is already employed. Please enter other name."
 }

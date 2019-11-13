@@ -1,5 +1,5 @@
 <app-dialog-wrapper [modalRef]="modalRef"
-                    titleText="Шаг {{currentStep}}: {{currentStep === 1 ? 'Параметры стратегии' : 'Параметры инвестиции'}}">
+                    titleText="{{ ('Шаг ' + currentStep + ': ' + (currentStep === 1 ? 'Параметры стратегии' : 'Параметры инвестиции')) | translate}}">
 
   <form [formGroup]="formStep1" *ngIf="currentStep === 1">
     <div class="form-field">
