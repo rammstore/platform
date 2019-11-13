@@ -16,4 +16,8 @@ export class Position {
   ) {
     Object.assign(this, options);
   }
+
+  getAbsVolume(): number {
+    return Math.abs(this.volume);
+  }
 }

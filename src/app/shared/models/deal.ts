@@ -80,4 +80,8 @@ export class Deal {
         break;
     }
   }
+
+  getAbsVolume(): number {
+    return Math.abs(this.volume);
+  }
 }
