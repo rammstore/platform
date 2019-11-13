@@ -364,5 +364,7 @@
   "Средства вашей инвестиции рассчитаны по индикативным ценам. При закрытии инвестиции все открытые позиции будут закрыты по текущим рыночным ценам, которые могут незначительно отличаться от индикативных.": "Current equity of your investment is calculated by indicative quotes. When your investment is closed, all open positions will be closed by current market quotes, that can slightly differ from the indicative.",
   "Шаг 1: Параметры стратегии": "Step 1: Strategy settings",
   "Шаг 2: Параметры инвестиции": "Step 2: Investment settings",
-  "Данное имя стратегии уже используется. Пожалуйста, введите другое имя.": "This strategy name is already employed. Please enter other name."
+  "Данное имя стратегии уже используется. Пожалуйста, введите другое имя.": "This strategy name is already employed. Please enter other name.",
+
+  "Сигнальный скрипт": "Signal script"
 }
