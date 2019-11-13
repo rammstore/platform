@@ -16,7 +16,8 @@
     <ng-container *ngFor="let row of tableHeader">
       <ng-container *ngFor="let column of row.columns">
         <ng-container *ngIf="column.property || column.property === ''" >
-          <td [ngSwitch]="column.property" class="{{column.property}}">
+          <td [ngSwitch]="column.property"
+              class="{{column.property === 'strategy.investmentInfo' ? '' : column.property}} {{column.property === 'strategy.investmentInfo' && item.account ? 'investmentInfo' : ''}}">
             <!-- Strategy special data -->
             <ng-container *ngSwitchCase="'age'">{{item.getAgeWeeks()}}</ng-container>
 
@@ -62,7 +63,7 @@
 
             <div class="strategy-account"
                  *ngSwitchCase="'strategy.investmentInfo'">
-              <ng-container *ngIf="item.isMy() && item.account">
+              <ng-container class="investmentInfo" *ngIf="item.account">
                 <div class="strategy-account-intervalPnL">
                   <span><span translate>Прибыль</span>:</span>
                   <span [class.positive]="item.account.intervalPnL > 0"
