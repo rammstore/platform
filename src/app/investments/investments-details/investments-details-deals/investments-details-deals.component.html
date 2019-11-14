@@ -6,7 +6,7 @@
 </app-data-table>
 
 <h5>Сделки</h5>
-<div class="deals">
+<div class="deals" *ngIf="deals">
   <div class="deal" *ngFor="let deal of deals">
     <div class="info">
       <div class="item">

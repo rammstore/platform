@@ -19,7 +19,7 @@ export class InvestmentsDetailsDealsComponent implements OnInit, OnDestroy {
   destroy$ = new Subject();
 
   // component data
-  deals: Deal[];
+  deals: Deal[] = [];
   id: number;
 
   // table settings
@@ -61,7 +61,9 @@ export class InvestmentsDetailsDealsComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe((deals: Deal[]) => {
         deals.forEach((deal: Deal) => {
-          deal.volume = Math.abs(deal.volume);
+          if (deal.volume) {
+            deal.volume = Math.abs(deal.volume);
+          }
         });
         this.deals = deals;
       });

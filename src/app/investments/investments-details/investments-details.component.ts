@@ -30,6 +30,11 @@ export class InvestmentsDetailsComponent implements OnInit, OnDestroy {
     this.dataService.getAccountStatement(this.route.params['_value'].id).subscribe((response: any) => {
       this.strategy = response.strategy;
       this.account = response.account;
+
+      this.links = [
+        new ContentTabLink('Позиции', '/investments/details/' + this.account.id),
+        new ContentTabLink('Сделки', '/investments/details/' + this.account.id + '/deals')
+      ];
     });
   }
 

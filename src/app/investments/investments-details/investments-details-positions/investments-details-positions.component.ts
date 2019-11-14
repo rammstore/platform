@@ -17,7 +17,7 @@ export class InvestmentsDetailsPositionsComponent implements OnInit, OnDestroy {
   destroy$ = new Subject();
 
   // component data
-  positions: Position[];
+  positions: Position[] = [];
   account: Account;
   id: number;
 
