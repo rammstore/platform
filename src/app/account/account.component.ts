@@ -6,22 +6,16 @@ import { takeUntil } from 'rxjs/internal/operators';
 import { WalletService } from '@app/services/wallet.service';
 
 @Component({
-  selector: 'app-bill',
-  templateUrl: './bill.component.html',
-  styleUrls: ['./bill.component.scss']
+  selector: 'app-account',
+  templateUrl: './account.component.html',
+  styleUrls: ['./account.component.scss']
 })
-export class BillComponent implements OnInit, OnDestroy {
+export class AccountComponent implements OnInit, OnDestroy {
   // https://blog.strongbrew.io/rxjs-best-practices-in-angular/#avoiding-memory-leaks
   // here we will unsubscribe from all subscriptions
   destroy$ = new Subject();
 
   // component data
-  links: ContentTabLink[] = [
-    new ContentTabLink('Результаты', '/bill'),
-    new ContentTabLink('Пополнить', '/bill/fund'),
-    new ContentTabLink('Вывести', '/bill/withdraw'),
-    new ContentTabLink('История переводов', '/bill/last-transfers')
-  ];
   wallet: Wallet;
 
   constructor(

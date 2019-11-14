@@ -4,16 +4,16 @@
       <tbody>
       <tr>
         <td translate>Доходность в месяц</td>
-        <td [class.positive]="false"
-            [class.negative]="false">
-          ???
+        <td [class.positive]="strategy.monthlyYield > 0"
+            [class.negative]="strategy.monthlyYield < 0">
+          {{strategy.monthlyYield | percent:'1.0-2'}}
         </td>
       </tr>
       <tr>
         <td translate>Доходность</td>
         <td *ngIf="strategy.account"
-            [class.positive]="strategy.account.intervalPnL > 0"
-            [class.negative]="strategy.account.intervalPnL < 0">
+            [class.positive]="strategy.profit > 0"
+            [class.negative]="strategy.profit < 0">
           {{strategy.profit | percent}}
         </td>
         <td *ngIf="!strategy.account">{{0 | percent}}</td>

@@ -19,12 +19,12 @@ header {
     }
 
     nav,
-    .bill-info {
+    .account-info {
       display: inline-block;
     }
 
     .menu,
-    .bill-info {
+    .account-info {
       float: right;
     }
 
@@ -48,7 +48,7 @@ header {
       display: none;
     }
 
-    .bill-info {
+    .account-info {
       font-size: 14px;
       color: $text-color-light;
       font-weight: bold;
@@ -194,7 +194,7 @@ header {
 @media (max-width: 576px) {
   @include compact();
 
-  header .container .bill-info {
+  header .container .account-info {
     display: none;
   }
 }

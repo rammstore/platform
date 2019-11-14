@@ -10,11 +10,11 @@ import { CustomCurrencyPipe } from '@app/pipes/custom-currency.pipe';
 declare type FilterValue = 'all' | 'internal' | 'external';
 
 @Component({
-  selector: 'app-bill-last-transfers',
-  templateUrl: './bill-last-transfers.component.html',
-  styleUrls: ['./bill-last-transfers.component.scss']
+  selector: 'app-account-last-transfers',
+  templateUrl: './account-last-transfers.component.html',
+  styleUrls: ['./account-last-transfers.component.scss']
 })
-export class BillLastTransfersComponent implements OnInit, OnDestroy {
+export class AccountLastTransfersComponent implements OnInit, OnDestroy {
   // https://blog.strongbrew.io/rxjs-best-practices-in-angular/#avoiding-memory-leaks
   // here we will unsubscribe from all subscriptions
   destroy$ = new Subject();

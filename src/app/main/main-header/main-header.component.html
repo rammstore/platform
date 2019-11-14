@@ -5,7 +5,7 @@
     </a>
 
     <nav>
-      <a [routerLink]="['/bill']" [class.active]="isLinkActive('/bill')" translate>Счет</a>
+      <a [routerLink]="['/account']" [class.active]="isLinkActive('/account')" translate>Счет</a>
       <a [routerLink]="['/investments']" [class.active]="isLinkActive('/investments')" translate>Инвестиции</a>
       <a [routerLink]="['/rating']" [class.active]="isLinkActive('/rating')" translate>Рейтинг</a>
       <a [routerLink]="['/strategies']" [class.active]="isLinkActive('/strategies')" translate>Мои стратегии</a>
@@ -57,13 +57,15 @@
         <div id="headerChartContainer"></div>
         <app-chart-wallet-info *ngIf="wallet" [wallet]="wallet" containerID="headerChartContainer"></app-chart-wallet-info>
 
-        <button [routerLink]="['/bill/fund']" class="primary block" translate>Пополнить</button>
+        <a href="https://grandcapital.net/account/payments/deposit" target="_blank">
+          <button class="primary block" translate>Пополнить</button>
+        </a>
       </div>
     </ng-template>
 
     <aside [class.open]="isAsideOpen">
       <ul>
-        <li><a [routerLink]="['/bill']" [class.active]="isLinkActive('/bill')" translate>Счет</a></li>
+        <li><a [routerLink]="['/account']" [class.active]="isLinkActive('/account')" translate>Счет</a></li>
         <li><a [routerLink]="['/investments']" [class.active]="isLinkActive('/investments')" translate>Инвестиции</a></li>
         <li><a [routerLink]="['/rating']" [class.active]="isLinkActive('/rating')" translate>Рейтинг</a></li>
         <li><a [routerLink]="['/strategies']" [class.active]="isLinkActive('/strategies')" translate>Мои стратегии</a></li>
@@ -93,7 +95,7 @@
       </ul>
     </aside>
 
-    <div class="bill-info" *ngIf="wallet" [popover]="chartContainer" [outsideClick]="true" placement="bottom">
+    <div class="account-info" *ngIf="wallet" [popover]="chartContainer" [outsideClick]="true" placement="bottom">
       <span class="available" [title]="'Доступно' | translate">
         {{wallet.balance | customCurrency}}
       </span>
