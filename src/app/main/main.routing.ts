@@ -4,8 +4,8 @@ import { MainComponent } from './main.component';
 
 const routes: Routes = [
   { path: '', component: MainComponent, children: [
-    { path: '', redirectTo: 'bill' },
-    { path: 'bill', loadChildren: '../bill/bill.module#BillModule' },
+    { path: '', redirectTo: 'account' },
+    { path: 'account', loadChildren: '../account/account.module#AccountModule' },
     { path: 'strategies', loadChildren: '../strategy/strategy.module#StrategyModule' },
     { path: 'manage', loadChildren: '../manage/manage.module#ManageModule' },
     { path: 'spec', loadChildren: '../specification/specification.module#SpecificationModule' },

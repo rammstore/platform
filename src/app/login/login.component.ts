@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   // component data
   form: FormGroup;
   isWrongCredentials: boolean = false;
-  redirectUrl: string[] = ['/bill'];
+  redirectUrl: string[] = ['/account'];
 
   constructor(
     private fb: FormBuilder,

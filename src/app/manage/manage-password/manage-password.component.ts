@@ -53,7 +53,7 @@ export class ManagePasswordComponent implements OnInit, OnDestroy {
         this.isDone = true;
         this.isSuccessful = true;
         setTimeout(() => {
-          this.router.navigate(['/bill']);
+          this.router.navigate(['/account']);
         }, 1000);
       }, () => {
         this.isDone = true;
