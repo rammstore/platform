@@ -19,6 +19,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   // component data
   form: FormGroup;
   isWrongCredentials: boolean = false;
+  redirectUrl: string[] = ['/bill'];
 
   constructor(
     private fb: FormBuilder,
@@ -47,7 +48,11 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.authService.login(this.form.getRawValue().login, this.form.getRawValue().password)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
-        this.router.navigate(['/bill']);
+        if (this.authService.redirectUrl) {
+          this.redirectUrl = [this.authService.redirectUrl];
+          this.authService.redirectUrl = '/';
+        }
+        this.router.navigate(this.redirectUrl);
       }, (e: HttpErrorResponse) => {
         if (e.status === 401) {
           this.isWrongCredentials = true;

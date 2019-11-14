@@ -14,6 +14,7 @@ import { CreateInstanceService } from '@app/services/create-instance.service';
   providedIn: 'root'
 })
 export class AuthService {
+  public redirectUrl: string;
 
   constructor(
     private http: HttpClient,
