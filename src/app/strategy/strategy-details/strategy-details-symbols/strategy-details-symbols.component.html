@@ -1,10 +1,18 @@
 <table *ngIf="strategy">
   <tbody>
   <tr>
+    <td>Доходность в месяц</td>
+    <td *ngIf="strategy.account"
+        [class.positive]="strategy.monthlyYield > 0"
+        [class.negative]="strategy.monthlyYield < 0">
+      {{strategy.monthlyYield | percent}}
+    </td>
+    <td *ngIf="!strategy.account">{{0 | percent}}</td>
+
     <td>Доходность</td>
     <td *ngIf="strategy.account"
-        [class.positive]="strategy.account.intervalPnL > 0"
-        [class.negative]="strategy.account.intervalPnL < 0">
+        [class.positive]="strategy.profit > 0"
+        [class.negative]="strategy.profit < 0">
       {{strategy.profit | percent}}
     </td>
     <td *ngIf="!strategy.account">{{0 | percent}}</td>
