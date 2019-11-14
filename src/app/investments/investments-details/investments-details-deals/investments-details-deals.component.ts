@@ -60,6 +60,9 @@ export class InvestmentsDetailsDealsComponent implements OnInit, OnDestroy {
     this.dataService.getAccountDeals(this.id, this.paginator)
       .pipe(takeUntil(this.destroy$))
       .subscribe((deals: Deal[]) => {
+        deals.forEach((deal: Deal) => {
+          deal.volume = Math.abs(deal.volume);
+        });
         this.deals = deals;
       });
   }

@@ -53,16 +53,16 @@
 
         <li *ngIf="dataType === 'strategy' && data.isMy()" [routerLink]="['/strategies/details', data.id, 'investments']" translate>
           <i class="fa fa-list-alt"></i>
-          Список инвестиций
+          Инвестиции
         </li>
         <li *ngIf="dataType === 'account' && data.isMy()" [routerLink]="['/strategies/details', data.strategy.id, 'investments']" translate>
           <i class="fa fa-list-alt"></i>
-          Список инвестиций
+          Инвестиции
         </li>
 
         <li *ngIf="data.isMy() && data.isSecured()" (click)="openStrategyDownloadScriptDialog()" translate>
           <i class="fa fa-download"></i>
-          Скачать сигнальный скрипт
+          Сигнальный скрипт
         </li>
 
         <li *ngIf="data.isMy()" (click)="openStrategyCloseDialog()" translate>

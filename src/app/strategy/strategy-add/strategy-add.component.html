@@ -1,5 +1,5 @@
 <app-dialog-wrapper [modalRef]="modalRef"
-                    titleText="Шаг {{currentStep}}: {{currentStep === 1 ? 'Параметры стратегии' : 'Параметры инвестиции'}}">
+                    titleText="{{ ('Шаг ' + currentStep + ': ' + (currentStep === 1 ? 'Параметры стратегии' : 'Параметры инвестиции')) | translate}}">
 
   <form [formGroup]="formStep1" *ngIf="currentStep === 1">
     <div class="form-field">
@@ -12,11 +12,16 @@
                  translate>
             Введите название стратегии
           </label>
+          <label *ngIf="formStep1.get('name').touched && formStep1.get('name').hasError('pattern')"
+                 class="error-message"
+                 translate>
+            Название стратегии может содержать только латинские буквы, цифры, пробелы и основные знаки препинания.
+          </label>
           <label *ngIf="formStep1.get('name').touched && formStep1.get('name').hasError('isUniq')"
                  class="error-message" translate>
             Данное имя стратегии уже используется. Пожалуйста, введите другое имя.
           </label>
-          <label class="details-message" translate>Название стратегии может быть изменено только в течение первых 1 недель.</label>
+<!--          <label class="details-message" translate>Название стратегии может быть изменено только в течение первых 1 недель.</label>-->
         </div>
       </div>
     </div>
@@ -50,10 +55,10 @@
                  class="error-message">
             <span translate>Максимальная комиссия за оборот</span> — 100 USD
           </label>
-          <label class="details-message" translate>
-            В дополнение к вознаграждению от прибыли вы можете задать комиссию за оборот ваших инвесторов.
-            Величина комиссии не может быть изменена после создания стратегии.
-          </label>
+<!--          <label class="details-message" translate>-->
+<!--            В дополнение к вознаграждению от прибыли вы можете задать комиссию за оборот ваших инвесторов.-->
+<!--            Величина комиссии не может быть изменена после создания стратегии.-->
+<!--          </label>-->
         </div>
       </div>
     </div>
@@ -103,6 +108,9 @@
           <label *ngIf="formStep2.get('target').touched && formStep2.get('target').hasError('min')" class="error-message">
             <span translate>Минимальный размер цели</span> - 0%
           </label>
+          <label class="details-message">
+            {{((formStep2.get('money').value * formStep2.get('target').value) / 100) | customCurrency}}
+          </label>
         </div>
       </div>
     </div>
@@ -120,9 +128,12 @@
                  class="error-message">
             <span translate>Максимальный размер защиты</span> - 99%
           </label>
+<!--          <label class="details-message">-->
+<!--            <span translate>В дополнение к вознаграждению от прибыли вы можете задать комиссию за оборот ваших инвесторов.-->
+<!--              Величина комиссии не может быть изменена после создания стратегии.</span>-->
+<!--          </label>-->
           <label class="details-message">
-            <span translate>В дополнение к вознаграждению от прибыли вы можете задать комиссию за оборот ваших инвесторов.
-              Величина комиссии не может быть изменена после создания стратегии.</span>
+            {{((formStep2.get('money').value * formStep2.get('protection').value) / 100) | customCurrency}}
           </label>
         </div>
       </div>
