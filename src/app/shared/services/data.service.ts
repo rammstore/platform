@@ -130,9 +130,13 @@ export class DataService {
   // Получение конкретной стратегии
   getStrategy(id: number): Observable<Strategy> {
     this.loaderService.showLoader();
-    this.http.post(`${CONFIG.baseApiUrl}/strategies.search`, {}).subscribe((response: any) => {
+    this.http.post(`${CONFIG.baseApiUrl}/strategies.get`, {ID: id}).subscribe((response: any) => {
       this.loaderService.hideLoader();
-      this.currentStrategyDetailsSubject.next(this.createInstanceService.createStrategy(response.Strategies.find(s => s.ID.toString() === id.toString())));
+      if (response.MyAccount) {
+        response.Strategy.Account = response.MyAccount;
+      }
+      response.Strategy.Offer = {Fee: response.Strategy.Fee};
+      this.currentStrategyDetailsSubject.next(this.createInstanceService.createStrategy(response.Strategy));
     });
 
     return this.currentStrategyDetailsSubject.asObservable();

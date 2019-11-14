@@ -9,6 +9,7 @@ export class CreateInstanceService {
   constructor() { }
 
   createStrategy(options: any): Strategy {
+    console.log(options);
     return new Strategy({
       id: options.ID || options.strategyID || options.IDStrategy,
       name: options.Name,
@@ -43,7 +44,7 @@ export class CreateInstanceService {
       equity: options.Equity,
       margin: options.Margin,
       marginLevel: options.MarginLevel,
-      intervalPnL: options.IntervalPnL,
+      intervalPnL: options.IntervalPnL || options.ProfitCurrentIntervalGross,
       status: options.Status,
       factor: options.Factor,
       dtMCReached: options.MCReached,
