@@ -1,6 +1,20 @@
 <app-dialog-wrapper titleText="Возобновить стратегию" [modalRef]="modalRef" *ngIf="wallet">
   <form [formGroup]="form">
 
+    <div class="form-field  no-input">
+      <label class="field-label"><span translate>Средства в инвестиции</span>:</label>
+      <div class="input-wrapper">
+        {{strategy.account.balance | customCurrency}}
+      </div>
+    </div>
+
+    <div class="form-field  no-input">
+      <label class="field-label"><span translate>Доступно</span>:</label>
+      <div class="input-wrapper">
+        <span class="available-clickable" (click)="setAllMoney()">{{wallet.getAvailableMoney() | customCurrency}}</span>
+      </div>
+    </div>
+
     <div class="form-field">
       <label for="amount" class="field-label">Добавить в инвестицию, USD:</label>
       <div class="input-wrapper">
@@ -26,9 +40,9 @@
                  *ngIf="form.get('amount').touched && form.get('amount').hasError('pattern')">
             Пожалуйста, введите корректную сумму вывода.
           </label>
-          <label class="details-message">
-            Доступно: <span class="available-clickable" (click)="setAllMoney()">{{wallet.getAvailableMoney() | customCurrency}}</span>
-          </label>
+<!--          <label class="details-message">-->
+<!--            Доступно: <span class="available-clickable" (click)="setAllMoney()">{{wallet.getAvailableMoney() | customCurrency}}</span>-->
+<!--          </label>-->
         </div>
       </div>
     </div>

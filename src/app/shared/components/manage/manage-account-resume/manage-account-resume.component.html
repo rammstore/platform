@@ -1,6 +1,20 @@
 <app-dialog-wrapper titleText="{{'Возобновить инвестицию' | translate}}" [modalRef]="modalRef">
   <form [formGroup]="form">
 
+    <div class="form-field  no-input">
+      <label class="field-label"><span translate>Средства в инвестиции</span>:</label>
+      <div class="input-wrapper">
+        {{account.balance | customCurrency}}
+      </div>
+    </div>
+
+    <div class="form-field  no-input">
+      <label class="field-label"><span translate>Доступно</span>:</label>
+      <div class="input-wrapper">
+        <span class="available-clickable" (click)="setAllMoney()">{{wallet.getAvailableMoney() | customCurrency}}</span>
+      </div>
+    </div>
+
     <div class="form-field">
       <label for="amount" class="field-label"><span translate>Добавить в инвестицию</span>, USD:</label>
       <div class="input-wrapper">
@@ -26,9 +40,9 @@
                  *ngIf="form.get('amount').touched && form.get('amount').hasError('pattern')" translate>
             Пожалуйста, введите корректную сумму инвестиции.
           </label>
-          <label class="details-message">
-            <span translate>Доступно</span>: <span class="available-clickable" (click)="setAllMoney()">{{wallet.getAvailableMoney() | customCurrency}}</span>
-          </label>
+<!--          <label class="details-message">-->
+<!--            <span translate>Доступно</span>: <span class="available-clickable" (click)="setAllMoney()">{{wallet.getAvailableMoney() | customCurrency}}</span>-->
+<!--          </label>-->
         </div>
       </div>
     </div>
