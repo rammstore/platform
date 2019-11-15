@@ -20,7 +20,7 @@ export class ManageAccountPauseComponent implements OnDestroy {
 
   constructor(
     private dataService: DataService,
-    public modalRef: BsModalRef,
+    public modalRef: BsModalRef
   ) { }
 
   pause(): void {

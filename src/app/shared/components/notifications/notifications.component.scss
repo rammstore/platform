@@ -1,0 +1,40 @@
+@import "styles";
+
+:host {
+  position: fixed;
+  right: .67em;
+  top: 6em;
+  z-index: 1000;
+}
+
+.notifications {
+  .notification {
+    z-index: 9999;
+    padding: 15px;
+    color: white;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 320px;
+
+    .icon-close {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      cursor: pointer;
+    }
+
+    &.success {
+      background-color: $positive-color;
+    }
+
+    &.warning {
+      background-color: $accent-color;
+    }
+
+    &.error {
+      background-color: $negative-color;
+    }
+  }
+}

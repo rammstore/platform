@@ -49,7 +49,6 @@ export class RatingPopularComponent implements  OnInit, OnDestroy {
     this.dataService.getRating(2, this.paginator)
       .pipe(takeUntil(this.destroy$))
       .subscribe((strategies: Strategy[]) => {
-        console.log(strategies);
         this.strategies = strategies;
       });
   }

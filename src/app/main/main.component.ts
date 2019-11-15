@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as Highcharts from 'highcharts';
 import { TranslateService } from '@ngx-translate/core';
+import { NotificationsService } from '@app/services/notifications.service';
 
 @Component({
   selector: 'app-main',
@@ -10,7 +11,8 @@ import { TranslateService } from '@ngx-translate/core';
 export class MainComponent implements OnInit {
 
   constructor(
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private notificationsService: NotificationsService
   ) { }
 
   ngOnInit(): void {

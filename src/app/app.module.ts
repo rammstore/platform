@@ -15,6 +15,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { DataService } from "@app/services/data.service";
 import { LoaderService } from '@app/services/loader.service';
+import { NotificationsService } from '@app/services/notifications.service';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -47,6 +48,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     CommandService,
     DataService,
     LoaderService,
+    NotificationsService,
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]

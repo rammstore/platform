@@ -9,7 +9,6 @@ export class CreateInstanceService {
   constructor() { }
 
   createStrategy(options: any): Strategy {
-    console.log(options);
     return new Strategy({
       id: options.ID || options.strategyID || options.IDStrategy,
       name: options.Name,
