@@ -46,8 +46,7 @@
 
       <div class="item">
         <span>Прибыль, USD</span>
-        <span [class.negative]="deal.yield < 0"
-              [class.positive]="deal.yield > 0">{{deal.yield}}</span>
+        <span class="{{deal.getColorClass('yield')}}">{{deal.yield}}</span>
       </div>
 
       <div class="item">
@@ -57,8 +56,7 @@
 
       <div class="item">
         <span>Итого прибыль, USD</span>
-        <span [class.negative]="deal.totalProfit < 0"
-              [class.positive]="deal.totalProfit > 0">{{deal.totalProfit}}</span>
+        <span class="{{deal.getColorClass('totalProfit')}}">{{deal.totalProfit}}</span>
       </div>
     </div>
   </div>

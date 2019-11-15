@@ -84,4 +84,12 @@ export class Deal {
   getAbsVolume(): number {
     return Math.abs(this.volume);
   }
+
+  getColorClass(property: string): string {
+    if (this[property] === 0) {
+      return '';
+    }
+
+    return this[property] > 0 ? 'positive' : 'negative';
+  }
 }

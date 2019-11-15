@@ -13,8 +13,7 @@
     <div class="account-info" *ngIf="strategy.account && strategy.isMy()">
       <div class="item intervalPnL">
         <div translate>Прибыль</div>
-        <div [class.positive]="strategy.account.intervalPnL > 0"
-             [class.negative]="strategy.account.intervalPnL < 0">
+        <div class="{{strategy.account.getColorClass('intervalPnL')}}">
           {{strategy.account.intervalPnL | customCurrency}}
         </div>
       </div>
@@ -35,9 +34,7 @@
     <div class="properties">
       <div class="property">
         <div class="property-name" translate>Доходность в месяц</div>
-        <div class="property-value"
-             [class.positive]="strategy.monthlyYield > 0"
-             [class.negative]="strategy.monthlyYield < 0">
+        <div class="property-value {{strategy.getColorClass('monthlyYield')}}">
           {{strategy.monthlyYield | percent:'1.0-2'}}
         </div>
       </div>

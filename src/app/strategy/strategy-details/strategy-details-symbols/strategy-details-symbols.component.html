@@ -3,16 +3,14 @@
   <tr>
     <td>Доходность в месяц</td>
     <td *ngIf="strategy.account"
-        [class.positive]="strategy.monthlyYield > 0"
-        [class.negative]="strategy.monthlyYield < 0">
+        class="{{strategy.getColorClass('monthlyYield')}}">
       {{strategy.monthlyYield | percent}}
     </td>
     <td *ngIf="!strategy.account">{{0 | percent}}</td>
 
     <td>Доходность</td>
     <td *ngIf="strategy.account"
-        [class.positive]="strategy.profit > 0"
-        [class.negative]="strategy.profit < 0">
+        class="{{strategy.getColorClass('profit')}}">
       {{strategy.profit | percent}}
     </td>
     <td *ngIf="!strategy.account">{{0 | percent}}</td>

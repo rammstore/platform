@@ -42,8 +42,7 @@
                  *ngSwitchCase="'investmentInfo'">
               <div class="strategy-account-intervalPnL">
                 <span><span translate>Прибыль</span>:</span>
-                <span [class.positive]="item.intervalPnL > 0"
-                      [class.negative]="item.intervalPnL < 0">
+                <span class="{{item.getColorClass('intervalPnL')}}">
                   {{item.intervalPnL | customCurrency}}
                 </span>
               </div>
@@ -66,8 +65,7 @@
               <ng-container class="investmentInfo" *ngIf="item.account">
                 <div class="strategy-account-intervalPnL">
                   <span><span translate>Прибыль</span>:</span>
-                  <span [class.positive]="item.account.intervalPnL > 0"
-                        [class.negative]="item.account.intervalPnL < 0">
+                  <span class="{{item.getColorClass('intervalPnL')}}">
                   {{item.account.intervalPnL | customCurrency}}
                 </span>
                 </div>

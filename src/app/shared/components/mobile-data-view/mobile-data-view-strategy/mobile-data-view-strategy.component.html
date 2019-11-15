@@ -24,8 +24,7 @@
       <div class="item">
         <span translate>Доходность стратегии</span>
         <span  *ngIf="strategy.account"
-               [class.negative]="strategy.profit < 0"
-               [class.positive]="strategy.profit > 0">
+               class="{{strategy.getColorClass('profit')}}">
           {{strategy.account.intervalPnL}}
         </span>
       </div>
