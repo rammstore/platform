@@ -13,7 +13,7 @@ import {
   PositionsSearchOptions,
   ChartOptions, RatingSearchOptions, StrategyAccontsOptions
 } from "@app/models";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { CreateInstanceService } from "@app/services/create-instance.service";
 import { CommandService } from "@app/services/command.service";
 import { CONFIG } from "../../../config";
@@ -139,6 +139,11 @@ export class DataService {
       }
       response.Strategy.Offer = {Fee: response.Strategy.Fee};
       this.currentStrategyDetailsSubject.next(this.createInstanceService.createStrategy(response.Strategy));
+    }, (error: HttpErrorResponse) => {
+      if (error.status === 404) {
+        this.router.navigate(['/strategies']);
+        this.notificationsService.open('У вас нет доступа к данной стратегии', {type: 'error', autoClose: true, duration: 3000});
+      }
     });
 
     return this.currentStrategyDetailsSubject.asObservable();
@@ -381,6 +386,11 @@ export class DataService {
         strategy: this.createInstanceService.createStrategy(response.Statement[0].Strategy),
         account: this.createInstanceService.createAccount(response.Statement[0].Account)
       });
+    }, (error: HttpErrorResponse) => {
+      if (error.status === 401) {
+        this.router.navigate(['/investments']);
+        this.notificationsService.open('У вас нет доступа к данной инвестиции', {type: 'error', autoClose: true, duration: 3000});
+      }
     });
 
     return this.currentAccountStatementSubject.asObservable();
