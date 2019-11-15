@@ -7,6 +7,10 @@
 
   &.no-input {
     min-height: 40px;
+
+    .input-wrapper {
+      padding-top: 7px;
+    }
   }
 
   label.field-label {

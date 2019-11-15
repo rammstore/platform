@@ -1,6 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AccordionModule, BsDropdownModule, ModalModule, PopoverModule, TooltipModule } from 'ngx-bootstrap';
+import {
+  AccordionModule,
+  BsDropdownModule,
+  ModalModule,
+  PopoverModule,
+  TooltipModule
+} from 'ngx-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ContentTabsComponent } from './components/content-tabs/content-tabs.component';
 import { RouterModule } from '@angular/router';
@@ -14,6 +20,7 @@ import { PipesModule } from '@app/pipes/pipes.module';
 import { ProgressbarModule } from 'ngx-bootstrap';
 import { DataTableModule } from '@app/components/data-table/data-table.module';
 import { ChartModule } from '@app/components/chart/chart.module';
+import { NotificationsModule } from '@app/components/notifications/notifications.module';
 
 @NgModule({
   declarations: [
@@ -35,7 +42,8 @@ import { ChartModule } from '@app/components/chart/chart.module';
     TranslateModule,
     PipesModule,
     DataTableModule,
-    ChartModule
+    ChartModule,
+    NotificationsModule
   ],
   exports: [
     CommonModule,
@@ -56,7 +64,8 @@ import { ChartModule } from '@app/components/chart/chart.module';
     ProgressbarModule,
     PipesModule,
     DataTableModule,
-    ChartModule
+    ChartModule,
+    NotificationsModule
   ]
 })
 export class SharedModule { }

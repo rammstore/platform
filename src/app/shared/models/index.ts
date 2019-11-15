@@ -14,3 +14,5 @@ export * from './user';
 export * from './wallet';
 export * from './command';
 export * from './search-options';
+export * from './notification-options';
+export * from './notification';

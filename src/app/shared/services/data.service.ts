@@ -21,6 +21,7 @@ import { map } from "rxjs/operators";
 import { LoaderService } from '@app/services/loader.service';
 import { WalletService } from '@app/services/wallet.service';
 import { Router } from '@angular/router';
+import { NotificationsService } from '@app/services/notifications.service';
 
 @Injectable({
   providedIn: 'root'
@@ -49,7 +50,8 @@ export class DataService {
     private commandService: CommandService,
     private loaderService: LoaderService,
     private walletService: WalletService,
-    private router: Router
+    private router: Router,
+    private notificationsService: NotificationsService
   ) { }
 
   //
@@ -149,6 +151,7 @@ export class DataService {
       this.loaderService.hideLoader();
       this.walletService.updateWallet().subscribe();
       this.getActiveMyStrategies().subscribe();
+      this.notificationsService.open('Стратегия создана');
     }));
   }
 
@@ -157,7 +160,7 @@ export class DataService {
     this.loaderService.showLoader();
     return this.http.post(`${CONFIG.baseApiUrl}/myStrategies.pause`, {StrategyID: strategyId}).pipe(
       map((response: any) => {
-        this.updateStrategy(strategyId, new Command(response.CommandID, strategyId));
+        this.updateStrategy(strategyId, new Command(response.CommandID, strategyId), 'Стратегия поставлена на паузу');
       })
     );
   }
@@ -167,7 +170,7 @@ export class DataService {
     this.loaderService.showLoader();
     return this.http.post(`${CONFIG.baseApiUrl}/myStrategies.resume`, {StrategyID: strategyId}).pipe(
       map((response: any) => {
-        this.updateStrategy(strategyId, new Command(response.CommandID, strategyId));
+        this.updateStrategy(strategyId, new Command(response.CommandID, strategyId), 'Стратегия возобновлена');
       })
     );
   }
@@ -177,7 +180,7 @@ export class DataService {
     this.loaderService.showLoader();
     return this.http.post(`${CONFIG.baseApiUrl}/myStrategies.close`, {StrategyID: strategyId}).pipe(
       map((response: any) => {
-        this.updateStrategy(strategyId, new Command(response.CommandID, strategyId));
+        this.updateStrategy(strategyId, new Command(response.CommandID, strategyId), 'Стратегия закрыта');
       })
     );
   }
@@ -206,7 +209,7 @@ export class DataService {
 
   // Получение статуса команды стратегии и запрос обновленного списка стратегий после завершения обработки изменений
   // Работает с активными стратегиями, так как закрытые изменять нельзя
-  updateStrategy(strategyId: number, command: Command): void {
+  updateStrategy(strategyId: number, command: Command, notificationText?: string): void {
     const interval = setInterval(() => {
       this.commandService.checkStrategyCommand(command).subscribe((commandStatus: number) => {
         if (commandStatus !== 0) {
@@ -217,6 +220,7 @@ export class DataService {
           this.loaderService.hideLoader();
           this.getStrategy(strategyId);
           this.updateRatingList();
+          this.notificationsService.open(notificationText);
         }
       });
     }, 1000);
@@ -399,6 +403,7 @@ export class DataService {
         this.walletService.updateWallet().subscribe();
         this.getStrategy(id);
         this.updateRatingList();
+        this.notificationsService.open('Инвестиция создана');
       })
     );
   }
@@ -408,7 +413,7 @@ export class DataService {
     this.loaderService.showLoader();
     return this.http.post(`${CONFIG.baseApiUrl}/accounts.fund`, {AccountID: accountID, Amount: amount}).pipe(
       map((response: any) => {
-        this.updateAccount(accountID, new Command(response.CommandBalanceID, accountID), strategyID);
+        this.updateAccount(accountID, new Command(response.CommandBalanceID, accountID), strategyID, 'Средства зачислены');
       })
     );
   }
@@ -418,7 +423,7 @@ export class DataService {
     this.loaderService.showLoader();
     return this.http.post(`${CONFIG.baseApiUrl}/accounts.pause`, {AccountID: id}).pipe(
       map((response: any) => {
-        this.updateAccount(id, new Command(response.CommandID, id), strategyID);
+        this.updateAccount(id, new Command(response.CommandID, id), strategyID, 'Инвестиция поставлена на паузу');
       })
     );
   }
@@ -428,7 +433,7 @@ export class DataService {
     this.loaderService.showLoader();
     return this.http.post(`${CONFIG.baseApiUrl}/accounts.resume`, {AccountID: id}).pipe(
       map((response: any) => {
-        this.updateAccount(id, new Command(response.CommandID, id), strategyID);
+        this.updateAccount(id, new Command(response.CommandID, id), strategyID, 'Инвестиция снята с паузы');
       })
     );
   }
@@ -460,7 +465,7 @@ export class DataService {
     this.loaderService.showLoader();
     return this.http.post(`${CONFIG.baseApiUrl}/accounts.withdraw`, { AccountID: id, Amount: amount }).pipe(
       map((response: any) => {
-        this.updateAccount(id, new Command(response.CommandBalanceID, id), strategyID);
+        this.updateAccount(id, new Command(response.CommandBalanceID, id), strategyID, 'Средства выведены');
       })
     );
   }
@@ -470,13 +475,13 @@ export class DataService {
     this.loaderService.showLoader();
     return this.http.post(`${CONFIG.baseApiUrl}/accounts.close`, { AccountID: id }).pipe(
       map((response: any) => {
-        this.updateAccount(id, new Command(response.CommandID, id), strategyID);
+        this.updateAccount(id, new Command(response.CommandID, id), strategyID, 'Инвестиция закрыта');
       })
     );
   }
 
   // Получение статуса команды и запрос обновленного списка дынных после завершения обработки изменений
-  updateAccount(accountId: number, command: Command, strategyID: number): void {
+  updateAccount(accountId: number, command: Command, strategyID: number, notificationText?: string): void {
     const interval = setInterval(() => {
       this.commandService.checkAccountCommand(command).subscribe((commandStatus: number) => {
         if (commandStatus !== 0) {
@@ -487,6 +492,7 @@ export class DataService {
           this.loaderService.hideLoader();
           this.getStrategy(strategyID);
           this.updateRatingList();
+          this.notificationsService.open(notificationText);
         }
       });
     }, 1000);

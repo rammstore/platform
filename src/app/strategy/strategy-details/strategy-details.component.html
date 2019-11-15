@@ -7,9 +7,7 @@
 
 
     <div class="info" *ngIf="strategy.account">
-    <span class="pnl item"
-          [class.positive]="strategy.account.intervalPnL > 0"
-          [class.negative]="strategy.account.intervalPnL < 0">
+    <span class="pnl item {{strategy.account.getColorClass('intervalPnL')}}">
       {{strategy.account.intervalPnL | customCurrency}}
     </span>
       <span class="item"><span translate>Средства</span>: <b>{{strategy.account.balance | customCurrency}}</b></span>

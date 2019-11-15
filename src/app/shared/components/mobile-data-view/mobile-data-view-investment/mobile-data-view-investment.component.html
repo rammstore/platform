@@ -11,8 +11,7 @@
     <div class="account-info">
       <div class="item intervalPnL">
         <div translate>Прибыль</div>
-        <div [class.positive]="account.intervalPnL > 0"
-             [class.negative]="account.intervalPnL < 0">
+        <div class="{{account.getColorClass('intervalPnL')}}">
           {{account.intervalPnL | customCurrency}}
         </div>
       </div>
@@ -33,9 +32,7 @@
     <div class="properties">
       <div class="property">
         <span class="property-name" translate>Доходность стратегии</span>
-        <span class="property-value"
-              [class.negative]="account.strategy.profit < 0"
-              [class.positive]="account.strategy.profit > 0">
+        <span class="property-value {{account.strategy.getColorClass('profit')}}">
           {{account.strategy.profit | percent:'1.0-2'}}
         </span>
       </div>

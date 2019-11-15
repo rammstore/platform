@@ -33,8 +33,7 @@
 
       <div class="item">
         <span>Прибыль</span>
-        <span [class.negative]="account.intervalPnL < 0"
-              [class.positive]="account.intervalPnL > 0">
+        <span class="{{account.getColorClass('intervalPnL')}}">
           {{account.intervalPnL  | customCurrency}}
         </span>
       </div>

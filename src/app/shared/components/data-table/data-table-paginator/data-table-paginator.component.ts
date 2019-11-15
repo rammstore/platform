@@ -59,6 +59,9 @@ export class DataTablePaginatorComponent {
     if (perPage < 1) {
       perPage = 1;
     }
+    if (perPage > 100) {
+      perPage = 100;
+    }
 
     this.paginator.currentPage = 1;
     this.paginator.perPage = perPage;

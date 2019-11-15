@@ -176,4 +176,15 @@ export class Account {
         break;
     }
   }
+
+  getColorClass(property: string): string {
+    switch (true) {
+      case this[property] > 0:
+        return 'positive';
+      case this[property] < 0:
+        return 'negative';
+      default:
+        return '';
+    }
+  }
 }

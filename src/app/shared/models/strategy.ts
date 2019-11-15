@@ -52,4 +52,12 @@ export class Strategy {
   isMy(): boolean {
     return this.isMyStrategy;
   }
+
+  getColorClass(property: string): string {
+    if (this[property] === 0) {
+      return '';
+    }
+
+    return this[property] > 0 ? 'positive' : 'negative';
+  }
 }
