@@ -86,9 +86,10 @@ export class MainHeaderComponent implements OnInit, OnDestroy {
   }
 
   setLanguage(lang: string) {
-    this.translateService.setDefaultLang(lang);
+    // this.translateService.setDefaultLang(lang);
     this.translateService.use(lang);
     this.language = lang;
     localStorage.setItem('language', lang);
+    location.reload();
   }
 }

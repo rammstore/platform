@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule, DatePipe, PercentPipe } from '@angular/common';
+import { CommonModule, CurrencyPipe, DatePipe, PercentPipe } from '@angular/common';
 import { DynamicPipe } from '@app/pipes/dynamic.pipe';
 import { CustomCurrencyPipe } from '@app/pipes/custom-currency.pipe';
 
@@ -23,7 +23,8 @@ import { CustomCurrencyPipe } from '@app/pipes/custom-currency.pipe';
     DynamicPipe,
     PercentPipe,
     DatePipe,
-    CustomCurrencyPipe
+    CustomCurrencyPipe,
+    CurrencyPipe
   ]
 })
 export class PipesModule { }
