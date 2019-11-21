@@ -123,6 +123,8 @@
   "Защита не задана": "Protection is not defined",
   "Пожалуйста, введите корректное значение защиты.": "Please enter correct protection value",
   "Множитель не задан": "Factor is not defined",
+  "Нет позиций": "No positions",
+  "Нет данных для отображения": "No data to display",
 
   "Вывод средств": "Withdraw",
   "Закрытие стратегии": "Close strategy",

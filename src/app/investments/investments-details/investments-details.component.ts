@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Account, Strategy } from '@app/models';
 import { ActivatedRoute } from '@angular/router';
-import { map, takeUntil } from 'rxjs/internal/operators';
 import { Subject } from 'rxjs';
 import { ContentTabLink } from '@app/components/content-tabs/content-tab-link';
 import { DataService } from '@app/services/data.service';
@@ -30,6 +29,8 @@ export class InvestmentsDetailsComponent implements OnInit, OnDestroy {
     this.dataService.getAccountStatement(this.route.params['_value'].id).subscribe((response: any) => {
       this.strategy = response.strategy;
       this.account = response.account;
+      this.account.strategy = response.strategy;
+      console.log(this.account);
 
       this.links = [
         new ContentTabLink('Позиции', '/investments/details/' + this.account.id),

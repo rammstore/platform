@@ -21,6 +21,6 @@ export class CustomCurrencyPipe implements PipeTransform {
       value = 0;
     }
 
-    return formatCurrency(value, this.locale, '');
+    return formatCurrency(value, this.locale, '', '', '1.2-2');
   }
 }
