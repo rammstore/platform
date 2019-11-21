@@ -122,6 +122,7 @@
   "При снижении средств до заданного значения инвестиция будет приостановлена": "At decrease in equity to the preset value the investment will pause",
   "Защита не задана": "Protection is not defined",
   "Пожалуйста, введите корректное значение защиты.": "Please enter correct protection value",
+  "Множитель не задан": "Factor is not defined",
 
   "Вывод средств": "Withdraw",
   "Закрытие стратегии": "Close strategy",
