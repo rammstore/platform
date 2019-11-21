@@ -25,13 +25,13 @@ export class InvestmentsDetailsPositionsComponent implements OnInit, OnDestroy {
   tableHeader: TableHeaderRow[] = [
     new TableHeaderRow([
       new TableColumn({ property: 'symbol', label: 'Инструмент'}),
-      new TableColumn({ property: 'id', label: 'Тип'}),
+      new TableColumn({ property: 'type', label: 'Тип'}),
       new TableColumn({ property: 'volume', label: 'Объем' }),
       new TableColumn({ property: 'price', label: 'Цена открытия' }),
-      new TableColumn({ property: '', label: 'Текущая цена' }),
-      new TableColumn({ property: 'profit', label: 'Прибыль' }),
-      new TableColumn({ property: 'swap', label: 'Своп' }),
-      new TableColumn({ property: 'totalProfit', label: 'Итого прибыль' }),
+      new TableColumn({ property: 'currentPrice', label: 'Текущая цена' }),
+      new TableColumn({ property: 'profit', label: 'Прибыль, USD' }),
+      new TableColumn({ property: 'swap', label: 'Своп, USD' }),
+      new TableColumn({ property: 'totalProfit', label: 'Итого прибыль, USD' }),
     ]),
   ];
   totalFields: string[] = ['profit', 'swap', 'totalProfit'];

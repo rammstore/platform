@@ -32,10 +32,10 @@ export class InvestmentsDetailsDealsComponent implements OnInit, OnDestroy {
       new TableColumn({ property: 'entry', label: 'Направление' }),
       new TableColumn({ property: 'volume', label: 'Объем' }),
       new TableColumn({ property: 'price', label: 'Цена' }),
-      new TableColumn({ property: 'yield', label: 'Прибыль', pipe: { pipe: CustomCurrencyPipe } }),
-      new TableColumn({ property: 'commission', label: 'Комиссия', pipe: { pipe: CustomCurrencyPipe } }),
-      new TableColumn({ property: 'swap', label: 'Своп', pipe: { pipe: CustomCurrencyPipe } }),
-      new TableColumn({ property: 'totalProfit', label: 'Итого прибыль', pipe: { pipe: CustomCurrencyPipe } })
+      new TableColumn({ property: 'yield', label: 'Прибыль, USD', pipe: { pipe: CustomCurrencyPipe } }),
+      new TableColumn({ property: 'commission', label: 'Комиссия, USD', pipe: { pipe: CustomCurrencyPipe } }),
+      new TableColumn({ property: 'swap', label: 'Своп, USD', pipe: { pipe: CustomCurrencyPipe } }),
+      new TableColumn({ property: 'totalProfit', label: 'Итого прибыль, USD', pipe: { pipe: CustomCurrencyPipe } })
     ]),
   ];
   totalFields: string[] = ['yield', 'commission', 'swap', 'totalProfit'];

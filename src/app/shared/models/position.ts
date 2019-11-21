@@ -20,4 +20,8 @@ export class Position {
   getAbsVolume(): number {
     return Math.abs(this.volume);
   }
+
+  getType(): string {
+    return '';
+  }
 }

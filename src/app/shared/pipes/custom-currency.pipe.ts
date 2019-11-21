@@ -17,6 +17,10 @@ export class CustomCurrencyPipe implements PipeTransform {
   }
 
   transform(value: number): string {
+    if (!value) {
+      value = 0;
+    }
+
     return formatCurrency(value, this.locale, '');
   }
 }

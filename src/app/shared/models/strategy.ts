@@ -17,6 +17,7 @@ export class Strategy {
   isMyStrategy: boolean;  // Признак собственной стратегии
   ageByDays: number;      // Возраст в днях
   monthlyYield: number;   // Месячная прибыль в %
+  equity: number;         // Инвестиции
 
 
   constructor(

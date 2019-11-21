@@ -31,8 +31,8 @@
       </tr>
       <tr>
         <td><span translate>Инвестиции</span>, USD</td>
-        <td *ngIf="strategy.account">{{strategy.account.equity | customCurrency}}</td>
-        <td *ngIf="!strategy.account">{{0 | customCurrency}}</td>
+        <td *ngIf="strategy.equity">{{strategy.equity | customCurrency}}</td>
+        <td *ngIf="!strategy.equity">{{0 | customCurrency}}</td>
       </tr>
       <tr>
         <td translate>Количество инвесторов</td>
