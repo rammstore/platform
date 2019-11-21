@@ -22,7 +22,7 @@
         <td>{{strategy.offer.fee | percent}}</td>
       </tr>
       <tr *ngIf="strategy.offer.commission">
-        <td translate>Комиссия за оборот</td>
+        <td><span>Комиссия за оборот</span>, USD</td>
         <td>{{strategy.offer.commission * 1000000}} / 1 mln</td>
       </tr>
       <tr>
