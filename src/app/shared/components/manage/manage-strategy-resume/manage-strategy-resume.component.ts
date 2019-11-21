@@ -63,8 +63,25 @@ export class ManageStrategyResumeComponent implements OnInit, OnDestroy {
       queries.push(this.dataService.fundAccount(this.strategy.account.id, values.amount, this.strategy.id));
     }
 
-    if (values.protection !== this.strategy.account.protection || values.target !== this.strategy.account.target) {
-      queries.push(this.dataService.changeAccountProfile(this.strategy.account.id, values, this.strategy.id));
+
+    const newObj = {
+      protection: undefined,
+      target: undefined,
+      factor: undefined
+    };
+
+    if (values.protection !== this.strategy.account.protection) {
+      newObj.protection = values.protection;
+    }
+    if (values.target !== this.strategy.account.target) {
+      newObj.target = values.target;
+    }
+    if (values.factor !== this.strategy.account.factor) {
+      newObj.factor = values.factor;
+    }
+
+    if (newObj.protection || newObj.target || newObj.factor) {
+      queries.push(this.dataService.changeAccountProfile(this.strategy.account.id, newObj, this.strategy.id));
     }
 
     forkJoin(queries).pipe(takeUntil(this.destroy$)).subscribe(() => {
