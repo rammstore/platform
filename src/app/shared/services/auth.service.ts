@@ -47,7 +47,7 @@ export class AuthService {
         wallets: wallets
       });
 
-      this.storageService.setAuthData(JSON.stringify(authData));
+      this.storageService.setAuthData(authData);
       this.storageService.setToken(authData.session.token);
 
       this.loaderService.hideLoader();

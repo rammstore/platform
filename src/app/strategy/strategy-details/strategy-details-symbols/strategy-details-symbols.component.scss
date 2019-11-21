@@ -1,6 +1,12 @@
+@import "styles";
+
 table {
   width: 50%;
-  margin: 0 auto;
+}
+
+#symbolsChartContainer {
+  min-height: 300px;
+  background-color: $background-color;
 }
 
 @media (max-width: 992px) {

@@ -9,6 +9,6 @@ export class Offer {
   }
 
   getComission(): string {
-    return (this.commission * 1000000) + ' USD / 1 mln.';
+    return (this.commission * 1000000) + ' USD / 1 mln';
   }
 }

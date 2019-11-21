@@ -28,7 +28,7 @@ export class RatingPopularComponent implements  OnInit, OnDestroy {
       new TableColumn({ property: 'strategy.yieldChart', label: 'Всего' }),
       new TableColumn({ property: 'accountsCount', label: 'Инвесторы'}),
       new TableColumn({ property: 'age', label: 'Возраст, недель' }),
-      new TableColumn({ property: 'strategy.investmentInfo', label: 'Моя инвестиция' }),
+      new TableColumn({ property: 'strategy.investmentInfo', label: 'Моя инвестиция, USD' }),
       new TableColumn({ property: 'manage', label: '' })
     ]),
   ];

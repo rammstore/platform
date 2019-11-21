@@ -43,15 +43,15 @@
       <div class="legend" *ngIf="wallet">
         <div>
           <span translate>Доступно</span>
-          <span class="amount available">{{wallet.balance | customCurrency}}</span>
+          <span class="amount available">{{wallet.balance | customCurrency}} USD</span>
         </div>
         <div>
           <span translate>Инвестировано</span>
-          <span class="amount invested">{{wallet.invested | customCurrency}}</span>
+          <span class="amount invested">{{wallet.invested | customCurrency}} USD</span>
         </div>
         <div>
           <span translate>Средства</span>
-          <span class="amount">{{wallet.getEquity() | customCurrency}}</span>
+          <span class="amount">{{wallet.getEquity() | customCurrency}} USD</span>
         </div>
 
         <div id="headerChartContainer"></div>
@@ -97,10 +97,10 @@
 
     <div class="account-info" *ngIf="wallet" [popover]="chartContainer" [outsideClick]="true" placement="bottom">
       <span class="available" [title]="'Доступно' | translate">
-        {{wallet.balance | customCurrency}}
+        {{wallet.balance | customCurrency}} USD
       </span>
       |
-      <span [title]="'Средства' | translate">{{wallet.getEquity() | customCurrency}}</span>
+      <span [title]="'Средства' | translate">{{wallet.getEquity() | customCurrency}} USD</span>
     </div>
   </div>
 </header>

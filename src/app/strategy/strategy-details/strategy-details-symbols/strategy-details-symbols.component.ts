@@ -34,30 +34,32 @@ export class StrategyDetailsSymbolsComponent implements OnInit, OnDestroy {
         this.dataService.getSymbolsChart(this.strategy.id)
           .pipe(takeUntil(this.destroy$))
           .subscribe((strategySymbolsStat: object[]) => {
-            this.chartOptions = {
-              credits: {
-                enabled: false
-              },
-              title: {
-                text: ''
-              },
-              legend: {
-                enabled: false
-              },
-              tooltip: {
-                useHTML: true,
-                headerFormat: '',
-                pointFormatter: function() {
-                  return `<div class="arearange-tooltip-header">${Highcharts.numberFormat((this.y * 100), 2, '.')}%</div>`;
-                }
-              },
-              series: [{
-                type: 'pie',
-                data: this.strategy.account ? strategySymbolsStat : [{symbol: '', share: 0}]
-              }]
-            };
+            if (strategySymbolsStat.length) {
+              this.chartOptions = {
+                credits: {
+                  enabled: false
+                },
+                title: {
+                  text: ''
+                },
+                legend: {
+                  enabled: false
+                },
+                tooltip: {
+                  useHTML: true,
+                  headerFormat: '',
+                  pointFormatter: function () {
+                    return `<div class="arearange-tooltip-header">${Highcharts.numberFormat((this.y * 100), 2, '.')}%</div>`;
+                  }
+                },
+                series: [{
+                  type: 'pie',
+                  data: this.strategy.account ? strategySymbolsStat : [{symbol: '', share: 0}]
+                }]
+              };
 
-            Highcharts.chart('symbolsChartContainer', this.chartOptions);
+              Highcharts.chart('symbolsChartContainer', this.chartOptions);
+            }
           });
       });
   }

@@ -25,7 +25,8 @@ export class CreateInstanceService {
       isMyStrategy: options.IsMyStrategy,
       ageByDays: options.AgeByDays,
       monthlyYield: options.MonthlyYield,
-      MCLevel: options.MCLevel
+      MCLevel: options.MCLevel,
+      equity: options.Equity
     });
   }
 
@@ -115,7 +116,9 @@ export class CreateInstanceService {
       totalProfit: options.TotalProfit,
       profitCalcQuote: options.ProfitCalcQuote,
       precisionPrice: options.PrecisionPrice,
-      precisionVolume: options.PrecisionVolume
+      precisionVolume: options.PrecisionVolume,
+      currentPrice: options.CurrentPrice,
+      type: options.Type
     });
   }
 

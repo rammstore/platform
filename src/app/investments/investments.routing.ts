@@ -9,13 +9,14 @@ import { InvestmentsDetailsDealsComponent } from './investments-details/investme
 
 const routes: Routes = [
   { path: '', component: InvestmentsComponent, children: [
-    { path: '', component: InvestmentsActiveComponent },
-    { path: 'closed', component: InvestmentsClosedComponent }
-  ] },
+      { path: '', component: InvestmentsActiveComponent },
+      { path: 'closed', component: InvestmentsClosedComponent }
+    ] },
   { path: 'details/:id', component: InvestmentsDetailsComponent, children: [
-    { path: '', component: InvestmentsDetailsPositionsComponent },
-    { path: 'deals', component: InvestmentsDetailsDealsComponent }
-  ] }
+      { path: 'positions', redirectTo: '' },
+      { path: '', component: InvestmentsDetailsPositionsComponent },
+      { path: 'deals', component: InvestmentsDetailsDealsComponent }
+    ] }
 ];
 
 @NgModule({

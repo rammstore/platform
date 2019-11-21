@@ -146,8 +146,8 @@
   </tbody>
 </table>
 
-<div class="empty-data" *ngIf="!data.length">
-  Нет данных для отображения
+<div class="empty-data" *ngIf="!data.length" translate>
+  {{emptyDataText}}
 </div>
 
 <div *ngIf="paginator" class="pagination-container">

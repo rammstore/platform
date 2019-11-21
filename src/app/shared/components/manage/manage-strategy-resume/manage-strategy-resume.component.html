@@ -58,7 +58,11 @@
                title="Коэффициент копирования. При соотношении более 1,0 копирование идет более агрессивно; увеличивается не только потенциальный доход, но и риск потери. Когда коэффициент меньше 1,0 - наоборот">
         <div class="messages">
           <label class="error-message"
-                 *ngIf="form.get('factor').touched && form.get('factor').hasError('incorrect')">
+                 *ngIf="form.get('factor').touched && form.get('factor').hasError('required')" translate>
+            Множитель не задан
+          </label>
+          <label class="error-message"
+                 *ngIf="form.get('factor').touched && form.get('factor').hasError('pattern')" translate>
             Пожалуйста, введите корректное значение множителя.
           </label>
           <label class="error-message"

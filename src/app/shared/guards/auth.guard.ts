@@ -21,7 +21,7 @@ export class AuthGuard implements CanActivate {
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     // check user logged in.
     // @TODO implement token check via service and API
-    if (!this.storageService.getAuthData() || !this.storageService.getToken()) {
+    if (!localStorage.getItem('auth') || !this.storageService.getToken()) {
       this.authService.redirectUrl = state.url;
       this.router.navigate(['/login']);
       return false;

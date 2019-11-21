@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, forkJoin, Observable, ReplaySubject } from "rxjs";
+import { BehaviorSubject, forkJoin, Observable, of, ReplaySubject } from "rxjs";
 import {
   Account,
   AccountsSearchOptions,
@@ -451,23 +451,45 @@ export class DataService {
   // Изменить профиль инвестиции
   changeAccountProfile(id: number, valueObj: {[key: string]: number}, strategyID: number): Observable<any> {
     this.loaderService.showLoader();
-    return forkJoin([
-      this.http.post(`${CONFIG.baseApiUrl}/accounts.setFactor`, {AccountID: id, Factor: valueObj['factor']}).pipe(
-        map((response: any) => {
-          this.updateAccount(id, new Command(response.CommandID, id), strategyID);
-        })
-      ),
-      this.http.post(`${CONFIG.baseApiUrl}/accounts.setProtection`, {AccountID: id, Protection: valueObj['protection']}).pipe(
-        map((response: any) => {
-          this.updateAccount(id, new Command(response.CommandID, id), strategyID);
-        })
-      ),
-      this.http.post(`${CONFIG.baseApiUrl}/accounts.setTarget`, {AccountID: id, Target: valueObj['target']}).pipe(
-        map((response: any) => {
-          this.updateAccount(id, new Command(response.CommandID, id), strategyID);
-        })
-      )
-    ]);
+
+    const requests: any[] = [];
+
+    if (valueObj.target) {
+      requests.push(
+        this.http.post(`${CONFIG.baseApiUrl}/accounts.setTarget`, {AccountID: id, Target: valueObj['target']}).pipe(
+          map((response: any) => {
+            this.updateAccount(id, new Command(response.CommandID, id), strategyID, 'Цель инвестиции изменена');
+          })
+        )
+      );
+    }
+
+    if (valueObj.protection) {
+      requests.push(
+        this.http.post(`${CONFIG.baseApiUrl}/accounts.setProtection`, {AccountID: id, Protection: valueObj['protection']}).pipe(
+          map((response: any) => {
+            this.updateAccount(id, new Command(response.CommandID, id), strategyID, 'Защита инвестиции изменена');
+          })
+        )
+      );
+    }
+
+    if (valueObj.factor) {
+      requests.push(
+        this.http.post(`${CONFIG.baseApiUrl}/accounts.setFactor`, {AccountID: id, Factor: valueObj['factor']}).pipe(
+          map((response: any) => {
+            this.updateAccount(id, new Command(response.CommandID, id), strategyID, 'Множитель цели изменен');
+          })
+        )
+      );
+    }
+
+    if (!requests.length) {
+      this.loaderService.hideLoader();
+      return of(null);
+    }
+
+    return forkJoin(requests);
   }
 
   // Вывести средства из инвестиции

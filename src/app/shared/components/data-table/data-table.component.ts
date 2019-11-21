@@ -15,6 +15,7 @@ export class DataTableComponent implements OnInit {
   coloredFields: string[] = ['yield', 'profit', 'totalProfit', 'intervalPnL', 'account.intervalPnL', 'amount', 'strategy.profit', 'monthlyYield'];
   @Input() paginator: Paginator;
   @Input() shouldHighlightMyStrategies: boolean = false;
+  @Input() emptyDataText: string = 'Нет данных для отображения';
   @Output() paginationChanged: EventEmitter<void> = new EventEmitter();
 
   constructor() { }

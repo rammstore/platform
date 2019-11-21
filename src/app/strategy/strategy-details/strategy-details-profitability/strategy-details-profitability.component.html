@@ -22,8 +22,8 @@
         <td>{{strategy.offer.fee | percent}}</td>
       </tr>
       <tr *ngIf="strategy.offer.commission">
-        <td translate>Комиссия за оборот</td>
-        <td>{{strategy.offer.commission * 1000000}} / 1 mln.</td>
+        <td><span>Комиссия за оборот</span>, USD</td>
+        <td>{{strategy.offer.commission * 1000000}} / 1 mln</td>
       </tr>
       <tr>
         <td translate>Возраст, недель</td>
@@ -31,8 +31,8 @@
       </tr>
       <tr>
         <td><span translate>Инвестиции</span>, USD</td>
-        <td *ngIf="strategy.account">{{strategy.account.equity | customCurrency}}</td>
-        <td *ngIf="!strategy.account">{{0 | customCurrency}}</td>
+        <td *ngIf="strategy.equity">{{strategy.equity | customCurrency}}</td>
+        <td *ngIf="!strategy.equity">{{0 | customCurrency}}</td>
       </tr>
       <tr>
         <td translate>Количество инвесторов</td>

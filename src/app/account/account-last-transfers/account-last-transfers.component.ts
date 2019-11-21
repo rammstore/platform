@@ -33,7 +33,7 @@ export class AccountLastTransfersComponent implements OnInit, OnDestroy {
       new TableColumn({ property: 'id', label: '#'}),
       new TableColumn({ property: 'accountID', label: 'Счет'}),
       new TableColumn({ property: 'dtCreated', label: 'Дата', pipe: { pipe: DatePipe, args: ['yyyy-MM-dd hh:mm:ss'] }}),
-      new TableColumn({ property: 'amount', label: 'Сумма', pipe: { pipe: CustomCurrencyPipe }}),
+      new TableColumn({ property: 'amount', label: 'Сумма, USD', pipe: { pipe: CustomCurrencyPipe }}),
       new TableColumn({ property: 'type', label: 'Тип'})
     ])
   ];

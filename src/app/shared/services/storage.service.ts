@@ -1,55 +1,52 @@
 import { Injectable } from '@angular/core';
-import { AuthData } from '@app/models/auth-data';
-import { User, Company, Session, Wallet } from '@app/models';
-import { CreateInstanceService } from '@app/services/create-instance.service';
+import { AuthData, User, Company, Session, Wallet } from '@app/models';
+import { Observable, ReplaySubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StorageService {
-  private storageName = 'sessionStorage';
+  authDataSubject: ReplaySubject<AuthData> = new ReplaySubject<AuthData>();
 
-  constructor(
-    private createInstanceService: CreateInstanceService
-  ) { }
+  constructor() { }
 
-  setAuthData(data: string): void {
-    window[this.storageName].setItem('auth', data);
+  setAuthData(data: AuthData): void {
+    this.authDataSubject.next(data);
+    localStorage.setItem('auth', JSON.stringify(data));
   }
 
-  getAuthData(): AuthData {
-    return JSON.parse(window[this.storageName].getItem('auth'));
+  getAuthData(): Observable<AuthData> {
+    return this.authDataSubject.asObservable();
   }
 
   removeAuthData(): void {
-    window[this.storageName].removeItem('auth');
+    this.authDataSubject.next(null);
+    localStorage.removeItem('auth');
   }
 
   setToken(data: string ): void {
-    window[this.storageName].setItem('token', data);
+    localStorage.setItem('token', data);
   }
 
   removeToken(): void {
-    window[this.storageName].removeItem('token');
+    localStorage.removeItem('token');
   }
 
   getToken(): string {
-    return window[this.storageName].getItem('token');
+    return localStorage.getItem('token');
   }
 
   getWallet(): Wallet {
-    return this.getAuthData().wallets[0];
+    return JSON.parse(localStorage.getItem('auth')).wallets[0];
   }
 
   getClient(): User {
-    return this.getAuthData().client;
+    return JSON.parse(localStorage.getItem('auth')).client;
+
   }
 
   getSession(): Session {
-    return this.getAuthData().session;
-  }
+    return JSON.parse(localStorage.getItem('auth')).session;
 
-  getCompany(): Company {
-    return this.getAuthData().company;
   }
 }
