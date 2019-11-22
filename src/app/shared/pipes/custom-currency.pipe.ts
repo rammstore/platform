@@ -7,20 +7,21 @@ import { TranslateService } from '@ngx-translate/core';
   name: 'customCurrency'
 })
 export class CustomCurrencyPipe implements PipeTransform {
-  locale: string;
 
   constructor(
     private storageService: StorageService,
     private translateService: TranslateService
-  ) {
-    this.locale = this.translateService.currentLang;
-  }
+  ) {}
 
   transform(value: number): string {
     if (!value) {
       value = 0;
     }
 
-    return formatCurrency(value, this.locale, '', '', '1.2-2');
+    // console.log(formatCurrency(value, this.translateService.currentLang, '', 'USD', '1.2-2'));
+
+    // return value;
+
+    return formatCurrency(value, this.translateService.currentLang, '', 'USD', '1.2-2');
   }
 }

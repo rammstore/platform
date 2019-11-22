@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { LoaderService } from '@app/services/loader.service';
 import { CreateInstanceService } from '@app/services/create-instance.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,8 @@ export class AuthService {
     private storageService: StorageService,
     private router: Router,
     private loaderService: LoaderService,
-    private createInstanceService: CreateInstanceService
+    private createInstanceService: CreateInstanceService,
+    private translateService: TranslateService
     ) { }
 
   login(login: string, password: string): Observable<AuthData> {
@@ -46,6 +48,11 @@ export class AuthService {
         session: session,
         wallets: wallets
       });
+
+      if (!window.localStorage.getItem('language')) {
+        this.translateService.setDefaultLang(authData.client.language);
+        this.translateService.use(authData.client.language);
+      }
 
       this.storageService.setAuthData(authData);
       this.storageService.setToken(authData.session.token);
