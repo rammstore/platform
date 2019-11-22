@@ -23,6 +23,6 @@ export class CustomCurrencyPipe implements PipeTransform {
       lang = 'ru';
     }
 
-    return formatCurrency(value, lang, '', 'USD', '1.2-2');
+    return formatCurrency(value, 'ru', '', 'USD', '1.2-2');
   }
 }
