@@ -18,10 +18,11 @@ export class CustomCurrencyPipe implements PipeTransform {
       value = 0;
     }
 
-    // console.log(formatCurrency(value, this.translateService.currentLang, '', 'USD', '1.2-2'));
+    const lang: string;
+    if (!this.translateService.currentLang) {
+      lang = 'ru';
+    }
 
-    // return value;
-
-    return formatCurrency(value, this.translateService.currentLang, '', 'USD', '1.2-2');
+    return formatCurrency(value, lang, '', 'USD', '1.2-2');
   }
 }
