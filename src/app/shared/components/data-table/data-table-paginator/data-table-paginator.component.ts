@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { Paginator } from '@app/models';
 
 @Component({
@@ -8,6 +8,7 @@ import { Paginator } from '@app/models';
 })
 export class DataTablePaginatorComponent {
   @Input() paginator: Paginator;
+  @ViewChild('perPageInput', {static: false}) perPageInput;
   @Output() paginationChanged: EventEmitter<void> = new EventEmitter();
 
   getPages(): Array<string | number> {
@@ -63,8 +64,10 @@ export class DataTablePaginatorComponent {
       perPage = 100;
     }
 
+
     this.paginator.currentPage = 1;
     this.paginator.perPage = perPage;
+    this.perPageInput.nativeElement.value = perPage;
     this.paginationChanged.emit();
   }
 

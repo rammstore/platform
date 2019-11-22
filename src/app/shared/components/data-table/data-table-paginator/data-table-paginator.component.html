@@ -3,6 +3,7 @@
     <div class="per-page-container" translate>
       {{'Показывать на странице' | translate}}:
       <input type="number"
+             #perPageInput
              [value]="paginator.perPage"
              [min]="1"
              [max]="100"
