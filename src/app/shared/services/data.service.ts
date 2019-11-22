@@ -478,7 +478,7 @@ export class DataService {
       requests.push(
         this.http.post(`${CONFIG.baseApiUrl}/accounts.setFactor`, {AccountID: id, Factor: valueObj['factor']}).pipe(
           map((response: any) => {
-            this.updateAccount(id, new Command(response.CommandID, id), strategyID, 'Множитель цели изменен');
+            this.updateAccount(id, new Command(response.CommandID, id), strategyID, 'Множитель инвестиции изменен');
           })
         )
       );

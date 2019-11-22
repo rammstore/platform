@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NotificationsComponent } from './notifications.component';
 import { AlertModule } from 'ngx-bootstrap';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 
@@ -12,7 +13,8 @@ import { AlertModule } from 'ngx-bootstrap';
   ],
   imports: [
     CommonModule,
-    AlertModule.forRoot()
+    AlertModule.forRoot(),
+    TranslateModule
   ]
 })
 export class NotificationsModule { }

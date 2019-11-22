@@ -380,5 +380,23 @@
   "Шаг 2: Параметры инвестиции": "Step 2: Investment settings",
   "Данное имя стратегии уже используется. Пожалуйста, введите другое имя.": "This strategy name is already employed. Please enter other name.",
 
-  "Сигнальный скрипт": "Signal script"
+  "Сигнальный скрипт": "Signal script",
+  "У вас нет доступа к данной инвестиции": "You do not have access to this investment",
+  "У вас нет доступа к данной стратегии": "You do not have access to this strategy",
+  "Стратегия создана": "The strategy created",
+  "Стратегия поставлена на паузу": "The strategy paused",
+  "Стратегия возобновлена": "The strategy resumed",
+  "Стратегия закрыта": "The strategy closed",
+  "Инвестиция создана": "The investment created",
+  "Средства зачислены": "Funds deposited",
+  "Инвестиция поставлена на паузу": "The investment paused",
+  "Инвестиция снята с паузы": "The investment resumed",
+  "Цель инвестиции изменена": "Investment target is changed",
+  "Защита инвестиции изменена": "Investment protection is changed",
+  "Множитель инвестиции изменен": "Investment factor is changed",
+  "Средства выведены": "Funds withdrawn",
+  "Инвестиция закрыта": "The investment closed",
+
+  "Вы подтверждаете закрытие своей стратегии?": "Do you confirm closing your strategy?",
+  "Если Вы инвестировали в свою стратегию, то при ее закрытии Ваш инвестиционный счет также будет закрыт. Обратите внимание, что это необратимое действие.": "If you had invested into your own strategy your investment account would also be closed. Please note that this action is irreversible."
 }
