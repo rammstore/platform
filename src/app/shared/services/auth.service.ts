@@ -52,6 +52,7 @@ export class AuthService {
       if (!window.localStorage.getItem('language')) {
         this.translateService.setDefaultLang(authData.client.language);
         this.translateService.use(authData.client.language);
+        localStorage.setItem('language', authData.client.language);
       }
 
       this.storageService.setAuthData(authData);
