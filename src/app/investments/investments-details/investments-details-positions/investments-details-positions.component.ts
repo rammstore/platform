@@ -52,11 +52,11 @@ export class InvestmentsDetailsPositionsComponent implements OnInit, OnDestroy {
         this.id = params['id'];
         this.getPositions();
 
-        this.dataService.getAccountStatement(this.id)
-          .pipe(takeUntil(this.destroy$))
-          .subscribe((response: any) => {
-            this.account = response.account;
-          });
+        // this.dataService.getAccountStatement(this.id)
+        //   .pipe(takeUntil(this.destroy$))
+        //   .subscribe((response: any) => {
+        //     this.account = response.account;
+        //   });
       });
   }
 
