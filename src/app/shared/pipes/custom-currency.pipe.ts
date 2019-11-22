@@ -18,7 +18,7 @@ export class CustomCurrencyPipe implements PipeTransform {
       value = 0;
     }
 
-    const lang: string;
+    let lang: string;
     if (!this.translateService.currentLang) {
       lang = 'ru';
     }
