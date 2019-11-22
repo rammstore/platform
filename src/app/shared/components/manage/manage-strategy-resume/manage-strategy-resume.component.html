@@ -67,11 +67,11 @@
           </label>
           <label class="error-message"
                  *ngIf="form.get('factor').touched && form.get('factor').hasError('min')">
-            Максимальное значение множителя - -1000.
+            <span translate>Максимальное значение множителя</span> - 0.1.
           </label>
           <label class="error-message"
                  *ngIf="form.get('factor').touched && form.get('factor').hasError('max')">
-            Максимальное значение множителя - 1000.
+            <span translate>Максимальное значение множителя</span> - 10.
           </label>
         </div>
       </div>

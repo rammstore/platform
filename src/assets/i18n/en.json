@@ -395,5 +395,8 @@
   "Защита инвестиции изменена": "Investment protection is changed",
   "Множитель инвестиции изменен": "Investment factor is changed",
   "Средства выведены": "Funds withdrawn",
-  "Инвестиция закрыта": "The investment closed"
+  "Инвестиция закрыта": "The investment closed",
+
+  "Вы подтверждаете закрытие своей стратегии?": "Do you confirm closing your strategy?",
+  "Если Вы инвестировали в свою стратегию, то при ее закрытии Ваш инвестиционный счет также будет закрыт. Обратите внимание, что это необратимое действие.": "If you had invested into your own strategy your investment account would also be closed. Please note that this action is irreversible."
 }
