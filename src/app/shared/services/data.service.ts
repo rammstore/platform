@@ -141,7 +141,7 @@ export class DataService {
       this.currentStrategyDetailsSubject.next(this.createInstanceService.createStrategy(response.Strategy));
     }, (error: HttpErrorResponse) => {
       if (error.status === 404) {
-        this.router.navigate(['/strategies']);
+        this.router.navigate(['/rating']);
         this.notificationsService.open('У вас нет доступа к данной стратегии', {type: 'error', autoClose: true, duration: 3000});
       }
     });
