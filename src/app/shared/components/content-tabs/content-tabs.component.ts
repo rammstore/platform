@@ -15,10 +15,6 @@ export class ContentTabsComponent {
   ) {}
 
   isLinkActive(url: string, link?: ContentTabLink): boolean {
-    console.log(url);
-    console.log(this.router.url);
-    console.log(this.links);
-    console.log('-------------');
     let result: boolean = false;
 
     if (this.isStrategyInvestmentsClosedCheck(url, link)) {
