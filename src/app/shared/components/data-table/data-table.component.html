@@ -29,6 +29,10 @@
               <a class="detail-link" [routerLink]="[getItemLink(item)]">{{item.name}}</a>
             </ng-container>
 
+            <ng-container *ngSwitchCase="'accountID'">
+              <a class="detail-link" [routerLink]="['/investments/details', item.accountID]">{{item.accountID}}</a>
+            </ng-container>
+
             <ng-container *ngSwitchCase="'nameRating'">
               <a class="detail-link" [routerLink]="[getItemLink(item)]">{{item.name}}</a>
               <div class="symbols">{{item.symbols}}</div>
