@@ -338,6 +338,7 @@
   "Название стратегии": "Strategy name",
   "Введите название стратегии": "Please enter the strategy name",
   "Название стратегии может быть изменено только в течение первых 1 недель.": "Name can be changed only during the first 1 weeks.",
+  "Название стратегии может содержать только латинские буквы, цифры, пробелы и основные знаки препинания.": "Strategy name can contain only latin letters, digits, spaces and basic punctuation marks.",
   "Минимальный размер вознаграждения": "Minimal fee rate is",
   "Максимальный размер вознаграждения": "Maximal fee rate is",
   "Изменение вознаграждения после создания стратегии невозможно.": "It won't be possible to change the fee rate later.",
