@@ -7,7 +7,7 @@ import {
   PopoverModule,
   TooltipModule
 } from 'ngx-bootstrap';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ContentTabsComponent } from './components/content-tabs/content-tabs.component';
 import { RouterModule } from '@angular/router';
 import { SpecificationInfoBlockComponent } from './components/specification-info-block/specification-info-block.component';
@@ -43,7 +43,8 @@ import { NotificationsModule } from '@app/components/notifications/notifications
     PipesModule,
     DataTableModule,
     ChartModule,
-    NotificationsModule
+    NotificationsModule,
+    FormsModule
   ],
   exports: [
     CommonModule,
@@ -65,7 +66,8 @@ import { NotificationsModule } from '@app/components/notifications/notifications
     PipesModule,
     DataTableModule,
     ChartModule,
-    NotificationsModule
+    NotificationsModule,
+    FormsModule
   ]
 })
 export class SharedModule { }

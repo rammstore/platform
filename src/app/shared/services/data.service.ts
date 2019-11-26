@@ -609,13 +609,16 @@ export class DataService {
   //
   // Методы ддля работы с рейтингом
   //
-
-  getRating(ratingType: 0 | 1 | 2, pagination?: Paginator): Observable<Strategy[]> {
+  getRating(ratingType: 0 | 1 | 2, pagination?: Paginator, searchText?: string): Observable<Strategy[]> {
     this.loaderService.showLoader();
     const options: RatingSearchOptions = new RatingSearchOptions();
     options.Filter = {
       RatingType: ratingType,
     };
+
+    if (searchText) {
+      options.Filter.StrategyName = searchText;
+    }
 
     if (pagination) {
       options.Pagination = {
