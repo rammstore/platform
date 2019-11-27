@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpParams, HttpRequest } from '@angular/common/http';
+import { HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { AuthService } from '@app/services/auth.service';
 import { Observable } from 'rxjs/index';
 import { CONFIG } from '../../../config';
@@ -9,7 +9,7 @@ export class TokenInterceptor implements HttpInterceptor {
   constructor(public authService: AuthService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (request.url === `${CONFIG.baseApiUrl}/session.login`) {
+    if (request.url === `${CONFIG.baseApiUrl}/session.login` || request.url.startsWith('/assets/i18n')) {
       return next.handle(request);
     }
 

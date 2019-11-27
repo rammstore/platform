@@ -44,7 +44,9 @@ export class StorageService {
   }
 
   getClient(): Observable<User> {
-    this.userSubject.next(JSON.parse(localStorage.getItem('auth')).client);
+    if (JSON.parse(localStorage.getItem('auth'))) {
+      this.userSubject.next(JSON.parse(localStorage.getItem('auth')).client);
+    }
 
     return this.userSubject.asObservable();
   }
