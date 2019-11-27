@@ -402,6 +402,11 @@
 
   "Вход в систему": "Log In",
   "Ваш логин или почта": "Your login or email",
+  "Ваш пароль": "Your password",
+  "Вход": "Log In",
+  "Пожалуйста, введите ваш логин или почту.": "Please enter your login or email.",
+  "Пожалуйста, введите ваш пароль.": "Please enter your password",
+  "Вы ввели неправильное имя пользователя или пароль.": "Username or password is incorrect.",
 
   "Вы подтверждаете закрытие своей стратегии?": "Do you confirm closing your strategy?",
   "Если Вы инвестировали в свою стратегию, то при ее закрытии Ваш инвестиционный счет также будет закрыт. Обратите внимание, что это необратимое действие.": "If you had invested into your own strategy your investment account would also be closed. Please note that this action is irreversible."
