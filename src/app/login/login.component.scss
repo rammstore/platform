@@ -1,5 +1,50 @@
 @import "styles";
 
+.language-dropdown {
+  position: fixed;
+  top: 40px;
+  right: 40px;
+
+  .toggle-lang {
+    min-width: 40px;
+    height: 40px;
+    background-color: white;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+
+    i {
+      margin-right: 10px;
+    }
+  }
+
+  ul#dropdown-lang-login {
+    left: auto;
+    right: 0;
+    min-width: 0;
+    padding: 0;
+    border-radius: 10px;
+
+    li.menuitem {
+      display: flex;
+      align-items: center;
+      padding: 6px;
+      border-bottom: 1px solid $border-color;
+      cursor: pointer;
+
+      &:last-child {
+        border: none;
+      }
+
+      i {
+        margin-right: 10px;
+        width: 23px;
+        height: 23px;
+      }
+    }
+  }
+}
+
 .background {
   position: fixed;
   top: 0;

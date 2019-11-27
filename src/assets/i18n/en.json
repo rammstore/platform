@@ -400,6 +400,9 @@
   "Средства выведены": "Funds withdrawn",
   "Инвестиция закрыта": "The investment closed",
 
+  "Вход в систему": "Log In",
+  "Ваш логин или почта": "Your login or email",
+
   "Вы подтверждаете закрытие своей стратегии?": "Do you confirm closing your strategy?",
   "Если Вы инвестировали в свою стратегию, то при ее закрытии Ваш инвестиционный счет также будет закрыт. Обратите внимание, что это необратимое действие.": "If you had invested into your own strategy your investment account would also be closed. Please note that this action is irreversible."
 }

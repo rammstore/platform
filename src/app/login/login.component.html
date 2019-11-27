@@ -1,31 +1,44 @@
 <div class="background">
   <div class="overlay">
+
+    <div class="btn-group language-dropdown" dropdown placement="left">
+      <button dropdownToggle class="toggle-lang">
+        <i class="icon-flag {{language}} current-lang"></i>
+        {{language}}
+      </button>
+
+      <ul id="dropdown-lang-login" *dropdownMenu class="dropdown-menu">
+        <li class="menuitem" (click)="setLanguage('en')"><i class="icon-flag en"></i>EN</li>
+        <li class="menuitem" (click)="setLanguage('ru')"><i class="icon-flag ru"></i>RU</li>
+      </ul>
+    </div>
+
     <div class="content-container">
       <div class="content">
-        <h1>Вход в систему</h1>
+        <h1 translate>Вход в систему</h1>
 
         <form [formGroup]="form" (ngSubmit)="submit()">
           <div class="field">
-            <label>Ваш логин или почта</label>
+            <label translate>Ваш логин или почта</label>
             <input type="text" formControlName="login">
-            <label *ngIf="form.get('login').touched && form.get('login').hasError('required')" class="error">
+            <label *ngIf="form.get('login').touched && form.get('login').hasError('required')" class="error" translate>
               Пожалуйста, введите ваш логин или почту.
             </label>
           </div>
 
           <div class="field">
-            <label>Ваш пароль</label>
+            <label translate>Ваш пароль</label>
             <input type="password" formControlName="password">
-            <label *ngIf="form.get('password').touched && form.get('password').hasError('required')" class="error">
+            <label *ngIf="form.get('password').touched && form.get('password').hasError('required')" class="error" translate>
               Пожалуйста, введите ваш пароль.
             </label>
           </div>
 
-          <div class="error-message" *ngIf="isWrongCredentials">
+          <div class="error-message" *ngIf="isWrongCredentials" translate>
             Вы ввели неправильное имя пользователя или пароль.
           </div>
 
-          <button type="submit">Вход</button>
+          <button type="submit" translate>Вход</button>
         </form>
 
         <div class="links">
