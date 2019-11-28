@@ -75,7 +75,7 @@
   </tr>
   <tr>
     <td translate>Уровень маржи</td>
-    <td *ngIf="account" [class.positive]="account.marginLevel >= 1" [class.negative]="account.marginLevel < 1">{{account.marginLevel || 0}}</td>
+    <td *ngIf="account" [class.positive]="account.marginLevel >= 1" [class.negative]="account.marginLevel < 1">{{account.marginLevel || '−'}}</td>
   </tr>
   </tbody>
 </table>

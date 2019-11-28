@@ -30,7 +30,6 @@ export class InvestmentsDetailsComponent implements OnInit, OnDestroy {
       this.strategy = response.strategy;
       this.account = response.account;
       this.account.strategy = response.strategy;
-      console.log(this.account);
 
       this.links = [
         new ContentTabLink('Позиции', '/investments/details/' + this.account.id),
