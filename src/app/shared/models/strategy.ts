@@ -39,6 +39,10 @@ export class Strategy {
     const now: number = new Date().getTime();
     const created: number = new Date(this.dtCreated).getTime();
 
+    if (this.ageByDays === 0) {
+      return 0;
+    }
+
     if (this.ageByDays) {
       return Math.floor(this.ageByDays / 7);
     }
