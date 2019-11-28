@@ -1,8 +1,8 @@
-<app-dialog-wrapper titleText="Инвестировать в стратегию" [modalRef]="modalRef">
+<app-dialog-wrapper titleText="{{'Инвестировать в стратегию' | translate}}" [modalRef]="modalRef">
   <form [formGroup]="form">
 
     <div class="form-field">
-      <label for="amount" class="field-label">Сумма инвестиции, USD:</label>
+      <label for="amount" class="field-label"><span translate>Сумма инвестиции</span>, USD:</label>
       <div class="input-wrapper">
         <input id="amount"
                type="number"
@@ -11,70 +11,70 @@
                [max]="wallet.balance">
         <div class="messages">
           <label class="error-message"
-                 *ngIf="form.get('amount').touched && form.get('amount').hasError('required')">
+                 *ngIf="form.get('amount').touched && form.get('amount').hasError('required')" translate>
             Пожалуйста, введите сумму инвестиции.
           </label>
           <label class="error-message"
-                 *ngIf="form.get('amount').touched && form.get('amount').hasError('min')">
+                 *ngIf="form.get('amount').touched && form.get('amount').hasError('min')" translate>
             Пожалуйста, введите корректную сумму инвестиции.
           </label>
           <label class="error-message"
-                 *ngIf="form.get('amount').touched && form.get('amount').hasError('max')">
+                 *ngIf="form.get('amount').touched && form.get('amount').hasError('max')" translate>
             Вы можете инвестировать только свободные средства.
           </label>
           <label class="error-message"
-                 *ngIf="form.get('amount').touched && form.get('amount').hasError('pattern')">
+                 *ngIf="form.get('amount').touched && form.get('amount').hasError('pattern')" translate>
             Пожалуйста, введите корректную сумму вывода.
           </label>
           <label class="details-message">
-            Доступно: <span class="available-clickable" (click)="setAllMoney()">{{wallet.getAvailableMoney() | customCurrency}}</span>
+            <span translate>Доступно</span>: <span class="available-clickable" (click)="setAllMoney()">{{wallet.getAvailableMoney() | customCurrency}}</span>
           </label>
         </div>
       </div>
     </div>
 
     <div class="form-field">
-      <label for="factor" class="field-label">Множитель:</label>
+      <label for="factor" class="field-label"><span translate>Множитель</span>:</label>
       <div class="input-wrapper">
         <input id="factor"
                type="number"
                formControlName="factor"
                [min]="-1000"
                [max]="1000"
-               title="Коэффициент копирования. При соотношении более 1,0 копирование идет более агрессивно; увеличивается не только потенциальный доход, но и риск потери. Когда коэффициент меньше 1,0 - наоборот">
+               title="{{'Коэффициент копирования. При соотношении более 1,0 копирование идет более агрессивно; увеличивается не только потенциальный доход, но и риск потери. Когда коэффициент меньше 1,0 - наоборот' | translate}}">
         <div class="messages">
           <label class="error-message"
-                 *ngIf="form.get('factor').touched && form.get('factor').hasError('incorrect')">
+                 *ngIf="form.get('factor').touched && form.get('factor').hasError('incorrect')" translate>
             Пожалуйста, введите корректное значение множителя.
           </label>
           <label class="error-message"
                  *ngIf="form.get('factor').touched && form.get('factor').hasError('min')">
-            Максимальное значение множителя - -1000.
+            <span translate>Максимальное значение множителя</span> - 0.1.
           </label>
           <label class="error-message"
                  *ngIf="form.get('factor').touched && form.get('factor').hasError('max')">
-            Максимальное значение множителя - 1000.
+            <span translate>Максимальное значение множителя</span> - 10.
           </label>
         </div>
       </div>
     </div>
 
     <div class="form-field">
-      <label for="target" class="field-label">Цель, %:</label>
+      <label for="target" class="field-label"><span translate>Цель</span>, %:</label>
       <div class="input-wrapper">
         <input id="target"
                type="number"
                formControlName="target"
                [min]="0"
                [max]="100"
-               title="Целевой доход. При достижении целевого дохода инвестиция будет приостановлена">
+               title="{{'Целевой доход. При достижении целевого дохода инвестиция будет приостановлена' | translate}}">
         <div class="messages">
           <label class="error-message"
-                 *ngIf="form.get('target').touched && form.get('target').hasError('required')">
+                 *ngIf="form.get('target').touched && form.get('target').hasError('required')" translate>
             Цель не задана
           </label>
           <label class="error-message"
-                 *ngIf="form.get('target').touched && form.get('target').hasError('min')">
+                 *ngIf="form.get('target').touched && form.get('target').hasError('min')" translate>
             Пожалуйста, введите корректное значение цели.
           </label>
           <label class="details-message" *ngIf="form.get('amount').value && form.get('target').value">
@@ -85,25 +85,25 @@
     </div>
 
     <div class="form-field">
-      <label for="protection" class="field-label">Защита, %:</label>
+      <label for="protection" class="field-label"><span translate>Защита</span>, %:</label>
       <div class="input-wrapper">
         <input id="protection"
                type="number"
                formControlName="protection"
                [min]="0"
                [max]="100"
-               title="При снижении средств до заданного значения инвестиция будет приостановлена">
+               title="{{'При снижении средств до заданного значения инвестиция будет приостановлена' | translate}}">
         <div class="messages">
           <label class="error-message"
-                 *ngIf="form.get('protection').touched && form.get('protection').hasError('required')">
+                 *ngIf="form.get('protection').touched && form.get('protection').hasError('required')" translate>
             Защита не задана
           </label>
           <label class="error-message"
-                 *ngIf="form.get('protection').touched && form.get('protection').hasError('min')">
+                 *ngIf="form.get('protection').touched && form.get('protection').hasError('min')" translate>
             Пожалуйста, введите корректное значение защиты.
           </label>
           <label class="error-message"
-                 *ngIf="form.get('amount').touched && form.get('amount').hasError('max')">
+                 *ngIf="form.get('amount').touched && form.get('amount').hasError('max')" translate>
             Пожалуйста, введите корректное значение защиты.
           </label>
           <label class="details-message" *ngIf="form.get('amount').value && form.get('protection').value">
@@ -117,7 +117,7 @@
       <button class="primary"
               [disabled]="!form.valid"
               (click)="invest()">
-        Инвестировать {{form.valid ? '(' + (form.get('amount').value | customCurrency) + ')' : ''}}
+        <span translate>Инвестировать</span> {{form.valid ? '(' + (form.get('amount').value | customCurrency) + ')' : ''}}
       </button>
     </div>
   </form>
