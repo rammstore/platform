@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { TableHeaderRow } from '@app/models/table-header-row';
-import { Account, Paginator, Position, TableColumn } from '@app/models';
+import { Account, Deal, Paginator, Position, TableColumn } from '@app/models';
 import { ActivatedRoute } from '@angular/router';
 import { takeUntil } from 'rxjs/internal/operators';
 import { DataService } from '@app/services/data.service';
@@ -64,6 +64,12 @@ export class InvestmentsDetailsPositionsComponent implements OnInit, OnDestroy {
     this.dataService.getAccountPositions(this.route.parent.params['_value'].id, this.paginator)
       .pipe(takeUntil(this.destroy$))
       .subscribe((positions: Position[]) => {
+        positions.forEach((position: Position) => {
+          if (position.volume) {
+            position.volume = Math.abs(position.volume);
+          }
+        });
+
         this.positions = positions;
       });
   }
