@@ -40,10 +40,10 @@ export class Strategy {
     const created: number = new Date(this.dtCreated).getTime();
 
     if (this.ageByDays) {
-      return Math.round(this.ageByDays / 7);
+      return Math.floor(this.ageByDays / 7);
     }
 
-    return Math.round((now - created) / (1000 * 3600 * 24 * 7));
+    return Math.floor((now - created) / (1000 * 3600 * 24 * 7));
   }
 
   isSecured(): boolean {
@@ -55,7 +55,7 @@ export class Strategy {
   }
 
   getColorClass(property: string): string {
-    if (this[property] === 0) {
+    if (this[property] === 0 || !this[property]) {
       return '';
     }
 

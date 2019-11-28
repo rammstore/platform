@@ -44,7 +44,7 @@ export class CreateInstanceService {
       equity: options.Equity,
       margin: options.Margin,
       marginLevel: options.MarginLevel,
-      intervalPnL: options.IntervalPnL || options.ProfitCurrentIntervalGross,
+      intervalPnL: options.IntervalPnL || options.ProfitCurrentIntervalGross || options.ProfitCurrentIntervalNet,
       status: options.Status,
       factor: options.Factor,
       dtMCReached: options.MCReached,
