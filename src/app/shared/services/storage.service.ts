@@ -1,17 +1,20 @@
 import { Injectable } from '@angular/core';
 import { AuthData, User, Company, Session, Wallet } from '@app/models';
-import { Observable, ReplaySubject } from 'rxjs';
+import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StorageService {
   authDataSubject: ReplaySubject<AuthData> = new ReplaySubject<AuthData>();
+  userSubject: BehaviorSubject<User> = new BehaviorSubject<User>(null);
 
-  constructor() { }
+  constructor() {
+  }
 
   setAuthData(data: AuthData): void {
     this.authDataSubject.next(data);
+    console.log('login');
     localStorage.setItem('auth', JSON.stringify(data));
   }
 
@@ -40,9 +43,12 @@ export class StorageService {
     return JSON.parse(localStorage.getItem('auth')).wallets[0];
   }
 
-  getClient(): User {
-    return JSON.parse(localStorage.getItem('auth')).client;
+  getClient(): Observable<User> {
+    if (JSON.parse(localStorage.getItem('auth'))) {
+      this.userSubject.next(JSON.parse(localStorage.getItem('auth')).client);
+    }
 
+    return this.userSubject.asObservable();
   }
 
   getSession(): Session {

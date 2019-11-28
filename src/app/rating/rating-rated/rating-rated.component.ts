@@ -19,6 +19,7 @@ export class RatingRatedComponent implements OnInit, OnDestroy {
 
   // component data
   strategies: Strategy[];
+  searchText: string = '';
 
   // table settings
   tableHeader: TableHeaderRow[] = [
@@ -46,7 +47,7 @@ export class RatingRatedComponent implements OnInit, OnDestroy {
   }
 
   getRating(): void {
-    this.dataService.getRating(0, this.paginator)
+    this.dataService.getRating(0, this.paginator, this.searchText)
       .pipe(takeUntil(this.destroy$))
       .subscribe((strategies: Strategy[]) => {
         this.strategies = strategies;

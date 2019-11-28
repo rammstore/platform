@@ -141,7 +141,7 @@ export class DataService {
       this.currentStrategyDetailsSubject.next(this.createInstanceService.createStrategy(response.Strategy));
     }, (error: HttpErrorResponse) => {
       if (error.status === 404) {
-        this.router.navigate(['/strategies']);
+        this.router.navigate(['/rating']);
         this.notificationsService.open('У вас нет доступа к данной стратегии', {type: 'error', autoClose: true, duration: 3000});
       }
     });
@@ -609,13 +609,16 @@ export class DataService {
   //
   // Методы ддля работы с рейтингом
   //
-
-  getRating(ratingType: 0 | 1 | 2, pagination?: Paginator): Observable<Strategy[]> {
+  getRating(ratingType: 0 | 1 | 2, pagination?: Paginator, searchText?: string): Observable<Strategy[]> {
     this.loaderService.showLoader();
     const options: RatingSearchOptions = new RatingSearchOptions();
     options.Filter = {
       RatingType: ratingType,
     };
+
+    if (searchText) {
+      options.Filter.StrategyName = searchText;
+    }
 
     if (pagination) {
       options.Pagination = {

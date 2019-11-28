@@ -50,7 +50,9 @@ export class MainHeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.client = this.storageService.getClient();
+    this.storageService.getClient().subscribe((client: User) => {
+      this.client = client;
+    });
 
     this.walletService.getWallet()
       .pipe(takeUntil(this.destroy$))

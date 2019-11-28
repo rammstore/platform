@@ -15,12 +15,16 @@ export class AppComponent implements AfterViewChecked, OnInit {
     private cdRef: ChangeDetectorRef,
     private loaderService: LoaderService,
     private translateService: TranslateService
-  ) {}
+  ) {
+    this.translateService.addLangs(['ru', 'en']);
+    this.translateService.setDefaultLang('ru');
+  }
 
   ngOnInit(): void {
-    if (window.localStorage.getItem('language')) {
-      this.translateService.setDefaultLang(window.localStorage.getItem('language'));
-      this.translateService.use(window.localStorage.getItem('language'));
+    if (localStorage.getItem('language')) {
+      this.translateService.use(localStorage.getItem('language'));
+    } else {
+      this.translateService.use('ru');
     }
   }
 

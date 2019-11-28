@@ -29,6 +29,10 @@
               <a class="detail-link" [routerLink]="[getItemLink(item)]">{{item.name}}</a>
             </ng-container>
 
+            <ng-container *ngSwitchCase="'accountID'">
+              <a class="detail-link" [routerLink]="['/investments/details', item.accountID]">{{item.accountID}}</a>
+            </ng-container>
+
             <ng-container *ngSwitchCase="'nameRating'">
               <a class="detail-link" [routerLink]="[getItemLink(item)]">{{item.name}}</a>
               <div class="symbols">{{item.symbols}}</div>
@@ -65,7 +69,7 @@
               <ng-container class="investmentInfo" *ngIf="item.account">
                 <div class="strategy-account-intervalPnL">
                   <span><span translate>Прибыль</span>:</span>
-                  <span class="{{item.getColorClass('intervalPnL')}}">
+                  <span [class.positive]="item.account.intervalPnL > 0" [class.negative]="item.account.intervalPnL < 0">
                   {{item.account.intervalPnL | customCurrency}}
                 </span>
                 </div>
@@ -132,9 +136,14 @@
         <td class="total-cell" *ngIf="i === 0" translate>Всего</td>
         <ng-container *ngIf="isTotal(column.property) && i > 0">
           <td class="total-cell"
+              *ngIf="column.property !== 'accountsCount'"
               [class.positive]="getTotal(column.property) > 0 && isColored(column.property)"
               [class.negative]="getTotal(column.property) < 0 && isColored(column.property)">
-            {{getTotal(column.property) | number:'1.0-2'}}
+            {{getTotal(column.property) | number:'1.2-2'}}
+          </td>
+          <td class="total-cell"
+              *ngIf="column.property === 'accountsCount'">
+            {{getTotal(column.property)}}
           </td>
         </ng-container>
         <ng-container *ngIf="!isTotal(column.property) && i > 0">

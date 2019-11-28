@@ -5,6 +5,7 @@ import { AuthService } from '@app/services/auth.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
 import { HttpErrorResponse } from '@angular/common/http';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login',
@@ -20,14 +21,17 @@ export class LoginComponent implements OnInit, OnDestroy {
   form: FormGroup;
   isWrongCredentials: boolean = false;
   redirectUrl: string[] = ['/account'];
+  language: string;
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private translateService: TranslateService
   ) { }
 
   ngOnInit(): void {
+    this.language = this.translateService.currentLang;
     this.buildForm();
   }
 
@@ -58,6 +62,12 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.isWrongCredentials = true;
         }
       });
+  }
+
+  setLanguage(lang: string) {
+    this.translateService.use(lang);
+    this.language = lang;
+    localStorage.setItem('language', lang);
   }
 
   ngOnDestroy(): void {
