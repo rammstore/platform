@@ -135,6 +135,12 @@
     width: 40px;
     min-width: 40px;
 
+    &:hover {
+      i {
+        color: $positive-color;
+      }
+    }
+
     i {
       color: white;
       font-size: 16px;
