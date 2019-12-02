@@ -80,6 +80,10 @@
           <label class="details-message" *ngIf="form.get('amount').value && form.get('target').value">
             {{((form.get('amount').value * form.get('target').value) / 100) | customCurrency}}
           </label>
+          <label class="error-message"
+                 *ngIf="form.get('target').touched && form.get('target').hasError('pattern')" translate>
+            Пожалуйста, введите корректное значение цели.
+          </label>
         </div>
       </div>
     </div>
@@ -104,6 +108,10 @@
           </label>
           <label class="error-message"
                  *ngIf="form.get('amount').touched && form.get('amount').hasError('max')" translate>
+            Пожалуйста, введите корректное значение защиты.
+          </label>
+          <label class="error-message"
+                 *ngIf="form.get('protection').touched && form.get('protection').hasError('pattern')" translate>
             Пожалуйста, введите корректное значение защиты.
           </label>
           <label class="details-message" *ngIf="form.get('amount').value && form.get('protection').value">

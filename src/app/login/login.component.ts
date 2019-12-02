@@ -68,6 +68,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.translateService.use(lang);
     this.language = lang;
     localStorage.setItem('language', lang);
+    location.reload();
   }
 
   ngOnDestroy(): void {

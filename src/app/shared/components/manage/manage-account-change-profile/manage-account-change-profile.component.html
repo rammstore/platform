@@ -46,6 +46,10 @@
             Цель не задана
           </label>
           <label class="error-message"
+                 *ngIf="form.get('target').touched && form.get('target').hasError('pattern')" translate>
+            Пожалуйста, введите корректное значение защиты.
+          </label>
+          <label class="error-message"
                  *ngIf="form.get('target').touched && form.get('target').hasError('min')" translate>
             Пожалуйста, введите корректное значение цели.
           </label>
@@ -69,6 +73,10 @@
           </label>
           <label class="error-message"
                  *ngIf="form.get('protection').touched && form.get('protection').hasError('min')" translate>
+            Пожалуйста, введите корректное значение защиты.
+          </label>
+          <label class="error-message"
+                 *ngIf="form.get('protection').touched && form.get('protection').hasError('pattern')" translate>
             Пожалуйста, введите корректное значение защиты.
           </label>
           <label class="error-message"
