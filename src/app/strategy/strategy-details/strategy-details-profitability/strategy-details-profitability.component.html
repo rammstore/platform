@@ -12,9 +12,9 @@
         <td translate>Доходность</td>
         <td *ngIf="strategy.account"
             class="{{strategy.getColorClass('profit')}}">
-          {{strategy.profit | percent}}
+          {{strategy.profit | percent:'1.0-2'}}
         </td>
-        <td *ngIf="!strategy.account">{{0 | percent}}</td>
+        <td *ngIf="!strategy.account">{{0 | percent:'1.0-2'}}</td>
       </tr>
       <tr><td></td><td></td></tr>
       <tr>
