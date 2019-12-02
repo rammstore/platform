@@ -42,8 +42,8 @@ export class ManageStrategyInvestComponent implements OnInit, OnDestroy {
     this.form = this.fb.group({
       amount: [(this.wallet.balance / 10).toFixed(2), [Validators.required, Validators.min(0), Validators.max(this.wallet.balance), Validators.pattern('^[0-9]+([\\,\\.][0-9]{1,2})?$')]],
       factor: [1, [Validators.min(-1000), Validators.max(1000)]],
-      target: [100, [Validators.required, Validators.min(0)]],
-      protection: [50, [Validators.required, Validators.min(0), Validators.max(99)]]
+      target: [100, [Validators.required, Validators.min(0), Validators.pattern('^[0-9]*')]],
+      protection: [50, [Validators.required, Validators.min(0), Validators.max(99), Validators.pattern('^[0-9]*')]]
     });
   }
 
