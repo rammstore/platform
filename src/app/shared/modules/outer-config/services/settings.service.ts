@@ -5,7 +5,7 @@ import {map} from 'rxjs/operators';
 
 @Injectable()
 export class SettingsService {
-    private config = '../../../assets/config.json';
+    private config = '../../../config.json';
 
     promise: Promise<any>;
     private status = false;
