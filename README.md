@@ -1,3 +1,15 @@
+# WARNING
+
+You have to create `config.ts` file in the following path: `/src/assets/config.ts`. Put there the following code:
+```
+export const CONFIG = {
+  baseApiUrl: '<YOUR_API_URL>'
+};
+```
+
+For example, `'https://apitranslator20191015013613.azurewebsites.net/api/client/v1'`
+
+
 # RAMM
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.2.0.

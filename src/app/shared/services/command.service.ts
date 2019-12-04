@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Command } from '@app/models/command';
 import { interval, Observable } from 'rxjs/index';
-import { CONFIG } from '../../../config';
+import { CONFIG } from '@assets/config';
 import { map, takeUntil, takeWhile, timeInterval } from 'rxjs/internal/operators';
 
 @Injectable({

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { CONFIG } from '../../../config';
+import { CONFIG } from '@assets/config';
 import { Paginator, Wallet, WalletTransfer } from '@app/models';
 import { LoaderService } from '@app/services/loader.service';
 import { StorageService } from '@app/services/storage.service';
