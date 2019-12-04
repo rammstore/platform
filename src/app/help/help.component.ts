@@ -14,7 +14,7 @@ export class HelpComponent {
           behavior: 'smooth',
           block: 'start'
         });
-      }, 200);
+      }, 300);
     } else {
       document.getElementById(id).scrollIntoView({
         behavior: 'smooth',
