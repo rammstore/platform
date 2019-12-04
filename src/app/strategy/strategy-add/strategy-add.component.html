@@ -93,6 +93,14 @@
           <label *ngIf="formStep2.get('money').touched && formStep2.get('money').hasError('max')" class="error-message" translate>
             Вы можете инвестировать только свободные средства.
           </label>
+          <label class="error-message"
+                 *ngIf="formStep2.get('money').touched && formStep2.get('money').hasError('required')" translate>
+            Пожалуйста, введите сумму инвестиции.
+          </label>
+          <label class="error-message"
+                 *ngIf="formStep2.get('money').touched && formStep2.get('money').hasError('pattern')" translate>
+            Пожалуйста, введите корректную сумму инвестиции.
+          </label>
           <label class="details-message">
             <span translate>Доступно</span>: <span class="available-clickable" (click)="setAllMoney()">{{wallet.getAvailableMoney() | customCurrency}}</span>
           </label>
@@ -112,7 +120,7 @@
                  *ngIf="formStep2.get('target').touched && formStep2.get('target').hasError('pattern')" translate>
             Пожалуйста, введите корректное значение защиты.
           </label>
-          <label class="details-message">
+          <label class="details-message" *ngIf="formStep2.valid">
             {{((formStep2.get('money').value * formStep2.get('target').value) / 100) | customCurrency}}
           </label>
         </div>
@@ -136,7 +144,7 @@
                  class="error-message">
             <span translate>Максимальный размер защиты</span> - 99%
           </label>
-          <label class="details-message">
+          <label class="details-message" *ngIf="formStep2.valid">
             {{((formStep2.get('money').value * formStep2.get('protection').value) / 100) | customCurrency}}
           </label>
         </div>

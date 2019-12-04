@@ -525,6 +525,7 @@ export class DataService {
           this.getStrategy(strategyID);
           this.updateRatingList();
           this.notificationsService.open(notificationText);
+          this.getAccountStatement(accountId);
         }
       });
     }, 1000);

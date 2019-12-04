@@ -80,8 +80,8 @@
   <ng-container *ngIf="dataType === 'strategy' && !data.account">
 
     <div class="btn-group dropdown-container" dropdown>
-      <button class="primary inverted" (click)="openStrategyInvestDialog()" translate>Инвестировать</button>
-      <button class="primary inverted caret" dropdownToggle *ngIf="data.isMy()"><i class="fa fa-caret-down"></i></button>
+      <button class="primary" (click)="openStrategyInvestDialog()" translate>Инвестировать</button>
+      <button class="primary caret" dropdownToggle *ngIf="data.isMy()"><i class="fa fa-caret-down"></i></button>
 
       <ul *dropdownMenu class="dropdown-menu" role="menu">
         <li [routerLink]="['/strategies/details', data.id, 'investments']" translate>
