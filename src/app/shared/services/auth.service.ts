@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CONFIG } from '../../../config';
+import { CONFIG } from '@assets/config';
 import { map } from 'rxjs/internal/operators';
 import { Company, Session, User, Wallet } from '@app/models';
 import { AuthData } from '@app/models/auth-data';

@@ -16,8 +16,8 @@ import {
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { CreateInstanceService } from "@app/services/create-instance.service";
 import { CommandService } from "@app/services/command.service";
-import { CONFIG } from "../../../config";
-import { map } from "rxjs/operators";
+import { CONFIG } from '@assets/config';
+import { map } from 'rxjs/operators';
 import { LoaderService } from '@app/services/loader.service';
 import { WalletService } from '@app/services/wallet.service';
 import { Router } from '@angular/router';
