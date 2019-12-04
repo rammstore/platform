@@ -40,7 +40,7 @@
   "Инвестиция": "Investment",
   "Моя инвестиция": "My investment",
   "Моя инвестиция, USD": "My investment, USD",
-  "Создана": "Open",
+  "Создана": "Created",
   "Закрыта": "Closed",
   "Защита": "Protection",
   "Прибыль": "Profit",
@@ -63,6 +63,8 @@
   "Цена": "Price",
   "Комиссия": "Comission",
   "Комиссия, USD": "Comission, USD",
+  "Выплаченное Вознаграждение, USD": "Paid fee, USD",
+  "Невыплаченное Вознаграждение, USD": "Due Fee, USD",
 
   "Показывать на странице": "Items per page",
   "Всего записей": "Total items",

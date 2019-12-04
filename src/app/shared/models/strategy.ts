@@ -18,6 +18,8 @@ export class Strategy {
   ageByDays: number;      // Возраст в днях
   monthlyYield: number;   // Месячная прибыль в %
   equity: number;         // Инвестиции
+  feePaid: number;        // Выплаченное вознаграждение
+  feeToPay: number;       // Невыплаченное вознаграждение
 
 
   constructor(

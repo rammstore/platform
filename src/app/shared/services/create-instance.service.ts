@@ -26,7 +26,9 @@ export class CreateInstanceService {
       ageByDays: options.AgeByDays,
       monthlyYield: options.MonthlyYield,
       MCLevel: options.MCLevel,
-      equity: options.Equity
+      equity: options.Equity,
+      feePaid: options.FeePaid,
+      feeToPay: options.FeeToPay
     });
   }
 
