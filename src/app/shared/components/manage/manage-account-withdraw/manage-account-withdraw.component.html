@@ -107,7 +107,7 @@
               (click)="withdraw()"
               [disabled]="!form.valid">
         <span translate>Вывести </span>
-        <span *ngIf="form.get('amount').value > 0">({{form.get('amount').value | customCurrency}})</span>
+        <span *ngIf="form.get('amount').value > 0">({{(form.get('amount').value | customCurrency).trim()}})</span>
       </button>
 
       <button class="warning"
