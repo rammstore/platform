@@ -105,6 +105,18 @@
               {{item.getEntry()}}
             </ng-container>
 
+            <ng-container *ngSwitchCase="'volume'">
+              {{item.volume | number:'1.4-4'}}
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'price'">
+              {{item.volume | number:'1.6-6'}}
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'currentPrice'">
+              {{item.volume | number:'1.6-6'}}
+            </ng-container>
+
             <ng-container *ngSwitchCase="'yieldChart'">
               <app-chart-yield-table [strategy]="item.strategy"></app-chart-yield-table>
             </ng-container>
