@@ -48,8 +48,12 @@ table {
 
         a {
           color: $link-color !important;
-          text-decoration: underline !important;
+          text-decoration: none;
           cursor: pointer;
+
+          &.detail-link {
+            border-bottom: 1px dashed $link-color;
+          }
         }
       }
     }

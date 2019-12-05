@@ -5,6 +5,7 @@ export class TableColumn {
   colspan: number = 1;
   pipe: { pipe: any, args: any[] } = { pipe: null, args: [] };
   colored: boolean;
+  fontSize: number = 14;
 
   constructor(options: any) {
     Object.assign(this, options);

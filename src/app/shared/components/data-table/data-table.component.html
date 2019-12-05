@@ -19,12 +19,19 @@
         <ng-container *ngIf="column.property || column.property === ''" >
           <td [ngSwitch]="column.property"
               class="{{column.property === 'strategy.investmentInfo' ? '' : column.property}} {{column.property === 'strategy.investmentInfo' && item.account ? 'investmentInfo' : ''}}"
-              [class.colored]="column.colored">
+              [class.colored]="column.colored"
+          [ngStyle]="{'font-size': column.fontSize+'px'}">
             <!-- Strategy special data -->
             <ng-container *ngSwitchCase="'age'">{{item.getAgeWeeks()}}</ng-container>
 
             <ng-container *ngSwitchCase="'account.id'">
               <a class="detail-link" [routerLink]="[getItemLink(item)]">{{item.id}}</a>
+            </ng-container>
+
+            <ng-container *ngIf="item.strategy">
+              <ng-container *ngSwitchCase="'id'">
+                <a class="detail-link" [routerLink]="[getItemLink(item)]">{{item.id}}</a>
+              </ng-container>
             </ng-container>
 
             <ng-container *ngSwitchCase="'name'">
