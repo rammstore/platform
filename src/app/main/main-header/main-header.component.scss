@@ -105,6 +105,8 @@ header {
 }
 
 .legend {
+  letter-spacing: .010em;
+
   .amount {
     float: right;
 
@@ -120,7 +122,7 @@ header {
 
 #headerChartContainer {
   width: 220px;
-  height: 185px;
+  height: 200px;
 }
 
 @mixin compact() {
