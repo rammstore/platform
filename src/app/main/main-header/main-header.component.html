@@ -97,10 +97,10 @@
 
     <div class="account-info" *ngIf="wallet" [popover]="chartContainer" [outsideClick]="true" placement="bottom">
       <span class="available" [title]="'Доступно' | translate">
-        {{wallet.balance | customCurrency}} USD
+        {{wallet.balance | customCurrency}}USD
       </span>
       |
-      <span [title]="'Средства' | translate">{{wallet.getEquity() | customCurrency}} USD</span>
+      <span [title]="'Средства' | translate">{{wallet.getEquity() | customCurrency}}USD</span>
     </div>
   </div>
 </header>
