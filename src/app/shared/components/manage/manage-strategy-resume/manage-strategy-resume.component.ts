@@ -41,7 +41,7 @@ export class ManageStrategyResumeComponent implements OnInit, OnDestroy {
   buildForm(): void {
     this.form = this.fb.group({
       amount: [0, [Validators.required, Validators.min(0), Validators.max(this.wallet.balance), Validators.pattern('^[0-9]+([\\,\\.][0-9]{1,2})?$')]],
-      factor: [{value: this.strategy.account.factor, disabled: !this.strategy.account.isMy()}, [Validators.min(0.1), Validators.max(10), Validators.required, Validators.pattern('[0-9]+(\\.[0-9]?)?')]],
+      factor: [{value: this.strategy.account.factor, disabled: this.strategy.account.isMy()}, [Validators.min(0.1), Validators.max(10), Validators.required, Validators.pattern('[0-9]+(\\.[0-9]?)?')]],
       target: [this.strategy.account.target * 100, [Validators.required, Validators.min(0), Validators.pattern('^[0-9]*')]],
       protection: [this.strategy.account.protection * 100, [Validators.required, Validators.min(0), Validators.max(99), Validators.pattern('^[0-9]*')]]
     });
