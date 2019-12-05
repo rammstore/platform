@@ -25,7 +25,7 @@ export class StrategyDetailsInvestmentsActiveComponent implements OnInit, OnDest
   tableHeader: TableHeaderRow[] = [
     new TableHeaderRow([
       new TableColumn({ property: 'account.id', label: 'Инвестиция'}),
-      new TableColumn({ property: 'dtCreated', label: 'Дата', pipe: { pipe: DatePipe, args: ['yyyy-MM-dd hh:mm:ss'] }}),
+      new TableColumn({ property: 'dtCreated', label: 'Дата', pipe: { pipe: DatePipe, args: ['yyyy-MM-dd HH:mm:ss'] }}),
       new TableColumn({ property: 'equity', label: 'Средства, USD', pipe: { pipe: CustomCurrencyPipe } }),
       new TableColumn({ property: 'profitCurrentIntervalGross', label: 'Gross PL с начала недели, USD', pipe: { pipe: CustomCurrencyPipe } }),
       new TableColumn({ property: 'feePaid', label: 'Выплаченное вознаграждение, USD', pipe: { pipe: CustomCurrencyPipe } }),

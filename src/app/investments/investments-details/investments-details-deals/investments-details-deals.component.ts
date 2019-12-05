@@ -25,7 +25,7 @@ export class InvestmentsDetailsDealsComponent implements OnInit, OnDestroy {
   // table settings
   tableHeader: TableHeaderRow[] = [
     new TableHeaderRow([
-      new TableColumn({ property: 'dtCreated', label: 'Время', pipe: { pipe: DatePipe, args: ['yyyy-MM-dd hh:mm:ss'] }}),
+      new TableColumn({ property: 'dtCreated', label: 'Время', pipe: { pipe: DatePipe, args: ['yyyy-MM-dd HH:mm:ss'] }}),
       new TableColumn({ property: 'id', label: 'Сделка'}),
       new TableColumn({ property: 'Symbol', label: 'Инструмент' }),
       new TableColumn({ property: 'type', label: 'Тип' }),
