@@ -71,7 +71,7 @@
                type="number"
                formControlName="target"
                [min]="0"
-               [max]="100"
+               [step]="1"
                title="{{'Целевой доход. При достижении целевого дохода инвестиция будет приостановлена' | translate}}">
         <div class="messages">
           <label class="error-message"
@@ -79,15 +79,15 @@
             Цель не задана
           </label>
           <label class="error-message"
-                 *ngIf="form.get('target').touched && form.get('target').hasError('min')" translate>
-            Пожалуйста, введите корректное значение цели.
-          </label>
-          <label class="details-message" *ngIf="form.get('amount').value && form.get('target').value">
-            {{((form.get('amount').value * form.get('target').value) / 100) | customCurrency}}
-          </label>
-          <label class="error-message"
                  *ngIf="form.get('target').touched && form.get('target').hasError('pattern')" translate>
             Пожалуйста, введите корректное значение цели.
+          </label>
+          <label class="error-message"
+                 *ngIf="form.get('target').touched && form.get('target').hasError('min') && !form.get('target').hasError('pattern')">
+            <span translate>Минимальное значение цели</span> - 0.
+          </label>
+          <label class="details-message" *ngIf="form.get('amount').value && form.get('target').value && form.valid">
+            {{((form.get('amount').value * form.get('target').value) / 100) | customCurrency}}
           </label>
         </div>
       </div>

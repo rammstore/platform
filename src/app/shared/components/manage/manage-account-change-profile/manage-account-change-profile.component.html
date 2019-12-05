@@ -38,8 +38,8 @@
         <input id="target"
                type="number"
                formControlName="target"
-               [min]="0.001"
-               [max]="99.999"
+               [min]="0"
+               [step]="1"
                title="{{'Целевой доход. При достижении целевого дохода инвестиция будет приостановлена' | translate}}">
         <div class="messages">
           <label class="error-message"
@@ -48,11 +48,11 @@
           </label>
           <label class="error-message"
                  *ngIf="form.get('target').touched && form.get('target').hasError('pattern')" translate>
-            Пожалуйста, введите корректное значение защиты.
+            Пожалуйста, введите корректное значение цели.
           </label>
           <label class="error-message"
-                 *ngIf="form.get('target').touched && form.get('target').hasError('min')" translate>
-            Пожалуйста, введите корректное значение цели.
+                 *ngIf="form.get('target').touched && form.get('target').hasError('min') && !form.get('target').hasError('pattern')">
+            <span translate>Минимальное значение цели</span> - 0.
           </label>
         </div>
       </div>
