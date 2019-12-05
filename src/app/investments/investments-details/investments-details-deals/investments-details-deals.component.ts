@@ -1,12 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Deal, Paginator, TableColumn } from '@app/models';
-import { DatePipe } from '@angular/common';
 import { TableHeaderRow } from '@app/models/table-header-row';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
 import { ActivatedRoute } from '@angular/router';
 import { DataService } from '@app/services/data.service';
 import { CustomCurrencyPipe } from '@app/pipes/custom-currency.pipe';
+import { CustomDatePipe } from '@app/pipes/custom-date.pipe';
 
 @Component({
   selector: 'app-investments-details-deals',
@@ -25,7 +25,7 @@ export class InvestmentsDetailsDealsComponent implements OnInit, OnDestroy {
   // table settings
   tableHeader: TableHeaderRow[] = [
     new TableHeaderRow([
-      new TableColumn({ property: 'dtCreated', label: 'Время', pipe: { pipe: DatePipe, args: ['yyyy-MM-dd HH:mm:ss'] }}),
+      new TableColumn({ property: 'dtCreated', label: 'Время', pipe: { pipe: CustomDatePipe }}),
       new TableColumn({ property: 'id', label: 'Сделка'}),
       new TableColumn({ property: 'Symbol', label: 'Инструмент' }),
       new TableColumn({ property: 'type', label: 'Тип' }),

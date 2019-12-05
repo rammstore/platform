@@ -37,11 +37,11 @@
       </tr>
       <tr>
         <td translate>Создана</td>
-        <td *ngIf="account">{{account.dtCreated | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+        <td *ngIf="account">{{account.dtCreated | customDate }}</td>
       </tr>
       <tr *ngIf="account && !account.isActive()">
         <td translate>Закрыта</td>
-        <td>{{account.dtClosed | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+        <td>{{account.dtClosed | customDate }}</td>
       </tr>
       <tr>
         <td translate>Валюта</td>
