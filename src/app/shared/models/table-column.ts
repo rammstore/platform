@@ -4,6 +4,7 @@ export class TableColumn {
   rowspan: number = 1;
   colspan: number = 1;
   pipe: { pipe: any, args: any[] } = { pipe: null, args: [] };
+  colored: boolean;
 
   constructor(options: any) {
     Object.assign(this, options);

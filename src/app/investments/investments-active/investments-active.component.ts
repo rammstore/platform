@@ -24,13 +24,13 @@ export class InvestmentsActiveComponent implements OnInit, OnDestroy {
     new TableHeaderRow([
       new TableColumn({ property: 'strategy.name', label: 'Стратегия', rowspan: 2}),
       new TableColumn({ label: 'Доходность стратегии', colspan: 2}),
-      new TableColumn({ label: 'Инвестиция', colspan: 3})
+      new TableColumn({ label: 'Инвестиция', colspan: 3, colored: true})
     ]),
     new TableHeaderRow([
       new TableColumn({ property: 'strategy.profit', label: 'В месяц', pipe: { pipe: PercentPipe }}),
       new TableColumn({ property: 'yieldChart', label: 'Всего' }),
-      new TableColumn({ property: 'age', label: 'Возраст, недель' }),
-      new TableColumn({ property: 'investmentInfo', label: 'Моя инвестиция, USD' }),
+      new TableColumn({ property: 'age', label: 'Возраст, недель', colored: true }),
+      new TableColumn({ property: 'investmentInfo', label: 'Моя инвестиция, USD', colored: true }),
       new TableColumn({ property: 'manage', label: '' })
     ]),
   ];

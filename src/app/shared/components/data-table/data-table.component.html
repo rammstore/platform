@@ -5,6 +5,7 @@
         [attr.colspan]="column.colspan"
         [attr.rowspan]="column.rowspan"
         class="{{column.property}}"
+        [class.colored]="column.colored"
         translate>
       {{column.label}}
     </th>
@@ -17,7 +18,8 @@
       <ng-container *ngFor="let column of row.columns">
         <ng-container *ngIf="column.property || column.property === ''" >
           <td [ngSwitch]="column.property"
-              class="{{column.property === 'strategy.investmentInfo' ? '' : column.property}} {{column.property === 'strategy.investmentInfo' && item.account ? 'investmentInfo' : ''}}">
+              class="{{column.property === 'strategy.investmentInfo' ? '' : column.property}} {{column.property === 'strategy.investmentInfo' && item.account ? 'investmentInfo' : ''}}"
+              [class.colored]="column.colored">
             <!-- Strategy special data -->
             <ng-container *ngSwitchCase="'age'">{{item.getAgeWeeks()}}</ng-container>
 
