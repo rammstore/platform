@@ -32,7 +32,7 @@ export class ManageAccountChangeProfileComponent implements OnInit, OnDestroy {
 
   buildForm(): void {
     this.form = this.fb.group({
-      factor: [{value: this.account.factor, disabled: this.account.isMy()}, [Validators.min(0.1), Validators.max(10), Validators.required, Validators.pattern('[0-9]+(\\.[0-9]?)?')]],
+      factor: [{value: this.account.factor, disabled: this.account.isSecured() && this.account.isMy()}, [Validators.min(0.1), Validators.max(10), Validators.required, Validators.pattern('[0-9]+(\\.[0-9]?)?')]],
       target: [Math.round(this.account.target * 100), [Validators.required, Validators.min(0.001), Validators.pattern('^[0-9]*')]],
       protection: [this.account.protection * 100, [Validators.required, Validators.min(0), Validators.max(99.999), Validators.pattern('^[0-9]*')]]
     });
