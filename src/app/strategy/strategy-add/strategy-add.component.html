@@ -63,17 +63,17 @@
       </div>
     </div>
 
-    <div class="form-field">
-      <label for="isShared" class="field-label">Shared Strategy</label>
-      <div class="input-wrapper">
-        <input id="isShared" type="checkbox" formControlName="isShared">
-        <div class="messages">
-          <label class="details-message" translate>
-            Опция Shared Strategy позволяет <a translate>копировать вашу стратегию другим брокерам.</a>
-          </label>
-        </div>
-      </div>
-    </div>
+<!--    <div class="form-field">-->
+<!--      <label for="isShared" class="field-label">Shared Strategy</label>-->
+<!--      <div class="input-wrapper">-->
+<!--        <input id="isShared" type="checkbox" formControlName="isShared">-->
+<!--        <div class="messages">-->
+<!--          <label class="details-message" translate>-->
+<!--            Опция Shared Strategy позволяет <a translate>копировать вашу стратегию другим брокерам.</a>-->
+<!--          </label>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
 
     <div class="dialog-actions">
       <button class="primary" (click)="isStrategyNameUniq(formStep1.get('name').value, true)" [disabled]="!formStep1.valid" translate>Дальше</button>
