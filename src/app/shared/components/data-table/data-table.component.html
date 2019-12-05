@@ -151,7 +151,7 @@
               *ngIf="column.property !== 'accountsCount'"
               [class.positive]="getTotal(column.property) > 0 && isColored(column.property)"
               [class.negative]="getTotal(column.property) < 0 && isColored(column.property)">
-            {{getTotal(column.property) | number:'1.2-2'}}
+            {{getTotal(column.property) | customCurrency}}
           </td>
           <td class="total-cell"
               *ngIf="column.property === 'accountsCount'">
