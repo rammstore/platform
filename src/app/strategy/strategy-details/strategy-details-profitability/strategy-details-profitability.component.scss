@@ -1,5 +1,14 @@
 @import "styles";
 
+table {
+  border-top: 1px solid $border-color;
+
+  tbody tr td.yield {
+    font-size: 16px;
+  }
+}
+
+
 .profitability-container {
   display: flex;
 

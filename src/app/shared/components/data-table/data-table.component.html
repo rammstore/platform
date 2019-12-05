@@ -5,6 +5,7 @@
         [attr.colspan]="column.colspan"
         [attr.rowspan]="column.rowspan"
         class="{{column.property}}"
+        [class.colored]="column.colored"
         translate>
       {{column.label}}
     </th>
@@ -17,12 +18,20 @@
       <ng-container *ngFor="let column of row.columns">
         <ng-container *ngIf="column.property || column.property === ''" >
           <td [ngSwitch]="column.property"
-              class="{{column.property === 'strategy.investmentInfo' ? '' : column.property}} {{column.property === 'strategy.investmentInfo' && item.account ? 'investmentInfo' : ''}}">
+              class="{{column.property === 'strategy.investmentInfo' ? '' : column.property}} {{column.property === 'strategy.investmentInfo' && item.account ? 'investmentInfo' : ''}}"
+              [class.colored]="column.colored"
+          [ngStyle]="{'font-size': column.fontSize+'px'}">
             <!-- Strategy special data -->
             <ng-container *ngSwitchCase="'age'">{{item.getAgeWeeks()}}</ng-container>
 
             <ng-container *ngSwitchCase="'account.id'">
               <a class="detail-link" [routerLink]="[getItemLink(item)]">{{item.id}}</a>
+            </ng-container>
+
+            <ng-container *ngIf="item.strategy">
+              <ng-container *ngSwitchCase="'id'">
+                <a class="detail-link" [routerLink]="[getItemLink(item)]">{{item.id}}</a>
+              </ng-container>
             </ng-container>
 
             <ng-container *ngSwitchCase="'name'">
@@ -105,6 +114,18 @@
               {{item.getEntry()}}
             </ng-container>
 
+            <ng-container *ngSwitchCase="'volume'">
+              {{item.volume | number:'1.4-4'}}
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'price'">
+              {{item.volume | number:'1.6-6'}}
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'currentPrice'">
+              {{item.volume | number:'1.6-6'}}
+            </ng-container>
+
             <ng-container *ngSwitchCase="'yieldChart'">
               <app-chart-yield-table [strategy]="item.strategy"></app-chart-yield-table>
             </ng-container>
@@ -139,7 +160,7 @@
               *ngIf="column.property !== 'accountsCount'"
               [class.positive]="getTotal(column.property) > 0 && isColored(column.property)"
               [class.negative]="getTotal(column.property) < 0 && isColored(column.property)">
-            {{getTotal(column.property) | number:'1.2-2'}}
+            {{getTotal(column.property) | customCurrency}}
           </td>
           <td class="total-cell"
               *ngIf="column.property === 'accountsCount'">

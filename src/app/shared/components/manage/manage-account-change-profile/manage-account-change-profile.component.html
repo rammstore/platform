@@ -9,6 +9,7 @@
                formControlName="factor"
                [min]="0.1"
                [max]="10"
+               [step]="0.1"
                title="{{'Коэффициент копирования. При соотношении более 1,0 копирование идет более агрессивно; увеличивается не только потенциальный доход, но и риск потери. Когда коэффициент меньше 1,0 - наоборот' | translate}}">
         <div class="messages">
           <label class="error-message"
@@ -24,7 +25,7 @@
             <span translate>Минимальное значение множителя</span> - 0.1.
           </label>
           <label class="error-message"
-                 *ngIf="form.get('factor').touched && form.get('factor').hasError('max')">
+                 *ngIf="form.get('factor').touched && form.get('factor').hasError('max') && !form.get('factor').hasError('pattern')">
             <span translate>Максимальное значение множителя</span> - 10.
           </label>
         </div>
@@ -37,8 +38,8 @@
         <input id="target"
                type="number"
                formControlName="target"
-               [min]="0.001"
-               [max]="99.999"
+               [min]="0"
+               [step]="1"
                title="{{'Целевой доход. При достижении целевого дохода инвестиция будет приостановлена' | translate}}">
         <div class="messages">
           <label class="error-message"
@@ -47,11 +48,11 @@
           </label>
           <label class="error-message"
                  *ngIf="form.get('target').touched && form.get('target').hasError('pattern')" translate>
-            Пожалуйста, введите корректное значение защиты.
+            Пожалуйста, введите корректное значение цели.
           </label>
           <label class="error-message"
-                 *ngIf="form.get('target').touched && form.get('target').hasError('min')" translate>
-            Пожалуйста, введите корректное значение цели.
+                 *ngIf="form.get('target').touched && form.get('target').hasError('min') && !form.get('target').hasError('pattern')">
+            <span translate>Минимальное значение цели</span> - 0.
           </label>
         </div>
       </div>
@@ -65,6 +66,7 @@
                formControlName="protection"
                [min]="0"
                [max]="99"
+               [step]="1"
                title="{{'При снижении средств до заданного значения инвестиция будет приостановлена' | translate}}">
         <div class="messages">
           <label class="error-message"
@@ -72,7 +74,7 @@
             Защита не задана
           </label>
           <label class="error-message"
-                 *ngIf="form.get('protection').touched && form.get('protection').hasError('min')" translate>
+                 *ngIf="form.get('protection').touched && form.get('protection').hasError('min') && !form.get('protection').hasError('pattern')" translate>
             Пожалуйста, введите корректное значение защиты.
           </label>
           <label class="error-message"
@@ -80,7 +82,7 @@
             Пожалуйста, введите корректное значение защиты.
           </label>
           <label class="error-message"
-                 *ngIf="form.get('protection').touched && form.get('protection').hasError('max')">
+                 *ngIf="form.get('protection').touched && form.get('protection').hasError('max') && !form.get('protection').hasError('pattern')">
             <span translate>Максимальное значение защиты</span> - 99.
           </label>
         </div>

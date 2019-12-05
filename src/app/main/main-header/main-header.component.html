@@ -13,25 +13,20 @@
       <a [routerLink]="['/help']" [class.active]="isLinkActive('/help')" translate>Помощь</a>
     </nav>
 
-    <div class="btn-group menu" dropdown>
+    <div class="btn-group menu header-dropdown" dropdown>
       <!-- Toggle button -->
       <i class="icon-hamburger" dropdownToggle></i>
 
       <ul id="dropdown-nested" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-nested">
         <li role="menuitem"><a [routerLink]="['/manage']" class="dropdown-item" translate>Изменить пароль</a></li>
-        <li class="divider dropdown-divider"></li>
-        <!---->
         <li role="menuitem" dropdown triggers="mouseenter" placement="right" container="body">
           <a class="dropdown-item" dropdownToggle (click)="false" translate>Изменить язык<i class="icon-flag {{language}} current-lang"></i></a>
 
           <ul *dropdownMenu class="dropdown-menu langmenu" role="menu">
             <li role="menuitem lang" (click)="setLanguage('en')"><i class="icon-flag en"></i></li>
-            <li class="divider dropdown-divider"></li>
             <li role="menuitem lang" (click)="setLanguage('ru')"><i class="icon-flag ru"></i></li>
           </ul>
         </li>
-        <!---->
-        <li class="divider dropdown-divider"></li>
         <li role="menuitem"><a (click)="logout()" class="dropdown-item" translate>Выйти<span *ngIf="client" class="login">{{client.login}}</span></a></li>
       </ul>
     </div>
@@ -97,10 +92,10 @@
 
     <div class="account-info" *ngIf="wallet" [popover]="chartContainer" [outsideClick]="true" placement="bottom">
       <span class="available" [title]="'Доступно' | translate">
-        {{wallet.balance | customCurrency}} USD
+        {{wallet.balance | customCurrency}}USD
       </span>
       |
-      <span [title]="'Средства' | translate">{{wallet.getEquity() | customCurrency}} USD</span>
+      <span [title]="'Средства' | translate">{{wallet.getEquity() | customCurrency}}USD</span>
     </div>
   </div>
 </header>

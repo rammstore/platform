@@ -127,6 +127,8 @@
   "Множитель не задан": "Factor is not defined",
   "Нет позиций": "No positions",
   "Нет данных для отображения": "No data to display",
+  "Минимальное значение цели": "Minimum target is",
+  "На странице показаны стратегии с наибольшим приростом количества инвестиций в течение последней недели.": "The page shows top strategies with the maximum increase of number of investments during the last week.",
 
   "Вывод средств": "Withdraw",
   "Закрытие стратегии": "Close strategy",
@@ -404,7 +406,7 @@
   "Средства выведены": "Funds withdrawn",
   "Инвестиция закрыта": "The investment closed",
 
-  "Средства в инвестиции": "Investments equity",
+  "Средства в инвестиции": "Investment equity",
   "Возобновить стратегию": "Resume strategy",
   "Пауза стратегии": "Pause strategy",
   "Все позиции всех инвесторов данной стратегии будут закрыты. Новые позиции не будут открываться до момента снятия с паузы.": "All positions will be closed. New positions will not be opened until the pause removal.",

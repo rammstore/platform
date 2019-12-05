@@ -4,8 +4,8 @@ import { WalletService } from '@app/services/wallet.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
 import { TableHeaderRow } from '@app/models/table-header-row';
-import { DatePipe } from '@angular/common';
 import { CustomCurrencyPipe } from '@app/pipes/custom-currency.pipe';
+import { CustomDatePipe } from '@app/pipes/custom-date.pipe';
 
 declare type FilterValue = 'all' | 'internal' | 'external';
 
@@ -32,7 +32,7 @@ export class AccountLastTransfersComponent implements OnInit, OnDestroy {
     new TableHeaderRow([
       new TableColumn({ property: 'id', label: '#'}),
       new TableColumn({ property: 'accountID', label: 'Счет'}),
-      new TableColumn({ property: 'dtCreated', label: 'Дата', pipe: { pipe: DatePipe, args: ['yyyy-MM-dd hh:mm:ss'] }}),
+      new TableColumn({ property: 'dtCreated', label: 'Дата', pipe: { pipe: CustomDatePipe }}),
       new TableColumn({ property: 'amount', label: 'Сумма, USD', pipe: { pipe: CustomCurrencyPipe }}),
       new TableColumn({ property: 'type', label: 'Тип'})
     ])

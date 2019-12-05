@@ -24,12 +24,12 @@ export class RatingAllComponent implements OnInit, OnDestroy {
   // table settings
   tableHeader: TableHeaderRow[] = [
     new TableHeaderRow([
-      new TableColumn({ property: 'nameRating', label: 'Стратегия'}),
-      new TableColumn({ property: 'monthlyYield', label: 'Доходность в месяц', pipe: { pipe: PercentPipe, args: ['1.0-2'] }}),
+      new TableColumn({ property: 'nameRating', label: 'Стратегия', fontSize: 20}),
+      new TableColumn({ property: 'monthlyYield', label: 'Доходность в месяц', pipe: { pipe: PercentPipe, args: ['1.0-2'] }, fontSize: 24}),
       new TableColumn({ property: 'strategy.yieldChart', label: 'Всего' }),
       new TableColumn({ property: 'accountsCount', label: 'Инвесторы'}),
-      new TableColumn({ property: 'age', label: 'Возраст, недель' }),
-      new TableColumn({ property: 'strategy.investmentInfo', label: 'Моя инвестиция, USD' }),
+      new TableColumn({ property: 'age', label: 'Возраст, недель', fontSize: 20 }),
+      new TableColumn({ property: 'strategy.investmentInfo', label: 'Моя инвестиция, USD', colored: true }),
       new TableColumn({ property: 'manage', label: '' })
     ]),
   ];

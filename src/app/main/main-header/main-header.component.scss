@@ -31,15 +31,15 @@ header {
     nav {
       a {
         display: inline-block;
-        color: $text-color;
+        color: $text-color-dark;
         padding: 10px 12px;
         line-height: 20px;
         cursor: pointer;
+        letter-spacing: .010em;
 
         &.active {
           background-color: $text-color;
           color: $main-color;
-          font-weight: bold;
         }
       }
     }
@@ -51,15 +51,20 @@ header {
     .account-info {
       font-size: 14px;
       color: $text-color-light;
-      font-weight: bold;
       border-bottom: 1px dashed $text-color-light;
       padding-bottom: 3px;
-      margin-top: 10px;
+      margin-top: 14px;
       cursor: pointer;
       margin-right: 15px;
+      letter-spacing: .010em;
+      line-height: 10px;
 
       .available {
         color: $accent-color;
+      }
+
+      >span {
+        font-weight: 500;
       }
     }
 
@@ -100,6 +105,8 @@ header {
 }
 
 .legend {
+  letter-spacing: .010em;
+
   .amount {
     float: right;
 
@@ -115,7 +122,7 @@ header {
 
 #headerChartContainer {
   width: 220px;
-  height: 185px;
+  height: 200px;
 }
 
 @mixin compact() {

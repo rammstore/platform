@@ -43,8 +43,8 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
     this.formStep1 = this.fb.group({
       name: ['', [Validators.required, Validators.pattern('^[0-9a-zA-Z_!,.? ]*$')]],
       fee: [25, [Validators.min(0), Validators.max(50)]],
-      commission: [0, [Validators.min(0), Validators.max(100)]],
-      isShared: [true]
+      commission: [0, [Validators.min(0), Validators.max(100)]]
+      // isShared: [true]
     });
 
     this.formStep1.get('name').setErrors({isUniq: true});
@@ -53,8 +53,8 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
   buildFormStep2(): void {
     this.formStep2 = this.fb.group({
       money: [(Math.round(this.wallet.balance / 10)), [Validators.min(0), Validators.max(this.wallet.balance), Validators.required, Validators.pattern('^[0-9]+([\\,\\.][0-9]{1,2})?$')]],
-      target: [100, [Validators.min(0), Validators.pattern('^[0-9]*')]],
-      protection: [0, [Validators.min(0), Validators.max(99), Validators.pattern('^[0-9]*')]]
+      target: [100, [Validators.required, Validators.min(0), Validators.pattern('^[0-9]*')]],
+      protection: [0, [Validators.required, Validators.min(0), Validators.max(99), Validators.pattern('^[0-9]*')]]
     });
   }
 
@@ -80,7 +80,7 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
       Name: this.formStep1.get('name').value,
       FeeRate: this.formStep1.get('fee').value / 100,
       CommissionRate: this.formStep1.get('commission').value,
-      Shared: this.formStep1.get('isShared').value,
+      // Shared: this.formStep1.get('isShared').value,
       Protection: this.formStep2.get('protection').value / 100,
       Target: this.formStep2.get('target').value / 100,
       Money: this.formStep2.get('money').value,

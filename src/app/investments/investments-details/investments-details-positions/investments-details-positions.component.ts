@@ -5,6 +5,7 @@ import { Account, Deal, Paginator, Position, TableColumn } from '@app/models';
 import { ActivatedRoute } from '@angular/router';
 import { takeUntil } from 'rxjs/internal/operators';
 import { DataService } from '@app/services/data.service';
+import { CustomCurrencyPipe } from '@app/pipes/custom-currency.pipe';
 
 @Component({
   selector: 'app-investments-details-positions',
@@ -29,9 +30,9 @@ export class InvestmentsDetailsPositionsComponent implements OnInit, OnDestroy {
       new TableColumn({ property: 'volume', label: 'Объем' }),
       new TableColumn({ property: 'price', label: 'Цена открытия' }),
       new TableColumn({ property: 'currentPrice', label: 'Текущая цена' }),
-      new TableColumn({ property: 'profit', label: 'Прибыль, USD' }),
-      new TableColumn({ property: 'swap', label: 'Своп, USD' }),
-      new TableColumn({ property: 'totalProfit', label: 'Итого прибыль, USD' }),
+      new TableColumn({ property: 'profit', label: 'Прибыль, USD', pipe: { pipe: CustomCurrencyPipe } }),
+      new TableColumn({ property: 'swap', label: 'Своп, USD', pipe: { pipe: CustomCurrencyPipe } }),
+      new TableColumn({ property: 'totalProfit', label: 'Итого прибыль, USD', pipe: { pipe: CustomCurrencyPipe } }),
     ]),
   ];
   totalFields: string[] = ['profit', 'swap', 'totalProfit'];

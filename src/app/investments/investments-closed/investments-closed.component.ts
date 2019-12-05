@@ -1,11 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Account, Paginator, TableColumn } from '@app/models';
 import { TableHeaderRow } from '@app/models/table-header-row';
-import { DatePipe, PercentPipe } from '@angular/common';
+import { PercentPipe } from '@angular/common';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
 import { CustomCurrencyPipe } from '@app/pipes/custom-currency.pipe';
 import { DataService } from '@app/services/data.service';
+import { CustomDatePipe } from '@app/pipes/custom-date.pipe';
 
 @Component({
   selector: 'app-investments-closed',
@@ -24,12 +25,12 @@ export class InvestmentsClosedComponent implements OnInit, OnDestroy {
   tableHeader: TableHeaderRow[] = [
     new TableHeaderRow([
       new TableColumn({ property: 'strategy.name', label: 'Стратегия' }),
-      new TableColumn({ property: 'id', label: 'Инвестиция'}),
-      new TableColumn({ property: 'dtCreated', label: 'Создана', pipe: { pipe: DatePipe, args: ['yyyy-MM-dd hh:mm:ss'] }}),
-      new TableColumn({ property: 'dtClosed', label: 'Закрыта', pipe: { pipe: DatePipe, args: ['yyyy-MM-dd hh:mm:ss'] }}),
-      new TableColumn({ property: 'age', label: 'Возраст, недель' }),
-      new TableColumn({ property: 'protection', label: 'Защита', pipe: { pipe: PercentPipe }}),
-      new TableColumn({ property: 'intervalPnL', label: 'Прибыль', pipe: { pipe: CustomCurrencyPipe } }),
+      new TableColumn({ property: 'id', label: 'Инвестиция', colored: true}),
+      new TableColumn({ property: 'dtCreated', label: 'Создана', pipe: { pipe: CustomDatePipe }, colored: true}),
+      new TableColumn({ property: 'dtClosed', label: 'Закрыта', pipe: { pipe: CustomDatePipe }, colored: true}),
+      new TableColumn({ property: 'age', label: 'Возраст, недель', colored: true }),
+      new TableColumn({ property: 'protection', label: 'Защита', pipe: { pipe: PercentPipe }, colored: true}),
+      new TableColumn({ property: 'intervalPnL', label: 'Прибыль', pipe: { pipe: CustomCurrencyPipe }, colored: true }),
       new TableColumn({ property: 'investmentDetails', label: '' })
     ]),
   ];

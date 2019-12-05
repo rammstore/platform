@@ -4,14 +4,14 @@
       <tbody>
       <tr>
         <td translate>Доходность в месяц</td>
-        <td class="{{strategy.getColorClass('monthlyYield')}}">
+        <td class="yield {{strategy.getColorClass('monthlyYield')}}">
           {{strategy.monthlyYield | percent:'1.2-2'}}
         </td>
       </tr>
       <tr>
         <td translate>Доходность</td>
         <td *ngIf="strategy.account"
-            class="{{strategy.getColorClass('profit')}}">
+            class="yield {{strategy.getColorClass('profit')}}">
           {{strategy.profit | percent:'1.2-2'}}
         </td>
         <td *ngIf="!strategy.account">{{0 | percent:'1.2-2'}}</td>

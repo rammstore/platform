@@ -2,11 +2,12 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Strategy } from '@app/models/strategy';
 import { TableHeaderRow } from '@app/models/table-header-row';
 import { Paginator, TableColumn } from '@app/models';
-import { DatePipe, PercentPipe } from '@angular/common';
+import { PercentPipe } from '@angular/common';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
 import { DataService } from '@app/services/data.service';
 import { CustomCurrencyPipe } from '@app/pipes/custom-currency.pipe';
+import { CustomDatePipe } from '@app/pipes/custom-date.pipe';
 
 @Component({
   selector: 'app-strategy-closed',
@@ -27,8 +28,8 @@ export class StrategyClosedComponent implements OnInit, OnDestroy {
       new TableColumn({ property: 'id', label: 'ID'}),
       new TableColumn({ property: 'name', label: 'Название' }),
       new TableColumn({ property: 'offer.fee', label: 'Вознаграждение', pipe: { pipe: PercentPipe }}),
-      new TableColumn({ property: 'dtCreated', label: 'Создана', pipe: { pipe: DatePipe, args: ['yyyy-MM-dd hh:mm:ss'] }}),
-      new TableColumn({ property: 'dtClosed', label: 'Закрыта', pipe: { pipe: DatePipe, args: ['yyyy-MM-dd hh:mm:ss'] } }),
+      new TableColumn({ property: 'dtCreated', label: 'Создана', pipe: { pipe: CustomDatePipe }}),
+      new TableColumn({ property: 'dtClosed', label: 'Закрыта', pipe: { pipe: CustomDatePipe } }),
       new TableColumn({ property: 'age', label: 'Возраст, недель' }),
       new TableColumn({property: 'feePaid', label: 'Выплаченное Вознаграждение, USD', pipe: { pipe: CustomCurrencyPipe }})
     ]),

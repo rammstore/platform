@@ -3,6 +3,7 @@
 * {
   box-sizing: border-box;
   font-family: Roboto, sans-serif !important;
+  font-weight: 400;
 }
 
 ul.dropdown-menu.langmenu {
@@ -74,4 +75,8 @@ app-mobile-data-view-rating {
 
 p {
   margin: 14px 0 !important;
+}
+
+b {
+  font-weight: 700;
 }
