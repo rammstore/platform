@@ -31,7 +31,7 @@ export class StrategyDetailsSymbolsComponent implements OnInit, OnDestroy {
       .subscribe((strategy: Strategy) => {
         this.strategy = strategy;
 
-        this.dataService.getSymbolsChart(this.strategy.id)
+        this.dataService.getSymbolsChart(this.route.parent.params['_value'].id)
           .pipe(takeUntil(this.destroy$))
           .subscribe((strategySymbolsStat: object[]) => {
             if (strategySymbolsStat.length) {
@@ -48,7 +48,7 @@ export class StrategyDetailsSymbolsComponent implements OnInit, OnDestroy {
                 tooltip: {
                   useHTML: true,
                   headerFormat: '',
-                  pointFormatter: function () {
+                  pointFormatter: function() {
                     return `<div class="arearange-tooltip-header">${Highcharts.numberFormat((this.y * 100), 2, '.')}%</div>`;
                   }
                 },
