@@ -111,7 +111,8 @@
                type="number"
                formControlName="protection"
                [min]="0"
-               [max]="100"
+               [max]="99"
+               [step]="1"
                title="{{'При снижении средств до заданного значения инвестиция будет приостановлена' | translate}}">
         <div class="messages">
           <label class="error-message"
@@ -119,19 +120,19 @@
             Защита не задана
           </label>
           <label class="error-message"
-                 *ngIf="form.get('protection').touched && form.get('protection').hasError('min')" translate>
-            Пожалуйста, введите корректное значение защиты.
-          </label>
-          <label class="error-message"
-                 *ngIf="form.get('protection').touched && form.get('protection').hasError('max')" translate>
+                 *ngIf="form.get('protection').touched && form.get('protection').hasError('min') && !form.get('protection').hasError('pattern')" translate>
             Пожалуйста, введите корректное значение защиты.
           </label>
           <label class="error-message"
                  *ngIf="form.get('protection').touched && form.get('protection').hasError('pattern')" translate>
             Пожалуйста, введите корректное значение защиты.
           </label>
+          <label class="error-message"
+                 *ngIf="form.get('protection').touched && form.get('protection').hasError('max') && !form.get('protection').hasError('pattern')">
+            <span translate>Максимальное значение защиты</span> - 99.
+          </label>
           <label class="details-message" *ngIf="form.get('amount').value && form.get('protection').value">
-            {{(strategy.account.equity + form.get('amount').value) * (form.get('protection').value / 100) | customCurrency}}
+            {{((form.get('amount').value * form.get('protection').value) / 100) | customCurrency}}
           </label>
         </div>
       </div>

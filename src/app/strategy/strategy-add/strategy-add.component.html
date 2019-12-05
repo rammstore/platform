@@ -140,21 +140,31 @@
     <div class="form-field">
       <label for="protection" class="field-label"><span translate>Защита</span>, %:</label>
       <div class="input-wrapper">
-        <input id="protection" type="number" formControlName="protection" [min]="0" [max]="99">
+        <input id="protection"
+               type="number"
+               formControlName="protection"
+               [min]="0"
+               [max]="99"
+               [step]="1"
+               title="{{'При снижении средств до заданного значения инвестиция будет приостановлена' | translate}}">
         <div class="messages">
-          <label *ngIf="formStep2.get('protection').touched && formStep2.get('protection').hasError('min')"
-                 class="error-message">
-            <span translate>Минимальный размер защиты</span> - 0%
+          <label class="error-message"
+                 *ngIf="formStep2.get('protection').touched && formStep2.get('protection').hasError('required')" translate>
+            Защита не задана
+          </label>
+          <label class="error-message"
+                 *ngIf="formStep2.get('protection').touched && formStep2.get('protection').hasError('min') && !formStep2.get('protection').hasError('pattern')" translate>
+            Пожалуйста, введите корректное значение защиты.
           </label>
           <label class="error-message"
                  *ngIf="formStep2.get('protection').touched && formStep2.get('protection').hasError('pattern')" translate>
             Пожалуйста, введите корректное значение защиты.
           </label>
-          <label *ngIf="formStep2.get('protection').touched && formStep2.get('protection').hasError('max')"
-                 class="error-message">
-            <span translate>Максимальный размер защиты</span> - 99%
+          <label class="error-message"
+                 *ngIf="formStep2.get('protection').touched && formStep2.get('protection').hasError('max') && !formStep2.get('protection').hasError('pattern')">
+            <span translate>Максимальное значение защиты</span> - 99.
           </label>
-          <label class="details-message" *ngIf="formStep2.valid">
+          <label class="details-message" *ngIf="formStep2.get('money').value && formStep2.get('protection').value">
             {{((formStep2.get('money').value * formStep2.get('protection').value) / 100) | customCurrency}}
           </label>
         </div>

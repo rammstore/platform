@@ -66,6 +66,7 @@
                formControlName="protection"
                [min]="0"
                [max]="99"
+               [step]="1"
                title="{{'При снижении средств до заданного значения инвестиция будет приостановлена' | translate}}">
         <div class="messages">
           <label class="error-message"
@@ -73,7 +74,7 @@
             Защита не задана
           </label>
           <label class="error-message"
-                 *ngIf="form.get('protection').touched && form.get('protection').hasError('min')" translate>
+                 *ngIf="form.get('protection').touched && form.get('protection').hasError('min') && !form.get('protection').hasError('pattern')" translate>
             Пожалуйста, введите корректное значение защиты.
           </label>
           <label class="error-message"
@@ -81,7 +82,7 @@
             Пожалуйста, введите корректное значение защиты.
           </label>
           <label class="error-message"
-                 *ngIf="form.get('protection').touched && form.get('protection').hasError('max')">
+                 *ngIf="form.get('protection').touched && form.get('protection').hasError('max') && !form.get('protection').hasError('pattern')">
             <span translate>Максимальное значение защиты</span> - 99.
           </label>
         </div>
