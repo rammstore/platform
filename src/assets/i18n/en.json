@@ -141,11 +141,11 @@
   "Сумма, доступная для частичного вывода": "Available for partial withdrawal",
   "Сумма вывода": "Withdrawal amount",
   "Указанное значение превышает доступную для вывода сумму.": "Requested withdrawal amount is more than available for withdrawal.",
-  "Укажите сумму вывода.": "Enter withdraw amount.",
+  "Укажите сумму вывода.": "Enter withdrawal amount.",
   "Пожалуйста, введите корректную сумму вывода.": "Please enter correct withdrawal amount.",
   "Баланс вашей инвестиции в вашу стратегию после вывода должен быть не меньше": "The balance of your investment after withdrawal should be not less than",
   "Сумма, доступная для вывода": "Available for withdrawal",
-  "Сумма вывода должна быть больше или равна": "Withdrawal amount should be more greater than or equal to",
+  "Сумма вывода должна быть больше или равна": "Withdrawal amount should be greater than or equal to",
 
   "Стратегия была закрыта трейдером и более недоступна для инвестирования.": "The strategy has been closed by the trader and is no longer available for investing.\n",
   "Предупреждение о рисках: итоги предыдущих торговых операций не гарантируют получение идентичных результатов в будущем.": "Risk warning: the results of previous trading operations do not guarantee the same results in the future.",
