@@ -30,7 +30,7 @@
   }
 
 .buttons-group {
-  margin: 40px 0 0;
+  margin: 0;
 
   button {
     width: 200px;
@@ -74,8 +74,10 @@
   @include vertical-results();
 }
 
-@media (min-width: 992px) and (max-width: 1200px) {
-
+@media (min-width: 992px) {
+  #accountWalletChartContainer {
+    height: 250px;
+  }
 }
 
 @media (min-width: 1200px) {
