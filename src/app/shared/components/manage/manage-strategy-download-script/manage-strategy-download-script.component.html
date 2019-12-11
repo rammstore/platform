@@ -1,1 +1,31 @@
-<p>manage-strategy-download-script works!</p>
+<app-dialog-wrapper titleText="{{'Скачать сингальный скрипт'| translate}}" [modalRef]="modalRef">
+  <form [formGroup]="form">
+
+    <div class="form-field">
+      <label class="field-label"><span translate>Торговая платформа</span>:</label>
+
+      <div class="radio-container">
+        <input type="radio"
+               name="platform"
+               value="mq4"
+               id="mt4-radio"
+               formControlName="platform">
+        <label for="mt4-radio" class="radio-label" translate>MetaTrader 4</label>
+      </div>
+
+      <div class="radio-container">
+        <input type="radio"
+               name="platform"
+               value="mq5"
+               id="mt5-radio"
+               formControlName="platform">
+        <label for="mt5-radio" class="radio-label" translate>MetaTrader 5</label>
+      </div>
+    </div>
+
+    <div class="dialog-actions">
+      <button class="primary" (click)="download()" [disabled]="!form.valid" translate>Скачать</button>
+    </div>
+
+  </form>
+</app-dialog-wrapper>

@@ -212,6 +212,14 @@ export class DataService {
     );
   }
 
+  getStrategyToken(strategyId: number): Observable<string> {
+    return this.http.post(`${CONFIG.baseApiUrl}/myStrategies.getToken`, {StrategyID: strategyId}).pipe(
+      map((response: any) => {
+        return response.Token;
+      })
+    );
+  }
+
   // Получение статуса команды стратегии и запрос обновленного списка стратегий после завершения обработки изменений
   // Работает с активными стратегиями, так как закрытые изменять нельзя
   updateStrategy(strategyId: number, command: Command, notificationText?: string): void {
