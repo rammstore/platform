@@ -1,11 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Wallet } from '@app/models';
-import { BsModalRef } from 'ngx-bootstrap';
+import { Strategy, Wallet } from '@app/models';
+import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
 import { DataService } from '@app/services/data.service';
 import { WalletService } from '@app/services/wallet.service';
+import { StrategyAddScriptComponent } from './strategy-add-script/strategy-add-script.component';
 
 @Component({
   selector: 'app-strategy-add',
@@ -27,6 +28,7 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private walletService: WalletService,
     private dataService: DataService,
+    private modalService: BsModalService,
     public modalRef: BsModalRef
   ) { }
 
@@ -88,8 +90,9 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
 
     this.dataService.addStrategy(strategy)
       .pipe(takeUntil(this.destroy$))
-      .subscribe(() => {
+      .subscribe((newStrategy: Strategy) => {
         this.modalRef.hide();
+        this.openAddStrategyScriptDialog(newStrategy);
       });
   }
 
@@ -115,6 +118,15 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
           this.formStep1.get('name').setErrors({isUniq: true});
         }
       });
+  }
+
+  openAddStrategyScriptDialog(strategy: Strategy) {
+    const options: ModalOptions = new ModalOptions();
+    options.initialState = {
+      strategy: strategy
+    };
+
+    this.modalRef = this.modalService.show(StrategyAddScriptComponent, options);
   }
 
   ngOnDestroy(): void {

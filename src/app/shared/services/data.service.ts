@@ -150,13 +150,15 @@ export class DataService {
   }
 
   // Создание новой стратегии
-  addStrategy(strategy: object) {
+  addStrategy(strategy: object): Observable<Strategy> {
     this.loaderService.showLoader();
     return this.http.post(`${CONFIG.baseApiUrl}/myStrategies.add`, strategy).pipe(map((response: any) => {
       this.loaderService.hideLoader();
       this.walletService.updateWallet().subscribe();
       this.getActiveMyStrategies().subscribe();
       this.notificationsService.open('Стратегия создана');
+      console.log(response);
+      return this.createInstanceService.createStrategy(response.Strategy);
     }));
   }
 

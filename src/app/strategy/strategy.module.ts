@@ -13,6 +13,7 @@ import { StrategyDetailsInvestmentsComponent } from './strategy-details/strategy
 import { MobileDataViewModule } from '@app/components/mobile-data-view/mobile-data-view.module';
 import { StrategyDetailsInvestmentsActiveComponent } from './strategy-details/strategy-details-investments/strategy-details-investments-active/strategy-details-investments-active.component';
 import { StrategyDetailsInvestmentsClosedComponent } from './strategy-details/strategy-details-investments/strategy-details-investments-closed/strategy-details-investments-closed.component';
+import { StrategyAddScriptComponent } from './strategy-add/strategy-add-script/strategy-add-script.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { StrategyDetailsInvestmentsClosedComponent } from './strategy-details/st
     StrategyDetailsSymbolsComponent,
     StrategyDetailsInvestmentsComponent,
     StrategyDetailsInvestmentsActiveComponent,
-    StrategyDetailsInvestmentsClosedComponent
+    StrategyDetailsInvestmentsClosedComponent,
+    StrategyAddScriptComponent
   ],
   imports: [
     SharedModule,
@@ -33,7 +35,8 @@ import { StrategyDetailsInvestmentsClosedComponent } from './strategy-details/st
     MobileDataViewModule
   ],
   entryComponents: [
-    StrategyAddComponent
+    StrategyAddComponent,
+    StrategyAddScriptComponent
   ],
   providers: [
     StrategyResolver
