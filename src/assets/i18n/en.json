@@ -63,8 +63,6 @@
   "Цена": "Price",
   "Комиссия": "Comission",
   "Комиссия, USD": "Comission, USD",
-  "Выплаченное Вознаграждение, USD": "Paid fee, USD",
-  "Невыплаченное Вознаграждение, USD": "Due Fee, USD",
 
   "Показывать на странице": "Items per page",
   "Всего записей": "Total items",
@@ -141,11 +139,11 @@
   "Сумма, доступная для частичного вывода": "Available for partial withdrawal",
   "Сумма вывода": "Withdrawal amount",
   "Указанное значение превышает доступную для вывода сумму.": "Requested withdrawal amount is more than available for withdrawal.",
-  "Укажите сумму вывода.": "Enter withdraw amount.",
+  "Укажите сумму вывода.": "Enter withdrawal amount.",
   "Пожалуйста, введите корректную сумму вывода.": "Please enter correct withdrawal amount.",
   "Баланс вашей инвестиции в вашу стратегию после вывода должен быть не меньше": "The balance of your investment after withdrawal should be not less than",
   "Сумма, доступная для вывода": "Available for withdrawal",
-  "Сумма вывода должна быть больше или равна": "Withdrawal amount should be more greater than or equal to",
+  "Сумма вывода должна быть больше или равна": "Withdrawal amount should be greater than or equal to",
 
   "Стратегия была закрыта трейдером и более недоступна для инвестирования.": "The strategy has been closed by the trader and is no longer available for investing.\n",
   "Предупреждение о рисках: итоги предыдущих торговых операций не гарантируют получение идентичных результатов в будущем.": "Risk warning: the results of previous trading operations do not guarantee the same results in the future.",
@@ -167,6 +165,11 @@
   "Уровень маржи": "Margin level",
   "Не удалось изменить пароль.": "Password did not changed.",
   "Ваш пароль успешно изменен.": "Your password changed successfully.",
+
+  "Скачать сингальный скрипт": "Download signal script",
+  "Скачать": "Download",
+  "Торговая платформа": "Trading platform",
+  "Комиссия за оборот": "Turnover fee",
 
   "Вы также можете посмотреть эти значения в верхнем правом углу": "You can also check it up in the upper right corner",
   "Юридическая информация": "LEGAL: Grand Capital is a brand name owned and operated by Grand Capital Ltd. (Reg. no. 036046), a member of FinCom, an international regulatory body for financial markets. Grand Capital Ltd. is located at 106 Premier Building Victoria, Mahe, Seychelles. Email at: info@grandcapital.net",

@@ -28,7 +28,8 @@ export class CreateInstanceService {
       MCLevel: options.MCLevel,
       equity: options.Equity,
       feePaid: options.FeePaid,
-      feeToPay: options.FeeToPay
+      feeToPay: options.FeeToPay,
+      commission: options.Commission
     });
   }
 

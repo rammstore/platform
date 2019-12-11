@@ -27,9 +27,9 @@ export class StrategyActiveComponent implements OnInit, OnDestroy {
       new TableColumn({ property: 'account.equity', label: 'Средства, USD', pipe: { pipe: CustomCurrencyPipe }}),
       new TableColumn({ property: 'accountsCount', label: 'Инвесторы'}),
       new TableColumn({ property: 'offer.fee', label: 'Вознаграждение', pipe: { pipe: PercentPipe }}),
-      new TableColumn({ property: 'feePaid', label: 'Выплаченное Вознаграждение, USD', pipe: { pipe: CustomCurrencyPipe }}),
+      new TableColumn({ property: 'feePaid', label: 'Выплаченное вознаграждение, USD', pipe: { pipe: CustomCurrencyPipe }}),
       new TableColumn({ property: 'account.intervalPnL', label: 'Прибыль, USD', pipe: { pipe: CustomCurrencyPipe } }),
-      new TableColumn({ property: 'feeToPay', label: 'Невыплаченное Вознаграждение, USD', pipe: { pipe: CustomCurrencyPipe }}),
+      new TableColumn({ property: 'feeToPay', label: 'Невыплаченное вознаграждение, USD', pipe: { pipe: CustomCurrencyPipe }}),
       new TableColumn({ property: 'manage', label: '' })
     ]),
   ];

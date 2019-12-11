@@ -20,6 +20,7 @@ export class Strategy {
   equity: number;         // Инвестиции
   feePaid: number;        // Выплаченное вознаграждение
   feeToPay: number;       // Невыплаченное вознаграждение
+  commission: number;      // Комиссия за оборот
 
 
   constructor(
