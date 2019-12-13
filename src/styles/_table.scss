@@ -1,5 +1,39 @@
 @import "variables";
 
+app-data-table {
+  &.low-height {
+    table tbody {
+      tr {
+        td {
+          min-height: 40px !important;
+          height: 40px !important;
+          font-size: 12px !important;
+          padding: 0 15px !important;
+        }
+      }
+    }
+  }
+
+  &.stripped {
+    table tbody {
+      tr {
+
+        &:hover {
+          background-color: rgba($link-color, .5);
+        }
+
+        &:nth-child(2n) {
+          background-color: $main-color;
+
+          &:hover {
+            background-color: rgba($link-color, .5);
+          }
+        }
+      }
+    }
+  }
+}
+
 table {
   width: 100%;
   border-spacing: 0;

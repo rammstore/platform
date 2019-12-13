@@ -48,7 +48,9 @@ export class ChartYieldTableComponent implements OnInit, OnDestroy {
               enabled: false
             },
             gridLineWidth: 1,
-            tickAmount: response.Chart.length / 5
+            tickAmount: response.Chart.length / 7,
+            tickWidth: 0,
+            lineWidth: 0
           },
           yAxis: {
             labels: {
@@ -56,7 +58,8 @@ export class ChartYieldTableComponent implements OnInit, OnDestroy {
             },
             title: {
               enabled: false
-            }
+            },
+            gridLineWidth: 0
           },
           legend: {
             enabled: false

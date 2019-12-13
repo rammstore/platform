@@ -49,7 +49,8 @@ export class StrategyDetailsProfitabilityComponent implements OnInit , OnDestroy
             enabled: false
           },
           chart: {
-            zoomType: 'x'
+            zoomType: 'x',
+            backgroundColor: '#f8f8f8'
           },
           title: {
             text: ''
@@ -59,7 +60,9 @@ export class StrategyDetailsProfitabilityComponent implements OnInit , OnDestroy
             dateTimeLabelFormats: {
               day: '%e<br>%b',
               month: '%y<br>%b'
-            }
+            },
+            gridLineWidth: 1,
+            gridLineColor: '#eaeaea'
           },
           yAxis: {
             labels: {
@@ -67,12 +70,22 @@ export class StrategyDetailsProfitabilityComponent implements OnInit , OnDestroy
             },
             title: {
               text: ''
-            }
+            },
+            gridLineWidth: 1,
+            gridLineColor: '#eaeaea'
           },
           legend: {
             enabled: false
           },
+          plotOptions: {
+            series: {
+              marker: {
+                enabled: false
+              }
+            }
+          },
           tooltip: {
+            backgroundColor: '#ffffff',
             useHTML: true,
             formatter: function() {
               return `<div class="arearange-tooltip-header ${this.y < 0 ? 'negative' : ''} ${this.y > 0 ? 'positive' : ''}">` +
@@ -83,6 +96,7 @@ export class StrategyDetailsProfitabilityComponent implements OnInit , OnDestroy
           type: 'arearange',
           series: [{
             type: 'area',
+            lineWidth: 1,
             data: this.getChartDataValues(response.Chart),
             zones: [{
               value: 0,

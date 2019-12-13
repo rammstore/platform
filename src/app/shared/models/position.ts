@@ -10,11 +10,14 @@ export class Position {
   profitCalcQuote: number;  // Котировка, по которой вычислялась прибыль
   precisionPrice: number;   // Количество знаков после запятой при выводе цены
   precisionVolume: number;  // Количество знаков после запятой при выводе объема
+  type: string;             // Тип
+  currentPrice: number;     // Текущая цена
 
   constructor(
     options: any
   ) {
     Object.assign(this, options);
+    this.setType();
   }
 
   getAbsVolume(): number {
@@ -22,6 +25,20 @@ export class Position {
   }
 
   getType(): string {
-    return '';
+    return this.type;
+  }
+
+  setType(): void {
+    switch (true) {
+      case (this.volume > 0):
+        this.type = 'buy';
+        break;
+      case (this.volume < 0):
+        this.type = 'sell';
+        break;
+      case (this.volume === 0):
+      default:
+        this.type = 'no data to display';
+    }
   }
 }

@@ -120,7 +120,7 @@ export class CreateInstanceService {
       profitCalcQuote: options.ProfitCalcQuote,
       precisionPrice: options.PrecisionPrice,
       precisionVolume: options.PrecisionVolume,
-      currentPrice: options.CurrentPrice,
+      currentPrice: options.ProfitCalcQuote,
       type: options.Type
     });
   }
