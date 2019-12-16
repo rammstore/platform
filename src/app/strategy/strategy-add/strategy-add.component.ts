@@ -105,7 +105,7 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
   }
 
   isStrategyNameUniq(name: string, isSubmitClicked: boolean = false): void {
-    this.dataService.searchStrategy(name)
+    this.dataService.isStrategyNameUniq(name)
       .pipe(takeUntil(this.destroy$))
       .subscribe((isUniq: boolean) => {
         if (isUniq) {
@@ -113,8 +113,7 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
           if (isSubmitClicked) {
             this.submitStep1();
           }
-        }
-        else {
+        } else {
           this.formStep1.get('name').setErrors({isUniq: true});
         }
       });

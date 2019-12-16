@@ -222,6 +222,14 @@ export class DataService {
     );
   }
 
+  isStrategyNameUniq(searchQuery: string): Observable<boolean> {
+    return this.http.post(`${CONFIG.baseApiUrl}/myStrategies.checkName`, {Name: searchQuery}).pipe(
+      map((response: any) => {
+        return !!response.StrategyNameAvailable;
+      })
+    );
+  }
+
   // Получение статуса команды стратегии и запрос обновленного списка стратегий после завершения обработки изменений
   // Работает с активными стратегиями, так как закрытые изменять нельзя
   updateStrategy(strategyId: number, command: Command, notificationText?: string): void {

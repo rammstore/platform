@@ -103,6 +103,16 @@
   "Ок": "Ok",
   "Отмена": "Cancel",
 
+  "Готово!": "Ready!",
+  "Скачать скрипт": "Download script",
+  "Новая стратегия создана.": "Your strategy has been created successfully.",
+  "Для отправки сигналов с вашего торгового счета MetaTrader 4 или MetaTrader 5, скачайте сигнальный советник и запустите его в вашем терминале MetaTrader.": "To send signals from your MetaTrader 4 or MetaTrader 5 trading account, download the signal script and run it in your MetaTrader terminal.",
+  "Вы можете скачать советник и позже, выбрав соответствующую опцию в меню стратегии.": "You can also download it later by selecting the respective option in your strategy's context menu.",
+  "1. В меню терминала “Сервис” - ”Настройки”, на вкладке “Советники” внесите адрес сервера RAMM в список разрешенных URL.": "1. Before you launch the EA for the first time, please make sure that RAMM URL is in the list of allowed URLs in your MetaTrader.",
+  "Для этого добавьте адрес https://maindc.ramm.store/api/trading/v1/signals.send в таблицу “Разрешить WebRequest для следующих URL:”.": "For that, in menu Tools - Options - Expert Advisors add https://maindc.ramm.store/api/trading/v1/signals.send to table “Allow WebRequest for listed URL:”",
+  "2. Запустите советник на любом графике.": "2. Put the EA into any chart window.",
+  "Все изменения на вашем счете будут копироваться в вашу стратегию в RAMM.": "Since now, all changes on your account will be copied to your strategy in RAMM.",
+
   "Сумма пополнения": "Fund amount",
   "Пожалуйста, введите сумму инвестиции.": "Please enter the investment amount.",
 
@@ -166,7 +176,7 @@
   "Не удалось изменить пароль.": "Password did not changed.",
   "Ваш пароль успешно изменен.": "Your password changed successfully.",
 
-  "Скачать сингальный скрипт": "Download signal script",
+  "Скачать сигнальный скрипт": "Download signal script",
   "Скачать": "Download",
   "Торговая платформа": "Trading platform",
   "Комиссия за оборот": "Turnover fee",
