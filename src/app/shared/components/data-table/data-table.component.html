@@ -5,9 +5,8 @@
         [attr.colspan]="column.colspan"
         [attr.rowspan]="column.rowspan"
         class="{{column.property}}"
-        [class.colored]="column.colored"
-        translate>
-      {{column.label}}
+        [class.colored]="column.colored">
+      <span translate>{{column.label}}</span>
     </th>
   </tr>
   </thead>
