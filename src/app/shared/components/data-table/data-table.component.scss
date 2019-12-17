@@ -64,6 +64,15 @@ td {
   }
 }
 
+@media (max-width: 1200px) {
+  th,
+  td {
+    &[class*='strategy.yieldChart'] {
+      display: none;
+    }
+  }
+}
+
 @media (max-width: 992px) {
   th,
   td {

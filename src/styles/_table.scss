@@ -53,10 +53,11 @@ table {
         &.colored {
           background-color: $background-color;
         }
-        //&:first-child {
-        //  text-align: left;
-        //  padding: 15px;
-        //}
+
+        &:first-child {
+          text-align: left;
+          padding: 15px;
+        }
       }
     }
   }
@@ -87,6 +88,7 @@ table {
 
           &.detail-link {
             border-bottom: 1px dashed $link-color;
+            white-space: nowrap;
           }
         }
       }
