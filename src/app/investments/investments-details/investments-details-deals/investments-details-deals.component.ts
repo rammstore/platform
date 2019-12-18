@@ -27,7 +27,7 @@ export class InvestmentsDetailsDealsComponent implements OnInit, OnDestroy {
     new TableHeaderRow([
       new TableColumn({ property: 'dtCreated', label: 'Время', pipe: { pipe: CustomDatePipe }}),
       new TableColumn({ property: 'id', label: 'Сделка'}),
-      new TableColumn({ property: 'Symbol', label: 'Инструмент' }),
+      new TableColumn({ property: 'symbol', label: 'Инструмент' }),
       new TableColumn({ property: 'type', label: 'Тип' }),
       new TableColumn({ property: 'entry', label: 'Направление' }),
       new TableColumn({ property: 'volume', label: 'Объем' }),
