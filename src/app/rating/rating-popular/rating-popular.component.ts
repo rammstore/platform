@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Paginator, Strategy, TableColumn } from '@app/models';
 import { TableHeaderRow } from '@app/models/table-header-row';
@@ -20,6 +20,7 @@ export class RatingPopularComponent implements  OnInit, OnDestroy {
   // component data
   strategies: Strategy[];
   searchText: string = '';
+  args: any;
 
   // table settings
   tableHeader: TableHeaderRow[] = [
@@ -43,11 +44,16 @@ export class RatingPopularComponent implements  OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.args = {
+      ratingType: 2,
+      paginator: this.paginator,
+      searchText: this.searchText
+    };
     this.getRating();
   }
 
   getRating(): void {
-    this.dataService.getRating(2, this.paginator, this.searchText)
+    this.dataService.getRating(this.args)
       .pipe(takeUntil(this.destroy$))
       .subscribe((strategies: Strategy[]) => {
         this.strategies = strategies;

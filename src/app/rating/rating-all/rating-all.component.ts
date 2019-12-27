@@ -20,6 +20,7 @@ export class RatingAllComponent implements OnInit, OnDestroy {
   // component data
   strategies: Strategy[];
   searchText: string = '';
+  args: any;
 
   // table settings
   tableHeader: TableHeaderRow[] = [
@@ -43,11 +44,16 @@ export class RatingAllComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.args = {
+      ratingType: 1,
+      paginator: this.paginator,
+      searchText: this.searchText
+    };
     this.getRating();
   }
 
   getRating(): void {
-    this.dataService.getRating(1, this.paginator, this.searchText)
+    this.dataService.getRating(this.args)
       .pipe(takeUntil(this.destroy$))
       .subscribe((strategies: Strategy[]) => {
         this.strategies = strategies;

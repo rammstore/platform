@@ -10,6 +10,8 @@ export class MobileDataViewRatingComponent {
   @Input() strategies: Strategy[];
   @Input() paginator: Paginator;
   @Output() paginationChanged: EventEmitter<void> = new EventEmitter();
+  @Input() methodName: string;
+  @Input() methodArgs: any;
 
   paginatorChanged(): void {
     this.paginationChanged.emit();

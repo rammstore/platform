@@ -452,7 +452,7 @@ export class DataService {
         // this.getActiveMyStrategies().subscribe();
         this.walletService.updateWallet().subscribe();
         this.getStrategy(id);
-        this.updateRatingList();
+        // this.updateRatingList();
         this.notificationsService.open('Инвестиция создана');
       })
     );
@@ -670,21 +670,21 @@ export class DataService {
   //
   // Методы ддля работы с рейтингом
   //
-  getRating(ratingType: 0 | 1 | 2, pagination?: Paginator, searchText?: string): Observable<Strategy[]> {
+  getRating(args: {ratingType: 0 | 1 | 2, paginator: Paginator, searchText?: string}): Observable<Strategy[]> {
     this.loaderService.showLoader();
     const options: RatingSearchOptions = new RatingSearchOptions();
     options.Filter = {
-      RatingType: ratingType,
+      RatingType: args.ratingType,
     };
 
-    if (searchText) {
-      options.Filter.StrategyName = searchText;
+    if (args.searchText) {
+      options.Filter.StrategyName = args.searchText;
     }
 
-    if (pagination) {
+    if (args.paginator) {
       options.Pagination = {
-        CurrentPage: pagination.currentPage,
-        PerPage: pagination.perPage
+        CurrentPage: args.paginator.currentPage,
+        PerPage: args.paginator.perPage
       };
     }
 
@@ -698,9 +698,9 @@ export class DataService {
         strategies.push(this.createInstanceService.createStrategy(s.Strategy));
       });
 
-      if (pagination) {
-        pagination.totalItems = response.Pagination.TotalRecords;
-        pagination.totalPages = response.Pagination.TotalPages;
+      if (args.paginator) {
+        args.paginator.totalItems = response.Pagination.TotalRecords;
+        args.paginator.totalPages = response.Pagination.TotalPages;
       }
 
       this.loaderService.hideLoader();
