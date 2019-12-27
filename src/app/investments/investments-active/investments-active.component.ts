@@ -18,6 +18,7 @@ export class InvestmentsActiveComponent implements OnInit, OnDestroy {
 
   // component data
   accounts: Account[];
+  args: any;
 
   // table settings
   tableHeader: TableHeaderRow[] = [
@@ -45,11 +46,15 @@ export class InvestmentsActiveComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.args = {
+      paginator: this.paginator
+    };
+
     this.getAccounts();
   }
 
   getAccounts(): void {
-    this.dataService.getActiveMyAccounts(this.paginator)
+    this.dataService.getActiveMyAccounts(this.args)
       .pipe(takeUntil(this.destroy$))
       .subscribe((accounts: Account[]) => {
         this.accounts = accounts;

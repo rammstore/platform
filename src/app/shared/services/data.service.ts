@@ -329,15 +329,15 @@ export class DataService {
   }
 
   // Получение списка активных инвестиций
-  getActiveMyAccounts(pagination?: Paginator): Observable<Account[]> {
+  getActiveMyAccounts(args: { paginator: Paginator }): Observable<Account[]> {
     this.loaderService.showLoader();
     const options: AccountsSearchOptions = new AccountsSearchOptions();
     options.Filter = { MyActiveAccounts: true };
 
-    if (pagination) {
+    if (args.paginator) {
       options.Pagination = {
-        CurrentPage: pagination.currentPage,
-        PerPage: pagination.perPage
+        CurrentPage: args.paginator.currentPage,
+        PerPage: args.paginator.perPage
       };
     }
 
@@ -348,9 +348,9 @@ export class DataService {
         accounts.push(new Account(this.createInstanceService.createAccount(account)));
       });
 
-      if (pagination) {
-        pagination.totalItems = response.Pagination.TotalRecords;
-        pagination.totalPages = response.Pagination.TotalPages;
+      if (args.paginator) {
+        args.paginator.totalItems = response.Pagination.TotalRecords;
+        args.paginator.totalPages = response.Pagination.TotalPages;
       }
 
       this.loaderService.hideLoader();
