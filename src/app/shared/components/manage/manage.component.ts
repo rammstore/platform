@@ -114,7 +114,9 @@ export class ManageComponent implements OnInit {
     }
 
     options.initialState = {
-      strategy: data
+      strategy: data,
+      methodName: this.methodName,
+      methodArgs: this.methodArgs
     };
 
     return options;

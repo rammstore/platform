@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef } from 'ngx-bootstrap';
 import { Strategy, Wallet } from '@app/models';
@@ -21,6 +21,8 @@ export class ManageStrategyResumeComponent implements OnInit, OnDestroy {
   form: FormGroup;
   wallet: Wallet;
   strategy: Strategy;
+  @Input() methodName: string;
+  @Input() methodArgs: any;
 
   constructor(
     private fb: FormBuilder,
@@ -53,14 +55,14 @@ export class ManageStrategyResumeComponent implements OnInit, OnDestroy {
     if (!this.form.valid) {
       return;
     }
-    const queries: any[] = [this.dataService.resumeStrategy(this.strategy.id)];
+    const queries: any[] = [this.dataService.resumeStrategy(this.strategy.id, this.methodName, this.methodArgs)];
 
     const values = this.form.getRawValue();
     values.protection = values.protection / 100;
     values.target = values.target ? values.target / 100 : null;
 
     if (values.amount) {
-      queries.push(this.dataService.fundAccount(this.strategy.account.id, values.amount, this.strategy.id));
+      queries.push(this.dataService.fundAccount(this.strategy.account.id, values.amount, this.methodName, this.methodArgs));
     }
 
 
@@ -81,7 +83,7 @@ export class ManageStrategyResumeComponent implements OnInit, OnDestroy {
     }
 
     if (newObj.protection || newObj.target || newObj.factor) {
-      queries.push(this.dataService.changeAccountProfile(this.strategy.account.id, newObj, this.strategy.id));
+      queries.push(this.dataService.changeAccountProfile(this.strategy.account.id, newObj, this.methodName, this.methodArgs));
     }
 
     forkJoin(queries).pipe(takeUntil(this.destroy$)).subscribe(() => {

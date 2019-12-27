@@ -61,7 +61,7 @@ export class DataService {
   //
 
   // Получение списка активных стратегий
-  getActiveMyStrategies(pagination?: Paginator): Observable<Strategy[]> {
+  getActiveMyStrategies(args: {paginator: Paginator}): Observable<Strategy[]> {
     this.loaderService.showLoader();
     const options: StrategiesSearchOptions = new StrategiesSearchOptions();
     options.Filter = {
@@ -69,10 +69,10 @@ export class DataService {
       MyStrategies: true
     };
 
-    if (pagination) {
+    if (args.paginator) {
       options.Pagination = {
-        CurrentPage: pagination.currentPage,
-        PerPage: pagination.perPage
+        CurrentPage: args.paginator.currentPage,
+        PerPage: args.paginator.perPage
       };
     }
 
@@ -83,9 +83,9 @@ export class DataService {
         strategies.push(this.createInstanceService.createStrategy(s));
       });
 
-      if (pagination) {
-        pagination.totalItems = response.Pagination.TotalRecords;
-        pagination.totalPages = response.Pagination.TotalPages;
+      if (args.paginator) {
+        args.paginator.totalItems = response.Pagination.TotalRecords;
+        args.paginator.totalPages = response.Pagination.TotalPages;
       }
 
       this.loaderService.hideLoader();
@@ -157,64 +157,63 @@ export class DataService {
     return this.http.post(`${CONFIG.baseApiUrl}/myStrategies.add`, strategy).pipe(map((response: any) => {
       this.loaderService.hideLoader();
       this.walletService.updateWallet().subscribe();
-      this.getActiveMyStrategies().subscribe();
+      // this.getActiveMyStrategies().subscribe();
       this.notificationsService.open('Стратегия создана');
-      console.log(response);
       return this.createInstanceService.createStrategy(response.Strategy);
     }));
   }
 
   // Постановка стратегии на паузу
-  pauseStrategy(strategyId: number): Observable<any> {
+  pauseStrategy(strategyId: number, methodName: string, methodArgs: any): Observable<any> {
     this.loaderService.showLoader();
     return this.http.post(`${CONFIG.baseApiUrl}/myStrategies.pause`, {StrategyID: strategyId}).pipe(
       map((response: any) => {
-        this.updateStrategy(strategyId, new Command(response.CommandID, strategyId), 'Стратегия поставлена на паузу');
+        this.updateStrategy(new Command(response.CommandID, strategyId), methodName, methodArgs, 'Стратегия поставлена на паузу');
       })
     );
   }
 
   // Возобновление стратегии
-  resumeStrategy(strategyId: number): Observable<any> {
+  resumeStrategy(strategyId: number, methodName: string, methodArgs: any): Observable<any> {
     this.loaderService.showLoader();
     return this.http.post(`${CONFIG.baseApiUrl}/myStrategies.resume`, {StrategyID: strategyId}).pipe(
       map((response: any) => {
-        this.updateStrategy(strategyId, new Command(response.CommandID, strategyId), 'Стратегия возобновлена');
+        this.updateStrategy(new Command(response.CommandID, strategyId), methodName, methodArgs, 'Стратегия возобновлена');
       })
     );
   }
 
   // Закрытие стратегии
-  closeStrategy(strategyId: number): Observable<any> {
+  closeStrategy(strategyId: number, methodName: string, methodArgs: any): Observable<any> {
     this.loaderService.showLoader();
     return this.http.post(`${CONFIG.baseApiUrl}/myStrategies.close`, {StrategyID: strategyId}).pipe(
       map((response: any) => {
-        this.updateStrategy(strategyId, new Command(response.CommandID, strategyId), 'Стратегия закрыта');
+        this.updateStrategy(new Command(response.CommandID, strategyId), methodName, methodArgs, 'Стратегия закрыта');
       })
     );
   }
 
-  searchStrategy(strategyName: string): Observable<boolean> {
-    this.loaderService.showLoader();
-
-    const options: StrategiesSearchOptions = new StrategiesSearchOptions();
-    options.Filter = {
-      Name: strategyName
-    };
-
-    return this.http.post(`${CONFIG.baseApiUrl}/strategies.search`, options).pipe(
-      map((response: any) => {
-        this.loaderService.hideLoader();
-        let result: boolean = true;
-        response.Strategies.forEach((s: any) => {
-          if (s.Name.toLocaleLowerCase() === strategyName.toLocaleLowerCase()) {
-            result = false;
-          }
-        });
-        return result;
-      })
-    );
-  }
+  // searchStrategy(strategyName: string): Observable<boolean> {
+  //   this.loaderService.showLoader();
+  //
+  //   const options: StrategiesSearchOptions = new StrategiesSearchOptions();
+  //   options.Filter = {
+  //     Name: strategyName
+  //   };
+  //
+  //   return this.http.post(`${CONFIG.baseApiUrl}/strategies.search`, options).pipe(
+  //     map((response: any) => {
+  //       this.loaderService.hideLoader();
+  //       let result: boolean = true;
+  //       response.Strategies.forEach((s: any) => {
+  //         if (s.Name.toLocaleLowerCase() === strategyName.toLocaleLowerCase()) {
+  //           result = false;
+  //         }
+  //       });
+  //       return result;
+  //     })
+  //   );
+  // }
 
   getStrategyToken(strategyId: number): Observable<string> {
     return this.http.post(`${CONFIG.baseApiUrl}/myStrategies.getToken`, {StrategyID: strategyId}).pipe(
@@ -234,22 +233,41 @@ export class DataService {
 
   // Получение статуса команды стратегии и запрос обновленного списка стратегий после завершения обработки изменений
   // Работает с активными стратегиями, так как закрытые изменять нельзя
-  updateStrategy(strategyId: number, command: Command, notificationText?: string): void {
+  updateStrategy(command: Command, methodName: string, methodArgs: any, notificationText: string): void {
     const interval = setInterval(() => {
       this.commandService.checkStrategyCommand(command).subscribe((commandStatus: number) => {
         if (commandStatus !== 0) {
           clearInterval(interval);
-          this.getActiveMyStrategies().subscribe();
-          this.getActiveMyAccounts().subscribe();
-          this.walletService.updateWallet().subscribe();
-          this.loaderService.hideLoader();
-          this.getStrategy(strategyId);
-          this.updateRatingList();
-          this.notificationsService.open(notificationText);
+          this[methodName](methodArgs)
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(() => {
+              this.notificationsService.open(notificationText);
+
+              this.destroy$.next(true);
+            });
         }
       });
     }, 1000);
   }
+
+  // Получение статуса команды стратегии и запрос обновленного списка стратегий после завершения обработки изменений
+  // Работает с активными стратегиями, так как закрытые изменять нельзя
+  // updateStrategy(strategyId: number, command: Command, notificationText?: string): void {
+  //   const interval = setInterval(() => {
+  //     this.commandService.checkStrategyCommand(command).subscribe((commandStatus: number) => {
+  //       if (commandStatus !== 0) {
+  //         clearInterval(interval);
+  //         this.getActiveMyStrategies().subscribe();
+  //         // this.getActiveMyAccounts().subscribe();
+  //         this.walletService.updateWallet().subscribe();
+  //         this.loaderService.hideLoader();
+  //         this.getStrategy(strategyId);
+  //         this.updateRatingList();
+  //         this.notificationsService.open(notificationText);
+  //       }
+  //     });
+  //   }, 1000);
+  // }
 
   // Получение графика для стратегий
   getStrategyChart(chartOptions: ChartOptions): Observable<any> {
@@ -406,6 +424,8 @@ export class DataService {
         strategy: this.createInstanceService.createStrategy(response.Statement[0].Strategy),
         account: this.createInstanceService.createAccount(response.Statement[0].Account)
       });
+
+      this.loaderService.hideLoader();
     }, (error: HttpErrorResponse) => {
       if (error.status === 401) {
         this.router.navigate(['/investments']);
@@ -429,7 +449,7 @@ export class DataService {
 
     return this.http.post(`${CONFIG.baseApiUrl}/accounts.add`, options).pipe(
       map((response: any) => {
-        this.getActiveMyStrategies().subscribe();
+        // this.getActiveMyStrategies().subscribe();
         this.walletService.updateWallet().subscribe();
         this.getStrategy(id);
         this.updateRatingList();
@@ -543,7 +563,6 @@ export class DataService {
           this[methodName](methodArgs)
             .pipe(takeUntil(this.destroy$))
             .subscribe(() => {
-              this.loaderService.hideLoader();
               this.notificationsService.open(notificationText);
 
               this.destroy$.next(true);
