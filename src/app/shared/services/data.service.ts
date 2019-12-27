@@ -132,9 +132,9 @@ export class DataService {
   }
 
   // Получение конкретной стратегии
-  getStrategy(id: number): Observable<Strategy> {
+  getStrategy(args: {strategyId: number}): Observable<Strategy> {
     this.loaderService.showLoader();
-    this.http.post(`${CONFIG.baseApiUrl}/strategies.get`, {ID: id}).subscribe((response: any) => {
+    this.http.post(`${CONFIG.baseApiUrl}/strategies.get`, {ID: args.strategyId}).subscribe((response: any) => {
       this.loaderService.hideLoader();
       if (response.MyAccount) {
         response.Strategy.Account = response.MyAccount;
@@ -242,9 +242,13 @@ export class DataService {
             .pipe(takeUntil(this.destroy$))
             .subscribe(() => {
               this.notificationsService.open(notificationText);
-
               this.destroy$.next(true);
             });
+          this.walletService.updateWallet()
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(() => {
+              this.destroy$.next(true);
+          });
         }
       });
     }, 1000);
@@ -558,13 +562,15 @@ export class DataService {
       this.commandService.checkAccountCommand(command).subscribe((commandStatus: number) => {
         if (commandStatus !== 0) {
           clearInterval(interval);
-          console.log(methodName);
-          console.log(methodArgs);
           this[methodName](methodArgs)
             .pipe(takeUntil(this.destroy$))
             .subscribe(() => {
               this.notificationsService.open(notificationText);
-
+              this.destroy$.next(true);
+            });
+          this.walletService.updateWallet()
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(() => {
               this.destroy$.next(true);
             });
         }
@@ -591,19 +597,19 @@ export class DataService {
   //   }, 1000);
   // }
 
-  updateRatingList() {
-    switch (this.router.url) {
-      case '/rating':
-        this.getRating(0).subscribe();
-        break;
-      case '/rating/popular':
-        this.getRating(2).subscribe();
-        break;
-      case '/rating/all':
-        this.getRating(1).subscribe();
-        break;
-    }
-  }
+  // updateRatingList() {
+  //   switch (this.router.url) {
+  //     case '/rating':
+  //       this.getRating(0).subscribe();
+  //       break;
+  //     case '/rating/popular':
+  //       this.getRating(2).subscribe();
+  //       break;
+  //     case '/rating/all':
+  //       this.getRating(1).subscribe();
+  //       break;
+  //   }
+  // }
 
   // Получение списка сделок по инвестиции
   getAccountDeals(id: number, pagination?: Paginator): Observable<Deal[]> {
