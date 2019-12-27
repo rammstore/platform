@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef } from 'ngx-bootstrap';
 import { Subject } from 'rxjs';
@@ -19,6 +19,8 @@ export class ManageAccountChangeProfileComponent implements OnInit, OnDestroy {
   // component data
   form: FormGroup;
   account: Account;
+  @Input() methodName: string;
+  @Input() methodArgs: any;
 
   constructor(
     private fb: FormBuilder,
@@ -70,7 +72,7 @@ export class ManageAccountChangeProfileComponent implements OnInit, OnDestroy {
       newObj.factor = values.factor;
     }
 
-    this.dataService.changeAccountProfile(this.account.id, newObj, this.account.strategy.id)
+    this.dataService.changeAccountProfile(this.account.id, newObj, this.methodName, this.methodArgs)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
         this.modalRef.hide();

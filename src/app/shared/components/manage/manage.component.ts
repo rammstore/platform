@@ -21,6 +21,8 @@ export class ManageComponent implements OnInit {
   @Input() data: Strategy | Account;
   dataType: string;
   modalRef: BsModalRef;
+  @Input() methodName: string;
+  @Input() methodArgs: any;
 
   constructor(
     private modalService: BsModalService
@@ -130,7 +132,9 @@ export class ManageComponent implements OnInit {
     }
 
     options.initialState = {
-      account: data
+      account: data,
+      methodName: this.methodName,
+      methodArgs: this.methodArgs
     };
 
     return options;

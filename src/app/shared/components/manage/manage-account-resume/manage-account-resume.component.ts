@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef } from 'ngx-bootstrap';
 import { forkJoin, Subject } from 'rxjs';
@@ -21,6 +21,8 @@ export class ManageAccountResumeComponent implements OnInit, OnDestroy {
   form: FormGroup;
   wallet: Wallet;
   account: Account;
+  @Input() methodName: string;
+  @Input() methodArgs: any;
 
   constructor(
     private fb: FormBuilder,
@@ -54,7 +56,7 @@ export class ManageAccountResumeComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const queries: any[] = [this.dataService.resumeAccount(this.account.id, this.account.strategy.id)];
+    const queries: any[] = [this.dataService.resumeAccount(this.account.id, this.methodName, this.methodArgs)];
 
     const values = this.form.getRawValue();
     values.protection = values.protection / 100;
@@ -67,7 +69,7 @@ export class ManageAccountResumeComponent implements OnInit, OnDestroy {
     };
 
     if (values.amount) {
-      queries.push(this.dataService.fundAccount(this.account.id, values.amount, this.account.strategy.id))
+      queries.push(this.dataService.fundAccount(this.account.id, values.amount, this.methodName, this.methodArgs));
     }
 
     if (values.protection !== this.account.protection) {
@@ -81,7 +83,7 @@ export class ManageAccountResumeComponent implements OnInit, OnDestroy {
     }
 
     if (newObj.protection || newObj.target || newObj.factor) {
-      queries.push(this.dataService.changeAccountProfile(this.account.id, newObj, this.account.strategy.id));
+      queries.push(this.dataService.changeAccountProfile(this.account.id, newObj, this.methodName, this.methodArgs));
     }
 
     forkJoin(queries).pipe(takeUntil(this.destroy$)).subscribe(() => {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, forkJoin, Observable, of, ReplaySubject } from "rxjs";
+import { BehaviorSubject, forkJoin, Observable, of, ReplaySubject, Subject } from "rxjs";
 import {
   Account,
   AccountsSearchOptions,
@@ -17,7 +17,7 @@ import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { CreateInstanceService } from "@app/services/create-instance.service";
 import { CommandService } from "@app/services/command.service";
 import { CONFIG } from '@assets/config';
-import { map } from 'rxjs/operators';
+import { map, takeUntil } from 'rxjs/operators';
 import { LoaderService } from '@app/services/loader.service';
 import { WalletService } from '@app/services/wallet.service';
 import { Router } from '@angular/router';
@@ -43,6 +43,8 @@ export class DataService {
   currentAccountStatementSubject: ReplaySubject<any> = new ReplaySubject<any>();
   // Инвестиции текущей стратегии
   currentStrategyAccountsSubject: BehaviorSubject<Account[]> = new BehaviorSubject<Account[]>([]);
+  // here we will unsubscribe from all subscriptions
+  destroy$ = new Subject();
 
   constructor(
     private http: HttpClient,
@@ -393,8 +395,8 @@ export class DataService {
   }
 
   // Получение деталей инвестиции
-  getAccountStatement(id: number): Observable<any> {
-    this.http.post(`${CONFIG.baseApiUrl}/accounts.getStatement`, {AccountID: id}).subscribe((response: any) => {
+  getAccountStatement(args: {accountId: number}): Observable<any> {
+    this.http.post(`${CONFIG.baseApiUrl}/accounts.getStatement`, {AccountID: args.accountId}).subscribe((response: any) => {
       response.Statement[0].Strategy.Offer = {
         Commission: response.Statement[0].Strategy.Commission,
         Fee: response.Statement[0].Strategy.Fee
@@ -437,46 +439,46 @@ export class DataService {
   }
 
   // Пополнить инвестицию
-  fundAccount(accountID: number, amount: number, strategyID: number) {
+  fundAccount(accountID: number, amount: number, methodName: string, methodArgs: any) {
     this.loaderService.showLoader();
     return this.http.post(`${CONFIG.baseApiUrl}/accounts.fund`, {AccountID: accountID, Amount: amount}).pipe(
       map((response: any) => {
-        this.updateAccount(accountID, new Command(response.CommandBalanceID, accountID), strategyID, 'Средства зачислены');
+        this.updateAccount(new Command(response.CommandBalanceID, accountID), methodName, methodArgs, 'Средства зачислены');
       })
     );
   }
 
   // Приостановить инвестицию
-  pauseAccount(id: number, strategyID: number): Observable<any> {
+  pauseAccount(accountID: number, methodName: string, methodArgs: any): Observable<any> {
     this.loaderService.showLoader();
-    return this.http.post(`${CONFIG.baseApiUrl}/accounts.pause`, {AccountID: id}).pipe(
+    return this.http.post(`${CONFIG.baseApiUrl}/accounts.pause`, {AccountID: accountID}).pipe(
       map((response: any) => {
-        this.updateAccount(id, new Command(response.CommandID, id), strategyID, 'Инвестиция поставлена на паузу');
+        this.updateAccount(new Command(response.CommandID, accountID), methodName, methodArgs, 'Инвестиция поставлена на паузу');
       })
     );
   }
 
   // Возобновить инвестицию
-  resumeAccount(id: number, strategyID: number): Observable<any> {
+  resumeAccount(accountID: number, methodName: string, methodArgs: any): Observable<any> {
     this.loaderService.showLoader();
-    return this.http.post(`${CONFIG.baseApiUrl}/accounts.resume`, {AccountID: id}).pipe(
+    return this.http.post(`${CONFIG.baseApiUrl}/accounts.resume`, {AccountID: accountID}).pipe(
       map((response: any) => {
-        this.updateAccount(id, new Command(response.CommandID, id), strategyID, 'Инвестиция снята с паузы');
+        this.updateAccount(new Command(response.CommandID, accountID), methodName, methodArgs, 'Инвестиция снята с паузы');
       })
     );
   }
 
   // Изменить профиль инвестиции
-  changeAccountProfile(id: number, valueObj: {[key: string]: number}, strategyID: number): Observable<any> {
+  changeAccountProfile(accountID: number, valueObj: {[key: string]: number}, methodName: string, methodArgs: any): Observable<any> {
     this.loaderService.showLoader();
 
     const requests: any[] = [];
 
     if (valueObj.target) {
       requests.push(
-        this.http.post(`${CONFIG.baseApiUrl}/accounts.setTarget`, {AccountID: id, Target: valueObj['target']}).pipe(
+        this.http.post(`${CONFIG.baseApiUrl}/accounts.setTarget`, {AccountID: accountID, Target: valueObj['target']}).pipe(
           map((response: any) => {
-            this.updateAccount(id, new Command(response.CommandID, id), strategyID, 'Цель инвестиции изменена');
+            this.updateAccount(new Command(response.CommandID, accountID), methodName, methodArgs, 'Цель инвестиции изменена');
           })
         )
       );
@@ -484,9 +486,9 @@ export class DataService {
 
     if (valueObj.protection) {
       requests.push(
-        this.http.post(`${CONFIG.baseApiUrl}/accounts.setProtection`, {AccountID: id, Protection: valueObj['protection']}).pipe(
+        this.http.post(`${CONFIG.baseApiUrl}/accounts.setProtection`, {AccountID: accountID, Protection: valueObj['protection']}).pipe(
           map((response: any) => {
-            this.updateAccount(id, new Command(response.CommandID, id), strategyID, 'Защита инвестиции изменена');
+            this.updateAccount(new Command(response.CommandID, accountID), methodName, methodArgs, 'Защита инвестиции изменена');
           })
         )
       );
@@ -494,9 +496,9 @@ export class DataService {
 
     if (valueObj.factor) {
       requests.push(
-        this.http.post(`${CONFIG.baseApiUrl}/accounts.setFactor`, {AccountID: id, Factor: valueObj['factor']}).pipe(
+        this.http.post(`${CONFIG.baseApiUrl}/accounts.setFactor`, {AccountID: accountID, Factor: valueObj['factor']}).pipe(
           map((response: any) => {
-            this.updateAccount(id, new Command(response.CommandID, id), strategyID, 'Множитель инвестиции изменен');
+            this.updateAccount(new Command(response.CommandID, accountID), methodName, methodArgs, 'Множитель инвестиции изменен');
           })
         )
       );
@@ -511,43 +513,64 @@ export class DataService {
   }
 
   // Вывести средства из инвестиции
-  withdrawFromAccount(id: number, amount: number, strategyID: number): Observable<any> {
+  withdrawFromAccount(accountId: number, amount: number, methodName: string, methodArgs: any): Observable<any> {
     this.loaderService.showLoader();
-    return this.http.post(`${CONFIG.baseApiUrl}/accounts.withdraw`, { AccountID: id, Amount: amount }).pipe(
+    return this.http.post(`${CONFIG.baseApiUrl}/accounts.withdraw`, { AccountID: accountId, Amount: amount }).pipe(
       map((response: any) => {
-        this.updateAccount(id, new Command(response.CommandBalanceID, id), strategyID, 'Средства выведены');
+        this.updateAccount(new Command(response.CommandBalanceID, accountId), methodName, methodArgs, 'Средства выведены');
       })
     );
   }
 
   // Закрыть инвестицию
-  closeAccount(id: number, strategyID: number): Observable<any> {
+  closeAccount(accountID: number, methodName: string, methodArgs: any): Observable<any> {
     this.loaderService.showLoader();
-    return this.http.post(`${CONFIG.baseApiUrl}/accounts.close`, { AccountID: id }).pipe(
+    return this.http.post(`${CONFIG.baseApiUrl}/accounts.close`, { AccountID: accountID }).pipe(
       map((response: any) => {
-        this.updateAccount(id, new Command(response.CommandID, id), strategyID, 'Инвестиция закрыта');
+        this.updateAccount(new Command(response.CommandID, accountID), methodName, methodArgs, 'Инвестиция закрыта');
       })
     );
   }
 
   // Получение статуса команды и запрос обновленного списка дынных после завершения обработки изменений
-  updateAccount(accountId: number, command: Command, strategyID: number, notificationText?: string): void {
+  updateAccount(command: Command, methodName: string, methodArgs: any, notificationText: string): void {
     const interval = setInterval(() => {
       this.commandService.checkAccountCommand(command).subscribe((commandStatus: number) => {
         if (commandStatus !== 0) {
           clearInterval(interval);
-          this.getActiveMyStrategies().subscribe();
-          this.getActiveMyAccounts().subscribe();
-          this.walletService.updateWallet().subscribe();
-          this.loaderService.hideLoader();
-          this.getStrategy(strategyID);
-          this.updateRatingList();
-          this.notificationsService.open(notificationText);
-          this.getAccountStatement(accountId);
+          console.log(methodName);
+          console.log(methodArgs);
+          this[methodName](methodArgs)
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(() => {
+              this.loaderService.hideLoader();
+              this.notificationsService.open(notificationText);
+
+              this.destroy$.next(true);
+            });
         }
       });
     }, 1000);
   }
+
+  // Получение статуса команды и запрос обновленного списка дынных после завершения обработки изменений
+  // updateAccount(accountId: number, command: Command, strategyID: number, notificationText?: string): void {
+  //   const interval = setInterval(() => {
+  //     this.commandService.checkAccountCommand(command).subscribe((commandStatus: number) => {
+  //       if (commandStatus !== 0) {
+  //         clearInterval(interval);
+  //         this.getActiveMyStrategies().subscribe();
+  //         this.getActiveMyAccounts().subscribe();
+  //         this.walletService.updateWallet().subscribe();
+  //         this.loaderService.hideLoader();
+  //         this.getStrategy(strategyID);
+  //         this.updateRatingList();
+  //         this.notificationsService.open(notificationText);
+  //         this.getAccountStatement(accountId);
+  //       }
+  //     });
+  //   }, 1000);
+  // }
 
   updateRatingList() {
     switch (this.router.url) {
