@@ -455,7 +455,7 @@ export class DataService {
       map((response: any) => {
         // this.getActiveMyStrategies().subscribe();
         this.walletService.updateWallet().subscribe();
-        this.getStrategy(id);
+        this.getStrategy({strategyId: id});
         // this.updateRatingList();
         this.notificationsService.open('Инвестиция создана');
       })
