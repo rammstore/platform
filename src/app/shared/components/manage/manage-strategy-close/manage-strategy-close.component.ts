@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Strategy } from '@app/models';
 import { BsModalRef } from 'ngx-bootstrap';
@@ -17,6 +17,8 @@ export class ManageStrategyCloseComponent implements OnDestroy {
 
   // component data
   strategy: Strategy;
+  @Input() methodName: string;
+  @Input() methodArgs: any;
 
   constructor(
     private dataService: DataService,
@@ -24,7 +26,7 @@ export class ManageStrategyCloseComponent implements OnDestroy {
   ) { }
 
   close(): void {
-    this.dataService.closeStrategy(this.strategy.id)
+    this.dataService.closeStrategy(this.strategy.id, this.methodName, this.methodArgs)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
         this.modalRef.hide();

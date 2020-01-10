@@ -21,6 +21,7 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
   strategy: Strategy;
   modalRef: BsModalRef;
   links: ContentTabLink[];
+  args: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -29,7 +30,10 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.dataService.getStrategy(this.route.params['_value'].id)
+    this.args = {
+      strategyId: this.route.params['_value'].id
+    };
+    this.dataService.getStrategy(this.args)
       .pipe(takeUntil(this.destroy$))
       .subscribe((strategy: Strategy) => {
         this.strategy = strategy;

@@ -97,7 +97,7 @@
             </div>
 
             <ng-container *ngSwitchCase="'manage'">
-              <app-manage [data]="item"></app-manage>
+              <app-manage [data]="item" [methodName]="methodName" [methodArgs]="methodArgs"></app-manage>
             </ng-container>
 
             <!-- Investment special data-->

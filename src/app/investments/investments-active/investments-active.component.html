@@ -3,11 +3,15 @@
   [data]="accounts"
   [paginator]="paginator"
   [shouldHighlightMyStrategies]="true"
-  (paginationChanged)="getAccounts()">
+  (paginationChanged)="getAccounts()"
+  [methodName]="'getActiveMyAccounts'"
+  [methodArgs]="args">
 </app-data-table>
 
 <app-mobile-data-view-investment
   [accounts]="accounts"
   [paginator]="paginator"
-  (paginationChanged)="getAccounts()">
+  (paginationChanged)="getAccounts()"
+  [methodName]="'getActiveMyAccounts'"
+  [methodArgs]="args">
 </app-mobile-data-view-investment>

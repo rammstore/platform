@@ -93,10 +93,32 @@
   </div>
 
   <div class="manage-container">
-    <app-manage *ngIf="account && account.isActive()" [data]="account"></app-manage>
+    <app-manage *ngIf="account && account.isActive()" [data]="account" [methodName]="'getAccountStatement'" [methodArgs]="args"></app-manage>
   </div>
 </div>
 
 <app-content-tabs [links]="links">
   <router-outlet></router-outlet>
 </app-content-tabs>
+
+<table class="margin-info">
+  <tbody>
+  <tr>
+    <td><span translate>Средства</span>, USD</td>
+    <td *ngIf="account">{{account.equity | customCurrency}}</td>
+    <td><span translate>Баланс</span>, USD</td>
+    <td *ngIf="account">{{account.balance | customCurrency}}</td>
+  </tr>
+  <tr>
+    <td><span translate>Свободная маржа</span>, USD</td>
+    <td *ngIf="account" class="{{account.getColorClass('freeMargin')}}">{{account.freeMargin | customCurrency}}</td>
+    <td><span translate>Маржа</span>, USD</td>
+    <td *ngIf="account">{{account.margin | customCurrency}}</td>
+  </tr>
+  <tr>
+    <td translate>Уровень маржи</td>
+    <td *ngIf="account && account.marginLevel" [class.positive]="account.marginLevel >= 1" [class.negative]="account.marginLevel < 1">{{account.marginLevel | number:'1.2-2'}} %</td>
+    <td *ngIf="account && !account.marginLevel">−</td>
+  </tr>
+  </tbody>
+</table>

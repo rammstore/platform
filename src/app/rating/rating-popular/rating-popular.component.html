@@ -13,11 +13,15 @@
   [data]="strategies"
   [paginator]="paginator"
   [shouldHighlightMyStrategies]="true"
-  (paginationChanged)="getRating()">
+  (paginationChanged)="getRating()"
+  [methodName]="'getRating'"
+  [methodArgs]="args">
 </app-data-table>
 
 <app-mobile-data-view-rating
   [strategies]="strategies"
   [paginator]="paginator"
-  (paginationChanged)="getRating()">
+  (paginationChanged)="getRating()"
+  [methodName]="'getRating'"
+  [methodArgs]="args">
 </app-mobile-data-view-rating>

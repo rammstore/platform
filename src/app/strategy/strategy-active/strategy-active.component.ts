@@ -19,6 +19,7 @@ export class StrategyActiveComponent implements OnInit, OnDestroy {
 
   // component data
   strategies: Strategy[];
+  args: any;
 
   // table settings
   tableHeader: TableHeaderRow[] = [
@@ -44,11 +45,15 @@ export class StrategyActiveComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.args = {
+      paginator: this.paginator
+    };
+
     this.getStrategies();
   }
 
   getStrategies(): void {
-    this.dataService.getActiveMyStrategies(this.paginator)
+    this.dataService.getActiveMyStrategies(this.args)
       .pipe(takeUntil(this.destroy$))
       .subscribe((strategies: Strategy[]) => {
         this.strategies = strategies;

@@ -21,6 +21,8 @@ export class ManageAccountWithdrawComponent implements OnInit, AfterViewInit, On
   account: Account;
   form: FormGroup;
   @Input() forClose: boolean = false;
+  @Input() methodName: string;
+  @Input() methodArgs: any;
   @ViewChild('withdrawRadio', {static: false}) withdrawRadio: ElementRef;
 
   constructor(
@@ -76,7 +78,7 @@ export class ManageAccountWithdrawComponent implements OnInit, AfterViewInit, On
       return;
     }
 
-    this.dataService.withdrawFromAccount(this.account.id, this.form.get('amount').value, this.account.strategy.id)
+    this.dataService.withdrawFromAccount(this.account.id, this.form.get('amount').value, this.methodName, this.methodArgs)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
         this.modalRef.hide();
@@ -84,7 +86,7 @@ export class ManageAccountWithdrawComponent implements OnInit, AfterViewInit, On
   }
 
   close(): void {
-    this.dataService.closeAccount(this.account.id, this.account.strategy.id)
+    this.dataService.closeAccount(this.account.id, this.methodName, this.methodArgs)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
         this.modalRef.hide();

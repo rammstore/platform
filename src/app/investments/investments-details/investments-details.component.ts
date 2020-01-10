@@ -19,6 +19,7 @@ export class InvestmentsDetailsComponent implements OnInit, OnDestroy {
   account: Account;
   strategy: Strategy;
   links: ContentTabLink[] = [];
+  args: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -26,7 +27,8 @@ export class InvestmentsDetailsComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.dataService.getAccountStatement(this.route.params['_value'].id).subscribe((response: any) => {
+    this.args = { accountId: this.route.params['_value'].id };
+    this.dataService.getAccountStatement(this.args).subscribe((response: any) => {
       this.strategy = response.strategy;
       this.account = response.account;
       this.account.strategy = response.strategy;

@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap';
 import { Account } from '@app/models';
 import { Subject } from 'rxjs';
@@ -17,6 +17,8 @@ export class ManageAccountPauseComponent implements OnDestroy {
 
   // component data
   account: Account;
+  @Input() methodName: string;
+  @Input() methodArgs: any;
 
   constructor(
     private dataService: DataService,
@@ -24,7 +26,7 @@ export class ManageAccountPauseComponent implements OnDestroy {
   ) { }
 
   pause(): void {
-    this.dataService.pauseAccount(this.account.id, this.account.strategy.id)
+    this.dataService.pauseAccount(this.account.id, this.methodName, this.methodArgs)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
         this.modalRef.hide();

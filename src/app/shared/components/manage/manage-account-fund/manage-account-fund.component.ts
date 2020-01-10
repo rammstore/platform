@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { takeUntil } from 'rxjs/internal/operators';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef } from 'ngx-bootstrap';
@@ -21,6 +21,8 @@ export class ManageAccountFundComponent implements OnInit, OnDestroy {
   account: Account;
   form: FormGroup;
   wallet: Wallet;
+  @Input() methodName: string;
+  @Input() methodArgs: any;
 
   constructor(
     public modalRef: BsModalRef,
@@ -52,7 +54,7 @@ export class ManageAccountFundComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.dataService.fundAccount(this.account.id, this.form.get('amount').value, this.account.strategy.id)
+    this.dataService.fundAccount(this.account.id, this.form.get('amount').value, this.methodName, this.methodArgs)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
         this.modalRef.hide();

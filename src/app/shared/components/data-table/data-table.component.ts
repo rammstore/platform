@@ -17,6 +17,8 @@ export class DataTableComponent implements OnInit {
   @Input() shouldHighlightMyStrategies: boolean = false;
   @Input() emptyDataText: string = 'Нет данных для отображения';
   @Output() paginationChanged: EventEmitter<void> = new EventEmitter();
+  @Input() methodName: string;
+  @Input() methodArgs: any;
 
   constructor() { }
 
