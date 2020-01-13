@@ -1,5 +1,5 @@
 <div class="manage-container">
-  <ng-container *ngIf="dataType === 'account' || (dataType === 'strategy' && data.account)">
+  <ng-container *ngIf="dataType === 'account' || (dataType === 'strategy' && data.account && data.account.id)">
     <!--  Fund button  -->
     <i (click)="openAccountFundDialog()" title="{{'Пополнение инвестиции' | translate}}" class="icon-add"></i>
 
@@ -77,7 +77,7 @@
     </div>
   </ng-container>
 
-  <ng-container *ngIf="dataType === 'strategy' && !data.account">
+  <ng-container *ngIf="dataType === 'strategy' && (!data.account || !data.account.id)">
 
     <div class="btn-group dropdown-container" dropdown>
       <button class="primary" (click)="openStrategyInvestDialog()" translate>Инвестировать</button>

@@ -90,7 +90,7 @@
   "Gross PL с начала недели, USD": "Gross PL since the beginning of the week, USD",
   "Выплаченное вознаграждение, USD": "Paid fee, USD",
   "Выплаченная комиссия, USD": "Paid commission, USD",
-  "Невыплаченное вознаграждение, USD": "Unpaid fee, USD",
+  "Невыплаченное вознаграждение, USD": "Due fee, USD",
 
   "Понедельник": "Monday",
   "Вторник": "Tuesday",
@@ -136,6 +136,7 @@
   "Нет позиций": "No positions",
   "Нет данных для отображения": "No data to display",
   "Минимальное значение цели": "Minimum target is",
+  "Максимальное значение защиты": "Maximum protection is",
   "На странице показаны стратегии с наибольшим приростом количества инвестиций в течение последней недели.": "The page shows top strategies with the maximum increase of number of investments during the last week.",
 
   "Вывод средств": "Withdraw",

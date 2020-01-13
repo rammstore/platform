@@ -164,7 +164,7 @@
                  *ngIf="formStep2.get('protection').touched && formStep2.get('protection').hasError('max') && !formStep2.get('protection').hasError('pattern')">
             <span translate>Максимальное значение защиты</span> - 99.
           </label>
-          <label class="details-message" *ngIf="formStep2.get('money').value && formStep2.get('protection').value">
+          <label class="details-message" *ngIf="formStep2.get('money').value && formStep2.get('protection').value && formStep2.valid">
             {{((formStep2.get('money').value * formStep2.get('protection').value) / 100) | customCurrency}}
           </label>
         </div>
