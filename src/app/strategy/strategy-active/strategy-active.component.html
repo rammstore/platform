@@ -3,7 +3,9 @@
   [data]="strategies"
   [totalFields]="totalFields"
   [paginator]="paginator"
-  (paginationChanged)="getStrategies()">
+  (paginationChanged)="getStrategies()"
+  [methodName]="'getActiveMyStrategies'"
+  [methodArgs]="args">
 </app-data-table>
 
 <app-mobile-data-view-strategy
