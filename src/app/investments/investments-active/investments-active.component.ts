@@ -47,7 +47,8 @@ export class InvestmentsActiveComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.args = {
-      paginator: this.paginator
+      paginator: this.paginator,
+      orderBy: 'Strategy.Yield'
     };
 
     this.getAccounts();

@@ -318,10 +318,11 @@ export class DataService {
   }
 
   // Получение списка активных инвестиций
-  getActiveMyAccounts(args: { paginator: Paginator }): Observable<Account[]> {
+  getActiveMyAccounts(args: { paginator: Paginator, orderBy?: string }): Observable<Account[]> {
     this.loaderService.showLoader();
     const options: AccountsSearchOptions = new AccountsSearchOptions();
     options.Filter = { MyActiveAccounts: true };
+    options.OrderBy = { Field: args.orderBy, Direction: 'Desc' };
 
     if (args.paginator) {
       options.Pagination = {
