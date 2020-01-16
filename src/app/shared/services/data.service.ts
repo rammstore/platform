@@ -90,6 +90,8 @@ export class DataService {
 
       this.loaderService.hideLoader();
       this.activeMyStrategiesSubject.next(strategies);
+    }, (error: HttpErrorResponse) => {
+      this.notificationsService.open('При загрузке данных произошла ошибка', { type: 'error' });
     });
 
     return this.activeMyStrategiesSubject.asObservable();
@@ -126,6 +128,8 @@ export class DataService {
 
       this.loaderService.hideLoader();
       this.closedMyStrategiesSubject.next(strategies);
+    }, (error: HttpErrorResponse) => {
+      this.notificationsService.open('При загрузке данных произошла ошибка', { type: 'error' });
     });
 
     return this.closedMyStrategiesSubject.asObservable();
@@ -145,6 +149,8 @@ export class DataService {
       if (error.status === 404) {
         this.router.navigate(['/rating']);
         this.notificationsService.open('У вас нет доступа к данной стратегии', {type: 'error', autoClose: true, duration: 3000});
+      } else {
+        this.notificationsService.open('При загрузке данных произошла ошибка', { type: 'error' });
       }
     });
 
@@ -193,28 +199,6 @@ export class DataService {
     );
   }
 
-  // searchStrategy(strategyName: string): Observable<boolean> {
-  //   this.loaderService.showLoader();
-  //
-  //   const options: StrategiesSearchOptions = new StrategiesSearchOptions();
-  //   options.Filter = {
-  //     Name: strategyName
-  //   };
-  //
-  //   return this.http.post(`${CONFIG.baseApiUrl}/strategies.search`, options).pipe(
-  //     map((response: any) => {
-  //       this.loaderService.hideLoader();
-  //       let result: boolean = true;
-  //       response.Strategies.forEach((s: any) => {
-  //         if (s.Name.toLocaleLowerCase() === strategyName.toLocaleLowerCase()) {
-  //           result = false;
-  //         }
-  //       });
-  //       return result;
-  //     })
-  //   );
-  // }
-
   getStrategyToken(strategyId: number): Observable<string> {
     return this.http.post(`${CONFIG.baseApiUrl}/myStrategies.getToken`, {StrategyID: strategyId}).pipe(
       map((response: any) => {
@@ -248,30 +232,11 @@ export class DataService {
             .pipe(takeUntil(this.destroy$))
             .subscribe(() => {
               this.destroy$.next(true);
-          });
+            });
         }
       });
     }, 1000);
   }
-
-  // Получение статуса команды стратегии и запрос обновленного списка стратегий после завершения обработки изменений
-  // Работает с активными стратегиями, так как закрытые изменять нельзя
-  // updateStrategy(strategyId: number, command: Command, notificationText?: string): void {
-  //   const interval = setInterval(() => {
-  //     this.commandService.checkStrategyCommand(command).subscribe((commandStatus: number) => {
-  //       if (commandStatus !== 0) {
-  //         clearInterval(interval);
-  //         this.getActiveMyStrategies().subscribe();
-  //         // this.getActiveMyAccounts().subscribe();
-  //         this.walletService.updateWallet().subscribe();
-  //         this.loaderService.hideLoader();
-  //         this.getStrategy(strategyId);
-  //         this.updateRatingList();
-  //         this.notificationsService.open(notificationText);
-  //       }
-  //     });
-  //   }, 1000);
-  // }
 
   // Получение графика для стратегий
   getStrategyChart(chartOptions: ChartOptions): Observable<any> {
@@ -332,6 +297,8 @@ export class DataService {
 
       this.loaderService.hideLoader();
       this.currentStrategyAccountsSubject.next(accounts);
+    }, (error: HttpErrorResponse) => {
+      this.notificationsService.open('При загрузке данных произошла ошибка', { type: 'error' });
     });
 
     return this.currentStrategyAccountsSubject.asObservable();
@@ -377,6 +344,8 @@ export class DataService {
 
       this.loaderService.hideLoader();
       this.activeMyAccountsSubject.next(accounts.filter((a: Account) => a.isActive()));
+    }, (error: HttpErrorResponse) => {
+      this.notificationsService.open('При загрузке данных произошла ошибка', { type: 'error' });
     });
 
     return this.activeMyAccountsSubject.asObservable();
@@ -411,6 +380,8 @@ export class DataService {
 
       this.loaderService.hideLoader();
       this.closedMyAccountsSubject.next(accounts.filter((a: Account) => !a.isActive()));
+    }, (error: HttpErrorResponse) => {
+      this.notificationsService.open('При загрузке данных произошла ошибка', { type: 'error' });
     });
 
     return this.closedMyAccountsSubject.asObservable();
@@ -434,6 +405,8 @@ export class DataService {
       if (error.status === 401) {
         this.router.navigate(['/investments']);
         this.notificationsService.open('У вас нет доступа к данной инвестиции', {type: 'error', autoClose: true, duration: 3000});
+      } else {
+        this.notificationsService.open('При загрузке данных произошла ошибка', { type: 'error' });
       }
     });
 
@@ -578,39 +551,6 @@ export class DataService {
     }, 1000);
   }
 
-  // Получение статуса команды и запрос обновленного списка дынных после завершения обработки изменений
-  // updateAccount(accountId: number, command: Command, strategyID: number, notificationText?: string): void {
-  //   const interval = setInterval(() => {
-  //     this.commandService.checkAccountCommand(command).subscribe((commandStatus: number) => {
-  //       if (commandStatus !== 0) {
-  //         clearInterval(interval);
-  //         this.getActiveMyStrategies().subscribe();
-  //         this.getActiveMyAccounts().subscribe();
-  //         this.walletService.updateWallet().subscribe();
-  //         this.loaderService.hideLoader();
-  //         this.getStrategy(strategyID);
-  //         this.updateRatingList();
-  //         this.notificationsService.open(notificationText);
-  //         this.getAccountStatement(accountId);
-  //       }
-  //     });
-  //   }, 1000);
-  // }
-
-  // updateRatingList() {
-  //   switch (this.router.url) {
-  //     case '/rating':
-  //       this.getRating(0).subscribe();
-  //       break;
-  //     case '/rating/popular':
-  //       this.getRating(2).subscribe();
-  //       break;
-  //     case '/rating/all':
-  //       this.getRating(1).subscribe();
-  //       break;
-  //   }
-  // }
-
   // Получение списка сделок по инвестиции
   getAccountDeals(id: number, pagination?: Paginator): Observable<Deal[]> {
     this.loaderService.showLoader();
@@ -711,6 +651,8 @@ export class DataService {
 
       this.loaderService.hideLoader();
       this.ratingStrategiesSubject.next(strategies);
+    }, (error: HttpErrorResponse) => {
+      this.notificationsService.open('При загрузке данных произошла ошибка', { type: 'error' });
     });
 
     return this.ratingStrategiesSubject.asObservable();
