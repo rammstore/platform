@@ -53,6 +53,7 @@ export class RatingRatedComponent implements OnInit, OnDestroy {
   }
 
   getRating(): void {
+    this.args.searchText = this.searchText;
     this.dataService.getRating(this.args)
       .pipe(takeUntil(this.destroy$))
       .subscribe((strategies: Strategy[]) => {
