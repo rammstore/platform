@@ -10,9 +10,9 @@
     <span class="pnl item {{strategy.account.getColorClass('intervalPnL')}}">
       {{strategy.account.intervalPnL | customCurrency}} USD
     </span>
-      <span class="item"><span translate>Средства</span>: <b>{{strategy.account.equity | customCurrency}} USD</b></span>
-      <span class="item"><span translate>Цель</span>: <b>{{(strategy.account.target || 0) | percent}}</b></span>
-      <span class="item"><span translate>Защита</span>: <b>{{(strategy.account.protection || 0) | percent}}</b></span>
+      <span class="item"><span><span translate>Средства</span>:</span> <b>{{strategy.account.equity | customCurrency}} USD</b></span>
+      <span class="item"><span><span translate>Цель</span>:</span> <b>{{(strategy.account.target || 0) | percent}}</b></span>
+      <span class="item"><span><span translate>Защита</span>:</span> <b>{{(strategy.account.protection || 0) | percent}}</b></span>
     </div>
 
     <app-manage [data]="strategy" *ngIf="strategy.isActive()" [methodName]="'getStrategy'" [methodArgs]="args"></app-manage>
