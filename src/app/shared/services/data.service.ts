@@ -22,6 +22,7 @@ import { LoaderService } from '@app/services/loader.service';
 import { WalletService } from '@app/services/wallet.service';
 import { Router } from '@angular/router';
 import { NotificationsService } from '@app/services/notifications.service';
+import { AccountSpecAsset } from '@app/models/account-spec-asset';
 
 @Injectable({
   providedIn: 'root'
@@ -43,6 +44,8 @@ export class DataService {
   currentAccountStatementSubject: ReplaySubject<any> = new ReplaySubject<any>();
   // Инвестиции текущей стратегии
   currentStrategyAccountsSubject: BehaviorSubject<Account[]> = new BehaviorSubject<Account[]>([]);
+  // Настройки счетов клиента
+  accountSpecAsset: AccountSpecAsset;
   // here we will unsubscribe from all subscriptions
   destroy$ = new Subject();
 
@@ -657,5 +660,11 @@ export class DataService {
     });
 
     return this.ratingStrategiesSubject.asObservable();
+  }
+
+  getAccountSpecAsset(): void {
+    this.http.get(`${CONFIG.baseApiUrl}/accounts.searchSpec`).subscribe((response: any) => {
+      this.accountSpecAsset = this.createInstanceService.createAccountSpecAsset(response.AccountSpecAsset[0]);
+    });
   }
 }

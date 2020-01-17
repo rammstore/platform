@@ -14,7 +14,6 @@ export class StorageService {
 
   setAuthData(data: AuthData): void {
     this.authDataSubject.next(data);
-    console.log('login');
     localStorage.setItem('auth', JSON.stringify(data));
   }
 

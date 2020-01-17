@@ -26,8 +26,6 @@ export class ManageStrategyPauseComponent implements OnDestroy {
   ) { }
 
   pause(): void {
-    console.log(this.methodName);
-    console.log(this.methodArgs);
     this.dataService.pauseStrategy(this.strategy.id, this.methodName, this.methodArgs)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {

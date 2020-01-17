@@ -21,6 +21,7 @@ export class ManageStrategyInvestComponent implements OnInit, OnDestroy {
   form: FormGroup;
   wallet: Wallet;
   strategy: Strategy;
+  securityMinBalance: number;
 
   constructor(
     private fb: FormBuilder,
@@ -30,6 +31,7 @@ export class ManageStrategyInvestComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.securityMinBalance = this.dataService.accountSpecAsset.securityMinBalance;
     this.walletService.getWallet()
       .pipe(takeUntil(this.destroy$))
       .subscribe((wallet: Wallet) => {
@@ -40,7 +42,7 @@ export class ManageStrategyInvestComponent implements OnInit, OnDestroy {
 
   buildForm(): void {
     this.form = this.fb.group({
-      amount: [(this.wallet.balance / 10).toFixed(2), [Validators.required, Validators.min(0), Validators.max(this.wallet.balance), Validators.pattern('^[0-9]+([\\,\\.][0-9]{1,2})?$')]],
+      amount: [(this.wallet.balance / 10).toFixed(2), [Validators.required, Validators.min(this.securityMinBalance), Validators.max(this.wallet.balance), Validators.pattern('^[0-9]+([\\,\\.][0-9]{1,2})?$')]],
       factor: [1, [Validators.min(0.1), Validators.max(10), Validators.required, Validators.pattern('[0-9]+(\\.[0-9]?)?')]],
       target: [100, [Validators.required, Validators.min(0), Validators.pattern('^[0-9]*')]],
       protection: [50, [Validators.required, Validators.min(0), Validators.max(99), Validators.pattern('^[0-9]*')]]

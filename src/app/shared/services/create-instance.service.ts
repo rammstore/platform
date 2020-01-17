@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Account, AuthData, Company, Deal, Offer, Position, Session, Strategy, User, Wallet } from '@app/models';
+import { AccountSpecAsset } from '@app/models/account-spec-asset';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CreateInstanceService {
 
-  constructor() { }
+  constructor() {
+  }
 
   createStrategy(options: any): Strategy {
     return new Strategy({
@@ -170,6 +172,20 @@ export class CreateInstanceService {
       client: options.client,
       company: options.company,
       wallets: options.wallets
+    });
+  }
+
+  createAccountSpecAsset(options: any): AccountSpecAsset {
+    return new AccountSpecAsset({
+      idAccountSpecAsset: options.IDAccountSpecAsset,
+      idSpec: options.IDSpec,
+      idAsset: options.IDAsset,
+      idStreamDefault: options.IDStreamDefault,
+      idStreamDefaultSecurity: options.IDStreamDefaultSecurity,
+      accountMinBalance: options.AccountMinBalance,
+      securityMinBalance: options.SecurityMinBalance,
+      precision: options.Precision,
+      aBook: options.ABook
     });
   }
 }

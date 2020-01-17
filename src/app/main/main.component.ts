@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import * as Highcharts from 'highcharts';
 import { TranslateService } from '@ngx-translate/core';
 import { NotificationsService } from '@app/services/notifications.service';
+import { DataService } from '@app/services/data.service';
 
 @Component({
   selector: 'app-main',
@@ -12,10 +13,12 @@ export class MainComponent implements OnInit {
 
   constructor(
     private translateService: TranslateService,
-    private notificationsService: NotificationsService
+    private notificationsService: NotificationsService,
+    private dataService: DataService
   ) { }
 
   ngOnInit(): void {
+    this.dataService.getAccountSpecAsset();
     this.setHighChartsLocale();
 
     this.translateService.onDefaultLangChange.subscribe(() => {

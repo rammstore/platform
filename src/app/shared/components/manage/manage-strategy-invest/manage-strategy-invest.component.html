@@ -27,6 +27,9 @@
             Пожалуйста, введите корректную сумму вывода.
           </label>
           <label class="details-message">
+            <span translate>Баланс вашей инвестиции в вашу стратегию после вывода должен быть не меньше</span> {{securityMinBalance | customCurrency}}.
+          </label>
+          <label class="details-message">
             <span translate>Доступно</span>: <span class="available-clickable" (click)="setAllMoney()">{{wallet.getAvailableMoney() | customCurrency}}</span>
           </label>
         </div>
