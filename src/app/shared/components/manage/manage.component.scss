@@ -34,6 +34,16 @@
   }
 }
 
+ul.burger-menu {
+  width: 285px !important;
+  li {
+    padding: 10px 15px !important;
+    height: 50px;
+    display: flex;
+    align-items: center;
+  }
+}
+
 @media (max-width: 992px) {
   .manage-container {
     text-align: right;
