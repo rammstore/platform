@@ -34,7 +34,7 @@ export class StrategyActiveComponent implements OnInit, OnDestroy {
       new TableColumn({ property: 'manage', label: '' })
     ]),
   ];
-  totalFields: string[] = ['account.equity', 'accountsCount', 'account.intervalPnL'];
+  totalFields: string[] = ['account.equity', 'accountsCount', 'account.intervalPnL', 'feePaid', 'feeToPay'];
   paginator: Paginator = new Paginator({
     perPage: 10,
     currentPage: 1
