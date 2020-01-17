@@ -75,7 +75,9 @@ export class DataTableComponent implements OnInit {
     const splittedPropertyName: string[] = property.split('.');
     let sum: number = 0;
 
-    this.data.forEach((data: Strategy | Account) => {
+    const isDeal: boolean = this.data[0] instanceof Deal;
+
+    this.data.forEach((data: Strategy | Account | Deal | Position) => {
       let nestedObj = {};
       Object.assign(nestedObj, data);
 
@@ -83,7 +85,7 @@ export class DataTableComponent implements OnInit {
         if (typeof nestedObj[key] === 'object') {
           Object.assign(nestedObj, nestedObj[key]);
         } else {
-          if (nestedObj[key]) {
+          if (nestedObj[key] && (!isDeal || (isDeal && (key === 'totalProfit' || key === 'yield') && (nestedObj['type'] === 0 || nestedObj['type'] === 1)))) {
             sum = sum + nestedObj[key];
           }
         }
