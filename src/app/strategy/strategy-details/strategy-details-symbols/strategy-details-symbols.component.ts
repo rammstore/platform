@@ -19,6 +19,7 @@ export class StrategyDetailsSymbolsComponent implements OnInit, OnDestroy {
   // component data
   strategy: Strategy;
   chartOptions: any;
+  args: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -26,7 +27,10 @@ export class StrategyDetailsSymbolsComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.dataService.getStrategy(this.route.parent.params['_value'].id)
+    this.args = {
+      strategyId: this.route.parent.params['_value'].id
+    };
+    this.dataService.getStrategy(this.args)
       .pipe(takeUntil(this.destroy$))
       .subscribe((strategy: Strategy) => {
         this.strategy = strategy;
