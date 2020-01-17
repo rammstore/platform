@@ -6,22 +6,24 @@
   </button>
 </div>
 
-<p translate>На странице показаны стратегии с наибольшим приростом количества инвестиций в течение последней недели.</p>
+<div class="rating-content-container">
+  <p translate>На странице показаны стратегии с наибольшим приростом количества инвестиций в течение последней недели.</p>
 
-<app-data-table
-  [tableHeader]="tableHeader"
-  [data]="strategies"
-  [paginator]="paginator"
-  [shouldHighlightMyStrategies]="true"
-  (paginationChanged)="getRating()"
-  [methodName]="'getRating'"
-  [methodArgs]="args">
-</app-data-table>
+  <app-data-table
+    [tableHeader]="tableHeader"
+    [data]="strategies"
+    [paginator]="paginator"
+    [shouldHighlightMyStrategies]="true"
+    (paginationChanged)="getRating()"
+    [methodName]="'getRating'"
+    [methodArgs]="args">
+  </app-data-table>
 
-<app-mobile-data-view-rating
-  [strategies]="strategies"
-  [paginator]="paginator"
-  (paginationChanged)="getRating()"
-  [methodName]="'getRating'"
-  [methodArgs]="args">
-</app-mobile-data-view-rating>
+  <app-mobile-data-view-rating
+    [strategies]="strategies"
+    [paginator]="paginator"
+    (paginationChanged)="getRating()"
+    [methodName]="'getRating'"
+    [methodArgs]="args">
+  </app-mobile-data-view-rating>
+</div>

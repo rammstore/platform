@@ -1,0 +1,19 @@
+@media (max-width: 576px) {
+  .rating-content-container {
+    margin-top: 40px;
+  }
+
+  .search-container {
+    top: 95px;
+    position: fixed;
+    left: 0;
+    width: 100%;
+    display: flex;
+    z-index: 1;
+
+    input.search {
+      width: auto;
+      flex-grow: 1;
+    }
+  }
+}
