@@ -64,6 +64,8 @@
   "Комиссия": "Commission",
   "Комиссия, USD": "Commission, USD",
 
+  "При загрузке данных произошла ошибка": "An error occurred while loading data",
+
   "Показывать на странице": "Items per page",
   "Всего записей": "Total items",
   "Следующая": "Next",

@@ -94,7 +94,7 @@ export class DataService {
       this.loaderService.hideLoader();
       this.activeMyStrategiesSubject.next(strategies);
     }, (error: HttpErrorResponse) => {
-      this.notificationsService.open('При загрузке данных произошла ошибка', { type: 'error' });
+      this.notificationsService.open('При загрузке данных произошла ошибка', { type: 'error', autoClose: true, duration: 3000 });
     });
 
     return this.activeMyStrategiesSubject.asObservable();
@@ -132,7 +132,7 @@ export class DataService {
       this.loaderService.hideLoader();
       this.closedMyStrategiesSubject.next(strategies);
     }, (error: HttpErrorResponse) => {
-      this.notificationsService.open('При загрузке данных произошла ошибка', { type: 'error' });
+      this.notificationsService.open('При загрузке данных произошла ошибка', { type: 'error', autoClose: true, duration: 3000 });
     });
 
     return this.closedMyStrategiesSubject.asObservable();
@@ -153,7 +153,7 @@ export class DataService {
         this.router.navigate(['/rating']);
         this.notificationsService.open('У вас нет доступа к данной стратегии', {type: 'error', autoClose: true, duration: 3000});
       } else {
-        this.notificationsService.open('При загрузке данных произошла ошибка', { type: 'error' });
+        this.notificationsService.open('При загрузке данных произошла ошибка', { type: 'error', autoClose: true, duration: 3000 });
       }
     });
 
@@ -301,7 +301,7 @@ export class DataService {
       this.loaderService.hideLoader();
       this.currentStrategyAccountsSubject.next(accounts);
     }, (error: HttpErrorResponse) => {
-      this.notificationsService.open('При загрузке данных произошла ошибка', { type: 'error' });
+      this.notificationsService.open('При загрузке данных произошла ошибка', { type: 'error', autoClose: true, duration: 3000 });
     });
 
     return this.currentStrategyAccountsSubject.asObservable();
@@ -349,7 +349,7 @@ export class DataService {
       this.loaderService.hideLoader();
       this.activeMyAccountsSubject.next(accounts.filter((a: Account) => a.isActive()));
     }, (error: HttpErrorResponse) => {
-      this.notificationsService.open('При загрузке данных произошла ошибка', { type: 'error' });
+      this.notificationsService.open('При загрузке данных произошла ошибка', { type: 'error', autoClose: true, duration: 3000 });
     });
 
     return this.activeMyAccountsSubject.asObservable();
@@ -385,7 +385,7 @@ export class DataService {
       this.loaderService.hideLoader();
       this.closedMyAccountsSubject.next(accounts.filter((a: Account) => !a.isActive()));
     }, (error: HttpErrorResponse) => {
-      this.notificationsService.open('При загрузке данных произошла ошибка', { type: 'error' });
+      this.notificationsService.open('При загрузке данных произошла ошибка', { type: 'error', autoClose: true, duration: 3000 });
     });
 
     return this.closedMyAccountsSubject.asObservable();
@@ -410,7 +410,7 @@ export class DataService {
         this.router.navigate(['/investments']);
         this.notificationsService.open('У вас нет доступа к данной инвестиции', {type: 'error', autoClose: true, duration: 3000});
       } else {
-        this.notificationsService.open('При загрузке данных произошла ошибка', { type: 'error' });
+        this.notificationsService.open('При загрузке данных произошла ошибка', { type: 'error', autoClose: true, duration: 3000 });
       }
     });
 
@@ -656,7 +656,7 @@ export class DataService {
       this.loaderService.hideLoader();
       this.ratingStrategiesSubject.next(strategies);
     }, (error: HttpErrorResponse) => {
-      this.notificationsService.open('При загрузке данных произошла ошибка', { type: 'error' });
+      this.notificationsService.open('При загрузке данных произошла ошибка', { type: 'error', autoClose: true, duration: 3000 });
     });
 
     return this.ratingStrategiesSubject.asObservable();
