@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { LoaderService } from '@app/services/loader.service';
 import { CreateInstanceService } from '@app/services/create-instance.service';
 import { TranslateService } from '@ngx-translate/core';
+import { WalletService } from '@app/services/wallet.service';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,8 @@ export class AuthService {
     private router: Router,
     private loaderService: LoaderService,
     private createInstanceService: CreateInstanceService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private walletService: WalletService
     ) { }
 
   login(login: string, password: string): Observable<AuthData> {
@@ -39,6 +41,7 @@ export class AuthService {
         const wallet: Wallet = this.createInstanceService.createWallet(w);
         wallets.push(wallet);
       });
+      this.walletService.walletSubject.next(wallets[0]);
 
       const company: Company = this.createInstanceService.createCompany(response.Company);
 

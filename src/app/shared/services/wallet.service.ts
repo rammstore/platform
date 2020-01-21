@@ -67,6 +67,8 @@ export class WalletService {
     this.http.post(`${CONFIG.baseApiUrl}/walletTransfers.search`, options).subscribe((response: any) => {
       const transfers: WalletTransfer[] = [];
 
+      this.walletSubject.next(this.createInstanceService.createWallet(response.Wallets[0]));
+
       response.WalletTransfers.forEach((transfer: any) => {
         transfers.push(new WalletTransfer(
           transfer.ID,

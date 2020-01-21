@@ -82,6 +82,8 @@ export class DataService {
     this.http.post(`${CONFIG.baseApiUrl}/strategies.search`, options).subscribe((response: any) => {
       const strategies: Strategy[] = [];
 
+      this.walletService.walletSubject.next(this.createInstanceService.createWallet(response.Wallets[0]));
+
       response.Strategies.forEach((s: any) => {
         strategies.push(this.createInstanceService.createStrategy(s));
       });
@@ -119,6 +121,8 @@ export class DataService {
     this.http.post(`${CONFIG.baseApiUrl}/strategies.search`, options).subscribe((response: any) => {
       this.loaderService.showLoader();
       const strategies: Strategy[] = [];
+
+      this.walletService.walletSubject.next(this.createInstanceService.createWallet(response.Wallets[0]));
 
       response.Strategies.forEach((s: any) => {
         strategies.push(this.createInstanceService.createStrategy(s));
@@ -311,14 +315,14 @@ export class DataService {
   // Методы работы со инвестициями
   //
 
-  // Получение инвестиции по ID
-  getAccount(id: number): Observable<Account> {
-    this.loaderService.showLoader();
-    return this.http.post(`${CONFIG.baseApiUrl}/accounts.get`, { AccountID: id }).pipe(map((response: any) => {
-      this.loaderService.hideLoader();
-      return this.createInstanceService.createAccount(response);
-    }));
-  }
+  // // Получение инвестиции по ID
+  // getAccount(id: number): Observable<Account> {
+  //   this.loaderService.showLoader();
+  //   return this.http.post(`${CONFIG.baseApiUrl}/accounts.get`, { AccountID: id }).pipe(map((response: any) => {
+  //     this.loaderService.hideLoader();
+  //     return this.createInstanceService.createAccount(response);
+  //   }));
+  // }
 
   // Получение списка активных инвестиций
   getActiveMyAccounts(args: { paginator: Paginator, orderBy?: string }): Observable<Account[]> {
@@ -336,6 +340,8 @@ export class DataService {
 
     this.http.post(`${CONFIG.baseApiUrl}/accounts.search`, options).subscribe((response: any) => {
       const accounts: Account[] = [];
+
+      this.walletService.walletSubject.next(this.createInstanceService.createWallet(response.Wallets[0]));
 
       response.Accounts.forEach((account: any) => {
         accounts.push(new Account(this.createInstanceService.createAccount(account)));
@@ -370,6 +376,8 @@ export class DataService {
 
     this.http.post(`${CONFIG.baseApiUrl}/accounts.search`, options).subscribe((response: any) => {
       const accounts: Account[] = [];
+
+      this.walletService.walletSubject.next(this.createInstanceService.createWallet(response.Wallets[0]));
 
       response.Accounts
         .filter((a: any) => a.Status === 6)
@@ -571,6 +579,8 @@ export class DataService {
     return this.http.post(`${CONFIG.baseApiUrl}/deals.search`, options).pipe(map((response: any) => {
       const deals: Deal[] = [];
 
+      this.walletService.walletSubject.next(this.createInstanceService.createWallet(response.Wallets[0]));
+
       response.Deals.forEach((deal: any) => {
         deals.push(this.createInstanceService.createDeal(deal));
       });
@@ -600,6 +610,8 @@ export class DataService {
 
     return this.http.post(`${CONFIG.baseApiUrl}/positions.search`, options).pipe(map((response: any) => {
       const positions: Position[] = [];
+
+      this.walletService.walletSubject.next(this.createInstanceService.createWallet(response.Wallets[0]));
 
       if (response.Positions.length) {
         response.Positions.forEach((position: any) => {
