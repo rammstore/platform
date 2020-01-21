@@ -88,7 +88,7 @@
         <input id="money" type="number" formControlName="money" [min]="0" [max]="wallet.balance">
         <div class="messages">
           <label *ngIf="formStep2.get('money').touched && formStep2.get('money').hasError('min')" class="error-message" translate>
-            Пожалуйста, введите корректную сумму инвестиции.
+            <span translate>Минимальная сумма инвестиции - </span><span class="available-clickable" (click)="setMoney(accountMinBalance)"> {{accountMinBalance | customCurrency}}</span>
           </label>
           <label *ngIf="formStep2.get('money').touched && formStep2.get('money').hasError('max')" class="error-message" translate>
             Вы можете инвестировать только свободные средства.
@@ -105,7 +105,7 @@
             <span translate>Баланс вашей инвестиции в вашу стратегию после вывода должен быть не меньше</span> {{accountMinBalance | customCurrency}}.
           </label>
           <label class="details-message">
-            <span translate>Доступно</span>: <span class="available-clickable" (click)="setAllMoney()">{{wallet.getAvailableMoney() | customCurrency}}</span>
+            <span translate>Доступно</span>: <span class="available-clickable" (click)="setMoney(wallet.getAvailableMoney())">{{wallet.getAvailableMoney() | customCurrency}}</span>
           </label>
         </div>
       </div>

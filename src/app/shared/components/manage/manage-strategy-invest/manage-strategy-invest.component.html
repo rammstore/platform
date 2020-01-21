@@ -15,8 +15,8 @@
             Пожалуйста, введите сумму инвестиции.
           </label>
           <label class="error-message"
-                 *ngIf="form.get('amount').touched && form.get('amount').hasError('min')" translate>
-            Пожалуйста, введите корректную сумму инвестиции.
+                 *ngIf="form.get('amount').touched && form.get('amount').hasError('min')">
+            <span translate>Минимальная сумма инвестиции -</span><span class="available-clickable" (click)="setMoney(securityMinBalance)"> {{securityMinBalance | customCurrency}}</span>
           </label>
           <label class="error-message"
                  *ngIf="form.get('amount').touched && form.get('amount').hasError('max')" translate>
@@ -24,13 +24,13 @@
           </label>
           <label class="error-message"
                  *ngIf="form.get('amount').touched && form.get('amount').hasError('pattern')" translate>
-            Пожалуйста, введите корректную сумму вывода.
+            Пожалуйста, введите корректную сумму инвестиции.
           </label>
           <label class="details-message">
             <span translate>Баланс вашей инвестиции в вашу стратегию после вывода должен быть не меньше</span> {{securityMinBalance | customCurrency}}.
           </label>
           <label class="details-message">
-            <span translate>Доступно</span>: <span class="available-clickable" (click)="setAllMoney()">{{wallet.getAvailableMoney() | customCurrency}}</span>
+            <span translate>Доступно</span>: <span class="available-clickable" (click)="setMoney(wallet.getAvailableMoney())">{{wallet.getAvailableMoney() | customCurrency}}</span>
           </label>
         </div>
       </div>

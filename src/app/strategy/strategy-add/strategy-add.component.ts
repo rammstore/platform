@@ -102,8 +102,8 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
     this.currentStep = 1;
   }
 
-  setAllMoney(): void {
-    this.formStep2.get('money').setValue(this.wallet.getAvailableMoney());
+  setMoney(amount: number): void {
+    this.formStep2.get('money').setValue(amount);
   }
 
   isStrategyNameUniq(name: string, isSubmitClicked: boolean = false): void {
