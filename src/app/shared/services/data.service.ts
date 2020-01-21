@@ -68,8 +68,8 @@ export class DataService {
     this.loaderService.showLoader();
     const options: StrategiesSearchOptions = new StrategiesSearchOptions();
     options.Filter = {
-      ActiveStrategies: true,
-      MyStrategies: true
+      IsActive: true
+      // MyStrategies: true
     };
 
     if (args.paginator) {
@@ -79,7 +79,7 @@ export class DataService {
       };
     }
 
-    this.http.post(`${CONFIG.baseApiUrl}/strategies.search`, options).subscribe((response: any) => {
+    this.http.post(`${CONFIG.baseApiUrl}/myStrategies.search`, options).subscribe((response: any) => {
       const strategies: Strategy[] = [];
 
       this.walletService.walletSubject.next(this.createInstanceService.createWallet(response.Wallets[0]));
@@ -107,8 +107,7 @@ export class DataService {
     this.loaderService.showLoader();
     const options: StrategiesSearchOptions = new StrategiesSearchOptions();
     options.Filter = {
-      ActiveStrategies: false,
-      MyStrategies: true
+      IsActive: false
     };
 
     if (pagination) {
@@ -118,13 +117,14 @@ export class DataService {
       };
     }
 
-    this.http.post(`${CONFIG.baseApiUrl}/strategies.search`, options).subscribe((response: any) => {
+    this.http.post(`${CONFIG.baseApiUrl}/myStrategies.search`, options).subscribe((response: any) => {
       this.loaderService.showLoader();
       const strategies: Strategy[] = [];
 
       this.walletService.walletSubject.next(this.createInstanceService.createWallet(response.Wallets[0]));
 
       response.Strategies.forEach((s: any) => {
+        console.log(s.Account);
         strategies.push(this.createInstanceService.createStrategy(s));
       });
 

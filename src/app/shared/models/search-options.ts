@@ -3,7 +3,8 @@ export class StrategiesSearchOptions {
     Name?: string,
     MyActiveAccounts?: boolean,
     MyStrategies?: boolean,
-    ActiveStrategies?: boolean
+    ActiveStrategies?: boolean,
+    IsActive?: boolean
   };
 
   Pagination: {

@@ -57,6 +57,7 @@ export class StrategyActiveComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe((strategies: Strategy[]) => {
         this.strategies = strategies;
+        console.log(this.strategies);
       });
   }
 
