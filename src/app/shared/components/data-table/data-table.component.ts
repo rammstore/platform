@@ -85,7 +85,7 @@ export class DataTableComponent implements OnInit {
         if (typeof nestedObj[key] === 'object') {
           Object.assign(nestedObj, nestedObj[key]);
         } else {
-          if (nestedObj[key] && (!isDeal || (isDeal && (key === 'totalProfit' || key === 'yield') && (nestedObj['type'] === 0 || nestedObj['type'] === 1)))) {
+          if (nestedObj[key] && (!isDeal || (isDeal && (nestedObj['type'] !== 0 || nestedObj['type'] === 1)))) {
             sum = sum + nestedObj[key];
           }
         }
