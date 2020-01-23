@@ -56,3 +56,11 @@ body {
     width: 1140px;
   }
 }
+
+@media (max-width: 576px) {
+  app-content-tabs.additional-tabs {
+    .content-tab-links {
+      position: static;
+    }
+  }
+}
