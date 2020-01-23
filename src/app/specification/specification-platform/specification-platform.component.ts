@@ -26,8 +26,7 @@ export class SpecificationPlatformComponent {
   }, {
     title: 'Торговый интервал',
     items: [
-      {label: 'Начало', value: 'вторник 18:09'},
-      {label: 'Конец', value: 'вторник 18:09'}
+      {label: 'Период', value: 'Неделя'}
     ]
   }];
 }
