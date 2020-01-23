@@ -71,10 +71,10 @@
       <ul>
         <li><a [routerLink]="['/manage']" class="dropdown-item" translate>Изменить пароль</a></li>
 
-        <li dropdown triggers="mouseenter" placement="right" container="body" [dropup]="true">
-          <a dropdownToggle class="dropdown-item" (click)="false" translate>
+        <li dropdown triggers="tap" placement="right" container="body" (click)="false" [dropup]="true">
+          <a dropdownToggle class="dropdown-item mobile-lang" (click)="false" translate>
             Изменить язык
-            <i class="icon-flag {{language}} current-lang"></i>
+            <i class="icon-flag {{language}} current-lang" (click)="false"></i>
           </a>
 
           <ul *dropdownMenu class="dropdown-menu langmenu" role="menu">

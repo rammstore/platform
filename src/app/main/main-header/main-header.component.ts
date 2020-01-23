@@ -28,6 +28,15 @@ export class MainHeaderComponent implements OnInit, OnDestroy {
   public onClick(event) {
     event.stopPropagation();
 
+    console.log(event);
+    if (event.target.className.toString().includes('mobile-lang')) {
+      return;
+    }
+
+    if (event.target.className.toString().includes('icon-flag')) {
+      return;
+    }
+
     if (event.target.tagName.toLowerCase() === 'aside') {
       return;
     }
