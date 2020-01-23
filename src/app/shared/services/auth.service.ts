@@ -34,6 +34,7 @@ export class AuthService {
 
       const session: Session = this.createInstanceService.createSession(response.Session);
 
+      response.Client.IDCompany = response.Company.ID;
       const user: User = this.createInstanceService.createUser(response.Client);
 
       const wallets: Wallet[] = [];

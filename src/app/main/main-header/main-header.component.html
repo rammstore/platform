@@ -27,7 +27,7 @@
             <li role="menuitem lang" (click)="setLanguage('ru')"><i class="icon-flag ru"></i></li>
           </ul>
         </li>
-        <li role="menuitem"><a (click)="logout()" class="dropdown-item" translate>Выйти<span *ngIf="client" class="login">{{client.login}}</span></a></li>
+        <li role="menuitem"><a (click)="logout()" class="dropdown-item" title="{{client.id}} - {{client.idCompany}}" translate>Выйти<span *ngIf="client" class="login">{{client.login}}</span></a></li>
       </ul>
     </div>
 

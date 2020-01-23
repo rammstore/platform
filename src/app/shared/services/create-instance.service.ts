@@ -162,7 +162,9 @@ export class CreateInstanceService {
       lastName: options.LastName,
       login: options.Login,
       language: options.Language,
-      pushToken: options.PushToken
+      pushToken: options.PushToken,
+      id: options.ID,
+      idCompany: options.IDCompany
     });
   }
 

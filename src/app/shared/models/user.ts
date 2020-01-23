@@ -4,6 +4,8 @@ export class User {
   login: string;
   language: string;
   pushToken: string;
+  id: number;
+  idCompany: number;
 
   constructor(
     options: any
