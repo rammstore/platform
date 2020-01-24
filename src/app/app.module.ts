@@ -19,6 +19,7 @@ import { NotificationsService } from '@app/services/notifications.service';
 import localeRu from '@angular/common/locales/ru';
 import { registerLocaleData } from '@angular/common';
 import {MultiTranslateHttpLoader} from 'ngx-translate-multi-http-loader';
+import { BrandService } from '@app/services/brand.service';
 
 registerLocaleData(localeRu, 'ru');
 
@@ -29,7 +30,7 @@ registerLocaleData(localeRu, 'ru');
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new MultiTranslateHttpLoader(httpClient, [
     { prefix: './assets/i18n/', suffix: '.json' },
-    { prefix: './assets/i18n/custom/', suffix: '.json' },
+    { prefix: './assets/downloads/', suffix: '.json' },
   ]);
 }
 
@@ -60,6 +61,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     DataService,
     LoaderService,
     NotificationsService,
+    BrandService,
     {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]

@@ -32,6 +32,16 @@ export class AuthService {
     this.loaderService.showLoader();
     return this.http.post(`${CONFIG.baseApiUrl}/session.login`, {Login: login, Password: password}).pipe(map((response: any) => {
 
+      const brand: object = {
+        brand: './assets/downloads/brand.json',
+        languages: {
+          en: './assets/downloads/',
+          ru: './assets/downloads/'
+        }
+      };
+
+      localStorage.setItem('brand', JSON.stringify(brand));
+
       const session: Session = this.createInstanceService.createSession(response.Session);
 
       response.Client.IDCompany = response.Company.ID;

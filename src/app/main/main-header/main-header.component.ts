@@ -7,6 +7,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { WalletService } from '@app/services/wallet.service';
+import { BrandService } from '@app/services/brand.service';
 
 @Component({
   selector: 'app-main-header',
@@ -23,6 +24,7 @@ export class MainHeaderComponent implements OnInit, OnDestroy {
   wallet: Wallet;
   isAsideOpen: boolean = false;
   language: string;
+  logoLink: string;
 
   @HostListener('document:click', ['$event'])
   public onClick(event) {
@@ -54,11 +56,16 @@ export class MainHeaderComponent implements OnInit, OnDestroy {
     private router: Router,
     private authService: AuthService,
     private translateService: TranslateService,
-    private walletService: WalletService
+    private walletService: WalletService,
+    private brandService: BrandService
   ) {
   }
 
   ngOnInit(): void {
+    this.brandService.getLogoLink().subscribe((link: string) => {
+      this.logoLink = link;
+    });
+
     this.storageService.getClient().subscribe((client: User) => {
       this.client = client;
     });

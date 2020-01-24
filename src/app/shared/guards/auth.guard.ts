@@ -3,6 +3,7 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Rout
 import { Observable } from 'rxjs';
 import { StorageService } from '@app/services/storage.service';
 import { AuthService } from '@app/services/auth.service';
+import { BrandService } from '@app/services/brand.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,8 @@ export class AuthGuard implements CanActivate {
   constructor(
     private router: Router,
     private storageService: StorageService,
-    private authService: AuthService
+    private authService: AuthService,
+    private brandService: BrandService
   ) {}
 
   canActivate(
@@ -26,6 +28,8 @@ export class AuthGuard implements CanActivate {
       this.router.navigate(['/login']);
       return false;
     }
+
+    this.brandService.getBrandFile();
 
     return true;
   }
