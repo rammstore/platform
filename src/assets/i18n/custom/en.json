@@ -1,0 +1,10 @@
+{
+  "linkFund.text": "< fund link [linkFund.text] >",
+  "linkFund.title": "< fund link tooltip [linkFund.title] >",
+  "linkFund.link": "https://www.google.com/",
+  "linkWithdraw.text": "< withdraw link [linkFund.text] >",
+  "linkWithdraw.title": "< withdraw link tooltip [linkFund.text] >",
+  "linkWithdraw.link": "https://www.google.com/",
+  "legal.text": "< Broker legal information [legal.text] >",
+  "risk.text": "< Additional risk warning text [risk.text] >"
+}
