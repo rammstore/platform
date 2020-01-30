@@ -21,6 +21,8 @@ export class MainComponent implements OnInit {
     this.dataService.getAccountSpecAsset();
     this.setHighChartsLocale();
 
+    this.translateService.use(localStorage.getItem('language'));
+
     this.translateService.onDefaultLangChange.subscribe(() => {
       this.setHighChartsLocale();
     });

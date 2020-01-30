@@ -4,6 +4,7 @@ import { ContentTabLink } from '@app/components/content-tabs/content-tab-link';
 import { Wallet } from '@app/models';
 import { takeUntil } from 'rxjs/internal/operators';
 import { WalletService } from '@app/services/wallet.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-account',
@@ -19,10 +20,12 @@ export class AccountComponent implements OnInit, OnDestroy {
   wallet: Wallet;
 
   constructor(
+    private translateService: TranslateService,
     private walletService: WalletService
   ) { }
 
   ngOnInit(): void {
+    this.translateService.use(localStorage.getItem('language'));
     this.walletService.getWallet()
       .pipe(takeUntil(this.destroy$))
       .subscribe((wallet: Wallet) => {

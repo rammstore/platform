@@ -7,6 +7,7 @@ import { takeUntil } from 'rxjs/internal/operators';
 import { DataService } from '@app/services/data.service';
 import { WalletService } from '@app/services/wallet.service';
 import { StrategyAddScriptComponent } from './strategy-add-script/strategy-add-script.component';
+import { BrandService } from '@app/services/brand.service';
 
 @Component({
   selector: 'app-strategy-add',
@@ -24,16 +25,19 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
   formStep2: FormGroup;
   wallet: Wallet;
   accountMinBalance: number;
+  functionality: object;
 
   constructor(
     private fb: FormBuilder,
     private walletService: WalletService,
     private dataService: DataService,
     private modalService: BsModalService,
-    public modalRef: BsModalRef
+    public modalRef: BsModalRef,
+    private brandService: BrandService
   ) { }
 
   ngOnInit(): void {
+    this.functionality = this.brandService.functionality;
     this.accountMinBalance = this.dataService.accountSpecAsset.accountMinBalance;
     this.buildFormStep1();
     this.walletService.getWallet()

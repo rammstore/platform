@@ -33,12 +33,18 @@ export class AuthService {
     return this.http.post(`${CONFIG.baseApiUrl}/session.login`, {Login: login, Password: password}).pipe(map((response: any) => {
 
       const brand: object = {
-        brand: './assets/downloads/brand.json',
+        brand: {
+          brandKey: `${response.Company.BrandKey}`,
+          logo: `${window.location.origin}/config/${response.Company.BrandKey}/logo.png`,
+          favicon: `${window.location.origin}/config/${response.Company.BrandKey}/favicon.ico`
+        },
         languages: {
-          en: './assets/downloads/',
-          ru: './assets/downloads/'
+          en: `${window.location.origin}/config/${response.Company.BrandKey}`,
+          ru: '${window.location.origin}/config/${response.Company.BrandKey}'
         }
       };
+
+      console.log(brand);
 
       localStorage.setItem('brand', JSON.stringify(brand));
 

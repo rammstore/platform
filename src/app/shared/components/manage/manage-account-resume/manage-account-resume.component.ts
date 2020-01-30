@@ -6,6 +6,7 @@ import { takeUntil } from 'rxjs/internal/operators';
 import { Account, Wallet } from '@app/models';
 import { DataService } from '@app/services/data.service';
 import { WalletService } from '@app/services/wallet.service';
+import { BrandService } from '@app/services/brand.service';
 
 @Component({
   selector: 'app-manage-account-resume',
@@ -23,15 +24,19 @@ export class ManageAccountResumeComponent implements OnInit, OnDestroy {
   account: Account;
   @Input() methodName: string;
   @Input() methodArgs: any;
+  functionality: object;
 
   constructor(
     private fb: FormBuilder,
     private walletService: WalletService,
     private dataService: DataService,
-    public modalRef: BsModalRef
+    public modalRef: BsModalRef,
+    private brandService: BrandService
   ) { }
 
   ngOnInit(): void {
+    this.functionality = this.brandService.functionality;
+
     this.walletService.getWallet()
       .pipe(takeUntil(this.destroy$))
       .subscribe((wallet: Wallet) => {

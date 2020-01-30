@@ -8,6 +8,8 @@ import { HttpClient } from '@angular/common/http';
 export class BrandService {
   logoLinkSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
   faviconLinkSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  url: string = `${window.location.origin}/config/${JSON.parse(localStorage.getItem('brand')).brand.brandKey}`;
+  functionality: object;
 
   constructor(
     private http: HttpClient
@@ -15,11 +17,16 @@ export class BrandService {
   }
 
   getBrandFile() {
-    const link: string = JSON.parse(localStorage.getItem('brand')).brand;
+    this.setLogoLink(JSON.parse(localStorage.getItem('brand')).brand.logo);
+    this.setFavicon(JSON.parse(localStorage.getItem('brand')).brand.favicon);
+
+    const link: string = `${this.url}/contacts.json`;
     this.http.get(link).subscribe((result: any) => {
-      this.setLogoLink(result['logo']);
-      this.setFavicon(result['favicon']);
-      this.setTitle(result['title']);
+      this.setTitle(result['CompanyName']);
+    });
+    const linkOptions: string = `${this.url}/options.json`;
+    this.http.get(linkOptions).subscribe((result: any) => {
+      this.functionality = result.options;
     });
   }
 
