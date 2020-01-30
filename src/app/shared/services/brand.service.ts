@@ -17,6 +17,7 @@ export class BrandService {
   }
 
   getBrandFile() {
+    console.log(this.url);
     this.setLogoLink(JSON.parse(localStorage.getItem('brand')).brand.logo);
     this.setFavicon(JSON.parse(localStorage.getItem('brand')).brand.favicon);
 
@@ -26,7 +27,7 @@ export class BrandService {
     });
     const linkOptions: string = `${this.url}/options.json`;
     this.http.get(linkOptions).subscribe((result: any) => {
-      this.functionality = result.options;
+      this.functionality = result;
     });
   }
 
