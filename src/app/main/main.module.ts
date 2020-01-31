@@ -7,9 +7,14 @@ import { MainRoutingModule } from './main.routing';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { MultiTranslateHttpLoader } from 'ngx-translate-multi-http-loader';
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
-  return new TranslateHttpLoader(httpClient, `${window.location.origin}/config/${JSON.parse(localStorage.getItem('brand')).brand.brandKey}/`, '.json');
+  return new MultiTranslateHttpLoader(httpClient, [
+    { prefix: './assets/i18n/', suffix: '.json'},
+    { prefix: `${window.location.origin}/config/${JSON.parse(localStorage.getItem('brand')).brand.brandKey}/`, suffix: '.json'}
+  ]);
+  // return new TranslateHttpLoader(httpClient, `${window.location.origin}/config/${JSON.parse(localStorage.getItem('brand')).brand.brandKey}/`, '.json');
 }
 
 @NgModule({
@@ -26,7 +31,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
-      }
+      },
+      isolate: true
     })
   ]
 })
