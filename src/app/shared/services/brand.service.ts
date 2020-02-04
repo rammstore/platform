@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 export class BrandService {
   logoLinkSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
   faviconLinkSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
-  url: string = `${window.location.origin}/config/${JSON.parse(localStorage.getItem('brand')).brand.brandKey}`;
+  url: string;
   functionality: object;
 
   constructor(
@@ -17,6 +17,7 @@ export class BrandService {
   }
 
   getBrandFile() {
+    this.url = `${window.location.origin}/config/${JSON.parse(localStorage.getItem('brand')).brand.brandKey}`;
     console.log(this.url);
     this.setLogoLink(JSON.parse(localStorage.getItem('brand')).brand.logo);
     this.setFavicon(JSON.parse(localStorage.getItem('brand')).brand.favicon);
