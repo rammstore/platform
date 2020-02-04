@@ -8,12 +8,8 @@
   }
 
   .search-container {
-    top: 95px;
-    position: fixed;
-    left: 0;
-    width: 100%;
-    display: flex;
-    z-index: 1;
+    position: static;
+    margin-top: 15px;
 
     input.search {
       width: auto;
