@@ -48,6 +48,7 @@
 
             <ng-container *ngSwitchCase="'strategy.name'">
               <a class="detail-link" [routerLink]="[getItemLink(item.strategy)]">{{item.strategy.name}}</a>
+              <div class="symbols">{{item.strategy.symbols}}</div>
             </ng-container>
 
             <div class="strategy-account"

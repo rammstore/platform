@@ -1,6 +1,7 @@
 @import "styles";
 
-.nameRating {
+.nameRating,
+*[class*='strategy.name'] {
   .symbols {
     font-size: 12px;
     color: rgba(0,0,0,.54);
