@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef } from 'ngx-bootstrap';
-import { Strategy, Wallet } from '@app/models';
+import { Paginator, Strategy, Wallet } from '@app/models';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
 import { DataService } from '@app/services/data.service';
@@ -74,19 +74,42 @@ export class ManageStrategyInvestComponent implements OnInit, OnDestroy {
       this.modalRef.hide();
       switch (true) {
         case this.router.url.includes('strategies'):
-          this.dataService.getActiveMyStrategies();
+          this.dataService.getActiveMyStrategies({
+            paginator: new Paginator({
+              perPage: 10,
+              currentPage: 1
+            })
+          });
           break;
 
         case this.router.url.includes('rating/popular '):
-          this.dataService.getRating({ratingType: 2});
+          this.dataService.getRating({
+            ratingType: 2,
+            paginator: new Paginator({
+              perPage: 10,
+              currentPage: 1
+            })
+          });
           break;
 
         case this.router.url.includes('rating/all'):
-          this.dataService.getRating({ratingType: 1});
+          this.dataService.getRating({
+            ratingType: 1,
+            paginator: new Paginator({
+              perPage: 10,
+              currentPage: 1
+            })
+          });
           break;
 
         case this.router.url.includes('rating'):
-          this.dataService.getRating({ratingType: 0});
+          this.dataService.getRating({
+            ratingType: 0,
+            paginator: new Paginator({
+              perPage: 10,
+              currentPage: 1
+            })
+          });
           break;
       }
     });

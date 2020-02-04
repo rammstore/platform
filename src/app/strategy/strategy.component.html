@@ -1,4 +1,4 @@
 <app-content-tabs [links]="links">
-  <router-outlet></router-outlet>
-  <button class="primary header-control" (click)="openAddStrategyDialog()" translate="">Создать стратегию</button>
+  <router-outlet (activate)="onRouterOutletActivate($event)"></router-outlet>
+  <button class="primary header-control" (click)="openAddStrategyDialog()" translate>Создать стратегию</button>
 </app-content-tabs>

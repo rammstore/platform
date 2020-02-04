@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Strategy, Wallet } from '@app/models';
+import { Paginator, Strategy, Wallet } from '@app/models';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
@@ -26,6 +26,8 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
   wallet: Wallet;
   accountMinBalance: number;
   functionality: object;
+  @Input() methodName: string;
+  @Input() methodArgs: any;
 
   constructor(
     private fb: FormBuilder,
@@ -94,12 +96,17 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
       Money: this.formStep2.get('money').value,
     };
 
-    this.dataService.addStrategy(strategy)
+    this.dataService.addStrategy(strategy, this.methodName, this.methodArgs)
       .pipe(takeUntil(this.destroy$))
       .subscribe((newStrategy: Strategy) => {
         this.modalRef.hide();
         this.openAddStrategyScriptDialog(newStrategy);
-        this.dataService.getActiveMyStrategies();
+        // this.dataService.getActiveMyStrategies({
+        //   paginator: new Paginator({
+        //     perPage: 10,
+        //     currentPage: 1
+        //   })
+        // });
       });
   }
 

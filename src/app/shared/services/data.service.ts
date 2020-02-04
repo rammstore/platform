@@ -65,15 +65,14 @@ export class DataService {
   //
 
   // Получение списка активных стратегий
-  getActiveMyStrategies(args?: { paginator: Paginator }): Observable<Strategy[]> {
+  getActiveMyStrategies(args: { paginator: Paginator }): Observable<Strategy[]> {
     this.loaderService.showLoader();
     const options: StrategiesSearchOptions = new StrategiesSearchOptions();
     options.Filter = {
       IsActive: true
-      // MyStrategies: true
     };
 
-    if (args && args.paginator) {
+    if (args.paginator) {
       options.Pagination = {
         CurrentPage: args.paginator.currentPage,
         PerPage: args.paginator.perPage
@@ -185,15 +184,20 @@ export class DataService {
   }
 
   // Создание новой стратегии
-  addStrategy(strategy: object): Observable<Strategy> {
+  addStrategy(strategy: object, methodName: string, methodArgs: any): Observable<Strategy> {
     this.loaderService.showLoader();
-    return this.http.post(`${CONFIG.baseApiUrl}/myStrategies.add`, strategy).pipe(map((response: any) => {
-      this.loaderService.hideLoader();
-      this.walletService.updateWallet().subscribe();
-      // this.getActiveMyStrategies().subscribe();
-      this.notificationsService.open('Стратегия создана');
-      return this.createInstanceService.createStrategy(response.Strategy);
-    }));
+    return this.http.post(`${CONFIG.baseApiUrl}/myStrategies.add`, strategy).pipe(
+      map((response: any) => {
+        // this.loaderService.hideLoader();
+        // this.walletService.updateWallet().subscribe();
+        // // this.getActiveMyStrategies().subscribe();
+        // this.notificationsService.open('Стратегия создана');
+        this.updateAccount(new Command(response.AccountCommand.ID, response.Account.ID), methodName, methodArgs, 'Стратегия создана');
+
+        response.Strategy.Account = response.Account;
+        return this.createInstanceService.createStrategy(response.Strategy);
+      })
+    );
   }
 
   // Постановка стратегии на паузу
@@ -484,7 +488,7 @@ export class DataService {
 
     return this.http.post(`${CONFIG.baseApiUrl}/accounts.add`, options).pipe(
       map((response: any) => {
-        this.getActiveMyStrategies().subscribe();
+        // this.getActiveMyStrategies().subscribe();
         this.walletService.updateWallet().subscribe();
         this.getStrategy({strategyId: id});
         // this.updateRatingList();
