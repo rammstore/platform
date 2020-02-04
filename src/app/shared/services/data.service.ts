@@ -692,6 +692,7 @@ export class DataService {
   // Методы ддля работы с рейтингом
   //
   getRating(args: { ratingType: 0 | 1 | 2, paginator?: Paginator, searchText?: string }): Observable<Strategy[]> {
+    console.log(args);
     this.loaderService.showLoader();
     const options: RatingSearchOptions = new RatingSearchOptions();
     options.Filter = {
