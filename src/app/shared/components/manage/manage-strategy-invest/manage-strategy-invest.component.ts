@@ -74,7 +74,6 @@ export class ManageStrategyInvestComponent implements OnInit, OnDestroy {
       this.modalRef.hide();
       switch (true) {
         case this.router.url.includes('strategies'):
-          console.log('strategies');
           this.dataService.getActiveMyStrategies({
             paginator: new Paginator({
               perPage: 10,
@@ -84,7 +83,6 @@ export class ManageStrategyInvestComponent implements OnInit, OnDestroy {
           break;
 
         case this.router.url.includes('rating/popular'):
-          console.log('popular');
           this.dataService.getRating({
             ratingType: 2,
             searchText: '',
@@ -96,7 +94,6 @@ export class ManageStrategyInvestComponent implements OnInit, OnDestroy {
           break;
 
         case this.router.url.includes('rating/all'):
-          console.log('all');
           this.dataService.getRating({
             ratingType: 1,
             searchText: '',
@@ -108,7 +105,6 @@ export class ManageStrategyInvestComponent implements OnInit, OnDestroy {
           break;
 
         case this.router.url.includes('rating'):
-          console.log('rated');
           this.dataService.getRating({
             ratingType: 0,
             paginator: new Paginator({
