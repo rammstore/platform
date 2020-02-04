@@ -18,7 +18,6 @@ export class BrandService {
 
   getBrandFile() {
     this.url = `${window.location.origin}/config/${JSON.parse(localStorage.getItem('brand')).brand.brandKey}`;
-    console.log(this.url);
     this.setLogoLink(JSON.parse(localStorage.getItem('brand')).brand.logo);
     this.setFavicon(JSON.parse(localStorage.getItem('brand')).brand.favicon);
 

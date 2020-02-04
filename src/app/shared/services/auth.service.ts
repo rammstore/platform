@@ -44,8 +44,6 @@ export class AuthService {
         }
       };
 
-      console.log(brand);
-
       localStorage.setItem('brand', JSON.stringify(brand));
 
       const session: Session = this.createInstanceService.createSession(response.Session);

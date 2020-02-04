@@ -133,7 +133,6 @@ export class DataService {
       this.walletService.walletSubject.next(this.createInstanceService.createWallet(response.Wallets[0]));
 
       response.Strategies.forEach((s: any) => {
-        console.log(s.Account);
         strategies.push(this.createInstanceService.createStrategy(s));
       });
 
@@ -191,7 +190,7 @@ export class DataService {
     return this.http.post(`${CONFIG.baseApiUrl}/myStrategies.add`, strategy).pipe(map((response: any) => {
       this.loaderService.hideLoader();
       this.walletService.updateWallet().subscribe();
-      this.getActiveMyStrategies().subscribe();
+      // this.getActiveMyStrategies().subscribe();
       this.notificationsService.open('Стратегия создана');
       return this.createInstanceService.createStrategy(response.Strategy);
     }));

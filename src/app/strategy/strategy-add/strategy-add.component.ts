@@ -99,6 +99,7 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
       .subscribe((newStrategy: Strategy) => {
         this.modalRef.hide();
         this.openAddStrategyScriptDialog(newStrategy);
+        this.dataService.getActiveMyStrategies();
       });
   }
 
