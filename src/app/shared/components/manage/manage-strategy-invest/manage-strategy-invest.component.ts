@@ -7,6 +7,7 @@ import { takeUntil } from 'rxjs/internal/operators';
 import { DataService } from '@app/services/data.service';
 import { WalletService } from '@app/services/wallet.service';
 import { BrandService } from '@app/services/brand.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-manage-strategy-invest',
@@ -30,7 +31,8 @@ export class ManageStrategyInvestComponent implements OnInit, OnDestroy {
     private dataService: DataService,
     private walletService: WalletService,
     public modalRef: BsModalRef,
-    private brandService: BrandService
+    private brandService: BrandService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -70,6 +72,23 @@ export class ManageStrategyInvestComponent implements OnInit, OnDestroy {
 
     this.dataService.addAccount(this.strategy.id, values).subscribe(() => {
       this.modalRef.hide();
+      switch (true) {
+        case this.router.url.includes('strategies'):
+          this.dataService.getActiveMyStrategies();
+          break;
+
+        case this.router.url.includes('rating/popular '):
+          this.dataService.getRating({ratingType: 2});
+          break;
+
+        case this.router.url.includes('rating/all'):
+          this.dataService.getRating({ratingType: 1});
+          break;
+
+        case this.router.url.includes('rating'):
+          this.dataService.getRating({ratingType: 0});
+          break;
+      }
     });
   }
 
