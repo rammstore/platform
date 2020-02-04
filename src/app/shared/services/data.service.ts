@@ -57,14 +57,15 @@ export class DataService {
     private walletService: WalletService,
     private router: Router,
     private notificationsService: NotificationsService
-  ) { }
+  ) {
+  }
 
   //
   // Методы работы со стратегиями
   //
 
   // Получение списка активных стратегий
-  getActiveMyStrategies(args: {paginator: Paginator}): Observable<Strategy[]> {
+  getActiveMyStrategies(args?: { paginator: Paginator }): Observable<Strategy[]> {
     this.loaderService.showLoader();
     const options: StrategiesSearchOptions = new StrategiesSearchOptions();
     options.Filter = {
@@ -72,7 +73,7 @@ export class DataService {
       // MyStrategies: true
     };
 
-    if (args.paginator) {
+    if (args && args.paginator) {
       options.Pagination = {
         CurrentPage: args.paginator.currentPage,
         PerPage: args.paginator.perPage
@@ -96,7 +97,11 @@ export class DataService {
       this.loaderService.hideLoader();
       this.activeMyStrategiesSubject.next(strategies);
     }, (error: HttpErrorResponse) => {
-      this.notificationsService.open('При загрузке данных произошла ошибка', { type: 'error', autoClose: true, duration: 3000 });
+      this.notificationsService.open('При загрузке данных произошла ошибка', {
+        type: 'error',
+        autoClose: true,
+        duration: 3000
+      });
     });
 
     return this.activeMyStrategiesSubject.asObservable();
@@ -108,6 +113,10 @@ export class DataService {
     const options: StrategiesSearchOptions = new StrategiesSearchOptions();
     options.Filter = {
       IsActive: false
+    };
+    options.OrderBy = {
+      Field: 'DTClosed',
+      Direction: 'Desc'
     };
 
     if (pagination) {
@@ -136,14 +145,18 @@ export class DataService {
       this.loaderService.hideLoader();
       this.closedMyStrategiesSubject.next(strategies);
     }, (error: HttpErrorResponse) => {
-      this.notificationsService.open('При загрузке данных произошла ошибка', { type: 'error', autoClose: true, duration: 3000 });
+      this.notificationsService.open('При загрузке данных произошла ошибка', {
+        type: 'error',
+        autoClose: true,
+        duration: 3000
+      });
     });
 
     return this.closedMyStrategiesSubject.asObservable();
   }
 
   // Получение конкретной стратегии
-  getStrategy(args: {strategyId: number}): Observable<Strategy> {
+  getStrategy(args: { strategyId: number }): Observable<Strategy> {
     this.loaderService.showLoader();
     this.http.post(`${CONFIG.baseApiUrl}/strategies.get`, {ID: args.strategyId}).subscribe((response: any) => {
       this.loaderService.hideLoader();
@@ -155,9 +168,17 @@ export class DataService {
     }, (error: HttpErrorResponse) => {
       if (error.status === 404) {
         this.router.navigate(['/rating']);
-        this.notificationsService.open('У вас нет доступа к данной стратегии', {type: 'error', autoClose: true, duration: 3000});
+        this.notificationsService.open('У вас нет доступа к данной стратегии', {
+          type: 'error',
+          autoClose: true,
+          duration: 3000
+        });
       } else {
-        this.notificationsService.open('При загрузке данных произошла ошибка', { type: 'error', autoClose: true, duration: 3000 });
+        this.notificationsService.open('При загрузке данных произошла ошибка', {
+          type: 'error',
+          autoClose: true,
+          duration: 3000
+        });
       }
     });
 
@@ -170,7 +191,7 @@ export class DataService {
     return this.http.post(`${CONFIG.baseApiUrl}/myStrategies.add`, strategy).pipe(map((response: any) => {
       this.loaderService.hideLoader();
       this.walletService.updateWallet().subscribe();
-      // this.getActiveMyStrategies().subscribe();
+      this.getActiveMyStrategies().subscribe();
       this.notificationsService.open('Стратегия создана');
       return this.createInstanceService.createStrategy(response.Strategy);
     }));
@@ -305,7 +326,11 @@ export class DataService {
       this.loaderService.hideLoader();
       this.currentStrategyAccountsSubject.next(accounts);
     }, (error: HttpErrorResponse) => {
-      this.notificationsService.open('При загрузке данных произошла ошибка', { type: 'error', autoClose: true, duration: 3000 });
+      this.notificationsService.open('При загрузке данных произошла ошибка', {
+        type: 'error',
+        autoClose: true,
+        duration: 3000
+      });
     });
 
     return this.currentStrategyAccountsSubject.asObservable();
@@ -328,8 +353,8 @@ export class DataService {
   getActiveMyAccounts(args: { paginator: Paginator, orderBy?: string }): Observable<Account[]> {
     this.loaderService.showLoader();
     const options: AccountsSearchOptions = new AccountsSearchOptions();
-    options.Filter = { MyActiveAccounts: true };
-    options.OrderBy = { Field: args.orderBy, Direction: 'Desc' };
+    options.Filter = {MyActiveAccounts: true};
+    options.OrderBy = {Field: args.orderBy, Direction: 'Desc'};
 
     if (args.paginator) {
       options.Pagination = {
@@ -355,7 +380,11 @@ export class DataService {
       this.loaderService.hideLoader();
       this.activeMyAccountsSubject.next(accounts.filter((a: Account) => a.isActive()));
     }, (error: HttpErrorResponse) => {
-      this.notificationsService.open('При загрузке данных произошла ошибка', { type: 'error', autoClose: true, duration: 3000 });
+      this.notificationsService.open('При загрузке данных произошла ошибка', {
+        type: 'error',
+        autoClose: true,
+        duration: 3000
+      });
     });
 
     return this.activeMyAccountsSubject.asObservable();
@@ -365,7 +394,13 @@ export class DataService {
   getClosedMyAccounts(pagination?: Paginator): Observable<Account[]> {
     this.loaderService.showLoader();
     const options: AccountsSearchOptions = new AccountsSearchOptions();
-    options.Filter = { MyActiveAccounts: false };
+    options.Filter = {
+      MyActiveAccounts: false
+    };
+    options.OrderBy = {
+      Field: 'DTClosed',
+      Direction: 'Desc'
+    };
 
     if (pagination) {
       options.Pagination = {
@@ -393,14 +428,18 @@ export class DataService {
       this.loaderService.hideLoader();
       this.closedMyAccountsSubject.next(accounts.filter((a: Account) => !a.isActive()));
     }, (error: HttpErrorResponse) => {
-      this.notificationsService.open('При загрузке данных произошла ошибка', { type: 'error', autoClose: true, duration: 3000 });
+      this.notificationsService.open('При загрузке данных произошла ошибка', {
+        type: 'error',
+        autoClose: true,
+        duration: 3000
+      });
     });
 
     return this.closedMyAccountsSubject.asObservable();
   }
 
   // Получение деталей инвестиции
-  getAccountStatement(args: {accountId: number}): Observable<any> {
+  getAccountStatement(args: { accountId: number }): Observable<any> {
     this.http.post(`${CONFIG.baseApiUrl}/accounts.getStatement`, {AccountID: args.accountId}).subscribe((response: any) => {
       response.Statement[0].Strategy.Offer = {
         Commission: response.Statement[0].Strategy.Commission,
@@ -416,9 +455,17 @@ export class DataService {
     }, (error: HttpErrorResponse) => {
       if (error.status === 401) {
         this.router.navigate(['/investments']);
-        this.notificationsService.open('У вас нет доступа к данной инвестиции', {type: 'error', autoClose: true, duration: 3000});
+        this.notificationsService.open('У вас нет доступа к данной инвестиции', {
+          type: 'error',
+          autoClose: true,
+          duration: 3000
+        });
       } else {
-        this.notificationsService.open('При загрузке данных произошла ошибка', { type: 'error', autoClose: true, duration: 3000 });
+        this.notificationsService.open('При загрузке данных произошла ошибка', {
+          type: 'error',
+          autoClose: true,
+          duration: 3000
+        });
       }
     });
 
@@ -438,7 +485,7 @@ export class DataService {
 
     return this.http.post(`${CONFIG.baseApiUrl}/accounts.add`, options).pipe(
       map((response: any) => {
-        // this.getActiveMyStrategies().subscribe();
+        this.getActiveMyStrategies().subscribe();
         this.walletService.updateWallet().subscribe();
         this.getStrategy({strategyId: id});
         // this.updateRatingList();
@@ -478,14 +525,17 @@ export class DataService {
   }
 
   // Изменить профиль инвестиции
-  changeAccountProfile(accountID: number, valueObj: {[key: string]: number}, methodName: string, methodArgs: any): Observable<any> {
+  changeAccountProfile(accountID: number, valueObj: { [key: string]: number }, methodName: string, methodArgs: any): Observable<any> {
     this.loaderService.showLoader();
 
     const requests: any[] = [];
 
     if (valueObj.target) {
       requests.push(
-        this.http.post(`${CONFIG.baseApiUrl}/accounts.setTarget`, {AccountID: accountID, Target: valueObj['target']}).pipe(
+        this.http.post(`${CONFIG.baseApiUrl}/accounts.setTarget`, {
+          AccountID: accountID,
+          Target: valueObj['target']
+        }).pipe(
           map((response: any) => {
             this.updateAccount(new Command(response.CommandID, accountID), methodName, methodArgs, 'Цель инвестиции изменена');
           })
@@ -495,7 +545,10 @@ export class DataService {
 
     if (valueObj.protection) {
       requests.push(
-        this.http.post(`${CONFIG.baseApiUrl}/accounts.setProtection`, {AccountID: accountID, Protection: valueObj['protection']}).pipe(
+        this.http.post(`${CONFIG.baseApiUrl}/accounts.setProtection`, {
+          AccountID: accountID,
+          Protection: valueObj['protection']
+        }).pipe(
           map((response: any) => {
             this.updateAccount(new Command(response.CommandID, accountID), methodName, methodArgs, 'Защита инвестиции изменена');
           })
@@ -505,7 +558,10 @@ export class DataService {
 
     if (valueObj.factor) {
       requests.push(
-        this.http.post(`${CONFIG.baseApiUrl}/accounts.setFactor`, {AccountID: accountID, Factor: valueObj['factor']}).pipe(
+        this.http.post(`${CONFIG.baseApiUrl}/accounts.setFactor`, {
+          AccountID: accountID,
+          Factor: valueObj['factor']
+        }).pipe(
           map((response: any) => {
             this.updateAccount(new Command(response.CommandID, accountID), methodName, methodArgs, 'Множитель инвестиции изменен');
           })
@@ -524,7 +580,7 @@ export class DataService {
   // Вывести средства из инвестиции
   withdrawFromAccount(accountId: number, amount: number, methodName: string, methodArgs: any): Observable<any> {
     this.loaderService.showLoader();
-    return this.http.post(`${CONFIG.baseApiUrl}/accounts.withdraw`, { AccountID: accountId, Amount: amount }).pipe(
+    return this.http.post(`${CONFIG.baseApiUrl}/accounts.withdraw`, {AccountID: accountId, Amount: amount}).pipe(
       map((response: any) => {
         this.updateAccount(new Command(response.CommandBalanceID, accountId), methodName, methodArgs, 'Средства выведены');
       })
@@ -534,7 +590,7 @@ export class DataService {
   // Закрыть инвестицию
   closeAccount(accountID: number, methodName: string, methodArgs: any): Observable<any> {
     this.loaderService.showLoader();
-    return this.http.post(`${CONFIG.baseApiUrl}/accounts.close`, { AccountID: accountID }).pipe(
+    return this.http.post(`${CONFIG.baseApiUrl}/accounts.close`, {AccountID: accountID}).pipe(
       map((response: any) => {
         this.updateAccount(new Command(response.CommandID, accountID), methodName, methodArgs, 'Инвестиция закрыта');
       })
@@ -567,7 +623,7 @@ export class DataService {
   getAccountDeals(id: number, pagination?: Paginator): Observable<Deal[]> {
     this.loaderService.showLoader();
     const options: DealsSearchOptions = new DealsSearchOptions();
-    options.Filter = { AccountID: id };
+    options.Filter = {AccountID: id};
 
     if (pagination) {
       options.Pagination = {
@@ -599,7 +655,7 @@ export class DataService {
   getAccountPositions(id: number, pagination?: Paginator): Observable<Position[]> {
     this.loaderService.showLoader();
     const options: PositionsSearchOptions = new PositionsSearchOptions();
-    options.Filter = { AccountID: id };
+    options.Filter = {AccountID: id};
 
     if (pagination) {
       options.Pagination = {
@@ -632,7 +688,7 @@ export class DataService {
   //
   // Методы ддля работы с рейтингом
   //
-  getRating(args: {ratingType: 0 | 1 | 2, paginator: Paginator, searchText?: string}): Observable<Strategy[]> {
+  getRating(args: { ratingType: 0 | 1 | 2, paginator: Paginator, searchText?: string }): Observable<Strategy[]> {
     this.loaderService.showLoader();
     const options: RatingSearchOptions = new RatingSearchOptions();
     options.Filter = {
@@ -668,7 +724,11 @@ export class DataService {
       this.loaderService.hideLoader();
       this.ratingStrategiesSubject.next(strategies);
     }, (error: HttpErrorResponse) => {
-      this.notificationsService.open('При загрузке данных произошла ошибка', { type: 'error', autoClose: true, duration: 3000 });
+      this.notificationsService.open('При загрузке данных произошла ошибка', {
+        type: 'error',
+        autoClose: true,
+        duration: 3000
+      });
     });
 
     return this.ratingStrategiesSubject.asObservable();
