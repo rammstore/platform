@@ -27,9 +27,7 @@ export class BrandService {
     });
     const linkOptions: string = `${this.url}/options.json`;
     this.http.get(linkOptions).subscribe((result: any) => {
-      console.log('get options');
       this.functionality.next(result);
-      console.log(this.functionality);
     });
   }
 

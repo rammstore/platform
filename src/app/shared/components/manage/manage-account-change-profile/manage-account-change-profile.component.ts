@@ -32,7 +32,12 @@ export class ManageAccountChangeProfileComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.functionality = this.brandService.functionality;
+    this.brandService.functionality
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((f: object) => {
+        this.functionality = f;
+      });
+
     this.buildForm();
   }
 

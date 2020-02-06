@@ -36,7 +36,12 @@ export class ManageStrategyInvestComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.functionality = this.brandService.functionality;
+    this.brandService.functionality
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((f: object) => {
+        this.functionality = f;
+      });
+
     this.securityMinBalance = this.dataService.accountSpecAsset.securityMinBalance;
     this.walletService.getWallet()
       .pipe(takeUntil(this.destroy$))
