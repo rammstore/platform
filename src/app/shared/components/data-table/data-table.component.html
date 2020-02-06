@@ -51,6 +51,11 @@
               <div class="symbols">{{item.strategy.symbols}}</div>
             </ng-container>
 
+            <ng-container *ngSwitchCase="'walletTransferType'">
+              {{item.getType()}}
+<!--              <a class="detail-link" [routerLink]="['/strategies/details', item.strategyID]">{{item.getType()}}</a>-->
+            </ng-container>
+
             <div class="strategy-account"
                  *ngSwitchCase="'investmentInfo'">
               <div class="strategy-account-intervalPnL">

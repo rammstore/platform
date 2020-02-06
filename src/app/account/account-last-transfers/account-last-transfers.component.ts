@@ -34,7 +34,7 @@ export class AccountLastTransfersComponent implements OnInit, OnDestroy {
       new TableColumn({ property: 'accountID', label: 'Счет'}),
       new TableColumn({ property: 'dtCreated', label: 'Дата', pipe: { pipe: CustomDatePipe }}),
       new TableColumn({ property: 'amount', label: 'Сумма, USD', pipe: { pipe: CustomCurrencyPipe }}),
-      new TableColumn({ property: 'type', label: 'Тип'})
+      new TableColumn({ property: 'walletTransferType', label: 'Тип'})
     ])
   ];
   paginator: Paginator = new Paginator({
