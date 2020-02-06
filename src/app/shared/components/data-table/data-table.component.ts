@@ -1,14 +1,21 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Account, Deal, Strategy, WalletTransfer, Position } from '@app/models';
 import { TableHeaderRow } from '@app/models/table-header-row';
 import { Paginator } from '@app/models/paginator';
+import { BrandService } from '@app/services/brand.service';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-data-table',
   templateUrl: './data-table.component.html',
   styleUrls: ['./data-table.component.scss']
 })
-export class DataTableComponent implements OnInit {
+export class DataTableComponent implements OnInit, OnDestroy {
+  // https://blog.strongbrew.io/rxjs-best-practices-in-angular/#avoiding-memory-leaks
+  // here we will unsubscribe from all subscriptions
+  destroy$ = new Subject();
+
   @Input() tableHeader: TableHeaderRow[];
   @Input() data: Array<Strategy | Account | Deal | WalletTransfer | Position>;
   @Input() totalFields: Array<string> = null;
@@ -19,10 +26,18 @@ export class DataTableComponent implements OnInit {
   @Output() paginationChanged: EventEmitter<void> = new EventEmitter();
   @Input() methodName: string;
   @Input() methodArgs: any;
+  functionality: object;
 
-  constructor() { }
+  constructor(
+    private brandService: BrandService
+  ) { }
 
   ngOnInit(): void {
+    this.brandService.functionality
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((f: object) => {
+      this.functionality = f;
+    });
   }
 
   getItemLink(item: any): string {
@@ -100,5 +115,9 @@ export class DataTableComponent implements OnInit {
 
   paginatorChanged(): void {
     this.paginationChanged.emit();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
   }
 }

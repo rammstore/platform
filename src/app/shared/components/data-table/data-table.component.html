@@ -59,7 +59,7 @@
                   {{item.intervalPnL | customCurrency}}
                 </span>
               </div>
-              <div class="strategy-account-target">
+              <div class="strategy-account-target" *ngIf="functionality['targetShow']">
                 <span><span translate>Цель</span>:</span>
                 <span>{{item.getTargetAmount() | customCurrency}}</span>
               </div>
@@ -67,7 +67,7 @@
                 <span><span translate>Средства</span>:</span>
                 <span>{{item.equity | customCurrency}}</span>
               </div>
-              <div class="strategy-account-protection">
+              <div class="strategy-account-protection" *ngIf="functionality['protectionShow']">
                 <span><span translate>Защита</span>:</span>
                 <span>{{item.getProtectionAmount() | customCurrency}}</span>
               </div>
@@ -82,7 +82,7 @@
                   {{item.account.intervalPnL | customCurrency}}
                 </span>
                 </div>
-                <div class="strategy-account-target">
+                <div class="strategy-account-target" *ngIf="functionality['targetShow']">
                   <span><span translate>Цель</span>:</span>
                   <span>{{item.account.getTargetAmount() | customCurrency}}</span>
                 </div>
@@ -90,7 +90,7 @@
                   <span><span translate>Средства</span>:</span>
                   <span>{{item.account.equity | customCurrency}}</span>
                 </div>
-                <div class="strategy-account-protection">
+                <div class="strategy-account-protection" *ngIf="functionality['protectionShow']">
                   <span><span translate>Защита</span>:</span>
                   <span>{{item.account.getProtectionAmount() | customCurrency}}</span>
                 </div>

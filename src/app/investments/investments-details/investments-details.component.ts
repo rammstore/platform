@@ -4,6 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { ContentTabLink } from '@app/components/content-tabs/content-tab-link';
 import { DataService } from '@app/services/data.service';
+import { BrandService } from '@app/services/brand.service';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-investments-details',
@@ -20,24 +22,34 @@ export class InvestmentsDetailsComponent implements OnInit, OnDestroy {
   strategy: Strategy;
   links: ContentTabLink[] = [];
   args: any;
+  functionality: object;
 
   constructor(
     private route: ActivatedRoute,
-    private dataService: DataService
-  ) { }
+    private dataService: DataService,
+    private brandService: BrandService
+  ) {
+  }
 
   ngOnInit(): void {
-    this.args = { accountId: this.route.params['_value'].id };
-    this.dataService.getAccountStatement(this.args).subscribe((response: any) => {
-      this.strategy = response.strategy;
-      this.account = response.account;
-      this.account.strategy = response.strategy;
+    this.brandService.functionality
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((f: object) => {
+        this.functionality = f;
+      });
+    this.args = {accountId: this.route.params['_value'].id};
+    this.dataService.getAccountStatement(this.args)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((response: any) => {
+        this.strategy = response.strategy;
+        this.account = response.account;
+        this.account.strategy = response.strategy;
 
-      this.links = [
-        new ContentTabLink('Позиции', '/investments/details/' + this.account.id),
-        new ContentTabLink('Сделки', '/investments/details/' + this.account.id + '/deals')
-      ];
-    });
+        this.links = [
+          new ContentTabLink('Позиции', '/investments/details/' + this.account.id),
+          new ContentTabLink('Сделки', '/investments/details/' + this.account.id + '/deals')
+        ];
+      });
   }
 
   ngOnDestroy(): void {

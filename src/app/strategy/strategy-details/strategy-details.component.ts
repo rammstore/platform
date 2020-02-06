@@ -6,6 +6,7 @@ import { BsModalRef } from 'ngx-bootstrap';
 import { Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/internal/operators';
 import { DataService } from '@app/services/data.service';
+import { BrandService } from '@app/services/brand.service';
 
 @Component({
   selector: 'app-strategy-details',
@@ -22,14 +23,22 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
   modalRef: BsModalRef;
   links: ContentTabLink[];
   args: any;
+  functionality: object;
 
   constructor(
     private route: ActivatedRoute,
-    private dataService: DataService
+    private dataService: DataService,
+    private brandService: BrandService
   ) {
   }
 
   ngOnInit(): void {
+    this.brandService.functionality
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((f: object) => {
+        this.functionality = f;
+      });
+
     this.args = {
       strategyId: this.route.params['_value'].id
     };

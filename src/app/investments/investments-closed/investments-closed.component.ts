@@ -7,6 +7,8 @@ import { takeUntil } from 'rxjs/internal/operators';
 import { CustomCurrencyPipe } from '@app/pipes/custom-currency.pipe';
 import { DataService } from '@app/services/data.service';
 import { CustomDatePipe } from '@app/pipes/custom-date.pipe';
+import { BrandService } from '@app/services/brand.service';
+import { log } from 'util';
 
 @Component({
   selector: 'app-investments-closed',
@@ -20,19 +22,19 @@ export class InvestmentsClosedComponent implements OnInit, OnDestroy {
 
   // component data
   accounts: Account[];
+  functionality: object;
 
   // table settings
   tableHeader: TableHeaderRow[] = [
     new TableHeaderRow([
-      new TableColumn({ property: 'strategy.name', label: 'Стратегия' }),
-      new TableColumn({ property: 'id', label: 'Инвестиция', colored: true}),
-      new TableColumn({ property: 'dtCreated', label: 'Создана', pipe: { pipe: CustomDatePipe }, colored: true}),
-      new TableColumn({ property: 'dtClosed', label: 'Закрыта', pipe: { pipe: CustomDatePipe }, colored: true}),
-      new TableColumn({ property: 'age', label: 'Возраст, недель', colored: true }),
-      new TableColumn({ property: 'protection', label: 'Защита', pipe: { pipe: PercentPipe }, colored: true}),
-      new TableColumn({ property: 'intervalPnL', label: 'Прибыль', pipe: { pipe: CustomCurrencyPipe }, colored: true }),
-      new TableColumn({ property: 'investmentDetails', label: '' })
-    ]),
+      new TableColumn({property: 'strategy.name', label: 'Стратегия'}),
+      new TableColumn({property: 'id', label: 'Инвестиция', colored: true}),
+      new TableColumn({property: 'dtCreated', label: 'Создана', pipe: {pipe: CustomDatePipe}, colored: true}),
+      new TableColumn({property: 'dtClosed', label: 'Закрыта', pipe: {pipe: CustomDatePipe}, colored: true}),
+      new TableColumn({property: 'age', label: 'Возраст, недель', colored: true}),
+      new TableColumn({property: 'intervalPnL', label: 'Прибыль', pipe: {pipe: CustomCurrencyPipe}, colored: true}),
+      new TableColumn({property: 'investmentDetails', label: ''})
+    ])
   ];
 
   paginator: Paginator = new Paginator({
@@ -41,10 +43,26 @@ export class InvestmentsClosedComponent implements OnInit, OnDestroy {
   });
 
   constructor(
-    private dataService: DataService
-  ) { }
+    private dataService: DataService,
+    private brandService: BrandService
+  ) {
+  }
 
   ngOnInit(): void {
+    this.brandService.functionality
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((f: object) => {
+        this.functionality = f;
+
+        if (this.functionality['protectionShow'] && this.tableHeader[0].columns[5].property !== 'protection') {
+          this.tableHeader[0].columns.splice(5, 0, new TableColumn({
+            property: 'protection',
+            label: 'Защита',
+            pipe: {pipe: PercentPipe},
+            colored: true
+          }));
+        }
+      });
     this.getAccounts();
   }
 

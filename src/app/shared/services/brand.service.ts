@@ -9,7 +9,7 @@ export class BrandService {
   logoLinkSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
   faviconLinkSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
   url: string;
-  functionality: object;
+  functionality: BehaviorSubject<object> = new BehaviorSubject<object>({});
 
   constructor(
     private http: HttpClient
@@ -27,7 +27,9 @@ export class BrandService {
     });
     const linkOptions: string = `${this.url}/options.json`;
     this.http.get(linkOptions).subscribe((result: any) => {
-      this.functionality = result;
+      console.log('get options');
+      this.functionality.next(result);
+      console.log(this.functionality);
     });
   }
 

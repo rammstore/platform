@@ -71,20 +71,20 @@
         <td translate>Множитель</td>
         <td *ngIf="account">{{account.factor | number:'1.1-1'}}</td>
       </tr>
-      <tr>
+      <tr *ngIf="functionality['targetShow']">
         <td translate>Цель</td>
         <td *ngIf="account">{{account.target | percent:'1.0-2'}}</td>
       </tr>
-      <tr>
+      <tr *ngIf="functionality['protectionShow']">
         <td translate>Защита</td>
         <td *ngIf="account">{{account.protection | percent:'1.0-2'}}</td>
       </tr>
-      <tr><td></td><td></td></tr>
-      <tr>
+      <tr *ngIf="functionality['targetShow'] && functionality['protectionShow']"><td></td><td></td></tr>
+      <tr *ngIf="functionality['targetShow']">
         <td><span translate>Цель</span>, USD</td>
         <td *ngIf="account">{{account.getTargetAmount() | customCurrency}}</td>
       </tr>
-      <tr>
+      <tr *ngIf="functionality['protectionShow']">
         <td><span translate>Защита</span>, USD</td>
         <td *ngIf="account">{{account.getProtectionAmount() | customCurrency}}</td>
       </tr>
