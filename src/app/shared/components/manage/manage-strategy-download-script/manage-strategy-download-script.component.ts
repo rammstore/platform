@@ -4,6 +4,7 @@ import { Strategy } from '@app/models';
 import { BsModalRef } from 'ngx-bootstrap';
 import { HttpClient } from '@angular/common/http';
 import { DataService } from '@app/services/data.service';
+import { CONFIG } from '@assets/config';
 
 @Component({
   selector: 'app-manage-strategy-download-script',
@@ -37,10 +38,14 @@ export class ManageStrategyDownloadScriptComponent implements OnInit {
   }
 
   download() {
+    const urlProtocol = CONFIG.baseApiUrl.split('://')[0] + '://';
+    const urlHost = CONFIG.baseApiUrl.split('://')[1];
     this.http.get(`assets/adviser/sample.${this.form.get('platform').value}`, {responseType: 'text'})
       .subscribe((fileContent: string) => {
         let newContent: string = fileContent.replace(/<strategy_name>/g, this.strategy.name);
         newContent = newContent.replace(/<strategy_token>/g, this.token);
+        newContent = newContent.replace(/<api_protocol>/g, urlProtocol);
+        newContent = newContent.replace(/<api_host>/g, urlHost);
 
         const a = document.createElement('a');
         document.body.appendChild(a);

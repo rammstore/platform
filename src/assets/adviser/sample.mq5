@@ -4,8 +4,8 @@
 
 string StrategyName = "<strategy_name>";
 string Token = "<strategy_token>";
-string protocol = "http://";
-string host = "136.243.13.109";
+string protocol = "<api_protocol>";
+string host = "<api_host>";
 string path = "/api/trading/v1/signals.send";
 bool MarketOnly = true; //Copy only market orders
 string AppToken = "512eb17d-2ada-4028-9304-2ccf1f7684fd";
