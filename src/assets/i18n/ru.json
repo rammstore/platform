@@ -7,5 +7,6 @@
   "linkFund.link": "#",
   "linkWithdraw.text": "Вывести",
   "linkWithdraw.title": "Перейти на страницу вывода с RAMM-счета",
-  "linkWithdraw.link": "#"
+  "linkWithdraw.link": "#",
+  "additionalInfo": ""
 }

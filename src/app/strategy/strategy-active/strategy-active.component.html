@@ -14,8 +14,10 @@
   (paginationChanged)="getStrategies()">
 </app-mobile-data-view-strategy>
 
-<p translate>В меню терминала “Сервис” - ”Настройки”, на вкладке “Советники” внесите адрес сервера RAMM в список разрешенных URL.</p>
-<p translate>Для этого добавьте адрес
-  <a href="https://maindc.ramm.store/api/trading/v1/signals.send">https://maindc.ramm.store/api/trading/v1/signals.send</a>
-  в таблицу “Разрешить WebRequest для следующих URL:”.</p>
-<p translate>Запустите советник на любом графике. Все изменения на вашем счете будут копироваться в вашу стратегию в RAMM.</p>
+<div [innerHTML]="'additionalInfo' | translate"></div>
+
+<!--<p translate>В меню терминала “Сервис” - ”Настройки”, на вкладке “Советники” внесите адрес сервера RAMM в список разрешенных URL.</p>-->
+<!--<p translate>Для этого добавьте адрес-->
+<!--  <a href="https://maindc.ramm.store/api/trading/v1/signals.send">https://maindc.ramm.store/api/trading/v1/signals.send</a>-->
+<!--  в таблицу “Разрешить WebRequest для следующих URL:”.</p>-->
+<!--<p translate>Запустите советник на любом графике. Все изменения на вашем счете будут копироваться в вашу стратегию в RAMM.</p>-->

@@ -455,5 +455,6 @@
   "linkFund.link": "#",
   "linkWithdraw.text": "Withdraw",
   "linkWithdraw.title": "Withdraw from RAMM-account",
-  "linkWithdraw.link": "#"
+  "linkWithdraw.link": "#",
+  "additionalInfo": ""
 }
