@@ -101,9 +101,9 @@
                  *ngIf="formStep2.get('money').touched && formStep2.get('money').hasError('pattern')" translate>
             Пожалуйста, введите корректную сумму инвестиции.
           </label>
-          <label class="details-message">
-            <span translate>Баланс вашей инвестиции в вашу стратегию после вывода должен быть не меньше</span> {{accountMinBalance | customCurrency}}.
-          </label>
+<!--          <label class="details-message">-->
+<!--            <span translate>Баланс вашей инвестиции в вашу стратегию после вывода должен быть не меньше</span> {{accountMinBalance | customCurrency}}.-->
+<!--          </label>-->
           <label class="details-message">
             <span translate>Доступно</span>: <span class="available-clickable" (click)="setMoney(wallet.getAvailableMoney())">{{wallet.getAvailableMoney() | customCurrency}}</span>
           </label>
