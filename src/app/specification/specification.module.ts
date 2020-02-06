@@ -5,6 +5,7 @@ import { SpecificationRatingComponent } from './specification-rating/specificati
 import { SpecificationComponent } from './specification.component';
 import { SpecificationRoutingModule } from './specification.routing';
 import { SharedModule } from '@app/shared.module';
+import { SpecificationService } from './specification.service';
 
 
 
@@ -17,6 +18,9 @@ import { SharedModule } from '@app/shared.module';
   imports: [
     SharedModule,
     SpecificationRoutingModule
+  ],
+  providers: [
+    SpecificationService
   ]
 })
 export class SpecificationModule { }
