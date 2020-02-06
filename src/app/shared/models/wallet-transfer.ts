@@ -8,6 +8,7 @@ export class WalletTransfer {
   amount: number;
   type: number;
   comment: string;
+  strategyName: string;
 
   constructor(
     id: number,
@@ -18,7 +19,8 @@ export class WalletTransfer {
     dtAccrual: Date,
     amount: number,
     type: number,
-    comment: string
+    comment: string,
+    strategyName: string
   ) {
     this.id = id;
     this.strategyID = strategyID;
@@ -29,6 +31,7 @@ export class WalletTransfer {
     this.amount = amount;
     this.type = type;
     this.comment = comment;
+    this.strategyName = strategyName;
   }
 
   getType(): string {
@@ -42,15 +45,15 @@ export class WalletTransfer {
       case 3:
         return 'Bonus withdraw';
       case 4:
-        return 'To account' + (this.strategyID != null ? '\n\'' + this.strategyID + '\'' : '');
+        return 'To account' + (this.strategyID != null ? '\n\'' + this.strategyName + '\'' : '');
       case 5:
-        return 'From account' + (this.strategyID != null ? '\n\'' + this.strategyID + '\'' : '');
+        return 'From account' + (this.strategyID != null ? '\n\'' + this.strategyName + '\'' : '');
       case 6:
-        return 'Fee' + (this.strategyID != null ? '\n\'' + this.strategyID + '\'' : '');
+        return 'Fee from' + (this.strategyID != null ? '\n\'' + this.strategyName + '\'' : '');
       case 7:
-        return 'Commission' + (this.strategyID != null ? '\n\'' + this.strategyID + '\'' : '');
+        return 'Commission from' + (this.strategyID != null ? '\n\'' + this.strategyName + '\'' : '');
       case 8:
-        return 'Partners' + (this.strategyID != null ? '\n\'' + this.strategyID + '\'' : '');
+        return 'Partners' + (this.strategyID != null ? '\n\'' + this.strategyName + '\'' : '');
     }
   }
 

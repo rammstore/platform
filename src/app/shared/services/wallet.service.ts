@@ -79,7 +79,8 @@ export class WalletService {
           transfer.AccrualDate,
           transfer.Amount,
           transfer.Type,
-          transfer.Comment
+          transfer.Comment,
+          transfer.StrategyName
         ));
       });
 
