@@ -45,15 +45,15 @@ export class WalletTransfer {
       case 3:
         return 'Bonus withdraw';
       case 4:
-        return 'To account' + (this.strategyID != null ? '\n\'' + this.strategyName + '\'' : '');
+        return 'To account';
       case 5:
-        return 'From account' + (this.strategyID != null ? '\n\'' + this.strategyName + '\'' : '');
+        return 'From account';
       case 6:
-        return 'Fee from' + (this.strategyID != null ? '\n\'' + this.strategyName + '\'' : '');
+        return 'Fee from';
       case 7:
-        return 'Commission from' + (this.strategyID != null ? '\n\'' + this.strategyName + '\'' : '');
+        return 'Commission from';
       case 8:
-        return 'Partners' + (this.strategyID != null ? '\n\'' + this.strategyName + '\'' : '');
+        return 'Partners';
     }
   }
 

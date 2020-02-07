@@ -52,8 +52,8 @@
             </ng-container>
 
             <ng-container *ngSwitchCase="'walletTransferType'">
-              {{item.getType()}}
-<!--              <a class="detail-link" [routerLink]="['/strategies/details', item.strategyID]">{{item.getType()}}</a>-->
+              {{item.getType()}} <a *ngIf="item.strategyID" [routerLink]="['/strategies/details', item.strategyID]">{{item.strategyName}}</a>
+<!--              <span [innerHTML]="item.getType()"></span>-->
             </ng-container>
 
             <div class="strategy-account"
