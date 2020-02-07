@@ -1,6 +1,6 @@
 /* This EA sends signals from MT account into RAMM strategy*/
 #property strict
-#define EAVersion "2.16"
+#define EAVersion "2.17"
 
 string StrategyName = "<strategy_name>";
 string Token = "<strategy_token>";
@@ -22,7 +22,7 @@ datetime NextHeartBeat;
 datetime LastHeartBeat;
 int LastTryTimeout = 10; //To avoid order duplication don't try again in less than this number of seconds
 long RAMM_Curr_MT_Account = 0;
-datetime last_synch_time=0;
+datetime last_bal_op=0, prev_last_bal_op=0;
 double Yield      = 0;
 int Accounts      = 0;
 int Status        = 0;
@@ -480,7 +480,7 @@ bool Synchronize(const int synch_type) //0-hard, 1-soft
 	else
 	{
 	   NextHeartBeat = TimeLocal()+AfterSignalHeartBeatTimeOut;
-	   last_synch_time = TimeCurrent();
+	   prev_last_bal_op = last_bal_op;
 	   if (api_synchtype == 3) //hard
 	   {
 			ArrayResize(PosArray,ArraySize(tmpPosArray));
@@ -665,8 +665,11 @@ void OnTimer()
       for (int k=0;k<=deal_total-1;k++)
       {
          bool bres = OrderSelect(k, SELECT_BY_POS, MODE_HISTORY);
-         if (OrderType() == 6 && OrderOpenTime() > last_synch_time)
+         if (OrderType() == 6 && OrderOpenTime() > prev_last_bal_op)
+         {
             Balance_Change += OrderProfit();
+            if (OrderOpenTime() > last_bal_op) last_bal_op = OrderOpenTime();
+         }
       }
       if (MathAbs(Balance_Change / (Equity - Balance_Change)) >= MinDiffPercent/100)
       {

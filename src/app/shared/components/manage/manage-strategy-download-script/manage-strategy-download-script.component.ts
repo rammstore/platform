@@ -39,7 +39,7 @@ export class ManageStrategyDownloadScriptComponent implements OnInit {
 
   download() {
     const urlProtocol = CONFIG.baseApiUrl.split('://')[0] + '://';
-    const urlHost = CONFIG.baseApiUrl.split('://')[1];
+    const urlHost = CONFIG.baseApiUrl.split('://')[1].split('/api/')[0];
     this.http.get(`assets/adviser/sample.${this.form.get('platform').value}`, {responseType: 'text'})
       .subscribe((fileContent: string) => {
         let newContent: string = fileContent.replace(/<strategy_name>/g, this.strategy.name);
