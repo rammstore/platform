@@ -23,7 +23,7 @@
 
       <div class="item">
         <span>Тип</span>
-        <span>{{transfer.getType()}}</span>
+        <span>{{transfer.getType()}} <a *ngIf="transfer.strategyID" [routerLink]="['/strategies/details', transfer.strategyID]">{{transfer.strategyName}}</a></span>
       </div>
     </div>
   </div>
