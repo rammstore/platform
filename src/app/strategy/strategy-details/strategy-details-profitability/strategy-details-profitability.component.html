@@ -10,11 +10,10 @@
       </tr>
       <tr>
         <td translate>Доходность</td>
-        <td *ngIf="strategy.account"
-            class="yield {{strategy.getColorClass('profit')}}">
+        <td class="yield {{strategy.getColorClass('profit')}}">
           {{strategy.profit | percent:'1.2-2'}}
         </td>
-        <td *ngIf="!strategy.account">{{0 | percent:'1.2-2'}}</td>
+<!--        <td *ngIf="!strategy.account">{{0 | percent:'1.2-2'}}</td>-->
       </tr>
       <tr><td></td><td></td></tr>
       <tr>
