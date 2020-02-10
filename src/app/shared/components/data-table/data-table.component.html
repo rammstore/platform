@@ -55,6 +55,11 @@
               <a *ngIf="item.strategyID" [routerLink]="['/strategies/details', item.strategyID]" class="detail-link">{{item.strategyName}}</a>
             </ng-container>
 
+            <ng-container *ngSwitchCase="'walletTransferDtCreated'">
+              <div>{{item.dtCreated | customDate}}</div>
+              <div class="wallet-transfer-comment" *ngIf="item.comment">{{item.comment}}</div>
+            </ng-container>
+
             <div class="strategy-account"
                  *ngSwitchCase="'investmentInfo'">
               <div class="strategy-account-intervalPnL">
