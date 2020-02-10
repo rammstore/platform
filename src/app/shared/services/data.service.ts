@@ -29,21 +29,21 @@ import { AccountSpecAsset } from '@app/models/account-spec-asset';
 })
 export class DataService {
   // Мои активные стратегии
-  activeMyStrategiesSubject: BehaviorSubject<Strategy[]> = new BehaviorSubject<Strategy[]>([]);
+  activeMyStrategiesSubject: BehaviorSubject<Strategy[]> = new BehaviorSubject<Strategy[]>(null);
   // Мои закрытые стратегии
-  closedMyStrategiesSubject: BehaviorSubject<Strategy[]> = new BehaviorSubject<Strategy[]>([]);
+  closedMyStrategiesSubject: BehaviorSubject<Strategy[]> = new BehaviorSubject<Strategy[]>(null);
   // Мои активные инвестиции
-  activeMyAccountsSubject: BehaviorSubject<Account[]> = new BehaviorSubject<Account[]>([]);
+  activeMyAccountsSubject: BehaviorSubject<Account[]> = new BehaviorSubject<Account[]>(null);
   // Мои закрытые инвестиции
-  closedMyAccountsSubject: BehaviorSubject<Account[]> = new BehaviorSubject<Account[]>([]);
+  closedMyAccountsSubject: BehaviorSubject<Account[]> = new BehaviorSubject<Account[]>(null);
   // Детали текущей стратегии
   currentStrategyDetailsSubject: ReplaySubject<Strategy> = new ReplaySubject<Strategy>();
   // Рейтинг стратегий
-  ratingStrategiesSubject: BehaviorSubject<Strategy[]> = new BehaviorSubject<Strategy[]>([]);
+  ratingStrategiesSubject: BehaviorSubject<Strategy[]> = new BehaviorSubject<Strategy[]>(null);
   // Детали текущей инвестиции
   currentAccountStatementSubject: ReplaySubject<any> = new ReplaySubject<any>();
   // Инвестиции текущей стратегии
-  currentStrategyAccountsSubject: BehaviorSubject<Account[]> = new BehaviorSubject<Account[]>([]);
+  currentStrategyAccountsSubject: BehaviorSubject<Account[]> = new BehaviorSubject<Account[]>(null);
   // Настройки счетов клиента
   accountSpecAsset: AccountSpecAsset;
   // here we will unsubscribe from all subscriptions

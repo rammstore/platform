@@ -19,7 +19,7 @@ export class InvestmentsDetailsDealsComponent implements OnInit, OnDestroy {
   destroy$ = new Subject();
 
   // component data
-  deals: Deal[] = [];
+  deals: Deal[];
   id: number;
 
   // table settings
