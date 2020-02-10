@@ -18,7 +18,7 @@ class DealsSearchOptions {
 })
 export class WalletService {
   walletSubject: BehaviorSubject<Wallet> = new BehaviorSubject<Wallet>(null);
-  dealsSubject: BehaviorSubject<WalletTransfer[]> = new BehaviorSubject<WalletTransfer[]>([]);
+  dealsSubject: BehaviorSubject<WalletTransfer[]> = new BehaviorSubject<WalletTransfer[]>(null);
 
   constructor(
     private http: HttpClient,

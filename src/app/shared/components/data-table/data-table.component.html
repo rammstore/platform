@@ -38,7 +38,7 @@
             </ng-container>
 
             <ng-container *ngSwitchCase="'accountID'">
-              <a class="detail-link" [routerLink]="['/investments/details', item.accountID]">{{item.accountID}}</a>
+              <a class="detail-link" [routerLink]="['/investments/details', item.accountID, 'deals']">{{item.accountID}}</a>
             </ng-container>
 
             <ng-container *ngSwitchCase="'nameRating'">
@@ -51,8 +51,8 @@
               <div class="symbols">{{item.strategy.symbols}}</div>
             </ng-container>
 
-            <ng-container *ngSwitchCase="'walletTransferType'">
-              {{item.getType()}} <a *ngIf="item.strategyID" [routerLink]="['/strategies/details', item.strategyID]">{{item.strategyName}}</a>
+            <ng-container *ngSwitchCase="'walletTransferStrategy'">
+              <a *ngIf="item.strategyID" [routerLink]="['/strategies/details', item.strategyID]" class="detail-link">{{item.strategyName}}</a>
             </ng-container>
 
             <div class="strategy-account"
@@ -180,7 +180,11 @@
   </tbody>
 </table>
 
-<div class="empty-data" *ngIf="!data.length" translate>
+<div class="empty-data" *ngIf="!data" translate>
+  Загрузка...
+</div>
+
+<div class="empty-data" *ngIf="data && !data.length" translate>
   {{emptyDataText}}
 </div>
 
