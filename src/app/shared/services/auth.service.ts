@@ -16,7 +16,7 @@ import { WalletService } from '@app/services/wallet.service';
   providedIn: 'root'
 })
 export class AuthService {
-  public redirectUrl: string;
+  public redirectUrl: string = '/account';
 
   constructor(
     private http: HttpClient,

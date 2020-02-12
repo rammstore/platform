@@ -32,10 +32,26 @@ export class LoginComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    if (this.authService.redirectUrl.includes('otp=')) {
+      const fullURL: string = this.authService.redirectUrl;
+      this.redirectUrl = [fullURL.split('otp=')[0]];
+      this.authService.loginByOtp(fullURL.split('otp=')[1])
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(() => {
+          this.router.navigate([fullURL.split('?otp=')[0]]);
+        }, (e: HttpErrorResponse) => {
+          if (e.status === 401) {
+            this.isWrongCredentials = true;
+          }
+        });
+      this.authService.redirectUrl = fullURL.split('otp=')[0];
+    }
+
     this.route.queryParams.subscribe((params) => {
       if (!params['otp']) {
         return;
       }
+
 
       this.authService.loginByOtp(params['otp'])
         .pipe(takeUntil(this.destroy$))
