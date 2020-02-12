@@ -81,6 +81,59 @@ export class AuthService {
     }));
   }
 
+  loginByOtp(otp: string): Observable<AuthData> {
+    this.loaderService.showLoader();
+    return this.http.post(`${CONFIG.baseApiUrl}/session.login`, {OTP: otp}).pipe(map((response: any) => {
+
+      const brand: object = {
+        brand: {
+          brandKey: `${response.Company.BrandKey}`,
+          logo: `${window.location.origin}/config/${response.Company.BrandKey}/logo.png`,
+          favicon: `${window.location.origin}/config/${response.Company.BrandKey}/favicon.ico`
+        },
+        languages: {
+          en: `${window.location.origin}/config/${response.Company.BrandKey}`,
+          ru: '${window.location.origin}/config/${response.Company.BrandKey}'
+        }
+      };
+
+      localStorage.setItem('brand', JSON.stringify(brand));
+
+      const session: Session = this.createInstanceService.createSession(response.Session);
+
+      response.Client.IDCompany = response.Company.ID;
+      const user: User = this.createInstanceService.createUser(response.Client);
+
+      const wallets: Wallet[] = [];
+      response.Wallets.forEach((w: any) => {
+        const wallet: Wallet = this.createInstanceService.createWallet(w);
+        wallets.push(wallet);
+      });
+      this.walletService.walletSubject.next(wallets[0]);
+
+      const company: Company = this.createInstanceService.createCompany(response.Company);
+
+      const authData: AuthData = this.createInstanceService.createAuthData({
+        client: user,
+        company: company,
+        session: session,
+        wallets: wallets
+      });
+
+      if (!window.localStorage.getItem('language')) {
+        this.translateService.setDefaultLang(authData.client.language);
+        this.translateService.use(authData.client.language);
+        localStorage.setItem('language', authData.client.language);
+      }
+
+      this.storageService.setAuthData(authData);
+      this.storageService.setToken(authData.session.token);
+
+      this.loaderService.hideLoader();
+      return authData;
+    }));
+  }
+
   logout(): void {
     this.http.get(`${CONFIG.baseApiUrl}/session.logout`).subscribe(() => {
       this.storageService.removeAuthData();

@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '@app/services/auth.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
@@ -27,10 +27,30 @@ export class LoginComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe((params) => {
+      if (!params['otp']) {
+        return;
+      }
+
+      this.authService.loginByOtp(params['otp'])
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(() => {
+          if (this.authService.redirectUrl) {
+            this.redirectUrl = [this.authService.redirectUrl];
+            this.authService.redirectUrl = '/';
+          }
+          this.router.navigate(this.redirectUrl);
+        }, (e: HttpErrorResponse) => {
+          if (e.status === 401) {
+            this.isWrongCredentials = true;
+          }
+        });
+    });
     this.language = this.translateService.currentLang;
     this.buildForm();
   }
