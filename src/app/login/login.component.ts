@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   isWrongCredentials: boolean = false;
   redirectUrl: string[] = ['/account'];
   language: string;
+  otp: string;
 
   constructor(
     private fb: FormBuilder,
@@ -32,43 +33,34 @@ export class LoginComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    if (this.authService.redirectUrl.includes('otp=')) {
-      const fullURL: string = this.authService.redirectUrl;
-      this.redirectUrl = [fullURL.split('otp=')[0]];
-      this.authService.loginByOtp(fullURL.split('otp=')[1])
-        .pipe(takeUntil(this.destroy$))
-        .subscribe(() => {
-          this.router.navigate([fullURL.split('?otp=')[0]]);
-        }, (e: HttpErrorResponse) => {
-          if (e.status === 401) {
-            this.isWrongCredentials = true;
-          }
-        });
-      this.authService.redirectUrl = fullURL.split('otp=')[0];
+    console.log(this.router.url);
+
+    if (this.route.snapshot.queryParams['lang']) {
+      this.language = this.route.snapshot.queryParams['lang'];
+      this.router.navigate(['.'], { relativeTo: this.route, queryParams: { otp: this.route.snapshot.queryParams['otp'] }});
+      this.setLanguage(this.language);
     }
 
-    this.route.queryParams.subscribe((params) => {
-      if (!params['otp']) {
-        return;
-      }
+    if (this.router.url.split('?')[0] !== '/login') {
+      this.redirectUrl = [this.router.url.split('?')[0]];
+      this.authService.redirectUrl = this.redirectUrl[0];
+    }
 
-
-      this.authService.loginByOtp(params['otp'])
+    if (this.route.snapshot.queryParams['otp']) {
+      this.otp = this.route.snapshot.queryParams['otp'];
+      this.authService.loginByOtp(this.otp)
         .pipe(takeUntil(this.destroy$))
         .subscribe(() => {
-          if (this.authService.redirectUrl) {
-            this.redirectUrl = [this.authService.redirectUrl];
-            this.authService.redirectUrl = '/';
-          }
           this.router.navigate(this.redirectUrl);
         }, (e: HttpErrorResponse) => {
           if (e.status === 401) {
             this.isWrongCredentials = true;
           }
         });
-    });
-    this.language = this.translateService.currentLang;
-    this.buildForm();
+    } else {
+      this.language = this.translateService.currentLang;
+      this.buildForm();
+    }
   }
 
   buildForm(): void {
@@ -101,10 +93,12 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   setLanguage(lang: string) {
-    this.translateService.use(lang);
-    this.language = lang;
-    localStorage.setItem('language', lang);
-    location.reload();
+    if (this.translateService.currentLang !== lang) {
+      this.translateService.use(lang);
+      this.language = lang;
+      localStorage.setItem('language', lang);
+      location.reload();
+    }
   }
 
   ngOnDestroy(): void {

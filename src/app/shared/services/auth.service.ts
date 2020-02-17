@@ -18,6 +18,8 @@ import { log } from 'util';
 })
 export class AuthService {
   public redirectUrl: string = '/account';
+  public otp: string;
+  public lang: string;
 
   constructor(
     private http: HttpClient,
