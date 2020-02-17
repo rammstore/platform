@@ -458,5 +458,6 @@
   "linkWithdraw.title": "Withdraw from RAMM-account",
   "linkWithdraw.link": "#",
   "additionalInfo": "",
-  "linkLogout": "/account"
+  "linkLogout": "/account",
+  "Логин и/или пароль неверны": "Login/Password incorrect or not found"
 }
