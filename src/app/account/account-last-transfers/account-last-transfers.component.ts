@@ -31,8 +31,8 @@ export class AccountLastTransfersComponent implements OnInit, OnDestroy {
   tableHeader: TableHeaderRow[] = [
     new TableHeaderRow([
       new TableColumn({ property: 'id', label: '#'}),
-      new TableColumn({ property: 'walletTransferDtCreated', label: 'Дата', pipe: { pipe: CustomDatePipe }}),
-      new TableColumn({ property: 'amount', label: 'Сумма, USD', pipe: { pipe: CustomCurrencyPipe }}),
+      new TableColumn({ property: 'dtCreated', label: 'Дата', pipe: { pipe: CustomDatePipe }}),
+      new TableColumn({ property: 'walletTransferAmount', label: 'Сумма, USD', pipe: { pipe: CustomCurrencyPipe }}),
       new TableColumn({ property: 'type', label: 'Тип'}),
       new TableColumn({ property: 'accountID', label: 'Счет'}),
       new TableColumn({ property: 'walletTransferStrategy', label: 'Стратегия'})

@@ -457,5 +457,6 @@
   "linkWithdraw.text": "Withdraw",
   "linkWithdraw.title": "Withdraw from RAMM-account",
   "linkWithdraw.link": "#",
-  "additionalInfo": ""
+  "additionalInfo": "",
+  "linkLogout": "/account"
 }

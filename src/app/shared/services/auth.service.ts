@@ -9,8 +9,9 @@ import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { LoaderService } from '@app/services/loader.service';
 import { CreateInstanceService } from '@app/services/create-instance.service';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { WalletService } from '@app/services/wallet.service';
+import { log } from 'util';
 
 @Injectable({
   providedIn: 'root'

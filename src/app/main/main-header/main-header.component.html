@@ -1,6 +1,6 @@
 <header>
   <div class="container">
-    <a href="#">
+    <a href="{{'linkLogout' | translate}}">
       <img class="logo" [src]="logoLink" alt="company_logo">
     </a>
 
@@ -27,7 +27,7 @@
             <li role="menuitem lang" (click)="setLanguage('ru')"><i class="icon-flag ru"></i></li>
           </ul>
         </li>
-        <li role="menuitem"><a (click)="logout()" class="dropdown-item" title="{{client.id}} - {{client.idCompany}}" translate>Выйти<span *ngIf="client" class="login">{{client.login}}</span></a></li>
+        <li role="menuitem"><a (click)="logout()"  href="{{'linkLogout' | translate}}" class="dropdown-item" title="{{client.id}} - {{client.idCompany}}" translate>Выйти<span *ngIf="client" class="login">{{client.login}}</span></a></li>
       </ul>
     </div>
 
@@ -84,7 +84,7 @@
           </ul>
         </li>
 
-        <li><a (click)="logout()" translate>Выйти</a></li>
+        <li><a (click)="logout()" href="{{'linkLogout' | translate}}" translate>Выйти</a></li>
 
         <li><a *ngIf="client" class="login">{{client.login}}</a></li>
       </ul>
