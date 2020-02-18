@@ -48,7 +48,7 @@ export class ChartYieldTableComponent implements OnInit, OnDestroy {
               enabled: false
             },
             gridLineWidth: 1,
-            tickAmount: response.Chart.length / 7,
+            tickAmount: this.getWeeksAmount(response.Chart),// response.Chart.length / 7,
             tickWidth: 0,
             lineWidth: 0
           },
@@ -104,5 +104,10 @@ export class ChartYieldTableComponent implements OnInit, OnDestroy {
     const data: object[] = [];
     chartData.forEach(d => data.push([new Date(d.DT).getTime(), d.Yield]));
     return data;
+  }
+
+  getWeeksAmount(chart: any): number {
+    // console.log(Math.floor((new Date(chart[0].DT).getTime() - new Date(chart[chart.length - 1].DT).getTime()) / (1000 * 3600 * 24 * 7)));
+    return Math.round((new Date(chart[chart.length - 1].DT).getTime() - new Date(chart[0].DT).getTime()) / (1000 * 3600 * 24 * 7));
   }
 }

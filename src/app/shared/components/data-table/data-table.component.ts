@@ -19,7 +19,7 @@ export class DataTableComponent implements OnInit, OnDestroy {
   @Input() tableHeader: TableHeaderRow[];
   @Input() data: Array<Strategy | Account | Deal | WalletTransfer | Position>;
   @Input() totalFields: Array<string> = null;
-  coloredFields: string[] = ['yield', 'profit', 'totalProfit', 'intervalPnL', 'account.intervalPnL', 'amount', 'strategy.monthlyYield', 'monthlyYield'];
+  coloredFields: string[] = ['yield', 'profit', 'totalProfit', 'intervalPnL', 'account.intervalPnL', 'amount', 'strategy.profit', 'profit'];
   @Input() paginator: Paginator;
   @Input() shouldHighlightMyStrategies: boolean = false;
   @Input() emptyDataText: string = 'Нет данных для отображения';
