@@ -9,5 +9,5 @@
   "linkWithdraw.title": "Перейти на страницу вывода с RAMM-счета",
   "linkWithdraw.link": "#",
   "additionalInfo": "",
-  "linkLogout": "/account"
+  "linkLogout": "/login"
 }

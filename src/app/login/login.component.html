@@ -17,7 +17,7 @@
       <div class="content">
         <h1 translate>Вход в систему</h1>
 
-        <form [formGroup]="form" (ngSubmit)="submit()">
+        <form [formGroup]="form" (ngSubmit)="submit()" *ngIf="!otp">
           <div class="field">
             <label translate>Ваш логин или почта</label>
             <input type="text" formControlName="login">

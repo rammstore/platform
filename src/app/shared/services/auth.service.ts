@@ -141,10 +141,10 @@ export class AuthService {
 
   logout(): void {
     this.http.get(`${CONFIG.baseApiUrl}/session.logout`).subscribe(() => {
-      this.storageService.removeAuthData();
-      this.storageService.removeToken();
       this.router.navigate(['/login']);
     });
+    this.storageService.removeAuthData();
+    this.storageService.removeToken();
   }
 
   changePassword(оldPassword: string, password: string): Observable<any> {
