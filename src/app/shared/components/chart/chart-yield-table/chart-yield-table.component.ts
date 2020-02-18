@@ -22,7 +22,8 @@ export class ChartYieldTableComponent implements OnInit, OnDestroy {
 
   constructor(
     private dataService: DataService
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.dataService.getStrategyChart(new ChartOptions(this.strategy.id, 10, 'yield', 'small'))
@@ -48,7 +49,8 @@ export class ChartYieldTableComponent implements OnInit, OnDestroy {
               enabled: false
             },
             gridLineWidth: 1,
-            tickAmount: this.getWeeksAmount(response.Chart),// response.Chart.length / 7,
+            gridLineColor: this.getXAxisColor(response.Chart),
+            tickAmount: this.getWeeksAmount(response.Chart),
             tickWidth: 0,
             lineWidth: 0
           },
@@ -107,7 +109,26 @@ export class ChartYieldTableComponent implements OnInit, OnDestroy {
   }
 
   getWeeksAmount(chart: any): number {
-    // console.log(Math.floor((new Date(chart[0].DT).getTime() - new Date(chart[chart.length - 1].DT).getTime()) / (1000 * 3600 * 24 * 7)));
-    return Math.round((new Date(chart[chart.length - 1].DT).getTime() - new Date(chart[0].DT).getTime()) / (1000 * 3600 * 24 * 7));
+    const days: number = Math.round((new Date(chart[chart.length - 1].DT).getTime() - new Date(chart[0].DT).getTime()) / (1000 * 3600 * 24));
+    switch (true) {
+      case (days <= 180):
+        return Math.round((new Date(chart[chart.length - 1].DT).getTime() - new Date(chart[0].DT).getTime()) / (1000 * 3600 * 24 * 7));
+      case (days > 180 && days <= 720):
+        return Math.round((new Date(chart[chart.length - 1].DT).getTime() - new Date(chart[0].DT).getTime()) / (1000 * 3600 * 24 * 30));
+      case(days > 720):
+        return Math.round((new Date(chart[chart.length - 1].DT).getTime() - new Date(chart[0].DT).getTime()) / (1000 * 3600 * 24 * 365));
+    }
+  }
+
+  getXAxisColor(chart: any): string {
+    const days: number = Math.round((new Date(chart[chart.length - 1].DT).getTime() - new Date(chart[0].DT).getTime()) / (1000 * 3600 * 24));
+    switch (true) {
+      case (days <= 180):
+        return '#e1dddd';
+      case (days > 180 && days <= 720):
+        return 'rgb(28, 117, 186, .5)';
+      case(days > 720):
+        return 'rgba(247, 163, 92, .5)';
+    }
   }
 }
