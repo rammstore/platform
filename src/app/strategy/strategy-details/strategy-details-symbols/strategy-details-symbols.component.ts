@@ -58,7 +58,7 @@ export class StrategyDetailsSymbolsComponent implements OnInit, OnDestroy {
                 },
                 series: [{
                   type: 'pie',
-                  data: this.strategy.account ? strategySymbolsStat : [{symbol: '', share: 0}]
+                  data: strategySymbolsStat
                 }]
               };
 
