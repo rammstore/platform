@@ -48,9 +48,9 @@ export class ChartYieldTableComponent implements OnInit, OnDestroy {
             title: {
               enabled: false
             },
-            gridLineWidth: 1,
-            gridLineColor: this.getXAxisColor(response.Chart),
-            tickAmount: this.getWeeksAmount(response.Chart),
+            gridLineWidth: 0,
+            // gridLineColor: this.getXAxisColor(response.Chart),
+            // tickAmount: this.getWeeksAmount(response.Chart),
             tickWidth: 0,
             lineWidth: 0
           },
