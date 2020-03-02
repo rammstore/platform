@@ -1,0 +1,188 @@
+@import "variables";
+
+.form-field {
+  display: flex;
+  min-height: 70px;
+  margin-bottom: 10px;
+
+  &.no-input {
+    min-height: 40px;
+
+    .input-wrapper {
+      padding-top: 7px;
+    }
+  }
+
+  label.field-label {
+    font-size: 14px;
+    flex-grow: 1;
+    text-align: right;
+    margin-bottom: 0;
+    padding-top: 7px;
+  }
+
+  .input-wrapper {
+    max-width: 400px;
+    margin-left: 15px;
+    width: 400px;
+    min-width: 400px;
+
+    input {
+      height: 30px;
+      font-size: 14px;
+      max-width: 300px;
+      width: 300px;
+      padding: 0 5px;
+      border: 1px solid $text-color-light;
+
+      &[type='checkbox'] {
+        width: 15px;
+        height: 20px;
+      }
+
+      &.ng-touched.ng-invalid {
+        border: 1px solid $negative-color;
+      }
+    }
+
+    .messages {
+      margin-top: 5px;
+
+      label {
+        margin-bottom: 5px;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+
+      label.error-message {
+        color: $negative-color;
+        font-size: 12px;
+        margin-bottom: 0;
+        display: block;
+      }
+
+      label.details-message {
+        font-size: 12px;
+        margin-bottom: 0;
+        display: block;
+      }
+    }
+  }
+}
+
+.radio-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+
+  input[type="radio"] {
+    margin-right: 15px;
+  }
+
+  .radio-label {
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 0;
+  }
+}
+
+.radio-hint {
+  padding-left: 28px;
+  margin-bottom: 40px;
+}
+
+.search-container {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  display: flex;
+
+  .search-clear {
+    display: none;
+  }
+
+  &.filled {
+
+    .search-clear {
+      display: block;
+      position: absolute;
+      right: 50px;
+      top: 8px;
+      padding: 5px;
+      border-radius: 50%;
+      background-color: $main-color;
+      width: 25px;
+      height: 25px;
+      cursor: pointer;
+    }
+
+    .search {
+      padding-right: 40px;
+      width: 200px;
+      min-width: 200px;
+    }
+  }
+
+  .search {
+    padding: 10px;
+    width: 200px;
+    min-width: 200px;
+  }
+
+  .search-button {
+    width: 40px;
+    min-width: 40px;
+
+    &:hover {
+      i {
+        color: $positive-color;
+      }
+    }
+
+    i {
+      color: white;
+      font-size: 16px;
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  .search-container {
+    top: 90px
+  }
+}
+
+@media (max-width: 576px) {
+  .search-container {
+    top: -40px;
+    left: calc(50% - 100px);
+    z-index: 999;
+  }
+
+  .form-field {
+    flex-direction: column;
+    margin-bottom: 20px;
+
+    &.no-input {
+      flex-direction: row;
+    }
+
+    label.field-label {
+      text-align: left;
+      margin-bottom: 5px;
+    }
+
+    .input-wrapper {
+      max-width: none;
+      width: 100%;
+      min-width: 0;
+
+      input {
+        max-width: none;
+        width: 100%;
+      }
+    }
+  }
+}

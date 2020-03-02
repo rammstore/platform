@@ -1,0 +1,37 @@
+<div class="wallet-container">
+  <div class="wallet-info">
+    <table>
+      <thead><tr></tr></thead>
+      <tbody>
+      <tr>
+        <td translate>Доступно</td>
+        <td class="accent">{{wallet.balance | customCurrency}} USD</td>
+      </tr>
+      <tr>
+        <td translate>Инвестировано</td>
+        <td class="positive">{{wallet.invested | customCurrency}} USD</td>
+      </tr>
+      <tr>
+        <td translate>Средства</td>
+        <td>{{wallet.getEquity() | customCurrency}} USD</td>
+      </tr>
+      </tbody>
+    </table>
+
+    <div class="buttons-group">
+      <a href="{{'linkFund.link' | translate}}" target="_blank">
+        <button class="primary" translate title="{{'linkFund.title' | translate}}">linkFund.text</button>
+      </a>
+
+      <a href="{{'linkWithdraw.link' | translate}}" target="_blank">
+        <button class="primary" translate title="{{'linkWithdraw.title' | translate}}">linkWithdraw.text</button>
+      </a>
+    </div>
+  </div>
+
+  <div class="chart-container">
+    <i class="fa fa-question-circle-o" [tooltip]="'Вы также можете посмотреть эти значения в верхнем правом углу' | translate"></i>
+    <div id="accountWalletChartContainer"></div>
+    <app-chart-wallet-info [wallet]="wallet" containerID="accountWalletChartContainer"></app-chart-wallet-info>
+  </div>
+</div>

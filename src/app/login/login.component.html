@@ -1,0 +1,62 @@
+<div class="background">
+  <div class="overlay">
+
+    <div class="btn-group language-dropdown" dropdown placement="left">
+      <button dropdownToggle class="toggle-lang">
+        <i class="icon-flag {{language}} current-lang"></i>
+        {{language}}
+      </button>
+
+      <ul id="dropdown-lang-login" *dropdownMenu class="dropdown-menu">
+        <li class="menuitem" (click)="setLanguage('en')"><i class="icon-flag en"></i>EN</li>
+        <li class="menuitem" (click)="setLanguage('ru')"><i class="icon-flag ru"></i>RU</li>
+      </ul>
+    </div>
+
+    <div class="content-container">
+      <div class="content">
+        <h1 translate>Вход в систему</h1>
+
+        <form [formGroup]="form" (ngSubmit)="submit()" *ngIf="!otp">
+          <div class="field">
+            <label translate>Ваш логин или почта</label>
+            <input type="text" formControlName="login">
+            <label *ngIf="form.get('login').touched && form.get('login').hasError('required')" class="error" translate>
+              Пожалуйста, введите ваш логин или почту.
+            </label>
+          </div>
+
+          <div class="field">
+            <label translate>Ваш пароль</label>
+            <input type="password" formControlName="password">
+            <label *ngIf="form.get('password').touched && form.get('password').hasError('required')" class="error" translate>
+              Пожалуйста, введите ваш пароль.
+            </label>
+          </div>
+
+          <div class="error-message" *ngIf="isWrongCredentials" translate>
+            Вы ввели неправильное имя пользователя или пароль.
+          </div>
+
+          <button type="submit" translate>Вход</button>
+        </form>
+
+        <div class="links">
+          <a>
+            <img src="assets/images/appStore_{{language}}.png" style="opacity:0.4;">
+          </a>
+
+          <a href="https://t.me/rammstore">
+            <img src="assets/images/telegram_{{language}}.png">
+          </a>
+
+          <a href="https://play.google.com/store/apps/details?id=com.project.ramm">
+            <img src="assets/images/googlePlay_{{language}}.png">
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

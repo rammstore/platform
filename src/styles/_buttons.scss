@@ -1,0 +1,89 @@
+@import "variables";
+
+button {
+  border: 1px solid $accent-color;
+  text-transform: uppercase !important;
+  height: 40px;
+  font-size: 14px;
+  cursor: pointer;
+  min-width: 90px;
+
+  &[disabled] {
+    cursor: default;
+    background-color: $main-color !important;
+    border: none;
+  }
+
+  &.primary {
+    background-color: $positive-color;
+    color: white;
+
+    &.inverted {
+      color: $positive-color;
+      border: 1px solid $positive-color;
+      background-color: white;
+
+      &:hover {
+        background-color: $positive-color;
+        color: white;
+      }
+    }
+
+    &:hover {
+      color: $positive-color;
+      border-color: $positive-color;
+      background-color: white;
+    }
+  }
+
+  &.warning {
+    background-color: $negative-color;
+    color: white;
+
+    &:hover {
+      color: $negative-color;
+      border-color: $negative-color;
+      background-color: white;
+    }
+  }
+
+  &.block {
+    display: block;
+    width: 100%;
+  }
+
+  &.centered {
+    display: block;
+    margin: 0 auto;
+  }
+
+  &.caret {
+    min-width: 0;
+    border-left: none;
+
+    i {
+      color: inherit !important;
+      font-size: 14px;
+    }
+
+    //&:hover {
+    //  i {
+    //    color: white;
+    //  }
+    //}
+  }
+}
+
+.buttons-group {
+  margin: 0 auto;
+  text-align: center;
+
+  a,
+  button {
+    margin-right: 15px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}

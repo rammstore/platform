@@ -1,0 +1,97 @@
+@import "variables";
+
+app-data-table {
+  &.low-height {
+    table tbody {
+      tr {
+        td {
+          min-height: 40px !important;
+          height: 40px !important;
+          font-size: 12px !important;
+          padding: 0 15px !important;
+        }
+      }
+    }
+  }
+
+  &.stripped {
+    table tbody {
+      tr {
+
+        &:hover {
+          background-color: rgba($link-color, .5);
+        }
+
+        &:nth-child(2n) {
+          background-color: $main-color;
+
+          &:hover {
+            background-color: rgba($link-color, .5);
+          }
+        }
+      }
+    }
+  }
+}
+
+table {
+  width: 100%;
+  border-spacing: 0;
+  border-collapse: separate !important;
+  margin-bottom: 40px;
+
+  thead {
+    tr {
+      th {
+        border-bottom: 1px solid $main-color;
+        text-align: center;
+        padding: 5px 10px;
+        font-size: 12px;
+        color: $text-color-dark;
+        font-weight: normal;
+
+        &.colored {
+          background-color: $background-color;
+        }
+
+        //&:first-child {
+        //  text-align: left;
+        //  padding: 15px;
+        //}
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      td {
+        padding: 15px;
+        border-bottom: 1px solid $main-color;
+        text-align: center;
+        font-size: 14px;
+        color: $text-color-dark;
+        min-height: 56px;
+        height: 56px;
+
+        &:first-child {
+          text-align: left;
+        }
+
+        &.colored {
+          background-color: $background-color;
+        }
+
+        a {
+          color: $link-color !important;
+          text-decoration: none;
+          cursor: pointer;
+
+          &.detail-link {
+            border-bottom: 1px dashed $link-color;
+            white-space: nowrap;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,31 @@
+@import "styles";
+
+.transfers {
+  display: block;
+  border-top: 5px solid $border-color;
+  margin-bottom: 20px;
+
+  .transfer {
+    border-bottom: 5px solid $border-color;
+    padding: 10px 10px 0;
+
+    .info {
+      .item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 10px;
+      }
+    }
+  }
+}
+
+app-data-table-paginator {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  app-data-table-paginator {
+    display: block;
+  }
+}

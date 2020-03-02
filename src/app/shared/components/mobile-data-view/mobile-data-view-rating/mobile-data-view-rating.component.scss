@@ -1,0 +1,72 @@
+@import "styles";
+
+.strategies {
+  padding-top: 15px;
+  margin-bottom: 40px;
+
+  .strategy {
+    padding: 15px 10px;
+    border-bottom: 3px solid $border-color;
+
+    &.my {
+      background-color: $background-color;
+    }
+
+    .caption {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .chart-container {
+      height: 150px;
+    }
+
+    .account-info {
+      display: flex;
+      align-items: center;
+      margin-top: 15px;
+
+      .item {
+        text-align: center;
+        border-right: 1px solid $border-color;
+        padding: 10px;
+        line-height: 20px;
+        font-size: 12px;
+        flex-grow: 1;
+
+        &:last-child {
+          border: none;
+        }
+      }
+    }
+
+    .properties {
+      margin-top: 15px;
+
+      .property {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+
+        .property-name {
+          flex: 1 1 60%;
+        }
+
+        .property-value {
+          flex: 1 1 40%;
+        }
+      }
+    }
+  }
+}
+
+app-data-table-paginator {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  app-data-table-paginator {
+    display: block;
+  }
+}

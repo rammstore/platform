@@ -1,0 +1,60 @@
+<app-data-table [data]="positions"
+                [tableHeader]="tableHeader"
+                [totalFields]="totalFields"
+                [paginator]="paginator"
+                (paginationChanged)="getPositions()"
+                [emptyDataText]="'Нет позиций'">
+</app-data-table>
+
+
+<div class="positions" *ngIf="positions">
+  <div class="position" *ngFor="let position of positions">
+    <div class="info">
+      <div class="item">
+        <span translate>Инструмент</span>
+        <span>{{position.symbol}}</span>
+      </div>
+
+      <div class="item">
+        <span translate>Тип</span>
+        <span>{{position.type}}</span>
+      </div>
+
+      <div class="item">
+        <span translate>Объем</span>
+        <span>{{position.volume}}</span>
+      </div>
+
+      <div class="item">
+        <span translate>Цена открытия</span>
+        <span>{{position.price}}</span>
+      </div>
+
+      <div class="item">
+        <span translate>Текущая цена</span>
+        <span>{{position.currentPrice}}</span>
+      </div>
+
+      <div class="item">
+        <span><span translate>Прибыль</span>, USD</span>
+        <span>{{position.profit}}</span>
+      </div>
+
+      <div class="item">
+        <span><span translate>Своп</span>, USD</span>
+        <span>{{position.swap}}</span>
+      </div>
+
+      <div class="item">
+        <span><span translate>Итого прибыль</span>, USD</span>
+        <span>{{position.totalProfit}}</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-data-table-paginator
+  *ngIf="positions && positions.length"
+  [paginator]="paginator"
+  (paginationChanged)="getPositions()">
+</app-data-table-paginator>

@@ -1,0 +1,13 @@
+<app-data-table
+  [data]="transfers"
+  [tableHeader]="tableHeader"
+  [paginator]="paginator"
+  (paginationChanged)="getDeals()">
+</app-data-table>
+
+<h5>Операции с кошельком</h5>
+<app-mobile-data-view-last-transfers
+  [transfers]="transfers"
+  [paginator]="paginator"
+  (paginationChanged)="getDeals()">
+</app-mobile-data-view-last-transfers>

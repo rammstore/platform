@@ -1,0 +1,51 @@
+@import "styles";
+
+.manage-container {
+  text-align: center;
+  width: 160px;
+  margin: 0 auto;
+
+  i[class^="icon-"],
+  i[class*=" icon-"] {
+    vertical-align: middle;
+    margin-right: 5px;
+    cursor: pointer;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  button {
+    &:first-child {
+      display: inline-block;
+    }
+
+    &.caret {
+      display: inline-block;
+      min-width: 0;
+      border-left: none;
+
+      i {
+        color: $positive-color;
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+ul.burger-menu {
+  width: 285px !important;
+  li {
+    padding: 10px 15px !important;
+    height: 50px;
+    display: flex;
+    align-items: center;
+  }
+}
+
+@media (max-width: 992px) {
+  .manage-container {
+    text-align: right;
+  }
+}

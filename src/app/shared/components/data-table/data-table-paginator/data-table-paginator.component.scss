@@ -1,0 +1,79 @@
+@import "styles";
+
+.paginator-container {
+  margin: 40px 0;
+
+  .info-container {
+    display: flex;
+    justify-content: space-around;
+
+    .per-page-container {
+      display: flex;
+      align-items: center;
+
+      input {
+        display: inline-block;
+        width: 50px;
+        margin: 0 5px;
+      }
+    }
+
+    .total-container {
+      display: inline-block;
+    }
+  }
+
+  .pages-container {
+    margin: 40px 0 0;
+    text-align: center;
+
+    .prev-page,
+    .page-number,
+    .next-page {
+      color: $link-color;
+      margin-right: 10px;
+      cursor: pointer;
+      padding: 10px;
+
+      &.current-page {
+        color: $text-color-dark;
+        background-color: $main-color;
+        cursor: default;
+        font-weight: bold;
+        pointer-events: none;
+      }
+
+      &.disabled {
+        color: $text-color-light;
+        cursor: default;
+        pointer-events: none;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .per-page-container {
+    margin-bottom: 20px;
+  }
+
+  .paginator-container {
+    display: flex;
+    flex-direction: column;
+
+    .info-container {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .pages-container {
+      margin-left: 0;
+      margin-top: 40px;
+
+      .dots,
+      .page-number:not(.current-page) {
+        display: none;
+      }
+    }
+  }
+}

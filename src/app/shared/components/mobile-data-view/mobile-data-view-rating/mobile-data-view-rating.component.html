@@ -1,0 +1,59 @@
+<div class="strategies">
+  <div *ngFor="let strategy of strategies" class="strategy" [class.my]="strategy.isMy()">
+    <div class="caption">
+      <div class="name">
+        <a [routerLink]="['/strategies/details', strategy.id]">{{strategy.name}}</a>
+      </div>
+      <app-manage [data]="strategy"></app-manage>
+    </div>
+
+    <app-chart-yield-table [strategy]="strategy" [containerID]="'mobileYieldChartContainer' + strategy.id"></app-chart-yield-table>
+    <div class="chart-container" id="mobileYieldChartContainer{{strategy.id}}"></div>
+
+    <div class="account-info" *ngIf="strategy.account && strategy.isMy()">
+      <div class="item intervalPnL">
+        <div translate>Прибыль</div>
+        <div class="{{strategy.account.getColorClass('intervalPnL')}}">
+          {{strategy.account.intervalPnL | customCurrency}}
+        </div>
+      </div>
+      <div class="item target">
+        <div translate>Цель</div>
+        <div>{{strategy.account.getTargetAmount() | customCurrency}}</div>
+      </div>
+      <div class="item equity">
+        <div translate>Средства</div>
+        <div>{{strategy.account.equity | customCurrency}}</div>
+      </div>
+      <div class="item protection">
+        <div translate>Защита</div>
+        <div>{{strategy.account.getProtectionAmount() | customCurrency}}</div>
+      </div>
+    </div>
+
+    <div class="properties">
+      <div class="property">
+        <div class="property-name" translate>Доходность в месяц</div>
+        <div class="property-value {{strategy.getColorClass('monthlyYield')}}">
+          {{strategy.monthlyYield | percent:'1.0-2'}}
+        </div>
+      </div>
+      <div class="property">
+        <div class="property-name" translate>Количество инвесторов</div>
+        <div class="property-value">{{strategy.accountsCount}}</div>
+      </div>
+      <div class="property">
+        <div class="property-name" translate>Возраст, недель</div>
+        <div class="property-value">{{strategy.getAgeWeeks()}}</div>
+      </div>
+      <div class="property">
+        <div class="property-name" translate>Инструменты</div>
+        <div class="property-value">{{strategy.symbols}}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-data-table-paginator [paginator]="paginator"
+                          (paginationChanged)="paginatorChanged()">
+</app-data-table-paginator>

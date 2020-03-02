@@ -1,0 +1,26 @@
+<ng-container *ngIf="strategy">
+  <div class="caption">
+    <h2>
+      {{strategy.name}}
+      <span class="closed-info" *ngIf="!strategy.isActive()" translate>Стратегия была закрыта трейдером и более недоступна для инвестирования.</span>
+    </h2>
+
+
+    <div class="info" *ngIf="strategy.account && strategy.account.id">
+    <span class="pnl item {{strategy.account.getColorClass('intervalPnL')}}">
+      {{strategy.account.intervalPnL | customCurrency}} USD
+    </span>
+      <span class="item"><span><span translate>Средства</span>:</span> <b>{{strategy.account.equity | customCurrency}} USD</b></span>
+      <span class="item" *ngIf="functionality['targetShow']"><span><span translate>Цель</span>:</span> <b>{{(strategy.account.target || 0) | percent}}</b></span>
+      <span class="item" *ngIf="functionality['protectionShow']"><span><span translate>Защита</span>:</span> <b>{{(strategy.account.protection || 0) | percent}}</b></span>
+    </div>
+
+    <app-manage [data]="strategy" *ngIf="strategy.isActive()" [methodName]="'getStrategy'" [methodArgs]="args"></app-manage>
+  </div>
+
+  <app-content-tabs [links]="links">
+    <router-outlet></router-outlet>
+  </app-content-tabs>
+</ng-container>
+
+<p><b translate>Предупреждение о рисках: итоги предыдущих торговых операций не гарантируют получение идентичных результатов в будущем.</b></p>

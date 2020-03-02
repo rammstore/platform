@@ -1,0 +1,184 @@
+<app-dialog-wrapper [modalRef]="modalRef"
+                    titleText="{{ ('Шаг ' + currentStep + ': ' + (currentStep === 1 ? 'Параметры стратегии' : 'Параметры инвестиции')) | translate}}">
+
+  <form [formGroup]="formStep1" *ngIf="currentStep === 1">
+    <div class="form-field">
+      <label for="name" class="field-label" translate>Название стратегии</label>
+      <div class="input-wrapper">
+        <input id="name" formControlName="name" (change)="isStrategyNameUniq($event.target.value)">
+        <div class="messages">
+          <label *ngIf="formStep1.get('name').touched && formStep1.get('name').hasError('required')"
+                 class="error-message"
+                 translate>
+            Введите название стратегии
+          </label>
+          <label *ngIf="formStep1.get('name').touched && formStep1.get('name').hasError('pattern')"
+                 class="error-message"
+                 translate>
+            Название стратегии может содержать только латинские буквы, цифры, пробелы и основные знаки препинания.
+          </label>
+          <label *ngIf="formStep1.get('name').touched && formStep1.get('name').hasError('isUniq')"
+                 class="error-message" translate>
+            Данное имя стратегии уже используется. Пожалуйста, введите другое имя.
+          </label>
+<!--          <label class="details-message" translate>Название стратегии может быть изменено только в течение первых 1 недель.</label>-->
+        </div>
+      </div>
+    </div>
+
+    <div class="form-field">
+      <label for="fee" class="field-label"><span translate>Вознаграждение</span>, %:</label>
+      <div class="input-wrapper">
+        <input id="fee" type="number" formControlName="fee" [min]="0" [max]="50">
+        <div class="messages">
+          <label *ngIf="formStep1.get('fee').touched && formStep1.get('fee').hasError('min')" class="error-message" translate>
+            <span translate>Минимальный размер вознаграждения</span> - 0
+          </label>
+          <label *ngIf="formStep1.get('fee').touched && formStep1.get('fee').hasError('max')" class="error-message" translate>
+            <span translate>Максимальный размер вознаграждения</span> — 50% <span translate>в неделю</span>
+          </label>
+          <label class="details-message" translate>Изменение вознаграждения после создания стратегии невозможно.</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-field">
+      <label for="commission" class="field-label"><span translate>Комиссия за оборот</span>, USD / 1mln.:</label>
+      <div class="input-wrapper">
+        <input id="commission" type="number" formControlName="commission" [min]="0" [max]="100">
+        <div class="messages">
+          <label *ngIf="formStep1.get('commission').touched && formStep1.get('commission').hasError('min')"
+                 class="error-message">
+            <span translate>Минимальная комиссия за оборот</span> — 0
+          </label>
+          <label *ngIf="formStep1.get('commission').touched && formStep1.get('commission').hasError('max')"
+                 class="error-message">
+            <span translate>Максимальная комиссия за оборот</span> — 100 USD
+          </label>
+          <label class="details-message" translate>
+            В дополнение к вознаграждению от прибыли вы можете задать комиссию за оборот ваших инвесторов.
+            Величина комиссии не может быть изменена после создания стратегии.
+          </label>
+        </div>
+      </div>
+    </div>
+
+<!--    <div class="form-field">-->
+<!--      <label for="isShared" class="field-label">Shared Strategy</label>-->
+<!--      <div class="input-wrapper">-->
+<!--        <input id="isShared" type="checkbox" formControlName="isShared">-->
+<!--        <div class="messages">-->
+<!--          <label class="details-message" translate>-->
+<!--            Опция Shared Strategy позволяет <a translate>копировать вашу стратегию другим брокерам.</a>-->
+<!--          </label>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+
+    <div class="dialog-actions">
+      <button class="primary" (click)="isStrategyNameUniq(formStep1.get('name').value, true)" [disabled]="!formStep1.valid" translate>Дальше</button>
+    </div>
+  </form>
+
+  <form [formGroup]="formStep2" *ngIf="currentStep === 2">
+    <p translate>При создании стратегии вы должны создать и инвестицию в нее. Эта инвестиция может быть закрыта только при закрытии стратегии.</p>
+    <div class="form-field">
+      <label for="money" class="field-label"><span translate>Сумма инвестиции</span>, USD:</label>
+      <div class="input-wrapper">
+        <input id="money" type="number" formControlName="money" [min]="0" [max]="wallet.balance">
+        <div class="messages">
+          <label *ngIf="formStep2.get('money').touched && formStep2.get('money').hasError('min')" class="error-message" translate>
+            <span translate>Минимальная сумма инвестиции - </span><span class="available-clickable" (click)="setMoney(accountMinBalance)"> {{accountMinBalance | customCurrency}}</span>
+          </label>
+          <label *ngIf="formStep2.get('money').touched && formStep2.get('money').hasError('max')" class="error-message" translate>
+            Вы можете инвестировать только свободные средства.
+          </label>
+          <label class="error-message"
+                 *ngIf="formStep2.get('money').touched && formStep2.get('money').hasError('required')" translate>
+            Пожалуйста, введите сумму инвестиции.
+          </label>
+          <label class="error-message"
+                 *ngIf="formStep2.get('money').touched && formStep2.get('money').hasError('pattern')" translate>
+            Пожалуйста, введите корректную сумму инвестиции.
+          </label>
+<!--          <label class="details-message">-->
+<!--            <span translate>Баланс вашей инвестиции в вашу стратегию после вывода должен быть не меньше</span> {{accountMinBalance | customCurrency}}.-->
+<!--          </label>-->
+          <label class="details-message">
+            <span translate>Доступно</span>: <span class="available-clickable" (click)="setMoney(wallet.getAvailableMoney())">{{wallet.getAvailableMoney() | customCurrency}}</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-field" *ngIf="functionality['TargetChangeAllow']">
+      <label for="target" class="field-label"><span translate>Цель</span>, %:</label>
+      <div class="input-wrapper">
+        <input id="target"
+               type="number"
+               formControlName="target"
+               [min]="0"
+               [step]="1"
+               title="{{'Целевой доход. При достижении целевого дохода инвестиция будет приостановлена' | translate}}">
+        <div class="messages">
+          <label class="error-message"
+                 *ngIf="formStep2.get('target').touched && formStep2.get('target').hasError('required')" translate>
+            Цель не задана
+          </label>
+          <label class="error-message"
+                 *ngIf="formStep2.get('target').touched && formStep2.get('target').hasError('pattern')" translate>
+            Пожалуйста, введите корректное значение цели.
+          </label>
+          <label class="error-message"
+                 *ngIf="formStep2.get('target').touched && formStep2.get('target').hasError('min') && !formStep2.get('target').hasError('pattern')">
+            <span translate>Минимальное значение цели</span> - 0.
+          </label>
+          <label class="details-message" *ngIf="formStep2.get('money').value && formStep2.get('target').value && formStep2.valid">
+            {{((formStep2.get('money').value * formStep2.get('target').value) / 100) | customCurrency}}
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-field" *ngIf="functionality['ProtectionChangeAllow']">
+      <label for="protection" class="field-label"><span translate>Защита</span>, %:</label>
+      <div class="input-wrapper">
+        <input id="protection"
+               type="number"
+               formControlName="protection"
+               [min]="0"
+               [max]="99"
+               [step]="1"
+               title="{{'При снижении средств до заданного значения инвестиция будет приостановлена' | translate}}">
+        <div class="messages">
+          <label class="error-message"
+                 *ngIf="formStep2.get('protection').touched && formStep2.get('protection').hasError('required')" translate>
+            Защита не задана
+          </label>
+          <label class="error-message"
+                 *ngIf="formStep2.get('protection').touched && formStep2.get('protection').hasError('min') && !formStep2.get('protection').hasError('pattern')" translate>
+            Пожалуйста, введите корректное значение защиты.
+          </label>
+          <label class="error-message"
+                 *ngIf="formStep2.get('protection').touched && formStep2.get('protection').hasError('pattern')" translate>
+            Пожалуйста, введите корректное значение защиты.
+          </label>
+          <label class="error-message"
+                 *ngIf="formStep2.get('protection').touched && formStep2.get('protection').hasError('max') && !formStep2.get('protection').hasError('pattern')">
+            <span translate>Максимальное значение защиты</span> - 99.
+          </label>
+          <label class="details-message" *ngIf="formStep2.get('money').value && formStep2.get('protection').value && formStep2.valid">
+            {{((formStep2.get('money').value * formStep2.get('protection').value) / 100) | customCurrency}}
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="dialog-actions">
+      <button class="primary" (click)="back()" translate>Назад</button>
+      <button (click)="submitStep2()" class="primary" [disabled]="!formStep2.valid" translate>Создать стратегию</button>
+    </div>
+  </form>
+
+</app-dialog-wrapper>
+

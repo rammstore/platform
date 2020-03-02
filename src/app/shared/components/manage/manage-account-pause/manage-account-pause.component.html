@@ -1,0 +1,10 @@
+<app-dialog-wrapper titleText="{{'Пауза инвестиции' | translate}}" [modalRef]="modalRef">
+  <div class="text" translate>
+    Все позиции будут закрыты. Новые позиции не будут открываться до момента снятия с паузы.
+  </div>
+
+  <div class="dialog-actions">
+    <button class="primary" (click)="pause()" translate>Ок</button>
+    <button class="primary" (click)="cancel()" translate>Отмена</button>
+  </div>
+</app-dialog-wrapper>

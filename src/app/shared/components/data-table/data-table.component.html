@@ -1,0 +1,198 @@
+<table>
+  <thead>
+  <tr *ngFor="let row of tableHeader">
+    <th *ngFor="let column of row.columns"
+        [attr.colspan]="column.colspan"
+        [attr.rowspan]="column.rowspan"
+        class="{{column.property}}"
+        [class.colored]="column.colored">
+      <span translate>{{column.label}}</span>
+    </th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <tr *ngFor="let item of data" [class.my]="shouldHighlightMyStrategies && item.isMy()">
+    <ng-container *ngFor="let row of tableHeader">
+      <ng-container *ngFor="let column of row.columns">
+        <ng-container *ngIf="column.property || column.property === ''" >
+          <td [ngSwitch]="column.property"
+              class="{{column.property === 'strategy.investmentInfo' ? '' : column.property}} {{column.property === 'strategy.investmentInfo' && item.account ? 'investmentInfo' : ''}}"
+              [class.colored]="column.colored"
+          [ngStyle]="{'font-size': column.fontSize+'px'}">
+            <!-- Strategy special data -->
+            <ng-container *ngSwitchCase="'age'">{{item.getAgeWeeks()}}</ng-container>
+
+            <ng-container *ngSwitchCase="'account.id'">
+              <a class="detail-link" [routerLink]="[getItemLink(item)]">{{item.id}}</a>
+            </ng-container>
+
+            <ng-container *ngIf="item.strategy">
+              <ng-container *ngSwitchCase="'id'">
+                <a class="detail-link" [routerLink]="[getItemLink(item)]">{{item.id}}</a>
+              </ng-container>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'name'">
+              <a class="detail-link" [routerLink]="[getItemLink(item)]">{{item.name}}</a>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'accountID'">
+              <a class="detail-link" [routerLink]="['/investments/details', item.accountID, 'deals']">{{item.accountID}}</a>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'nameRating'">
+              <a class="detail-link" [routerLink]="[getItemLink(item)]">{{item.name}}</a>
+              <div class="symbols">{{item.symbols}}</div>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'strategy.name'">
+              <a class="detail-link" [routerLink]="[getItemLink(item.strategy)]">{{item.strategy.name}}</a>
+              <div class="symbols">{{item.strategy.symbols}}</div>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'walletTransferStrategy'">
+              <a *ngIf="item.strategyID" [routerLink]="['/strategies/details', item.strategyID]" class="detail-link">{{item.strategyName}}</a>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'walletTransferAmount'">
+              <div>{{item.amount | customCurrency}}</div>
+              <div class="wallet-transfer-comment" *ngIf="item.comment">{{item.comment}}</div>
+            </ng-container>
+
+            <div class="strategy-account"
+                 *ngSwitchCase="'investmentInfo'">
+              <div class="strategy-account-intervalPnL">
+                <span><span translate>Прибыль</span>:</span>
+                <span class="{{item.getColorClass('intervalPnL')}}">
+                  {{item.intervalPnL | customCurrency}}
+                </span>
+              </div>
+              <div class="strategy-account-target" *ngIf="functionality['targetShow']">
+                <span><span translate>Цель</span>:</span>
+                <span>{{item.getTargetAmount() | customCurrency}}</span>
+              </div>
+              <div class="strategy-account-equity">
+                <span><span translate>Средства</span>:</span>
+                <span>{{item.equity | customCurrency}}</span>
+              </div>
+              <div class="strategy-account-protection" *ngIf="functionality['protectionShow']">
+                <span><span translate>Защита</span>:</span>
+                <span>{{item.getProtectionAmount() | customCurrency}}</span>
+              </div>
+            </div>
+
+            <div class="strategy-account"
+                 *ngSwitchCase="'strategy.investmentInfo'">
+              <ng-container class="investmentInfo" *ngIf="item.account">
+                <div class="strategy-account-intervalPnL">
+                  <span><span translate>Прибыль</span>:</span>
+                  <span [class.positive]="item.account.intervalPnL > 0" [class.negative]="item.account.intervalPnL < 0">
+                  {{item.account.intervalPnL | customCurrency}}
+                </span>
+                </div>
+                <div class="strategy-account-target" *ngIf="functionality['targetShow']">
+                  <span><span translate>Цель</span>:</span>
+                  <span>{{item.account.getTargetAmount() | customCurrency}}</span>
+                </div>
+                <div class="strategy-account-equity">
+                  <span><span translate>Средства</span>:</span>
+                  <span>{{item.account.equity | customCurrency}}</span>
+                </div>
+                <div class="strategy-account-protection" *ngIf="functionality['protectionShow']">
+                  <span><span translate>Защита</span>:</span>
+                  <span>{{item.account.getProtectionAmount() | customCurrency}}</span>
+                </div>
+              </ng-container>
+            </div>
+
+            <ng-container *ngSwitchCase="'manage'">
+              <app-manage [data]="item" [methodName]="methodName" [methodArgs]="methodArgs"></app-manage>
+            </ng-container>
+
+            <!-- Investment special data-->
+            <ng-container *ngSwitchCase="'investmentDetails'">
+              <a [routerLink]="['/investments/details', item.id]"><i class="icon-doc"></i></a>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'type'">
+              {{item.getType()}}
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'entry'">
+              {{item.getEntry()}}
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'volume'">
+              {{item.volume | number:'1.4-4'}}
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'price'">
+              {{item.price | number:'1.6-6'}}
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'currentPrice'">
+              {{item.currentPrice | number:'1.6-6'}}
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'yieldChart'">
+              <app-chart-yield-table [strategy]="item.strategy"></app-chart-yield-table>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'strategy.yieldChart'">
+              <app-chart-yield-table [strategy]="item"></app-chart-yield-table>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="''">
+              ???
+            </ng-container>
+
+            <!-- Just show property value -->
+            <ng-container *ngSwitchDefault>
+              <span [class.positive]="getPropertyValue(item, column.property) > 0 && isColored(column.property)"
+                    [class.negative]="getPropertyValue(item, column.property) < 0 && isColored(column.property)">
+                {{getPropertyValue(item, column.property) | dynamic:column.pipe.pipe:column.pipe.args}}
+              </span>
+            </ng-container>
+          </td>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+  </tr>
+
+  <tr *ngIf="totalFields && data && data.length">
+    <ng-container *ngFor="let row of tableHeader">
+      <ng-container *ngFor="let column of row.columns; let i = index">
+        <td class="total-cell" *ngIf="i === 0" translate>Всего</td>
+        <ng-container *ngIf="isTotal(column.property) && i > 0">
+          <td class="total-cell"
+              *ngIf="column.property !== 'accountsCount'"
+              [class.positive]="getTotal(column.property) > 0 && isColored(column.property)"
+              [class.negative]="getTotal(column.property) < 0 && isColored(column.property)">
+            {{getTotal(column.property) | customCurrency}}
+          </td>
+          <td class="total-cell"
+              *ngIf="column.property === 'accountsCount'">
+            {{getTotal(column.property)}}
+          </td>
+        </ng-container>
+        <ng-container *ngIf="!isTotal(column.property) && i > 0">
+          <td></td>
+        </ng-container>
+      </ng-container>
+    </ng-container>
+  </tr>
+  </tbody>
+</table>
+
+<div class="empty-data" *ngIf="!data" translate>
+  Загрузка...
+</div>
+
+<div class="empty-data" *ngIf="data && !data.length" translate>
+  {{emptyDataText}}
+</div>
+
+<div *ngIf="paginator" class="pagination-container">
+  <app-data-table-paginator [paginator]="paginator" (paginationChanged)="paginatorChanged()"></app-data-table-paginator>
+</div>

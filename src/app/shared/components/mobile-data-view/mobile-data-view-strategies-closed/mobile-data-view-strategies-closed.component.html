@@ -1,0 +1,36 @@
+<div class="strategies">
+  <div class="strategy" *ngFor="let strategy of strategies">
+    <div class="caption">
+      <a [routerLink]="['/strategies/details', strategy.id]">{{strategy.name}}</a>
+    </div>
+
+    <div class="info">
+      <div class="item">
+        <span>ID:</span>
+        <span>{{strategy.id}}</span>
+      </div>
+
+      <div class="item">
+        <span translate>Вознаграждение</span>
+        <span>{{strategy.offer.fee | percent}}</span>
+      </div>
+
+      <div class="item">
+        <span translate>Создана</span>
+        <span>{{strategy.dtCreated | customDate}}</span>
+      </div>
+
+      <div class="item">
+        <span translate>Закрыта</span>
+        <span>{{strategy.dtClosed | customDate}}</span>
+      </div>
+
+      <div class="item">
+        <span translate>Возраст, недель</span>
+        <span>{{strategy.getAgeWeeks()}}</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-data-table-paginator [paginator]="paginator" (paginationChanged)="paginatorChanged()"></app-data-table-paginator>

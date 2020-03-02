@@ -1,0 +1,33 @@
+@import "styles";
+
+table {
+  border-top: 1px solid $border-color;
+
+  tbody tr td.yield {
+    font-size: 16px;
+  }
+}
+
+
+.profitability-container {
+  display: flex;
+
+  .statistics {
+    width: 400px;
+    margin-right: 10px;
+  }
+
+  .chart-container {
+    flex-grow: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .profitability-container {
+    flex-direction: column;
+
+    .statistics {
+      width: 100%;
+    }
+  }
+}

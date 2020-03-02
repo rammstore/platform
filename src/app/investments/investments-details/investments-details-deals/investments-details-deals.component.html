@@ -1,0 +1,65 @@
+<app-data-table [data]="deals"
+                [tableHeader]="tableHeader"
+                [totalFields]="totalFields"
+                [paginator]="paginator"
+                (paginationChanged)="getDeals()"
+                class="low-height stripped">
+</app-data-table>
+
+<h5>Сделки</h5>
+<div class="deals" *ngIf="deals">
+  <div class="deal" *ngFor="let deal of deals">
+    <div class="info">
+      <div class="item">
+        <span>Время</span>
+        <span>{{deal.dtCreated | customDate}}</span>
+      </div>
+
+      <div class="item">
+        <span>Сделка</span>
+        <span>{{deal.id}}</span>
+      </div>
+
+      <div class="item">
+        <span>Инструмент</span>
+        <span>{{deal.symbol}}</span>
+      </div>
+
+      <div class="item">
+        <span>Тип</span>
+        <span>{{deal.getType()}}</span>
+      </div>
+
+      <div class="item">
+        <span>Направление</span>
+        <span>{{deal.getEntry()}}</span>
+      </div>
+
+      <div class="item">
+        <span>Объем</span>
+        <span>{{deal.volume}}</span>
+      </div>
+
+      <div class="item">
+        <span>Цена</span>
+        <span>{{deal.price}}</span>
+      </div>
+
+      <div class="item">
+        <span>Прибыль, USD</span>
+        <span class="{{deal.getColorClass('yield')}}">{{deal.yield}}</span>
+      </div>
+
+      <div class="item">
+        <span>Своп, USD</span>
+        <span>{{deal.swap}}</span>
+      </div>
+
+      <div class="item">
+        <span>Итого прибыль, USD</span>
+        <span class="{{deal.getColorClass('totalProfit')}}">{{deal.totalProfit}}</span>
+      </div>
+    </div>
+  </div>
+</div>
+<app-data-table-paginator [paginator]="paginator" (paginationChanged)="getDeals()"></app-data-table-paginator>

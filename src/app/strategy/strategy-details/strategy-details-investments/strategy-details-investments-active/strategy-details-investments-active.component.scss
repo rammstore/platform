@@ -1,0 +1,14 @@
+app-mobile-data-view-strategy-investment {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  app-data-table {
+    display: none;
+  }
+
+  app-mobile-data-view-strategy-investment {
+    display: block;
+  }
+}
+

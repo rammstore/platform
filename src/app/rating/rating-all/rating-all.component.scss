@@ -1,0 +1,15 @@
+@media (max-width: 576px) {
+  .rating-content-container {
+    margin-top: 40px;
+  }
+
+  .search-container {
+    position: static;
+    margin-top: 15px;
+
+    input.search {
+      width: auto;
+      flex-grow: 1;
+    }
+  }
+}

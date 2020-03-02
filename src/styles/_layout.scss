@@ -1,0 +1,66 @@
+@import "variables";
+
+body {
+  margin: 0;
+  line-height: 16px !important;
+  font-size: 14px !important;
+
+  .container {
+    margin: 0 auto;
+    padding: 0;
+  }
+}
+
+.header-control {
+  position: absolute;
+  right: 0;
+  top: 40px;
+}
+
+@media (max-width: 576px) {
+  .header-control {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    top: auto;
+    width: 100%;
+    background: white;
+    padding: 10px;
+  }
+
+  .container {
+    width: 100%;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 768px) {
+  .container {
+    width: 540px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+  .container {
+    width: 720px;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1200px) {
+  .container {
+    width: 960px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    width: 1140px;
+  }
+}
+
+@media (max-width: 576px) {
+  app-content-tabs.additional-tabs {
+    .content-tab-links {
+      position: static;
+    }
+  }
+}

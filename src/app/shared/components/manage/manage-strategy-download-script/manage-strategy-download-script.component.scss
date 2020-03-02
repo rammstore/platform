@@ -1,0 +1,23 @@
+@import 'styles';
+
+form {
+  .form-field {
+    align-items: center;
+    justify-content: center;
+
+    .field-label {
+      flex-grow: initial;
+      padding-top: 0;
+      margin-right: 15px;
+    }
+
+    .radio-container {
+      margin-bottom: 0;
+      margin-right: 30px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}

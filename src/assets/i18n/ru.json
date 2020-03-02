@@ -1,0 +1,13 @@
+{
+  "risk.text": "<b>RISK WARNING:</b> There is a high level of risk involved when trading leveraged products such as Forex/CFDs.",
+  "legal.text": "",
+
+  "linkFund.text": "Пополнить",
+  "linkFund.title": "Перейти на страницу пополнения RAMM-счета",
+  "linkFund.link": "#",
+  "linkWithdraw.text": "Вывести",
+  "linkWithdraw.title": "Перейти на страницу вывода с RAMM-счета",
+  "linkWithdraw.link": "#",
+  "additionalInfo": "",
+  "linkLogout": "/login"
+}

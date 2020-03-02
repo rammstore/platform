@@ -1,0 +1,35 @@
+@import "styles";
+
+.info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
+
+  img.logo {
+    max-height: 30px;
+  }
+
+  .copyright {
+    margin-left: 50px;
+    font-size: 12px;
+    flex-grow: 1;
+  }
+}
+
+.risk {
+  padding: 15px;
+  font-size: 12px;
+  border: 1px solid $text-color-dark;
+  margin-bottom: 40px;
+}
+
+@media (max-width: 576px) {
+  .info {
+    flex-direction: column;
+
+    .copyright {
+      margin: 20px 0;
+    }
+  }
+}

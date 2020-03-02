@@ -1,0 +1,27 @@
+<div class="search-container" [class.filled]="!!searchText">
+  <input placeholder="{{'Поиск стратегий' | translate}}" class="search" [(ngModel)]="searchText" (keyup.enter)="getRating()">
+  <span class="search-clear" (click)="searchText = ''; getRating()"><i class="icon-close"></i></span>
+  <button class="primary search-button" (click)="getRating()">
+    <i class="fa fa-search"></i>
+  </button>
+</div>
+
+<div class="rating-content-container">
+  <app-data-table
+    [tableHeader]="tableHeader"
+    [data]="strategies"
+    [paginator]="paginator"
+    [shouldHighlightMyStrategies]="true"
+    (paginationChanged)="getRating()"
+    [methodName]="'getRating'"
+    [methodArgs]="args">
+  </app-data-table>
+
+  <app-mobile-data-view-rating
+    [strategies]="strategies"
+    [paginator]="paginator"
+    (paginationChanged)="getRating()"
+    [methodName]="'getRating'"
+    [methodArgs]="args">
+  </app-mobile-data-view-rating>
+</div>

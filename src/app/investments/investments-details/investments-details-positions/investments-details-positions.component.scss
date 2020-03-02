@@ -1,0 +1,56 @@
+@import "styles";
+
+.positions {
+  display: none;
+}
+
+.margin-info {
+  width: 500px;
+}
+
+app-data-table-paginator {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .margin-info {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  app-data-table {
+    display: none;
+  }
+
+  app-data-table-paginator {
+    display: block;
+  }
+
+  .positions {
+    display: block;
+    border-top: 5px solid $border-color;
+    margin-bottom: 20px;
+
+    .position {
+      border-bottom: 5px solid $border-color;
+      padding: 15px 10px;
+
+      .info {
+        .item {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 10px;
+
+          &>span {
+            flex: 0 0 50%;
+            text-align: left;
+          }
+        }
+      }
+    }
+  }
+
+}
+

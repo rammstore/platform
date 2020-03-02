@@ -1,0 +1,224 @@
+@import "styles";
+
+header {
+  height: 40px;
+  background-color: $main-color;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+
+  .container {
+    height: 100%;
+
+    img.logo {
+      max-height: 30px;
+      margin-right: 15px;
+      vertical-align: middle;
+    }
+
+    nav,
+    .account-info {
+      display: inline-block;
+    }
+
+    .menu,
+    .account-info {
+      float: right;
+    }
+
+    nav {
+      a {
+        display: inline-block;
+        color: $text-color-dark;
+        padding: 10px 12px;
+        line-height: 20px;
+        cursor: pointer;
+        letter-spacing: .010em;
+
+        &.active {
+          background-color: $text-color;
+          color: $main-color;
+        }
+      }
+    }
+
+    aside {
+      display: none;
+    }
+
+    .account-info {
+      font-size: 14px;
+      color: $text-color-light;
+      border-bottom: 1px dashed $text-color-light;
+      padding-bottom: 3px;
+      margin-top: 14px;
+      cursor: pointer;
+      margin-right: 15px;
+      letter-spacing: .010em;
+      line-height: 10px;
+
+      .available {
+        color: $accent-color;
+      }
+
+      >span {
+        font-weight: 500;
+      }
+    }
+
+    .menu {
+      margin-top: 12px;
+      cursor: pointer;
+
+      ul.dropdown-menu {
+        left: auto !important;
+        right: 0 !important;
+        padding: 0;
+
+        .dropdown-item {
+          color: $text-color-dark;
+          font-size: 14px;
+          width: 250px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 15px;
+
+          .login {
+            color: $text-color-light;
+            font-size: 12px;
+            text-transform: lowercase;
+          }
+        }
+
+        .divider.dropdown-divider {
+          margin: 0;
+        }
+      }
+    }
+
+    .sidebar-toggler {
+      display: none;
+    }
+  }
+}
+
+.legend {
+  letter-spacing: .010em;
+
+  .amount {
+    float: right;
+
+    &.invested {
+      color: $positive-color
+    }
+
+    &.available {
+      color: $accent-color;
+    }
+  }
+}
+
+#headerChartContainer {
+  width: 220px;
+  height: 200px;
+}
+
+@mixin compact() {
+  header .container {
+    padding: 0 15px;
+
+    img.logo {
+      margin-top: 10px;
+    }
+
+    nav {
+      display: none;
+    }
+
+    .btn-group.menu {
+      display: none;
+    }
+
+    .sidebar-toggler {
+      display: inline-block;
+      float: right;
+      margin-top: 12px;
+      cursor: pointer;
+    }
+
+    aside {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: fixed;
+      left: -200px;
+      top: 40px;
+      bottom: 0;
+      background-color: $main-color;
+      width: 200px;
+      transition: .3s;
+      z-index: 100;
+
+      &.open {
+        left: 0;
+        transition: .3s;
+      }
+
+      ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        li {
+          a {
+            color: $text-color;
+            padding: 10px 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            &.active {
+              background-color: $text-color;
+              color: $main-color;
+              font-weight: bold;
+            }
+
+            .langmenu {
+              .lang {
+                background-color: red;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  @include compact();
+
+  header .container .account-info {
+    display: none;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 768px) {
+  @include compact();
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+  @include compact();
+}
+
+@media (min-width: 992px) and (max-width: 1200px) {
+
+}
+
+@media (min-width: 1200px) {
+
+}

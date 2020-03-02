@@ -1,0 +1,66 @@
+.details-container {
+  display: flex;
+  position: relative;
+
+  .strategy,
+  .investment,
+  .profile {
+    flex: 1 1 100%;
+
+    table {
+      padding-right: 20px;
+
+      tbody {
+        tr {
+          td {
+            padding: 0 20px;
+            height: 30px;
+
+            &:last-child {
+              text-align: right;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .profile table {
+    padding-right: 0 !important;
+  }
+
+  .manage-container {
+    position: absolute;
+    right: 0;
+    bottom: -40px;
+  }
+}
+
+.margin-info {
+  width: 50%;
+}
+
+app-data-table-paginator {
+  display: none;
+}
+
+@media (max-width: 992px) {
+  .details-container {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 576px) {
+  .details-container {
+    margin-top: 30px;
+  }
+
+  app-data-table-paginator {
+    display: block;
+  }
+
+  .manage-container {
+    bottom: auto;
+    top: 0;
+  }
+}

@@ -1,0 +1,31 @@
+@import "styles";
+
+.filter-container {
+  text-align: right;
+
+  a.filter-value {
+    color: $link-color;
+    text-decoration: underline;
+    text-decoration-style: dashed;
+  }
+}
+
+h5 {
+  display: none;
+}
+
+app-mobile-data-view-last-transfers {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  app-mobile-data-view-last-transfers {
+    display: block;
+  }
+
+  h5 {
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
+}

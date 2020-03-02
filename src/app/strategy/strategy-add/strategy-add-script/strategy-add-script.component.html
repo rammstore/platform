@@ -1,0 +1,14 @@
+<app-dialog-wrapper [modalRef]="modalRef" titleText="{{ 'Готово!' | translate}}">
+  <p translate>Новая стратегия создана.</p>
+  <p translate>Для отправки сигналов с вашего торгового счета MetaTrader 4 или MetaTrader 5, скачайте сигнальный советник и запустите его в вашем терминале MetaTrader.</p>
+  <p translate>Вы можете скачать советник и позже, выбрав соответствующую опцию в меню стратегии.</p>
+  <p translate>1. В меню терминала “Сервис” - ”Настройки”, на вкладке “Советники” внесите адрес сервера RAMM в список разрешенных URL.</p>
+  <p translate>Для этого добавьте адрес https://maindc.ramm.store/api/trading/v1/signals.send в таблицу “Разрешить WebRequest для следующих URL:”.</p>
+  <p translate>2. Запустите советник на любом графике.</p>
+  <p translate>Все изменения на вашем счете будут копироваться в вашу стратегию в RAMM.</p>
+
+  <div class="dialog-actions">
+    <button (click)="openDownloadScriptDialog()" class="primary" translate>Скачать скрипт</button>
+    <button class="primary" (click)="close()" translate>Ок</button>
+  </div>
+</app-dialog-wrapper>

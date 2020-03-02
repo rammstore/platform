@@ -1,0 +1,49 @@
+<div class="profitability-container">
+  <div class="statistics" *ngIf="strategy">
+    <table>
+      <tbody>
+      <tr>
+        <td translate>Доходность в месяц</td>
+        <td class="yield {{strategy.getColorClass('monthlyYield')}}">
+          {{strategy.monthlyYield | percent:'1.2-2'}}
+        </td>
+      </tr>
+      <tr>
+        <td translate>Доходность</td>
+        <td class="yield {{strategy.getColorClass('profit')}}">
+          {{strategy.profit | percent:'1.2-2'}}
+        </td>
+<!--        <td *ngIf="!strategy.account">{{0 | percent:'1.2-2'}}</td>-->
+      </tr>
+      <tr><td></td><td></td></tr>
+      <tr>
+        <td translate>Вознаграждение</td>
+        <td>{{strategy.offer.fee | percent}}</td>
+      </tr>
+      <tr *ngIf="strategy.commission">
+        <td><span translate>Комиссия за оборот</span>, USD</td>
+        <td>{{strategy.commission * 1000000}} / 1 mln</td>
+      </tr>
+      <tr>
+        <td translate>Возраст, недель</td>
+        <td>{{strategy.getAgeWeeks()}}</td>
+      </tr>
+      <tr>
+        <td><span translate>Инвестиции</span>, USD</td>
+        <td *ngIf="strategy.equity">{{strategy.equity | customCurrency}}</td>
+        <td *ngIf="!strategy.equity">{{0 | customCurrency}}</td>
+      </tr>
+      <tr>
+        <td translate>Количество инвесторов</td>
+        <td>{{strategy.accountsCount}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="yieldChartContainer" class="chart-container"></div>
+</div>
+
+<p><span  translate>График отображает </span> <b translate>доходность</b> <span translate> стратегии по инвестиции трейдера. Доходность рассчитана без учета выплаты Вознаграждения трейдера.</span></p>
+
+<p translate>Месячная доходность стратегии — средняя доходность за один месяц без учета Вознаграждения трейдера, рассчитанная по историческим данным с момента создания стратегии.</p><br><br>

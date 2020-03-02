@@ -1,0 +1,22 @@
+@import "styles";
+
+app-mobile-data-view-strategy {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  app-data-table {
+    display: none;
+  }
+
+  app-mobile-data-view-strategy {
+    display: block;
+  }
+
+  p {
+    a {
+      word-break: break-all;
+    }
+  }
+}
+

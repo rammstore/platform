@@ -1,0 +1,17 @@
+<table *ngIf="strategy">
+  <tbody>
+  <tr>
+    <td translate>Доходность в месяц</td>
+    <td class="yield {{strategy.getColorClass('monthlyYield')}}">
+      {{strategy.monthlyYield | percent:'1.2-2'}}
+    </td>
+
+    <td translate>Доходность</td>
+    <td class="yield {{strategy.getColorClass('profit')}}">
+      {{strategy.profit | percent:'1.2-2'}}
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<div id="symbolsChartContainer"></div>

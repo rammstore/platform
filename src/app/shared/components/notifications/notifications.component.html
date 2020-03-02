@@ -1,0 +1,7 @@
+<div class="notifications">
+  <div *ngFor="let notification of notificationService.get() | async" class="notification {{notification.options.type}}" [@notificationAnimation]="notification">
+    <i class="icon-close" (click)="notificationService.close(notification)"></i>
+
+    <div class="text" translate>{{notification.text}}</div>
+  </div>
+</div>

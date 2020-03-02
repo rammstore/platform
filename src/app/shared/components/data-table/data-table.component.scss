@@ -1,0 +1,97 @@
+@import "styles";
+
+.nameRating,
+*[class*='strategy.name'] {
+  .symbols {
+    font-size: 12px;
+    color: rgba(0,0,0,.54);
+    white-space: nowrap;
+    margin-top: 15px;
+  }
+}
+
+.wallet-transfer-comment {
+  font-size: 12px;
+  margin-top: 10px;
+  color: $text-color;
+}
+
+td.investmentInfo {
+  background-color: $background-color;
+}
+
+.strategy-account {
+  width: 150px;
+
+  .strategy-account-intervalPnL {
+    color: $text-color-dark;
+    font-size: 14px;
+    line-height: 24px;
+    text-align: justify;
+
+    &>span:last-child {
+      float: right;
+    }
+  }
+
+  .strategy-account-target,
+  .strategy-account-equity,
+  .strategy-account-protection {
+    color: $text-color-light;
+    font-size: 12px;
+    line-height: 20px;
+    text-align: justify;
+
+    &>span:last-child {
+      float: right;
+    }
+  }
+}
+
+.total-cell {
+  font-weight: bold;
+}
+
+tr.my {
+  background-color: $background-color;
+}
+
+.empty-data {
+  text-align: center;
+  font-weight: bold;
+
+}
+
+td {
+  &.name,
+  &[class*='strategy.name'] {
+    app-manage {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 1200px) {
+  th,
+  td {
+    &[class*='strategy.yieldChart'] {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  th,
+  td {
+    &.yieldChart {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  table,
+  .pagination-container {
+    display: none;
+  }
+}

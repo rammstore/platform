@@ -1,0 +1,32 @@
+<div class="accounts">
+  <div class="account" [class.my]="account.isMy()"  *ngFor="let account of accounts">
+    <div class="caption">
+      <a [routerLink]="['/investments/details', account.id]">{{account.id}}</a>
+    </div>
+
+    <div class="info">
+      <div class="item">
+        <span>Создана</span>
+        <span>{{account.dtCreated | customDate}}</span>
+      </div>
+
+      <div class="item">
+        <span>Закрыта</span>
+        <span>{{account.dtClosed | customDate}}</span>
+      </div>
+
+      <div class="item">
+        <span>Возраст, недель</span>
+        <span>{{account.getAgeWeeks()}}</span>
+      </div>
+
+      <div class="item">
+        <span>PL</span>
+        <span>{{account.profitCurrentIntervalGross | customCurrency}}</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<app-data-table-paginator [paginator]="paginator" (paginationChanged)="paginatorChanged()"></app-data-table-paginator>
