@@ -45,6 +45,8 @@ export class Account {
     options: any
   ) {
     Object.assign(this, options);
+    console.log(this);
+    console.log(options);
   }
 
   isActive(): boolean {
