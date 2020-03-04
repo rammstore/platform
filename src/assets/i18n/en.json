@@ -459,7 +459,7 @@
   "linkWithdraw.link": "#",
   "additionalInfo": "",
   "linkLogout": "/account",
-  "Логин и/или пароль неверны": "Login/Password incorrect or not found",
+  "Логин и/или пароль не верны": "Login/Password incorrect or not found",
   "Общая доходность": "Total yield",
   "Общая": "Total",
   "График": "Chart",

@@ -39,7 +39,7 @@ export class AuthGuard implements CanActivate {
       this.authService.loginByOtp(next.queryParams['otp']).subscribe(() => {
         this.router.navigate([this.authService.redirectUrl]);
       }, () => {
-        this.notificationsService.open('Логин и/или пароль неверны', {type: 'error'});
+        this.notificationsService.open('Логин и/или пароль не верны', {type: 'error'});
       });
       return false;
     }
