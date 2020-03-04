@@ -462,5 +462,6 @@
   "Логин и/или пароль неверны": "Login/Password incorrect or not found",
   "Общая доходность": "Total yield",
   "Общая": "Total",
-  "График": "Chart"
+  "График": "Chart",
+  "Управление": "Management"
 }
