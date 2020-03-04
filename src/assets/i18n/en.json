@@ -91,7 +91,7 @@
   "Начало": "Start",
   "Конец": "Finish",
   "Условия для попадания в рейтинг": "Conditions for publishing into rating",
-  "Минимальный срок жизни стратегии, недель": "Minimal age of a strategy, weeks",
+  "Минимальный срок жизни стратегии, дней": "Minimal age of a strategy, days",
   "Минимальное количество закрытых рыночных позиций": "Minimal number of closed market positions",
   "Время последней активности (открытие или закрытие рыночной позиции), не позднее": "Last activity (open or close of a market position), not later than",
   "Минимальная доходность": "Minimal yield",
