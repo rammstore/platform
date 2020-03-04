@@ -22,8 +22,8 @@ import { BrandService } from '@app/services/brand.service';
 
 registerLocaleData(localeRu, 'ru');
 
-export function HttpLoaderFactory(httpClient: HttpClient) {
-  return new TranslateHttpLoader(httpClient, './assets/i18n/', '.json');
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
 }
 
 @NgModule({
