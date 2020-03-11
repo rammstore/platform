@@ -119,11 +119,13 @@ export class Account {
   }
 
   getTargetAmount(): number {
-    return (1 + this.target) * this.equity;
+    return this.targetEquity;
+    // return (1 + this.target) * this.equity;
   }
 
   getProtectionAmount(): number {
-    return this.protection * this.equity;
+    return this.protectionEquity;
+    // return this.protection * this.equity;
   }
 
   getState(): string {
