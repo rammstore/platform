@@ -1,9 +1,9 @@
 <app-data-table [data]="positions"
                 [tableHeader]="tableHeader"
-                [totalFields]="totalFields"
                 [paginator]="paginator"
                 (paginationChanged)="getPositions()"
-                [emptyDataText]="'Нет позиций'">
+                [emptyDataText]="'Нет позиций'"
+                [totals]="totals">
 </app-data-table>
 
 

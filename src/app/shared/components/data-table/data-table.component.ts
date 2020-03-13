@@ -19,13 +19,14 @@ export class DataTableComponent implements OnInit, OnDestroy {
   @Input() tableHeader: TableHeaderRow[];
   @Input() data: Array<Strategy | Account | Deal | WalletTransfer | Position>;
   @Input() totalFields: Array<string> = null;
-  coloredFields: string[] = ['yield', 'profit', 'totalProfit', 'intervalPnL', 'account.intervalPnL', 'amount', 'strategy.profit', 'profit'];
+  coloredFields: string[] = ['yield', 'profit', 'totalProfit', 'intervalPnL', 'account.intervalPnL', 'amount', 'strategy.profit', 'profit', 'swap'];
   @Input() paginator: Paginator;
   @Input() shouldHighlightMyStrategies: boolean = false;
   @Input() emptyDataText: string = 'Нет данных для отображения';
   @Output() paginationChanged: EventEmitter<void> = new EventEmitter();
   @Input() methodName: string;
   @Input() methodArgs: any;
+  @Input() totals: object;
   functionality: object;
 
   constructor(
@@ -100,7 +101,7 @@ export class DataTableComponent implements OnInit, OnDestroy {
         if (typeof nestedObj[key] === 'object') {
           Object.assign(nestedObj, nestedObj[key]);
         } else {
-          if (nestedObj[key] && (!isDeal || (isDeal && (nestedObj['type'] !== 0 || nestedObj['type'] === 1)))) {
+          if (nestedObj[key] && (!isDeal || (isDeal && (nestedObj['type'] !== 2)))) {
             sum = sum + nestedObj[key];
           }
         }

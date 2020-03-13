@@ -21,6 +21,7 @@ export class InvestmentsDetailsPositionsComponent implements OnInit, OnDestroy {
   positions: Position[];
   account: Account;
   id: number;
+  totals: object;
 
   // table settings
   tableHeader: TableHeaderRow[] = [
@@ -35,7 +36,7 @@ export class InvestmentsDetailsPositionsComponent implements OnInit, OnDestroy {
       new TableColumn({ property: 'totalProfit', label: 'Итого прибыль, USD', pipe: { pipe: CustomCurrencyPipe } }),
     ]),
   ];
-  totalFields: string[] = ['profit', 'swap', 'totalProfit'];
+  // totalFields: string[] = ['profit', 'swap', 'totalProfit'];
   paginator: Paginator = new Paginator({
     perPage: 10,
     currentPage: 1
@@ -58,14 +59,15 @@ export class InvestmentsDetailsPositionsComponent implements OnInit, OnDestroy {
   getPositions(): void {
     this.dataService.getAccountPositions(this.route.parent.params['_value'].id, this.paginator)
       .pipe(takeUntil(this.destroy$))
-      .subscribe((positions: Position[]) => {
-        positions.forEach((position: Position) => {
+      .subscribe((result: {positions: Position[], totals: object}) => {
+        this.totals = result.totals;
+        result.positions.forEach((position: Position) => {
           if (position.volume) {
             position.volume = Math.abs(position.volume);
           }
         });
 
-        this.positions = positions;
+        this.positions = result.positions;
       });
   }
 

@@ -623,7 +623,7 @@ export class DataService {
   }
 
   // Получение списка сделок по инвестиции
-  getAccountDeals(id: number, pagination?: Paginator): Observable<Deal[]> {
+  getAccountDeals(id: number, pagination?: Paginator): Observable<object> {
     this.loaderService.showLoader();
     const options: DealsSearchOptions = new DealsSearchOptions();
     options.Filter = {AccountID: id};
@@ -636,12 +636,20 @@ export class DataService {
     }
 
     return this.http.post(`${CONFIG.baseApiUrl}/deals.search`, options).pipe(map((response: any) => {
-      const deals: Deal[] = [];
+      const result: {deals: Deal[], totals: object} = {
+        deals: [],
+        totals: {
+          yield: response.DealsTotal[0].Profit,
+          totalProfit: response.DealsTotal[0].TotalProfit,
+          swap: response.DealsTotal[0].Swap,
+          commission: response.DealsTotal[0].Commission
+        }
+      };
 
       this.walletService.walletSubject.next(this.createInstanceService.createWallet(response.Wallets[0]));
 
       response.Deals.forEach((deal: any) => {
-        deals.push(this.createInstanceService.createDeal(deal));
+        result.deals.push(this.createInstanceService.createDeal(deal));
       });
 
       if (pagination) {
@@ -650,12 +658,12 @@ export class DataService {
       }
 
       this.loaderService.hideLoader();
-      return deals;
+      return result;
     }));
   }
 
   // Получение списка позиций по инвестиции
-  getAccountPositions(id: number, pagination?: Paginator): Observable<Position[]> {
+  getAccountPositions(id: number, pagination?: Paginator): Observable<object> {
     this.loaderService.showLoader();
     const options: PositionsSearchOptions = new PositionsSearchOptions();
     options.Filter = {AccountID: id};
@@ -668,13 +676,20 @@ export class DataService {
     }
 
     return this.http.post(`${CONFIG.baseApiUrl}/positions.search`, options).pipe(map((response: any) => {
-      const positions: Position[] = [];
+      const result: {positions: Position[], totals: object} = {
+        positions: [],
+        totals: {
+          profit: response.PositionsTotal[0].Profit,
+          totalProfit: response.PositionsTotal[0].TotalProfit,
+          swap: response.PositionsTotal[0].Swap
+        }
+      };
 
       this.walletService.walletSubject.next(this.createInstanceService.createWallet(response.Wallets[0]));
 
       if (response.Positions.length) {
         response.Positions.forEach((position: any) => {
-          positions.push(this.createInstanceService.createPosition(position));
+          result.positions.push(this.createInstanceService.createPosition(position));
         });
 
         if (pagination) {
@@ -684,7 +699,7 @@ export class DataService {
       }
 
       this.loaderService.hideLoader();
-      return positions;
+      return result;
     }));
   }
 

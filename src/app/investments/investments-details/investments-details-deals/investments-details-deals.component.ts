@@ -21,6 +21,7 @@ export class InvestmentsDetailsDealsComponent implements OnInit, OnDestroy {
   // component data
   deals: Deal[];
   id: number;
+  totals: object;
 
   // table settings
   tableHeader: TableHeaderRow[] = [
@@ -38,7 +39,7 @@ export class InvestmentsDetailsDealsComponent implements OnInit, OnDestroy {
       new TableColumn({ property: 'totalProfit', label: 'Итого прибыль, USD', pipe: { pipe: CustomCurrencyPipe } })
     ]),
   ];
-  totalFields: string[] = ['yield', 'commission', 'swap', 'totalProfit'];
+  // totalFields: string[] = ['yield', 'commission', 'swap', 'totalProfit'];
   paginator: Paginator = new Paginator({
     perPage: 10,
     currentPage: 1
@@ -59,13 +60,15 @@ export class InvestmentsDetailsDealsComponent implements OnInit, OnDestroy {
   getDeals(): void {
     this.dataService.getAccountDeals(this.id, this.paginator)
       .pipe(takeUntil(this.destroy$))
-      .subscribe((deals: Deal[]) => {
-        deals.forEach((deal: Deal) => {
+      .subscribe((result: {deals: Deal[], totals: object}) => {
+        this.totals = result.totals;
+
+        result.deals.forEach((deal: Deal) => {
           if (deal.volume) {
             deal.volume = Math.abs(deal.volume);
           }
         });
-        this.deals = deals;
+        this.deals = result.deals;
       });
   }
 

@@ -15,11 +15,11 @@
   <tr *ngFor="let item of data" [class.my]="shouldHighlightMyStrategies && item.isMy()">
     <ng-container *ngFor="let row of tableHeader">
       <ng-container *ngFor="let column of row.columns">
-        <ng-container *ngIf="column.property || column.property === ''" >
+        <ng-container *ngIf="column.property || column.property === ''">
           <td [ngSwitch]="column.property"
               class="{{column.property === 'strategy.investmentInfo' ? '' : column.property}} {{column.property === 'strategy.investmentInfo' && item.account ? 'investmentInfo' : ''}}"
               [class.colored]="column.colored"
-          [ngStyle]="{'font-size': column.fontSize+'px'}">
+              [ngStyle]="{'font-size': column.fontSize+'px'}">
             <!-- Strategy special data -->
             <ng-container *ngSwitchCase="'age'">{{item.getAgeWeeks()}}</ng-container>
 
@@ -38,7 +38,8 @@
             </ng-container>
 
             <ng-container *ngSwitchCase="'accountID'">
-              <a class="detail-link" [routerLink]="['/investments/details', item.accountID, 'deals']">{{item.accountID}}</a>
+              <a class="detail-link"
+                 [routerLink]="['/investments/details', item.accountID, 'deals']">{{item.accountID}}</a>
             </ng-container>
 
             <ng-container *ngSwitchCase="'nameRating'">
@@ -52,7 +53,8 @@
             </ng-container>
 
             <ng-container *ngSwitchCase="'walletTransferStrategy'">
-              <a *ngIf="item.strategyID" [routerLink]="['/strategies/details', item.strategyID]" class="detail-link">{{item.strategyName}}</a>
+              <a *ngIf="item.strategyID" [routerLink]="['/strategies/details', item.strategyID]"
+                 class="detail-link">{{item.strategyName}}</a>
             </ng-container>
 
             <ng-container *ngSwitchCase="'walletTransferAmount'">
@@ -156,6 +158,20 @@
             </ng-container>
           </td>
         </ng-container>
+      </ng-container>
+    </ng-container>
+  </tr>
+
+  <tr *ngIf="totals">
+    <ng-container *ngFor="let row of tableHeader">
+      <ng-container *ngFor="let column of row.columns; let i = index">
+        <td class="total-cell" *ngIf="i === 0" translate>Всего 1</td>
+        <td class="total-cell"
+            *ngIf="i > 0"
+            [class.positive]="totals[column.property] > 0 && isColored(column.property)"
+            [class.negative]="totals[column.property] < 0 && isColored(column.property)">
+          {{totals[column.property]}}
+        </td>
       </ng-container>
     </ng-container>
   </tr>
