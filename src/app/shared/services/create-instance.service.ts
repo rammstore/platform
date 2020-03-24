@@ -74,7 +74,8 @@ export class CreateInstanceService {
       profitCurrentIntervalGross: options.ProfitCurrentIntervalGross,
       feeToPay: options.FeeToPay,
       totalCommissionTrader: options.TotalCommissionTrader,
-      feePaid: options.FeePaid
+      feePaid: options.FeePaid,
+      isMyAccount: options.IsMyAccount
     });
   }
 

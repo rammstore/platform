@@ -463,5 +463,6 @@
   "Общая доходность": "Total yield",
   "Общая": "Total",
   "График": "Chart",
-  "Управление": "Management"
+  "Управление": "Management",
+  "Данная инвестиция принадлежит инвестору Вашей стратегии. Полный функционал доступен только владельцу инвестиции.": "This investment belongs to an investor of your strategy. The full functionality is only available to the investment’s owner."
 }

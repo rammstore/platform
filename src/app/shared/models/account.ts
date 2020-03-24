@@ -39,14 +39,12 @@ export class Account {
   feeToPay: number;                 // Невыплаченное вознаграждение
   totalCommissionTrader: number;
   feePaid: number;
-
+  isMyAccount: boolean;
 
   constructor(
     options: any
   ) {
     Object.assign(this, options);
-    console.log(this);
-    console.log(options);
   }
 
   isActive(): boolean {
@@ -62,6 +60,14 @@ export class Account {
   }
 
   isMy(): boolean {
+    if (this.isMyAccount === false) {
+      return false;
+    }
+
+    if (this.isMyAccount === true) {
+      return true;
+    }
+
     if (!this.strategy) {
       return this.isMyStrategy;
     }

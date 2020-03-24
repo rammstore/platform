@@ -93,7 +93,8 @@
   </div>
 
   <div class="manage-container">
-    <app-manage *ngIf="account && account.isActive()" [data]="account" [methodName]="'getAccountStatement'" [methodArgs]="args"></app-manage>
+    <app-manage *ngIf="account && account.isMyAccount && account.isActive()" [data]="account" [methodName]="'getAccountStatement'" [methodArgs]="args"></app-manage>
+    <div *ngIf="!account.isMyAccount" translate>Данная инвестиция принадлежит инвестору Вашей стратегии. Полный функционал доступен только владельцу инвестиции.</div>
   </div>
 </div>
 
