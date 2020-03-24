@@ -26,85 +26,85 @@ export class ChartYieldTableComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.dataService.getStrategyChart(new ChartOptions(this.strategy.id, 10, 'yield', 'small'))
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(response => {
+    if (!this.strategy.chart) {
+      this.strategy.chart = [{Yield: 0}, {Yield: 0}];
+    }
 
-        this.chartOptions = {
-          chart: {
-            zoomType: 'x',
-            backgroundColor: 'transparent'
-          },
-          credits: {
+    this.chartOptions = {
+      chart: {
+        zoomType: 'x',
+        backgroundColor: 'transparent'
+      },
+      credits: {
+        enabled: false
+      },
+      title: {
+        text: ''
+      },
+      xAxis: {
+        labels: {
+          enabled: false
+        },
+        title: {
+          enabled: false
+        },
+        gridLineWidth: 0,
+        tickWidth: 0,
+        lineWidth: 0
+      },
+      yAxis: {
+        labels: {
+          enabled: false
+        },
+        title: {
+          enabled: false
+        },
+        gridLineWidth: 0
+      },
+      legend: {
+        enabled: false
+      },
+      tooltip: {
+        enabled: false
+      },
+      plotOptions: {
+        series: {
+          enableMouseTracking: false,
+          marker: {
             enabled: false
-          },
-          title: {
-            text: ''
-          },
-          xAxis: {
-            labels: {
-              enabled: false
-            },
-            title: {
-              enabled: false
-            },
-            gridLineWidth: 0,
-            // gridLineColor: this.getXAxisColor(response.Chart),
-            // tickAmount: this.getWeeksAmount(response.Chart),
-            tickWidth: 0,
-            lineWidth: 0
-          },
-          yAxis: {
-            labels: {
-              enabled: false
-            },
-            title: {
-              enabled: false
-            },
-            gridLineWidth: 0
-          },
-          legend: {
-            enabled: false
-          },
-          tooltip: {
-            enabled: false
-          },
-          plotOptions: {
-            series: {
-              enableMouseTracking: false,
-              marker: {
-                enabled: false
-              }
-            }
-          },
-          type: 'area',
-          series: [{
-            type: 'area',
-            data: this.getChartDataValues(response.Chart),
-            color: '#00a651',
-            fillColor: 'rgba(0, 166, 81, .1',
-            negativeColor: '#ec151d',
-            negativeFillColor: 'rgba(236, 21, 29, .1)'
-          }]
-        };
-
-        let containerID: string = `yieldChartContainer${this.strategy.id}`;
-
-        if (this.containerID) {
-          containerID = this.containerID;
+          }
         }
+      },
+      type: 'area',
+      series: [{
+        type: 'area',
+        data: this.getChartDataValues(),
+        color: '#00a651',
+        fillColor: 'rgba(0, 166, 81, .1)',
+        negativeColor: '#ec151d',
+        negativeFillColor: 'rgba(236, 21, 29, .1)'
+      }]
+    };
 
-        Highcharts.chart(containerID, this.chartOptions);
-      });
+    let containerID: string = `yieldChartContainer${this.strategy.id}`;
+
+    if (this.containerID) {
+      containerID = this.containerID;
+    }
+
+    setTimeout(() => {
+      Highcharts.chart(containerID, this.chartOptions);
+    });
+
   }
 
   ngOnDestroy(): void {
     this.destroy$.next(true);
   }
 
-  getChartDataValues(chartData: any[]) {
+  getChartDataValues() {
     const data: object[] = [];
-    chartData.forEach(d => data.push([new Date(d.DT).getTime(), d.Yield]));
+    this.strategy.chart.forEach((d, i) => data.push([i, d.Yield]));
     return data;
   }
 

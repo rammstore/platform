@@ -372,6 +372,7 @@ export class DataService {
       this.walletService.walletSubject.next(this.createInstanceService.createWallet(response.Wallets[0]));
 
       response.Accounts.forEach((account: any) => {
+        account.Strategy.Chart = account.Chart;
         accounts.push(new Account(this.createInstanceService.createAccount(account)));
       });
 
@@ -730,6 +731,7 @@ export class DataService {
       response.Strategies.forEach((s: any) => {
         if (s.Account) {
           s.Strategy.Account = s.Account;
+          s.Strategy.Chart = s.Chart;
         }
         strategies.push(this.createInstanceService.createStrategy(s.Strategy));
       });

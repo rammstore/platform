@@ -21,6 +21,7 @@ export class Strategy {
   feePaid: number;        // Выплаченное вознаграждение
   feeToPay: number;       // Невыплаченное вознаграждение
   commission: number;      // Комиссия за оборот
+  chart: {Yield: number}[];
 
 
   constructor(

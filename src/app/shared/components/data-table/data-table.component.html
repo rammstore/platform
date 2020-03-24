@@ -138,7 +138,7 @@
             </ng-container>
 
             <ng-container *ngSwitchCase="'yieldChart'">
-              <app-chart-yield-table [strategy]="item.strategy"></app-chart-yield-table>
+              <app-chart-yield-table *ngIf="item.strategy" [strategy]="item.strategy"></app-chart-yield-table>
             </ng-container>
 
             <ng-container *ngSwitchCase="'strategy.yieldChart'">

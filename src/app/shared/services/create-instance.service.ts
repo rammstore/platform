@@ -31,7 +31,8 @@ export class CreateInstanceService {
       equity: options.Equity,
       feePaid: options.FeePaid,
       feeToPay: options.FeeToPay,
-      commission: options.Commission
+      commission: options.Commission,
+      chart: options.Chart
     });
   }
 
