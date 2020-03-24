@@ -77,7 +77,8 @@ export class StrategyDetailsProfitabilityComponent implements OnInit , OnDestroy
               text: ''
             },
             gridLineWidth: 1,
-            gridLineColor: '#eaeaea'
+            gridLineColor: '#eaeaea',
+            startOfWeek: 1
           },
           legend: {
             enabled: false
@@ -95,7 +96,7 @@ export class StrategyDetailsProfitabilityComponent implements OnInit , OnDestroy
             formatter: function() {
               return `<div class="arearange-tooltip-header ${this.y < 0 ? 'negative' : ''} ${this.y > 0 ? 'positive' : ''}">` +
                 `${Highcharts.numberFormat((this.y), 2, '.')}%</div>` +
-                `<div>${Highcharts.dateFormat('%A, %e %b %Y, %H:%M', this.x)}</div>`;
+                `<div>${getDayName(new Date(this.x).getDay())}, ${Highcharts.dateFormat('%e %b %Y, %H:%M', this.x)}</div>`;
             }
           },
           type: 'arearange',
@@ -126,5 +127,24 @@ export class StrategyDetailsProfitabilityComponent implements OnInit , OnDestroy
 
   ngOnDestroy(): void {
     this.destroy$.next(true);
+  }
+}
+
+function getDayName(dayNumber: number) {
+  switch (dayNumber) {
+    case 0:
+      return 'Воскресенье';
+    case 1:
+      return 'Понедельник';
+    case 2:
+      return 'Вторник';
+    case 3:
+      return 'Среда';
+    case 4:
+      return 'Четверг';
+    case 5:
+      return 'Пятницы';
+    case 6:
+      return 'Суббота';
   }
 }
