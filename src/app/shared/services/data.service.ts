@@ -450,6 +450,9 @@ export class DataService {
         Fee: response.Statement[0].Strategy.Fee
       };
 
+      response.Statement[0].Account.CurrentDate = new Date(response.Statement[0].CurrentDate);
+      console.log(response.Statement[0].Account.CurrentDate);
+
       this.currentAccountStatementSubject.next({
         strategy: this.createInstanceService.createStrategy(response.Statement[0].Strategy),
         account: this.createInstanceService.createAccount(response.Statement[0].Account)

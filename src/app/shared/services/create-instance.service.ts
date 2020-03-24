@@ -76,7 +76,8 @@ export class CreateInstanceService {
       feeToPay: options.FeeToPay,
       totalCommissionTrader: options.TotalCommissionTrader,
       feePaid: options.FeePaid,
-      isMyAccount: options.IsMyAccount
+      isMyAccount: options.IsMyAccount,
+      currentDate: options.CurrentDate
     });
   }
 

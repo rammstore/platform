@@ -40,6 +40,7 @@ export class Account {
   totalCommissionTrader: number;
   feePaid: number;
   isMyAccount: boolean;
+  currentDate: Date;
 
   constructor(
     options: any
