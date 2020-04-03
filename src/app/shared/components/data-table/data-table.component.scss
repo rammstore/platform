@@ -80,6 +80,13 @@ td {
   }
 }
 
+td {
+  &.yieldChart,
+  &.strategy.yieldChart{
+    padding: 0 !important;
+  }
+}
+
 @media (max-width: 992px) {
   th,
   td {

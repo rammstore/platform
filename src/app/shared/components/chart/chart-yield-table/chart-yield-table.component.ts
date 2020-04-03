@@ -33,7 +33,8 @@ export class ChartYieldTableComponent implements OnInit, OnDestroy {
     this.chartOptions = {
       chart: {
         zoomType: 'x',
-        backgroundColor: 'transparent'
+        backgroundColor: 'transparent',
+        height: '115px'
       },
       credits: {
         enabled: false
@@ -50,7 +51,8 @@ export class ChartYieldTableComponent implements OnInit, OnDestroy {
         },
         gridLineWidth: 0,
         tickWidth: 0,
-        lineWidth: 0
+        lineWidth: 0,
+        height: '100%'
       },
       yAxis: {
         labels: {
