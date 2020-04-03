@@ -42,7 +42,6 @@ export class StrategyDetailsProfitabilityComponent implements OnInit , OnDestroy
       .pipe(takeUntil(this.destroy$))
       .subscribe((strategy: Strategy) => {
         this.strategy = strategy;
-        console.log(strategy);
       });
 
     this.dataService.getStrategyChart(new ChartOptions(this.route.parent.params['_value'].id))
@@ -96,7 +95,7 @@ export class StrategyDetailsProfitabilityComponent implements OnInit , OnDestroy
             formatter: function() {
               return `<div class="arearange-tooltip-header ${this.y < 0 ? 'negative' : ''} ${this.y > 0 ? 'positive' : ''}">` +
                 `${Highcharts.numberFormat((this.y), 2, '.')}%</div>` +
-                `<div>${getDayName(new Date(this.x).getDay())}, ${Highcharts.dateFormat('%e %b %Y, %H:%M', this.x)}</div>`;
+                `<div>${getDayName(this.x + 43200000)}, ${Highcharts.dateFormat('%e %b %Y, %H:%M', this.x + 43200000)}</div>`;
             }
           },
           type: 'arearange',
@@ -130,7 +129,8 @@ export class StrategyDetailsProfitabilityComponent implements OnInit , OnDestroy
   }
 }
 
-function getDayName(dayNumber: number) {
+function getDayName(time: number) {
+  const dayNumber: number = new Date(time).getDay();
   switch (dayNumber) {
     case 0:
       return 'Воскресенье';
