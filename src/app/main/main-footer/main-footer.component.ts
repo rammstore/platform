@@ -9,7 +9,7 @@ import { BrandService } from '@app/services/brand.service';
 })
 export class MainFooterComponent implements OnInit {
   language: string;
-  logoLink: string;
+  footerLogoLink: string;
 
   constructor(
     private translateService: TranslateService,
@@ -17,8 +17,8 @@ export class MainFooterComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.brandService.getLogoLink().subscribe((link: string) => {
-      this.logoLink = link;
+    this.brandService.getFooterLogoLink().subscribe((link: string) => {
+      this.footerLogoLink = link;
     });
 
     this.language = this.translateService.currentLang;

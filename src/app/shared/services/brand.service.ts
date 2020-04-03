@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class BrandService {
   logoLinkSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  footerLogoLinkSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
   faviconLinkSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
   url: string;
   functionality: BehaviorSubject<object> = new BehaviorSubject<object>({});
@@ -19,6 +20,7 @@ export class BrandService {
   getBrandFile() {
     this.url = `${window.location.origin}/config/${JSON.parse(localStorage.getItem('brand')).brand.brandKey}`;
     this.setLogoLink(JSON.parse(localStorage.getItem('brand')).brand.logo);
+    this.setfooterLogoLink(JSON.parse(localStorage.getItem('brand')).brand.footerLogo);
     this.setFavicon(JSON.parse(localStorage.getItem('brand')).brand.favicon);
 
     const link: string = `${this.url}/contacts.json`;
@@ -35,6 +37,10 @@ export class BrandService {
     this.logoLinkSubject.next(link);
   }
 
+  setfooterLogoLink(link: string): void {
+    this.footerLogoLinkSubject.next(link);
+  }
+
   setFavicon(iconLink: string): void {
     const link = document.querySelector("link[rel*='icon']") || document.createElement('link');
     link['type'] = 'image/x-icon';
@@ -49,5 +55,9 @@ export class BrandService {
 
   getLogoLink(): Observable<string> {
     return this.logoLinkSubject.asObservable();
+  }
+
+  getFooterLogoLink(): Observable<string> {
+    return this.footerLogoLinkSubject.asObservable();
   }
 }

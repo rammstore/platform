@@ -1,7 +1,7 @@
 <footer>
   <div class="container">
     <div class="info">
-      <img class="logo" [src]="logoLink" alt="company_logo">
+      <img *ngIf="footerLogoLink" class="logo" [src]="footerLogoLink" alt="company_logo">
       <span class="copyright">{{'legal.text' | translate}}</span>
       <a href="https://play.google.com/store/apps/details?id=com.project.ramm" target="_blank">
         <img src="assets/images/googlePlay_{{language}}.png">
