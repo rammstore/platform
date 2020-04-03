@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ContentTabLink } from '@app/components/content-tabs/content-tab-link';
 import { Router } from '@angular/router';
 
@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 })
 export class ContentTabsComponent {
   @Input() links: ContentTabLink[];
+  @Output() change: EventEmitter<void> = new EventEmitter<void>();
 
   constructor(
     private router: Router

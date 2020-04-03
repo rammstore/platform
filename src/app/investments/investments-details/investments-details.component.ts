@@ -38,6 +38,14 @@ export class InvestmentsDetailsComponent implements OnInit, OnDestroy {
         this.functionality = f;
       });
     this.args = {accountId: this.route.params['_value'].id};
+    this.getAccountStatement();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
+  }
+
+  getAccountStatement(): void {
     this.dataService.getAccountStatement(this.args)
       .pipe(takeUntil(this.destroy$))
       .subscribe((response: any) => {
@@ -50,9 +58,5 @@ export class InvestmentsDetailsComponent implements OnInit, OnDestroy {
           new ContentTabLink('Сделки', '/investments/details/' + this.account.id + '/deals')
         ];
       });
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next(true);
   }
 }

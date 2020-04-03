@@ -104,7 +104,7 @@
   </div>
 </div>
 
-<app-content-tabs [links]="links">
+<app-content-tabs [links]="links" (change)="getAccountStatement()">
   <router-outlet></router-outlet>
 </app-content-tabs>
 

@@ -86,8 +86,6 @@ export class AuthService {
 
   loginByOtp(otp: string): Observable<AuthData> {
     this.loaderService.showLoader();
-    console.log(otp);
-    console.log(this.redirectUrl);
     return this.http.post(`${CONFIG.baseApiUrl}/session.login`, {OTP: otp}).pipe(map((response: any) => {
 
       const brand: object = {
