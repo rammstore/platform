@@ -33,7 +33,7 @@ export class AuthService {
 
   login(login: string, password: string): Observable<AuthData> {
     this.loaderService.showLoader();
-    return this.http.post(`${CONFIG.baseApiUrl}/session.login`, {Login: login, Password: password}).pipe(map((response: any) => {
+    return this.http.post(`${CONFIG.baseApiUrl}/session.login`, {Login: login.trim(), Password: password}).pipe(map((response: any) => {
 
       const brand: object = {
         brand: {

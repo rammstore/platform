@@ -33,8 +33,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.router.url);
-
     if (this.route.snapshot.queryParams['lang']) {
       this.language = this.route.snapshot.queryParams['lang'];
       this.router.navigate(['.'], { relativeTo: this.route, queryParams: { otp: this.route.snapshot.queryParams['otp'] }});
