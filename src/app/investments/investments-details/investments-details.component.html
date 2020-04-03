@@ -100,7 +100,7 @@
         <span translate>Полный функционал доступен только владельцу инвестиции.</span>
       </div>
     </div>
-    <app-manage *ngIf="account && account.isMyAccount && account.isActive()" [data]="account" [methodName]="'getAccountStatement'" [methodArgs]="args"></app-manage>
+    <app-manage *ngIf="account && account.isMyAccount && account.isActive()" [data]="account" [methodName]="'getAccountStatement'" [methodArgs]="args" [hideInvestmentsButton]="!account.strategy.isMyStrategy"></app-manage>
   </div>
 </div>
 

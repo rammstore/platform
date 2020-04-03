@@ -55,7 +55,7 @@
           <i class="fa fa-list-alt"></i>
           Инвестиции
         </li>
-        <li *ngIf="dataType === 'account' && data.isMy()" [routerLink]="['/strategies/details', data.strategy.id, 'investments']" translate>
+        <li *ngIf="dataType === 'account' && data.isMy() && !hideInvestmentsButton" [routerLink]="['/strategies/details', data.strategy.id, 'investments']" translate>
           <i class="fa fa-list-alt"></i>
           Инвестиции
         </li>

@@ -23,6 +23,7 @@ export class ManageComponent implements OnInit {
   modalRef: BsModalRef;
   @Input() methodName: string;
   @Input() methodArgs: any;
+  @Input() hideInvestmentsButton: boolean;
 
   constructor(
     private modalService: BsModalService
