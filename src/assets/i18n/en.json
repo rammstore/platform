@@ -465,5 +465,6 @@
   "График": "Chart",
   "Управление": "Management",
   "Обновлено": "Refreshed",
-  "Данная инвестиция принадлежит инвестору Вашей стратегии. Полный функционал доступен только владельцу инвестиции.": "This investment belongs to an investor of your strategy. The full functionality is only available to the investment’s owner."
+  "Данная инвестиция принадлежит инвестору Вашей стратегии.": "This investment belongs to an investor of your strategy.",
+  "Полный функционал доступен только владельцу инвестиции.": "The full functionality is only available to the investment’s owner."
 }
