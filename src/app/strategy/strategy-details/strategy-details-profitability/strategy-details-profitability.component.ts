@@ -7,6 +7,8 @@ import { takeUntil } from 'rxjs/internal/operators';
 import { DataService } from '@app/services/data.service';
 import { TranslateService } from '@ngx-translate/core';
 
+const offset = Math.abs(new Date().getTimezoneOffset()) * 60000;
+
 @Component({
   selector: 'app-strategy-details-profitability',
   templateUrl: './strategy-details-profitability.component.html',
@@ -95,8 +97,8 @@ export class StrategyDetailsProfitabilityComponent implements OnInit , OnDestroy
             formatter: function() {
               return `<div class="arearange-tooltip-header ${this.y < 0 ? 'negative' : ''} ${this.y > 0 ? 'positive' : ''}">` +
                 `${Highcharts.numberFormat((this.y), 2, '.')}%</div>` +
-                `<div>${getDayName(this.x + 43200000)}, ${Highcharts.dateFormat('%e %b %Y, %H:%M', this.x + 43200000)}</div>`;
-            }
+                `<div>${getDayName(this.x + offset)}, ${Highcharts.dateFormat('%e %b %Y, %H:%M', this.x + offset)}</div>`;
+}
           },
           type: 'arearange',
           series: [{
