@@ -15,7 +15,7 @@
           <label *ngIf="formStep1.get('name').touched && formStep1.get('name').hasError('pattern')"
                  class="error-message"
                  translate>
-            Название стратегии может содержать только латинские буквы, цифры, пробелы и основные знаки препинания.
+            Название стратегии может содержать только латинские буквы, цифры, пробелы и основные знаки препинания: .,!?_
           </label>
           <label *ngIf="formStep1.get('name').touched && formStep1.get('name').hasError('isUniq')"
                  class="error-message" translate>
