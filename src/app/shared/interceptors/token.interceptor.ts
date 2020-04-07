@@ -15,7 +15,7 @@ export class TokenInterceptor implements HttpInterceptor {
 
     const options: { url?: string, params?: any, observe?: 'response', headers?: HttpHeaders, setHeaders?: any } = {};
 
-    options.headers = new HttpHeaders({Token: this.authService.getToken()});
+    options.headers = new HttpHeaders({Token: this.authService.getToken(), AppToken: CONFIG.appToken});
     request = request.clone(options);
 
     return next.handle(request);
