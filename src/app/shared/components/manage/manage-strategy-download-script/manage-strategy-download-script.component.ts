@@ -16,13 +16,18 @@ export class ManageStrategyDownloadScriptComponent implements OnInit {
   strategy: Strategy;
   token: string;
   form: FormGroup;
+  apiUrl: string = CONFIG.baseApiUrl;
 
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
     private dataService: DataService,
     public modalRef: BsModalRef
-  ) { }
+  ) {
+    if (!CONFIG.baseApiUrl.startsWith('http')) {
+      this.apiUrl = `${window.location.origin}${CONFIG.baseApiUrl}`;
+    }
+  }
 
   ngOnInit() {
     this.buildForm();

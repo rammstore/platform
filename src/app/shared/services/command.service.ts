@@ -9,10 +9,15 @@ import { map, takeUntil, takeWhile, timeInterval } from 'rxjs/internal/operators
   providedIn: 'root'
 })
 export class CommandService {
+  apiUrl = CONFIG.baseApiUrl;
 
   constructor(
     private http: HttpClient
-  ) { }
+  ) {
+    if (!CONFIG.baseApiUrl.startsWith('http')) {
+      this.apiUrl = `${window.location.origin}${CONFIG.baseApiUrl}`;
+    }
+  }
 
   checkStrategyCommand(command: Command): Observable<number> {
     const options: object = {

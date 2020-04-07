@@ -9,9 +9,8 @@ import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { LoaderService } from '@app/services/loader.service';
 import { CreateInstanceService } from '@app/services/create-instance.service';
-import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 import { WalletService } from '@app/services/wallet.service';
-import { log } from 'util';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +19,7 @@ export class AuthService {
   public redirectUrl: string = '/account';
   public otp: string;
   public lang: string;
+  apiUrl: string = CONFIG.baseApiUrl;
 
   constructor(
     private http: HttpClient,
@@ -29,7 +29,11 @@ export class AuthService {
     private createInstanceService: CreateInstanceService,
     private translateService: TranslateService,
     private walletService: WalletService
-    ) { }
+    ) {
+    if (!CONFIG.baseApiUrl.startsWith('http')) {
+      this.apiUrl = `${window.location.origin}${CONFIG.baseApiUrl}`;
+    }
+  }
 
   login(login: string, password: string): Observable<AuthData> {
     this.loaderService.showLoader();

@@ -48,6 +48,7 @@ export class DataService {
   accountSpecAsset: AccountSpecAsset;
   // here we will unsubscribe from all subscriptions
   destroy$ = new Subject();
+  apiUrl: string = CONFIG.baseApiUrl;
 
   constructor(
     private http: HttpClient,
@@ -58,6 +59,9 @@ export class DataService {
     private router: Router,
     private notificationsService: NotificationsService
   ) {
+    if (!CONFIG.baseApiUrl.startsWith('http')) {
+      this.apiUrl = `${window.location.origin}${CONFIG.baseApiUrl}`;
+    }
   }
 
   //

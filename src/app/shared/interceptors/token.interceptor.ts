@@ -9,7 +9,7 @@ export class TokenInterceptor implements HttpInterceptor {
   constructor(public authService: AuthService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (request.url === `${CONFIG.baseApiUrl}/session.login` || request.url.startsWith('/assets/i18n')) {
+    if (request.url.includes(`session.login`) || request.url.startsWith('/assets/i18n')) {
       return next.handle(request);
     }
 

@@ -19,13 +19,18 @@ class DealsSearchOptions {
 export class WalletService {
   walletSubject: BehaviorSubject<Wallet> = new BehaviorSubject<Wallet>(null);
   dealsSubject: BehaviorSubject<WalletTransfer[]> = new BehaviorSubject<WalletTransfer[]>(null);
+  apiUrl: string = CONFIG.baseApiUrl;
 
   constructor(
     private http: HttpClient,
     private loaderService: LoaderService,
     private createInstanceService: CreateInstanceService,
     private storageService: StorageService
-  ) { }
+  ) {
+    if (!CONFIG.baseApiUrl.startsWith('http')) {
+      this.apiUrl = `${window.location.origin}${CONFIG.baseApiUrl}`;
+    }
+  }
 
   getWallet(): Observable<Wallet> {
     if (!this.walletSubject.value) {

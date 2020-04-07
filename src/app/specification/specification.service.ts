@@ -6,10 +6,15 @@ import { CONFIG } from '@assets/config';
   providedIn: 'root'
 })
 export class SpecificationService {
+  apiUrl: string = CONFIG.baseApiUrl;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    if (!CONFIG.baseApiUrl.startsWith('http')) {
+      this.apiUrl = `${window.location.origin}${CONFIG.baseApiUrl}`;
+    }
+  }
 
   get() {
-    return this.http.get(`${CONFIG.baseApiUrl}/platform.getSpecification`);
+    return this.http.get(`${this.apiUrl}/platform.getSpecification`);
   }
 }
