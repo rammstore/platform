@@ -94,7 +94,7 @@
 
   <div class="manage-container">
     <div class="text-right">
-      <div *ngIf="account" class="mb-1"><span translate>Обновлено</span> {{account.currentDate | date:'yyyy-MM-dd hh:mm:ss'}}</div>
+      <div *ngIf="account" class="mb-1"><span translate>Обновлено</span> {{account.currentDate | customDate}}</div>
       <div *ngIf="account && !account.isMyAccount">
         <span translate>Данная инвестиция принадлежит инвестору Вашей стратегии.</span><br>
         <span translate>Полный функционал доступен только владельцу инвестиции.</span>
