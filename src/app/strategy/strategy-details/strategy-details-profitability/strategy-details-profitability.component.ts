@@ -8,7 +8,7 @@ import { DataService } from '@app/services/data.service';
 import { TranslateService } from '@ngx-translate/core';
 
 const offset = Math.abs(new Date().getTimezoneOffset()) * 60000;
-
+let that: StrategyDetailsProfitabilityComponent;
 @Component({
   selector: 'app-strategy-details-profitability',
   templateUrl: './strategy-details-profitability.component.html',
@@ -31,6 +31,7 @@ export class StrategyDetailsProfitabilityComponent implements OnInit , OnDestroy
   ) { }
 
   ngOnInit(): void {
+    that = this;
     this.args = {
       strategyId: this.route.parent.params['_value'].id
     };
@@ -97,7 +98,7 @@ export class StrategyDetailsProfitabilityComponent implements OnInit , OnDestroy
             formatter: function() {
               return `<div class="arearange-tooltip-header ${this.y < 0 ? 'negative' : ''} ${this.y > 0 ? 'positive' : ''}">` +
                 `${Highcharts.numberFormat((this.y), 2, '.')}%</div>` +
-                `<div>${getDayName(this.x + offset)}, ${Highcharts.dateFormat('%e %b %Y, %H:%M', this.x + offset)}</div>`;
+                `<div>${that.translateService.instant(getDayName(this.x + offset))}, ${Highcharts.dateFormat('%e %b %Y, %H:%M', this.x + offset)}</div>`;
 }
           },
           type: 'arearange',
@@ -145,7 +146,7 @@ function getDayName(time: number) {
     case 4:
       return 'Четверг';
     case 5:
-      return 'Пятницы';
+      return 'Пятница';
     case 6:
       return 'Суббота';
   }
