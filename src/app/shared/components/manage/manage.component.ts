@@ -18,7 +18,7 @@ import { ManageStrategyInvestComponent } from '@app/components/manage/manage-str
   styleUrls: ['./manage.component.scss']
 })
 export class ManageComponent implements OnInit {
-  @Input() data: Strategy | Account;
+  @Input() data: any;
   dataType: string;
   modalRef: BsModalRef;
   @Input() methodName: string;
