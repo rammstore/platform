@@ -4,6 +4,10 @@ app-data-table-paginator {
   display: none;
 }
 
+.totals {
+  display: none;
+}
+
 .deals,
 h5 {
   display: none;
@@ -12,6 +16,22 @@ h5 {
 @media (max-width: 576px) {
   app-data-table {
     display: none;
+  }
+
+  .totals {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .total {
+      text-align: center;
+      padding: 10px 5px;
+
+      .total-title {
+        margin-bottom: 10px;
+        font-weight: bold;
+      }
+    }
   }
 
   h5 {

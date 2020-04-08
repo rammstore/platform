@@ -62,6 +62,7 @@ export class InvestmentsDetailsDealsComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe((result: {deals: Deal[], totals: object}) => {
         this.totals = result.totals;
+        console.log(this.totals);
 
         result.deals.forEach((deal: Deal) => {
           if (deal.volume) {

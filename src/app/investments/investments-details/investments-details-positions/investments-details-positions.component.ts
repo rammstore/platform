@@ -61,6 +61,7 @@ export class InvestmentsDetailsPositionsComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe((result: {positions: Position[], totals: object}) => {
         this.totals = result.totals;
+        console.log(this.totals);
         result.positions.forEach((position: Position) => {
           if (position.volume) {
             position.volume = Math.abs(position.volume);

@@ -62,4 +62,20 @@
     </div>
   </div>
 </div>
+
+<div class="totals" *ngIf="deals && deals.length">
+  <div class="total">
+    <div translate class="text-center total-title">Прибыль, USD</div>
+    <div class="text-center">{{totals['profit']}}</div>
+  </div>
+  <div class="total">
+    <div translate class="text-center total-title">Своп, USD</div>
+    <div class="text-center">{{totals['swap']}}</div>
+  </div>
+  <div class="total">
+    <div translate class="text-center total-title">Итого прибыль, USD</div>
+    <div class="text-center">{{totals['totalProfit']}}</div>
+  </div>
+</div>
+
 <app-data-table-paginator [paginator]="paginator" (paginationChanged)="getDeals()"></app-data-table-paginator>

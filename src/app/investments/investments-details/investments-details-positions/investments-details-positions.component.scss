@@ -8,6 +8,10 @@
   width: 500px;
 }
 
+.totals {
+  display: none;
+}
+
 app-data-table-paginator {
   display: none;
 }
@@ -21,6 +25,22 @@ app-data-table-paginator {
 @media (max-width: 768px) {
   app-data-table {
     display: none;
+  }
+
+  .totals {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .total {
+      text-align: center;
+      padding: 10px 5px;
+
+      .total-title {
+        margin-bottom: 10px;
+        font-weight: bold;
+      }
+    }
   }
 
   app-data-table-paginator {

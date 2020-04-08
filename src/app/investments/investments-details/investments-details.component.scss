@@ -62,9 +62,12 @@ app-data-table-paginator {
   }
 
   .manage-container {
-    bottom: auto;
+    bottom: auto !important;
     top: 0;
-    max-width: 45%;
     line-height: 14px;
+
+    .text-right {
+      display: none;
+    }
   }
 }
