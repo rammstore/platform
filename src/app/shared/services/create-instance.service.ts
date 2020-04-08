@@ -32,7 +32,8 @@ export class CreateInstanceService {
       feePaid: options.FeePaid,
       feeToPay: options.FeeToPay,
       commission: options.Commission,
-      chart: options.Chart
+      chart: options.Chart,
+      masterAccount: options.MasterAccount
     });
   }
 

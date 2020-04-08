@@ -466,5 +466,6 @@
   "Управление": "Management",
   "Обновлено": "Refreshed",
   "Данная инвестиция принадлежит инвестору Вашей стратегии.": "This investment belongs to an investor of your strategy.",
-  "Полный функционал доступен только владельцу инвестиции.": "The full functionality is only available to the investment’s owner."
+  "Полный функционал доступен только владельцу инвестиции.": "The full functionality is only available to the investment’s owner.",
+  "Номер счета, с которого идет копирование": "The number of account from which copy trading is performed"
 }

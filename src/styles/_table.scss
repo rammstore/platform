@@ -81,6 +81,11 @@ table {
           background-color: $background-color;
         }
 
+        .master-account {
+          margin-top: 10px;
+          cursor: help;
+        }
+
         a {
           color: $link-color !important;
           text-decoration: none;

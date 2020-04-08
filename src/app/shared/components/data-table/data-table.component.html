@@ -35,6 +35,9 @@
 
             <ng-container *ngSwitchCase="'name'">
               <a class="detail-link" [routerLink]="[getItemLink(item)]">{{item.name}}</a>
+              <div class="master-account" *ngIf="item.masterAccount" [title]="'Номер счета, с которого идет копирование' | translate">
+                {{item.masterAccount}}
+              </div>
             </ng-container>
 
             <ng-container *ngSwitchCase="'accountID'">

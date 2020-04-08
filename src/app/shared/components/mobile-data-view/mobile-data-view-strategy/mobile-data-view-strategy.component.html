@@ -2,6 +2,9 @@
   <div class="strategy" *ngFor="let strategy of strategies">
     <div class="caption">
       <a [routerLink]="['/strategies/details', strategy.id]">{{strategy.name}}</a>
+      <div class="master-account" *ngIf="strategy.masterAccount" [title]="'Номер счета, с которого идет копирование' | translate">
+        {{strategy.masterAccount}}
+      </div>
       <app-manage [data]="strategy"></app-manage>
     </div>
 
