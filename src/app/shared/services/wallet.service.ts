@@ -44,7 +44,7 @@ export class WalletService {
     this.loaderService.showLoader();
     const walletID: number = this.storageService.getSession().walletID;
 
-    return this.http.post(`${CONFIG.baseApiUrl}/wallets.get`, { ID: walletID }).pipe(
+    return this.http.post(`${this.apiUrl}/wallets.get`, { ID: walletID }).pipe(
       map((response: any) => {
         const wallet: Wallet = this.createInstanceService.createWallet(response);
         this.walletSubject.next(wallet);
@@ -69,7 +69,7 @@ export class WalletService {
       };
     }
 
-    this.http.post(`${CONFIG.baseApiUrl}/walletTransfers.search`, options).subscribe((response: any) => {
+    this.http.post(`${this.apiUrl}/walletTransfers.search`, options).subscribe((response: any) => {
       const transfers: WalletTransfer[] = [];
 
       this.walletSubject.next(this.createInstanceService.createWallet(response.Wallets[0]));

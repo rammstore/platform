@@ -83,7 +83,7 @@ export class DataService {
       };
     }
 
-    this.http.post(`${CONFIG.baseApiUrl}/myStrategies.search`, options).subscribe((response: any) => {
+    this.http.post(`${this.apiUrl}/myStrategies.search`, options).subscribe((response: any) => {
       const strategies: Strategy[] = [];
 
       this.walletService.walletSubject.next(this.createInstanceService.createWallet(response.Wallets[0]));
@@ -129,7 +129,7 @@ export class DataService {
       };
     }
 
-    this.http.post(`${CONFIG.baseApiUrl}/myStrategies.search`, options).subscribe((response: any) => {
+    this.http.post(`${this.apiUrl}/myStrategies.search`, options).subscribe((response: any) => {
       this.loaderService.showLoader();
       const strategies: Strategy[] = [];
 
@@ -160,7 +160,7 @@ export class DataService {
   // Получение конкретной стратегии
   getStrategy(args: { strategyId: number }): Observable<Strategy> {
     this.loaderService.showLoader();
-    this.http.post(`${CONFIG.baseApiUrl}/strategies.get`, {ID: args.strategyId}).subscribe((response: any) => {
+    this.http.post(`${this.apiUrl}/strategies.get`, {ID: args.strategyId}).subscribe((response: any) => {
       this.loaderService.hideLoader();
       if (response.MyAccount) {
         response.Strategy.Account = response.MyAccount;
@@ -190,7 +190,7 @@ export class DataService {
   // Создание новой стратегии
   addStrategy(strategy: object, methodName: string, methodArgs: any): Observable<Strategy> {
     this.loaderService.showLoader();
-    return this.http.post(`${CONFIG.baseApiUrl}/myStrategies.add`, strategy).pipe(
+    return this.http.post(`${this.apiUrl}/myStrategies.add`, strategy).pipe(
       map((response: any) => {
         // this.loaderService.hideLoader();
         // this.walletService.updateWallet().subscribe();
@@ -207,7 +207,7 @@ export class DataService {
   // Постановка стратегии на паузу
   pauseStrategy(strategyId: number, methodName: string, methodArgs: any): Observable<any> {
     this.loaderService.showLoader();
-    return this.http.post(`${CONFIG.baseApiUrl}/myStrategies.pause`, {StrategyID: strategyId}).pipe(
+    return this.http.post(`${this.apiUrl}/myStrategies.pause`, {StrategyID: strategyId}).pipe(
       map((response: any) => {
         this.updateStrategy(new Command(response.CommandID, strategyId), methodName, methodArgs, 'Стратегия поставлена на паузу');
       })
@@ -217,7 +217,7 @@ export class DataService {
   // Возобновление стратегии
   resumeStrategy(strategyId: number, methodName: string, methodArgs: any): Observable<any> {
     this.loaderService.showLoader();
-    return this.http.post(`${CONFIG.baseApiUrl}/myStrategies.resume`, {StrategyID: strategyId}).pipe(
+    return this.http.post(`${this.apiUrl}/myStrategies.resume`, {StrategyID: strategyId}).pipe(
       map((response: any) => {
         this.updateStrategy(new Command(response.CommandID, strategyId), methodName, methodArgs, 'Стратегия возобновлена');
       })
@@ -227,7 +227,7 @@ export class DataService {
   // Закрытие стратегии
   closeStrategy(strategyId: number, methodName: string, methodArgs: any): Observable<any> {
     this.loaderService.showLoader();
-    return this.http.post(`${CONFIG.baseApiUrl}/myStrategies.close`, {StrategyID: strategyId}).pipe(
+    return this.http.post(`${this.apiUrl}/myStrategies.close`, {StrategyID: strategyId}).pipe(
       map((response: any) => {
         this.updateStrategy(new Command(response.CommandID, strategyId), methodName, methodArgs, 'Стратегия закрыта');
       })
@@ -235,7 +235,7 @@ export class DataService {
   }
 
   getStrategyToken(strategyId: number): Observable<string> {
-    return this.http.post(`${CONFIG.baseApiUrl}/myStrategies.getToken`, {StrategyID: strategyId}).pipe(
+    return this.http.post(`${this.apiUrl}/myStrategies.getToken`, {StrategyID: strategyId}).pipe(
       map((response: any) => {
         return response.Token;
       })
@@ -243,7 +243,7 @@ export class DataService {
   }
 
   isStrategyNameUniq(searchQuery: string): Observable<boolean> {
-    return this.http.post(`${CONFIG.baseApiUrl}/myStrategies.checkName`, {Name: searchQuery}).pipe(
+    return this.http.post(`${this.apiUrl}/myStrategies.checkName`, {Name: searchQuery}).pipe(
       map((response: any) => {
         return !!response.StrategyNameAvailable;
       })
@@ -284,7 +284,7 @@ export class DataService {
     };
 
     this.loaderService.hideLoader();
-    return this.http.post(`${CONFIG.baseApiUrl}/charts.get`, options);
+    return this.http.post(`${this.apiUrl}/charts.get`, options);
   }
 
   getSymbolsChart(strategyID: number): Observable<any> {
@@ -293,7 +293,7 @@ export class DataService {
       StrategyID: strategyID
     };
 
-    return this.http.post(`${CONFIG.baseApiUrl}/strategysymbolstat.get`, options).pipe(
+    return this.http.post(`${this.apiUrl}/strategysymbolstat.get`, options).pipe(
       map((response: any) => {
         const chart: object[] = [];
         response.StrategySymbolStat.forEach((stat: any) => {
@@ -318,7 +318,7 @@ export class DataService {
       };
     }
 
-    this.http.post(`${CONFIG.baseApiUrl}/${method}`, options).subscribe((response: any) => {
+    this.http.post(`${this.apiUrl}/${method}`, options).subscribe((response: any) => {
       const accounts: Account[] = [];
 
       response.Accounts.forEach((a: any) => {
@@ -370,7 +370,7 @@ export class DataService {
       };
     }
 
-    this.http.post(`${CONFIG.baseApiUrl}/accounts.search`, options).subscribe((response: any) => {
+    this.http.post(`${this.apiUrl}/accounts.search`, options).subscribe((response: any) => {
       const accounts: Account[] = [];
 
       this.walletService.walletSubject.next(this.createInstanceService.createWallet(response.Wallets[0]));
@@ -417,7 +417,7 @@ export class DataService {
       };
     }
 
-    this.http.post(`${CONFIG.baseApiUrl}/accounts.search`, options).subscribe((response: any) => {
+    this.http.post(`${this.apiUrl}/accounts.search`, options).subscribe((response: any) => {
       const accounts: Account[] = [];
 
       this.walletService.walletSubject.next(this.createInstanceService.createWallet(response.Wallets[0]));
@@ -448,7 +448,7 @@ export class DataService {
 
   // Получение деталей инвестиции
   getAccountStatement(args: { accountId: number }): Observable<any> {
-    this.http.post(`${CONFIG.baseApiUrl}/accounts.getStatement`, {AccountID: args.accountId}).subscribe((response: any) => {
+    this.http.post(`${this.apiUrl}/accounts.getStatement`, {AccountID: args.accountId}).subscribe((response: any) => {
       response.Statement[0].Strategy.Offer = {
         Commission: response.Statement[0].Strategy.Commission,
         Fee: response.Statement[0].Strategy.Fee
@@ -493,7 +493,7 @@ export class DataService {
       Money: data['amount']
     };
 
-    return this.http.post(`${CONFIG.baseApiUrl}/accounts.add`, options).pipe(
+    return this.http.post(`${this.apiUrl}/accounts.add`, options).pipe(
       map((response: any) => {
         // this.getActiveMyStrategies().subscribe();
         this.walletService.updateWallet().subscribe();
@@ -507,7 +507,7 @@ export class DataService {
   // Пополнить инвестицию
   fundAccount(accountID: number, amount: number, methodName: string, methodArgs: any) {
     this.loaderService.showLoader();
-    return this.http.post(`${CONFIG.baseApiUrl}/accounts.fund`, {AccountID: accountID, Amount: amount}).pipe(
+    return this.http.post(`${this.apiUrl}/accounts.fund`, {AccountID: accountID, Amount: amount}).pipe(
       map((response: any) => {
         this.updateAccount(new Command(response.CommandBalanceID, accountID), methodName, methodArgs, 'Средства зачислены');
       })
@@ -517,7 +517,7 @@ export class DataService {
   // Приостановить инвестицию
   pauseAccount(accountID: number, methodName: string, methodArgs: any): Observable<any> {
     this.loaderService.showLoader();
-    return this.http.post(`${CONFIG.baseApiUrl}/accounts.pause`, {AccountID: accountID}).pipe(
+    return this.http.post(`${this.apiUrl}/accounts.pause`, {AccountID: accountID}).pipe(
       map((response: any) => {
         this.updateAccount(new Command(response.CommandID, accountID), methodName, methodArgs, 'Инвестиция поставлена на паузу');
       })
@@ -527,7 +527,7 @@ export class DataService {
   // Возобновить инвестицию
   resumeAccount(accountID: number, methodName: string, methodArgs: any): Observable<any> {
     this.loaderService.showLoader();
-    return this.http.post(`${CONFIG.baseApiUrl}/accounts.resume`, {AccountID: accountID}).pipe(
+    return this.http.post(`${this.apiUrl}/accounts.resume`, {AccountID: accountID}).pipe(
       map((response: any) => {
         this.updateAccount(new Command(response.CommandID, accountID), methodName, methodArgs, 'Инвестиция снята с паузы');
       })
@@ -542,7 +542,7 @@ export class DataService {
 
     if (valueObj.target) {
       requests.push(
-        this.http.post(`${CONFIG.baseApiUrl}/accounts.setTarget`, {
+        this.http.post(`${this.apiUrl}/accounts.setTarget`, {
           AccountID: accountID,
           Target: valueObj['target']
         }).pipe(
@@ -555,7 +555,7 @@ export class DataService {
 
     if (valueObj.protection) {
       requests.push(
-        this.http.post(`${CONFIG.baseApiUrl}/accounts.setProtection`, {
+        this.http.post(`${this.apiUrl}/accounts.setProtection`, {
           AccountID: accountID,
           Protection: valueObj['protection']
         }).pipe(
@@ -568,7 +568,7 @@ export class DataService {
 
     if (valueObj.factor) {
       requests.push(
-        this.http.post(`${CONFIG.baseApiUrl}/accounts.setFactor`, {
+        this.http.post(`${this.apiUrl}/accounts.setFactor`, {
           AccountID: accountID,
           Factor: valueObj['factor']
         }).pipe(
@@ -590,7 +590,7 @@ export class DataService {
   // Вывести средства из инвестиции
   withdrawFromAccount(accountId: number, amount: number, methodName: string, methodArgs: any): Observable<any> {
     this.loaderService.showLoader();
-    return this.http.post(`${CONFIG.baseApiUrl}/accounts.withdraw`, {AccountID: accountId, Amount: amount}).pipe(
+    return this.http.post(`${this.apiUrl}/accounts.withdraw`, {AccountID: accountId, Amount: amount}).pipe(
       map((response: any) => {
         this.updateAccount(new Command(response.CommandBalanceID, accountId), methodName, methodArgs, 'Средства выведены');
       })
@@ -600,7 +600,7 @@ export class DataService {
   // Закрыть инвестицию
   closeAccount(accountID: number, methodName: string, methodArgs: any): Observable<any> {
     this.loaderService.showLoader();
-    return this.http.post(`${CONFIG.baseApiUrl}/accounts.close`, {AccountID: accountID}).pipe(
+    return this.http.post(`${this.apiUrl}/accounts.close`, {AccountID: accountID}).pipe(
       map((response: any) => {
         this.updateAccount(new Command(response.CommandID, accountID), methodName, methodArgs, 'Инвестиция закрыта');
       })
@@ -642,7 +642,7 @@ export class DataService {
       };
     }
 
-    return this.http.post(`${CONFIG.baseApiUrl}/deals.search`, options).pipe(map((response: any) => {
+    return this.http.post(`${this.apiUrl}/deals.search`, options).pipe(map((response: any) => {
       const result: {deals: Deal[], totals: object} = {
         deals: [],
         totals: {
@@ -682,7 +682,7 @@ export class DataService {
       };
     }
 
-    return this.http.post(`${CONFIG.baseApiUrl}/positions.search`, options).pipe(map((response: any) => {
+    return this.http.post(`${this.apiUrl}/positions.search`, options).pipe(map((response: any) => {
       const result: {positions: Position[], totals: object} = {
         positions: [],
         totals: {
@@ -731,7 +731,7 @@ export class DataService {
       };
     }
 
-    this.http.post(`${CONFIG.baseApiUrl}/ratings.get`, options).subscribe((response: any) => {
+    this.http.post(`${this.apiUrl}/ratings.get`, options).subscribe((response: any) => {
       const strategies: Strategy[] = [];
 
       response.Strategies.forEach((s: any) => {
@@ -761,7 +761,7 @@ export class DataService {
   }
 
   getAccountSpecAsset(): void {
-    this.http.get(`${CONFIG.baseApiUrl}/accounts.searchSpec`).subscribe((response: any) => {
+    this.http.get(`${this.apiUrl}/accounts.searchSpec`).subscribe((response: any) => {
       this.accountSpecAsset = this.createInstanceService.createAccountSpecAsset(response.AccountSpecAsset[0]);
     });
   }

@@ -37,7 +37,7 @@ export class AuthService {
 
   login(login: string, password: string): Observable<AuthData> {
     this.loaderService.showLoader();
-    return this.http.post(`${CONFIG.baseApiUrl}/session.login`, {Login: login.trim(), Password: password}).pipe(map((response: any) => {
+    return this.http.post(`${this.apiUrl}/session.login`, {Login: login.trim(), Password: password}).pipe(map((response: any) => {
 
       const brand: object = {
         brand: {
@@ -90,7 +90,7 @@ export class AuthService {
 
   loginByOtp(otp: string): Observable<AuthData> {
     this.loaderService.showLoader();
-    return this.http.post(`${CONFIG.baseApiUrl}/session.login`, {OTP: otp}).pipe(map((response: any) => {
+    return this.http.post(`${this.apiUrl}/session.login`, {OTP: otp}).pipe(map((response: any) => {
 
       const brand: object = {
         brand: {
@@ -142,7 +142,7 @@ export class AuthService {
   }
 
   logout(): void {
-    this.http.get(`${CONFIG.baseApiUrl}/session.logout`).subscribe(() => {
+    this.http.get(`${this.apiUrl}/session.logout`).subscribe(() => {
       this.router.navigate(['/login']);
     });
     this.storageService.removeAuthData();
@@ -151,7 +151,7 @@ export class AuthService {
 
   changePassword(оldPassword: string, password: string): Observable<any> {
     this.loaderService.showLoader();
-    return this.http.post(`${CONFIG.baseApiUrl}/password.set`, {OldPassword: оldPassword, Password: password}).pipe(
+    return this.http.post(`${this.apiUrl}/password.set`, {OldPassword: оldPassword, Password: password}).pipe(
       map(() => {
         this.loaderService.hideLoader();
       })

@@ -25,7 +25,7 @@ export class CommandService {
       StrategyID: command.dataID
     };
 
-    return this.http.post(`${CONFIG.baseApiUrl}/strategyCommands.get`, options).pipe(
+    return this.http.post(`${this.apiUrl}/strategyCommands.get`, options).pipe(
       map((response: any) => {
         return response.StrategyCommandStatus;
       })
@@ -39,7 +39,7 @@ export class CommandService {
       CommandBalanceID: command.id
     };
 
-    return this.http.post(`${CONFIG.baseApiUrl}/accountCommands.get`, options).pipe(
+    return this.http.post(`${this.apiUrl}/accountCommands.get`, options).pipe(
       map((response: any) => {
         return response.AccountCommandStatus;
       })
