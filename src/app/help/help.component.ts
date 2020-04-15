@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
 
 @Component({
   selector: 'app-help',
   templateUrl: './help.component.html',
   styleUrls: ['./help.component.scss']
 })
-export class HelpComponent {
+export class HelpComponent implements OnInit {
+  @ViewChild('frame', {static: true}) frame;
   scroll(id: string, group?) {
     if (group) {
       group.isOpen = true;
@@ -21,5 +22,10 @@ export class HelpComponent {
         block: 'start'
       });
     }
+  }
+
+  ngOnInit(): void {
+    console.log(this.frame);
+    console.log(this);
   }
 }

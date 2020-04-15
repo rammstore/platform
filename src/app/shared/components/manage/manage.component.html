@@ -65,11 +65,11 @@
           Сигнальный скрипт
         </li>
 
-        <li *ngIf="(dataType === 'strategy' && data.isMy())" (click)="openStrategyCloseDialog()" translate>
+        <li *ngIf="(dataType === 'strategy' && data.isMyStrategy) || (dataType === 'account' && data.strategy.isMyStrategy)" (click)="openStrategyCloseDialog()" translate>
           <i class="fa fa-window-close"></i>
           Закрыть стратегию
         </li>
-        <li *ngIf="(dataType === 'strategy' && !data.isMy()) || (dataType === 'account' && data.isMyAccount)" (click)="openAccountCloseDialog()" translate>
+        <li *ngIf="(dataType === 'strategy' && !data.isMyStrategy) || (dataType === 'account' && !data.strategy.isMyStrategy)" (click)="openAccountCloseDialog()" translate>
           <i class="fa fa-window-close"></i>
           Закрыть инвестицию
         </li>
