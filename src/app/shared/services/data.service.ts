@@ -737,8 +737,8 @@ export class DataService {
       response.Strategies.forEach((s: any) => {
         if (s.Account) {
           s.Strategy.Account = s.Account;
-          s.Strategy.Chart = s.Chart;
         }
+        s.Strategy.Chart = s.Chart;
         strategies.push(this.createInstanceService.createStrategy(s.Strategy));
       });
 

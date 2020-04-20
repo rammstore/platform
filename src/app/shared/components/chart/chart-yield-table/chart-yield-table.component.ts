@@ -26,6 +26,8 @@ export class ChartYieldTableComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    console.log(this.strategy.chart);
+
     if (!this.strategy.chart) {
       this.strategy.chart = [{Yield: 0}, {Yield: 0}];
     }
