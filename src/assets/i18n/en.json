@@ -11,6 +11,11 @@
 	"common.invested": "Invested",
 	"common.equity": "Equity",
 	"common.fee": "Fee rate",
+	"common.factor": "Factor",
+	"common.target": "Target",
+  	"common.protection": "Protection",
+
+  	"common.manage.invest": "Invest",
 
 	"table.footer.itemsPerPage": "Items per page",
 	"table.footer.itemsTotal": "Total items",
@@ -41,6 +46,19 @@
 
   	"account.active.title": "Active",
  	"account.closed.title": "Closed",
+ 	"account.form.factor.title": "Copy ratio. With a ratio of more than 1.0, copying is performed more aggressively; not only the potential income increases, but also the risk of loss does. When the coefficient is less than 1.0 - vice versa.",
+ 	"account.form.factor.error.required": "Factor is not defined",
+ 	"account.form.factor.error.pattern": "Please enter the correct factor value",
+ 	"account.form.factor.error.min": "Minimum factor is",
+  	"account.form.factor.error.max": "Maximum factor is",
+  	"account.form.target.error.required": "Target is not defined",
+  	"account.form.target.error.pattern": "Please enter the correct target value",
+  	"account.form.target.error.min": "Minimum target is",
+  	"account.form.protection.title": "At decrease in equity to the preset value the investment will be paused.",
+  	"account.form.protection.error.required": "Protection is not defined",
+  	"account.form.protection.error.pattern": "Please enter the correct protection value",
+  	"account.form.protection.error.min": "Minimum protection is",
+  	"account.form.protection.error.max": "Maximum protection is",
 
  	"rating.message": "The page shows top strategies with the maximum increase of number of investments during the last week.",
     "rating.search.placeholder": "Search strategies",
@@ -53,6 +71,14 @@
 
  	"strategy.details.investments.active.title": "Active",
   	"strategy.details.investments.closed.title": "Closed",
+
+	"strategy.invest.form.title": "Invest into strategy",
+  	"strategy.add.form.label.amount": "Investment amount",
+  	"strategy.form.amount.error.min": "Minimal investment amount is",
+  	"strategy.form.amount.error.max": "You can only invest free funds.",
+  	"strategy.form.amount.error.required": "Please enter the investment amount.",
+  	"strategy.form.amount.error.pattern": "Please enter correct investment amount.",
+  	"strategy.form.target.tooltip": "Target income. Upon reaching the target income, the investment will be paused.",
 
   	"spec.platform.title": "Platform",
   	"spec.rating.title": "Rating",

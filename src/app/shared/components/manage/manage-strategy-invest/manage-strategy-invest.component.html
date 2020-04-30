@@ -1,8 +1,8 @@
-<app-dialog-wrapper titleText="{{'Инвестировать в стратегию' | translate}}" [modalRef]="modalRef">
+<app-dialog-wrapper titleText="{{'strategy.invest.form.title' | translate}}" [modalRef]="modalRef">
   <form [formGroup]="form">
 
     <div class="form-field">
-      <label for="amount" class="field-label"><span translate>Сумма инвестиции</span>, USD:</label>
+      <label for="amount" class="field-label"><span translate>strategy.add.form.label.amount</span>, USD:</label>
       <div class="input-wrapper">
         <input id="amount"
                type="number"
@@ -16,7 +16,7 @@
           </label>
           <label class="error-message"
                  *ngIf="form.get('amount').touched && form.get('amount').hasError('min')">
-            <span translate>Минимальная сумма инвестиции -</span><span class="available-clickable" (click)="setMoney(securityMinBalance)"> {{securityMinBalance | customCurrency}}</span>
+            <span translate>strategy.form.amount.error.min -</span><span class="available-clickable" (click)="setMoney(securityMinBalance)"> {{securityMinBalance | customCurrency}}</span>
           </label>
           <label class="error-message"
                  *ngIf="form.get('amount').touched && form.get('amount').hasError('max')" translate>
@@ -37,7 +37,7 @@
     </div>
 
     <div class="form-field">
-      <label for="factor" class="field-label"><span translate>Множитель</span>:</label>
+      <label for="factor" class="field-label"><span translate>common.factor</span>:</label>
       <div class="input-wrapper">
         <input id="factor"
                type="number"
@@ -45,7 +45,7 @@
                [min]="0.1"
                [max]="10"
                [step]="0.1"
-               title="{{'Коэффициент копирования. При соотношении более 1,0 копирование идет более агрессивно; увеличивается не только потенциальный доход, но и риск потери. Когда коэффициент меньше 1,0 - наоборот' | translate}}">
+               title="{{'account.form.factor.title' | translate}}">
         <div class="messages">
           <label class="error-message"
                  *ngIf="form.get('factor').touched && form.get('factor').hasError('required')" translate>
