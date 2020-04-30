@@ -8,7 +8,7 @@ import { ContentTabLink } from '@app/components/content-tabs/content-tab-link';
 })
 export class SpecificationComponent {
   links: ContentTabLink[] = [
-    new ContentTabLink('Платформа', '/spec'),
-    new ContentTabLink('Рейтинг', '/spec/rating')
+    new ContentTabLink('spec.platform.title', '/spec'),
+    new ContentTabLink('spec.rating.title', '/spec/rating')
   ];
 }

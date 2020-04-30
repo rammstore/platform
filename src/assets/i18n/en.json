@@ -6,9 +6,11 @@
 	"common.type": "Type",
 	"common.account": "Account",
 	"common.strategy": "Strategy",
+	"common.investments": "Инвестиции",
 	"common.available": "Available",
 	"common.invested": "Invested",
 	"common.equity": "Equity",
+	"common.fee": "Вознаграждение",
 
 	"table.footer.itemsPerPage": "Items per page",
 	"table.footer.itemsTotal": "Total items",
@@ -50,5 +52,24 @@
   	"myStrategies.closed.title": "Closed",
 
  	"strategy.details.investments.active.title": "Active",
-  	"strategy.details.investments.closed.title": "Closed"
+  	"strategy.details.investments.closed.title": "Closed",
+
+  	"spec.platform.title": "Platform",
+  	"spec.rating.title": "Rating",
+    "spec.platform.account.currencies.title": "Available deposit currencies",
+	"spec.platform.account.min-deposit.title": "Minimal deposit",
+    "spec.platform.investments.min-balance.title": "Minimal balance",
+ 	"spec.platform.strategies.title": "Strategies",
+  	"spec.platform.strategies.min-sum.title": "Minimal initial deposit",
+  	"spec.platform.strategies.fee.value": "0 - 50% of profit",
+  	"spec.platform.trading-interval.title": "Trading interval",
+  	"spec.platform.trading-interval.period.title": "Period",
+  	"spec.platform.trading-interval.period.value": "Week",
+  	"spec.rating.conditions.title": "Conditions for publishing into rating",
+  	"spec.rating.life-term.title": "Conditions for publishing into rating\t",
+  	"spec.rating.min-positions-number.title": "Minimal number of closed market positions\t",
+  	"spec.rating.last-activity-time.title": "Last activity (opening or closing a market position), not later than",
+  	"spec.rating.last-activity-time.value": "365 calendar days",
+  	"spec.rating.min-yield.title": "Minimal yield",
+  	"spec.rating.min-yield.value": "Positive"
 }

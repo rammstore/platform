@@ -20,26 +20,26 @@ export class SpecificationPlatformComponent implements OnInit {
       this.spec = spec;
 
       this.datas = [{
-        title: 'Счет',
+        title: 'common.account',
         items: [
-          {label: 'Доступные валюты счета', value: this.spec.Account.AvailableCurrency},
-          {label: 'Минимальный депозит', value: `${this.spec.Account.MinBalance} ${this.spec.Account.AvailableCurrency}`}
+          {label: 'spec.platform.account.currencies.title', value: this.spec.Account.AvailableCurrency},
+          {label: 'spec.platform.account.min-deposit.title', value: `${this.spec.Account.MinBalance} ${this.spec.Account.AvailableCurrency}`}
         ]
       }, {
         title: 'common.investments',
         items: [
-          {label: 'Минимальный баланс', value: `${this.spec.Account.MinBalance} ${this.spec.Account.AvailableCurrency}`}
+          {label: 'spec.platform.investments.min-balance.title', value: `${this.spec.Account.MinBalance} ${this.spec.Account.AvailableCurrency}`}
         ]
       }, {
-        title: 'Стратегии',
+        title: 'spec.platform.strategies.title',
         items: [
-          {label: 'Минимальная сумма для создания', value: `${this.spec.Strategy.MinAmountToCreate} ${this.spec.Account.AvailableCurrency}`},
-          {label: 'common.fee', value: '0 - 50% от прибыли'}
+          {label: 'spec.platform.strategies.min-sum.title', value: `${this.spec.Strategy.MinAmountToCreate} ${this.spec.Account.AvailableCurrency}`},
+          {label: 'common.fee', value: 'spec.platform.strategies.fee.value'}
         ]
       }, {
-        title: 'Торговый интервал',
+        title: 'spec.platform.trading-interval.title',
         items: [
-          {label: 'Период', value: 'Неделя'}
+          {label: 'spec.platform.trading-interval.period.title', value: 'spec.platform.trading-interval.period.value'}
         ]
       }];
     });
