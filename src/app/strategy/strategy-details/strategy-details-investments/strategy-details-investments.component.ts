@@ -17,8 +17,8 @@ export class StrategyDetailsInvestmentsComponent implements OnInit {
 
   ngOnInit(): void {
     this.links = [
-      new ContentTabLink('Активные', '/strategies/details/' + this.route.parent.params['_value'].id + '/investments'),
-      new ContentTabLink('Закрытые', '/strategies/details/' + this.route.parent.params['_value'].id + '/investments/closed')
+      new ContentTabLink('strategy.details.investments.active.title', '/strategies/details/' + this.route.parent.params['_value'].id + '/investments'),
+      new ContentTabLink('strategy.details.investments.closed.title', '/strategies/details/' + this.route.parent.params['_value'].id + '/investments/closed')
     ];
   }
 }

@@ -8,7 +8,7 @@ import { ContentTabLink } from '@app/components/content-tabs/content-tab-link';
 })
 export class InvestmentsComponent {
   links: ContentTabLink[] = [
-    new ContentTabLink('Активные', '/investments'),
-    new ContentTabLink('Закрытые', '/investments/closed')
+    new ContentTabLink('account.active.title', '/investments'),
+    new ContentTabLink('account.closed.title', '/investments/closed')
   ];
 }
