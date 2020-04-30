@@ -11,5 +11,17 @@
 	"common.equity": "Equity",
 
 	"table.footer.itemsPerPage": "Items per page",
-	"table.footer.itemsTotal": "Total items"
-}
+	"table.footer.itemsTotal": "Total items",
+	"table.footer.pagePrevious": "Previous",
+    "table.footer.pageNext": "Next",
+    "table.cell.accountNumberCopy": "The number of account from which copy trading is performed",
+  	"table.cell.total": "Total",
+  	"table.cell.loading": "Loading...",
+
+  	"login.title": "Log in",
+  	"login.form.label.login": "Your login or email",
+  	"login.form.login.error.required": "Please enter your login or email.",
+  	"login.form.label.password": "Your password",
+  	"login.form.password.error.required": "Please enter your password.",
+  	"login.form.error.credentials": "Username or password is incorrect.",
+  	"login.form.button.submit.label": "Log in"
