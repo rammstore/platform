@@ -96,6 +96,9 @@
 
   "rating.message": "На странице показаны стратегии с наибольшим приростом количества инвестиций в течение последней недели.",
   "rating.search.placeholder": "Поиск стратегий",
+  "rating.rating.title": "Рейтинг",
+  "rating.popular.title": "Популярные",
+  "rating.all.title": "Все стратегии",
 
   "account.lastTransfers.title": "Операции с кошельком",
   "account.result.chart.help.tooltip": "Вы также можете посмотреть эти значения в верхнем правом углу",
@@ -188,6 +191,8 @@
   "table.cell.total": "Всего",
   "table.cell.loading": "Загрузка...",
 
+  "account.active.title": "Активные",
+  "account.closed.title": "Закрытые",
   "account.form.profile.title": "Изменить профиль инвестиции",
   "account.form.factor.title": "Коэффициент копирования. При соотношении более 1,0 копирование идет более агрессивно; увеличивается не только потенциальный доход, но и риск потери. Когда коэффициент меньше 1,0 - наоборот",
   "account.form.factor.error.required": "Множитель не задан",

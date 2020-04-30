@@ -38,7 +38,12 @@
     "header.menu.item.logout": "Log out",
 
   	"account.active.title": "Active",
- 	"account.closed.title": "Closed"
+ 	"account.closed.title": "Closed",
 
+ 	"rating.message": "The page shows top strategies with the maximum increase of number of investments during the last week.",
+    "rating.search.placeholder": "Search strategies",
+    "rating.rating.title": "Rating",
+ 	"rating.popular.title": "Popular",
+ 	"rating.all.title": "All strategies"
 
 }

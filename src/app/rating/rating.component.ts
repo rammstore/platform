@@ -8,8 +8,8 @@ import { ContentTabLink } from '@app/components/content-tabs/content-tab-link';
 })
 export class RatingComponent {
   links: ContentTabLink[] = [
-    new ContentTabLink('Рейтинг', '/rating'),
-    new ContentTabLink('Популярные', '/rating/popular'),
-    new ContentTabLink('Все стратегии', '/rating/all')
+    new ContentTabLink('rating.rating.title', '/rating'),
+    new ContentTabLink('rating.popular.title', '/rating/popular'),
+    new ContentTabLink('rating.all.title', '/rating/all')
   ];
 }
