@@ -24,5 +24,21 @@
   	"login.form.label.password": "Your password",
   	"login.form.password.error.required": "Please enter your password.",
   	"login.form.error.credentials": "Username or password is incorrect.",
-  	"login.form.button.submit.label": "Log in"
+  	"login.form.button.submit.label": "Log in",
+
+  	"header.item.account": "Account",
+ 	"header.item.investments": "Investments",
+  	"header.item.rating": "Rating",
+ 	"header.item.myStrategies": "My strategies",
+ 	"header.item.specification": "Specification",
+  	"header.item.help": "Help",
+
+  	"header.menu.item.changePassword": "Change password",
+    "header.menu.item.changeLanguage": "Change language",
+    "header.menu.item.logout": "Log out",
+
+  	"account.active.title": "Active",
+ 	"account.closed.title": "Closed"
+
+
 }
