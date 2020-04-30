@@ -24,12 +24,12 @@ export class RatingAllComponent implements OnInit, OnDestroy {
   // table settings
   tableHeader: TableHeaderRow[] = [
     new TableHeaderRow([
-      new TableColumn({ property: 'nameRating', label: 'Стратегия', fontSize: 20}),
-      new TableColumn({ property: 'profit', label: 'Общая доходность', pipe: { pipe: PercentPipe, args: ['1.0-2'] }, fontSize: 24}),
-      new TableColumn({ property: 'strategy.yieldChart', label: 'График' }),
-      new TableColumn({ property: 'accountsCount', label: 'Инвесторы', fontSize: 16}),
-      new TableColumn({ property: 'age', label: 'Возраст, недель', fontSize: 16 }),
-      new TableColumn({ property: 'strategy.investmentInfo', label: 'Моя инвестиция, USD', colored: true }),
+      new TableColumn({ property: 'nameRating', label: 'common.strategy', fontSize: 20}),
+      new TableColumn({ property: 'profit', label: 'common.table.label.yieldCommon', pipe: { pipe: PercentPipe, args: ['1.0-2'] }, fontSize: 24}),
+      new TableColumn({ property: 'strategy.yieldChart', label: 'common.chart' }),
+      new TableColumn({ property: 'accountsCount', label: 'common.table.label.investors', fontSize: 16}),
+      new TableColumn({ property: 'age', label: 'common.age', fontSize: 16 }),
+      new TableColumn({ property: 'strategy.investmentInfo', label: 'common.table.label.myInvestmentUSD', colored: true }),
       new TableColumn({ property: 'manage', label: '' })
     ]),
   ];

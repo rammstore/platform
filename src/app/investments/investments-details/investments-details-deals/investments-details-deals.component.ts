@@ -26,17 +26,17 @@ export class InvestmentsDetailsDealsComponent implements OnInit, OnDestroy {
   // table settings
   tableHeader: TableHeaderRow[] = [
     new TableHeaderRow([
-      new TableColumn({ property: 'dtCreated', label: 'Время', pipe: { pipe: CustomDatePipe }}),
-      new TableColumn({ property: 'id', label: 'Сделка'}),
-      new TableColumn({ property: 'symbol', label: 'Инструмент' }),
-      new TableColumn({ property: 'type', label: 'Тип' }),
-      new TableColumn({ property: 'entry', label: 'Направление' }),
-      new TableColumn({ property: 'volume', label: 'Объем' }),
-      new TableColumn({ property: 'price', label: 'Цена' }),
-      new TableColumn({ property: 'yield', label: 'Прибыль, USD', pipe: { pipe: CustomCurrencyPipe } }),
-      new TableColumn({ property: 'commission', label: 'Комиссия, USD', pipe: { pipe: CustomCurrencyPipe } }),
-      new TableColumn({ property: 'swap', label: 'Своп, USD', pipe: { pipe: CustomCurrencyPipe } }),
-      new TableColumn({ property: 'totalProfit', label: 'Итого прибыль, USD', pipe: { pipe: CustomCurrencyPipe } })
+      new TableColumn({ property: 'dtCreated', label: 'common.table.label.time', pipe: { pipe: CustomDatePipe }}),
+      new TableColumn({ property: 'id', label: 'common.deal'}),
+      new TableColumn({ property: 'symbol', label: 'common.table.label.symbol' }),
+      new TableColumn({ property: 'type', label: 'common.type' }),
+      new TableColumn({ property: 'entry', label: 'common.table.label.entry' }),
+      new TableColumn({ property: 'volume', label: 'common.table.label.volume' }),
+      new TableColumn({ property: 'price', label: 'common.table.label.price' }),
+      new TableColumn({ property: 'yield', label: 'common.table.label.yieldUSD', pipe: { pipe: CustomCurrencyPipe } }),
+      new TableColumn({ property: 'commission', label: 'common.table.label.commissionUSD', pipe: { pipe: CustomCurrencyPipe } }),
+      new TableColumn({ property: 'swap', label: 'common.table.label.swapUSD', pipe: { pipe: CustomCurrencyPipe } }),
+      new TableColumn({ property: 'totalProfit', label: 'common.table.label.yieldTotalUSD', pipe: { pipe: CustomCurrencyPipe } })
     ]),
   ];
   // totalFields: string[] = ['yield', 'commission', 'swap', 'totalProfit'];
@@ -62,7 +62,6 @@ export class InvestmentsDetailsDealsComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe((result: {deals: Deal[], totals: object}) => {
         this.totals = result.totals;
-        console.log(this.totals);
 
         result.deals.forEach((deal: Deal) => {
           if (deal.volume) {

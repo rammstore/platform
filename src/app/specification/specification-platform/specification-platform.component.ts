@@ -34,7 +34,7 @@ export class SpecificationPlatformComponent implements OnInit {
         title: 'Стратегии',
         items: [
           {label: 'Минимальная сумма для создания', value: `${this.spec.Strategy.MinAmountToCreate} ${this.spec.Account.AvailableCurrency}`},
-          {label: 'Вознаграждение', value: '0 - 50% от прибыли'}
+          {label: 'common.fee', value: '0 - 50% от прибыли'}
         ]
       }, {
         title: 'Торговый интервал',

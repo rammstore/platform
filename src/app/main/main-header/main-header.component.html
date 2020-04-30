@@ -5,12 +5,14 @@
     </a>
 
     <nav>
-      <a [routerLink]="['/account']" [class.active]="isLinkActive('/account')" translate>Счет</a>
-      <a [routerLink]="['/investments']" [class.active]="isLinkActive('/investments')" translate>Инвестиции</a>
-      <a [routerLink]="['/rating']" [class.active]="isLinkActive('/rating')" translate>Рейтинг</a>
-      <a [routerLink]="['/strategies']" [class.active]="isLinkActive('/strategies')" translate>Мои стратегии</a>
-      <a [routerLink]="['/spec']" [class.active]="isLinkActive('/spec')" translate>Спецификация</a>
-      <a [routerLink]="['/help']" [class.active]="isLinkActive('/help')" translate>Помощь</a>
+      <a [routerLink]="['/account']" [class.active]="isLinkActive('/account')" translate>header.item.account</a>
+      <a [routerLink]="['/investments']" [class.active]="isLinkActive('/investments')"
+         translate>header.item.investments</a>
+      <a [routerLink]="['/rating']" [class.active]="isLinkActive('/rating')" translate>header.item.rating</a>
+      <a [routerLink]="['/strategies']" [class.active]="isLinkActive('/strategies')"
+         translate>header.item.myStrategies</a>
+      <a [routerLink]="['/spec']" [class.active]="isLinkActive('/spec')" translate>header.item.specification</a>
+      <a [routerLink]="['/help']" [class.active]="isLinkActive('/help')" translate>header.item.help</a>
     </nav>
 
     <div class="btn-group menu header-dropdown" dropdown>
@@ -18,16 +20,26 @@
       <i class="icon-hamburger" dropdownToggle></i>
 
       <ul id="dropdown-nested" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-nested">
-        <li role="menuitem"><a [routerLink]="['/manage']" class="dropdown-item" translate>Изменить пароль</a></li>
+        <li role="menuitem"><a [routerLink]="['/manage']" class="dropdown-item" translate>header.menu.item.changePassword</a>
+        </li>
         <li role="menuitem" dropdown triggers="mouseenter" placement="right" container="body">
-          <a class="dropdown-item" dropdownToggle (click)="false" translate>Изменить язык<i class="icon-flag {{language}} current-lang"></i></a>
+          <a class="dropdown-item" dropdownToggle (click)="false" translate>header.menu.item.changeLanguage
+            <img class="lang-img" src="/assets/images/flags/{{language}}.png" (click)="false">
+          </a>
 
           <ul *dropdownMenu class="dropdown-menu langmenu" role="menu">
-            <li role="menuitem lang" (click)="setLanguage('en')"><i class="icon-flag en"></i></li>
-            <li role="menuitem lang" (click)="setLanguage('ru')"><i class="icon-flag ru"></i></li>
+            <li role="menuitem lang" (click)="setLanguage('en')"><img class="lang-img" src="/assets/images/flags/en.png"></li>
+            <li role="menuitem lang" (click)="setLanguage('ru')"><img class="lang-img" src="/assets/images/flags/ru.png"></li>
+            <li role="menuitem lang" (click)="setLanguage('es')"><img class="lang-img" src="/assets/images/flags/es.png"></li>
           </ul>
         </li>
-        <li role="menuitem"><a (click)="logout()"  href="{{'linkLogout' | translate}}" class="dropdown-item" title="{{client.id}} - {{client.idCompany}}" translate>Выйти<span *ngIf="client" class="login">{{client.login}}</span></a></li>
+        <li role="menuitem">
+          <a (click)="logout()" href="{{'linkLogout' | translate}}" class="dropdown-item"
+             title="{{client.id}} - {{client.idCompany}}" translate>
+            header.menu.item.logout
+            <span *ngIf="client" class="login">{{client.login}}</span>
+          </a>
+        </li>
       </ul>
     </div>
 
@@ -37,65 +49,70 @@
     <ng-template #chartContainer>
       <div class="legend" *ngIf="wallet">
         <div>
-          <span translate>Доступно</span>
+          <span translate>common.available</span>
           <span class="amount available">{{wallet.balance | customCurrency}} USD</span>
         </div>
         <div>
-          <span translate>Инвестировано</span>
+          <span translate>common.invested</span>
           <span class="amount invested">{{wallet.invested | customCurrency}} USD</span>
         </div>
         <div>
-          <span translate>Средства</span>
+          <span translate>common.equity</span>
           <span class="amount">{{wallet.getEquity() | customCurrency}} USD</span>
         </div>
 
         <div id="headerChartContainer"></div>
-        <app-chart-wallet-info *ngIf="wallet" [wallet]="wallet" containerID="headerChartContainer"></app-chart-wallet-info>
+        <app-chart-wallet-info *ngIf="wallet" [wallet]="wallet"
+                               containerID="headerChartContainer"></app-chart-wallet-info>
 
-        <a href="https://grandcapital.net/account/payments/deposit" target="_blank">
-          <button class="primary block" translate>Пополнить</button>
+        <a href="{{'linkFund.link' | translate}}" target="_blank">
+          <button class="primary" translate title="{{'linkFund.title' | translate}}">linkFund.text</button>
         </a>
       </div>
     </ng-template>
 
     <aside [class.open]="isAsideOpen">
       <ul>
-        <li><a [routerLink]="['/account']" [class.active]="isLinkActive('/account')" translate>Счет</a></li>
-        <li><a [routerLink]="['/investments']" [class.active]="isLinkActive('/investments')" translate>Инвестиции</a></li>
-        <li><a [routerLink]="['/rating']" [class.active]="isLinkActive('/rating')" translate>Рейтинг</a></li>
-        <li><a [routerLink]="['/strategies']" [class.active]="isLinkActive('/strategies')" translate>Мои стратегии</a></li>
-        <li><a [routerLink]="['/spec']" [class.active]="isLinkActive('/specification')" translate>Спецификация</a></li>
-        <li><a [routerLink]="['/help']" [class.active]="isLinkActive('/help')" translate>Помощь</a></li>
+        <li><a [routerLink]="['/account']" [class.active]="isLinkActive('/account')" translate>header.item.account</a></li>
+        <li><a [routerLink]="['/investments']" [class.active]="isLinkActive('/investments')" translate>header.item.investments</a>
+        </li>
+        <li><a [routerLink]="['/rating']" [class.active]="isLinkActive('/rating')" translate>header.item.rating</a></li>
+        <li><a [routerLink]="['/strategies']" [class.active]="isLinkActive('/strategies')" translate>header.item.myStrategies</a>
+        </li>
+        <li><a [routerLink]="['/spec']" [class.active]="isLinkActive('/specification')" translate>header.item.specification</a></li>
+        <li><a [routerLink]="['/help']" [class.active]="isLinkActive('/help')" translate>header.item.help</a></li>
       </ul>
 
       <ul>
-        <li><a [routerLink]="['/manage']" class="dropdown-item" translate>Изменить пароль</a></li>
+        <li><a [routerLink]="['/manage']" class="dropdown-item" translate>header.menu.item.changePassword</a></li>
 
         <li dropdown triggers="tap" placement="right" container="body" (click)="false" [dropup]="true">
           <a dropdownToggle class="dropdown-item mobile-lang" (click)="false" translate>
-            Изменить язык
-            <i class="icon-flag {{language}} current-lang" (click)="false"></i>
+            header.menu.item.changeLanguage
+            <img class="lang-img" src="/assets/images/flags/{{language}}.png" (click)="false">
           </a>
 
           <ul *dropdownMenu class="dropdown-menu langmenu" role="menu">
-            <li role="menuitem lang" (click)="setLanguage('en')"><i class="icon-flag en"></i></li>
+            <li role="menuitem lang" (click)="setLanguage('en')"><img class="lang-img" src="/assets/images/flags/en.png"></li>
             <li class="divider dropdown-divider"></li>
-            <li role="menuitem lang" (click)="setLanguage('ru')"><i class="icon-flag ru"></i></li>
+            <li role="menuitem lang" (click)="setLanguage('ru')"><img class="lang-img" src="/assets/images/flags/ru.png"></li>
+            <li class="divider dropdown-divider"></li>
+            <li role="menuitem lang" (click)="setLanguage('es')"><img class="lang-img" src="/assets/images/flags/es.png"></li>
           </ul>
         </li>
 
-        <li><a (click)="logout()" href="{{'linkLogout' | translate}}" translate>Выйти</a></li>
+        <li><a (click)="logout()" href="{{'linkLogout' | translate}}" translate>header.menu.item.logout</a></li>
 
         <li><a *ngIf="client" class="login">{{client.login}}</a></li>
       </ul>
     </aside>
 
     <div class="account-info" *ngIf="wallet" [popover]="chartContainer" [outsideClick]="true" placement="bottom">
-      <span class="available" [title]="'Доступно' | translate">
+      <span class="available" [title]="'common.available' | translate">
         {{wallet.balance | customCurrency}}USD
       </span>
       |
-      <span [title]="'Средства' | translate">{{wallet.getEquity() | customCurrency}}USD</span>
+      <span [title]="'common.equity' | translate">{{wallet.getEquity() | customCurrency}}USD</span>
     </div>
   </div>
 </header>

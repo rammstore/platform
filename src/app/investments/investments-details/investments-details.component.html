@@ -1,6 +1,6 @@
 <div class="details-container">
   <div class="strategy">
-    <h2 translate>Стратегия</h2>
+    <h2 translate>common.strategy</h2>
     <table>
       <tbody>
       <tr>
@@ -8,55 +8,55 @@
         <td *ngIf="strategy">{{strategy.id}}</td>
       </tr>
       <tr>
-        <td translate>Название</td>
+        <td translate>investment.details.strategy.name</td>
         <td *ngIf="strategy"><a [routerLink]="['/strategies/details', strategy.id]">{{strategy.name}}</a></td>
       </tr>
       <tr>
-        <td translate>Комиссия</td>
+        <td translate>investment.details.strategy.commission</td>
         <td *ngIf="strategy">{{strategy.offer.getComission()}}</td>
       </tr>
       <tr>
-        <td translate>Вознаграждение</td>
+        <td translate>investment.details.strategy.feeRate</td>
         <td *ngIf="strategy">{{strategy.offer.fee | percent:'1.0-2'}}</td>
       </tr>
       <tr>
-        <td translate>Период оплаты</td>
-        <td>1 <span translate>неделя</span></td>
+        <td translate>investment.details.strategy.feePeriod</td>
+        <td>1 <span translate>investment.details.strategy.feePeriod.week</span></td>
       </tr>
       </tbody>
     </table>
   </div>
 
   <div class="investment">
-    <h2 translate>Инвестиция</h2>
+    <h2 translate>common.investment</h2>
     <table>
       <tbody>
       <tr>
-        <td>ID</td>
+        <td>investment.details.investment.id</td>
         <td *ngIf="account">{{account.id}}</td>
       </tr>
       <tr>
-        <td translate>Создана</td>
+        <td translate>investment.details.investment.created</td>
         <td *ngIf="account">{{account.dtCreated | customDate }}</td>
       </tr>
       <tr *ngIf="account && !account.isActive()">
-        <td translate>Закрыта</td>
+        <td translate>investment.details.investment.closed</td>
         <td>{{account.dtClosed | customDate }}</td>
       </tr>
       <tr>
-        <td translate>Валюта</td>
+        <td translate>investment.details.investment.currency</td>
         <td *ngIf="account">{{account.asset}}</td>
       </tr>
       <tr>
-        <td translate>Плечо</td>
+        <td translate>investment.details.investment.leverage</td>
         <td *ngIf="account">1:{{account.leverageMax}}</td>
       </tr>
       <tr>
-        <td translate>StopOut</td>
+        <td translate>investment.details.investment.stopOut</td>
         <td *ngIf="account">{{account.MCLevel}}%</td>
       </tr>
       <tr>
-        <td translate>Статус</td>
+        <td translate>investment.details.investment.status</td>
         <td *ngIf="account">{{account.getState()}}</td>
       </tr>
       </tbody>
@@ -64,28 +64,28 @@
   </div>
 
   <div class="profile">
-    <h2 translate>Инвестиционный профиль</h2>
+    <h2 translate>investment.details.investmentProfile.title</h2>
     <table>
       <tbody>
       <tr>
-        <td translate>Множитель</td>
+        <td translate>common.factor</td>
         <td *ngIf="account">{{account.factor | number:'1.1-1'}}</td>
       </tr>
       <tr *ngIf="functionality['targetShow']">
-        <td translate>Цель</td>
+        <td translate>common.target</td>
         <td *ngIf="account">{{account.target | percent:'1.0-2'}}</td>
       </tr>
       <tr *ngIf="functionality['protectionShow']">
-        <td translate>Защита</td>
+        <td translate>common.protection</td>
         <td *ngIf="account">{{account.protection | percent:'1.0-2'}}</td>
       </tr>
       <tr *ngIf="functionality['targetShow'] && functionality['protectionShow']"><td></td><td></td></tr>
       <tr *ngIf="functionality['targetShow']">
-        <td><span translate>Цель</span>, USD</td>
+        <td><span translate>common.target</span>, USD</td>
         <td *ngIf="account">{{account.getTargetAmount() | customCurrency}}</td>
       </tr>
       <tr *ngIf="functionality['protectionShow']">
-        <td><span translate>Защита</span>, USD</td>
+        <td><span translate>common.protection</span>, USD</td>
         <td *ngIf="account">{{account.getProtectionAmount() | customCurrency}}</td>
       </tr>
       </tbody>
@@ -94,10 +94,10 @@
 
   <div class="manage-container">
     <div class="text-right">
-      <div *ngIf="account" class="mb-1"><span translate>Обновлено</span> {{account.currentDate | customDate}}</div>
+      <div *ngIf="account" class="mb-1"><span translate>common.refreshed</span> {{account.currentDate | customDate}}</div>
       <div *ngIf="account && !account.isMyAccount">
-        <span translate>Данная инвестиция принадлежит инвестору Вашей стратегии.</span><br>
-        <span translate>Полный функционал доступен только владельцу инвестиции.</span>
+        <span translate>investment.details.message.investor</span><br>
+        <span translate>investment.details.message.owner</span>
       </div>
     </div>
     <app-manage *ngIf="account && account.isMyAccount && account.isActive()" [data]="account" [methodName]="'getAccountStatement'" [methodArgs]="args" [hideInvestmentsButton]="!account.strategy.isMyStrategy"></app-manage>
@@ -111,19 +111,19 @@
 <table class="margin-info">
   <tbody>
   <tr>
-    <td><span translate>Средства</span>, USD</td>
+    <td><span translate>common.equity</span>, USD</td>
     <td *ngIf="account">{{account.equity | customCurrency}}</td>
-    <td><span translate>Баланс</span>, USD</td>
+    <td><span translate>common.balance</span>, USD</td>
     <td *ngIf="account">{{account.balance | customCurrency}}</td>
   </tr>
   <tr>
-    <td><span translate>Свободная маржа</span>, USD</td>
+    <td><span translate>common.freeMargin</span>, USD</td>
     <td *ngIf="account" class="{{account.getColorClass('freeMargin')}}">{{account.freeMargin | customCurrency}}</td>
-    <td><span translate>Маржа</span>, USD</td>
+    <td><span translate>common.margin</span>, USD</td>
     <td *ngIf="account">{{account.margin | customCurrency}}</td>
   </tr>
   <tr>
-    <td translate>Уровень маржи</td>
+    <td translate>common.marginLevel</td>
     <td *ngIf="account && account.marginLevel" [class.positive]="account.marginLevel >= 1" [class.negative]="account.marginLevel < 1">{{account.marginLevel | number:'1.2-2'}} %</td>
     <td *ngIf="account && !account.marginLevel">−</td>
   </tr>

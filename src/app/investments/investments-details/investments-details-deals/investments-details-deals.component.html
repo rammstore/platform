@@ -6,57 +6,57 @@
                 class="low-height stripped">
 </app-data-table>
 
-<h5>Сделки</h5>
+<h5 translate>investment.deals.title</h5>
 <div class="deals" *ngIf="deals">
   <div class="deal" *ngFor="let deal of deals">
     <div class="info">
       <div class="item">
-        <span>Время</span>
+        <span translate>common.table.label.time</span>
         <span>{{deal.dtCreated | customDate}}</span>
       </div>
 
       <div class="item">
-        <span>Сделка</span>
+        <span translate>common.table.label.deal</span>
         <span>{{deal.id}}</span>
       </div>
 
       <div class="item">
-        <span>Инструмент</span>
+        <span translate>common.table.label.symbol</span>
         <span>{{deal.symbol}}</span>
       </div>
 
       <div class="item">
-        <span>Тип</span>
+        <span translate>common.table.label.type</span>
         <span>{{deal.getType()}}</span>
       </div>
 
       <div class="item">
-        <span>Направление</span>
+        <span translate>common.table.label.entry</span>
         <span>{{deal.getEntry()}}</span>
       </div>
 
       <div class="item">
-        <span>Объем</span>
+        <span translate>common.table.label.volume</span>
         <span>{{deal.volume}}</span>
       </div>
 
       <div class="item">
-        <span>Цена</span>
+        <span translate>common.table.label.price</span>
         <span>{{deal.price}}</span>
       </div>
 
       <div class="item">
-        <span>Прибыль, USD</span>
+        <span><span translate>common.table.label.yield</span>, USD</span>
         <span class="{{deal.getColorClass('yield')}}">{{deal.yield}}</span>
       </div>
 
       <div class="item">
-        <span>Своп, USD</span>
+        <span><span translate>common.table.label.swap</span>, USD</span>
         <span>{{deal.swap}}</span>
       </div>
 
       <div class="item">
-        <span>Итого прибыль, USD</span>
+        <span><span translate>common.table.label.yieldTotal</span>, USD</span>
         <span class="{{deal.getColorClass('totalProfit')}}">{{deal.totalProfit}}</span>
       </div>
     </div>
@@ -65,15 +65,15 @@
 
 <div class="totals" *ngIf="deals && deals.length">
   <div class="total">
-    <div translate class="text-center total-title">Прибыль, USD</div>
+    <div translate class="text-center total-title"><span translate>Прибыль</span>, USD</div>
     <div class="text-center">{{totals['profit']}}</div>
   </div>
   <div class="total">
-    <div translate class="text-center total-title">Своп, USD</div>
+    <div translate class="text-center total-title"><span translate>Своп</span>, USD</div>
     <div class="text-center">{{totals['swap']}}</div>
   </div>
   <div class="total">
-    <div translate class="text-center total-title">Итого прибыль, USD</div>
+    <div translate class="text-center total-title"><span translate>Итого прибыль</span>, USD</div>
     <div class="text-center">{{totals['totalProfit']}}</div>
   </div>
 </div>

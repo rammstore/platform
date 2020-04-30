@@ -2,7 +2,7 @@
   <div class="caption">
     <h2>
       {{strategy.name}}
-      <span class="closed-info" *ngIf="!strategy.isActive()" translate>Стратегия была закрыта трейдером и более недоступна для инвестирования.</span>
+      <span class="closed-info" *ngIf="!strategy.isActive()" translate>strategy.details.message.closed</span>
     </h2>
 
 
@@ -10,9 +10,9 @@
     <span class="pnl item {{strategy.account.getColorClass('intervalPnL')}}">
       {{strategy.account.intervalPnL | customCurrency}} USD
     </span>
-      <span class="item"><span><span translate>Средства</span>:</span> <b>{{strategy.account.equity | customCurrency}} USD</b></span>
-      <span class="item" *ngIf="functionality['targetShow']"><span><span translate>Цель</span>:</span> <b>{{(strategy.account.target || 0) | percent}}</b></span>
-      <span class="item" *ngIf="functionality['protectionShow']"><span><span translate>Защита</span>:</span> <b>{{(strategy.account.protection || 0) | percent}}</b></span>
+      <span class="item"><span><span translate>common.equity</span>:</span> <b>{{strategy.account.equity | customCurrency}} USD</b></span>
+      <span class="item" *ngIf="functionality['targetShow']"><span><span translate>common.targen</span>:</span> <b>{{(strategy.account.target || 0) | percent}}</b></span>
+      <span class="item" *ngIf="functionality['protectionShow']"><span><span translate>common.protection</span>:</span> <b>{{(strategy.account.protection || 0) | percent}}</b></span>
     </div>
 
     <app-manage [data]="strategy" *ngIf="strategy.isActive()" [methodName]="'getStrategy'" [methodArgs]="args"></app-manage>
@@ -23,4 +23,4 @@
   </app-content-tabs>
 </ng-container>
 
-<p><b translate>Предупреждение о рисках: итоги предыдущих торговых операций не гарантируют получение идентичных результатов в будущем.</b></p>
+<p><b translate>strategy.details.message.risk</b></p>

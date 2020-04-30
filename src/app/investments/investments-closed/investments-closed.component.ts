@@ -27,12 +27,12 @@ export class InvestmentsClosedComponent implements OnInit, OnDestroy {
   // table settings
   tableHeader: TableHeaderRow[] = [
     new TableHeaderRow([
-      new TableColumn({property: 'strategy.name', label: 'Стратегия'}),
-      new TableColumn({property: 'id', label: 'Инвестиция', colored: true}),
-      new TableColumn({property: 'dtCreated', label: 'Создана', pipe: {pipe: CustomDatePipe}, colored: true}),
-      new TableColumn({property: 'dtClosed', label: 'Закрыта', pipe: {pipe: CustomDatePipe}, colored: true}),
-      new TableColumn({property: 'age', label: 'Возраст, недель', colored: true}),
-      new TableColumn({property: 'intervalPnL', label: 'Прибыль', pipe: {pipe: CustomCurrencyPipe}, colored: true}),
+      new TableColumn({property: 'strategy.name', label: 'common.strategy'}),
+      new TableColumn({property: 'id', label: 'common.investment', colored: true}),
+      new TableColumn({property: 'dtCreated', label: 'common.table.label.created', pipe: {pipe: CustomDatePipe}, colored: true}),
+      new TableColumn({property: 'dtClosed', label: 'common.table.label.closed', pipe: {pipe: CustomDatePipe}, colored: true}),
+      new TableColumn({property: 'age', label: 'common.age', colored: true}),
+      new TableColumn({property: 'intervalPnL', label: 'common.yield', pipe: {pipe: CustomCurrencyPipe}, colored: true}),
       new TableColumn({property: 'investmentDetails', label: ''})
     ])
   ];
