@@ -38,6 +38,7 @@
   "common.account": "Счет",
   "common.date": "Дата",
   "common.deal": "Сделка",
+  "common.fund": "Пополнить",
 
   "common.table.empty.positions": "Нет позиций",
 
@@ -71,8 +72,18 @@
   "common.table.label.commissionPaidUSD": "Выплаченная комиссия, USD",
   "common.table.label.grossPLUSD": "Gross PL с начала недели, USD",
 
+  "common.manage.withdraw": "Вывод средств из инвестиции",
+  "common.manage.statement": "Выписка по инвестиции",
+  "common.manage.signalScript": "Сигнальный скрипт",
+  "common.manage.closeStrategy": "Закрыть стратегию",
+  "common.manage.closeInvestment": "Закрыть инвестицию",
+  "common.manage.invest": "Инвестировать",
+
+  "common.label.iWant": "Я хочу:",
+
   "button.back": "Назад",
   "button.ok": "Ок",
+  "button.cancel": "Отмена",
 
   "managePassword.form.label.current": "Текущий пароль",
   "managePassword.form.current.error.required": "Пожалуйста, введите текущий пароль",
@@ -188,16 +199,17 @@
   "account.form.target.error.min": "Минимальное значение цели",
   "account.form.protection.title": "При снижении средств до заданного значения инвестиция будет приостановлена",
   "account.form.protection.error.required": "Защита не задана",
-  "account.form.protection.error.min": "Пожалуйста, введите корректное значение защиты.",
+  "account.form.protection.error.min": "Минимальное значение защиты.",
   "account.form.protection.error.pattern": "Пожалуйста, введите корректное значение защиты.",
   "account.form.protection.error.max": "Максимальное значение защиты",
-  "": "",
-  "": "",
-  "": "",
-  "": "",
-  "": "",
-  "": "",
-  "": "",
+  "account.form.fund.title": "Пополнение инвестиции",
+  "account.form.label.equity": "Средства в инвестиции",
+  "account.form.label.amount": "Сумма пополнения",
+
+  "account.manage.pause.title": "Пауза инвестиции",
+  "account.manage.pause.message": "Все позиции будут закрыты. Новые позиции не будут открываться до момента снятия с паузы.",
+  "account.manage.resume.title": "Возобновить инвестицию",
+  "account.manage.addTo": "Добавить в инвестицию",
   "": "",
   "": "",
   "": "",

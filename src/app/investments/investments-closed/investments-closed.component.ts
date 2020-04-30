@@ -57,7 +57,7 @@ export class InvestmentsClosedComponent implements OnInit, OnDestroy {
         if (this.functionality['protectionShow'] && this.tableHeader[0].columns[5].property !== 'protection') {
           this.tableHeader[0].columns.splice(5, 0, new TableColumn({
             property: 'protection',
-            label: 'Защита',
+            label: 'common.protection',
             pipe: {pipe: PercentPipe},
             colored: true
           }));

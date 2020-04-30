@@ -26,7 +26,7 @@ export class SpecificationPlatformComponent implements OnInit {
           {label: 'Минимальный депозит', value: `${this.spec.Account.MinBalance} ${this.spec.Account.AvailableCurrency}`}
         ]
       }, {
-        title: 'Инвестиции',
+        title: 'common.investments',
         items: [
           {label: 'Минимальный баланс', value: `${this.spec.Account.MinBalance} ${this.spec.Account.AvailableCurrency}`}
         ]
