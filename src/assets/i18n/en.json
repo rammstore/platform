@@ -1,5 +1,15 @@
 {
 	"help.title": "RAMM Help Center",
 
-	"common.date": "Date"
+	"common.date": "Date",
+	"common.table.label.amountUSD": "Amount, USD",
+	"common.type": "Type",
+	"common.account": "Account",
+	"common.strategy": "Strategy",
+	"common.available": "Available",
+	"common.invested": "Invested",
+	"common.equity": "Equity",
+
+	"table.footer.itemsPerPage": "Items per page",
+	"table.footer.itemsTotal": "Total items"
 }
