@@ -74,7 +74,7 @@
 
 	"strategy.invest.form.title": "Invest into strategy",
   	"strategy.add.form.label.amount": "Investment amount",
-  	"strategy.form.amount.error.min": "Minimal investment amount is",
+  	"strategy.form.amount.error.min": "Minimum investment amount is",
   	"strategy.form.amount.error.max": "You can only invest free funds.",
   	"strategy.form.amount.error.required": "Please enter the investment amount.",
   	"strategy.form.amount.error.pattern": "Please enter correct investment amount.",
