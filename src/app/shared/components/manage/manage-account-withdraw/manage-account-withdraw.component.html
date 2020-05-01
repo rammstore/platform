@@ -20,7 +20,7 @@
           account.withdraw.partial.pause2.strategy
         </div>
         <div *ngIf="!account.isSecured() && !account.isPaused()" class="negative" translate>
-          account.withdraw.partial.pause1
+          account.withdraw.partial.pause
           <a class="pause-link" (click)="openAccountPauseDialog()" translate>common.pause2</a>
           account.withdraw.partial.pause2.investment
         </div>
@@ -77,7 +77,7 @@
       <div class="radio-hint">
         <ng-container  *ngIf="account.isSecured() && account.isMy()">
           <p translate>
-            account.withdraw.close.warning
+            account.withdraw.close.strategy.warning
           </p>
           <div *ngIf="(form.get('withdrawType').value === 'close')" class="withdraw-amount">
             <span translate>account.withdraw.close.current-equity</span>:
