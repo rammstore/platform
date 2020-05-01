@@ -71,7 +71,7 @@
                id="close-radio"
                value="close"
                formControlName="withdrawType">
-        <label for="close-radio" class="radio-label" translate>common.manage.close {{account.isSecured() && account.isMy() ? 'common.strategy2' : 'common.investment2' }}</label>
+        <label for="close-radio" class="radio-label" translate>{{account.isSecured() && account.isMy() ? 'common.manage.closeStrategy' : 'common.manage.closeInvestment' }}</label>
       </div>
 
       <div class="radio-hint">
@@ -109,7 +109,7 @@
       <button class="warning"
               *ngIf="form.get('withdrawType').value === 'close'"
               (click)="close()" translate> 
-        common.manage.close {{account.isSecured() && account.isMy() ? 'common.strategy2' : 'common.investment2' }}
+        {{account.isSecured() && account.isMy() ? 'common.manage.closeStrategy' : 'common.manage.closeInvestment' }}
       </button>
     </div>
   </form>
