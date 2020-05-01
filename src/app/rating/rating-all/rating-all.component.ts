@@ -30,7 +30,7 @@ export class RatingAllComponent implements OnInit, OnDestroy {
       new TableColumn({ property: 'accountsCount', label: 'common.table.label.investors', fontSize: 16}),
       new TableColumn({ property: 'age', label: 'common.age', fontSize: 16 }),
       new TableColumn({ property: 'strategy.investmentInfo', label: 'common.table.label.myInvestmentUSD', colored: true }),
-      new TableColumn({ property: 'manage', label: 'common.table.label.manage' })
+      new TableColumn({ property: 'manage', label: '' })
     ]),
   ];
   paginator: Paginator = new Paginator({
