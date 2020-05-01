@@ -66,6 +66,11 @@
 	"common.factor": "Factor",
 	"common.target": "Target",
   	"common.protection": "Protection",
+	
+	"common.age": "Age, weeks",
+	"common.chart": "Chart",
+  	"common.yield": "Yield",
+  	"common.yieldMonthly": "Monthly yield",
 
 	"common.label.iWant": "I want to:",
 
@@ -78,6 +83,11 @@
   	"common.manage.closeInvestment": "Close investment",
   	"common.manage.invest": "Invest",
   	
+	"common.table.label.manage": "Management",
+	"common.table.label.name": "Name",
+	"common.table.label.myInvestmentUSD": "My investment, USD",
+
+
   	"header.item.account": "Account",
  	"header.item.investments": "Investments",
   	"header.item.rating": "Rating",
