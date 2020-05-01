@@ -81,6 +81,7 @@
   "common.manage.close": "Закрыть",
   "common.manage.closeStrategy": "Закрыть стратегию",
   "common.manage.closeInvestment": "Закрыть инвестицию",
+  "common.manage.download": "Скачать",
   "common.manage.invest": "Инвестировать",
 
 
@@ -184,7 +185,11 @@
 
   "strategy.add.script.title": "Готово!",
   "strategy.add.script.message": "Новая стратегия создана.<br>Для отправки сигналов с вашего торгового счета MetaTrader 4 или MetaTrader 5, скачайте сигнальный советник и запустите его в вашем терминале MetaTrader.<br>Вы можете скачать советник и позже, выбрав соответствующую опцию в меню стратегии.<br>1. В меню терминала “Сервис” - ”Настройки”, на вкладке “Советники” внесите адрес сервера RAMM в список разрешенных URL.<br>Для этого добавьте адрес https://maindc.ramm.store/api/trading/v1/signals.send в таблицу “Разрешить WebRequest для следующих URL:”.<br>2. Запустите советник на любом графике.<br>Все изменения на вашем счете будут копироваться в вашу стратегию в RAMM.",
+  
   "strategy.add.script.button.download": "Скачать скрипт",
+  "strategy.add.script.download.title": "Скачать сигнальный скрипт",
+  "strategy.add.script.download.platform.title": "Торговая платформа",
+
   "strategy.details.message.pageForbidden": "Эта страница недоступна другим пользователям.",
   "strategy.details.message.closed": "Стратегия была закрыта трейдером и более недоступна для инвестирования.",
   "strategy.details.message.risk": "Предупреждение о рисках: итоги предыдущих торговых операций не гарантируют получение идентичных результатов в будущем.",

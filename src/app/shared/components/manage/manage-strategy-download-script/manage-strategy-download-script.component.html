@@ -1,8 +1,8 @@
-<app-dialog-wrapper titleText="{{'Скачать сигнальный скрипт'| translate}}" [modalRef]="modalRef">
+<app-dialog-wrapper titleText="{{'strategy.add.script.download.title'| translate}}" [modalRef]="modalRef">
   <form [formGroup]="form">
 
     <div class="form-field">
-      <label class="field-label"><span translate>Торговая платформа</span>:</label>
+      <label class="field-label"><span translate>strategy.add.script.download.platform.title</span>:</label>
 
       <div class="radio-container">
         <input type="radio"
@@ -24,7 +24,7 @@
     </div>
 
     <div class="dialog-actions">
-      <button class="primary" (click)="download()" [disabled]="!form.valid" translate>Скачать</button>
+      <button class="primary" (click)="download()" [disabled]="!form.valid" translate>common.manage.download</button>
     </div>
 
   </form>
