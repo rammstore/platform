@@ -1,5 +1,6 @@
 <app-dialog-wrapper [modalRef]="modalRef"
-                    titleText= "{{ (currentStep === 1 ? ('common.step ' + currentStep + ': ' + 'strategy.add.title.strategy') : ('common.step ' + currentStep + ': ' +'strategy.add.title.investments') | translate}}"
+                    titleText= translate (’common.step ’ + currentStep + ’: ’ + (currentStep === 1 ? ’strategy.add.title.strategy’ : ’strategy.add.title.investments’))
+
                     >
                     <!-- titleText= "{{'common.step ' + currentStep + ': ' + (currentStep === 1 ? 'strategy.add.title.strategy' : 'strategy.add.title.investments') | translate}}"-->
 
