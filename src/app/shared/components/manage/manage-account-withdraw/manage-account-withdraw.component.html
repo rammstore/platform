@@ -16,7 +16,7 @@
       <div class="radio-hint">
         <div *ngIf="account.isSecured() && account.isMy() && !account.strategy.isPaused()" class="negative" translate>
           account.withdraw.partial.pause
-          <a class="pause-link" (click)="openStrategyPauseDialog()" translate>common.pause2</a>.
+          <a class="pause-link" (click)="openStrategyPauseDialog()" translate>common.pause2</a>
           account.withdraw.partial.pause2.strategy
         </div>
         <div *ngIf="!account.isSecured() && !account.isPaused()" class="negative" translate>
