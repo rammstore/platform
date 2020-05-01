@@ -109,7 +109,7 @@
       <button class="warning"
               *ngIf="form.get('withdrawType').value === 'close'"
               (click)="close()" translate> 
-        common.manage.close {{account.isSecured() && account.isMy() ? 'common.strategy2' : 'common.investment2'}}
+        common.manage.close {{account.isSecured() && account.isMy() ? common.strategy2 : common.investment2 }}
       </button>
     </div>
   </form>
