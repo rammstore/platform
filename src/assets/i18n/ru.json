@@ -171,7 +171,7 @@
   "strategy.form.amount.error.required": "Пожалуйста, введите сумму инвестиции.",
   "strategy.form.amount.error.pattern": "Пожалуйста, введите корректную сумму инвестиции.",
   "strategy.form.target.error.min": "Минимальное значение цели",
-  "strategy.form.target.error.required": "Цель не задана.",
+  "strategy.form.target.error.required": "Цель не задана",
   "strategy.form.target.error.pattern": "Пожалуйста, введите корректное значение цели.",
   "strategy.form.target.tooltip": "Целевой доход. При достижении целевого дохода инвестиция будет приостановлена.",
   "strategy.form.protection.error.required": "Защита не задана",
