@@ -1,10 +1,10 @@
 <app-dialog-wrapper [modalRef]="modalRef" 
-                    titleText = "{{('common.step'  + currentStep + ': ' + (currentStep === 1 ? 'strategy.add.title.strategy' : 'strategy.add.title.investments')) | translate}}" translate>
+                    titleText = "{{('common.step '  + currentStep + ': ' + (currentStep === 1 ? 'strategy.add.title.strategy' : 'strategy.add.title.investments')) | translate}}" translate>
 
   <form [formGroup]="formStep1" *ngIf="currentStep === 1">
     <div class="form-field">
       <label for="name" class="field-label" translate>strategy.add.form.label.name 
-      "{{('common.step'  + currentStep + ': ' + (currentStep === 1 ? 'strategy.add.title.strategy' : 'strategy.add.title.investments'))}}"
+      'common.step '  + currentStep + ': ' + (currentStep === 1 ? 'strategy.add.title.strategy' : 'strategy.add.title.investments')
     </label>
       <div class="input-wrapper">
         <input id="name" formControlName="name" (change)="isStrategyNameUniq($event.target.value)">
