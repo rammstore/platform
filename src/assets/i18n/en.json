@@ -18,7 +18,7 @@
 
   	"account.form.profile.title": "Change investment profile",
 
-  	"account.withdraw.title": "Withdraw",
+  	"account.withdraw.partial.title": "Withdraw",
   	"account.withdraw.close.strategy.title": "Сlose strategy",
   	"account.withdraw.close.investment.title": "Close investment",
  	"account.withdraw.partial": "Withdraw part of money from my investment",
