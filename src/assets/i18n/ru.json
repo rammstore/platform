@@ -161,7 +161,7 @@
   "strategy.form.fee.error.max": "Максимальный размер вознаграждения",
   "strategy.form.fee.hint": "Изменение вознаграждения после создания стратегии невозможно.",
   "strategy.add.form.label.commission": "Комиссия за оборот",
-  "strategy.form.commission.error.min": "Минимальный комиссия за оборот",
+  "strategy.form.commission.error.min": "Минимальная комиссия за оборот",
   "strategy.form.commission.error.max": "Максимальная комиссия за оборот",
   "strategy.form.commission.hint": "В дополнение к вознаграждению от прибыли вы можете задать комиссию за оборот ваших инвесторов. Величина комиссии не может быть изменена после создания стратегии.",
   "strategy.add.form.label.amount": "Сумма инвестиции",
@@ -173,18 +173,18 @@
   "strategy.form.target.error.min": "Минимальное значение цели",
   "strategy.form.target.error.required": "Цель не задана.",
   "strategy.form.target.error.pattern": "Пожалуйста, введите корректное значение цели.",
-  "strategy.form.target.tooltip": "Целевой доход. При достижении целевого дохода инвестиция будет приостановлена",
+  "strategy.form.target.tooltip": "Целевой доход. При достижении целевого дохода инвестиция будет приостановлена.",
   "strategy.form.protection.error.required": "Защита не задана",
   "strategy.form.protection.error.min": "Минимальное значение защиты",
   "strategy.form.protection.error.max": "Максимальное значение защиты",
   "strategy.form.protection.error.pattern": "Пожалуйста, введите корректное значение защиты.",
-  "strategy.form.protection.tooltip": "При снижении средств до заданного значения инвестиция будет приостановлена",
+  "strategy.form.protection.tooltip": "При снижении средств до заданного значения инвестиция будет приостановлена.",
 
   "strategy.invest.form.title": "Инвестировать в стратегию",
 
 
   "strategy.add.script.title": "Готово!",
-  "strategy.add.script.message": "Новая стратегия создана.<br>Для отправки сигналов с вашего торгового счета MetaTrader 4 или MetaTrader 5, скачайте сигнальный советник и запустите его в вашем терминале MetaTrader.<br>Вы можете скачать советник и позже, выбрав соответствующую опцию в меню стратегии.<br>1. В меню терминала “Сервис” - ”Настройки”, на вкладке “Советники” внесите адрес сервера RAMM в список разрешенных URL.<br>Для этого добавьте адрес https://maindc.ramm.store/api/trading/v1/signals.send в таблицу “Разрешить WebRequest для следующих URL:”.<br>2. Запустите советник на любом графике.<br>Все изменения на вашем счете будут копироваться в вашу стратегию в RAMM.",
+  "strategy.add.script.message": "Новая стратегия создана.<br>Для отправки сигналов с вашего торгового счета MetaTrader 4 или MetaTrader 5 скачайте сигнальный советник и запустите его в вашем терминале MetaTrader.<br>Вы можете скачать советник и позже, выбрав соответствующую опцию в меню стратегии.<br>1. В меню терминала “Сервис” - ”Настройки”, на вкладке “Советники” внесите адрес сервера RAMM в список разрешенных URL.<br>Для этого добавьте адрес https://maindc.ramm.store/api/trading/v1/signals.send в таблицу “Разрешить WebRequest для следующих URL:”.<br>2. Запустите советник на любом графике.<br>Все изменения на вашем счете будут копироваться в вашу стратегию в RAMM.",
   
   "strategy.add.script.button.download": "Скачать скрипт",
   "strategy.add.script.download.title": "Скачать сигнальный скрипт",
