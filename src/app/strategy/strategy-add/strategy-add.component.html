@@ -1,5 +1,5 @@
 <app-dialog-wrapper [modalRef]="modalRef" 
-                    titleText = "('common.step'  + currentStep + ': ' + (currentStep === 1 ? 'strategy.add.title.strategy' : 'strategy.add.title.investments')) | translate" translate>
+                    titleText = "{('common.step'  + currentStep + ': ' + (currentStep === 1 ? 'strategy.add.title.strategy' : 'strategy.add.title.investments')) | translate}" translate>
 
   <form [formGroup]="formStep1" *ngIf="currentStep === 1">
     <div class="form-field">
