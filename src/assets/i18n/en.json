@@ -87,6 +87,10 @@
 	"common.table.label.myInvestmentUSD": "My investment, USD",
 
 
+	"common.table.label.yieldCommon": "Total yield",
+	"common.table.label.investors": "Investors",
+
+
   	"header.item.account": "Account",
  	"header.item.investments": "Investments",
   	"header.item.rating": "Rating",
