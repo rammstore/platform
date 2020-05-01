@@ -84,6 +84,9 @@
 	
 	"help.title": "RAMM Help Center",
 
+	"investment.positions.title": "Positions",
+  	"investment.deals.title": "Deals",
+
   	"login.title": "Log in",
   	"login.form.label.login": "Your login or email",
   	"login.form.login.error.required": "Please enter your login or email.",

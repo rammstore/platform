@@ -54,8 +54,8 @@ export class InvestmentsDetailsComponent implements OnInit, OnDestroy {
         this.account.strategy = response.strategy;
 
         this.links = [
-          new ContentTabLink('Позиции', '/investments/details/' + this.account.id),
-          new ContentTabLink('Сделки', '/investments/details/' + this.account.id + '/deals')
+          new ContentTabLink('investment.positions.title', '/investments/details/' + this.account.id),
+          new ContentTabLink('investment.deals.title', '/investments/details/' + this.account.id + '/deals')
         ];
       });
   }

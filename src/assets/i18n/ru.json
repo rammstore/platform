@@ -126,6 +126,7 @@
   "investment.details.message.investor": "Данная инвестиция принадлежит инвестору Вашей стратегии.",
   "investment.details.message.owner": "Полный функционал доступен только владельцу инвестиции.",
 
+  "investment.positions.title": "Позиции",
   "investment.deals.title": "Сделки",
 
   "login.title": "Вход в систему",
