@@ -11,7 +11,7 @@
       {{strategy.account.intervalPnL | customCurrency}} USD
     </span>
       <span class="item"><span><span translate>common.equity</span>:</span> <b>{{strategy.account.equity | customCurrency}} USD</b></span>
-      <span class="item" *ngIf="functionality['targetShow']"><span><span translate>common.targen</span>:</span> <b>{{(strategy.account.target || 0) | percent}}</b></span>
+      <span class="item" *ngIf="functionality['targetShow']"><span><span translate>common.target</span>:</span> <b>{{(strategy.account.target || 0) | percent}}</b></span>
       <span class="item" *ngIf="functionality['protectionShow']"><span><span translate>common.protection</span>:</span> <b>{{(strategy.account.protection || 0) | percent}}</b></span>
     </div>
 
