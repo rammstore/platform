@@ -18,7 +18,7 @@
           </label>
           <label class="error-message"
                  *ngIf="form.get('factor').touched && form.get('factor').hasError('pattern')" translate>
-
+            account.form.factor.error.pattern
           </label>
           <label class="error-message"
                  *ngIf="form.get('factor').touched && form.get('factor').hasError('min') && !form.get('factor').hasError('pattern')">
@@ -26,7 +26,7 @@
           </label>
           <label class="error-message"
                  *ngIf="form.get('factor').touched && form.get('factor').hasError('max') && !form.get('factor').hasError('pattern')">
-            <span translate></span> - 10.
+            <span translate>account.form.factor.error.max</span> - 10.
           </label>
         </div>
       </div>
@@ -40,7 +40,7 @@
                formControlName="target"
                [min]="0"
                [step]="1"
-               title="{{'' | translate}}">
+               title="{{'account.form.target.title' | translate}}">
         <div class="messages">
           <label class="error-message"
                  *ngIf="form.get('target').touched && form.get('target').hasError('required')" translate>
