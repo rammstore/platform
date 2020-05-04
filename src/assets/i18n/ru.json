@@ -50,6 +50,7 @@
   "common.table.label.closed": "Закрыта",
   "common.table.label.deal": "Сделка",
   "common.table.label.symbol": "Инструмент",
+  "common.table.label.symbols": "Инструменты",
   "common.table.label.type": "Тип",
   "common.table.label.entry": "Направление",
   "common.table.label.volume": "Объем",
