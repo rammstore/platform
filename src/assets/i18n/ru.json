@@ -227,6 +227,7 @@
   "account.form.protection.error.pattern": "Пожалуйста, введите корректное значение защиты",
   "account.form.protection.error.max": "Максимальное значение защиты",
   "account.form.fund.title": "Пополнение инвестиции",
+  "account.form.resume.title": "Возобновить",
   "account.form.label.equity": "Средства в инвестиции",
   "account.form.label.amount": "Сумма пополнения",
 
@@ -234,6 +235,9 @@
   "account.manage.pause.title": "Пауза инвестиции",
   "account.manage.pause.message": "Все позиции будут закрыты. Новые позиции не будут открываться до момента снятия с паузы.",
   "account.manage.resume.title": "Возобновить инвестицию",
+  "account.manage.strategy.pause.title": "Пауза стратегии",
+  "account.manage.strategy.pause.message": "Все позиции всех инвесторов данной стратегии будут закрыты. Новые позиции не будут открываться до момента снятия с паузы.",
+  "account.manage.strategy.resume.title": "Возобновить стратегию",
   "account.manage.addTo": "Добавить в инвестицию",
 
   "account.withdraw.partial.title": "Вывод средств",

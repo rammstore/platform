@@ -1,30 +1,30 @@
 <div class="manage-container">
   <ng-container *ngIf="dataType === 'account' || (dataType === 'strategy' && data.account && data.account.id)">
     <!--  Fund button  -->
-    <i (click)="openAccountFundDialog()" title="{{'Пополнение инвестиции' | translate}}" class="icon-add"></i>
+    <i (click)="openAccountFundDialog()" title="{{'account.form.fund.title' | translate}}" class="icon-add"></i>
 
     <!--  Pause/Resume buttons  -->
     <ng-container *ngIf="dataType === 'account'">
       <ng-container *ngIf="data.isSecured() && data.isMy()">
         <i (click)="openStrategyPauseDialog()" *ngIf="!data.strategy.isPaused()" title="{{'Пауза' | translate}}" class="icon-pause"></i>
-        <i (click)="openStrategyResumeDialog()" *ngIf="data.strategy.isPaused()" title="{{'Возобновить' | translate}}" class="icon-start"></i>
+        <i (click)="openStrategyResumeDialog()" *ngIf="data.strategy.isPaused()" title="{{'account.form.resume.title' | translate}}" class="icon-start"></i>
       </ng-container>
 
       <ng-container *ngIf="!data.isSecured()">
         <i (click)="openAccountPauseDialog()" *ngIf="!data.isPaused()" title="{{'Пауза' | translate}}" class="icon-pause"></i>
-        <i (click)="openAccountResumeDialog()" *ngIf="data.isPaused()" title="{{'Возобновить' | translate}}" class="icon-start"></i>
+        <i (click)="openAccountResumeDialog()" *ngIf="data.isPaused()" title="{{'account.form.resume.title' | translate}}" class="icon-start"></i>
       </ng-container>
     </ng-container>
 
     <ng-container *ngIf="dataType === 'strategy'">
       <ng-container *ngIf="data.isSecured() && data.isMy()">
         <i (click)="openStrategyPauseDialog()" *ngIf="!data.isPaused()" title="{{'Пауза' | translate}}" class="icon-pause"></i>
-        <i (click)="openStrategyResumeDialog()" *ngIf="data.isPaused()" title="{{'Возобновить' | translate}}" class="icon-start"></i>
+        <i (click)="openStrategyResumeDialog()" *ngIf="data.isPaused()" title="{{'account.form.resume.title' | translate}}" class="icon-start"></i>
       </ng-container>
 
       <ng-container *ngIf="!data.isSecured()">
         <i (click)="openAccountPauseDialog()" *ngIf="!data.account.isPaused()" title="{{'Пауза' | translate}}" class="icon-pause"></i>
-        <i (click)="openAccountResumeDialog()" *ngIf="data.account.isPaused()" title="{{'Возобновить' | translate}}" class="icon-start"></i>
+        <i (click)="openAccountResumeDialog()" *ngIf="data.account.isPaused()" title="{{'account.form.resume.title' | translate}}" class="icon-start"></i>
       </ng-container>
     </ng-container>
 
