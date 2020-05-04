@@ -86,7 +86,9 @@
 	"common.table.label.name": "Name",
 	"common.table.label.myInvestmentUSD": "My investment, USD",
 
-	"common.table.label.symbols": "Instruments",
+
+	"common.table.label.symbol": "Symbol",
+	"common.table.label.symbols": "Symbols",
 	"common.table.label.yieldCommon": "Total yield",
 	"common.table.label.investors": "Investors",
 
