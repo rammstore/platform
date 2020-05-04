@@ -128,6 +128,28 @@
 	"myStrategies.active.title": "Active",
   	"myStrategies.closed.title": "Closed",
 
+
+
+	"notify.loading.error": "An error occurred while loading the data",
+  	"notify.strategy.access.error": "You do not have access to this strategy",
+	"notify.strategy.created": "The strategy is created",
+	"notify.strategy.paused": "The strategy is paused",
+	"notify.strategy.resumed": "The strategy is resumed",
+	"notify.strategy.closed": "The strategy is closed",
+  	"notify.investment.access.error": "You do not have access to this investment",
+	"notify.investment.created": "The investment is created",
+	"notify.investment.funded": "Funds are deposited",
+	"notify.investment.factor.changed": "Investment factor is changed",
+  	"notify.investment.target.changed": "Investment target is changed",
+  	"notify.investment.protection.changed": "Investment protection is changed",
+	"notify.investment.withdrawn": "Funds are withdrawn",
+	"notify.investment.paused": "The investment is paused",
+	"notify.investment.resumed": "The investment is resumed",
+	"notify.investment.closed": "The investment is closed",
+
+
+
+
 	"rating.message": "The page shows top strategies with the maximum increase of number of investments during the last week.",
     "rating.search.placeholder": "Search strategies",
     "rating.rating.title": "Rating",
