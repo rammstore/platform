@@ -1,8 +1,6 @@
 {
-
 	"account.lastTransfers.title": "Wallet operations",
   	"account.result.chart.help.tooltip": "You can also check it up in the upper right corner.",
-
 
   	"account.active.title": "Active",
  	"account.closed.title": "Closed",
@@ -134,9 +132,6 @@
 	"common.table.label.grossPLUSD": "Gross PL since the beginning of the week, USD",
 	"common.table.label.no-data": "No data to display",
 	
-	
-
-
   	"common.week-days.monday": "Monday",
   	"common.week-days.tuesday": "Tuesday",
   	"common.week-days.wednesday": "Wednesday",
@@ -158,16 +153,32 @@
 	
 	"help.title": "RAMM Help Center",
 
-
-
 	"investment.positions.title": "Positions",
   	"investment.deals.title": "Deals",
 
+  	"investment.details.strategy.name": "Name",
+  	"investment.details.strategy.commission": "Commission",
+  	"investment.details.strategy.feeRate": "Fee rate",
+  	"investment.details.strategy.feePeriod": "Fee period",
+  	"investment.details.strategy.feePeriod.week": "week",
 
+  	"investment.details.investment.id": "ID",
+  	"investment.details.investment.created": "Created",
+  	"investment.details.investment.closed": "Closed",
+  	"investment.details.investment.currency": "Currency",
+  	"investment.details.investment.leverage": "Leverage",
+  	"investment.details.investment.stopOut": "StopOut",
+  	"investment.details.investment.status": "Status",
+
+  	"investment.details.investmentProfile.title": "Investment profile",
+  	"investment.details.investmentProfile.factor": "Factor",
+  	"investment.details.investmentProfile.target": "Target",
+  	"investment.details.investmentProfile.protection": "Protection",
+  	"investment.details.investmentProfile.target-equity": "Target, USD",
+  	"investment.details.investmentProfile.protection-equity": "Protection, USD",
 
 	"investment.details.message.investor": "This investment belongs to an investor of your strategy.",
   	"investment.details.message.owner": "The full functionality is only available to the investment’s owner.",
-
 
   	"login.title": "Log in",
   	"login.form.label.login": "Your login or email",
@@ -176,7 +187,6 @@
   	"login.form.password.error.required": "Please enter your password.",
   	"login.form.error.credentials": "Username or password is incorrect.",
   	"login.form.button.submit.label": "Log in",
-
 
 	"managePassword.form.title": "Change password",
   	"managePassword.form.label.current": "Current password",
@@ -192,7 +202,6 @@
 
 	"myStrategies.active.title": "Active",
   	"myStrategies.closed.title": "Closed",
-
 
 	"notify.loading.error": "An error occurred while loading the data",
   	"notify.strategy.access.error": "You do not have access to this strategy",
@@ -211,15 +220,11 @@
 	"notify.investment.resumed": "The investment is resumed",
 	"notify.investment.closed": "The investment is closed",
 
-
-
-
 	"rating.message": "The page shows top strategies with the maximum increase of number of investments during the last week.",
     "rating.search.placeholder": "Search strategies",
     "rating.rating.title": "Rating",
  	"rating.popular.title": "Popular",
  	"rating.all.title": "All strategies",
-
  	 	
   	"spec.platform.title": "Platform",
   	"spec.rating.title": "Rating",
@@ -239,8 +244,6 @@
   	"spec.rating.last-activity-time.value": "365 calendar days",
   	"spec.rating.min-yield.title": "Minimum yield",
   	"spec.rating.min-yield.value": "Positive",
-
-
 
 	"strategy.button.create": "Create strategy",
   	"strategy.add.title.strategy": "Strategy settings",
@@ -290,8 +293,6 @@
   	"strategy.details.message.chart": "The chart shows the yield of the strategy according to the trader's investment. The yield is calculated without Trader's fee deduction.",
   	"strategy.details.message.yieldMonthly": "Monthly yield is an average yield (without Trader's fee deduction) based on the historical data and calculated since the strategy creation moment.",
  
-
-
 	"strategy.invest.form.title": "Invest in strategy",
 
   	"table.footer.itemsPerPage": "Items per page",

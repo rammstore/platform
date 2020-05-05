@@ -30,7 +30,7 @@
   "common.pause": "Пауза",
   "common.pause2": "паузы",
   "common.perWeek": "в неделю",
-    "common.yield": "Доходность",
+  "common.yield": "Доходность",
   "common.yieldMonthly": "Доходность в месяц",
   "common.fee": "Вознаграждение",
   "common.commission": "Комиссия за оборот",
@@ -50,7 +50,6 @@
   "common.week-days.friday": "Пятница",
   "common.week-days.saturday": "Суббота",
   "common.week-days.sunday": "Воскресенье",
-
 
   "common.table.empty.positions": "Нет позиций",
   "common.table.empty.deals": "Нет сделок",
@@ -96,7 +95,6 @@
   "common.manage.download": "Скачать",
   "common.manage.invest": "Инвестировать",
 
-
   "common.label.iWant": "Я хочу:",
 
   "button.back": "Назад",
@@ -141,9 +139,6 @@
   "account.lastTransfers.title": "Операции с кошельком",
   "account.result.chart.help.tooltip": "Вы также можете посмотреть эти значения в верхнем правом углу.",
 
-
-
-
   "investment.positions.title": "Позиции",
   "investment.deals.title": "Сделки",
 
@@ -168,12 +163,8 @@
   "investment.details.investmentProfile.target-equity": "Цель, USD",
   "investment.details.investmentProfile.protection-equity": "Защита, USD",
 
-
-
   "investment.details.message.investor": "Данная инвестиция принадлежит инвестору вашей стратегии.",
   "investment.details.message.owner": "Полный функционал доступен только владельцу инвестиции.",
-
-
 
   "login.title": "Вход в систему",
   "login.form.label.login": "Ваш логин или почта",
@@ -237,7 +228,6 @@
   "strategy.add.script.download.title": "Скачать сигнальный скрипт",
   "strategy.add.script.download.platform.title": "Торговая платформа",
 
-
   "strategy.details.investments.active.title": "Активные",
   "strategy.details.investments.closed.title": "Закрытые",
   "strategy.details.message.pageForbidden": "Эта страница недоступна другим пользователям.",
@@ -245,7 +235,6 @@
   "strategy.details.message.risk": "Предупреждение о рисках: итоги предыдущих торговых операций не гарантируют получение идентичных результатов в будущем.",
   "strategy.details.message.chart": "График отображает доходность стратегии по инвестиции трейдера. Доходность рассчитана без учета выплаты Вознаграждения трейдера.",
   "strategy.details.message.yieldMonthly": "Месячная доходность стратегии — средняя доходность за один месяц без учета Вознаграждения трейдера, рассчитанная по историческим данным с момента создания стратегии.",
-
 
   "table.footer.itemsPerPage": "Показывать на странице",
   "table.footer.itemsTotal": "Всего записей",
@@ -276,7 +265,6 @@
   "account.form.resume.title": "Возобновить",
   "account.form.label.equity": "Средства в инвестиции",
   "account.form.label.amount": "Сумма пополнения",
-
 
   "account.manage.pause.title": "Пауза инвестиции",
   "account.manage.pause.message": "Все позиции будут закрыты. Новые позиции не будут открываться до момента снятия с паузы.",
@@ -328,31 +316,5 @@
   "spec.rating.last-activity-time.value": "365 календарных дней",
   "spec.rating.min-yield.title": "Минимальная доходность",
   "spec.rating.min-yield.value": "Положительная",
-  "": "",
-  "": "",
-  "": "",
-  "": "",
-  "": "",
-  "": "",
-  "": "",
-  "": "",
-  "": "",
-  "": "",
-  "": "",
-  "": "",
-  "": "",
-  "": "",
-  "": "",
-  "": "",
-  "": "",
-  "": "",
-  "": "",
-  "": "",
-  "": "",
-  "": "",
-  "": "",
-  "": "",
-  "": "",
-  "": "",
   "": ""
 }
