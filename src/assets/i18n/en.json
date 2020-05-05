@@ -60,7 +60,6 @@
   	"button.cancel": "Cancel",
 
 	"common.date": "Date",
-	"common.table.label.amountUSD": "Amount, USD",
 	"common.type": "Type",
 	"common.account": "Account",
 	"common.strategy": "Strategy",
@@ -69,6 +68,10 @@
 	"common.available": "Available",
 	"common.invested": "Invested",
 	"common.equity": "Equity",
+	"common.balance": "Balance",
+  	"common.freeMargin": "Free margin",
+  	"common.margin": "Margin",
+  	"common.marginLevel": "Margin level",
 	"common.next": "Next",
 	"common.step": "Step",
 	"common.pause": "Pause",
@@ -96,22 +99,42 @@
   	"common.manage.closeInvestment": "Close investment",
   	"common.manage.invest": "Invest",
   	
+  	"common.table.empty.positions": "No positions",
+  	"common.table.empty.deals": "No deals",
+
+  	"common.table.label.time": "Time",
   	"common.table.label.created": "Created",
   	"common.table.label.closed": "Closed",
-	"common.table.label.manage": "Management",
-	"common.table.label.name": "Name",
-	"common.table.label.myInvestmentUSD": "My investment, USD",
-	"common.table.label.equityUSD": "Equity, USD",
-	"common.table.label.grossPLUSD": "Gross PL since the beginning of the week, USD",
-	"common.table.label.feePaidUSD": "Paid fee, USD",
-	"common.table.label.commissionPaidUSD": "Paid commission, USD",
-	"common.table.label.feeToPayUSD": "Due fee, USD",
-	"common.table.label.symbol": "Symbol",
+  	"common.table.label.deal": "Deal",
+ 	"common.table.label.symbol": "Symbol",
 	"common.table.label.symbols": "Symbols",
+  	"common.table.label.type": "Type",
+  	"common.table.label.entry": "Direction",
+  	"common.table.label.volume": "Volume",
+  	"common.table.label.price": "Price",
+  	"common.table.label.yield": "Profit",
+ 	"common.table.label.swap": "Swap",
+  	"common.table.label.yieldTotal": "Total profit",
+  	"common.table.label.priceOpen": "Open price",
+  	"common.table.label.priceCurrent": "Current price",
+	"common.table.label.name": "Name",
+	"common.table.label.manage": "Management",
 	"common.table.label.yieldCommon": "Total yield",
 	"common.table.label.investors": "Investors",
+	"common.table.label.myInvestmentUSD": "My investment, USD",
+	"common.table.label.amountUSD": "Amount, USD",
+	"common.table.label.equityUSD": "Equity, USD",
+	"common.table.label.feePaidUSD": "Paid fee, USD",
 	"common.table.label.yieldUSD": "Profit, USD",
+  	"common.table.label.yieldTotalUSD": "Total profit, USD",
+	"common.table.label.feeToPayUSD": "Due fee, USD",
+	"common.table.label.commissionUSD": "Commission, USD",
+  	"common.table.label.swapUSD": "Swap, USD",
+  	"common.table.label.commissionPaidUSD": "Paid commission, USD",
+	"common.table.label.grossPLUSD": "Gross PL since the beginning of the week, USD",
 	"common.table.label.no-data": "No data to display",
+	
+	
 
 
   	"common.week-days.monday": "Monday",
@@ -135,8 +158,11 @@
 	
 	"help.title": "RAMM Help Center",
 
+
+
 	"investment.positions.title": "Positions",
   	"investment.deals.title": "Deals",
+
 
 
 	"investment.details.message.investor": "This investment belongs to an investor of your strategy.",
