@@ -92,6 +92,7 @@
   "button.ok": "Ок",
   "button.cancel": "Отмена",
 
+  "managePassword.form.title": "Смена пароля",
   "managePassword.form.label.current": "Текущий пароль",
   "managePassword.form.current.error.required": "Пожалуйста, введите текущий пароль",
   "managePassword.form.label.new": "Новый пароль",
@@ -99,6 +100,9 @@
   "managePassword.form.label.confirm": "Подтвердите пароль",
   "managePassword.form.confirm.error.required": "Пожалуйста, подтвердите новый пароль",
   "managePassword.form.confirm.error.mismatch": "Пароли не совпадают",
+  "managePassword.form.failure": "Не удалось изменить пароль.",
+  "managePassword.form.success": "Ваш пароль успешно изменен.",
+  "managePassword.form.button": "Сменить пароль",
 
   "notify.loading.error": "При загрузке данных произошла ошибка",
   "notify.strategy.access.error": "У вас нет доступа к данной стратегии",
