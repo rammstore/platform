@@ -1,5 +1,9 @@
 {
 
+	"account.lastTransfers.title": "Wallet operations",
+  	"account.result.chart.help.tooltip": "You can also check it up in the upper right corner.",
+
+
   	"account.active.title": "Active",
  	"account.closed.title": "Closed",
  	"account.form.profile.title": "Change investment profile",
@@ -73,6 +77,7 @@
 	"common.factor": "Factor",
 	"common.target": "Target",
   	"common.protection": "Protection",
+  	"common.refreshed": "Refreshed",
 	"common.age": "Age, weeks",
 	"common.accountsCount": "Investors count",
 	"common.chart": "Chart",
@@ -132,6 +137,11 @@
 
 	"investment.positions.title": "Positions",
   	"investment.deals.title": "Deals",
+
+
+	"investment.details.message.investor": "This investment belongs to an investor of your strategy.",
+  	"investment.details.message.owner": "The full functionality is only available to the investment’s owner.",
+
 
   	"login.title": "Log in",
   	"login.form.label.login": "Your login or email",
