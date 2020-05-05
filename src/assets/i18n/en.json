@@ -105,6 +105,7 @@
 	"common.table.label.symbols": "Symbols",
 	"common.table.label.yieldCommon": "Total yield",
 	"common.table.label.investors": "Investors",
+	"common.table.label.yieldUSD": "Profit, USD",
 	"common.table.label.no-data": "No data to display",
 
 
