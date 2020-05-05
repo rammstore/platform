@@ -74,6 +74,7 @@
 	"common.target": "Target",
   	"common.protection": "Protection",
 	"common.age": "Age, weeks",
+	"common.accountsCount": "Investors count",
 	"common.chart": "Chart",
   	"common.yield": "Yield",
   	"common.yieldMonthly": "Monthly yield",
@@ -95,11 +96,25 @@
 	"common.table.label.manage": "Management",
 	"common.table.label.name": "Name",
 	"common.table.label.myInvestmentUSD": "My investment, USD",
+	"common.table.label.equityUSD": "Equity, USD",
+	"common.table.label.grossPLUSD": "Gross PL since the beginning of the week, USD",
+	"common.table.label.feePaidUSD": "Paid fee, USD",
+	"common.table.label.commissionPaidUSD": "Paid commission, USD",
+	"common.table.label.feeToPayUSD": "Due fee, USD",
 	"common.table.label.symbol": "Symbol",
 	"common.table.label.symbols": "Symbols",
 	"common.table.label.yieldCommon": "Total yield",
 	"common.table.label.investors": "Investors",
+	"common.table.label.no-data": "No data to display",
 
+
+  	"common.week-days.monday": "Monday",
+  	"common.week-days.tuesday": "Tuesday",
+  	"common.week-days.wednesday": "Wednesday",
+  	"common.week-days.thursday": "Thursday",
+  	"common.week-days.friday": "Friday",
+  	"common.week-days.saturday": "Saturday",
+  	"common.week-days.sunday": "Sunday",
 
   	"header.item.account": "Account",
  	"header.item.investments": "Investments",
@@ -232,6 +247,13 @@
 
 	"strategy.details.investments.active.title": "Active",
   	"strategy.details.investments.closed.title": "Closed",
+  	"strategy.details.message.pageForbidden": "This page is not visible to other users.",
+  	"strategy.details.message.closed": "The strategy has been closed by the trader and is no longer available for investing.",
+  	"strategy.details.message.risk": "Risk warning: the results of previous trading operations do not guarantee the same results in the future.",
+  	"strategy.details.message.chart": "The chart shows the <b>yield</b> of the strategy according to the trader's investment. The yield is calculated without Trader's fee deduction.",
+  	"strategy.details.message.yieldMonthly": "Monthly yield is an average yield (without Trader's fee deduction) based on the historical data and calculated since the strategy creation moment.",
+ 
+
 
 	"strategy.invest.form.title": "Invest into strategy",
 

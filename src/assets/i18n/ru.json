@@ -43,6 +43,15 @@
   "common.deal": "Сделка",
   "common.fund": "Пополнить",
 
+  "common.week-days.monday": "Понедельник",
+  "common.week-days.tuesday": "Вторник",
+  "common.week-days.wednesday": "Среда",
+  "common.week-days.thursday": "Четверг",
+  "common.week-days.friday": "Пятница",
+  "common.week-days.saturday": "Суббота",
+  "common.week-days.sunday": "Воскресенье",
+
+
   "common.table.empty.positions": "Нет позиций",
 
   "common.table.label.time": "Время",
@@ -75,6 +84,7 @@
   "common.table.label.swapUSD": "Своп, USD",
   "common.table.label.commissionPaidUSD": "Выплаченная комиссия, USD",
   "common.table.label.grossPLUSD": "Gross PL с начала недели, USD",
+  "common.table.label.no-data": "Нет данных для отображения",
 
   "common.manage.withdraw": "Вывод средств из инвестиции",
   "common.manage.statement": "Выписка по инвестиции",
@@ -214,13 +224,15 @@
   "strategy.add.script.download.title": "Скачать сигнальный скрипт",
   "strategy.add.script.download.platform.title": "Торговая платформа",
 
+
+  "strategy.details.investments.active.title": "Активные",
+  "strategy.details.investments.closed.title": "Закрытые",
   "strategy.details.message.pageForbidden": "Эта страница недоступна другим пользователям.",
   "strategy.details.message.closed": "Стратегия была закрыта трейдером и более недоступна для инвестирования.",
   "strategy.details.message.risk": "Предупреждение о рисках: итоги предыдущих торговых операций не гарантируют получение идентичных результатов в будущем.",
   "strategy.details.message.chart": "График отображает <b>доходность</b> стратегии по инвестиции трейдера. Доходность рассчитана без учета выплаты Вознаграждения трейдера.",
   "strategy.details.message.yieldMonthly": "Месячная доходность стратегии — средняя доходность за один месяц без учета Вознаграждения трейдера, рассчитанная по историческим данным с момента создания стратегии.",
-  "strategy.details.investments.active.title": "Активные",
-  "strategy.details.investments.closed.title": "Закрытые",
+
 
   "table.footer.itemsPerPage": "Показывать на странице",
   "table.footer.itemsTotal": "Всего записей",
