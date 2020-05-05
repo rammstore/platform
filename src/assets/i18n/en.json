@@ -90,11 +90,11 @@
   	"common.manage.closeInvestment": "Close investment",
   	"common.manage.invest": "Invest",
   	
+  	"common.table.label.created": "Created",
+  	"common.table.label.closed": "Closed",
 	"common.table.label.manage": "Management",
 	"common.table.label.name": "Name",
 	"common.table.label.myInvestmentUSD": "My investment, USD",
-
-
 	"common.table.label.symbol": "Symbol",
 	"common.table.label.symbols": "Symbols",
 	"common.table.label.yieldCommon": "Total yield",
