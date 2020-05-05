@@ -250,7 +250,7 @@
   	"strategy.details.message.pageForbidden": "This page is not visible to other users.",
   	"strategy.details.message.closed": "The strategy has been closed by the trader and is no longer available for investing.",
   	"strategy.details.message.risk": "Risk warning: the results of previous trading operations do not guarantee the same results in the future.",
-  	"strategy.details.message.chart": "The chart shows the <b>yield</b> of the strategy according to the trader's investment. The yield is calculated without Trader's fee deduction.",
+  	"strategy.details.message.chart": "The chart shows the \<b\>yield\</b\> of the strategy according to the trader's investment. The yield is calculated without Trader's fee deduction.",
   	"strategy.details.message.yieldMonthly": "Monthly yield is an average yield (without Trader's fee deduction) based on the historical data and calculated since the strategy creation moment.",
  
 
