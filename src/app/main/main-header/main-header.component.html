@@ -52,6 +52,9 @@
         <div id="headerChartContainer"></div>
         <app-chart-wallet-info *ngIf="wallet" [wallet]="wallet" containerID="headerChartContainer"></app-chart-wallet-info>
 
+        <a href="{{'linkFund.link' | translate}}" target="_blank">
+          <button class="primary" translate title="{{'linkFund.title' | translate}}">linkFund.text</button>
+        </a>
       </div>
     </ng-template>
 
