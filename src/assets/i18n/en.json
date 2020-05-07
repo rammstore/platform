@@ -6,7 +6,7 @@
   	"linkWithdraw.title": "Go to RAMM account withdrawal page",
   	"linkWithdraw.link": "#",
   	"additionalInfo": "",
-  	"linkLogout": "/login",
+  	"linkLogout": "/login", //не переводите
 	
   	"account.active.title": "Active",
  	"account.closed.title": "Closed",
@@ -309,7 +309,7 @@
     "table.cell.accountNumberCopy": "The number of account from which copy trading is performed",
   	"table.cell.loading": "Loading...",
   	"table.cell.total": "Total",
-	"table.footer.itemsPerPage": "Items per page",
+	"table.footer.itemsPerPage": "Items per page", 
 	"table.footer.itemsTotal": "Total items",
 	"table.footer.pageNext": "Next",
 	"table.footer.pagePrevious": "Previous"
