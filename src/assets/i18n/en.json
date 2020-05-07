@@ -6,7 +6,7 @@
   	"linkWithdraw.title": "Go to RAMM account withdrawal page",
   	"linkWithdraw.link": "#",
   	"additionalInfo": "",
-  	"linkLogout": "/login", //не переводите
+  	"linkLogout": "/login",
 	
   	"account.active.title": "Active",
  	"account.closed.title": "Closed",
