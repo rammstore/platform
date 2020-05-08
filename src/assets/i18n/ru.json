@@ -91,6 +91,10 @@
   "common.protection": "Защита",
   "common.refreshed": "Обновлено",
   "common.step": "Шаг",
+
+  "common.step 1: strategy.add.title.strategy": "Шаг 1: Параметры стратегии",
+  "common.step 2: strategy.add.title.investments": "Шаг 2: Параметры инвестиции",
+  
   "common.strategy": "Стратегия",
   "common.target": "Цель",
   "common.type": "Тип",

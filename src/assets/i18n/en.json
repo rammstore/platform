@@ -91,6 +91,10 @@
   	"common.protection": "Protection",
   	"common.refreshed": "Refreshed",
   	"common.step": "Step",
+
+  	"common.step 1: strategy.add.title.strategy": "Step 1: Strategy settings",
+  	"common.step 2: strategy.add.title.investments": "Step 2: Investment settings",
+
 	"common.strategy": "Strategy",
 	"common.target": "Target",
 	"common.type": "Type",
