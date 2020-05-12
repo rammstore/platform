@@ -26,12 +26,12 @@ export class StrategyClosedComponent implements OnInit, OnDestroy {
   tableHeader: TableHeaderRow[] = [
     new TableHeaderRow([
       new TableColumn({ property: 'id', label: 'ID'}),
-      new TableColumn({ property: 'name', label: 'Название' }),
-      new TableColumn({ property: 'offer.fee', label: 'Вознаграждение', pipe: { pipe: PercentPipe }}),
-      new TableColumn({ property: 'dtCreated', label: 'Создана', pipe: { pipe: CustomDatePipe }}),
-      new TableColumn({ property: 'dtClosed', label: 'Закрыта', pipe: { pipe: CustomDatePipe } }),
-      new TableColumn({ property: 'age', label: 'Возраст, недель' }),
-      new TableColumn({property: 'feePaid', label: 'Выплаченное вознаграждение, USD', pipe: { pipe: CustomCurrencyPipe }})
+      new TableColumn({ property: 'name', label: 'common.table.label.name' }),
+      new TableColumn({ property: 'offer.fee', label: 'common.fee', pipe: { pipe: PercentPipe }}),
+      new TableColumn({ property: 'dtCreated', label: 'common.table.label.created', pipe: { pipe: CustomDatePipe }}),
+      new TableColumn({ property: 'dtClosed', label: 'common.table.label.closed', pipe: { pipe: CustomDatePipe } }),
+      new TableColumn({ property: 'age', label: 'common.age' }),
+      new TableColumn({ property: 'feePaid', label: 'common.table.label.feePaidUSD', pipe: { pipe: CustomCurrencyPipe }})
     ]),
   ];
   paginator: Paginator = new Paginator({

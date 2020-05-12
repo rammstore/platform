@@ -1,30 +1,30 @@
 <div class="manage-container">
   <ng-container *ngIf="dataType === 'account' || (dataType === 'strategy' && data.account && data.account.id)">
     <!--  Fund button  -->
-    <i (click)="openAccountFundDialog()" title="{{'Пополнение инвестиции' | translate}}" class="icon-add"></i>
+    <i (click)="openAccountFundDialog()" title="{{'account.form.fund.title' | translate}}" class="icon-add"></i>
 
     <!--  Pause/Resume buttons  -->
     <ng-container *ngIf="dataType === 'account'">
       <ng-container *ngIf="data.isSecured() && data.isMy()">
-        <i (click)="openStrategyPauseDialog()" *ngIf="!data.strategy.isPaused()" title="{{'Пауза' | translate}}" class="icon-pause"></i>
-        <i (click)="openStrategyResumeDialog()" *ngIf="data.strategy.isPaused()" title="{{'Возобновить' | translate}}" class="icon-start"></i>
+        <i (click)="openStrategyPauseDialog()" *ngIf="!data.strategy.isPaused()" title="{{'common.pause' | translate}}" class="icon-pause"></i>
+        <i (click)="openStrategyResumeDialog()" *ngIf="data.strategy.isPaused()" title="{{'account.form.resume.title' | translate}}" class="icon-start"></i>
       </ng-container>
 
       <ng-container *ngIf="!data.isSecured()">
-        <i (click)="openAccountPauseDialog()" *ngIf="!data.isPaused()" title="{{'Пауза' | translate}}" class="icon-pause"></i>
-        <i (click)="openAccountResumeDialog()" *ngIf="data.isPaused()" title="{{'Возобновить' | translate}}" class="icon-start"></i>
+        <i (click)="openAccountPauseDialog()" *ngIf="!data.isPaused()" title="{{'common.pause' | translate}}" class="icon-pause"></i>
+        <i (click)="openAccountResumeDialog()" *ngIf="data.isPaused()" title="{{'account.form.resume.title' | translate}}" class="icon-start"></i>
       </ng-container>
     </ng-container>
 
     <ng-container *ngIf="dataType === 'strategy'">
       <ng-container *ngIf="data.isSecured() && data.isMy()">
-        <i (click)="openStrategyPauseDialog()" *ngIf="!data.isPaused()" title="{{'Пауза' | translate}}" class="icon-pause"></i>
-        <i (click)="openStrategyResumeDialog()" *ngIf="data.isPaused()" title="{{'Возобновить' | translate}}" class="icon-start"></i>
+        <i (click)="openStrategyPauseDialog()" *ngIf="!data.isPaused()" title="{{'common.pause' | translate}}" class="icon-pause"></i>
+        <i (click)="openStrategyResumeDialog()" *ngIf="data.isPaused()" title="{{'account.form.resume.title' | translate}}" class="icon-start"></i>
       </ng-container>
 
       <ng-container *ngIf="!data.isSecured()">
-        <i (click)="openAccountPauseDialog()" *ngIf="!data.account.isPaused()" title="{{'Пауза' | translate}}" class="icon-pause"></i>
-        <i (click)="openAccountResumeDialog()" *ngIf="data.account.isPaused()" title="{{'Возобновить' | translate}}" class="icon-start"></i>
+        <i (click)="openAccountPauseDialog()" *ngIf="!data.account.isPaused()" title="{{'common.pause' | translate}}" class="icon-pause"></i>
+        <i (click)="openAccountResumeDialog()" *ngIf="data.account.isPaused()" title="{{'account.form.resume.title' | translate}}" class="icon-start"></i>
       </ng-container>
     </ng-container>
 
@@ -34,44 +34,44 @@
       <ul *dropdownMenu class="dropdown-menu burger-menu" role="menu">
         <li (click)="openAccountChangeProfileDialog()" translate>
           <i class="icon-percent-shield"></i>
-          Изменить профиль инвестиции
+          account.form.profile.title
         </li>
 
         <li (click)="openAccountWithdrawDialog()" translate>
           <i class="icon-card"></i>
-          Вывод средств из инвестиции
+          common.manage.withdraw
         </li>
 
         <li *ngIf="dataType === 'account'" [routerLink]="['/investments/details', data.id]" translate>
           <i class="icon-doc"></i>
-          Выписка по инвестиции
+          common.manage.statement
         </li>
         <li *ngIf="dataType === 'strategy'" [routerLink]="['/investments/details', data.account.id]" translate>
           <i class="icon-doc"></i>
-          Выписка по инвестиции
+          common.manage.statement
         </li>
 
         <li *ngIf="dataType === 'strategy' && data.isMy()" [routerLink]="['/strategies/details', data.id, 'investments']" translate>
           <i class="fa fa-list-alt"></i>
-          Инвестиции
+          common.investments
         </li>
         <li *ngIf="dataType === 'account' && data.isMy() && !hideInvestmentsButton" [routerLink]="['/strategies/details', data.strategy.id, 'investments']" translate>
           <i class="fa fa-list-alt"></i>
-          Инвестиции
+          common.investments
         </li>
 
         <li *ngIf="data.isMy() && data.isSecured()" (click)="openStrategyDownloadScriptDialog()" translate>
           <i class="fa fa-download"></i>
-          Сигнальный скрипт
+          common.manage.signalScript
         </li>
 
         <li *ngIf="(dataType === 'strategy' && data.isMyStrategy) || (dataType === 'account' && data.strategy.isMyStrategy)" (click)="openStrategyCloseDialog()" translate>
           <i class="fa fa-window-close"></i>
-          Закрыть стратегию
+          common.manage.closeStrategy
         </li>
         <li *ngIf="(dataType === 'strategy' && !data.isMyStrategy) || (dataType === 'account' && !data.strategy.isMyStrategy)" (click)="openAccountCloseDialog()" translate>
           <i class="fa fa-window-close"></i>
-          Закрыть инвестицию
+          common.manage.closeInvestment
         </li>
       </ul>
     </div>
@@ -80,18 +80,18 @@
   <ng-container *ngIf="dataType === 'strategy' && (!data.account || !data.account.id)">
 
     <div class="btn-group dropdown-container" dropdown>
-      <button class="primary" (click)="openStrategyInvestDialog()" translate>Инвестировать</button>
+      <button class="primary" (click)="openStrategyInvestDialog()" translate>common.manage.invest</button>
       <button class="primary caret" dropdownToggle *ngIf="data.isMy()"><i class="fa fa-caret-down"></i></button>
 
       <ul *dropdownMenu class="dropdown-menu" role="menu">
         <li [routerLink]="['/strategies/details', data.id, 'investments']" translate>
           <i class="fa fa-list-alt"></i>
-          Инвестиции
+          common.investments
         </li>
 
         <li (click)="openStrategyCloseDialog()" translate>
           <i class="fa fa-window-close"></i>
-          Закрыть стратегию
+          common.manage.closeStrategy
         </li>
       </ul>
     </div>

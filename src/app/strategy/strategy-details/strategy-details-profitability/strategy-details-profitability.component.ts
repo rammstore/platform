@@ -136,18 +136,18 @@ function getDayName(time: number) {
   const dayNumber: number = new Date(time).getDay();
   switch (dayNumber) {
     case 0:
-      return 'Воскресенье';
+      return 'common.week-days.sunday';
     case 1:
-      return 'Понедельник';
+      return 'common.week-days.monday';
     case 2:
-      return 'Вторник';
+      return 'common.week-days.tuesday';
     case 3:
-      return 'Среда';
+      return 'common.week-days.wednesday';
     case 4:
-      return 'Четверг';
+      return 'common.week-days.thursday';
     case 5:
-      return 'Пятница';
+      return 'common.week-days.friday';
     case 6:
-      return 'Суббота';
+      return 'common.week-days.saturday';
   }
 }

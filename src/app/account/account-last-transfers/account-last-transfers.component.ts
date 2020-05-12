@@ -31,11 +31,11 @@ export class AccountLastTransfersComponent implements OnInit, OnDestroy {
   tableHeader: TableHeaderRow[] = [
     new TableHeaderRow([
       new TableColumn({ property: 'id', label: '#'}),
-      new TableColumn({ property: 'dtCreated', label: 'Дата', pipe: { pipe: CustomDatePipe }}),
-      new TableColumn({ property: 'walletTransferAmount', label: 'Сумма, USD', pipe: { pipe: CustomCurrencyPipe }}),
-      new TableColumn({ property: 'type', label: 'Тип'}),
-      new TableColumn({ property: 'accountID', label: 'Счет'}),
-      new TableColumn({ property: 'walletTransferStrategy', label: 'Стратегия'})
+      new TableColumn({ property: 'dtCreated', label: 'common.date', pipe: { pipe: CustomDatePipe }}),
+      new TableColumn({ property: 'walletTransferAmount', label: 'common.table.label.amountUSD', pipe: { pipe: CustomCurrencyPipe }}),
+      new TableColumn({ property: 'type', label: 'common.type'}),
+      new TableColumn({ property: 'accountID', label: 'common.account'}),
+      new TableColumn({ property: 'walletTransferStrategy', label: 'common.strategy'})
     ])
   ];
   paginator: Paginator = new Paginator({

@@ -16,11 +16,13 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { DataService } from '@app/services/data.service';
 import { LoaderService } from '@app/services/loader.service';
 import { NotificationsService } from '@app/services/notifications.service';
-import localeRu from '@angular/common/locales/ru';
 import { registerLocaleData } from '@angular/common';
 import { BrandService } from '@app/services/brand.service';
+import localeRu from '@angular/common/locales/ru';
+import localeEs from '@angular/common/locales/es';
 
 registerLocaleData(localeRu, 'ru');
+registerLocaleData(localeEs, 'es');
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
