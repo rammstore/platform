@@ -1,7 +1,7 @@
 <div class="paginator-container">
   <div class="info-container">
     <div class="per-page-container" translate>
-      {{'Показывать на странице' | translate}}:
+      {{'table.footer.itemsPerPage' | translate}}:
       <input type="number"
              #perPageInput
              [value]="paginator.perPage"
@@ -10,13 +10,13 @@
              (change)="changePerPage($event.target.value)">
     </div>
 
-    <div class="total-container">{{'Всего записей' | translate}}: {{paginator.totalItems}}</div>
+    <div class="total-container">{{'table.footer.itemsTotal' | translate}}: {{paginator.totalItems}}</div>
   </div>
 
   <div class="pages-container" *ngIf="paginator.totalPages > 1">
     <a class="prev-page"
        [class.disabled]="paginator.currentPage === 1"
-       (click)="selectPage(paginator.currentPage - 1)" translate>Предыдущая</a>
+       (click)="selectPage(paginator.currentPage - 1)" translate>table.footer.pagePrevious</a>
     <ng-container *ngFor="let page of getPages(); let i = index">
       <a [class.current-page]="page === paginator.currentPage"
          class="page-number"
@@ -26,6 +26,6 @@
     </ng-container>
     <a class="next-page"
        [class.disabled]="paginator.currentPage === paginator.totalPages"
-       (click)="selectPage(paginator.currentPage + 1)" translate>Следующая</a>
+       (click)="selectPage(paginator.currentPage + 1)" translate>table.footer.pageNext</a>
   </div>
 </div>

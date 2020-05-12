@@ -27,7 +27,7 @@ export class ChartWalletInfoComponent implements OnInit {
       },
       series: [{
         data: [
-          ['Доступно', this.wallet.balance],
+          ['common.available', this.wallet.balance],
           ['Инвестировано', this.wallet.invested]
         ],
         colors: ['#f7a35b', '#00a651'],

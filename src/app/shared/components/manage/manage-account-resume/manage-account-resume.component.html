@@ -1,22 +1,22 @@
-<app-dialog-wrapper titleText="{{'Возобновить инвестицию' | translate}}" [modalRef]="modalRef">
+<app-dialog-wrapper titleText="{{'account.manage.resume.title' | translate}}" [modalRef]="modalRef">
   <form [formGroup]="form">
 
     <div class="form-field  no-input">
-      <label class="field-label"><span translate>Средства в инвестиции</span>:</label>
+      <label class="field-label"><span translate>account.form.label.equity</span>:</label>
       <div class="input-wrapper">
         {{account.equity | customCurrency}}
       </div>
     </div>
 
     <div class="form-field  no-input">
-      <label class="field-label"><span translate>Доступно</span>:</label>
+      <label class="field-label"><span translate>common.available</span>:</label>
       <div class="input-wrapper">
         <span class="available-clickable" (click)="setAllMoney()">{{wallet.getAvailableMoney() | customCurrency}}</span>
       </div>
     </div>
 
     <div class="form-field">
-      <label for="amount" class="field-label"><span translate>Добавить в инвестицию</span>, USD:</label>
+      <label for="amount" class="field-label"><span translate>account.manage.addTo</span>, USD:</label>
       <div class="input-wrapper">
         <input id="amount"
                type="number"
@@ -26,19 +26,19 @@
         <div class="messages">
           <label class="error-message"
                  *ngIf="form.get('amount').touched && form.get('amount').hasError('required')" translate>
-            Пожалуйста, введите сумму инвестиции.
+            strategy.form.amount.error.required
           </label>
           <label class="error-message"
                  *ngIf="form.get('amount').touched && form.get('amount').hasError('min')" translate>
-            Пожалуйста, введите корректную сумму инвестиции.
+            strategy.form.amount.error.pattern
           </label>
           <label class="error-message"
                  *ngIf="form.get('amount').touched && form.get('amount').hasError('max')" translate>
-            Вы можете инвестировать только свободные средства.
+            strategy.form.amount.error.max
           </label>
           <label class="error-message"
                  *ngIf="form.get('amount').touched && form.get('amount').hasError('pattern')" translate>
-            Пожалуйста, введите корректную сумму инвестиции.
+            strategy.form.amount.error.pattern
           </label>
 <!--          <label class="details-message">-->
 <!--            <span translate>Доступно</span>: <span class="available-clickable" (click)="setAllMoney()">{{wallet.getAvailableMoney() | customCurrency}}</span>-->
@@ -48,7 +48,7 @@
     </div>
 
     <div class="form-field">
-      <label for="factor" class="field-label"><span translate>Множитель</span>:</label>
+      <label for="factor" class="field-label"><span translate>common.factor</span>:</label>
       <div class="input-wrapper">
         <input id="factor"
                type="number"
@@ -56,49 +56,49 @@
                [min]="0.1"
                [max]="10"
                [step]="0.1"
-               title="{{'Коэффициент копирования. При соотношении более 1,0 копирование идет более агрессивно; увеличивается не только потенциальный доход, но и риск потери. Когда коэффициент меньше 1,0 - наоборот' | translate}}">
+               title="{{'account.form.factor.title' | translate}}">
         <div class="messages">
           <label class="error-message"
                  *ngIf="form.get('factor').touched && form.get('factor').hasError('required')" translate>
-            Множитель не задан
+            account.form.factor.error.required
           </label>
           <label class="error-message"
                  *ngIf="form.get('factor').touched && form.get('factor').hasError('pattern')" translate>
-            Пожалуйста, введите корректное значение множителя.
+            account.form.factor.error.pattern
           </label>
           <label class="error-message"
                  *ngIf="form.get('factor').touched && form.get('factor').hasError('min') && !form.get('factor').hasError('pattern')">
-            <span translate>Минимальное значение множителя</span> - 0.1.
+            <span translate>account.form.factor.error.min</span> - 0.1.
           </label>
           <label class="error-message"
                  *ngIf="form.get('factor').touched && form.get('factor').hasError('max') && !form.get('factor').hasError('pattern')">
-            <span translate>Максимальное значение множителя</span> - 10.
+            <span translate>account.form.factor.error.max</span> - 10.
           </label>
         </div>
       </div>
     </div>
 
     <div class="form-field" *ngIf="functionality['TargetChangeAllow']">
-      <label for="target" class="field-label"><span translate>Цель</span>, %:</label>
+      <label for="target" class="field-label"><span translate>common.target</span>, %:</label>
       <div class="input-wrapper">
         <input id="target"
                type="number"
                formControlName="target"
                [min]="0"
                [step]="1"
-               title="{{'Целевой доход. При достижении целевого дохода инвестиция будет приостановлена' | translate}}">
+               title="{{'strategy.form.target.tooltip' | translate}}">
         <div class="messages">
           <label class="error-message"
                  *ngIf="form.get('target').touched && form.get('target').hasError('required')" translate>
-            Цель не задана
+            account.form.target.error.required
           </label>
           <label class="error-message"
                  *ngIf="form.get('target').touched && form.get('target').hasError('pattern')" translate>
-            Пожалуйста, введите корректное значение цели.
+            account.form.target.error.pattern
           </label>
           <label class="error-message"
                  *ngIf="form.get('target').touched && form.get('target').hasError('min') && !form.get('target').hasError('pattern')">
-            <span translate>Минимальное значение цели</span> - 0.
+            <span translate>account.form.target.error.min</span> - 0.
           </label>
           <label class="details-message" *ngIf="form.get('amount').value && form.get('target').value && form.valid">
             {{((form.get('amount').value * form.get('target').value) / 100) | customCurrency}}
@@ -108,7 +108,7 @@
     </div>
 
     <div class="form-field" *ngIf="functionality['ProtectionChangeAllow']">
-      <label for="protection" class="field-label"><span translate>Защита</span>, %:</label>
+      <label for="protection" class="field-label"><span translate>common.protection</span>, %:</label>
       <div class="input-wrapper">
         <input id="protection"
                type="number"
@@ -116,23 +116,23 @@
                [min]="0"
                [max]="99"
                [step]="1"
-               title="{{'При снижении средств до заданного значения инвестиция будет приостановлена' | translate}}">
+               title="{{'account.form.protection.title' | translate}}">
         <div class="messages">
           <label class="error-message"
                  *ngIf="form.get('protection').touched && form.get('protection').hasError('required')" translate>
-            Защита не задана
+            account.form.protection.error.required
           </label>
           <label class="error-message"
                  *ngIf="form.get('protection').touched && form.get('protection').hasError('min') && !form.get('protection').hasError('pattern')" translate>
-            Пожалуйста, введите корректное значение защиты.
+            account.form.protection.error.min
           </label>
           <label class="error-message"
                  *ngIf="form.get('protection').touched && form.get('protection').hasError('pattern')" translate>
-            Пожалуйста, введите корректное значение защиты.
+            account.form.protection.error.pattern
           </label>
           <label class="error-message"
                  *ngIf="form.get('protection').touched && form.get('protection').hasError('max') && !form.get('protection').hasError('pattern')">
-            <span translate>Максимальное значение защиты</span> - 99.
+            <span translate>account.form.protection.error.max</span> - 99.
           </label>
           <label class="details-message" *ngIf="form.get('amount').value && form.get('protection').value">
             {{((form.get('amount').value * form.get('protection').value) / 100) | customCurrency}}
@@ -142,8 +142,8 @@
     </div>
 
     <div class="dialog-actions">
-      <button class="primary" (click)="resume()" [disabled]="!form.valid" translate>Ок</button>
-      <button class="primary" (click)="cancel()" translate>Отмена</button>
+      <button class="primary" (click)="resume()" [disabled]="!form.valid" translate>button.ok</button>
+      <button class="primary" (click)="cancel()" translate>button.cancel</button>
     </div>
   </form>
 </app-dialog-wrapper>

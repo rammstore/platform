@@ -7,12 +7,12 @@ import { Component } from '@angular/core';
 })
 export class SpecificationRatingComponent {
   data: any = {
-    title: 'Условия для попадания в рейтинг',
+    title: 'spec.rating.conditions.title',
     items: [
-      {label: 'Минимальный срок жизни стратегии, дней\t', value: '30'},
-      {label: 'Минимальное количество закрытых рыночных позиций\t', value: '0'},
-      {label: 'Время последней активности (открытие или закрытие рыночной позиции), не позднее', value: '365 календарных дней'},
-      {label: 'Минимальная доходность', value: 'Положительная'}
+      {label: 'spec.rating.life-term.title', value: '30'},
+      {label: 'spec.rating.min-positions-number.title', value: '0'},
+      {label: 'spec.rating.last-activity-time.title', value: 'spec.rating.last-activity-time.value'},
+      {label: 'spec.rating.min-yield.title', value: 'spec.rating.min-yield.value'}
     ]
   };
 }

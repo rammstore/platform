@@ -98,12 +98,12 @@ export class ManageAccountWithdrawComponent implements OnInit, AfterViewInit, On
   }
 
   getTitleText(): string {
-    let title = 'Вывод средств';
+    let title = 'account.withdraw.partial.title';
     if (this.form.get('withdrawType').value === 'close') {
       if (this.account.strategy.isMy() && this.account.isSecured()) {
-        title = 'Закрытие стратегии';
+        title = 'account.withdraw.close.strategy.title';
       } else {
-        title = 'Закрытие инвестиции';
+        title = 'account.withdraw.close.investment.title';
       }
     }
     return title;

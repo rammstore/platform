@@ -18,8 +18,8 @@ export class StrategyComponent implements OnInit, OnDestroy {
   destroy$ = new Subject();
 
   links: ContentTabLink[] = [
-    new ContentTabLink('Активные', '/strategies'),
-    new ContentTabLink('Закрытые', '/strategies/closed')
+    new ContentTabLink('myStrategies.active.title', '/strategies'),
+    new ContentTabLink('myStrategies.closed.title', '/strategies/closed')
   ];
   modalRef: BsModalRef;
   methodArgs: any;

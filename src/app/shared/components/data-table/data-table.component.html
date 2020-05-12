@@ -35,7 +35,7 @@
 
             <ng-container *ngSwitchCase="'name'">
               <a class="detail-link" [routerLink]="[getItemLink(item)]">{{item.name}}</a>
-              <div class="master-account" *ngIf="item.masterAccount" [title]="'Номер счета, с которого идет копирование' | translate">
+              <div class="master-account" *ngIf="item.masterAccount" [title]="'table.cell.accountNumberCopy' | translate">
                 {{item.masterAccount}}
               </div>
             </ng-container>
@@ -68,21 +68,21 @@
             <div class="strategy-account"
                  *ngSwitchCase="'investmentInfo'">
               <div class="strategy-account-intervalPnL">
-                <span><span translate>Прибыль</span>:</span>
+                <span><span translate>common.table.label.yield</span>:</span>
                 <span class="{{item.getColorClass('intervalPnL')}}">
                   {{item.intervalPnL | customCurrency}}
                 </span>
               </div>
               <div class="strategy-account-target" *ngIf="functionality['targetShow']">
-                <span><span translate>Цель</span>:</span>
+                <span><span translate>common.target</span>:</span>
                 <span>{{item.targetEquity | customCurrency}}</span>
               </div>
               <div class="strategy-account-equity">
-                <span><span translate>Средства</span>:</span>
+                <span><span translate>common.equity</span>:</span>
                 <span>{{item.equity | customCurrency}}</span>
               </div>
               <div class="strategy-account-protection" *ngIf="functionality['protectionShow']">
-                <span><span translate>Защита</span>:</span>
+                <span><span translate>common.protection</span>:</span>
                 <span>{{item.protectionEquity | customCurrency}}</span>
               </div>
             </div>
@@ -91,21 +91,21 @@
                  *ngSwitchCase="'strategy.investmentInfo'">
               <ng-container class="investmentInfo" *ngIf="item.account">
                 <div class="strategy-account-intervalPnL">
-                  <span><span translate>Прибыль</span>:</span>
+                  <span><span translate>common.yield</span>:</span>
                   <span [class.positive]="item.account.intervalPnL > 0" [class.negative]="item.account.intervalPnL < 0">
                   {{item.account.intervalPnL | customCurrency}}
                 </span>
                 </div>
                 <div class="strategy-account-target" *ngIf="functionality['targetShow']">
-                  <span><span translate>Цель</span>:</span>
+                  <span><span translate>common.target</span>:</span>
                   <span>{{item.account.targetEquity | customCurrency}}</span>
                 </div>
                 <div class="strategy-account-equity">
-                  <span><span translate>Средства</span>:</span>
+                  <span><span translate>common.equity</span>:</span>
                   <span>{{item.account.equity | customCurrency}}</span>
                 </div>
                 <div class="strategy-account-protection" *ngIf="functionality['protectionShow']">
-                  <span><span translate>Защита</span>:</span>
+                  <span><span translate>common.protection</span>:</span>
                   <span>{{item.account.protectionEquity | customCurrency}}</span>
                 </div>
               </ng-container>
@@ -168,7 +168,7 @@
   <tr *ngIf="totals && data.length">
     <ng-container *ngFor="let row of tableHeader">
       <ng-container *ngFor="let column of row.columns; let i = index">
-        <td class="total-cell" *ngIf="i === 0" translate>Всего</td>
+        <td class="total-cell" *ngIf="i === 0" translate>table.cell.total</td>
         <td class="total-cell"
             *ngIf="i > 0"
             [class.positive]="totals[column.property] > 0 && isColored(column.property)"
@@ -182,7 +182,7 @@
   <tr *ngIf="totalFields && data && data.length">
     <ng-container *ngFor="let row of tableHeader">
       <ng-container *ngFor="let column of row.columns; let i = index">
-        <td class="total-cell" *ngIf="i === 0" translate>Всего</td>
+        <td class="total-cell" *ngIf="i === 0" translate>table.cell.total</td>
         <ng-container *ngIf="isTotal(column.property) && i > 0">
           <td class="total-cell"
               *ngIf="column.property !== 'accountsCount'"
@@ -205,7 +205,7 @@
 </table>
 
 <div class="empty-data" *ngIf="!data" translate>
-  Загрузка...
+  table.cell.loading
 </div>
 
 <div class="empty-data" *ngIf="data && !data.length" translate>

@@ -24,13 +24,13 @@ export class StrategyDetailsInvestmentsActiveComponent implements OnInit, OnDest
   // table settings
   tableHeader: TableHeaderRow[] = [
     new TableHeaderRow([
-      new TableColumn({ property: 'account.id', label: 'Инвестиция'}),
-      new TableColumn({ property: 'dtCreated', label: 'Дата', pipe: { pipe: CustomDatePipe }}),
-      new TableColumn({ property: 'equity', label: 'Средства, USD', pipe: { pipe: CustomCurrencyPipe } }),
-      new TableColumn({ property: 'profitCurrentIntervalGross', label: 'Gross PL с начала недели, USD', pipe: { pipe: CustomCurrencyPipe } }),
-      new TableColumn({ property: 'feePaid', label: 'Выплаченное вознаграждение, USD', pipe: { pipe: CustomCurrencyPipe } }),
-      new TableColumn({ property: 'totalCommissionTrader', label: 'Выплаченная комиссия, USD', pipe: { pipe: CustomCurrencyPipe } }),
-      new TableColumn({ property: 'feeToPay', label: 'Невыплаченное вознаграждение, USD', pipe: { pipe: CustomCurrencyPipe } })
+      new TableColumn({ property: 'account.id', label: 'common.investment'}),
+      new TableColumn({ property: 'dtCreated', label: 'common.date', pipe: { pipe: CustomDatePipe }}),
+      new TableColumn({ property: 'equity', label: 'common.table.label.equityUSD', pipe: { pipe: CustomCurrencyPipe } }),
+      new TableColumn({ property: 'profitCurrentIntervalGross', label: 'common.table.label.grossPLUSD', pipe: { pipe: CustomCurrencyPipe } }),
+      new TableColumn({ property: 'feePaid', label: 'common.table.label.feePaidUSD', pipe: { pipe: CustomCurrencyPipe } }),
+      new TableColumn({ property: 'totalCommissionTrader', label: 'common.table.label.commissionPaidUSD', pipe: { pipe: CustomCurrencyPipe } }),
+      new TableColumn({ property: 'feeToPay', label: 'common.table.label.feeToPayUSD', pipe: { pipe: CustomCurrencyPipe } })
     ]),
   ];
   paginator: Paginator = new Paginator({

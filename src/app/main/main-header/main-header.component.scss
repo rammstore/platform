@@ -190,6 +190,8 @@ header {
             .langmenu {
               .lang {
                 background-color: red;
+
+
               }
             }
           }
@@ -197,6 +199,11 @@ header {
       }
     }
   }
+}
+
+.lang-img {
+  width: 23px;
+  height: 23px;
 }
 
 @media (max-width: 576px) {
