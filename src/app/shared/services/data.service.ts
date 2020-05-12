@@ -100,7 +100,7 @@ export class DataService {
       this.loaderService.hideLoader();
       this.activeMyStrategiesSubject.next(strategies);
     }, (error: HttpErrorResponse) => {
-      this.notificationsService.open('При загрузке данных произошла ошибка', {
+      this.notificationsService.open('notify.loading.error', {
         type: 'error',
         autoClose: true,
         duration: 3000
@@ -147,7 +147,7 @@ export class DataService {
       this.loaderService.hideLoader();
       this.closedMyStrategiesSubject.next(strategies);
     }, (error: HttpErrorResponse) => {
-      this.notificationsService.open('При загрузке данных произошла ошибка', {
+      this.notificationsService.open('notify.loading.error', {
         type: 'error',
         autoClose: true,
         duration: 3000
@@ -170,13 +170,13 @@ export class DataService {
     }, (error: HttpErrorResponse) => {
       if (error.status === 404) {
         this.router.navigate(['/rating']);
-        this.notificationsService.open('У вас нет доступа к данной стратегии', {
+        this.notificationsService.open('notify.strategy.access.error', {
           type: 'error',
           autoClose: true,
           duration: 3000
         });
       } else {
-        this.notificationsService.open('При загрузке данных произошла ошибка', {
+        this.notificationsService.open('notify.loading.error', {
           type: 'error',
           autoClose: true,
           duration: 3000
@@ -195,8 +195,8 @@ export class DataService {
         // this.loaderService.hideLoader();
         // this.walletService.updateWallet().subscribe();
         // // this.getActiveMyStrategies().subscribe();
-        // this.notificationsService.open('Стратегия создана');
-        this.updateAccount(new Command(response.AccountCommand.ID, response.Account.ID), methodName, methodArgs, 'Стратегия создана');
+        // this.notificationsService.open('notify.strategy.created');
+        this.updateAccount(new Command(response.AccountCommand.ID, response.Account.ID), methodName, methodArgs, 'notify.strategy.created');
 
         response.Strategy.Account = response.Account;
         return this.createInstanceService.createStrategy(response.Strategy);
@@ -209,7 +209,7 @@ export class DataService {
     this.loaderService.showLoader();
     return this.http.post(`${this.apiUrl}/myStrategies.pause`, {StrategyID: strategyId}).pipe(
       map((response: any) => {
-        this.updateStrategy(new Command(response.CommandID, strategyId), methodName, methodArgs, 'Стратегия поставлена на паузу');
+        this.updateStrategy(new Command(response.CommandID, strategyId), methodName, methodArgs, 'notify.strategy.paused');
       })
     );
   }
@@ -219,7 +219,7 @@ export class DataService {
     this.loaderService.showLoader();
     return this.http.post(`${this.apiUrl}/myStrategies.resume`, {StrategyID: strategyId}).pipe(
       map((response: any) => {
-        this.updateStrategy(new Command(response.CommandID, strategyId), methodName, methodArgs, 'Стратегия возобновлена');
+        this.updateStrategy(new Command(response.CommandID, strategyId), methodName, methodArgs, 'notify.strategy.resumed');
       })
     );
   }
@@ -229,7 +229,7 @@ export class DataService {
     this.loaderService.showLoader();
     return this.http.post(`${this.apiUrl}/myStrategies.close`, {StrategyID: strategyId}).pipe(
       map((response: any) => {
-        this.updateStrategy(new Command(response.CommandID, strategyId), methodName, methodArgs, 'Стратегия закрыта');
+        this.updateStrategy(new Command(response.CommandID, strategyId), methodName, methodArgs, 'notify.strategy.closed');
       })
     );
   }
@@ -333,7 +333,7 @@ export class DataService {
       this.loaderService.hideLoader();
       this.currentStrategyAccountsSubject.next(accounts);
     }, (error: HttpErrorResponse) => {
-      this.notificationsService.open('При загрузке данных произошла ошибка', {
+      this.notificationsService.open('notify.loading.error', {
         type: 'error',
         autoClose: true,
         duration: 3000
@@ -344,7 +344,7 @@ export class DataService {
   }
 
   //
-  // Методы работы со инвестициями
+  // Методы работы с инвестициями
   //
 
   // // Получение инвестиции по ID
@@ -388,7 +388,7 @@ export class DataService {
       this.loaderService.hideLoader();
       this.activeMyAccountsSubject.next(accounts.filter((a: Account) => a.isActive()));
     }, (error: HttpErrorResponse) => {
-      this.notificationsService.open('При загрузке данных произошла ошибка', {
+      this.notificationsService.open('notify.loading.error', {
         type: 'error',
         autoClose: true,
         duration: 3000
@@ -436,7 +436,7 @@ export class DataService {
       this.loaderService.hideLoader();
       this.closedMyAccountsSubject.next(accounts.filter((a: Account) => !a.isActive()));
     }, (error: HttpErrorResponse) => {
-      this.notificationsService.open('При загрузке данных произошла ошибка', {
+      this.notificationsService.open('notify.loading.error', {
         type: 'error',
         autoClose: true,
         duration: 3000
@@ -465,13 +465,13 @@ export class DataService {
     }, (error: HttpErrorResponse) => {
       if (error.status === 401) {
         this.router.navigate(['/investments']);
-        this.notificationsService.open('У вас нет доступа к данной инвестиции', {
+        this.notificationsService.open('notify.investment.access.error', {
           type: 'error',
           autoClose: true,
           duration: 3000
         });
       } else {
-        this.notificationsService.open('При загрузке данных произошла ошибка', {
+        this.notificationsService.open('notify.loading.error', {
           type: 'error',
           autoClose: true,
           duration: 3000
@@ -499,7 +499,7 @@ export class DataService {
         this.walletService.updateWallet().subscribe();
         this.getStrategy({strategyId: id});
         // this.updateRatingList();
-        this.notificationsService.open('Инвестиция создана');
+        this.notificationsService.open('notify.investment.created');
       })
     );
   }
@@ -509,7 +509,7 @@ export class DataService {
     this.loaderService.showLoader();
     return this.http.post(`${this.apiUrl}/accounts.fund`, {AccountID: accountID, Amount: amount}).pipe(
       map((response: any) => {
-        this.updateAccount(new Command(response.CommandBalanceID, accountID), methodName, methodArgs, 'Средства зачислены');
+        this.updateAccount(new Command(response.CommandBalanceID, accountID), methodName, methodArgs, 'notify.investment.funded');
       })
     );
   }
@@ -519,7 +519,7 @@ export class DataService {
     this.loaderService.showLoader();
     return this.http.post(`${this.apiUrl}/accounts.pause`, {AccountID: accountID}).pipe(
       map((response: any) => {
-        this.updateAccount(new Command(response.CommandID, accountID), methodName, methodArgs, 'Инвестиция поставлена на паузу');
+        this.updateAccount(new Command(response.CommandID, accountID), methodName, methodArgs, 'notify.investment.paused');
       })
     );
   }
@@ -529,7 +529,7 @@ export class DataService {
     this.loaderService.showLoader();
     return this.http.post(`${this.apiUrl}/accounts.resume`, {AccountID: accountID}).pipe(
       map((response: any) => {
-        this.updateAccount(new Command(response.CommandID, accountID), methodName, methodArgs, 'Инвестиция снята с паузы');
+        this.updateAccount(new Command(response.CommandID, accountID), methodName, methodArgs, 'notify.investment.resumed');
       })
     );
   }
@@ -547,7 +547,7 @@ export class DataService {
           Target: valueObj['target']
         }).pipe(
           map((response: any) => {
-            this.updateAccount(new Command(response.CommandID, accountID), methodName, methodArgs, 'Цель инвестиции изменена');
+            this.updateAccount(new Command(response.CommandID, accountID), methodName, methodArgs, 'notify.investment.target.changed');
           })
         )
       );
@@ -560,7 +560,7 @@ export class DataService {
           Protection: valueObj['protection']
         }).pipe(
           map((response: any) => {
-            this.updateAccount(new Command(response.CommandID, accountID), methodName, methodArgs, 'Защита инвестиции изменена');
+            this.updateAccount(new Command(response.CommandID, accountID), methodName, methodArgs, 'notify.investment.protection.changed');
           })
         )
       );
@@ -573,7 +573,7 @@ export class DataService {
           Factor: valueObj['factor']
         }).pipe(
           map((response: any) => {
-            this.updateAccount(new Command(response.CommandID, accountID), methodName, methodArgs, 'Множитель инвестиции изменен');
+            this.updateAccount(new Command(response.CommandID, accountID), methodName, methodArgs, 'notify.investment.factor.changed');
           })
         )
       );
@@ -592,7 +592,7 @@ export class DataService {
     this.loaderService.showLoader();
     return this.http.post(`${this.apiUrl}/accounts.withdraw`, {AccountID: accountId, Amount: amount}).pipe(
       map((response: any) => {
-        this.updateAccount(new Command(response.CommandBalanceID, accountId), methodName, methodArgs, 'Средства выведены');
+        this.updateAccount(new Command(response.CommandBalanceID, accountId), methodName, methodArgs, 'notify.investment.withdrawn');
       })
     );
   }
@@ -602,7 +602,7 @@ export class DataService {
     this.loaderService.showLoader();
     return this.http.post(`${this.apiUrl}/accounts.close`, {AccountID: accountID}).pipe(
       map((response: any) => {
-        this.updateAccount(new Command(response.CommandID, accountID), methodName, methodArgs, 'Инвестиция закрыта');
+        this.updateAccount(new Command(response.CommandID, accountID), methodName, methodArgs, 'notify.investment.closed');
       })
     );
   }
@@ -750,7 +750,7 @@ export class DataService {
       this.loaderService.hideLoader();
       this.ratingStrategiesSubject.next(strategies);
     }, (error: HttpErrorResponse) => {
-      this.notificationsService.open('При загрузке данных произошла ошибка', {
+      this.notificationsService.open('notify.loading.error', {
         type: 'error',
         autoClose: true,
         duration: 3000

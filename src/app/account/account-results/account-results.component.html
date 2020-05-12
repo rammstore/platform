@@ -4,15 +4,15 @@
       <thead><tr></tr></thead>
       <tbody>
       <tr>
-        <td translate>Доступно</td>
+        <td translate>common.available</td>
         <td class="accent">{{wallet.balance | customCurrency}} USD</td>
       </tr>
       <tr>
-        <td translate>Инвестировано</td>
+        <td translate>common.invested</td>
         <td class="positive">{{wallet.invested | customCurrency}} USD</td>
       </tr>
       <tr>
-        <td translate>Средства</td>
+        <td translate>common.equity</td>
         <td>{{wallet.getEquity() | customCurrency}} USD</td>
       </tr>
       </tbody>
@@ -30,7 +30,7 @@
   </div>
 
   <div class="chart-container">
-    <i class="fa fa-question-circle-o" [tooltip]="'Вы также можете посмотреть эти значения в верхнем правом углу' | translate"></i>
+    <i class="fa fa-question-circle-o" [tooltip]="'account.result.chart.help.tooltip' | translate"></i>
     <div id="accountWalletChartContainer"></div>
     <app-chart-wallet-info [wallet]="wallet" containerID="accountWalletChartContainer"></app-chart-wallet-info>
   </div>

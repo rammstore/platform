@@ -22,7 +22,7 @@ export class DataTableComponent implements OnInit, OnDestroy {
   coloredFields: string[] = ['yield', 'profit', 'totalProfit', 'intervalPnL', 'account.intervalPnL', 'amount', 'strategy.profit', 'profit', 'swap'];
   @Input() paginator: Paginator;
   @Input() shouldHighlightMyStrategies: boolean = false;
-  @Input() emptyDataText: string = 'Нет данных для отображения';
+  @Input() emptyDataText: string = 'common.table.label.no-data';
   @Output() paginationChanged: EventEmitter<void> = new EventEmitter();
   @Input() methodName: string;
   @Input() methodArgs: any;

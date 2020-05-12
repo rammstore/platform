@@ -15,30 +15,30 @@
 
     <div class="content-container">
       <div class="content">
-        <h1 translate>Вход в систему</h1>
+        <h1 translate>login.title</h1>
 
         <form [formGroup]="form" (ngSubmit)="submit()" *ngIf="!otp">
           <div class="field">
-            <label translate>Ваш логин или почта</label>
+            <label translate>login.form.label.login</label>
             <input type="text" formControlName="login">
             <label *ngIf="form.get('login').touched && form.get('login').hasError('required')" class="error" translate>
-              Пожалуйста, введите ваш логин или почту.
+              login.form.login.error.required
             </label>
           </div>
 
           <div class="field">
-            <label translate>Ваш пароль</label>
+            <label translate>login.form.label.password</label>
             <input type="password" formControlName="password">
             <label *ngIf="form.get('password').touched && form.get('password').hasError('required')" class="error" translate>
-              Пожалуйста, введите ваш пароль.
+              login.form.password.error.required
             </label>
           </div>
 
           <div class="error-message" *ngIf="isWrongCredentials" translate>
-            Вы ввели неправильное имя пользователя или пароль.
+            login.form.error.credentials
           </div>
 
-          <button type="submit" translate>Вход</button>
+          <button type="submit" translate>login.form.button.submit.label</button>
         </form>
 
         <div class="links">

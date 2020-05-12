@@ -1,7 +1,7 @@
 <app-content-tabs [links]="links">
   <router-outlet (activate)="onRouterOutletActivate($event)"></router-outlet>
-  <button *ngIf="!functionality['externalStrategyCreation']" class="primary header-control" (click)="openAddStrategyDialog()" translate>Создать стратегию</button>
+  <button *ngIf="!functionality['externalStrategyCreation']" class="primary header-control" (click)="openAddStrategyDialog()" translate>strategy.button.create</button>
   <a *ngIf="functionality['externalStrategyCreation']" [href]="'strategyCreate.link' | translate" target="_blank">
-    <button class="primary header-control" translate>Создать стратегию</button>
+    <button class="primary header-control" translate>strategy.button.create</button>
   </a>
 </app-content-tabs>

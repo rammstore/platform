@@ -26,14 +26,14 @@ export class InvestmentsDetailsPositionsComponent implements OnInit, OnDestroy {
   // table settings
   tableHeader: TableHeaderRow[] = [
     new TableHeaderRow([
-      new TableColumn({ property: 'symbol', label: 'Инструмент'}),
-      new TableColumn({ property: 'type', label: 'Тип'}),
-      new TableColumn({ property: 'volume', label: 'Объем' }),
-      new TableColumn({ property: 'price', label: 'Цена открытия' }),
-      new TableColumn({ property: 'currentPrice', label: 'Текущая цена' }),
-      new TableColumn({ property: 'profit', label: 'Прибыль, USD', pipe: { pipe: CustomCurrencyPipe } }),
-      new TableColumn({ property: 'swap', label: 'Своп, USD', pipe: { pipe: CustomCurrencyPipe } }),
-      new TableColumn({ property: 'totalProfit', label: 'Итого прибыль, USD', pipe: { pipe: CustomCurrencyPipe } }),
+      new TableColumn({ property: 'symbol', label: 'common.table.label.symbol'}),
+      new TableColumn({ property: 'type', label: 'common.type'}),
+      new TableColumn({ property: 'volume', label: 'common.table.label.volume' }),
+      new TableColumn({ property: 'price', label: 'common.table.label.priceOpen' }),
+      new TableColumn({ property: 'currentPrice', label: 'common.table.label.priceCurrent' }),
+      new TableColumn({ property: 'profit', label: 'common.table.label.yieldUSD', pipe: { pipe: CustomCurrencyPipe } }),
+      new TableColumn({ property: 'swap', label: 'common.table.label.swapUSD', pipe: { pipe: CustomCurrencyPipe } }),
+      new TableColumn({ property: 'totalProfit', label: 'common.table.label.yieldTotalUSD', pipe: { pipe: CustomCurrencyPipe } }),
     ]),
   ];
   // totalFields: string[] = ['profit', 'swap', 'totalProfit'];
@@ -61,7 +61,6 @@ export class InvestmentsDetailsPositionsComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe((result: {positions: Position[], totals: object}) => {
         this.totals = result.totals;
-        console.log(this.totals);
         result.positions.forEach((position: Position) => {
           if (position.volume) {
             position.volume = Math.abs(position.volume);

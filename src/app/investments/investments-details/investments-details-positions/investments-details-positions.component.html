@@ -2,7 +2,7 @@
                 [tableHeader]="tableHeader"
                 [paginator]="paginator"
                 (paginationChanged)="getPositions()"
-                [emptyDataText]="'Нет позиций'"
+                [emptyDataText]="'common.table.empty.positions' | translate"
                 [totals]="totals">
 </app-data-table>
 
@@ -11,42 +11,42 @@
   <div class="position" *ngFor="let position of positions">
     <div class="info">
       <div class="item">
-        <span translate>Инструмент</span>
+        <span translate>common.table.label.symbol</span>
         <span>{{position.symbol}}</span>
       </div>
 
       <div class="item">
-        <span translate>Тип</span>
+        <span translate>common.table.label.type</span>
         <span>{{position.type}}</span>
       </div>
 
       <div class="item">
-        <span translate>Объем</span>
+        <span translate>common.table.label.volume</span>
         <span>{{position.volume}}</span>
       </div>
 
       <div class="item">
-        <span translate>Цена открытия</span>
+        <span translate>common.table.label.priceOpen</span>
         <span>{{position.price}}</span>
       </div>
 
       <div class="item">
-        <span translate>Текущая цена</span>
+        <span translate>common.table.label.priceCurrent</span>
         <span>{{position.currentPrice}}</span>
       </div>
 
       <div class="item">
-        <span><span translate>Прибыль</span>, USD</span>
+        <span><span translate>common.table.label.yield</span>, USD</span>
         <span>{{position.profit}}</span>
       </div>
 
       <div class="item">
-        <span><span translate>Своп</span>, USD</span>
+        <span><span translate>common.table.label.swap</span>, USD</span>
         <span>{{position.swap}}</span>
       </div>
 
       <div class="item">
-        <span><span translate>Итого прибыль</span>, USD</span>
+        <span><span translate>common.table.label.yieldTotal</span>, USD</span>
         <span>{{position.totalProfit}}</span>
       </div>
     </div>
@@ -55,15 +55,15 @@
 
 <div class="totals" *ngIf="positions && positions.length">
   <div class="total">
-    <div translate class="text-center total-title">Прибыль, USD</div>
+    <div class="text-center total-title"><span translate>common.table.label.yield</span>, USD</div>
     <div class="text-center">{{totals['profit']}}</div>
   </div>
   <div class="total">
-    <div translate class="text-center total-title">Своп, USD</div>
+    <div translate class="text-center total-title"><span translate>common.table.label.swap</span>, USD</div>
     <div class="text-center">{{totals['swap']}}</div>
   </div>
   <div class="total">
-    <div translate class="text-center total-title">Итого прибыль, USD</div>
+    <div translate class="text-center total-title"><span translate>common.table.label.yieldTotal</span>, USD</div>
     <div class="text-center">{{totals['totalProfit']}}</div>
   </div>
 </div>

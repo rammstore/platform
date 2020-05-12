@@ -24,10 +24,10 @@ export class StrategyDetailsInvestmentsClosedComponent implements OnInit, OnDest
   // table settings
   tableHeader: TableHeaderRow[] = [
     new TableHeaderRow([
-      new TableColumn({ property: 'account.id', label: 'Инвестиция'}),
-      new TableColumn({ property: 'dtCreated', label: 'Создана', pipe: { pipe: CustomDatePipe }}),
-      new TableColumn({ property: 'dtClosed', label: 'Закрыта', pipe: { pipe: CustomDatePipe }}),
-      new TableColumn({ property: 'age', label: 'Возраст, недель', pipe: { pipe: CustomCurrencyPipe } }),
+      new TableColumn({ property: 'account.id', label: 'common.investment'}),
+      new TableColumn({ property: 'dtCreated', label: 'common.table.label.created', pipe: { pipe: CustomDatePipe }}),
+      new TableColumn({ property: 'dtClosed', label: 'common.table.label.closed', pipe: { pipe: CustomDatePipe }}),
+      new TableColumn({ property: 'age', label: 'common.age', pipe: { pipe: CustomCurrencyPipe } }),
       new TableColumn({ property: 'profitCurrentIntervalGross', label: 'PL', pipe: { pipe: CustomCurrencyPipe } })
     ]),
   ];

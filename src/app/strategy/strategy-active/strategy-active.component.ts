@@ -24,13 +24,13 @@ export class StrategyActiveComponent implements OnInit, OnDestroy {
   // table settings
   tableHeader: TableHeaderRow[] = [
     new TableHeaderRow([
-      new TableColumn({ property: 'name', label: 'Название'}),
-      new TableColumn({ property: 'account.equity', label: 'Средства, USD', pipe: { pipe: CustomCurrencyPipe }}),
-      new TableColumn({ property: 'accountsCount', label: 'Инвесторы'}),
-      new TableColumn({ property: 'offer.fee', label: 'Вознаграждение', pipe: { pipe: PercentPipe }}),
-      new TableColumn({ property: 'feePaid', label: 'Выплаченное вознаграждение, USD', pipe: { pipe: CustomCurrencyPipe }}),
-      new TableColumn({ property: 'account.intervalPnL', label: 'Прибыль, USD', pipe: { pipe: CustomCurrencyPipe } }),
-      new TableColumn({ property: 'feeToPay', label: 'Невыплаченное вознаграждение, USD', pipe: { pipe: CustomCurrencyPipe }}),
+      new TableColumn({ property: 'name', label: 'common.table.label.name'}),
+      new TableColumn({ property: 'account.equity', label: 'common.table.label.equityUSD', pipe: { pipe: CustomCurrencyPipe }}),
+      new TableColumn({ property: 'accountsCount', label: 'common.table.label.investors'}),
+      new TableColumn({ property: 'offer.fee', label: 'common.fee', pipe: { pipe: PercentPipe }}),
+      new TableColumn({ property: 'feePaid', label: 'common.table.label.feePaidUSD', pipe: { pipe: CustomCurrencyPipe }}),
+      new TableColumn({ property: 'account.intervalPnL', label: 'common.table.label.yieldUSD', pipe: { pipe: CustomCurrencyPipe } }),
+      new TableColumn({ property: 'feeToPay', label: 'common.table.label.feeToPayUSD', pipe: { pipe: CustomCurrencyPipe }}),
       new TableColumn({ property: 'manage', label: '' })
     ]),
   ];
