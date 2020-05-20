@@ -35,7 +35,7 @@
   	
   	"account.manage.addTo": "Añadir a la inversión",
   	"account.manage.pause.message": "Todas las posiciones se cerraran. Las nuevas posiciones no se abrirán hasta que se elimine la pausa",
-  	"account.manage.pause.title": "Pausar inversion",
+  	"account.manage.pause.title": "Pausar inversión",
   	"account.manage.resume.title": "Reanudar la inversión",
   	"account.manage.strategy.pause.message": "Todas las posiciones de todos los inversores de esta estrategia se cerraran. No se abrirán nuevas posiciones hasta que se elimine la pausa",
   	"account.manage.strategy.pause.title": "Pausar estrategia",
@@ -80,7 +80,7 @@
 	"common.freeMargin": "Margen libre",
 	"common.fund": "Fondo",
 	"common.invested": "Invertido",
-	"common.investment": "Inversion",
+	"common.investment": "Inversión",
   	"common.investments": "Inversiones",
   	"common.margin": "Margen",
   	"common.marginLevel": "Nivel de margen",
@@ -91,6 +91,10 @@
   	"common.protection": "Proteccion",
   	"common.refreshed": "Refrescar",
   	"common.step": "Paso",
+
+  "common.step 1: strategy.add.title.strategy": "Paso 1: Configuracion de estrategia",
+  "common.step 2: strategy.add.title.investments": "Paso 2: Configuracion de inversión",
+  
 	"common.strategy": "Estrategia",
 	"common.target": "Objetivo",
 	"common.type": "Tipo",
@@ -100,12 +104,12 @@
 	"common.label.iWant": "Quiero:",
 
 	"common.manage.close": "Cerca",
-	"common.manage.closeInvestment": "Cerrar inversion",
+	"common.manage.closeInvestment": "Cerrar inversión",
   	"common.manage.closeStrategy": "Estrategia cercana",
   	"common.manage.download": "Descargar",
   	"common.manage.invest": "Invertir",
   	"common.manage.signalScript": "Script de señal",
-  	"common.manage.statement": "Declaracion de inversion",
+  	"common.manage.statement": "Declaración de inversión",
   	"common.manage.withdraw": "Retirar",
   	 	  	
   	"common.table.empty.deals": "No hay ofertas",	  	
@@ -186,9 +190,9 @@
   	"investment.details.investmentProfile.protection-equity": "Proteccion, USD",
   	"investment.details.investmentProfile.target": "Objetivo",
   	"investment.details.investmentProfile.target-equity": "Target, USD",
-  	"investment.details.investmentProfile.title": "Perfil de inversion",
+  	"investment.details.investmentProfile.title": "Perfil de inversión",
 
-	"investment.details.message.investor": "Esta inversion pertenece a un inversor de su estrategia",
+	"investment.details.message.investor": "Esta inversión pertenece a un inversor de su estrategia",
   	"investment.details.message.owner": "La funcionalidad completa solo está disponible para el propietario de la inversión",
 
   	"login.form.button.submit.label": "Iniciar sesion",
@@ -197,7 +201,7 @@
   	"login.form.label.password": "Tu contraseña",
   	"login.form.login.error.required": "Ingrese su nombre de usuario o correo electronico",
   	"login.form.password.error.required": "Por favor, introduzca su contraseña.",
-  	"login.title": "Iniciar sesion",
+  	"login.title": "Iniciar sesión",
 
   	"managePassword.form.button": "Cambia la contraseña",
  	"managePassword.form.confirm.error.mismatch": "Las contraseñas no coinciden",
@@ -214,7 +218,7 @@
 	"myStrategies.active.title": "Activo",
   	"myStrategies.closed.title": "Cerrado",
 
- 	"notify.investment.access.error": "No tienes acceso a esta inversion",
+ 	"notify.investment.access.error": "No tienes acceso a esta inversión",
 	"notify.investment.closed": "La inversión está cerrada",
 	"notify.investment.created": "Se crea la inversión",
 	"notify.investment.factor.changed": "El factor de inversiÃ³n ha cambiado",
@@ -254,9 +258,9 @@
   	"spec.rating.min-positions-number.title": "numero mínimo de posiciones de mercado cerradas\t",
   	"spec.rating.min-yield.title": "Rendimiento minimo",
   	"spec.rating.min-yield.value": "Positivo",
-  	"spec.rating.title": "Clasificacion",
+  	"spec.rating.title": "Clasificación",
 
-  	"strategy.add.form.label.amount": "Monto de la inverison",
+  "strategy.add.form.label.amount": "Monto de la inverison",
 	"strategy.add.form.label.commission": "Tasa de rotacion",
 	"strategy.add.form.label.fee": "Tarifa",
 	"strategy.add.form.label.name": "Nombre de la estrategia",
@@ -266,16 +270,16 @@
 	"strategy.add.script.download.title": "Descargar script de señal",
 	"strategy.add.script.message": "Su estrategia se ha creado con exito. <br> Para enviar señales desde su cuenta comercial MetaTrader 4 o MetaTrader 5, descargue el script de señal y ejecútelo en su terminal MetaTrader. <br> También puede descargarlo más tarde seleccionando la opción correspondiente en el menú contextual de su estrategia. <br> 1. Antes de iniciar el EA por primera vez, asegúrese de que la URL RAMM está en la lista de URL permitidas en su MetaTrader. <br> Para eso, en el menú Herramientas - Opciones - Los asesores expertos agregan https://maindc.ramm.store/api/trading/v1/signals.send a la tabla "Permitir WebRequest para la URL listada:" <br> 2. Coloque el EA en cualquier ventana de gráfico. <br> Desde ahora, todos los cambios en su cuenta se copiaran a su estrategia en RAMM.",
   	"strategy.add.script.title": "Listo!",
-	"strategy.add.title.investments": "Configuracion de inversion",
+	"strategy.add.title.investments": "Configuracion de inversión",
 	"strategy.add.title.strategy": "Configuracion de estrategia",
 	"strategy.button.create": "Crear estrategia",
 
-	"strategy.close.form.text": "Â¿Confirmas cerrar tu estrategia?",
+	"strategy.close.form.text": "¿Confirmas cerrar tu estrategia?",
   	"strategy.close.form.text2": "Si hubiera invertido en su propia estrategia, su cuenta de inversión también se cerraría. Tenga en cuenta que esta acción es irreversible",
 
 	"strategy.details.investments.active.title": "Activo",
   	"strategy.details.investments.closed.title": "Cerrado",
-  	"strategy.details.message.chart": "El grafico muestra el rendimiento de la estrategia de acuerdo con la inversion del comerciante. El rendimiento se calcula sin la deduccion de honorarios del comerciante",
+  	"strategy.details.message.chart": "El grafico muestra el rendimiento de la estrategia de acuerdo con la inversión del comerciante. El rendimiento se calcula sin la deduccion de honorarios del comerciante",
   	"strategy.details.message.closed": "El comerciante ha cerrado la estrategia, por lo que ya no está disponible para invertir",
   	"strategy.details.message.pageForbidden": "Esta página no es visible para otros usuarios",
   	"strategy.details.message.risk": "Advertencia de riesgo: los resultados de operaciones comerciales anteriores no garantizan los mismos resultados en el futuro",
@@ -306,9 +310,9 @@
   		
 	"strategy.invest.form.title": "Invertir en estrategia",
 
-    	"table.cell.accountNumberCopy": "El número de cuenta desde la que se realiza el intercambio de copias",
-  	"table.cell.loading": "Cargando...",
-  	"table.cell.total": "Total",
+  "table.cell.accountNumberCopy": "El número de cuenta desde la que se realiza el intercambio de copias",
+  "table.cell.loading": "Cargando...",
+  "table.cell.total": "Total",
 	"table.footer.itemsPerPage": "Artículos por página",
 	"table.footer.itemsTotal": "Artículos totales",
 	"table.footer.pageNext": "Próximo",
