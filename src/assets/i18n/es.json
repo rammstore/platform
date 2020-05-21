@@ -43,7 +43,7 @@
   	
   	"account.withdraw.close.current-equity": "Capital actual",
   	"account.withdraw.close.investment.title": "Cerrar inversión",
-  	"account.withdraw.close.investment.warning": " Puede cerrar su inversión en cualquier momento. Mas tarde podrá crear una nueva inversión en la misma estrategia. Inversión será 0.",
+  	"account.withdraw.close.investment.warning": "Puede cerrar su inversión en cualquier momento. Más tarde podrá crear una nueva inversión en la misma estrategia. Tenga en cuenta que después de cerrar la reducción de inversión se convertirá en 0.",
   	"account.withdraw.close.investment.warning2": "El capital actual de su inversión se calcula mediante cotizaciones indicativas. Cuando se cierra su inversión, todas las posiciones abiertas se cerrarán mediante cotizaciones de mercado actuales que pueden diferir ligeramente de las indicativas",
   	"account.withdraw.close.strategy.title": "Cerrar estrategia",
   	"account.withdraw.close.strategy.warning": "Puede cerrar una inversión en su estrategia solo cerrando la estrategia misma. Tenga en cuenta que esta acción es irreversible",
