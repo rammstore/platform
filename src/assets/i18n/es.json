@@ -159,7 +159,7 @@
   	"header.item.help": "Ayuda",
  	"header.item.investments": "Inversiones",
   	"header.item.myStrategies": "Mis estrategias",
- 	"header.item.rating": "Clasificacion",
+ 	"header.item.rating": "Clasificación",
  	"header.item.specification": "Especificación",
   	
   	"header.menu.item.changeLanguage": "Cambiar idioma",
@@ -251,7 +251,7 @@
   	"spec.platform.trading-interval.period.title": "Periodo",
   	"spec.platform.trading-interval.period.value": "Semana",
   	"spec.platform.trading-interval.title": "Intervalo comercial",
-  	"spec.rating.conditions.title": "Condiciones para publicar en clasificacion",
+  	"spec.rating.conditions.title": "Condiciones para publicar en clasificación",
   	"spec.rating.last-activity-time.title": "Ultima actividad (apertura o cierre de una posición de mercado), más tardar",
   	"spec.rating.last-activity-time.value": "365 dias calendario",
   	"spec.rating.life-term.title": "Edad mínima de una estrategia, dias",
