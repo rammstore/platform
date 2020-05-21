@@ -21,8 +21,8 @@ import { BrandService } from '@app/services/brand.service';
 import localeRu from '@angular/common/locales/ru';
 import localeEs from '@angular/common/locales/es';
 
-registerLocaleData(localeRu, localeId: 'ru');
-registerLocaleData(localeEs, localeId: 'es');
+registerLocaleData(localeRu, 'ru');
+registerLocaleData(localeEs, 'es');
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
