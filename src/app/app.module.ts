@@ -22,7 +22,7 @@ import localeRu from '@angular/common/locales/ru';
 import localeEs from '@angular/common/locales/es';
 
 registerLocaleData(localeRu, 'ru');
-registerLocaleData(localeEs, 'es');
+
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
