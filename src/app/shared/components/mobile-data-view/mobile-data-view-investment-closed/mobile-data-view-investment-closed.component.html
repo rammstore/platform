@@ -12,12 +12,12 @@
       </div>
 
       <div class="item">
-        <span>Открыта</span>
+        <span translate>common.table.label.created</span>
         <span>{{account.dtCreated | customDate}}</span>
       </div>
 
       <div class="item">
-        <span>Закрыта</span>
+        <span translate>common.table.label.closed</span>
         <span>{{account.dtClosed | customDate}}</span>
       </div>
 
@@ -27,12 +27,12 @@
       </div>
 
       <div class="item">
-        <span>common.protection</span>
+        <span translate>common.protection</span>
         <span>{{account.protection | percent}}</span>
       </div>
 
       <div class="item">
-        <span>Прибыль</span>
+        <span translate>common.table.label.yield</span>
         <span class="{{account.getColorClass('intervalPnL')}}">
           {{account.intervalPnL  | customCurrency}}
         </span>
