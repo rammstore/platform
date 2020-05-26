@@ -12,7 +12,7 @@
 
     <div class="account-info" *ngIf="strategy.account && strategy.isMy()">
       <div class="item intervalPnL">
-        <div translate>Прибыль</div>
+        <div translate>common.table.label.yield</div>
         <div class="{{strategy.account.getColorClass('intervalPnL')}}">
           {{strategy.account.intervalPnL | customCurrency}}
         </div>
@@ -22,7 +22,7 @@
         <div>{{strategy.account.getTargetAmount() | customCurrency}}</div>
       </div>
       <div class="item equity">
-        <div translate>Средства</div>
+        <div translate>common.equity</div>
         <div>{{strategy.account.equity | customCurrency}}</div>
       </div>
       <div class="item protection">
@@ -39,7 +39,7 @@
         </div>
       </div>
       <div class="property">
-        <div class="property-name" translate>Количество инвесторов</div>
+        <div class="property-name" translate>common.accountsCount</div>
         <div class="property-value">{{strategy.accountsCount}}</div>
       </div>
       <div class="property">
