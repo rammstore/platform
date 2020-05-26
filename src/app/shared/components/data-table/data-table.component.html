@@ -74,15 +74,15 @@
                 </span>
               </div>
               <div class="strategy-account-target" *ngIf="functionality['targetShow']">
-                <span><span translate>common.target</span>: </span>
+                <span><span translate>common.target</span>:" "</span>
                 <span>{{item.targetEquity | customCurrency}}</span>
               </div>
               <div class="strategy-account-equity">
-                <span><span translate>common.equity</span>: </span>
+                <span><span translate>common.equity</span>:" "</span>
                 <span>{{item.equity | customCurrency}}</span>
               </div>
               <div class="strategy-account-protection" *ngIf="functionality['protectionShow']">
-                <span><span translate>common.protection</span>: </span>
+                <span><span translate>common.protection</span>:" "</span>
                 <span>{{item.protectionEquity | customCurrency}}</span>
               </div>
             </div>
