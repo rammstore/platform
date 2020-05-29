@@ -8,6 +8,7 @@ import { DataService } from '@app/services/data.service';
 import { WalletService } from '@app/services/wallet.service';
 import { StrategyAddScriptComponent } from './strategy-add-script/strategy-add-script.component';
 import { BrandService } from '@app/services/brand.service';
+import {NotificationsService} from "@app/services/notifications.service";
 
 @Component({
   selector: 'app-strategy-add',
@@ -35,6 +36,7 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
     private dataService: DataService,
     private modalService: BsModalService,
     public modalRef: BsModalRef,
+    private notificationsService: NotificationsService,
     private brandService: BrandService
   ) { }
 
@@ -54,7 +56,7 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
       });
   }
 
-  buildFormStep1(): void {
+  buildFormStep1(): void { debugger
     this.formStep1 = this.fb.group({
       name: ['', [Validators.required, Validators.pattern('^[0-9a-zA-Z_!,.? ]*$')]],
       fee: [25, [Validators.min(0), Validators.max(50)]],
@@ -65,8 +67,8 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
     this.formStep1.get('name').setErrors({isUniq: true});
   }
 
-  buildFormStep2(): void {
-    this.formStep2 = this.fb.group({
+  buildFormStep2(): void { debugger
+    this.formStep2 = this.fb.group( {
       money: [(Math.round(this.wallet.balance / 10)), [Validators.min(this.accountMinBalance), Validators.max(this.wallet.balance), Validators.required, Validators.pattern('^[0-9]+([\\,\\.][0-9]{1,2})?$')]],
       target: [this.functionality['TargetChangeAllow'] ? 100 : 0, [Validators.required, Validators.min(0), Validators.pattern('^[0-9]*')]],
       protection: [this.functionality['ProtectionChangeAllow'] ? 50 : 0, [Validators.required, Validators.min(0), Validators.max(99), Validators.pattern('^[0-9]*')]]
@@ -81,7 +83,9 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
     }
 
     this.currentStep = 2;
-    this.buildFormStep2();
+    if (!this.formStep2) {
+      this.buildFormStep2();
+    }
   }
 
   submitStep2(): void {
@@ -103,16 +107,15 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
 
     this.dataService.addStrategy(strategy, this.methodName, this.methodArgs)
       .pipe(takeUntil(this.destroy$))
-      .subscribe((newStrategy: Strategy) => {
-        this.modalRef.hide();
-        this.openAddStrategyScriptDialog(newStrategy);
-        // this.dataService.getActiveMyStrategies({
-        //   paginator: new Paginator({
-        //     perPage: 10,
-        //     currentPage: 1
-        //   })
-        // });
-      });
+      .subscribe(
+        (newStrategy: Strategy) => {
+          this.modalRef.hide();
+          this.openAddStrategyScriptDialog(newStrategy);
+        },
+        error => {
+          // this.notificationsService.open('Error');
+        }
+        );
   }
 
   back(): void {
