@@ -107,7 +107,7 @@
           </label>
           <label class="error-message"
                  *ngIf="formStep2.get('target').touched && formStep2.get('target').hasError('min') && !formStep2.get('target').hasError('pattern')">
-            <span translate>strategy.form.target.error.min</span> - 0.
+            <span translate>strategy.form.target.error.min</span> - 1.
           </label>
           <label class="details-message" *ngIf="formStep2.get('money').value && formStep2.get('target').value && formStep2.valid">
             {{((formStep2.get('money').value * formStep2.get('target').value) / 100) | customCurrency}}
@@ -133,7 +133,7 @@
           </label>
           <label class="error-message"
                  *ngIf="formStep2.get('protection').touched && formStep2.get('protection').hasError('min') && !formStep2.get('protection').hasError('pattern')" translate>
-            strategy.form.protection.error.min
+            strategy.form.protection.error.min - 0.
           </label>
           <label class="error-message"
                  *ngIf="formStep2.get('protection').touched && formStep2.get('protection').hasError('pattern')" translate>
