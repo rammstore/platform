@@ -56,7 +56,7 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
       });
   }
 
-  buildFormStep1(): void { debugger
+  buildFormStep1(): void {
     this.formStep1 = this.fb.group({
       name: ['', [Validators.required, Validators.pattern('^[0-9a-zA-Z_!,.? ]*$')]],
       fee: [25, [Validators.min(0), Validators.max(50)]],
