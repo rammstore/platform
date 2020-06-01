@@ -67,7 +67,7 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
     this.formStep1.get('name').setErrors({isUniq: true});
   }
 
-  buildFormStep2(): void { debugger
+  buildFormStep2(): void {
     this.formStep2 = this.fb.group( {
       money: [(Math.round(this.wallet.balance / 10)), [Validators.min(this.accountMinBalance), Validators.max(this.wallet.balance), Validators.required, Validators.pattern('^[0-9]+([\\,\\.][0-9]{1,2})?$')]],
       target: [this.functionality['TargetChangeAllow'] ? 100 : 0, [Validators.required, Validators.min(0), Validators.pattern('^[0-9]*')]],
