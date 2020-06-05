@@ -10,22 +10,22 @@
 
     <div class="info">
       <div class="item">
-        <span translate>Средства</span>
+        <span translate>common.equity</span>
         <span *ngIf="strategy.account">{{strategy.account.equity | customCurrency}}</span>
       </div>
 
       <div class="item">
-        <span translate>Инвесторы</span>
+        <span translate>common.table.label.investors</span>
         <span>{{strategy.accountsCount}}</span>
       </div>
 
       <div class="item">
-        <span translate>Вознаграждение</span>
+        <span translate>common.fee</span>
         <span>{{strategy.offer.fee | percent}}</span>
       </div>
 
       <div class="item">
-        <span translate>Доходность стратегии</span>
+        <span translate>common.table.label.yieldUSD</span>
         <span  *ngIf="strategy.account"
                class="{{strategy.getColorClass('profit')}}">
           {{strategy.account.intervalPnL}}

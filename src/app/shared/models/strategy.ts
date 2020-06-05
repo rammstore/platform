@@ -42,7 +42,7 @@ export class Strategy {
 
   getAgeWeeks(): number {
     const now: number = new Date().getTime();
-    const created: number = new Date(this.dtCreated).getTime();
+    const created: number = new Date(this.dtStat).getTime();
 
     if (this.ageByDays === 0) {
       return 0;

@@ -10,7 +10,7 @@
 
     <div class="account-info">
       <div class="item intervalPnL">
-        <div translate>Прибыль</div>
+        <div translate>common.table.label.yield</div>
         <div class="{{account.getColorClass('intervalPnL')}}">
           {{account.intervalPnL | customCurrency}}
         </div>
@@ -20,7 +20,7 @@
         <div>{{account.getTargetAmount() | customCurrency}}</div>
       </div>
       <div class="item equity">
-        <div translate>Средства</div>
+        <div translate>common.equity</div>
         <div>{{account.equity | customCurrency}}</div>
       </div>
       <div class="item protection">
@@ -31,13 +31,13 @@
 
     <div class="properties">
       <div class="property">
-        <span class="property-name" translate>Доходность стратегии</span>
+        <span class="property-name" translate>common.yield</span>
         <span class="property-value {{account.strategy.getColorClass('profit')}}">
           {{account.strategy.profit | percent:'1.0-2'}}
         </span>
       </div>
       <div class="property">
-        <span class="property-name" translate>Age, weeks</span>
+        <span class="property-name" translate>common.age</span>
         <span class="property-value">{{account.getAgeWeeks()}}</span>
       </div>
     </div>
