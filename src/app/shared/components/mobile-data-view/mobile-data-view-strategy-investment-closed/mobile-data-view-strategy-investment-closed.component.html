@@ -6,22 +6,22 @@
 
     <div class="info">
       <div class="item">
-        <span>Создана</span>
+        <span translate>investment.details.investment.created</span>
         <span>{{account.dtCreated | customDate}}</span>
       </div>
 
       <div class="item">
-        <span>Закрыта</span>
+        <span translate>investment.details.investment.closed</span>
         <span>{{account.dtClosed | customDate}}</span>
       </div>
 
       <div class="item">
-        <span>common.age</span>
+        <span translate>common.age</span>
         <span>{{account.getAgeWeeks()}}</span>
       </div>
 
       <div class="item">
-        <span>PL</span>
+        <span translate>common.profit-and-loss</span>
         <span>{{account.profitCurrentIntervalGross | customCurrency}}</span>
       </div>
     </div>

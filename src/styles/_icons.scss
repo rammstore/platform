@@ -33,6 +33,11 @@ i.icon-flag {
   &.ru {
     background-position: -672px -19px;
   }
+  &.es {
+    background: url('/assets/images/flags/es.png')!important;
+    background-position: 0!important;
+    background-size: 100% !important;
+  }
 }
 
 i.icon-add {

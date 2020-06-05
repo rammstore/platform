@@ -32,7 +32,7 @@ export class InvestmentsClosedComponent implements OnInit, OnDestroy {
       new TableColumn({property: 'dtCreated', label: 'common.table.label.created', pipe: {pipe: CustomDatePipe}, colored: true}),
       new TableColumn({property: 'dtClosed', label: 'common.table.label.closed', pipe: {pipe: CustomDatePipe}, colored: true}),
       new TableColumn({property: 'age', label: 'common.age', colored: true}),
-      new TableColumn({property: 'intervalPnL', label: 'common.yield', pipe: {pipe: CustomCurrencyPipe}, colored: true}),
+      new TableColumn({property: 'intervalPnL', label: 'common.table.label.yield', pipe: {pipe: CustomCurrencyPipe}, colored: true}),
       new TableColumn({property: 'investmentDetails', label: ''})
     ])
   ];

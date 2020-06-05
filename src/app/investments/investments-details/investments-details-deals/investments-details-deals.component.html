@@ -66,11 +66,11 @@
 <div class="totals" *ngIf="deals && deals.length">
   <div class="total">
     <div translate class="text-center total-title"><span translate>Прибыль</span>, USD</div>
-    <div class="text-center">{{totals['profit']}}</div>
+    <div class="text-center">{{(totals['profit'] || 0).toFixed(2)}}</div>
   </div>
   <div class="total">
     <div translate class="text-center total-title"><span translate>Своп</span>, USD</div>
-    <div class="text-center">{{totals['swap']}}</div>
+    <div class="text-center">{{(totals['swap'] || 0).toFixed(2)}}</div>
   </div>
   <div class="total">
     <div translate class="text-center total-title"><span translate>Итого прибыль</span>, USD</div>
