@@ -91,7 +91,7 @@
                  *ngSwitchCase="'strategy.investmentInfo'">
               <ng-container class="investmentInfo" *ngIf="item.account">
                 <div class="strategy-account-intervalPnL">
-                  <span><span translate>common.yield</span>:</span>
+                  <span><span translate>common.table.label.yield</span>:</span>
                   <span [class.positive]="item.account.intervalPnL > 0" [class.negative]="item.account.intervalPnL < 0">
                   {{item.account.intervalPnL | customCurrency}}
                 </span>

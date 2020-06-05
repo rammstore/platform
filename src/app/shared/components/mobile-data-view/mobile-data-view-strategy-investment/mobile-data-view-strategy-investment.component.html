@@ -6,32 +6,32 @@
 
     <div class="info">
       <div class="item">
-        <span>Дата</span>
+        <span translate>common.date</span>
         <span>{{account.dtCreated | customDate}}</span>
       </div>
 
       <div class="item">
-        <span>Средства</span>
+        <span translate>common.equity</span>
         <span>{{account.equity | customCurrency}}</span>
       </div>
 
       <div class="item">
-        <span>Gross PL с начала недели</span>
+        <span translate>common.table.label.grossPLUSD</span>
         <span>{{account.profitCurrentIntervalGross | customCurrency}}</span>
       </div>
 
       <div class="item">
-        <span>Выплаченное вознаграждение</span>
+        <span translate>common.table.label.feePaidUSD</span>
         <span>{{account.feePaid | customCurrency}}</span>
       </div>
 
       <div class="item">
-        <span>Выплаченная комиссия</span>
+        <span translate>common.table.label.commissionPaidUSD</span>
         <span>{{account.totalCommissionTrader | customCurrency}}</span>
       </div>
 
       <div class="item">
-        <span>Невыплаченное вознаграждение</span>
+        <span translate>common.table.label.feeToPayUSD</span>
         <span>{{account.feeToPay | customCurrency}}</span>
       </div>
     </div>

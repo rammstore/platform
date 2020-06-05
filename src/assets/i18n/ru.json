@@ -88,6 +88,7 @@
   "common.pause": "Пауза",
   "common.pause2": "паузы",
   "common.perWeek": "в неделю",
+  "common.profit-and-loss": "PL",
   "common.protection": "Защита",
   "common.refreshed": "Обновлено",
   "common.step": "Шаг",
@@ -217,6 +218,7 @@
 
   "myStrategies.active.title": "Активные",
   "myStrategies.closed.title": "Закрытые",
+  "myStrategies.yield": "Доходность стратегии",
 
   "notify.investment.access.error": "У вас нет доступа к данной инвестиции",
   "notify.investment.closed": "Инвестиция закрыта",
