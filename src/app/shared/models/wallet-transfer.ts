@@ -45,9 +45,9 @@ export class WalletTransfer {
       case 3:
         return 'Bonus withdraw';
       case 4:
-        return common.type4;
+        return "To account";
       case 5:
-        return common.type5;
+        return "From account";
       case 6:
         return 'Fee from';
       case 7:
