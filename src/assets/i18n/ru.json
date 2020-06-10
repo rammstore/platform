@@ -99,6 +99,8 @@
   "common.strategy": "Стратегия",
   "common.target": "Цель",
   "common.type": "Тип",
+  "common.type4":"На счет",
+  "common.type5":"Со счета",
   "common.yield": "Доходность",
   "common.yieldMonthly": "Доходность в месяц",
    
@@ -218,7 +220,6 @@
 
   "myStrategies.active.title": "Активные",
   "myStrategies.closed.title": "Закрытые",
-  "myStrategies.yield": "Доходность стратегии",
 
   "notify.investment.access.error": "У вас нет доступа к данной инвестиции",
   "notify.investment.closed": "Инвестиция закрыта",
