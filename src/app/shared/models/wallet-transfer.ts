@@ -35,7 +35,7 @@ export class WalletTransfer {
   }
 
   getType(): string {
-    switch (this.type) {
+    <span translate> switch (this.type) {
       case 0:
         return 'Fund';
       case 1:
@@ -54,7 +54,7 @@ export class WalletTransfer {
         return 'Commission from';
       case 8:
         return 'Partners';
-    }
+    } </span>
   }
 
   isExternal(): boolean {
