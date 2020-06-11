@@ -39,21 +39,21 @@ export class WalletTransfer {
       case 0:
         return 'common.type0';
       case 1:
-        return 'Withdraw';
+        return 'common.type1';
       case 2:
-        return 'Bonus fund';
+        return 'common.type2';
       case 3:
-        return 'Bonus withdraw';
+        return 'common.type3';
       case 4:
-        return 'To account';
+        return 'common.type4';
       case 5:
-        return 'From account';
+        return 'common.type5';
       case 6:
-        return 'Fee from';
+        return 'common.type6';
       case 7:
-        return 'Commission from';
+        return 'common.type7';
       case 8:
-        return 'Partners';
+        return 'common.type8';
     }
   }
 
