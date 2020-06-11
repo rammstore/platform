@@ -101,6 +101,8 @@
 	"common.type": "Tipo",
   "common.type0":"Depositar",
   "common.type1":"Retirada",
+  "common.type2":"Depositar un bono",
+  "common.type3":"Retirada un bono",
   "common.type4":"A la cuenta",
   "common.type5":"Desde cuenta",
   "common.type6":"Tarifa desde",

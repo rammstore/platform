@@ -101,6 +101,8 @@
 	"common.type": "Type",
   "common.type0":"Fund",
   "common.type1":"Withdraw",
+  "common.type2":"Bonus fund",
+  "common.type3":"Bonus withdrawal",
   "common.type4":"To account",
   "common.type5":"From account",
   "common.type6":"Fee from",

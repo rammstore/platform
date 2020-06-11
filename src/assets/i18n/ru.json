@@ -101,6 +101,8 @@
   "common.type": "Тип",
   "common.type0":"Пополнение",
   "common.type1":"Вывод",
+  "common.type2":"Бонусное пополнение",
+  "common.type3":"Бонусный вывод",
   "common.type4":"На счет",
   "common.type5":"Со счета",
   "common.type6":"Вознаграждение от",
