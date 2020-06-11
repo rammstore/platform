@@ -99,8 +99,13 @@
 	"common.strategy": "Strategy",
 	"common.target": "Target",
 	"common.type": "Type",
+  "common.type0":"Fund",
+  "common.type1":"Withdraw",
   "common.type4":"To account",
   "common.type5":"From account",
+  "common.type6":"Fee from",
+  "common.type7":"Commission from",
+  "common.type8":"Partners",
   	"common.yield": "Yield",
   	"common.yieldMonthly": "Monthly yield",
   	

@@ -99,8 +99,13 @@
   "common.strategy": "Стратегия",
   "common.target": "Цель",
   "common.type": "Тип",
+  "common.type0":"Пополнение",
+  "common.type1":"Вывод",
   "common.type4":"На счет",
   "common.type5":"Со счета",
+  "common.type6":"Вознаграждение от",
+  "common.type7":"Комиссия от",
+  "common.type8":"Партнеры",
   "common.yield": "Доходность",
   "common.yieldMonthly": "Доходность в месяц",
    

@@ -37,7 +37,7 @@ export class WalletTransfer {
   getType(): string {
     switch (this.type) {
       case 0:
-        return 'Fund';
+        return common.type0;
       case 1:
         return 'Withdraw';
       case 2:
