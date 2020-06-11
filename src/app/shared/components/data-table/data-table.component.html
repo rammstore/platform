@@ -121,7 +121,9 @@
             </ng-container>
 
             <ng-container *ngSwitchCase="'type'">
-              {{item.getType()}}
+              <span translate>
+                {{item.getType()}}
+              </span>
             </ng-container>
 
             <ng-container *ngSwitchCase="'entry'">
