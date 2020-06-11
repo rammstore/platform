@@ -263,7 +263,7 @@
   	"spec.rating.last-activity-time.title": "Last activity (opening or closing a market position), not later than",
   	"spec.rating.last-activity-time.value": "365 calendar days",
   	"spec.rating.life-term.title": "Minimum age of a strategy, days\t",
-  	"spec.rating.min-positions-number.title": "Minimum number of closed market positions\t",
+  	"spec.rating.min-deals-number.title": "Minimum number of deals\t",
   	"spec.rating.min-yield.title": "Minimum yield",
   	"spec.rating.min-yield.value": "Positive",
   	"spec.rating.title": "Rating",

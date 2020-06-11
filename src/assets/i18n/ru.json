@@ -263,7 +263,7 @@
   "spec.rating.last-activity-time.title": "Время последней активности (открытие или закрытие рыночной позиции), не позднее",
   "spec.rating.last-activity-time.value": "365 календарных дней",
   "spec.rating.life-term.title": "Минимальный срок жизни стратегии, дней\t",
-  "spec.rating.min-positions-number.title": "Минимальное количество закрытых рыночных позиций\t",
+  "spec.rating.min-deals-number.title": "Минимальное количество сделок\t",
   "spec.rating.min-yield.title": "Минимальная доходность",
   "spec.rating.min-yield.value": "Положительная",
   "spec.rating.title": "Рейтинг",

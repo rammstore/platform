@@ -120,8 +120,8 @@
   	"common.manage.statement": "Declaración de inversión",
   	"common.manage.withdraw": "Retirar",
   	 	  	
-  	"common.table.empty.deals": "No hay ofertas",	  	
-  	"common.table.empty.positions": "Sin puestos",
+  	"common.table.empty.deals": "No hay acuerdos",	  	
+  	"common.table.empty.positions": "Sin posiciones",
   	
   	"common.table.label.amountUSD": "Cantidad, USD",
 	"common.table.label.closed": "Cerrado",
@@ -176,7 +176,7 @@
 	
 	"help.title": "Centro de ayuda RAMM",
 
-	"investment.deals.title": "Ofertas",
+	"investment.deals.title": "Acuerdos",
 	"investment.positions.title": "Posiciones",
   	
   	"investment.details.strategy.commission": "Comisión",
@@ -263,7 +263,7 @@
   	"spec.rating.last-activity-time.title": "Ultima actividad (apertura o cierre de una posición de mercado), más tardar",
   	"spec.rating.last-activity-time.value": "365 dias calendario",
   	"spec.rating.life-term.title": "Edad mínima de una estrategia, dias",
-  	"spec.rating.min-positions-number.title": "numero mínimo de posiciones de mercado cerradas\t",
+  	"spec.rating.min-deals-number.title": "Numero mínimo de acuerdos\t",
   	"spec.rating.min-yield.title": "Rendimiento minimo",
   	"spec.rating.min-yield.value": "Positivo",
   	"spec.rating.title": "Clasificación",
