@@ -235,7 +235,7 @@
   "notify.investment.funded": "Средства зачислены",
   "notify.investment.paused": "Инвестиция поставлена на паузу",
   "notify.investment.protection.changed": "Защита инвестиции изменена",
-  "notify.investment.resumed": "Инвестиция снята с паузы",
+  "notify.investment.resumed": "Инвестиция возобновлена",
   "notify.investment.target.changed": "Цель инвестиции изменена",
   "notify.investment.withdrawn": "Средства выведены",
   "notify.loading.error": "При загрузке данных произошла ошибка",
