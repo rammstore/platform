@@ -21,10 +21,12 @@ import { BrandService } from '@app/services/brand.service';
 import localeRu from '@angular/common/locales/ru';
 import localeEs from '@angular/common/locales/es';
 import localeTr from '@angular/common/locales/tr';
+import localeFa from '@angular/common/locales/fa';
 
 registerLocaleData(localeRu, 'ru');
 registerLocaleData(localeEs, 'es');
 registerLocaleData(localeTr, 'tr');
+registerLocaleData(localeFa, 'fa');
 
 
 export function HttpLoaderFactory(http: HttpClient) {
