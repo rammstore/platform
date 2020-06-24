@@ -47,6 +47,10 @@ export class MainHeaderComponent implements OnInit, OnDestroy {
       return;
     }
 
+    if (event.target.className.toString().includes('lang-img')) {
+      return;
+    }
+
     this.closeAside();
   }
 
