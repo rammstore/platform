@@ -68,7 +68,7 @@
   	
 	"common.account": "Account",
 	"common.accountsCount": "Investors count",
-	"common.age": "Age, weeks",
+	"common.age": "Age, weeks1",
 	"common.available": "Available",
 	"common.balance": "Balance",
 	"common.chart": "Chart",
@@ -88,7 +88,7 @@
   	"common.pause": "Pause",
   	"common.pause2": "pause",
   	"common.perWeek": "per week",
-    "common.profit-and-loss": "PL",
+    "common.profit-and-loss": "PL1",
   	"common.protection": "Protection",
   	"common.refreshed": "Refreshed",
   	"common.step": "Step",
@@ -187,8 +187,8 @@
   	"investment.details.strategy.feeRate": "Fee rate",
   	"investment.details.strategy.name": "Name",
 
-  	"investment.details.investment.closed": "Closed",
-  	"investment.details.investment.created": "Created",
+  	"investment.details.investment.closed": "Closed1",
+  	"investment.details.investment.created": "Created1",
   	"investment.details.investment.currency": "Currency",
   	"investment.details.investment.id": "ID",
   	"investment.details.investment.leverage": "Leverage",
