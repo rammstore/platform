@@ -7,22 +7,22 @@
       </div>
 
       <div class="item">
-        <span>Счет</span>
+        <span>common.account</span>
         <span>{{transfer.accountID}}</span>
       </div>
 
       <div class="item">
-        <span>Дата</span>
+        <span>common.date</span>
         <span>{{transfer.dtCreated | customDate}}</span>
       </div>
 
       <div class="item">
-        <span>Сумма</span>
+        <span>common.table.label.amountUSD</span>
         <span>{{transfer.amount}}</span>
       </div>
 
       <div class="item">
-        <span>Тип</span>
+        <span>common.table.label.type</span>
         <span>{{transfer.getType()}} <a *ngIf="transfer.strategyID" [routerLink]="['/strategies/details', transfer.strategyID]">{{transfer.strategyName}}</a></span>
       </div>
     </div>
