@@ -264,7 +264,7 @@
   	"spec.rating.conditions.title": "Condiciones para publicar en clasificación",
   	"spec.rating.last-activity-time.title": "Ultima actividad (apertura o cierre de una posición de mercado), más tardar",
   	"spec.rating.last-activity-time.value": "365 dias calendario",
-  	"spec.rating.life-term.title": "Edad mínima de una estrategia, dias",
+  	"spec.rating.life-term.title": "Edad mínima de una estrategia, dias\t",
   	"spec.rating.min-deals-number.title": "Numero mínimo de acuerdos\t",
   	"spec.rating.min-yield.title": "Rendimiento minimo",
   	"spec.rating.min-yield.value": "Positivo",

@@ -265,7 +265,7 @@
   	"spec.rating.last-activity-time.title": "Son etkinlik (bir piyasa pozisyonunu açma veya kapatma), bu tarihten önce",
   	"spec.rating.last-activity-time.value": "365 takvim günü",
   	"spec.rating.life-term.title": "Bir stratejinin minimum hayat süresi, gün\t",
-  	"spec.rating.min-deals-number.title": "Minimum anlaşma sayısı\t",
+  	"spec.rating.min-deals-number.title": "Minimum piyasa'da kapatılmış pozisyonlar\t",
   	"spec.rating.min-yield.title": "Minimum getiri",
   	"spec.rating.min-yield.value": "Pozitif",
   	"spec.rating.title": "Derecelendirme",

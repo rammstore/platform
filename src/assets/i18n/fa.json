@@ -265,7 +265,7 @@
   "spec.rating.last-activity-time.title": "آخرین فعالیت (باز یا بسته شدن یک پوزیشن بازار)، نه دیرتر از این",
   "spec.rating.last-activity-time.value": "365 روز تقویم",
   "spec.rating.life-term.title": "حداقل طول عمر یک استراتژی, روزمدت",
-  "spec.rating.min-deals-number.title": "حداقل تعداد معامله",
+  "spec.rating.min-deals-number.title": "حداقل تعداد معاملات بسته شده در بازار\t",
   "spec.rating.min-yield.title": "حداقل بازده",
   "spec.rating.min-yield.value": "مثبت",
   "spec.rating.title": "رتبه‌بندی",
