@@ -120,7 +120,7 @@ export class Account {
   }
 
   getAgeWeeks(): number {
-    const now: number = new Date().getTime();
+    const now: number = this.dtClosed ? new Date(this.dtClosed).getTime() : new Date().getTime();
     const created: number = new Date(this.dtCreated).getTime();
     return Math.floor((now - created) / (1000 * 3600 * 24 * 7));
   }
