@@ -7,12 +7,12 @@
   	"linkWithdraw.link": "#",
   	"additionalInfo": "",
   	"linkLogout": "/login",
-	
+
   	"account.active.title": "Active",
  	"account.closed.title": "Closed",
  	"account.lastTransfers.title": "Wallet operations",
   	"account.result.chart.help.tooltip": "You can also check it up in the upper right corner.",
- 	
+
  	"account.form.factor.error.max": "Maximum factor is",
  	"account.form.factor.error.min": "Minimum factor is",
  	"account.form.factor.error.pattern": "Please enter the correct factor value",
@@ -32,7 +32,7 @@
   	"account.form.target.error.pattern": "Please enter the correct target value",
   	"account.form.target.error.required": "Target is not defined",
   	"account.form.target.title": "Target income. Upon reaching the target income, the investment will be paused.",
-  	
+
   	"account.manage.addTo": "Add to investment",
   	"account.manage.pause.message": "All positions will be closed. New positions will not be opened until the pause removal.",
   	"account.manage.pause.title": "Pause investment",
@@ -40,7 +40,7 @@
   	"account.manage.strategy.pause.message": "All positions of all investors of this strategy will be closed. New positions will not be opened until the pause removal.",
   	"account.manage.strategy.pause.title": "Pause strategy",
   	"account.manage.strategy.resume.title": "Resume strategy",
-  	
+
   	"account.withdraw.close.current-equity": "Current equity",
   	"account.withdraw.close.investment.title": "Close investment",
   	"account.withdraw.close.investment.warning": " You can close your investment at any moment. Later you will be able to create a new investment into the same strategy. Note that after closing the investment drawdown will become 0.",
@@ -61,11 +61,12 @@
   	"account.withdraw.partial.pause2.strategy": "mode. Please pause strategy and then repeat current operation.",
  	"account.withdraw.partial.sum": "Withdrawal amount",
  	"account.withdraw.partial.title": "Withdraw",
- 
+
   	"button.back": "Back",
+    "button.skip": "Skip",
   	"button.cancel": "Cancel",
  	"button.ok": "OK",
-  	
+
 	"common.account": "Account",
 	"common.accountsCount": "Investors count",
 	"common.age": "Age, weeks",
@@ -95,6 +96,7 @@
 
   	"common.step 1: strategy.add.title.strategy": "Step 1: Strategy settings",
   	"common.step 2: strategy.add.title.investments": "Step 2: Investment settings",
+    "common.step 3: strategy.add.title.offer": "Step 3: Public offer",
 
 	"common.strategy": "Strategy",
 	"common.target": "Target",
@@ -110,7 +112,7 @@
   "common.type8":"Partners",
   	"common.yield": "Yield",
   	"common.yieldMonthly": "Monthly yield",
-  	
+
 	"common.label.iWant": "I want to:",
 
 	"common.manage.close": "Close",
@@ -121,10 +123,10 @@
   	"common.manage.signalScript": "Signal script",
   	"common.manage.statement": "Investment statement",
   	"common.manage.withdraw": "Withdraw",
-  	 	  	
-  	"common.table.empty.deals": "No deals", 	  	
+
+  	"common.table.empty.deals": "No deals",
   	"common.table.empty.positions": "No positions",
-  	
+
   	"common.table.label.amountUSD": "Amount, USD",
 	"common.table.label.closed": "Closed",
 	"common.table.label.commissionPaidUSD": "Paid commission, USD",
@@ -154,9 +156,9 @@
   	"common.table.label.yield": "Profit",
   	"common.table.label.yieldCommon": "Total yield",
  	"common.table.label.yieldTotal": "Total profit",
- 	"common.table.label.yieldTotalUSD": "Total profit, USD",  		
+ 	"common.table.label.yieldTotalUSD": "Total profit, USD",
 	"common.table.label.yieldUSD": "Profit, USD",
-  	
+
   	"common.week-days.friday": "Friday",
 	"common.week-days.monday": "Monday",
 	"common.week-days.saturday": "Saturday",
@@ -164,23 +166,23 @@
   	"common.week-days.thursday": "Thursday",
   	"common.week-days.tuesday": "Tuesday",
   	"common.week-days.wednesday": "Wednesday",
-  	  	
+
   	"header.item.account": "Account",
   	"header.item.help": "Help",
  	"header.item.investments": "Investments",
   	"header.item.myStrategies": "My strategies",
  	"header.item.rating": "Rating",
  	"header.item.specification": "Specification",
-  	
+
   	"header.menu.item.changeLanguage": "Change language",
   	"header.menu.item.changePassword": "Change password",
     "header.menu.item.logout": "Log out",
-	
+
 	"help.title": "RAMM Help Center",
 
 	"investment.deals.title": "Deals",
 	"investment.positions.title": "Positions",
-  	
+
   	"investment.details.strategy.commission": "Commission",
   	"investment.details.strategy.feePeriod": "Fee period",
   	"investment.details.strategy.feePeriod.week": "week",
@@ -224,7 +226,7 @@
  	"managePassword.form.new.error.required": "Please enter a new password",
   	"managePassword.form.success": "Your password is successfully changed .",
 	"managePassword.form.title": "Change password",
- 
+
 	"myStrategies.active.title": "Active",
   	"myStrategies.closed.title": "Closed",
 
@@ -275,6 +277,7 @@
 	"strategy.add.form.label.fee": "Fee rate",
 	"strategy.add.form.label.name": "Strategy name",
   	"strategy.add.form.label.step2": "A strategy requires your investment into it. This investment can only be closed together with the strategy.",
+  "strategy.add.form.label.step3": "These conditions of the offer are intended for public investment through the Rating and may be changed at any time; it is possible not to set public conditions at all. Non-public terms may be specified after the creation of the strategy.",
 	"strategy.add.script.button.download": "Download script",
 	"strategy.add.script.download.platform.title": "Trading platform",
 	"strategy.add.script.download.title": "Download signal script",
@@ -317,13 +320,13 @@
   	"strategy.form.target.error.pattern": "Please enter the correct target value",
   	"strategy.form.target.error.required": "Target is not defined",
   	"strategy.form.target.tooltip": "Target income. Upon reaching the target income, the investment will be paused.",
-  		
+
 	"strategy.invest.form.title": "Invest in strategy",
 
     "table.cell.accountNumberCopy": "The number of account from which copy trading is performed",
   	"table.cell.loading": "Loading...",
   	"table.cell.total": "Total",
-	"table.footer.itemsPerPage": "Items per page", 
+	"table.footer.itemsPerPage": "Items per page",
 	"table.footer.itemsTotal": "Total items",
 	"table.footer.pageNext": "Next",
 	"table.footer.pagePrevious": "Previous"

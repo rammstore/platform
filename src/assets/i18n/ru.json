@@ -23,7 +23,7 @@
   "account.form.label.equity": "Средства в инвестиции",
   "account.form.profile.title": "Изменить профиль инвестиции",
   "account.form.protection.error.max": "Максимальное значение защиты",
-  "account.form.protection.error.min": "Минимальное значение защиты.", 
+  "account.form.protection.error.min": "Минимальное значение защиты.",
   "account.form.protection.error.pattern": "Пожалуйста, введите корректное значение защиты",
   "account.form.protection.error.required": "Защита не задана",
   "account.form.protection.title": "При снижении средств до заданного значения инвестиция будет приостановлена.",
@@ -32,7 +32,7 @@
   "account.form.target.error.pattern": "Пожалуйста, введите корректное значение цели",
   "account.form.target.error.required": "Цель не задана",
   "account.form.target.title": "Целевой доход. При достижении целевого дохода инвестиция будет приостановлена",
-  
+
   "account.manage.addTo": "Добавить в инвестицию",
   "account.manage.pause.message": "Все позиции будут закрыты. Новые позиции не будут открываться до момента снятия с паузы.",
   "account.manage.pause.title": "Пауза инвестиции",
@@ -61,8 +61,9 @@
   "account.withdraw.partial.pause2.strategy": ". Поставьте стратегию на паузу и повторите операцию.",
   "account.withdraw.partial.sum": "Сумма вывода",
   "account.withdraw.partial.title": "Вывод средств",
-    
+
   "button.back": "Назад",
+  "button.skip": "Пропустить",
   "button.cancel": "Отмена",
   "button.ok": "ОК",
 
@@ -95,7 +96,8 @@
 
   "common.step 1: strategy.add.title.strategy": "Шаг 1: Параметры стратегии",
   "common.step 2: strategy.add.title.investments": "Шаг 2: Параметры инвестиции",
-  
+  "common.step 3: strategy.add.title.offer": "Шаг 3: Публичная оферта",
+
   "common.strategy": "Стратегия",
   "common.target": "Цель",
   "common.type": "Тип",
@@ -110,9 +112,9 @@
   "common.type8":"Партнеры",
   "common.yield": "Доходность",
   "common.yieldMonthly": "Доходность в месяц",
-   
+
   "common.label.iWant": "Я хочу:",
-  
+
   "common.manage.close": "Закрыть",
   "common.manage.closeInvestment": "Закрыть инвестицию",
   "common.manage.closeStrategy": "Закрыть стратегию",
@@ -124,7 +126,7 @@
 
   "common.table.empty.deals": "Нет сделок",
   "common.table.empty.positions": "Нет позиций",
-  
+
   "common.table.label.amountUSD": "Сумма, USD",
   "common.table.label.closed": "Закрыта",
   "common.table.label.commissionPaidUSD": "Выплаченная комиссия, USD",
@@ -156,7 +158,7 @@
   "common.table.label.yieldTotal": "Итого прибыль",
   "common.table.label.yieldTotalUSD": "Итого прибыль, USD",
   "common.table.label.yieldUSD": "Прибыль, USD",
-  
+
   "common.week-days.friday": "Пятница",
   "common.week-days.monday": "Понедельник",
   "common.week-days.saturday": "Суббота",
@@ -186,7 +188,7 @@
   "investment.details.strategy.feePeriod.week": "неделя",
   "investment.details.strategy.feeRate": "Вознаграждение",
   "investment.details.strategy.name": "Название",
-  
+
   "investment.details.investment.closed": "Закрыта",
   "investment.details.investment.created": "Создана",
   "investment.details.investment.currency": "Валюта",
@@ -201,7 +203,7 @@
   "investment.details.investmentProfile.target": "Цель",
   "investment.details.investmentProfile.target-equity": "Цель, USD",
   "investment.details.investmentProfile.title": "Инвестиционный профиль",
-  
+
   "investment.details.message.investor": "Данная инвестиция принадлежит инвестору вашей стратегии.",
   "investment.details.message.owner": "Полный функционал доступен только владельцу инвестиции.",
 
@@ -275,6 +277,7 @@
   "strategy.add.form.label.fee": "Вознаграждение",
   "strategy.add.form.label.name": "Название стратегии",
   "strategy.add.form.label.step2": "При создании стратегии вы должны создать и инвестицию в нее. Эта инвестиция может быть закрыта только при закрытии стратегии.",
+  "strategy.add.form.label.step3": "Данные условия оферты предназначены для публичного инвестирования через Рейтинг и могут в любой момент быть изменены; возможно не задавать публичные условия вовсе. Непубличные условия могут быть заданы после создания стратегии.",
   "strategy.add.script.button.download": "Скачать скрипт",
   "strategy.add.script.download.platform.title": "Торговая платформа",
   "strategy.add.script.download.title": "Скачать сигнальный скрипт",
@@ -283,6 +286,7 @@
   "strategy.add.title.investments": "Параметры инвестиции",
   "strategy.add.title.strategy": "Параметры стратегии",
   "strategy.button.create": "Создать стратегию",
+  "strategy.button.create.offer": "Создать оферту",
 
   "strategy.close.form.text": "Вы подтверждаете закрытие своей стратегии?",
   "strategy.close.form.text2": "Если вы инвестировали в свою стратегию, то при ее закрытии ваш инвестиционный счет также будет закрыт. Обратите внимание, что это необратимое действие.",

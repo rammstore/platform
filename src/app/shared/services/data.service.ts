@@ -1,28 +1,30 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, forkJoin, Observable, of, ReplaySubject, Subject } from "rxjs";
+import {Injectable} from '@angular/core';
+import {BehaviorSubject, forkJoin, Observable, of, ReplaySubject, Subject} from "rxjs";
 import {
   Account,
   AccountsSearchOptions,
-  Paginator,
-  Strategy,
-  StrategiesSearchOptions,
+  ChartOptions,
   Command,
   Deal,
-  Position,
   DealsSearchOptions,
+  Paginator,
+  Position,
   PositionsSearchOptions,
-  ChartOptions, RatingSearchOptions, StrategyAccontsOptions
+  RatingSearchOptions,
+  StrategiesSearchOptions,
+  Strategy,
+  StrategyAccontsOptions
 } from "@app/models";
-import { HttpClient, HttpErrorResponse } from "@angular/common/http";
-import { CreateInstanceService } from "@app/services/create-instance.service";
-import { CommandService } from "@app/services/command.service";
-import { CONFIG } from '@assets/config';
-import { map, takeUntil } from 'rxjs/operators';
-import { LoaderService } from '@app/services/loader.service';
-import { WalletService } from '@app/services/wallet.service';
-import { Router } from '@angular/router';
-import { NotificationsService } from '@app/services/notifications.service';
-import { AccountSpecAsset } from '@app/models/account-spec-asset';
+import {HttpClient, HttpErrorResponse} from "@angular/common/http";
+import {CreateInstanceService} from "@app/services/create-instance.service";
+import {CommandService} from "@app/services/command.service";
+import {CONFIG} from '@assets/config';
+import {map, takeUntil} from 'rxjs/operators';
+import {LoaderService} from '@app/services/loader.service';
+import {WalletService} from '@app/services/wallet.service';
+import {Router} from '@angular/router';
+import {NotificationsService} from '@app/services/notifications.service';
+import {AccountSpecAsset} from '@app/models/account-spec-asset';
 
 @Injectable({
   providedIn: 'root'
@@ -202,6 +204,16 @@ export class DataService {
         return this.createInstanceService.createStrategy(response.Strategy);
       })
     );
+  }
+
+  // Создать оферту
+  addOffer(id: number, feeRate: number, commissionRate: number): Observable<any> {
+    this.loaderService.showLoader();
+    return this.http.post(`${CONFIG.baseApiUrl2}/myStrategies.addOffer`, {
+      StrategyID: id,
+      FeeRate: feeRate,
+      CommissionRate: commissionRate
+    });
   }
 
   // Постановка стратегии на паузу
@@ -643,7 +655,7 @@ export class DataService {
     }
 
     return this.http.post(`${this.apiUrl}/deals.search`, options).pipe(map((response: any) => {
-      const result: {deals: Deal[], totals: object} = {
+      const result: { deals: Deal[], totals: object } = {
         deals: [],
         totals: {
           yield: response.DealsTotal[0].Profit,
@@ -683,7 +695,7 @@ export class DataService {
     }
 
     return this.http.post(`${this.apiUrl}/positions.search`, options).pipe(map((response: any) => {
-      const result: {positions: Position[], totals: object} = {
+      const result: { positions: Position[], totals: object } = {
         positions: [],
         totals: {
           profit: response.PositionsTotal[0].Profit,
