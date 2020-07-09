@@ -216,7 +216,7 @@ export class DataService {
   // Создать оферту
   addOffer(id: number, feeRate: number, commissionRate: number): Observable<any> {
     this.loaderService.showLoader();
-    return this.http.post(`${CONFIG.baseApiUrl2}/myStrategies.addOffer`, {
+    return this.http.post(`${this.apiUrl}/myStrategies.addOffer`, {
       StrategyID: id,
       FeeRate: feeRate,
       CommissionRate: commissionRate
