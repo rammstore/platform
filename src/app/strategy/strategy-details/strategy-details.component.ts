@@ -49,6 +49,7 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
 
         this.links = [
           new ContentTabLink('common.yield', '/strategies/details/' + this.strategy.id),
+          new ContentTabLink('common.offers', `/strategies/details/${this.strategy.id}/offers`),
           new ContentTabLink('common.table.label.symbols', '/strategies/details/' + this.strategy.id + '/symbols')
         ];
 
