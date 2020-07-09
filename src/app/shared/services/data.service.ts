@@ -206,6 +206,13 @@ export class DataService {
     );
   }
 
+  setPublicOffer(strategyID: number, offerID: number) {
+    this.http.post(`${this.apiUrl}/myStrategies.setPublicOffer`, {
+      StrategyID: strategyID,
+      OfferID: offerID
+    }).subscribe();
+  }
+
   // Создать оферту
   addOffer(id: number, feeRate: number, commissionRate: number): Observable<any> {
     this.loaderService.showLoader();
@@ -213,7 +220,12 @@ export class DataService {
       StrategyID: id,
       FeeRate: feeRate,
       CommissionRate: commissionRate
-    });
+    }).pipe(
+      map((item) => {
+        this.setPublicOffer(id, item['OfferID']);
+        return item;
+      })
+    );
   }
 
   // Постановка стратегии на паузу

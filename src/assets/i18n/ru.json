@@ -282,7 +282,7 @@
   "strategy.add.script.download.platform.title": "Торговая платформа",
   "strategy.add.script.download.title": "Скачать сигнальный скрипт",
   "strategy.add.script.message": "Новая стратегия создана.<br>Для отправки сигналов с вашего торгового счета MetaTrader 4 или MetaTrader 5 скачайте сигнальный советник и запустите его в вашем терминале MetaTrader.<br>Вы можете скачать советник и позже, выбрав соответствующую опцию в меню стратегии.<br>1. В меню терминала “Сервис” - ”Настройки”, на вкладке “Советники” внесите адрес сервера RAMM в список разрешенных URL.<br>Для этого добавьте адрес https://ramm.store/api/trading/v1/signals.send в таблицу “Разрешить WebRequest для следующих URL:”.<br>2. Запустите советник на любом графике.<br>Все изменения на вашем счете будут копироваться в вашу стратегию в RAMM.",
-  "strategy.add.script.title": "Готово!",
+  "strategy.add.script.title": "Поздравляем!",
   "strategy.add.title.investments": "Параметры инвестиции",
   "strategy.add.title.strategy": "Параметры стратегии",
   "strategy.button.create": "Создать стратегию",
