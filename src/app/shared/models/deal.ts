@@ -85,6 +85,14 @@ export class Deal {
     return Math.abs(this.volume);
   }
 
+  get Volume() {
+    return (this.volume || 0).toFixed(this.precisionVolume || 2);
+  }
+
+  get Price() {
+    return (this.price || 0).toFixed(this.precisionPrice || 2);
+  }
+
   getColorClass(property: string): string {
     if (this[property] === 0) {
       return '';
