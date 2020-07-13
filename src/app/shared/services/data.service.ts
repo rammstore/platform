@@ -198,10 +198,11 @@ export class DataService {
         // this.walletService.updateWallet().subscribe();
         // // this.getActiveMyStrategies().subscribe();
         // this.notificationsService.open('notify.strategy.created');
-        this.updateAccount(new Command(response.AccountCommand.ID, response.Account.ID), methodName, methodArgs, 'notify.strategy.created');
+        this.updateAccount(new Command(response.AccountCommandID, response.AccountID), methodName, methodArgs, 'notify.strategy.created');
 
-        response.Strategy.Account = response.Account;
-        return this.createInstanceService.createStrategy(response.Strategy);
+        return this.createInstanceService.createStrategy({
+          ID: response.StrategyID
+        });
       })
     );
   }
