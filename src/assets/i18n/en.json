@@ -220,6 +220,7 @@
  	"managePassword.form.confirm.error.mismatch": "Passwords do not match",
  	"managePassword.form.confirm.error.required": "Please confirm the new password",
  	"managePassword.form.current.error.required": "Please enter your current password",
+  "managePassword.form.current.error.wrong": "Wrong current password",
  	"managePassword.form.failure": "The password is not changed.",
  	"managePassword.form.label.confirm": "Confirm password",
  	"managePassword.form.label.current": "Current password",

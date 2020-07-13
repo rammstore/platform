@@ -7,12 +7,12 @@
   	"linkWithdraw.link": "#",
   	"additionalInfo": "",
   	"linkLogout": "/login",
-	
+
   	"account.active.title": "Activo",
  	"account.closed.title": "Cerrado",
  	"account.lastTransfers.title": "Operaciones de billetera",
   	"account.result.chart.help.tooltip": "También puedes consultarlo en la esquina superior derecha.",
- 	
+
  	"account.form.factor.error.max": "Factor máximo es",
  	"account.form.factor.error.min": "Factor mínimo es",
  	"account.form.factor.error.pattern": "Introduzca el valor del factor correcto por favor",
@@ -32,7 +32,7 @@
   	"account.form.target.error.pattern": "Por favor, introduzca el valor objetivo correcto",
   	"account.form.target.error.required": "El objetivo no está definido",
   	"account.form.target.title": "Objetivo de ingresos. Al alcanzar los ingresos deseados, la inversión se detendrá",
-  	
+
   	"account.manage.addTo": "Añadir a la inversión",
   	"account.manage.pause.message": "Todas las posiciones se cerraran. Las nuevas posiciones no se abrirán hasta que se elimine la pausa",
   	"account.manage.pause.title": "Pausar inversión",
@@ -40,7 +40,7 @@
   	"account.manage.strategy.pause.message": "Todas las posiciones de todos los inversores de esta estrategia se cerraran. No se abrirán nuevas posiciones hasta que se elimine la pausa",
   	"account.manage.strategy.pause.title": "Pausar estrategia",
   	"account.manage.strategy.resume.title": "Reanudar estrategia",
-  	
+
   	"account.withdraw.close.current-equity": "Capital actual",
   	"account.withdraw.close.investment.title": "Cerrar inversión",
   	"account.withdraw.close.investment.warning": "Puede cerrar su inversión en cualquier momento. Más tarde podrá crear una nueva inversión en la misma estrategia. Tenga en cuenta que después de cerrar la reducción de inversión se convertirá en 0.",
@@ -61,12 +61,12 @@
   	"account.withdraw.partial.pause2.strategy": "mode. Pause la estrategia y luego repita la operacion actual.",
  	"account.withdraw.partial.sum": "Cantidad de retiro",
  	"account.withdraw.partial.title": "Retirar",
- 
+
   	"button.back": "Atras",
     "button.skip": "Omitir",
   	"button.cancel": "Cancelar",
  	"button.ok": "OKAY",
-  	
+
 	"common.account": "Cuenta",
 	"common.accountsCount": "Los inversores cuentan",
 	"common.age": "Edad, semanas",
@@ -96,7 +96,10 @@
 
   "common.step 1: strategy.add.title.strategy": "Paso 1: Configuracion de estrategia",
   "common.step 2: strategy.add.title.investments": "Paso 2: Configuracion de inversión",
+<<<<<<< HEAD
   "common.step 3: strategy.add.title.offer": "Paso 3: Oferta publica",
+=======
+>>>>>>> 9d5c095df1ea1177e5a07f520ecf26de471fbcd5
 
 	"common.strategy": "Estrategia",
 	"common.target": "Objetivo",
@@ -112,7 +115,7 @@
   "common.type8": "Socios",
   "common.yield": "Rendimiento",
   "common.yieldMonthly": "Rendimiento mensual",
-  	
+
 	"common.label.iWant": "Quiero:",
 
 	"common.manage.close": "Cerca",
@@ -123,10 +126,10 @@
   	"common.manage.signalScript": "Script de señal",
   	"common.manage.statement": "Declaración de inversión",
   	"common.manage.withdraw": "Retirar",
-  	 	  	
-  	"common.table.empty.deals": "No hay acuerdos",	  	
+
+  	"common.table.empty.deals": "No hay acuerdos",
   	"common.table.empty.positions": "Sin posiciones",
-  	
+
   	"common.table.label.amountUSD": "Cantidad, USD",
 	"common.table.label.closed": "Cerrado",
 	"common.table.label.commissionPaidUSD": "Comisión pagada, USD",
@@ -156,9 +159,9 @@
   	"common.table.label.yield": "Ganancias",
   	"common.table.label.yieldCommon": "Rendimiento total",
  	"common.table.label.yieldTotal": "Beneficio total",
- 	"common.table.label.yieldTotalUSD": "Beneficio total, USD",		
+ 	"common.table.label.yieldTotalUSD": "Beneficio total, USD",
 	"common.table.label.yieldUSD": "Beneficio, USD",
-  	
+
   	"common.week-days.friday": "Viernes",
 	"common.week-days.monday": "Lunes",
 	"common.week-days.saturday": "Sabado",
@@ -166,23 +169,23 @@
   	"common.week-days.thursday": "Jueves",
   	"common.week-days.tuesday": "Martes",
   	"common.week-days.wednesday": "Miercoles",
-  	  	
+
   	"header.item.account": "Cuenta",
   	"header.item.help": "Ayuda",
  	"header.item.investments": "Inversiones",
   	"header.item.myStrategies": "Mis estrategias",
  	"header.item.rating": "Clasificación",
  	"header.item.specification": "Especificación",
-  	
+
   	"header.menu.item.changeLanguage": "Cambiar idioma",
   	"header.menu.item.changePassword": "Cambia la contraseña",
     	"header.menu.item.logout": "Cerrar sesion",
-	
+
 	"help.title": "Centro de ayuda RAMM",
 
 	"investment.deals.title": "Acuerdos",
 	"investment.positions.title": "Posiciones",
-  	
+
   	"investment.details.strategy.commission": "Comisión",
   	"investment.details.strategy.feePeriod": "Periodo de tarifa",
   	"investment.details.strategy.feePeriod.week": "semana",
@@ -219,6 +222,7 @@
  	"managePassword.form.confirm.error.mismatch": "Las contraseñas no coinciden",
  	"managePassword.form.confirm.error.required": "Confirme la nueva contraseña",
  	"managePassword.form.current.error.required": "Ingrese su contraseña actual",
+  "managePassword.form.current.error.wrong": "Contraseña actual inválid",
  	"managePassword.form.failure": "La contraseña no ha cambiado",
  	"managePassword.form.label.confirm": "Confirmar contraseña ",
  	"managePassword.form.label.current": "Contraseña actual",
@@ -226,7 +230,7 @@
  	"managePassword.form.new.error.required": "Ingrese una nueva contraseña ",
   	"managePassword.form.success": "Su contraseña se ha cambiado correctamente",
 	"managePassword.form.title": "Cambia la contraseña",
- 
+
 	"myStrategies.active.title": "Activo",
   	"myStrategies.closed.title": "Cerrado",
 
@@ -322,7 +326,7 @@
   	"strategy.form.target.error.pattern": "Ingrese el valor objetivo correcto",
   	"strategy.form.target.error.required": "El objetivo no está definido",
   	"strategy.form.target.tooltip": "Ingresos objetivo. Al alcanzar los ingresos objetivo, la inversión se detendrá",
-  		
+
 	"strategy.invest.form.title": "Invertir en estrategia",
 
   "table.cell.accountNumberCopy": "El número de cuenta desde la que se realiza el intercambio de copias",

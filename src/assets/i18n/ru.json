@@ -220,6 +220,7 @@
   "managePassword.form.confirm.error.mismatch": "Пароли не совпадают",
   "managePassword.form.confirm.error.required": "Пожалуйста, подтвердите новый пароль",
   "managePassword.form.current.error.required": "Пожалуйста, введите текущий пароль",
+  "managePassword.form.current.error.wrong": "Неверный текущий пароль",
   "managePassword.form.failure": "Не удалось изменить пароль.",
   "managePassword.form.label.confirm": "Подтвердите пароль",
   "managePassword.form.label.current": "Текущий пароль",
