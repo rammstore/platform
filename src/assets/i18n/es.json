@@ -96,10 +96,7 @@
 
   "common.step 1: strategy.add.title.strategy": "Paso 1: Configuracion de estrategia",
   "common.step 2: strategy.add.title.investments": "Paso 2: Configuracion de inversión",
-<<<<<<< HEAD
   "common.step 3: strategy.add.title.offer": "Paso 3: Oferta publica",
-=======
->>>>>>> 9d5c095df1ea1177e5a07f520ecf26de471fbcd5
 
 	"common.strategy": "Estrategia",
 	"common.target": "Objetivo",
