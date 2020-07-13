@@ -7,7 +7,7 @@ export class Strategy {
   dtCreated: Date;        // Дата создания стратегии
   dtClosed: Date;         // Дата закрытия стратегии
   dtStat: Date;           // Дата сбора статистики
-  partnerShare: number;   // Доля партнера
+  // partnerShare: number;   // Доля партнера
   status: number;         // Статус
   profit: number;         // Прибыль в % (Yield)
   accountsCount: number;  // Количество счетов
