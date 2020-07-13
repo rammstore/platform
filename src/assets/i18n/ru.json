@@ -86,6 +86,7 @@
   "common.margin": "Маржа",
   "common.marginLevel": "Уровень маржи",
   "common.next": "Далее",
+  "common.offers": "Оферты",
   "common.pause": "Пауза",
   "common.pause2": "паузы",
   "common.perWeek": "в неделю",
@@ -111,7 +112,6 @@
   "common.type7":"Комиссия от",
   "common.type8":"Партнеры",
   "common.yield": "Доходность",
-  "common.offers": "Оферты",
   "common.yieldMonthly": "Доходность в месяц",
 
   "common.label.iWant": "Я хочу:",

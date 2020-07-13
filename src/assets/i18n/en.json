@@ -86,6 +86,7 @@
   	"common.margin": "Margin",
   	"common.marginLevel": "Margin level",
   	"common.next": "Next",
+    "common.offers": "Offers",
   	"common.pause": "Pause",
   	"common.pause2": "pause",
   	"common.perWeek": "per week",
@@ -110,9 +111,8 @@
   "common.type6":"Fee from",
   "common.type7":"Commission from",
   "common.type8":"Partners",
-  	"common.yield": "Yield",
-    "common.offers": "Offers",
-  	"common.yieldMonthly": "Monthly yield",
+  "common.yield": "Yield",
+ 	"common.yieldMonthly": "Monthly yield",
 
 	"common.label.iWant": "I want to:",
 
