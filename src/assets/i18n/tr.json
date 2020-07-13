@@ -96,7 +96,8 @@
 
     "common.step 1: strategy.add.title.strategy": "Adım 1: Strateji ayarları",
     "common.step 2: strategy.add.title.investments": "Adım 2: Yatırım ayarları",
-  
+    "common.step 3: strategy.add.title.offer": "Adım 3: Genel teklif",
+
 	  "common.strategy": "Strateji",
 	  "common.target": "Hedef",
 	  "common.type": "Tür",

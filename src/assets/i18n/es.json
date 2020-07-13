@@ -96,7 +96,8 @@
 
   "common.step 1: strategy.add.title.strategy": "Paso 1: Configuracion de estrategia",
   "common.step 2: strategy.add.title.investments": "Paso 2: Configuracion de inversión",
-  
+  "common.step 3: strategy.add.title.offer": "Paso 3: Oferta publica",
+
 	"common.strategy": "Estrategia",
 	"common.target": "Objetivo",
 	"common.type": "Tipo",
