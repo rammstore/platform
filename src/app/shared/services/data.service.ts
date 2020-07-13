@@ -85,7 +85,7 @@ export class DataService {
       };
     }
 
-    this.http.post(`${this.apiUrl}/myStrategies.search`, options).subscribe((response: any) => {
+    this.http.post(`${this.apiUrl}/Strategies.search`, options).subscribe((response: any) => {
       const strategies: Strategy[] = [];
 
       this.walletService.walletSubject.next(this.createInstanceService.createWallet(response.Wallets[0]));
@@ -131,7 +131,7 @@ export class DataService {
       };
     }
 
-    this.http.post(`${this.apiUrl}/myStrategies.search`, options).subscribe((response: any) => {
+    this.http.post(`${this.apiUrl}/Strategies.search`, options).subscribe((response: any) => {
       this.loaderService.showLoader();
       const strategies: Strategy[] = [];
 
