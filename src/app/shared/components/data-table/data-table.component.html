@@ -175,7 +175,19 @@
             *ngIf="i > 0"
             [class.positive]="totals[column.property] > 0 && isColored(column.property)"
             [class.negative]="totals[column.property] < 0 && isColored(column.property)">
-          {{totals[column.property]}}
+
+          <span [ngSwitch]="column.property">
+            <span *ngSwitchCase="'commission'">
+              {{ (totals[column.property] || 0).toFixed(2)}}
+            </span>
+            <span *ngSwitchCase="'swap'">
+              {{ (totals[column.property] || 0).toFixed(2)}}
+            </span>
+            <span *ngSwitchDefault>
+              {{totals[column.property]}}
+            </span>
+          </span>
+
         </td>
       </ng-container>
     </ng-container>
