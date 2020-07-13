@@ -155,11 +155,11 @@
         <div class="input-wrapper">
           <input id="fee" type="number" formControlName="fee" [min]="0" [max]="50">
           <div class="messages">
-            <label *ngIf="formStep3.get('fee').touched && formStep1.get('fee').hasError('min')" class="error-message"
+            <label *ngIf="formStep3.get('fee').touched && formStep3.get('fee').hasError('min')" class="error-message"
                    translate>
               <span translate>strategy.form.fee.error.min</span> - 0
             </label>
-            <label *ngIf="formStep3.get('fee').touched && formStep1.get('fee').hasError('max')" class="error-message"
+            <label *ngIf="formStep3.get('fee').touched && formStep3.get('fee').hasError('max')" class="error-message"
                    translate>
               <span translate>strategy.form.fee.error.max</span> — 50%
             </label>
