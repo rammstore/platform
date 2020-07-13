@@ -62,9 +62,9 @@
  	"account.withdraw.partial.sum": "Withdrawal amount",
  	"account.withdraw.partial.title": "Withdraw",
 
-  	"button.back": "Back",
-    "button.skip": "Skip",
-  	"button.cancel": "Cancel",
+  "button.back": "Back",
+  "button.skip": "Skip",
+  "button.cancel": "Cancel",
  	"button.ok": "OK",
 
 	"common.account": "Account",
@@ -284,10 +284,11 @@
 	"strategy.add.script.download.platform.title": "Trading platform",
 	"strategy.add.script.download.title": "Download signal script",
 	"strategy.add.script.message": "Your strategy has been created successfully.<br>To send signals from your MetaTrader 4 or MetaTrader 5 trading account, download the signal script and run it in your MetaTrader terminal.<br>You can also download it later by selecting the respective option in your strategy's context menu.<br>1. Before you launch the EA for the first time, please make sure that RAMM URL is in the list of allowed URLs in your MetaTrader.<br>For that, in menu Tools - Options - Expert Advisors add https://ramm.store/api/trading/v1/signals.send to table “Allow WebRequest for listed URL:”<br>2. Put the EA into any chart window.<br>Since now, all changes on your account will be copied to your strategy in RAMM.",
-  "strategy.add.script.title": "Congratulation!",
+  "strategy.add.script.title": "Congratulations!",
 	"strategy.add.title.investments": "Investment settings",
 	"strategy.add.title.strategy": "Strategy settings",
 	"strategy.button.create": "Create strategy",
+  "strategy.button.create.offer": "Create offer",
 
 	"strategy.close.form.text": "Do you confirm closing your strategy?",
   	"strategy.close.form.text2": "If you had invested in your own strategy your investment account would also be closed. Please note that this action is irreversible.",

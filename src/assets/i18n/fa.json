@@ -63,6 +63,7 @@
  	"account.withdraw.partial.title": "برداشت",
  
   "button.back": "بازگشت",
+  "button.skip": "پیشنهاد را رد کنید",
   "button.cancel": "لغو",
  	"button.ok": "تأیید",
   	
@@ -275,14 +276,17 @@
 	"strategy.add.form.label.fee": "نرخ دستمزد",
 	"strategy.add.form.label.name": "نام استراتژی",
   "strategy.add.form.label.step2": "یک استراتژی نیاز به سرمایه‌گذاری شما در آن دارد. این سرمایه‌گذاری می‌تواند فقط با استراتژی بسته شود",
-	"strategy.add.script.button.download": "دریافت اسکریپت",
+	"strategy.add.form.label.step2.bottom": "You can set investment conditions and download the adviser in the next steps.",
+  "strategy.add.form.label.step3": "These conditions of the offer are intended for public investment through the Rating and may be changed at any time; it is possible not to set public conditions at all. Non-public terms may be specified after the creation of the strategy.",
+  "strategy.add.script.button.download": "دریافت اسکریپت",
 	"strategy.add.script.download.platform.title": "پلتفرم معامله کردن",
 	"strategy.add.script.download.title": "دریافت اسکریپت سیگنال",
 	"strategy.add.script.message": "استراتژی شما با موفقیت ایجاد شد<br> برای ارسال سیگنال‌ها از حساب معاملاتی متاتریدر4 یا متاتریدر5 شما، اسکریپت سیگنال را دریافت کرده و در ترمینال متاتریدرتان اجرا کنید<br>همچنین می‌توانید بعداً با انتخاب گزینه مربوطه در منوی درون استراتژیتان آن را دریافت کنید<br>1. قبل از اجرای EA برای اولین بار، لطفاً مطمئن شوید که لینک RAMM در فهرست لینک‌های مجاز در متاتریدر شمات وجود داشته باشد<br>برای این منظور، در منوی Tools - options - Expert Advisors و https://maindc.ramm.store/api/trading/v1/signals. ارسال به جدول “Allow WebRequest for listed URL:”<br>2. EA را در هر پنجره چارت که می‌خواهید قرار دهید<br>از حالا، تمام تغییرات روی حساب شما به استراتژی شما در RAMM کپی خواهد شد ", 
-  "strategy.add.script.title": "آماده است!",
+  "strategy.add.script.title": "تبریک می گویم!",
 	"strategy.add.title.investments": "تنظیمات سرمایه‌گذاری",
 	"strategy.add.title.strategy": "تنظیمات استراتژی",
 	"strategy.button.create": "ایجاد استراتژی",
+  "strategy.button.create.offer": "ایجاد پیشنهاد",
 
 	"strategy.close.form.text": "آیا بسته شدن استراتژیتان را تأیید می‌کنید؟",
   "strategy.close.form.text2": "اگر شما در استراتژی خودتان سرمایه‌ای دارید حساب سرمایه‌گذاری شما بسته خواهد شد. لطفاً توجه داشته باشید که این جریان برگشت‌ناپذیر است",

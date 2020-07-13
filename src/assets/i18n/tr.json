@@ -63,6 +63,7 @@
  	  "account.withdraw.partial.title": "Para çek",
  
   	"button.back": "Geri",
+    "button.skip": "Çıkarmak",
   	"button.cancel": "İptal",
  	  "button.ok": "Tamam",
   	
@@ -275,14 +276,17 @@
 	  "strategy.add.form.label.fee": "Ücret oranı",
 	  "strategy.add.form.label.name": "Strateji adı",
   	"strategy.add.form.label.step2": "Bir stratejinin oluşturulması ona yatırım yapmanızı gerektirmektedir. Bu yatırım sadece stratejiyle birlikte kapatılabilir.",
-	  "strategy.add.script.button.download": "Scripti indir",
+	  "strategy.add.form.label.step2.bottom": "You can set investment conditions and download the adviser in the next steps.",
+    "strategy.add.form.label.step3": "These conditions of the offer are intended for public investment through the Rating and may be changed at any time; it is possible not to set public conditions at all. Non-public terms may be specified after the creation of the strategy.",
+    "strategy.add.script.button.download": "Scripti indir",
 	  "strategy.add.script.download.platform.title": "İşlem platformu",
 	  "strategy.add.script.download.title": "Sinyal scriptini indir",
 	  "strategy.add.script.message": "Stratejiniz başarılı bir şekilde oluşturuldu.<br>MetaTrader 4 ya da  MetaTrader 5 işlem hesabınızdan sinyaller göndermek için sinyal scriptini indirin ve MetaTrader terminali içerisinde çalıştırın.<br>Stratejinizin içerik menüsü üzerilndeki ilgili seçeneği seçmek suretiyle daha sonra da indirebilirsiniz.<br>1.EA'yı ilk defa açmadan önce, lütfen RAMM URL'sinin MetaTrader platformunda izin verilen URL'ler arasında olduğundan emin olun.<br>Bunun için, menüde Araçlar - Seçenekler - Uzman Danışmanlar kısmına https://ramm.store/api/trading/v1/signals.send URL'sini “Listelenen URL'ler için WebRequest'e izin ver:” tablosuna ekleyin<br>2.EA'yı çizelge penceresine koyun.<br>Bundan sonra hesabınızdaki tüm değişiklikler RAMM'daki stratejinize kopyalanacaktır.",
-  	"strategy.add.script.title": "Hazır!",
+  	"strategy.add.script.title": "Tebrikler!",
 	  "strategy.add.title.investments": "Yatırım ayarları",
 	  "strategy.add.title.strategy": "Strateji ayarları",
 	  "strategy.button.create": "Strateji oluştur",
+    "strategy.button.create.offer": "Teklif oluştur",
 
 	  "strategy.close.form.text": "Stratejinizin kapatılmasını onaylıyor musunuz?",
   	"strategy.close.form.text2": "Eğer kendi stratejinize yatırım yaptıysanız yatırım hesabınız da kapatılacak. Lütfen unutmayın bu işlem geri alınamaz.",
