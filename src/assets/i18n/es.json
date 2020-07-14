@@ -220,7 +220,7 @@
  	"managePassword.form.confirm.error.mismatch": "Las contraseñas no coinciden",
  	"managePassword.form.confirm.error.required": "Confirme la nueva contraseña",
  	"managePassword.form.current.error.required": "Ingrese su contraseña actual",
-  "managePassword.form.current.error.wrong": "Contraseña actual inválid",
+  "managePassword.form.current.error.wrong": "Contraseña actual inválida",
  	"managePassword.form.failure": "La contraseña no ha cambiado",
  	"managePassword.form.label.confirm": "Confirmar contraseña ",
  	"managePassword.form.label.current": "Contraseña actual",
