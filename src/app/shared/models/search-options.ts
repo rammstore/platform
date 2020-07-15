@@ -2,8 +2,8 @@ export class StrategiesSearchOptions {
   Filter: {
     Name?: string,
     MyActiveAccounts?: boolean,
-    MyStrategies?: boolean,
-    ActiveStrategies?: boolean,
+    MyStrategies?: number,
+    ActiveStrategies?: number,
     IsActive?: boolean
   };
 

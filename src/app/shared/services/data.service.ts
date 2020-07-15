@@ -75,7 +75,8 @@ export class DataService {
     this.loaderService.showLoader();
     const options: StrategiesSearchOptions = new StrategiesSearchOptions();
     options.Filter = {
-      IsActive: true
+      ActiveStrategies: 1,
+      MyStrategies: 1
     };
 
     if (args.paginator) {
@@ -117,7 +118,8 @@ export class DataService {
     this.loaderService.showLoader();
     const options: StrategiesSearchOptions = new StrategiesSearchOptions();
     options.Filter = {
-      IsActive: false
+      ActiveStrategies: 0,
+      MyStrategies: 1
     };
     options.OrderBy = {
       Field: 'DTClosed',
