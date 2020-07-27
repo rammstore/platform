@@ -333,5 +333,6 @@
   "table.footer.itemsPerPage": "Показывать на странице",
   "table.footer.itemsTotal": "Всего записей",
   "table.footer.pageNext": "Следующая",
-  "table.footer.pagePrevious": "Предыдущая"
+  "table.footer.pagePrevious": "Предыдущая",
+  "account.label.profit.hint": "Прибыль за всю историю счета, с учетом плавающей прибыли и выплаченного вознаграждения трейдера, комиссий"
 }

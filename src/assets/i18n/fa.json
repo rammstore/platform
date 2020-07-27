@@ -7,12 +7,12 @@
   "linkWithdraw.link": "#",
   "additionalInfo": "",
   "linkLogout": "/login",
-	
+
   "account.active.title": "فعال",
  	"account.closed.title": "بسته شده",
  	"account.lastTransfers.title": "عملیات‌های کیف پول",
   "account.result.chart.help.tooltip": "شما همچنین می‌توانید در گوشه بالا سمت راست آن را چک کنید",
- 	
+
  	"account.form.factor.error.max": "بیشترین ضریب هست ",
  	"account.form.factor.error.min": "کمترین ضریب هست",
  	"account.form.factor.error.pattern": "لطفاً مقدار صحیح ضریب را وارد کنید",
@@ -32,7 +32,7 @@
   "account.form.target.error.pattern": "لطفاً مقدار صحیح هدف را وارد کنید",
   "account.form.target.error.required": "هدف مشخص نشده است",
   "account.form.target.title": "درآمد هدف. به محض رسیدن به درآمد هدف‌گذاری شده، سرمایه‌گذاری متوقف خواهد شد",
-  	
+
   "account.manage.addTo": "افزون به سرمایه‌گذاری",
   "account.manage.pause.message": "تمام پوزیشن‌ها بسته خواهند شد. پوزیشن‌های جدید تا حذف وقفه، باز نخواهند شد",
   "account.manage.pause.title": "متوقف کردن سرمایه‌گذاری",
@@ -40,7 +40,7 @@
   "account.manage.strategy.pause.message": "تمام پوزیشن‌های تمام سرمایه‌گذاران این استراتژی بسته خواهد شد. پوزیشن‌های جدید تا حذف وقفه باز نخواهند شد",
   "account.manage.strategy.pause.title": "متوقف کردن استراتژی",
   "account.manage.strategy.resume.title": "از سرگیری استراتژی",
-  	
+
   "account.withdraw.close.current-equity": "موجودی فعلی",
   "account.withdraw.close.investment.title": "بستن سرمایه‌گذاری",
   "account.withdraw.close.investment.warning": "شما در هر لحظه می‌توانید سرمایه‌گذاری خود را ببندید. سپس شما قادر خواهید بود که سرمایه‌گذاری جدیدی در همان استراتژی ایجاد کنید. توجه داشته باشید که بعد از بستن، کاهش سرمایه‌گذاری صفر خواهد شد",
@@ -61,12 +61,12 @@
   "account.withdraw.partial.pause2.strategy": "حالت. لطفاً استراتژی را متوقف کنید و سپس عملیات جاری را تکرار کنید",
  	"account.withdraw.partial.sum": "مبلغ برداشتی",
  	"account.withdraw.partial.title": "برداشت",
- 
+
   "button.back": "بازگشت",
   "button.skip": "پیشنهاد را رد کنید",
   "button.cancel": "لغو",
  	"button.ok": "تأیید",
-  	
+
 	"common.account": "حساب",
 	"common.accountsCount": "شمار سرمایه‌گذارها",
 	"common.age": "طول عمر, هفته‌ها",
@@ -98,7 +98,7 @@
   "common.step 1: strategy.add.title.strategy": "گام۱: نظیمات استراتژ",
   "common.step 2: strategy.add.title.investments": "گام ۲: نظیمات سرمایه‌گذاری",
   "common.step 3: strategy.add.title.offer": "مرحله 3: پیشنهاد عمومی",
-  
+
 	"common.strategy": "استراتژی",
 	"common.target": "هدف",
 	"common.type": "نوع",
@@ -113,7 +113,7 @@
   "common.type8": "همکاران",
   "common.yield": "بازده",
   "common.yieldMonthly": "بازده ماهانه",
-  	
+
 	"common.label.iWant": "من می‌خواهم تا:",
 
 	"common.manage.close": "بستن",
@@ -124,10 +124,10 @@
   "common.manage.signalScript": "اسکریپت سیگنال",
   "common.manage.statement": "اعلان سرمایه‌گذاری",
   "common.manage.withdraw": "برداشت",
-  	 	  	
-  "common.table.empty.deals": "بدون معامله", 	  	
+
+  "common.table.empty.deals": "بدون معامله",
   "common.table.empty.positions": "بدون پوزیشن",
-  	
+
   "common.table.label.amountUSD": "مبلغ, دلار آمریکا",
 	"common.table.label.closed": "بسته شده",
 	"common.table.label.commissionPaidUSD": "کمیسیون پرداخت شده, دلار آمریکا",
@@ -157,9 +157,9 @@
   "common.table.label.yield": "سود",
   "common.table.label.yieldCommon": "جمع بازده",
  	"common.table.label.yieldTotal": "جمع سود",
- 	"common.table.label.yieldTotalUSD": "جمع سود, دلار آمریکا",  		
+ 	"common.table.label.yieldTotalUSD": "جمع سود, دلار آمریکا",
 	"common.table.label.yieldUSD": "سود, دلار آمریکا",
-  	
+
   "common.week-days.friday": "جمعه",
 	"common.week-days.monday": "دوشنبه",
 	"common.week-days.saturday": "شنبه",
@@ -167,23 +167,23 @@
   "common.week-days.thursday": "پنجشنبه",
   "common.week-days.tuesday": "سه شنبه",
   "common.week-days.wednesday": "چهارشنبه",
-  	  	
+
   "header.item.account": "حساب",
   "header.item.help": "راهنما",
  	"header.item.investments": "سرمایه‌گذاری‌ها",
   "header.item.myStrategies": "استراتژی‌های من",
  	"header.item.rating": "رتبه‌بندی",
  	"header.item.specification": "مشخصات",
-  	
+
   "header.menu.item.changeLanguage": "تغییر زبان",
   "header.menu.item.changePassword": "تغییر رمز  عبور",
   "header.menu.item.logout": "خروج",
-	
+
 	"help.title": "مرکز راهنمایی RAMM",
 
 	"investment.deals.title": "معاملات",
 	"investment.positions.title": "پوزیشن‌ها",
-  	
+
   "investment.details.strategy.commission": "کمیسیون",
   "investment.details.strategy.feePeriod": "دوره دستمزد",
   "investment.details.strategy.feePeriod.week": "هفته",
@@ -228,7 +228,7 @@
  	"managePassword.form.new.error.required": "لطفاً یک رمز عبور جدید وارد کنید",
   "managePassword.form.success": "رمز عبور شما با موفقیت تغییر کرد",
 	"managePassword.form.title": "تغییر رمز عبور",
- 
+
 	"myStrategies.active.title": "فعال",
   "myStrategies.closed.title": "بسته شده",
 
@@ -284,7 +284,7 @@
   "strategy.add.script.button.download": "دریافت اسکریپت",
 	"strategy.add.script.download.platform.title": "پلتفرم معامله کردن",
 	"strategy.add.script.download.title": "دریافت اسکریپت سیگنال",
-	"strategy.add.script.message": "استراتژی شما با موفقیت ایجاد شد<br> برای ارسال سیگنال‌ها از حساب معاملاتی متاتریدر4 یا متاتریدر5 شما، اسکریپت سیگنال را دریافت کرده و در ترمینال متاتریدرتان اجرا کنید<br>همچنین می‌توانید بعداً با انتخاب گزینه مربوطه در منوی درون استراتژیتان آن را دریافت کنید<br>1. قبل از اجرای EA برای اولین بار، لطفاً مطمئن شوید که لینک RAMM در فهرست لینک‌های مجاز در متاتریدر شمات وجود داشته باشد<br>برای این منظور، در منوی Tools - options - Expert Advisors و https://maindc.ramm.store/api/trading/v1/signals. ارسال به جدول “Allow WebRequest for listed URL:”<br>2. EA را در هر پنجره چارت که می‌خواهید قرار دهید<br>از حالا، تمام تغییرات روی حساب شما به استراتژی شما در RAMM کپی خواهد شد ", 
+	"strategy.add.script.message": "استراتژی شما با موفقیت ایجاد شد<br> برای ارسال سیگنال‌ها از حساب معاملاتی متاتریدر4 یا متاتریدر5 شما، اسکریپت سیگنال را دریافت کرده و در ترمینال متاتریدرتان اجرا کنید<br>همچنین می‌توانید بعداً با انتخاب گزینه مربوطه در منوی درون استراتژیتان آن را دریافت کنید<br>1. قبل از اجرای EA برای اولین بار، لطفاً مطمئن شوید که لینک RAMM در فهرست لینک‌های مجاز در متاتریدر شمات وجود داشته باشد<br>برای این منظور، در منوی Tools - options - Expert Advisors و https://maindc.ramm.store/api/trading/v1/signals. ارسال به جدول “Allow WebRequest for listed URL:”<br>2. EA را در هر پنجره چارت که می‌خواهید قرار دهید<br>از حالا، تمام تغییرات روی حساب شما به استراتژی شما در RAMM کپی خواهد شد ",
   "strategy.add.script.title": "تبریک می گویم!",
 	"strategy.add.title.investments": "تنظیمات سرمایه‌گذاری",
 	"strategy.add.title.strategy": "تنظیمات استراتژی",
@@ -293,7 +293,7 @@
 
 	"strategy.close.form.text": "آیا بسته شدن استراتژیتان را تأیید می‌کنید؟",
   "strategy.close.form.text2": "اگر شما در استراتژی خودتان سرمایه‌ای دارید حساب سرمایه‌گذاری شما بسته خواهد شد. لطفاً توجه داشته باشید که این جریان برگشت‌ناپذیر است",
-	
+
   "strategy.details.investments.active.title": "فعال",
   "strategy.details.investments.closed.title": "بسته شده",
   "strategy.details.message.chart": "چارت نشان می‌دهد که بازده استراتژی متعلق است به سرمایه‌گذاری معامله‌گر. این بازده بدون کسر دستمزد معامله‌گر محاسبه شده است",
@@ -301,7 +301,7 @@
   "strategy.details.message.pageForbidden": "این صفحه برای کاربران دیگر قابل مشاهده نیست",
   "strategy.details.message.risk": "اخطار ریسک: نتایج حاصل از اجرای معامله قبلی ضامن نتایج مشابه در آینده نیست.",
   "strategy.details.message.yieldMonthly": "بازده ماهانه به صورت میانگین است (بدون کسر دستمزد معامله‌گر) بر مبنای تاریخچه داده‌ها و از لحظه ایجاد استراتژی محاسبه می‌شود",
-	
+
   "strategy.form.amount.error.max": "شما فقط می‌توانید در بدون سرمایه، سرمایه‌گذاری کنید ",
 	"strategy.form.amount.error.min": "حداقل مبلغ سرمایه‌گذاری هست",
 	"strategy.form.amount.error.pattern": "لطفاً مبلغ سرمایه‌گذاری صحیح را وارد کنید",
@@ -323,15 +323,16 @@
   "strategy.form.target.error.min": "حداقل هدف هست",
   "strategy.form.target.error.pattern": "لطفاً مقدار هدف صحیح را وارد کنید",
   "strategy.form.target.error.required": "هدف مشخص نشده است",
-  "strategy.form.target.tooltip": "درآمد هدف. به محض رسیدن به درآمد هدف، سرمایه‌گذاری متوقف خواهد شد.",	
-	
+  "strategy.form.target.tooltip": "درآمد هدف. به محض رسیدن به درآمد هدف، سرمایه‌گذاری متوقف خواهد شد.",
+
   "strategy.invest.form.title": "سرمایه‌گذاری در استراتژی",
-    
+
   "table.cell.accountNumberCopy": "تعداد حسابی که از طریق آن کپی تریدینگ انجام می شود",
   "table.cell.loading": "در حال بارگیری",
   "table.cell.total": "جمع",
 	"table.footer.itemsPerPage": "موارد هر صفحه",
 	"table.footer.itemsTotal": "همه موارد",
 	"table.footer.pageNext": "بعدی",
-	"table.footer.pagePrevious": "قبلی"
+	"table.footer.pagePrevious": "قبلی",
+  "account.label.profit.hint": "Profit for the entire account history, taking into account the floating profit and paid Trader's remuneration, commissions"
 }

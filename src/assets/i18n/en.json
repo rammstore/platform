@@ -333,5 +333,6 @@
 	"table.footer.itemsPerPage": "Items per page",
 	"table.footer.itemsTotal": "Total items",
 	"table.footer.pageNext": "Next",
-	"table.footer.pagePrevious": "Previous"
+	"table.footer.pagePrevious": "Previous",
+  "account.label.profit.hint": "Profit for the entire account history, taking into account the floating profit and paid Trader's remuneration, commissions"
 }

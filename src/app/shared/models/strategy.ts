@@ -13,7 +13,7 @@ export class Strategy {
   accountsCount: number;  // Количество счетов
   symbols: string;        // Строка с перечислением самых используемых торговых инструментов (не более 3-х)
   account: Account;       // Инвестиция
-  offer: Offer;           // Оффер
+  publicOffer: Offer;           // Оффер
   isMyStrategy: boolean;  // Признак собственной стратегии
   ageByDays: number;      // Возраст в днях
   monthlyYield: number;   // Месячная прибыль в %

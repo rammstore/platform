@@ -30,7 +30,11 @@ export class RatingRatedComponent implements OnInit, OnDestroy {
       new TableColumn({ property: 'strategy.yieldChart', label: 'common.chart' }),
       new TableColumn({ property: 'accountsCount', label: 'common.table.label.investors', fontSize: 16}),
       new TableColumn({ property: 'age', label: 'common.age', fontSize: 16 }),
-      new TableColumn({ property: 'strategy.investmentInfo', label: 'common.table.label.myInvestmentUSD', colored: true }),
+      new TableColumn({
+        property: 'strategy.investmentInfo',
+        hint: 'account.label.profit.hint',
+        label: 'common.table.label.myInvestmentUSD',
+        colored: true }),
       new TableColumn({ property: 'manage', label: 'common.table.label.manage' })
     ]),
   ];

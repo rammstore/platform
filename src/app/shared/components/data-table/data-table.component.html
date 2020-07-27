@@ -4,9 +4,17 @@
     <th *ngFor="let column of row.columns"
         [attr.colspan]="column.colspan"
         [attr.rowspan]="column.rowspan"
-        class="{{column.property}}"
+        class="{{column.property + ' hint-container'}}"
         [class.colored]="column.colored">
       <span translate>{{column.label}}</span>
+      <span *ngIf="column.hint" class="hint">
+        *
+        <div
+             *ngIf="column.hint"
+             class="hint-content"
+             [innerText]="column.hint"
+             translate></div>
+      </span>
     </th>
   </tr>
   </thead>
@@ -67,8 +75,19 @@
 
             <div class="strategy-account"
                  *ngSwitchCase="'investmentInfo'">
-              <div class="strategy-account-intervalPnL">
-                <span><span translate>common.table.label.yield</span>:</span>
+              <div class="strategy-account-intervalPnL hint-container">
+                <span>
+                  <span translate>common.table.label.yield</span>
+                   <span *ngIf="column.hint" class="hint">
+                    *
+                    <div
+                      *ngIf="column.hint"
+                      class="hint-content"
+                      [innerText]="column.hint"
+                      translate></div>
+                  </span>:
+                </span>
+
                 <span class="{{item.getColorClass('intervalPnL')}}">
                   {{item.intervalPnL | customCurrency}}
                 </span>
@@ -90,8 +109,18 @@
             <div class="strategy-account"
                  *ngSwitchCase="'strategy.investmentInfo'">
               <ng-container class="investmentInfo" *ngIf="item.account">
-                <div class="strategy-account-intervalPnL">
-                  <span><span translate>common.table.label.yield</span>:</span>
+                <div class="strategy-account-intervalPnL hint-container">
+                  <span><span translate>common.table.label.yield</span>
+                     <span *ngIf="column.hint" class="hint">
+                      *
+                      <div
+                        *ngIf="column.hint"
+                        class="hint-content"
+                        [innerText]="column.hint"
+                        translate></div>
+                    </span>:
+                  </span>
+
                   <span [class.positive]="item.account.intervalPnL > 0" [class.negative]="item.account.intervalPnL < 0">
                   {{item.account.intervalPnL | customCurrency}}
                 </span>

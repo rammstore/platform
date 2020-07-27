@@ -169,7 +169,7 @@ export class DataService {
       if (response.MyAccount) {
         response.Strategy.Account = response.MyAccount;
       }
-      response.Strategy.Offer = {Fee: response.Strategy.Fee};
+      response.Strategy.PublicOffer = {FeeRate: response.Strategy.Fee};
       this.currentStrategyDetailsSubject.next(this.createInstanceService.createStrategy(response.Strategy));
     }, (error: HttpErrorResponse) => {
       if (error.status === 404) {

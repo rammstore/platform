@@ -28,10 +28,17 @@ export class InvestmentsActiveComponent implements OnInit, OnDestroy {
     ]),
     new TableHeaderRow([
       new TableColumn({ property: 'strategy.name', label: 'common.table.label.name' }),
-      new TableColumn({ property: 'strategy.profit', label: 'common.yield', pipe: { pipe: PercentPipe, args: ['1.0-2'] }, fontSize: 24}),
+      new TableColumn({
+        property: 'strategy.profit',
+        label: 'common.yield',
+        pipe: { pipe: PercentPipe, args: ['1.0-2'] },
+        fontSize: 24}),
       new TableColumn({ property: 'yieldChart', label: 'common.chart' }),
       new TableColumn({ property: 'age', label: 'common.age', colored: true, fontSize: 16 }),
-      new TableColumn({ property: 'investmentInfo', label: 'common.table.label.myInvestmentUSD', colored: true }),
+      new TableColumn({
+        property: 'investmentInfo',
+        hint: 'account.label.profit.hint',
+        label: 'common.table.label.myInvestmentUSD', colored: true }),
       new TableColumn({ property: 'manage', label: 'common.table.label.manage' })
     ]),
   ];

@@ -13,11 +13,11 @@
       </tr>
       <tr>
         <td translate>investment.details.strategy.commission</td>
-        <td *ngIf="strategy">{{strategy.offer.getComission()}}</td>
+        <td *ngIf="strategy">{{strategy.publicOffer.getComission()}}</td>
       </tr>
       <tr>
         <td translate>investment.details.strategy.feeRate</td>
-        <td *ngIf="strategy">{{strategy.offer.fee | percent:'1.0-2'}}</td>
+        <td *ngIf="strategy">{{strategy.publicOffer.feeRate | percent:'1.0-2'}}</td>
       </tr>
 <!--      <tr>-->
 <!--        <td translate>investment.details.strategy.feePeriod</td>-->

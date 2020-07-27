@@ -1,6 +1,7 @@
 export class Offer {
-  commission: number;
-  fee: number;
+  commissionRate: number;
+  feeRate: number;
+  id: number;
 
   constructor(
     options: any
@@ -9,6 +10,6 @@ export class Offer {
   }
 
   getComission(): string {
-    return (this.commission * 1000000) + ' USD / 1 mln';
+    return (this.commissionRate * 1000000) + ' USD / 1 mln';
   }
 }

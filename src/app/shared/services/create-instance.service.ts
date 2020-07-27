@@ -23,7 +23,7 @@ export class CreateInstanceService {
       accountsCount: options.Accounts,
       symbols: options.Symbols,
       account: options.Account ? this.createAccount(options.Account) : null,
-      offer: options.Offer ? this.createOffer(options.Offer) : undefined,
+      publicOffer: options.PublicOffer ? this.createOffer(options.PublicOffer) : undefined,
       isMyStrategy: options.IsMyStrategy,
       ageByDays: options.AgeByDays,
       monthlyYield: options.MonthlyYield,
@@ -84,8 +84,9 @@ export class CreateInstanceService {
 
   createOffer(options: any): Offer {
     return new Offer({
-      commission: options.Commission,
-      fee: options.Fee
+      commissionRate: options.CommissionRate,
+      feeRate: options.FeeRate,
+      id: options.ID
     });
   }
 
