@@ -477,9 +477,9 @@ export class DataService {
   // Получение деталей инвестиции
   getAccountStatement(args: { accountId: number }): Observable<any> {
     this.http.post(`${this.apiUrl}/accounts.getStatement`, {AccountID: args.accountId}).subscribe((response: any) => {
-      response.Statement[0].Strategy.Offer = {
-        Commission: response.Statement[0].Strategy.Commission,
-        Fee: response.Statement[0].Strategy.Fee
+      response.Statement[0].Strategy.PublicOffer = {
+        CommissionRate: response.Statement[0].Strategy.Commission,
+        FeeRate: response.Statement[0].Strategy.Fee
       };
 
       response.Statement[0].Account.CurrentDate = new Date(response.Statement[0].CurrentDate);

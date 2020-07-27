@@ -14,7 +14,7 @@
       <tr>
         <td translate>investment.details.strategy.commission</td>
         <td>
-          <span *ngIf="strategy && strategy.publicOffer">
+          <span *ngIf="strategy">
             {{strategy.publicOffer.getComission()}}
           </span>
         </td>
@@ -22,7 +22,7 @@
       <tr>
         <td translate>investment.details.strategy.feeRate</td>
         <td>
-          <span *ngIf="strategy && strategy.publicOffer">
+          <span *ngIf="strategy">
             {{strategy.publicOffer.feeRate | percent:'1.0-2'}}
           </span>
         </td>
