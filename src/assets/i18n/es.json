@@ -33,6 +33,8 @@
   	"account.form.target.error.required": "El objetivo no está definido",
   	"account.form.target.title": "Objetivo de ingresos. Al alcanzar los ingresos deseados, la inversión se detendrá",
 
+    "account.label.profit.hint": "Beneficio para todo el historial de la cuenta, teniendo en cuenta el beneficio flotante y la remuneración del comerciante pagado, comisiones",
+
   	"account.manage.addTo": "Añadir a la inversión",
   	"account.manage.pause.message": "Todas las posiciones se cerraran. Las nuevas posiciones no se abrirán hasta que se elimine la pausa",
   	"account.manage.pause.title": "Pausar inversión",

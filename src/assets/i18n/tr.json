@@ -33,6 +33,8 @@
   	"account.form.target.error.required": "Hedef belirlenmemiş",
   	"account.form.target.title": "Hedef gelir. Hedef gelire ulaşılması durumunda, yatırım duraklatılacaktır.",
 
+    "account.label.profit.hint": "Profit for the entire account history, taking into account the floating profit and paid Trader's remuneration, commissions",
+
   	"account.manage.addTo": "Yatırıma ekle",
   	"account.manage.pause.message": "Tüm pozisyonlar kapatılacaktır. Duraklama kaldırılana kadar yeni pozisyonlar açılmayacaktır.",
   	"account.manage.pause.title": "Yatırımı duraklat",
@@ -333,6 +335,5 @@
 	  "table.footer.itemsPerPage": "Sayfa başına öğe sayısı",
 	  "table.footer.itemsTotal": "Toplam öğe sayısı",
 	  "table.footer.pageNext": "Sonraki",
-	  "table.footer.pagePrevious": "Önceki",
-    "account.label.profit.hint": "Profit for the entire account history, taking into account the floating profit and paid Trader's remuneration, commissions"
+	  "table.footer.pagePrevious": "Önceki"    
 }

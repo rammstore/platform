@@ -33,6 +33,8 @@
   	"account.form.target.error.required": "Target is not defined",
   	"account.form.target.title": "Target income. Upon reaching the target income, the investment will be paused.",
 
+    "account.label.profit.hint": "Profit for the entire account history, taking into account the floating profit and paid Trader's remuneration, commissions",
+
   	"account.manage.addTo": "Add to investment",
   	"account.manage.pause.message": "All positions will be closed. New positions will not be opened until the pause removal.",
   	"account.manage.pause.title": "Pause investment",
@@ -333,6 +335,5 @@
 	"table.footer.itemsPerPage": "Items per page",
 	"table.footer.itemsTotal": "Total items",
 	"table.footer.pageNext": "Next",
-	"table.footer.pagePrevious": "Previous",
-  "account.label.profit.hint": "Profit for the entire account history, taking into account the floating profit and paid Trader's remuneration, commissions"
+	"table.footer.pagePrevious": "Previous"
 }

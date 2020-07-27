@@ -32,8 +32,10 @@
   "account.form.target.error.pattern": "لطفاً مقدار صحیح هدف را وارد کنید",
   "account.form.target.error.required": "هدف مشخص نشده است",
   "account.form.target.title": "درآمد هدف. به محض رسیدن به درآمد هدف‌گذاری شده، سرمایه‌گذاری متوقف خواهد شد",
-
-  "account.manage.addTo": "افزون به سرمایه‌گذاری",
+  
+  "account.label.profit.hint": "Profit for the entire account history, taking into account the floating profit and paid Trader's remuneration, commissions",
+ 
+ "account.manage.addTo": "افزون به سرمایه‌گذاری",
   "account.manage.pause.message": "تمام پوزیشن‌ها بسته خواهند شد. پوزیشن‌های جدید تا حذف وقفه، باز نخواهند شد",
   "account.manage.pause.title": "متوقف کردن سرمایه‌گذاری",
   "account.manage.resume.title": "از سرگیری سرمایه گذاری",
@@ -333,6 +335,5 @@
 	"table.footer.itemsPerPage": "موارد هر صفحه",
 	"table.footer.itemsTotal": "همه موارد",
 	"table.footer.pageNext": "بعدی",
-	"table.footer.pagePrevious": "قبلی",
-  "account.label.profit.hint": "Profit for the entire account history, taking into account the floating profit and paid Trader's remuneration, commissions"
+	"table.footer.pagePrevious": "قبلی"
 }

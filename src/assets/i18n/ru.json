@@ -33,6 +33,8 @@
   "account.form.target.error.required": "Цель не задана",
   "account.form.target.title": "Целевой доход. При достижении целевого дохода инвестиция будет приостановлена",
 
+  "account.label.profit.hint": "Прибыль за всю историю счета, с учетом плавающей прибыли и выплаченного вознаграждения трейдера, комиссий",
+
   "account.manage.addTo": "Добавить в инвестицию",
   "account.manage.pause.message": "Все позиции будут закрыты. Новые позиции не будут открываться до момента снятия с паузы.",
   "account.manage.pause.title": "Пауза инвестиции",
@@ -333,6 +335,5 @@
   "table.footer.itemsPerPage": "Показывать на странице",
   "table.footer.itemsTotal": "Всего записей",
   "table.footer.pageNext": "Следующая",
-  "table.footer.pagePrevious": "Предыдущая",
-  "account.label.profit.hint": "Прибыль за всю историю счета, с учетом плавающей прибыли и выплаченного вознаграждения трейдера, комиссий"
+  "table.footer.pagePrevious": "Предыдущая"
 }
