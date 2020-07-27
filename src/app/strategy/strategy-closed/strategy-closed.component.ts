@@ -27,7 +27,7 @@ export class StrategyClosedComponent implements OnInit, OnDestroy {
     new TableHeaderRow([
       new TableColumn({ property: 'id', label: 'ID'}),
       new TableColumn({ property: 'name', label: 'common.table.label.name' }),
-      new TableColumn({ property: 'offer.fee', label: 'common.fee', pipe: { pipe: PercentPipe }}),
+      new TableColumn({ property: 'publicOffer.feeRate', label: 'common.fee', pipe: { pipe: PercentPipe }}),
       new TableColumn({ property: 'dtCreated', label: 'common.table.label.created', pipe: { pipe: CustomDatePipe }}),
       new TableColumn({ property: 'dtClosed', label: 'common.table.label.closed', pipe: { pipe: CustomDatePipe } }),
       new TableColumn({ property: 'age', label: 'common.age' }),

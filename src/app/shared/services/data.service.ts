@@ -140,6 +140,7 @@ export class DataService {
       this.walletService.walletSubject.next(this.createInstanceService.createWallet(response.Wallets[0]));
 
       response.Strategies.forEach((s: any) => {
+        s.PublicOffer = s.PublicOffer || {};
         strategies.push(this.createInstanceService.createStrategy(s));
       });
 

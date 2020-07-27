@@ -76,7 +76,7 @@ export class DataTableComponent implements OnInit, OnDestroy {
       if (typeof res[key] === 'object') {
         Object.assign(res, res[key]);
       } else {
-        res = res[key];
+        res = res[key] || 0;
       }
     });
 
