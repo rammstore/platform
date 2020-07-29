@@ -210,11 +210,22 @@ export class DataService {
     );
   }
 
-  setPublicOffer(strategyID: number, offerID: number) {
-    this.http.post(`${this.apiUrl}/myStrategies.setPublicOffer`, {
-      StrategyID: strategyID,
-      OfferID: offerID
-    }).subscribe();
+  setPublicOffer(strategyID: number, offerID?: number) {
+    const json: any = {
+      StrategyID: strategyID
+    };
+
+    if (offerID) {
+      json.OfferID = offerID;
+    }
+
+    return this.http.post(`${this.apiUrl}/myStrategies.setPublicOffer`, json);
+  }
+
+  getOffers(id: number) {
+    return this.http.post(`${this.apiUrl}/strategies.getOffers`, {
+      StrategyID: id
+    });
   }
 
   // Создать оферту
@@ -226,7 +237,7 @@ export class DataService {
       CommissionRate: commissionRate
     }).pipe(
       map((item) => {
-        this.setPublicOffer(id, item['OfferID']);
+        this.setPublicOffer(id, item['OfferID']).subscribe();
         return item;
       })
     );

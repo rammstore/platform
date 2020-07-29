@@ -1,12 +1,12 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Strategy } from '@app/models';
-import { ContentTabLink } from '@app/components/content-tabs/content-tab-link';
-import { BsModalRef } from 'ngx-bootstrap';
-import { Subject } from 'rxjs';
-import { map, takeUntil } from 'rxjs/internal/operators';
-import { DataService } from '@app/services/data.service';
-import { BrandService } from '@app/services/brand.service';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {Strategy} from '@app/models';
+import {ContentTabLink} from '@app/components/content-tabs/content-tab-link';
+import {BsModalRef} from 'ngx-bootstrap';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/internal/operators';
+import {DataService} from '@app/services/data.service';
+import {BrandService} from '@app/services/brand.service';
 
 @Component({
   selector: 'app-strategy-details',
@@ -48,10 +48,14 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
         this.strategy = strategy;
 
         this.links = [
-          new ContentTabLink('common.yield', '/strategies/details/' + this.strategy.id),
-          new ContentTabLink('common.offers', `/strategies/details/${this.strategy.id}/offers`),
-          new ContentTabLink('common.table.label.symbols', '/strategies/details/' + this.strategy.id + '/symbols')
+          new ContentTabLink('common.yield', '/strategies/details/' + this.strategy.id)
         ];
+
+        if (this.strategy.isMyStrategy) {
+          this.links.push(new ContentTabLink('common.offers', `/strategies/details/${this.strategy.id}/offers`));
+        }
+
+        this.links.push(new ContentTabLink('common.table.label.symbols', '/strategies/details/' + this.strategy.id + '/symbols'));
 
         if (this.strategy.isMy()) {
           this.links.push(new ContentTabLink('common.investments', '/strategies/details/' + this.strategy.id + '/investments'));

@@ -14,6 +14,7 @@ import { StrategyDetailsInvestmentsActiveComponent } from './strategy-details/st
 import { StrategyDetailsInvestmentsClosedComponent } from './strategy-details/strategy-details-investments/strategy-details-investments-closed/strategy-details-investments-closed.component';
 import { StrategyAddScriptComponent } from './strategy-add/strategy-add-script/strategy-add-script.component';
 import { StrategyOffersComponent } from './strategy-details/strategy-offers/strategy-offers.component';
+import { StrategyOfferCreateComponent } from './strategy-details/strategy-offers/strategy-offer-create/strategy-offer-create.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { StrategyOffersComponent } from './strategy-details/strategy-offers/stra
     StrategyDetailsInvestmentsActiveComponent,
     StrategyDetailsInvestmentsClosedComponent,
     StrategyAddScriptComponent,
-    StrategyOffersComponent
+    StrategyOffersComponent,
+    StrategyOfferCreateComponent
   ],
   imports: [
     SharedModule,
@@ -37,6 +39,7 @@ import { StrategyOffersComponent } from './strategy-details/strategy-offers/stra
   ],
   entryComponents: [
     StrategyAddComponent,
+    StrategyOfferCreateComponent,
     StrategyAddScriptComponent
   ]
 })

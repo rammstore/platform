@@ -67,6 +67,7 @@
   "button.back": "Назад",
   "button.skip": "Пропустить",
   "button.cancel": "Отмена",
+  "button.create": "Создать",
   "button.ok": "ОК",
 
   "common.account": "Счет",
@@ -233,6 +234,10 @@
 
   "myStrategies.active.title": "Активные",
   "myStrategies.closed.title": "Закрытые",
+  "myStrategies.offers.type.public": "Публичная",
+  "myStrategies.offers.type.create.public": "Сделать публичной",
+  "myStrategies.offers.type.create.not.public": "Сделать непубличной",
+  "myStrategies.offers.title.create": "Создание оферты",
 
   "notify.investment.access.error": "У вас нет доступа к данной инвестиции",
   "notify.investment.closed": "Инвестиция закрыта",
@@ -250,6 +255,7 @@
   "notify.strategy.created": "Стратегия создана",
   "notify.strategy.paused": "Стратегия поставлена на паузу",
   "notify.strategy.resumed": "Стратегия возобновлена",
+  "notify.strategy.offer.create": "Оферта создана",
 
   "rating.all.title": "Все стратегии",
   "rating.message": "На странице показаны стратегии с наибольшим приростом количества инвестиций в течение последней недели.",
@@ -292,6 +298,8 @@
   "strategy.add.title.strategy": "Параметры стратегии",
   "strategy.button.create": "Создать стратегию",
   "strategy.button.create.offer": "Создать оферту",
+  "strategy.public.offer.label": "Публичной может быть только одна оферта, при создании новой публичной оферты старая оферта станет непубличной",
+  "strategy.private.offer.label": "У стратегии не будет публичных оферт, стратегия будет удалена из рейтингов и инвестирование будет возможно только по скрытым ссылкам.",
 
   "strategy.close.form.text": "Вы подтверждаете закрытие своей стратегии?",
   "strategy.close.form.text2": "Если вы инвестировали в свою стратегию, то при ее закрытии ваш инвестиционный счет также будет закрыт. Обратите внимание, что это необратимое действие.",
@@ -335,5 +343,6 @@
   "table.footer.itemsPerPage": "Показывать на странице",
   "table.footer.itemsTotal": "Всего записей",
   "table.footer.pageNext": "Следующая",
-  "table.footer.pagePrevious": "Предыдущая"
+  "table.footer.pagePrevious": "Предыдущая",
+  "link": "Ccылка"
 }

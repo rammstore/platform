@@ -1,1 +1,45 @@
-<p>strategy-offers works!</p>
+<div class="strategy-offer"
+     *ngIf="strategy">
+  <div class="text-right">
+    <button class="primary"
+            (click)="createOffer()"
+            translate>strategy.button.create.offer
+    </button>
+  </div>
+  <table>
+    <tbody>
+    <tr>
+      <td>ID</td>
+      <td>
+        {{strategy.id}}
+        <span
+          class="positive"
+          *ngIf="strategy.publicOffer"
+          translate>myStrategies.offers.type.public</span>
+      </td>
+    </tr>
+    <tr *ngIf="strategy.publicOffer">
+      <td colspan="2" class="text-right">
+        <button
+          class="primary"
+          (click)="makeNotPublic()" translate>myStrategies.offers.type.create.not.public
+        </button>
+      </td>
+    </tr>
+    <tr>
+      <td translate>investment.details.strategy.feeRate</td>
+      <td>{{strategy.publicOffer.feeRate  | customCurrency}} USD</td>
+    </tr>
+    <tr>
+      <td translate>investment.details.strategy.commission</td>
+      <td>{{strategy.commission}}</td>
+    </tr>
+    <tr>
+      <td translate>link</td>
+      <td>
+        <a [href]="link">Получить ссылку</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
