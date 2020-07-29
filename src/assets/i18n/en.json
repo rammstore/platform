@@ -67,6 +67,7 @@
   "button.back": "Back",
   "button.skip": "Skip",
   "button.cancel": "Cancel",
+  "button.create": "Create",
  	"button.ok": "OK",
 
 	"common.account": "Account",
@@ -232,7 +233,11 @@
 	"managePassword.form.title": "Change password",
 
 	"myStrategies.active.title": "Active",
-  	"myStrategies.closed.title": "Closed",
+  "myStrategies.closed.title": "Closed",
+  "myStrategies.offers.type.public": "Public",
+  "myStrategies.offers.type.create.public": "Make public",
+  "myStrategies.offers.type.create.not.public": "Make not public",
+  "myStrategies.offers.title.create": "Create offer",
 
  	"notify.investment.access.error": "You do not have access to this investment",
 	"notify.investment.closed": "The investment is closed",
@@ -250,6 +255,7 @@
 	"notify.strategy.created": "The strategy is created",
 	"notify.strategy.paused": "The strategy is paused",
 	"notify.strategy.resumed": "The strategy is resumed",
+  "notify.strategy.offer.create": "Offer was created",
 
  	"rating.all.title": "All strategies",
 	"rating.message": "The page shows top strategies with the maximum increase of number of investments during the last week.",
@@ -292,9 +298,10 @@
 	"strategy.add.title.strategy": "Strategy settings",
 	"strategy.button.create": "Create strategy",
   "strategy.button.create.offer": "Create offer",
-
+  "strategy.public.offer.label": "Only one offer can be public; when creating a new public offer, the old offer will become non-public",
+  "strategy.private.offer.label": "The strategy will not have public offers, the strategy will be removed from the ratings and investment will be possible only through hidden links",
 	"strategy.close.form.text": "Do you confirm closing your strategy?",
-  	"strategy.close.form.text2": "If you had invested in your own strategy your investment account would also be closed. Please note that this action is irreversible.",
+  "strategy.close.form.text2": "If you had invested in your own strategy your investment account would also be closed. Please note that this action is irreversible.",
 
 	"strategy.details.investments.active.title": "Active",
   	"strategy.details.investments.closed.title": "Closed",
