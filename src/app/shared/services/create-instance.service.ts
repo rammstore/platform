@@ -85,7 +85,7 @@ export class CreateInstanceService {
 
   createOffer(options: any): Offer {
     return new Offer({
-      commissionRate: options.CommissionRate,
+      CommissionRate: options.CommissionRate,
       feeRate: options.FeeRate,
       id: options.ID
     });

@@ -12,12 +12,13 @@ export class Offer {
     options: any
   ) {
     Object.assign(this, options);
+    this.commissionRate = options.CommissionRate;
     this.commissionRate = this.commissionRate || 0;
     this.link = options.Link;
     this.isPublic = options.IsPublic;
     this.dTCreated = options.DTCreated;
     this.partnerShareRate = options.PartnerShareRate;
-    this.status = options.Status; debugger
+    this.status = options.Status;
   }
 
   getComission(): string {

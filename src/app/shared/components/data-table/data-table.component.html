@@ -61,6 +61,9 @@
             <ng-container *ngSwitchCase="'DTCreated'">
               <span [innerText]="item['dTCreated'] | dynamic:column.pipe.pipe:column.pipe.args"></span>
             </ng-container>
+            <ng-container *ngSwitchCase="'commissionRate'">
+              <span [innerText]="item.getComission()"></span>
+            </ng-container>
 
             <ng-container *ngSwitchCase="'strategy.name'">
               <a class="detail-link" [routerLink]="[getItemLink(item.strategy)]">{{item.strategy.name}}</a>

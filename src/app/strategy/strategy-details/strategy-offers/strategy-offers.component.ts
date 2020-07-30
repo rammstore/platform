@@ -32,7 +32,7 @@ export class StrategyOffersComponent implements OnInit {
     new TableHeaderRow([
       new TableColumn({property: 'commissionRate', label: 'common.table.label.commissionRate'}),
       new TableColumn({property: 'DTCreated', label: 'common.table.label.dtCreate', pipe: {pipe: CustomDatePipe}}),
-      new TableColumn({property: 'FeeRate', label: 'common.table.label.investors'}),
+      new TableColumn({property: 'FeeRate', label: 'investment.details.strategy.feeRate'}),
       new TableColumn({property: 'ID', label: 'ID'}),
       new TableColumn({property: 'IsPublic', label: 'common.table.label.offer.public'}),
       new TableColumn({property: 'link', label: 'common.table.label.link'}),
