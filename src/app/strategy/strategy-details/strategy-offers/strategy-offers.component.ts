@@ -30,12 +30,12 @@ export class StrategyOffersComponent implements OnInit {
   // table settings
   tableHeader: TableHeaderRow[] = [
     new TableHeaderRow([
-      new TableColumn({property: 'commissionRate', label: 'common.table.label.commissionRate'}),
-      new TableColumn({property: 'DTCreated', label: 'common.table.label.dtCreate', pipe: {pipe: CustomDatePipe}}),
-      new TableColumn({property: 'FeeRate', label: 'investment.details.strategy.feeRate'}),
       new TableColumn({property: 'ID', label: 'ID'}),
+      new TableColumn({property: 'DTCreated', label: 'common.table.label.dtCreate', pipe: {pipe: CustomDatePipe}}),
       new TableColumn({property: 'IsPublic', label: 'common.table.label.offer.public'}),
       new TableColumn({property: 'link', label: 'common.table.label.link'}),
+      new TableColumn({property: 'commissionRate', label: 'common.table.label.commissionRate'}),
+      new TableColumn({property: 'FeeRate', label: 'investment.details.strategy.feeRate'}),
       // new TableColumn({property: 'PartnerShareRate', label: 'common.table.label.partner'}),
       new TableColumn({property: 'OfferStatus', label: 'common.table.label.status'})
     ]),
