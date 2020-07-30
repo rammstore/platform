@@ -116,9 +116,13 @@ td {
   &>*{
     display: flex;
   }
+  &>span{
+    width: 80px;
+  }
   button{
     font-size: 20px;
-    width: auto;
+    width: 38px;
+    min-width: 38px;
     align-items: center;
     i{
       font-size: 20px;
