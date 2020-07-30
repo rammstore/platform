@@ -21,6 +21,7 @@ import { ProgressbarModule } from 'ngx-bootstrap';
 import { DataTableModule } from '@app/components/data-table/data-table.module';
 import { ChartModule } from '@app/components/chart/chart.module';
 import { NotificationsModule } from '@app/components/notifications/notifications.module';
+import { ClipboardModule } from 'ngx-clipboard';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { NotificationsModule } from '@app/components/notifications/notifications
   ],
   imports: [
     CommonModule,
+    ClipboardModule,
     PopoverModule.forRoot(),
     BsDropdownModule.forRoot(),
     ModalModule.forRoot(),
@@ -51,6 +53,7 @@ import { NotificationsModule } from '@app/components/notifications/notifications
     PopoverModule,
     BsDropdownModule,
     AccordionModule,
+    ClipboardModule,
     TooltipModule,
     ModalModule,
     ReactiveFormsModule,

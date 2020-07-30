@@ -16,10 +16,11 @@
 
       <div class="item">
         <span translate>common.table.label.investors</span>
-        <span>{{strategy.accountsCount}}</span>
+        <span>{{strategy.accounts}}</span>
       </div>
 
-      <div class="item">
+      <div class="item"
+           *ngIf="strategy.publicOffer">
         <span translate>common.fee</span>
         <span>{{strategy.publicOffer.feeRate | percent}}</span>
       </div>

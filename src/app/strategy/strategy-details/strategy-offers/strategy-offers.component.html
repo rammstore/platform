@@ -6,19 +6,18 @@
             translate>strategy.button.create.offer
     </button>
   </div>
-  <table>
+  <table *ngIf="strategy.publicOffer">
     <tbody>
     <tr>
       <td>ID</td>
       <td>
-        {{strategy.id}}
+        {{strategy.publicOffer.id}}
         <span
           class="positive"
-          *ngIf="strategy.publicOffer"
           translate>myStrategies.offers.type.public</span>
       </td>
     </tr>
-    <tr *ngIf="strategy.publicOffer">
+    <tr>
       <td colspan="2" class="text-right">
         <button
           class="primary"
@@ -32,14 +31,17 @@
     </tr>
     <tr>
       <td translate>investment.details.strategy.commission</td>
-      <td>{{strategy.commission}}</td>
-    </tr>
-    <tr>
-      <td translate>link</td>
-      <td>
-        <a [href]="link">Получить ссылку</a>
-      </td>
+      <td>{{strategy.publicOffer.getComission()}}</td>
     </tr>
     </tbody>
   </table>
+
+  <app-data-table
+    [tableHeader]="tableHeader"
+    [data]="offers"
+    (paginationChanged)="getOffers()"
+    [methodName]="'getOffers'"
+    [methodArgs]="args">
+  </app-data-table>
+
 </div>

@@ -58,6 +58,10 @@
               <div class="symbols">{{item.symbols}}</div>
             </ng-container>
 
+            <ng-container *ngSwitchCase="'DTCreated'">
+              <span [innerText]="item['dTCreated'] | dynamic:column.pipe.pipe:column.pipe.args"></span>
+            </ng-container>
+
             <ng-container *ngSwitchCase="'strategy.name'">
               <a class="detail-link" [routerLink]="[getItemLink(item.strategy)]">{{item.strategy.name}}</a>
               <div class="symbols">{{item.strategy.symbols}}</div>
@@ -173,6 +177,31 @@
 
             <ng-container *ngSwitchCase="'yieldChart'">
               <app-chart-yield-table *ngIf="item.strategy" [strategy]="item.strategy"></app-chart-yield-table>
+            </ng-container>
+
+
+
+            <ng-container *ngSwitchCase="'link'">
+              <span class="link-container">
+                <span class="d-flex">{{item.link}}</span>
+                <button ngxClipboard
+                        class="d-flex empty-space"
+                        [cbContent]="getOfferLink(item.link)"
+                        *ngIf="item.link">
+                <i class="fa fa-copy"></i>
+              </button>
+              </span>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'OfferStatus'">
+              <span translate>
+                {{item.getStatus()}}
+              </span>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'IsPublic'">
+             <span translate
+                   [innerText]="item['IsPublic'] ? 'table.content.yes' : 'table.content.no'"></span>
             </ng-container>
 
             <ng-container *ngSwitchCase="'strategy.yieldChart'">

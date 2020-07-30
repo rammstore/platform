@@ -10,7 +10,7 @@ export class Strategy {
   // partnerShare: number;   // Доля партнера
   status: number;         // Статус
   profit: number;         // Прибыль в % (Yield)
-  accountsCount: number;  // Количество счетов
+  accounts: number;  // Количество счетов
   symbols: string;        // Строка с перечислением самых используемых торговых инструментов (не более 3-х)
   account: Account;       // Инвестиция
   publicOffer: Offer;           // Оффер

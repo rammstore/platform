@@ -7,6 +7,7 @@ import {
   Command,
   Deal,
   DealsSearchOptions,
+  Offer,
   Paginator,
   Position,
   PositionsSearchOptions,
@@ -167,10 +168,16 @@ export class DataService {
     this.loaderService.showLoader();
     this.http.post(`${this.apiUrl}/strategies.get`, {ID: args.strategyId}).subscribe((response: any) => {
       this.loaderService.hideLoader();
-      if (response.MyAccount) {
-        response.Strategy.Account = response.MyAccount;
+      if (response.Account) {
+        const json = response.Account;
+        json.offer = new Offer({
+          commissionRate: json.Offer.CommissionRate,
+          feeRate: json.Offer.FeeRate,
+          id: json.Offer.ID
+        });
+        response.Strategy.Account = new Account(json);
       }
-      response.Strategy.PublicOffer = {FeeRate: response.Strategy.Fee};
+      // response.Strategy.PublicOffer = {FeeRate: response.Strategy.Fee};
       this.currentStrategyDetailsSubject.next(this.createInstanceService.createStrategy(response.Strategy));
     }, (error: HttpErrorResponse) => {
       if (error.status === 404) {
@@ -225,7 +232,16 @@ export class DataService {
   getOffers(id: number) {
     return this.http.post(`${this.apiUrl}/strategies.getOffers`, {
       StrategyID: id
-    });
+    })
+      .pipe(
+        map((item: any) => {
+          const array: Offer[] = [];
+
+          (item.Offers || []).forEach((item: any)=> {
+            array.push(new Offer(item));
+          });
+          return array;
+        }));
   }
 
   // Создать оферту

@@ -1,4 +1,5 @@
 import { Strategy } from '@app/models/strategy';
+import {Offer} from "@app/models/offer";
 
 export class Account {
   id: number;                       // ID счета (инвестиции)
@@ -25,6 +26,7 @@ export class Account {
   dtTargetReached: number;          // Дата/время достижения целевой доходности
   dtClosed: Date;                   // Дата закрытия
   bonus: number;                    // Бонус
+  offer: Offer;                    // Offer
   availableToWithDraw: number;      // Доступно для снятия
   profitBase: number;               // База для подсчета вознаграждения
   precision: number;                // Точность округления, знаки после запятой

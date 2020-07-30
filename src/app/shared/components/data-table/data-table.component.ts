@@ -121,4 +121,8 @@ export class DataTableComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy$.next(true);
   }
+
+  getOfferLink(link: string) {
+    return `${location.origin}/link/${link}`;
+  }
 }

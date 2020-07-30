@@ -137,7 +137,13 @@
   "common.table.label.commissionUSD": "Комиссия, USD",
   "common.table.label.created": "Создана",
   "common.table.label.deal": "Сделка",
+  "common.table.label.partner": "Партнер",
+  "common.table.label.status": "Статус",
+  "common.table.label.offer.public": "Публичная оферта",
   "common.table.label.entry": "Направление",
+  "common.table.label.link": "Ссылка",
+  "common.table.label.commissionRate": "Комиссия",
+  "common.table.label.dtCreate": "Дата создания",
   "common.table.label.equityUSD": "Средства, USD",
   "common.table.label.feePaidUSD": "Выплаченное вознаграждение, USD",
   "common.table.label.feeToPayUSD": "Невыплаченное вознаграждение, USD",
@@ -340,9 +346,16 @@
   "table.cell.accountNumberCopy": "Номер счета, с которого идет копирование",
   "table.cell.loading": "Загрузка...",
   "table.cell.total": "Всего",
+  "table.content.yes": "Да",
+  "table.content.no": "Нет",
   "table.footer.itemsPerPage": "Показывать на странице",
   "table.footer.itemsTotal": "Всего записей",
   "table.footer.pageNext": "Следующая",
   "table.footer.pagePrevious": "Предыдущая",
+
+  "enum.status.enable": "Активна",
+  "enum.status.disable": "Отключена",
+  "enum.status.closed": "Закрыта",
+
   "link": "Ccылка"
 }
