@@ -33,7 +33,7 @@
   	"account.form.target.error.required": "Hedef belirlenmemiş",
   	"account.form.target.title": "Hedef gelir. Hedef gelire ulaşılması durumunda, yatırım duraklatılacaktır.",
 
-    "account.label.profit.hint": "Profit for the entire account history, taking into account the floating profit and paid Trader's remuneration, commissions",
+    "account.label.profit.hint": "Hareketli kâr ve ödenen yatırımcı ücretleri ile komisyonlarını hesaba katarak hesap geçmişinin tamamındaki kâr.",
 
   	"account.manage.addTo": "Yatırıma ekle",
   	"account.manage.pause.message": "Tüm pozisyonlar kapatılacaktır. Duraklama kaldırılana kadar yeni pozisyonlar açılmayacaktır.",
@@ -65,7 +65,7 @@
  	  "account.withdraw.partial.title": "Para çek",
 
   	"button.back": "Geri",
-    "button.skip": "Çıkarmak",
+    "button.skip": "Atla",
   	"button.cancel": "İptal",
  	  "button.ok": "Tamam",
 
@@ -99,7 +99,7 @@
 
     "common.step 1: strategy.add.title.strategy": "Adım 1: Strateji ayarları",
     "common.step 2: strategy.add.title.investments": "Adım 2: Yatırım ayarları",
-    "common.step 3: strategy.add.title.offer": "Adım 3: Genel teklif",
+    "common.step 3: strategy.add.title.offer": "3.Adım: Halka açık teklif",
 
 	  "common.strategy": "Strateji",
 	  "common.target": "Hedef",
@@ -222,7 +222,7 @@
  	  "managePassword.form.confirm.error.mismatch": "Şifreler eşleşmiyor",
  	  "managePassword.form.confirm.error.required": "Lütfen yeni şifreyi onaylayın",
  	  "managePassword.form.current.error.required": "Lütfen mevcut şifrenizi girin",
- 	  "managePassword.form.current.error.wrong": "Yanlış geçerli şifre",
+ 	  "managePassword.form.current.error.wrong": "Mevcut şifre yanlış",
     "managePassword.form.failure": "Şifre değiştirilmedi.",
  	  "managePassword.form.label.confirm": "Şifreyi onayla",
  	  "managePassword.form.label.current": "Mevcut şifre",
@@ -281,8 +281,8 @@
 	  "strategy.add.form.label.fee": "Ücret oranı",
 	  "strategy.add.form.label.name": "Strateji adı",
   	"strategy.add.form.label.step2": "Bir stratejinin oluşturulması ona yatırım yapmanızı gerektirmektedir. Bu yatırım sadece stratejiyle birlikte kapatılabilir.",
-	  "strategy.add.form.label.step2.bottom": "You can set investment conditions and download the adviser in the next steps.",
-    "strategy.add.form.label.step3": "These conditions of the offer are intended for public investment through the Rating and may be changed at any time; it is possible not to set public conditions at all. Non-public terms may be specified after the creation of the strategy.",
+	  "strategy.add.form.label.step2.bottom": "Yatırım koşullarını ayarlayabilir ve sonraki adımlarda danışmanı indirebilirsiniz.",
+    "strategy.add.form.label.step3": "Bu teklif koşulları Derecelendirme yoluyla halka açık yatırımlara yöneliktir ve herhangi bir zamanda değiştirilebilir; halka açık koşulları hiçbir şekilde ayarlamamak mümkündür. Halka açık olmayan koşullar, stratejinin oluşturulmasından sonra belirlenebilir.",
     "strategy.add.script.button.download": "Scripti indir",
 	  "strategy.add.script.download.platform.title": "İşlem platformu",
 	  "strategy.add.script.download.title": "Sinyal scriptini indir",

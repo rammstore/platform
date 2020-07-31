@@ -33,7 +33,7 @@
   	"account.form.target.error.required": "El objetivo no está definido",
   	"account.form.target.title": "Objetivo de ingresos. Al alcanzar los ingresos deseados, la inversión se detendrá",
 
-    "account.label.profit.hint": "Beneficio para todo el historial de la cuenta, teniendo en cuenta el beneficio flotante y la remuneración del comerciante pagado, comisiones",
+    "account.label.profit.hint": "Ganancias para todo el historial de la cuenta, teniendo en cuenta las ganancias flotantes y las comisiones sobre la remuneración de Trader.",
 
   	"account.manage.addTo": "Añadir a la inversión",
   	"account.manage.pause.message": "Todas las posiciones se cerraran. Las nuevas posiciones no se abrirán hasta que se elimine la pausa",
@@ -65,7 +65,7 @@
  	"account.withdraw.partial.title": "Retirar",
 
   	"button.back": "Atras",
-    "button.skip": "Omitir",
+    "button.skip": "Saltar",
   	"button.cancel": "Cancelar",
  	"button.ok": "OKAY",
 
@@ -99,7 +99,7 @@
 
   "common.step 1: strategy.add.title.strategy": "Paso 1: Configuracion de estrategia",
   "common.step 2: strategy.add.title.investments": "Paso 2: Configuracion de inversión",
-  "common.step 3: strategy.add.title.offer": "Paso 3: Oferta publica",
+  "common.step 3: strategy.add.title.offer": "Paso 3: Oferta pública",
 
 	"common.strategy": "Estrategia",
 	"common.target": "Objetivo",
@@ -222,7 +222,7 @@
  	"managePassword.form.confirm.error.mismatch": "Las contraseñas no coinciden",
  	"managePassword.form.confirm.error.required": "Confirme la nueva contraseña",
  	"managePassword.form.current.error.required": "Ingrese su contraseña actual",
-  "managePassword.form.current.error.wrong": "Contraseña actual inválida",
+  "managePassword.form.current.error.wrong": "Contraseña actual incorrecta",
  	"managePassword.form.failure": "La contraseña no ha cambiado",
  	"managePassword.form.label.confirm": "Confirmar contraseña ",
  	"managePassword.form.label.current": "Contraseña actual",
@@ -281,8 +281,8 @@
 	"strategy.add.form.label.fee": "Tarifa",
 	"strategy.add.form.label.name": "Nombre de la estrategia",
   "strategy.add.form.label.step2": "Una estrategia requiere su inversión en ella. Esta inversión solo puede cerrarse junto con la estrategia",
-	"strategy.add.form.label.step2.bottom": "You can set investment conditions and download the adviser in the next steps.",
-  "strategy.add.form.label.step3": "These conditions of the offer are intended for public investment through the Rating and may be changed at any time; it is possible not to set public conditions at all. Non-public terms may be specified after the creation of the strategy.",
+	"strategy.add.form.label.step2.bottom": "Puede establecer las condiciones de inversión y descargar el asesor en los próximos pasos.",
+  "strategy.add.form.label.step3": "Estas condiciones de la oferta están destinadas a la inversión pública a través de la Calificación y pueden modificarse en cualquier momento; es posible no establecer condiciones públicas en absoluto.  Los términos no públicos pueden especificarse después de la creación de la estrategia.",
   "strategy.add.script.button.download": "Descargar script",
 	"strategy.add.script.download.platform.title": "Plataforma de negocios",
 	"strategy.add.script.download.title": "Descargar script de señal",
