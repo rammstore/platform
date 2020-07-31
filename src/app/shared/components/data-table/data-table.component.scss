@@ -117,7 +117,8 @@ td {
     display: flex;
   }
   &>span{
-    width: 80px;
+    min-width: 80px;
+    padding-right: 10px;
   }
   button{
     font-size: 20px;

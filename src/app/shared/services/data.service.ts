@@ -168,15 +168,6 @@ export class DataService {
     this.loaderService.showLoader();
     this.http.post(`${this.apiUrl}/strategies.get`, {ID: args.strategyId}).subscribe((response: any) => {
       this.loaderService.hideLoader();
-      if (response.Account) {
-        const json = response.Account;
-        json.offer = new Offer({
-          commissionRate: json.Offer.CommissionRate,
-          feeRate: json.Offer.FeeRate,
-          id: json.Offer.ID
-        });
-        response.Strategy.Account = new Account(json);
-      }
       this.currentStrategyDetailsSubject.next(this.createInstanceService.createStrategy(response.Strategy));
     }, (error: HttpErrorResponse) => {
       if (error.status === 404) {
@@ -430,9 +421,51 @@ export class DataService {
       this.walletService.walletSubject.next(this.createInstanceService.createWallet(response.Wallets[0]));
 
       response.Strategies.forEach((strategy: any) => {
-        const account = strategy.Account;
-        account.Strategy = strategy;
-        accounts.push(new Account(this.createInstanceService.createAccount(account)));
+        const options: any = strategy.Account;
+
+        accounts.push(new Account(new Account({
+          id: options.ID,
+          strategy: this.createInstanceService.createStrategy(strategy),
+          isSecurity: options.IsSecurity,
+          type: options.Type,
+          accountSpecAssetID: options.AccountSpecAssetID,
+          asset: options.Asset || options.AssetName,
+          tradingIntervalCurrentID: options.TradingIntervalCurrentID,
+          dtCreated: options.DTCreated || options.DT,
+          balance: options.Balance,
+          equity: options.Equity,
+          margin: options.Margin,
+          marginLevel: options.MarginLevel,
+          intervalPnL: options.IntervalPnL || options.ProfitCurrentIntervalGross || options.ProfitCurrentIntervalNet,
+          status: options.Status,
+          factor: options.Factor,
+          offer: options.Offer ? new Offer(options.Offer) : null,
+          dtMCReached: options.MCReached,
+          protection: options.Protection,
+          protectionEquity: options.ProtectionEquity,
+          dtProtectionReached: options.ProtectionReached,
+          target: options.Target,
+          targetEquity: options.TargetEquity,
+          dtTargetReached: options.TargetReached,
+          dtClosed: options.DTClosed,
+          bonus: options.Bonus,
+          availableToWithDraw: options.AvailableToWithdraw,
+          profitBase: options.ProfitBase,
+          precision: options.Precision,
+          positionsCount: options.PositionsCount,
+          accountMinBalance: options.AccountMinBalance,
+          leverageMax: options.LeverageMax,
+          freeMargin: options.FreeMargin,
+          MCLevel: options.MCLevel,
+          state: options.State,
+          isMyStrategy: options.IsMyStrategy,
+          profitCurrentIntervalGross: options.ProfitCurrentIntervalGross,
+          feeToPay: options.FeeToPay,
+          totalCommissionTrader: options.TotalCommissionTrader,
+          feePaid: options.FeePaid,
+          isMyAccount: options.IsMyAccount,
+          currentDate: options.CurrentDate
+        })));
       });
 
       if (args.paginator) {

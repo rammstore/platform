@@ -22,7 +22,7 @@ export class CreateInstanceService {
       profit: options.Yield,
       accounts: options.Accounts,
       symbols: options.Symbols,
-      //account: options.Account ? this.createAccount(options.Account) : null,
+      account: options.Account ? this.createAccount(options.Account) : null,
       publicOffer: options.PublicOffer ? this.createOffer(options.PublicOffer) : undefined,
       isMyStrategy: options.IsMyStrategy,
       ageByDays: options.AgeByDays,
