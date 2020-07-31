@@ -24,6 +24,7 @@ export class DataTableComponent implements OnInit, OnDestroy {
   @Input() shouldHighlightMyStrategies: boolean = false;
   @Input() emptyDataText: string = 'common.table.label.no-data';
   @Output() paginationChanged: EventEmitter<void> = new EventEmitter();
+  @Output() rowManageClick: EventEmitter<any> = new EventEmitter();
   @Input() methodName: string;
   @Input() methodArgs: any;
   @Input() totals: object;
@@ -124,5 +125,9 @@ export class DataTableComponent implements OnInit, OnDestroy {
 
   getOfferLink(link: string) {
     return `${location.origin}/link/${link}`;
+  }
+
+  onRowManageClick($event: any) {
+    this.rowManageClick.emit($event);
   }
 }

@@ -177,7 +177,6 @@ export class DataService {
         });
         response.Strategy.Account = new Account(json);
       }
-      // response.Strategy.PublicOffer = {FeeRate: response.Strategy.Fee};
       this.currentStrategyDetailsSubject.next(this.createInstanceService.createStrategy(response.Strategy));
     }, (error: HttpErrorResponse) => {
       if (error.status === 404) {
@@ -425,13 +424,14 @@ export class DataService {
       };
     }
 
-    this.http.post(`${this.apiUrl}/accounts.search`, options).subscribe((response: any) => {
+    this.http.post(`${this.apiUrl}/strategies.search`, options).subscribe((response: any) => {
       const accounts: Account[] = [];
 
       this.walletService.walletSubject.next(this.createInstanceService.createWallet(response.Wallets[0]));
 
-      response.Accounts.forEach((account: any) => {
-        account.Strategy.Chart = account.Chart;
+      response.Strategies.forEach((strategy: any) => {
+        const account = strategy.Account;
+        account.Strategy = strategy;
         accounts.push(new Account(this.createInstanceService.createAccount(account)));
       });
 
@@ -439,7 +439,6 @@ export class DataService {
         args.paginator.totalItems = response.Pagination.TotalRecords;
         args.paginator.totalPages = response.Pagination.TotalPages;
       }
-
       this.loaderService.hideLoader();
       this.activeMyAccountsSubject.next(accounts.filter((a: Account) => a.isActive()));
     }, (error: HttpErrorResponse) => {
@@ -457,9 +456,7 @@ export class DataService {
   getClosedMyAccounts(pagination?: Paginator): Observable<Account[]> {
     this.loaderService.showLoader();
     const options: AccountsSearchOptions = new AccountsSearchOptions();
-    options.Filter = {
-      MyActiveAccounts: false
-    };
+
     options.OrderBy = {
       Field: 'DTClosed',
       Direction: 'Desc'
@@ -472,15 +469,18 @@ export class DataService {
       };
     }
 
-    this.http.post(`${this.apiUrl}/accounts.search`, options).subscribe((response: any) => {
+    this.http.post(`${this.apiUrl}/accounts.searchClosed`, options).subscribe((response: any) => {
       const accounts: Account[] = [];
-
+      console.log('response', response);
       this.walletService.walletSubject.next(this.createInstanceService.createWallet(response.Wallets[0]));
 
-      response.Accounts
-        .filter((a: any) => a.Status === 6)
-        .forEach((account: any) => {
-          accounts.push(new Account(this.createInstanceService.createAccount(account)));
+      response.Strategies
+        .forEach((strategy: any) => {
+          if (strategy.Account) {
+            const account = strategy.Account;
+            account.Strategy = strategy;
+            accounts.push(new Account(this.createInstanceService.createAccount(account)));
+          }
         });
 
       if (pagination) {
@@ -489,7 +489,7 @@ export class DataService {
       }
 
       this.loaderService.hideLoader();
-      this.closedMyAccountsSubject.next(accounts.filter((a: Account) => !a.isActive()));
+      this.closedMyAccountsSubject.next(accounts);
     }, (error: HttpErrorResponse) => {
       this.notificationsService.open('notify.loading.error', {
         type: 'error',

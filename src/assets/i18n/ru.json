@@ -262,6 +262,7 @@
   "notify.strategy.paused": "Стратегия поставлена на паузу",
   "notify.strategy.resumed": "Стратегия возобновлена",
   "notify.strategy.offer.create": "Оферта создана",
+  "notify.strategy.offer.change": "Оферта изменена",
 
   "rating.all.title": "Все стратегии",
   "rating.message": "На странице показаны стратегии с наибольшим приростом количества инвестиций в течение последней недели.",
@@ -358,4 +359,5 @@
   "enum.status.closed": "Закрыта",
 
   "link": "Ccылка"
+
 }

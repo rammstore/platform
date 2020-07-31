@@ -96,4 +96,8 @@
       </ul>
     </div>
   </ng-container>
+
+  <ng-container *ngIf="dataType === 'offer'">
+    <button *ngIf="data.link && !data['isPublic']" class="primary btn-invest" (click)="onClick(data)" translate>myStrategies.offers.type.create.public</button>
+  </ng-container>
 </div>

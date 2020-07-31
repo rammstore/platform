@@ -48,17 +48,15 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
         this.strategy = strategy;
 
         this.links = [
-          new ContentTabLink('common.yield', '/strategies/details/' + this.strategy.id)
+          new ContentTabLink('common.yield', '/strategies/details/' + this.strategy.id),
+          new ContentTabLink('common.table.label.symbols', '/strategies/details/' + this.strategy.id + '/symbols')
         ];
-
-        if (this.strategy.isMyStrategy) {
-          this.links.push(new ContentTabLink('common.offers', `/strategies/details/${this.strategy.id}/offers`));
-        }
-
-        this.links.push(new ContentTabLink('common.table.label.symbols', '/strategies/details/' + this.strategy.id + '/symbols'));
 
         if (this.strategy.isMy()) {
           this.links.push(new ContentTabLink('common.investments', '/strategies/details/' + this.strategy.id + '/investments'));
+        }
+        if (this.strategy.isMyStrategy) {
+          this.links.push(new ContentTabLink('common.offers', `/strategies/details/${this.strategy.id}/offers`));
         }
       });
   }

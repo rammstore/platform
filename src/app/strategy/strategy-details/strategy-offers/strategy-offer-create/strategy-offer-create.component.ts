@@ -59,6 +59,7 @@ export class StrategyOfferCreateComponent implements OnInit {
             this.dataService.setPublicOffer(this.strategy.id, newStrategy['OfferID']).subscribe();
           }
           this.notificationsService.open('notify.strategy.offer.create');
+          this.onClose.next(true);
           this.bsModalRef.hide();
         },
         error => {

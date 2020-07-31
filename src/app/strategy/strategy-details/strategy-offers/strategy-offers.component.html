@@ -39,8 +39,8 @@
   <app-data-table
     [tableHeader]="tableHeader"
     [data]="offers"
+    (rowManageClick)="onRowManageClick($event)"
     (paginationChanged)="getOffers()"
-    [methodName]="'getOffers'"
     [methodArgs]="args">
   </app-data-table>
 

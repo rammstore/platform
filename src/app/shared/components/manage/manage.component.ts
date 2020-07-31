@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Account, Strategy } from '@app/models';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Account, Offer, Strategy} from '@app/models';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap';
 import { ManageAccountChangeProfileComponent } from './manage-account-change-profile/manage-account-change-profile.component';
 import { ManageAccountFundComponent } from './manage-account-fund/manage-account-fund.component';
@@ -24,6 +24,7 @@ export class ManageComponent implements OnInit {
   @Input() methodName: string;
   @Input() methodArgs: any;
   @Input() hideInvestmentsButton: boolean;
+  @Output() click: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(
     private modalService: BsModalService
@@ -31,11 +32,18 @@ export class ManageComponent implements OnInit {
 
   ngOnInit() {
     switch (true) {
-      case (this.data instanceof Strategy):
+      case (this.data instanceof Strategy): {
         this.dataType = 'strategy';
         break;
-      case (this.data instanceof Account):
+      }
+      case (this.data instanceof Account): {
         this.dataType = 'account';
+        break;
+      }
+      case (this.data instanceof Offer): {
+        this.dataType = 'offer';
+        break;
+      }
     }
   }
 
@@ -71,6 +79,10 @@ export class ManageComponent implements OnInit {
 
   openStrategyDownloadScriptDialog(): void {
     this.modalRef = this.modalService.show(ManageStrategyDownloadScriptComponent, this.getStrategyDialogOptions());
+  }
+
+  onClick(data: any) {
+    this.click.emit(data);
   }
 
   openStrategyPauseDialog(): void {

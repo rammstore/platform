@@ -75,7 +75,9 @@ export class InvestmentsClosedComponent implements OnInit, OnDestroy {
     this.dataService.getClosedMyAccounts(this.paginator)
       .pipe(takeUntil(this.destroy$))
       .subscribe((accounts: Account[]) => {
-        this.accounts = accounts;
+        if (accounts && accounts.length) {
+          this.accounts = accounts;
+        }
       });
   }
 
