@@ -9,6 +9,7 @@ import {StrategyOfferCreateComponent} from "./strategy-offer-create/strategy-off
 import {NotificationsService} from "@app/services/notifications.service";
 import {TableHeaderRow} from "@app/models/table-header-row";
 import {CustomDatePipe} from "@app/pipes/custom-date.pipe";
+import { PercentPipe } from '@angular/common';
 
 @Component({
   selector: 'app-strategy-offers',
@@ -32,7 +33,7 @@ export class StrategyOffersComponent implements OnInit {
       new TableColumn({property: 'DTCreated', label: 'common.table.label.dtCreate', pipe: {pipe: CustomDatePipe}}),
       new TableColumn({property: 'link', label: 'common.table.label.link'}),
       new TableColumn({property: 'commissionRate', label: 'common.table.label.commissionRate'}),
-      new TableColumn({property: 'FeeRate', label: 'investment.details.strategy.feeRate'}),
+      new TableColumn({property: 'FeeRate', label: 'investment.details.strategy.feeRate', pipe: {pipe: PercentPipe}}),
       // new TableColumn({property: 'PartnerShareRate', label: 'common.table.label.partner'}),
       new TableColumn({property: 'OfferStatus', label: 'common.table.label.status'}),
       new TableColumn({property: 'IsPublic', label: 'common.table.label.offer.public'}),
