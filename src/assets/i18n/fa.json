@@ -142,7 +142,7 @@
   "common.table.label.offer.public": "Public offer",
   "common.table.label.entry": "جهت",
   "common.table.label.link": "Link",
-  "common.table.label.commissionRate": "کمیسیون حجم معاملات",
+  "common.table.label.commissionRate": "کمیسیون ",
   "common.table.label.dtCreate": "Creation date",
   "common.table.label.equityUSD": "موجودی, دلار آمریکا",
   "common.table.label.feePaidUSD": "دستمزد پرداخت شده, دلار آمریکا",
@@ -243,7 +243,7 @@
   "myStrategies.offers.type.public": "Public",
   "myStrategies.offers.type.create.public": "Make public",
   "myStrategies.offers.type.create.not.public": "Make private",
-  "myStrategies.offers.title.create": "Create offer",
+  "myStrategies.offers.title.create": "ایجاد پیشنهاد",
 
  	"notify.investment.access.error": "شما به این سرمایه‌گذاری دسترسی ندارید",
 	"notify.investment.closed": "این سرمایه‌گذاری بسته شده است",
