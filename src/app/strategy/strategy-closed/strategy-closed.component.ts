@@ -31,7 +31,7 @@ export class StrategyClosedComponent implements OnInit, OnDestroy {
       new TableColumn({ property: 'dtCreated', label: 'common.table.label.created', pipe: { pipe: CustomDatePipe }}),
       new TableColumn({ property: 'dtClosed', label: 'common.table.label.closed', pipe: { pipe: CustomDatePipe } }),
       new TableColumn({ property: 'age', label: 'common.age' }),
-      new TableColumn({ property: 'feePaid', label: 'common.table.label.feePaidUSD', pipe: { pipe: CustomCurrencyPipe }})
+      new TableColumn({ property: 'traderInfo.feePaid', label: 'common.table.label.feePaidUSD', pipe: { pipe: CustomCurrencyPipe }})
     ]),
   ];
   paginator: Paginator = new Paginator({

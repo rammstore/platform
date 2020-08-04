@@ -28,13 +28,13 @@ export class StrategyActiveComponent implements OnInit, OnDestroy {
       new TableColumn({ property: 'account.equity', label: 'common.table.label.equityUSD', pipe: { pipe: CustomCurrencyPipe }}),
       new TableColumn({ property: 'accountsCount', label: 'common.table.label.investors'}),
       new TableColumn({ property: 'publicOffer.feeRate', label: 'common.fee', pipe: { pipe: PercentPipe }}),
-      new TableColumn({ property: 'feePaid', label: 'common.table.label.feePaidUSD', pipe: { pipe: CustomCurrencyPipe }}),
+      new TableColumn({ property: 'traderInfo.feePaid', label: 'common.table.label.feePaidUSD', pipe: { pipe: CustomCurrencyPipe }}),
       new TableColumn({ property: 'account.intervalPnL', hint: 'account.label.profit.hint', label: 'common.table.label.yieldUSD', pipe: { pipe: CustomCurrencyPipe } }),
-      new TableColumn({ property: 'feeToPay', label: 'common.table.label.feeToPayUSD', pipe: { pipe: CustomCurrencyPipe }}),
+      new TableColumn({ property: 'traderInfo.feeToPay', label: 'common.table.label.feeToPayUSD', pipe: { pipe: CustomCurrencyPipe }}),
       new TableColumn({ property: 'manage', label: '' })
     ]),
   ];
-  totalFields: string[] = ['account.equity', 'accountsCount', 'account.intervalPnL', 'feePaid', 'feeToPay'];
+  totalFields: string[] = ['account.equity', 'accountsCount', 'account.intervalPnL', 'traderInfo.feePaid', 'traderInfo.feeToPay'];
   paginator: Paginator = new Paginator({
     perPage: 10,
     currentPage: 1

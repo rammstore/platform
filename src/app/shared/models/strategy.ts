@@ -1,5 +1,6 @@
 import { Account } from './account';
 import { Offer } from './offer';
+import { TraderInfo } from './trader-info';
 
 export class Strategy {
   id: number;             // ID стратегии
@@ -18,8 +19,7 @@ export class Strategy {
   ageByDays: number;      // Возраст в днях
   monthlyYield: number;   // Месячная прибыль в %
   equity: number;         // Инвестиции
-  feePaid: number;        // Выплаченное вознаграждение
-  feeToPay: number;       // Невыплаченное вознаграждение
+  traderInfo: TraderInfo; // Выплаченное вознаграждение и невыплаченное вознаграждение
   commission: number;      // Комиссия за оборот
   chart: {Yield: number}[];
   masterAccount: string;
