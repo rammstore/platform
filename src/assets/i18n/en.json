@@ -295,7 +295,7 @@
 	"strategy.add.form.label.name": "Strategy name",
   "strategy.add.form.label.step2": "A strategy requires your investment into it. This investment can only be closed together with the strategy.",
   "strategy.add.form.label.step2.bottom": "You can set investment conditions and download the adviser in the next steps.",
-  "strategy.add.form.label.step3": "These conditions of the offer are intended for public investment through the Rating and may be changed at any time; it is possible not to set public conditions at all. Non-public terms may be specified after the creation of the strategy.",
+  "strategy.add.form.label.step3": "In case of creating a public offer these conditions of the offer are intended for public investment through the Rating and may be changed at any time; it is possible not to set public conditions at all. Non-public terms may be specified after the creation of the strategy.",
 	"strategy.add.script.button.download": "Download script",
 	"strategy.add.script.download.platform.title": "Trading platform",
 	"strategy.add.script.download.title": "Download signal script",

@@ -295,7 +295,7 @@
 	"strategy.add.form.label.name": "Nombre de la estrategia",
   "strategy.add.form.label.step2": "Una estrategia requiere su inversión en ella. Esta inversión solo puede cerrarse junto con la estrategia",
 	"strategy.add.form.label.step2.bottom": "Puede establecer las condiciones de inversión y descargar el asesor en los próximos pasos.",
-  "strategy.add.form.label.step3": "Estas condiciones de la oferta están destinadas a la inversión pública a través de la Clasificación y pueden modificarse en cualquier momento; es posible no establecer condiciones públicas en absoluto. Los términos no públicos pueden especificarse después de la creación de la estrategia.",
+  "strategy.add.form.label.step3": "En caso de crear una oferta pública, estas condiciones de la oferta están destinadas a la inversión pública a través de la Calificación y pueden modificarse en cualquier momento; Es posible no establecer condiciones públicas en absoluto. Los términos no públicos pueden especificarse después de la creación de la estrategia.",
   "strategy.add.script.button.download": "Descargar script",
 	"strategy.add.script.download.platform.title": "Plataforma de negocios",
 	"strategy.add.script.download.title": "Descargar script de señal",
