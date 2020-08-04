@@ -243,7 +243,7 @@
     "myStrategies.offers.type.public": "Halka açık",
     "myStrategies.offers.type.create.public": "Make public",
     "myStrategies.offers.type.create.not.public": "Make private",
-    "myStrategies.offers.title.create": "Create offer",
+    "myStrategies.offers.title.create": "Teklif oluştur",
 
  	  "notify.investment.access.error": "Bu yatırıma erişiminiz yoktur",
 	  "notify.investment.closed": "Yatırım kapandı",
