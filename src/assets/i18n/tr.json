@@ -240,7 +240,7 @@
 
 	  "myStrategies.active.title": "Aktif",
   	"myStrategies.closed.title": "Kapalı",
-    "myStrategies.offers.type.public": "Public",
+    "myStrategies.offers.type.public": "Halka açık",
     "myStrategies.offers.type.create.public": "Make public",
     "myStrategies.offers.type.create.not.public": "Make private",
     "myStrategies.offers.title.create": "Create offer",
