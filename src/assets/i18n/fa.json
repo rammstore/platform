@@ -138,11 +138,11 @@
   "common.table.label.created": "ایجاد شده",
   "common.table.label.deal": "معامله",
   "common.table.label.partner": "Partner",
-  "common.table.label.status": "Status",
+  "common.table.label.status": "وضعیت",
   "common.table.label.offer.public": "Public offer",
   "common.table.label.entry": "جهت",
   "common.table.label.link": "Link",
-  "common.table.label.commissionRate": "Commission",
+  "common.table.label.commissionRate": "کمیسیون حجم معاملات",
   "common.table.label.dtCreate": "Creation date",
   "common.table.label.equityUSD": "موجودی, دلار آمریکا",
   "common.table.label.feePaidUSD": "دستمزد پرداخت شده, دلار آمریکا",
@@ -356,7 +356,7 @@
 
   "enum.status.enabled": "Active",
   "enum.status.disabled": "Disabled",
-  "enum.status.closed": "Closed",
+  "enum.status.closed": "بسته شده",
 
   "link": "Link"
 }

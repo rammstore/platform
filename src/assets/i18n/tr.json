@@ -356,7 +356,7 @@
 
     "enum.status.enabled": "Active",
     "enum.status.disabled": "Disabled",
-    "enum.status.closed": "Closed",
+    "enum.status.closed": "Kapandı",
 
     "link": "Link"  
 }
