@@ -243,7 +243,7 @@ export class DataService {
       CommissionRate: commissionRate
     }).pipe(
       map((item) => {
-        this.setPublicOffer(id, item['OfferID']).subscribe();
+        //this.setPublicOffer(id, item['OfferID']).subscribe();
         return item;
       })
     );

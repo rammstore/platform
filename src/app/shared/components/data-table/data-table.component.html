@@ -268,13 +268,13 @@
         <td class="total-cell" *ngIf="i === 0" translate>table.cell.total</td>
         <ng-container *ngIf="isTotal(column.property) && i > 0">
           <td class="total-cell"
-              *ngIf="column.property !== 'accountsCount'"
+              *ngIf="column.property !== 'accounts'"
               [class.positive]="getTotal(column.property) > 0 && isColored(column.property)"
               [class.negative]="getTotal(column.property) < 0 && isColored(column.property)">
             {{getTotal(column.property) | customCurrency}}
           </td>
           <td class="total-cell"
-              *ngIf="column.property === 'accountsCount'">
+              *ngIf="column.property === 'accounts'">
             {{getTotal(column.property)}}
           </td>
         </ng-container>
