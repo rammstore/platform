@@ -18,7 +18,7 @@
       <tr><td></td><td></td></tr>
       <tr>
         <td translate>common.fee</td>
-        <td>{{strategy.account?.offer?.feeRate | percent}}</td>
+        <td>{{strategy.publicOffer.feeRate | percent}}</td>
       </tr>
       <tr *ngIf="strategy.commission">
         <td><span translate>common.commission</span>, USD</td>
@@ -35,7 +35,7 @@
       </tr>
       <tr>
         <td translate>common.accountsCount</td>
-        <td>{{strategy.accountsCount}}</td>
+        <td>{{strategy.accounts}}</td>
       </tr>
       </tbody>
     </table>

@@ -41,7 +41,7 @@ export class StrategyOffersComponent implements OnInit {
     ]),
   ];
 
-  totalFields: string[] = ['account.equity', 'accountsCount', 'account.intervalPnL', 'feePaid', 'feeToPay'];
+  totalFields: string[] = ['account.equity', 'accounts', 'account.intervalPnL', 'feePaid', 'feeToPay'];
   paginator: Paginator = new Paginator({
     perPage: 10,
     currentPage: 1
