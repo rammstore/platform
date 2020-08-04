@@ -305,7 +305,7 @@
   "strategy.add.title.strategy": "Параметры стратегии",
   "strategy.button.create": "Создать стратегию",
   "strategy.button.create.offer": "Создать оферту",
-  "strategy.public.offer.label": "Публичной может быть только одна оферта, при создании новой публичной оферты старая оферта станет непубличной",
+  "strategy.public.offer.label": "Публичной может быть только одна оферта, при создании новой публичной оферты старая оферта станет непубличной.",
   "strategy.private.offer.label": "У стратегии не будет публичных оферт, стратегия будет удалена из рейтингов и инвестирование будет возможно только по скрытым ссылкам.",
 
   "strategy.close.form.text": "Вы подтверждаете закрытие своей стратегии?",
@@ -354,10 +354,9 @@
   "table.footer.pageNext": "Следующая",
   "table.footer.pagePrevious": "Предыдущая",
 
-  "enum.status.enable": "Активна",
-  "enum.status.disable": "Отключена",
+  "enum.status.enabled": "Активна",
+  "enum.status.disabled": "Отключена",
   "enum.status.closed": "Закрыта",
 
   "link": "Ccылка"
-
 }

@@ -32,11 +32,11 @@ export class Offer {
 
     switch (this.status) {
       case 0: {
-        value = 'enum.status.enable';
+        value = 'enum.status.enabled';
         break;
       }
       case 1: {
-        value = 'enum.status.disable';
+        value = 'enum.status.disabled';
         break;
       }
       case 2: {
