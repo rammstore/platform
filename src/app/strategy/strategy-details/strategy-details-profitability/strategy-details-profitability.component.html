@@ -18,11 +18,11 @@
       <tr><td></td><td></td></tr>
       <tr>
         <td translate>common.fee</td>
-        <td>{{strategy.publicOffer.feeRate | percent}}</td>
+        <td>{{strategy.publicOffer ? strategy.publicOffer.feeRate : 0 | percent}}</td>
       </tr>
-      <tr *ngIf="strategy.publicOffer.commissionRate">
+      <tr>
         <td><span translate>common.commission</span>, USD</td>
-        <td>{{strategy.publicOffer.commissionRate * 1000000}} / 1 mln</td>
+        <td>{{strategy.publicOffer?.commissionRate * 1000000}} / 1 mln</td>
       </tr>
       <tr>
         <td translate>common.age</td>
