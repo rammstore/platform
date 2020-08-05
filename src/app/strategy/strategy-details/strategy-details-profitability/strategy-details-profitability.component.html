@@ -18,7 +18,7 @@
       <tr><td></td><td></td></tr>
       <tr>
         <td translate>common.fee</td>
-        <td>{{strategy.publicOffer ? strategy.publicOffer.feeRate : 0 | percent}}</td>
+        <td>{{(strategy.publicOffer ? strategy.publicOffer.feeRate : 0) | percent}}</td>
       </tr>
       <tr>
         <td><span translate>common.commission</span>, USD</td>
