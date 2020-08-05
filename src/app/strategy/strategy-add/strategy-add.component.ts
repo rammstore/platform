@@ -133,9 +133,6 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
   submitStep3(status: boolean): void {
     this.formStep3.markAllAsTouched();
 
-    console.log(this.formStep3);
-    return;
-
     if (!this.formStep3.valid) {
       return;
     }
