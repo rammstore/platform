@@ -30,7 +30,7 @@ export class StrategyDetailsSymbolsComponent implements OnInit, OnDestroy {
     this.args = {
       strategyId: this.route.parent.params['_value'].id
     };
-    this.dataService.getStrategy(this.args)
+    this.dataService.getStrategyByID(this.args)
       .pipe(takeUntil(this.destroy$))
       .subscribe((strategy: Strategy) => {
         this.strategy = strategy;

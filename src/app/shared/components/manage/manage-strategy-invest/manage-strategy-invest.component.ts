@@ -74,8 +74,9 @@ export class ManageStrategyInvestComponent implements OnInit, OnDestroy {
     const values: any = this.form.getRawValue();
     values.protection = values.protection / 100;
     values.target = values.target ? values.target / 100 : null;
+    values.offerId = this.strategy.publicOffer ? this.strategy.publicOffer.id : null;
 
-    this.dataService.addAccount(this.strategy.id, values).subscribe(() => {
+    this.dataService.addAccountPublicOffer(this.strategy.id, values).subscribe(() => {
       this.modalRef.hide();
       switch (true) {
         case this.router.url.includes('strategies'):
@@ -89,7 +90,7 @@ export class ManageStrategyInvestComponent implements OnInit, OnDestroy {
 
         case this.router.url.includes('rating/popular'):
           this.dataService.getRating({
-            ratingType: 2,
+            field: 'Accounts',
             searchText: '',
             paginator: new Paginator({
               perPage: 10,
@@ -100,7 +101,7 @@ export class ManageStrategyInvestComponent implements OnInit, OnDestroy {
 
         case this.router.url.includes('rating/all'):
           this.dataService.getRating({
-            ratingType: 1,
+            field: 'Yield',
             searchText: '',
             paginator: new Paginator({
               perPage: 10,
@@ -111,7 +112,9 @@ export class ManageStrategyInvestComponent implements OnInit, OnDestroy {
 
         case this.router.url.includes('rating'):
           this.dataService.getRating({
-            ratingType: 0,
+            field: 'Yield',
+            ageMin: 30,
+            yield: 0,
             paginator: new Paginator({
               perPage: 10,
               currentPage: 1

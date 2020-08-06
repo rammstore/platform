@@ -66,7 +66,7 @@ export class StrategyOffersComponent implements OnInit {
   }
 
   getStrategy() {
-    this.dataService.getStrategy(this.args)
+    this.dataService.getStrategyByID(this.args)
       .pipe(takeUntil(this.destroy$))
       .subscribe((strategy: Strategy) => {
         console.log('strategy', strategy);
@@ -101,7 +101,7 @@ export class StrategyOffersComponent implements OnInit {
 
     (<StrategyOfferCreateComponent>this.modalRef.content).onClose.subscribe(result => {
       if (result === true) {
-        this.dataService.getStrategy(this.args);
+        this.dataService.getStrategyByID(this.args);
         this.getOffers();
         // when pressed Yes
       } else if (result === false) {
@@ -117,7 +117,7 @@ export class StrategyOffersComponent implements OnInit {
     if (offer instanceof Offer) {
       this.dataService.setPublicOffer(this.strategy.id, offer.id).subscribe((item) => {
         this.notificationsService.open('notify.strategy.offer.change');
-        this.dataService.getStrategy(this.args);
+        this.dataService.getStrategyByID(this.args);
         this.getOffers();
       });
     }

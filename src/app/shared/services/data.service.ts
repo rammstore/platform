@@ -163,8 +163,8 @@ export class DataService {
     return this.closedMyStrategiesSubject.asObservable();
   }
 
-  // Получение конкретной стратегии
-  getStrategy(args: { strategyId: number }): Observable<Strategy> {
+  // Получение конкретной стратегии за ID
+  getStrategyByID(args: { strategyId: number }): Observable<Strategy> {
     this.loaderService.showLoader();
     this.http.post(`${this.apiUrl}/strategies.get`, {ID: args.strategyId}).subscribe((response: any) => {
       this.loaderService.hideLoader();
@@ -188,6 +188,32 @@ export class DataService {
 
     return this.currentStrategyDetailsSubject.asObservable();
   }
+
+    // Получение конкретной стратегии за ссылкой
+    getStrategyByLink(args: { link: string }): Observable<Strategy> {
+      this.loaderService.showLoader();
+      this.http.post(`${this.apiUrl}/strategies.get`, {Link: args.link}).subscribe((response: any) => {
+        this.loaderService.hideLoader();
+        this.currentStrategyDetailsSubject.next(this.createInstanceService.createStrategy(response.Strategy));
+      }, (error: HttpErrorResponse) => {
+        if (error.status === 404) {
+          this.router.navigate(['/rating']);
+          this.notificationsService.open('notify.strategy.access.error', {
+            type: 'error',
+            autoClose: true,
+            duration: 3000
+          });
+        } else {
+          this.notificationsService.open('notify.loading.error', {
+            type: 'error',
+            autoClose: true,
+            duration: 3000
+          });
+        }
+      });
+  
+      return this.currentStrategyDetailsSubject.asObservable();
+    }
 
   // Создание новой стратегии
   addStrategy(strategy: object, methodName: string, methodArgs: any): Observable<Strategy> {
@@ -570,11 +596,12 @@ export class DataService {
     return this.currentAccountStatementSubject.asObservable();
   }
 
-  // Инвестировать в стратегию (Создать инвестицию)
-  addAccount(id: number, data: object): Observable<any> {
+  // Инвестировать в стратегию по публичной оферте
+  addAccountPublicOffer(id: number, data: object): Observable<any> {
     this.loaderService.showLoader();
     const options: any = {
       StrategyID: id,
+      OfferID: data['offerId'],
       Factor: data['factor'],
       Protection: data['protection'],
       Target: data['target'],
@@ -585,7 +612,28 @@ export class DataService {
       map((response: any) => {
         // this.getActiveMyStrategies().subscribe();
         this.walletService.updateWallet().subscribe();
-        this.getStrategy({strategyId: id});
+        this.getStrategyByID({strategyId: id});
+        // this.updateRatingList();
+        this.notificationsService.open('notify.investment.created');
+      })
+    );
+  }
+
+   // Инвестировать в стратегию по cкрытой ссылке
+   addAccountLink(link: string, data: object): Observable<any> {
+    this.loaderService.showLoader();
+    const options: any = {
+      Link: link,
+      Factor: data['factor'],
+      Protection: data['protection'],
+      Target: data['target'],
+      Money: data['amount']
+    };
+
+    return this.http.post(`${this.apiUrl}/accounts.add`, options).pipe(
+      map((response: any) => {
+        // this.getActiveMyStrategies().subscribe();
+        this.walletService.updateWallet().subscribe();
         // this.updateRatingList();
         this.notificationsService.open('notify.investment.created');
       })
@@ -799,18 +847,71 @@ export class DataService {
   }
 
   //
-  // Методы ддля работы с рейтингом
+  // Методы для работы с рейтингом
   //
-  getRating(args: { ratingType: 0 | 1 | 2, paginator?: Paginator, searchText?: string }): Observable<Strategy[]> {
+  // getRating(args: { ratingType: 0 | 1 | 2, paginator?: Paginator, searchText?: string }): Observable<Strategy[]> {
+  //   this.loaderService.showLoader();
+  //   const options: RatingSearchOptions = new RatingSearchOptions();
+  //   options.Filter = {
+  //     RatingType: args.ratingType,
+  //   };
+
+  //   if (args.searchText) {
+  //     options.Filter.StrategyName = args.searchText;
+  //   }
+
+  //   if (args.paginator) {
+  //     options.Pagination = {
+  //       CurrentPage: args.paginator.currentPage,
+  //       PerPage: args.paginator.perPage
+  //     };
+  //   }
+
+  //   this.http.post(`${this.apiUrl}/ratings.get`, options).subscribe((response: any) => {
+  //     const strategies: Strategy[] = [];
+
+  //     response.Strategies.forEach((s: any) => {
+  //       if (s.Account) {
+  //         s.Strategy.Account = s.Account;
+  //       }
+  //       s.Strategy.Chart = s.Chart;
+  //       strategies.push(this.createInstanceService.createStrategy(s.Strategy));
+  //     });
+
+  //     if (args.paginator) {
+  //       args.paginator.totalItems = response.Pagination.TotalRecords;
+  //       args.paginator.totalPages = response.Pagination.TotalPages;
+  //     }
+
+  //     this.loaderService.hideLoader();
+  //     this.ratingStrategiesSubject.next(strategies);
+  //   }, (error: HttpErrorResponse) => {
+  //     this.notificationsService.open('notify.loading.error', {
+  //       type: 'error',
+  //       autoClose: true,
+  //       duration: 3000
+  //     });
+  //   });
+
+  //   return this.ratingStrategiesSubject.asObservable();
+  // }
+
+   getRating(args: { ageMin?: number, dealsMin?: number, yield?: number, field?: string, paginator?: Paginator, searchText?: string }): Observable<Strategy[]> {
     this.loaderService.showLoader();
-    const options: RatingSearchOptions = new RatingSearchOptions();
+    const options: StrategiesSearchOptions = new StrategiesSearchOptions();
     options.Filter = {
-      RatingType: args.ratingType,
+      ActiveStrategies: 1,
+      AgeMin: args.ageMin,
+      Yield: args.yield,
+      DealsMin: args.dealsMin
     };
 
-    if (args.searchText) {
-      options.Filter.StrategyName = args.searchText;
-    }
+      options.OrderBy = {
+        Field: args.field,
+        Direction: 'Desc'
+      };
+
+    console.log(args);
 
     if (args.paginator) {
       options.Pagination = {
@@ -819,15 +920,13 @@ export class DataService {
       };
     }
 
-    this.http.post(`${this.apiUrl}/ratings.get`, options).subscribe((response: any) => {
+    this.http.post(`${this.apiUrl}/strategies.search`, options).subscribe((response: any) => {
       const strategies: Strategy[] = [];
 
+      this.walletService.walletSubject.next(this.createInstanceService.createWallet(response.Wallets[0]));
+
       response.Strategies.forEach((s: any) => {
-        if (s.Account) {
-          s.Strategy.Account = s.Account;
-        }
-        s.Strategy.Chart = s.Chart;
-        strategies.push(this.createInstanceService.createStrategy(s.Strategy));
+        strategies.push(this.createInstanceService.createStrategy(s));
       });
 
       if (args.paginator) {

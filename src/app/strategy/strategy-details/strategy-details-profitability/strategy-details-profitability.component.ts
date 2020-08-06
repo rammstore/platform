@@ -41,7 +41,7 @@ export class StrategyDetailsProfitabilityComponent implements OnInit , OnDestroy
         Highcharts.chart('yieldChartContainer', this.chartOptions);
       });
 
-    this.dataService.getStrategy(this.args)
+    this.dataService.getStrategyByID(this.args)
       .pipe(takeUntil(this.destroy$))
       .subscribe((strategy: Strategy) => {
         this.strategy = strategy;

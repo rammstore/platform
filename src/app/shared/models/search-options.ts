@@ -4,7 +4,10 @@ export class StrategiesSearchOptions {
     MyActiveAccounts?: boolean,
     MyStrategies?: number,
     ActiveStrategies?: number,
-    IsActive?: boolean
+    IsActive?: boolean,
+    AgeMin?: number,
+    Yield?: number,
+    DealsMin?: number,
   };
 
   Pagination: {
