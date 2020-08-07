@@ -52,7 +52,11 @@ export class StrategyDetailsProfitabilityComponent implements OnInit , OnDestroy
       });
 
     if(!this.strategy.publicOffer && !this.strategy.isMyStrategy){
-      this.notificationsService.open('notify.strategy.access.error');
+      this.notificationsService.open('notify.strategy.access.error', {
+        type: 'error',
+        autoClose: true,
+        duration: 3000
+      });
       this.router.navigate(['/rating'], { relativeTo: this.route });
     }
 
