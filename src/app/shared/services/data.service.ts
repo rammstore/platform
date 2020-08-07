@@ -896,7 +896,7 @@ export class DataService {
   //   return this.ratingStrategiesSubject.asObservable();
   // }
 
-   getRating(args: { ageMin?: number, dealsMin?: number, yield?: number, field?: string, paginator?: Paginator, searchText?: string }): Observable<Strategy[]> {
+  getRating(args: { ageMin?: number, dealsMin?: number, yield?: number, field?: string, paginator?: Paginator, searchText?: string }): Observable<Strategy[]> {
     this.loaderService.showLoader();
     const options: StrategiesSearchOptions = new StrategiesSearchOptions();
     options.Filter = {
@@ -910,12 +910,10 @@ export class DataService {
       options.Filter.Name = args.searchText;
     }
 
-      options.OrderBy = {
-        Field: args.field,
-        Direction: 'Desc'
-      };
-
-    console.log(args);
+    options.OrderBy = {
+      Field: args.field,
+      Direction: 'Desc'
+    };
 
     if (args.paginator) {
       options.Pagination = {

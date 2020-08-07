@@ -1,11 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ChartOptions, Strategy } from '@app/models';
 import * as Highcharts from 'highcharts';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
 import { DataService } from '@app/services/data.service';
 import { TranslateService } from '@ngx-translate/core';
+import { NotificationsService } from '@app/services/notifications.service';
 
 const offset = Math.abs(new Date().getTimezoneOffset()) * 60000;
 let that: StrategyDetailsProfitabilityComponent;
@@ -26,8 +27,10 @@ export class StrategyDetailsProfitabilityComponent implements OnInit , OnDestroy
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private dataService: DataService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private notificationsService: NotificationsService,
   ) { }
 
   ngOnInit(): void {
@@ -47,6 +50,11 @@ export class StrategyDetailsProfitabilityComponent implements OnInit , OnDestroy
         this.strategy = strategy;
         console.log('my strategy', strategy);
       });
+
+    if(!this.strategy.publicOffer && !this.strategy.isMyStrategy){
+      this.notificationsService.open('notify.strategy.access.error');
+      this.router.navigate(['/rating'], { relativeTo: this.route });
+    }
 
     this.dataService.getStrategyChart(new ChartOptions(this.route.parent.params['_value'].id))
       .pipe(takeUntil(this.destroy$))
