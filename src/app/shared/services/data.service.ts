@@ -906,6 +906,10 @@ export class DataService {
       DealsMin: args.dealsMin
     };
 
+    if (args.searchText) {
+      options.Filter.StrategyName = args.searchText;
+    }
+
       options.OrderBy = {
         Field: args.field,
         Direction: 'Desc'

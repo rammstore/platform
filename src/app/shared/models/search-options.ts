@@ -8,6 +8,7 @@ export class StrategiesSearchOptions {
     AgeMin?: number,
     Yield?: number,
     DealsMin?: number,
+    StrategyName?: string,
   };
 
   Pagination: {
