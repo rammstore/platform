@@ -907,7 +907,7 @@ export class DataService {
     };
 
     if (args.searchText) {
-      options.Filter.StrategyName = args.searchText;
+      options.Filter.Name = args.searchText;
     }
 
       options.OrderBy = {
