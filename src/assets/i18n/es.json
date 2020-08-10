@@ -137,9 +137,9 @@
 	  "common.table.label.commissionUSD": "Comisión, USD",
   	"common.table.label.created": "Creado",
   	"common.table.label.deal": "Acuerdo",
-    "common.table.label.partner": "Compañero",
+    "common.table.label.partner": "Socio",
     "common.table.label.status": "Estado",
-    "common.table.label.offer.public": "Oferta publica",
+    "common.table.label.offer.public": "Oferta pública",
   	"common.table.label.entry": "Direccion",
     "common.table.label.link": "Enlace",
     "common.table.label.commissionRate": "Comisión",
@@ -261,8 +261,8 @@
 	"notify.strategy.created": "Se crea la estrategia",
 	"notify.strategy.paused": "La estrategia está en pausa",
 	"notify.strategy.resumed": "La estrategia se reanuda",
-  "notify.strategy.offer.create": "La oferta fue creada",
-  "notify.strategy.offer.change": "La oferta fue modificada",
+  "notify.strategy.offer.create": "Se creó la oferta",
+  "notify.strategy.offer.change": "La oferta fue cambiada",
 
  	"rating.all.title": "Todas las estrategias",
 	"rating.message": "La página muestra las principales estrategias con el aumento máximo del número de inversiones durante la última semana",
@@ -306,7 +306,7 @@
 	"strategy.button.create": "Crear estrategia",
   "strategy.button.create.offer": "Crear oferta",
   "strategy.public.offer.label": "Solo una oferta puede ser pública; al crear una nueva oferta pública, la oferta anterior dejará de ser pública.",
-  "strategy.private.offer.label": "La estrategia no tendrá ofertas públicas, la estrategia se eliminará de las clasificación y la inversión solo será posible a través de enlaces ocultos.",
+  "strategy.private.offer.label": "La estrategia no tendrá ofertas públicas, la estrategia se eliminará de las clasificación y la inversión será posible solo a través de enlaces ocultos.",
   
 	"strategy.close.form.text": "¿Confirmas cerrar tu estrategia?",
   "strategy.close.form.text2": "Si hubiera invertido en su propia estrategia, su cuenta de inversión también se cerraría. Tenga en cuenta que esta acción es irreversible",
@@ -354,8 +354,8 @@
 	"table.footer.pageNext": "Próximo",
 	"table.footer.pagePrevious": "Anterior",
 
-  "enum.status.enabled": "Activa",
-  "enum.status.disabled": "Deshabilitada",
+  "enum.status.enabled": "Activada",
+  "enum.status.disabled": "Desactivada",
   "enum.status.closed": "Cerrada",
 
   "link": "Enlace"

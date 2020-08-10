@@ -67,7 +67,7 @@
   	"button.back": "Geri",
     "button.skip": "Atla",
   	"button.cancel": "İptal",
-    "button.create": "Create",
+    "button.create": "Oluştur",
  	  "button.ok": "Tamam",
 
 	  "common.account": "Hesap",
@@ -137,13 +137,13 @@
 	  "common.table.label.commissionUSD": "Komisyon, USD",
   	"common.table.label.created": "Oluşturuldu",
   	"common.table.label.deal": "Anlaşma",
-    "common.table.label.partner": "Partner",
+    "common.table.label.partner": "Ortak",
     "common.table.label.status": "Durum",
-    "common.table.label.offer.public": "Halka açık teklif",
+    "common.table.label.offer.public": "Herkese açık teklif",
   	"common.table.label.entry": "Yönü",
-    "common.table.label.link": "Link",
+    "common.table.label.link": "Bağlantı",
     "common.table.label.commissionRate": "Komisyon",
-    "common.table.label.dtCreate": "Creation date",
+    "common.table.label.dtCreate": "Oluşturma tarihi",
   	"common.table.label.equityUSD": "Öz kaynak, USD",
   	"common.table.label.feePaidUSD": "Ödenen ücret, USD",
   	"common.table.label.feeToPayUSD": "Ödenecek ücret, USD",
@@ -240,9 +240,9 @@
 
 	  "myStrategies.active.title": "Aktif",
   	"myStrategies.closed.title": "Kapalı",
-    "myStrategies.offers.type.public": "Halka açık",
-    "myStrategies.offers.type.create.public": "Make public",
-    "myStrategies.offers.type.create.not.public": "Make private",
+    "myStrategies.offers.type.public": "Herkese açık",
+    "myStrategies.offers.type.create.public": "Herkese açık yap",
+    "myStrategies.offers.type.create.not.public": "Özel yap",
     "myStrategies.offers.title.create": "Teklif oluştur",
 
  	  "notify.investment.access.error": "Bu yatırıma erişiminiz yoktur",
@@ -261,8 +261,8 @@
 	  "notify.strategy.created": "Strateji oluşturuldu",
 	  "notify.strategy.paused": "Strateji duraklatıldı",
 	  "notify.strategy.resumed": "Strateji dürdürülüyor",
-    "notify.strategy.offer.create": "Offer was created",
-    "notify.strategy.offer.change": "Offer was changed",
+    "notify.strategy.offer.create": "Teklif oluşturuldu",
+    "notify.strategy.offer.change": "Teklif değiştirildi",
 
  	  "rating.all.title": "Tüm stratejiler",
 	  "rating.message": "Bu sayfa geçtiğimiz hafta yatırım sayısı en fazla artan en iyi stratejileri göstermektedir.",
@@ -305,8 +305,8 @@
 	  "strategy.add.title.strategy": "Strateji ayarları",
 	  "strategy.button.create": "Strateji oluştur",
     "strategy.button.create.offer": "Teklif oluştur",
-    "strategy.public.offer.label": "Only one offer can be public; when creating a new public offer, the old offer will become non-public.",
-    "strategy.private.offer.label": "The strategy will not have public offers, the strategy will be removed from the ratings and investment will be possible only through hidden links.",
+    "strategy.public.offer.label": "Sadece bir teklif herkese açık olabilir; herkese açık yeni bir teklif oluşturulurken eski teklif herkese kapalı hale gelecektir.",
+    "strategy.private.offer.label": "Stratejinin herkese açık teklifi olmayacaktır, strateji derecelendirmeden kaldırılacak ve yatırım sadece gizlenmiş bağlantılar yoluyla mümkün olabilecektir.",
   
 	  "strategy.close.form.text": "Stratejinizin kapatılmasını onaylıyor musunuz?",
   	"strategy.close.form.text2": "Eğer kendi stratejinize yatırım yaptıysanız yatırım hesabınız da kapatılacak. Lütfen unutmayın bu işlem geri alınamaz.",
@@ -354,9 +354,9 @@
 	  "table.footer.pageNext": "Sonraki",
 	  "table.footer.pagePrevious": "Önceki",
 
-    "enum.status.enabled": "Active",
-    "enum.status.disabled": "Disabled",
-    "enum.status.closed": "Kapandı",
+    "enum.status.enabled": "Etkin",
+    "enum.status.disabled": "Devre dışı",
+    "enum.status.closed": "Kapalı",
 
-    "link": "Link"  
+    "link": "Bağlantı"  
 }
