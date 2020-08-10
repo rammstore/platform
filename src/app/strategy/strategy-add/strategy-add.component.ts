@@ -99,8 +99,8 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
 
   buildFormStep3(): void {
     this.formStep3 = this.fb.group({
-      fee: [25, [Validators.min(0), Validators.max(50)]],
-      commission: [0, [Validators.min(0), Validators.max(100)]]
+      fee: [25, [Validators.required, Validators.min(0), Validators.max(50), Validators.pattern('^[0-9]*')]],
+      commission: [0, [Validators.required, Validators.min(0), Validators.max(100), Validators.pattern('^[0-9]*')]]
     });
   }
 
@@ -185,12 +185,10 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
     this.dataService.isStrategyNameUniq(name)
       .pipe(takeUntil(this.destroy$))
       .subscribe((isUniq: boolean) => {
-        if (isUniq) {
-          this.formStep1.get('name').setErrors(null);
-          if (isSubmitClicked) {
-            this.submitStep1();
-          }
-        } else {
+        if(isUniq && isSubmitClicked){
+          this.submitStep1();
+        }
+        if (!isUniq) {
           this.formStep1.get('name').setErrors({isUniq: true});
         }
       });

@@ -42,7 +42,7 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
     this.args = {
       strategyId: this.route.params['_value'].id
     };
-    this.dataService.getStrategy(this.args)
+    this.dataService.getStrategyByID(this.args)
       .pipe(takeUntil(this.destroy$))
       .subscribe((strategy: Strategy) => {
         this.strategy = strategy;

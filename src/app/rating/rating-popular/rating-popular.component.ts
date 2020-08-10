@@ -45,7 +45,7 @@ export class RatingPopularComponent implements  OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.args = {
-      ratingType: 2,
+      field: 'Accounts',
       paginator: this.paginator,
       searchText: this.searchText
     };

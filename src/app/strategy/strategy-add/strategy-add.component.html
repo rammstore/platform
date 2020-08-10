@@ -20,13 +20,13 @@
         <div class="input-wrapper">
           <input id="name" formControlName="name" (change)="isStrategyNameUniq($event.target.value)">
           <div class="messages">
-            <label *ngIf="formStep1.get('name').touched && formStep1.get('name').hasError('required')"
+            <label *ngIf="formStep1.invalid && formStep1.get('name').hasError('required')"
                    class="error-message"
                    translate>strategy.form.name.error.required</label>
-            <label *ngIf="formStep1.get('name').touched && formStep1.get('name').hasError('pattern')"
+            <label *ngIf="formStep1.invalid && formStep1.get('name').hasError('pattern')"
                    class="error-message"
                    translate>strategy.form.name.error.pattern</label>
-            <label *ngIf="formStep1.get('name').touched && formStep1.get('name').hasError('isUniq')"
+            <label *ngIf="formStep1.invalid && formStep1.get('name').hasError('isUniq')"
                    class="error-message" translate>strategy.form.name.error.uniq</label>
           </div>
         </div>
@@ -47,21 +47,21 @@
         <div class="input-wrapper">
           <input id="money" type="number" formControlName="money" [min]="0" [max]="wallet.balance">
           <div class="messages">
-            <label *ngIf="formStep2.get('money').touched && formStep2.get('money').hasError('min')"
+            <label *ngIf="formStep2.invalid && formStep2.get('money').hasError('min')"
                    class="error-message" translate>
               <span translate>strategy.form.amount.error.min</span><span class="available-clickable"
                                                                          (click)="setMoney(accountMinBalance)"> - {{accountMinBalance | customCurrency}}</span>
             </label>
-            <label *ngIf="formStep2.get('money').touched && formStep2.get('money').hasError('max')"
+            <label *ngIf="formStep2.invalid && formStep2.get('money').hasError('max')"
                    class="error-message" translate>
               strategy.form.amount.error.max
             </label>
             <label class="error-message"
-                   *ngIf="formStep2.get('money').touched && formStep2.get('money').hasError('required')" translate>
+                   *ngIf="formStep2.invalid && formStep2.get('money').hasError('required')" translate>
               strategy.form.amount.error.required
             </label>
             <label class="error-message"
-                   *ngIf="formStep2.get('money').touched && formStep2.get('money').hasError('pattern')" translate>
+                   *ngIf="formStep2.invalid && formStep2.get('money').hasError('pattern')" translate>
               strategy.form.amount.error.pattern
             </label>
             <label class="details-message">
@@ -83,19 +83,19 @@
                  title="{{'strategy.form.target.tooltip' | translate}}">
           <div class="messages">
             <label class="error-message"
-                   *ngIf="formStep2.get('target').touched && formStep2.get('target').hasError('required')" translate>
+                   *ngIf="formStep2.invalid && formStep2.get('target').hasError('required')" translate>
               strategy.form.target.error.required
             </label>
             <label class="error-message"
-                   *ngIf="formStep2.get('target').touched && formStep2.get('target').hasError('pattern')" translate>
+                   *ngIf="formStep2.invalid && formStep2.get('target').hasError('pattern')" translate>
               strategy.form.target.error.pattern
             </label>
             <label class="error-message"
-                   *ngIf="formStep2.get('target').touched && formStep2.get('target').hasError('min') && !formStep2.get('target').hasError('pattern')">
+                   *ngIf="formStep2.invalid && formStep2.get('target').hasError('min') && !formStep2.get('target').hasError('pattern')">
               <span translate>strategy.form.target.error.min</span> - 1.
             </label>
             <label class="details-message"
-                   *ngIf="formStep2.get('money').value && formStep2.get('target').value && formStep2.valid">
+                   *ngIf="formStep2.get('target').value && formStep2.valid">
               {{((formStep2.get('money').value * formStep2.get('target').value) / 100) | customCurrency}}
             </label>
           </div>
@@ -114,22 +114,22 @@
                  title="{{'strategy.form.protection.tooltip' | translate}}">
           <div class="messages">
             <label class="error-message"
-                   *ngIf="formStep2.get('protection').touched && formStep2.get('protection').hasError('required')"
+                   *ngIf="formStep2.invalid && formStep2.get('protection').hasError('required')"
                    translate>
               strategy.form.protection.error.required
             </label>
             <label class="error-message"
-                   *ngIf="formStep2.get('protection').touched && formStep2.get('protection').hasError('min') && !formStep2.get('protection').hasError('pattern')"
+                   *ngIf="formStep2.invalid && formStep2.get('protection').hasError('min') && !formStep2.get('protection').hasError('pattern')"
                    translate>
               strategy.form.protection.error.min - 0.
             </label>
             <label class="error-message"
-                   *ngIf="formStep2.get('protection').touched && formStep2.get('protection').hasError('pattern')"
+                   *ngIf="formStep2.invalid && formStep2.get('protection').hasError('pattern')"
                    translate>
               strategy.form.protection.error.pattern
             </label>
             <label class="error-message"
-                   *ngIf="formStep2.get('protection').touched && formStep2.get('protection').hasError('max') && !formStep2.get('protection').hasError('pattern')">
+                   *ngIf="formStep2.invalid && formStep2.get('protection').hasError('max') && !formStep2.get('protection').hasError('pattern')">
               <span translate>strategy.form.protection.error.max</span> - 99.
             </label>
             <label class="details-message"
@@ -155,14 +155,20 @@
       <div class="form-field">
         <label for="fee" class="field-label"><span translate>strategy.add.form.label.fee</span>, %:</label>
         <div class="input-wrapper">
-          <input id="fee" type="number" formControlName="fee" [min]="0" [max]="50">
+          <input  id="fee" 
+                  type="number" 
+                  formControlName="fee" 
+                  [step]="1" 
+                  [min]="0" 
+                  [max]="50">
           <div class="messages">
-            <label *ngIf="formStep3.get('fee').touched && formStep3.get('fee').hasError('min')" class="error-message"
-                   translate>
+            <label *ngIf="formStep3.invalid && formStep3.get('fee').hasError('required')" class="error-message" translate>
+              strategy.form.fee.error.required
+            </label>
+            <label *ngIf="formStep3.invalid && formStep3.get('fee').hasError('min')" class="error-message" translate>
               <span translate>strategy.form.fee.error.min</span> - 0
             </label>
-            <label *ngIf="formStep3.get('fee').touched && formStep3.get('fee').hasError('max')" class="error-message"
-                   translate>
+            <label *ngIf="formStep3.invalid && formStep3.get('fee').hasError('max')" class="error-message" translate>
               <span translate>strategy.form.fee.error.max</span> — 50%
             </label>
             <label class="details-message" translate>strategy.form.fee.hint</label>
@@ -174,13 +180,21 @@
         <label for="commission" class="field-label"><span translate>strategy.add.form.label.commission</span>, USD /
           1mln.:</label>
         <div class="input-wrapper">
-          <input id="commission" type="number" formControlName="commission" [min]="0" [max]="100">
+          <input  id="commission" 
+                  type="number" 
+                  formControlName="commission" 
+                  [step]="1" 
+                  [min]="0" 
+                  [max]="100">
           <div class="messages">
-            <label *ngIf="formStep3.get('commission').touched && formStep3.get('commission').hasError('min')"
+            <label *ngIf="formStep3.invalid && formStep3.get('commission').hasError('required')" class="error-message" translate>
+              strategy.form.commission.error.required
+            </label>
+            <label *ngIf="formStep3.invalid && formStep3.get('commission').hasError('min') && !formStep3.get('commission').hasError('pattern')"
                    class="error-message">
               <span translate>strategy.form.commission.error.min</span> — 0
             </label>
-            <label *ngIf="formStep3.get('commission').touched && formStep3.get('commission').hasError('max')"
+            <label *ngIf="formStep3.invalid && formStep3.get('commission').hasError('max') && !formStep3.get('commission').hasError('pattern')"
                    class="error-message">
               <span translate>strategy.form.commission.error.max</span> — 100 USD
             </label>

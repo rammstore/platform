@@ -44,7 +44,7 @@ export class RatingAllComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.args = {
-      ratingType: 1,
+      field: 'Yield',
       paginator: this.paginator,
       searchText: this.searchText
     };
