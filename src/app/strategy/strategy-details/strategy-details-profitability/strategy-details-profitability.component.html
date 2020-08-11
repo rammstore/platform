@@ -2,41 +2,44 @@
   <div class="statistics" *ngIf="strategy">
     <table>
       <tbody>
-      <tr>
-        <td translate>common.yieldMonthly</td>
-        <td class="yield {{strategy.getColorClass('monthlyYield')}}">
-          {{strategy.monthlyYield | percent:'1.2-2'}}
-        </td>
-      </tr>
-      <tr>
-        <td translate>common.yield</td>
-        <td class="yield {{strategy.getColorClass('profit')}}">
-          {{strategy.profit | percent:'1.2-2'}}
-        </td>
-<!--        <td *ngIf="!strategy.account">{{0 | percent:'1.2-2'}}</td>-->
-      </tr>
-      <tr><td></td><td></td></tr>
-      <tr>
-        <td translate>common.fee</td>
-        <td>{{(strategy.publicOffer ? strategy.publicOffer.feeRate : 0) | percent}}</td>
-      </tr>
-      <tr>
-        <td><span translate>common.commission</span>, USD</td>
-        <td>{{strategy.publicOffer?.commissionRate * 1000000}} / 1 mln</td>
-      </tr>
-      <tr>
-        <td translate>common.age</td>
-        <td>{{strategy.getAgeWeeks()}}</td>
-      </tr>
-      <tr>
-        <td><span translate>common.investments</span>, USD</td>
-        <td *ngIf="strategy.equity">{{strategy.equity | customCurrency}}</td>
-        <td *ngIf="!strategy.equity">{{0 | customCurrency}}</td>
-      </tr>
-      <tr>
-        <td translate>common.accountsCount</td>
-        <td>{{strategy.accounts}}</td>
-      </tr>
+        <tr>
+          <td translate>common.yieldMonthly</td>
+          <td class="yield {{strategy.getColorClass('monthlyYield')}}">
+            {{strategy.monthlyYield | percent:'1.2-2'}}
+          </td>
+        </tr>
+        <tr>
+          <td translate>common.yield</td>
+          <td class="yield {{strategy.getColorClass('profit')}}">
+            {{strategy.profit | percent:'1.2-2'}}
+          </td>
+          <!--        <td *ngIf="!strategy.account">{{0 | percent:'1.2-2'}}</td>-->
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td translate>common.fee</td>
+          <td>{{strategy.getFeeRate() | percent}}</td>
+        </tr>
+        <tr>
+          <td><span translate>common.commission</span>, USD</td>
+          <td>{{strategy.getCommissionRate() * 1000000}} / 1 mln</td>
+        </tr>
+        <tr>
+          <td translate>common.age</td>
+          <td>{{strategy.getAgeWeeks()}}</td>
+        </tr>
+        <tr>
+          <td><span translate>common.investments</span>, USD</td>
+          <td *ngIf="strategy.equity">{{strategy.equity | customCurrency}}</td>
+          <td *ngIf="!strategy.equity">{{0 | customCurrency}}</td>
+        </tr>
+        <tr>
+          <td translate>common.accountsCount</td>
+          <td>{{strategy.accounts}}</td>
+        </tr>
       </tbody>
     </table>
   </div>

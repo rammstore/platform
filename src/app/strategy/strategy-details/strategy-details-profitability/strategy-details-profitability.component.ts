@@ -15,7 +15,7 @@ let that: StrategyDetailsProfitabilityComponent;
   templateUrl: './strategy-details-profitability.component.html',
   styleUrls: ['./strategy-details-profitability.component.scss']
 })
-export class StrategyDetailsProfitabilityComponent implements OnInit , OnDestroy {
+export class StrategyDetailsProfitabilityComponent implements OnInit, OnDestroy {
   // https://blog.strongbrew.io/rxjs-best-practices-in-angular/#avoiding-memory-leaks
   // here we will unsubscribe from all subscriptions
   destroy$ = new Subject();
@@ -24,6 +24,7 @@ export class StrategyDetailsProfitabilityComponent implements OnInit , OnDestroy
   strategy: Strategy;
   chartOptions: any;
   args: any;
+  id: number = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -35,23 +36,37 @@ export class StrategyDetailsProfitabilityComponent implements OnInit , OnDestroy
 
   ngOnInit(): void {
     that = this;
-    this.args = {
-      strategyId: this.route.parent.params['_value'].id
-    };
-    this.translateService.onDefaultLangChange
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(() => {
-        Highcharts.chart('yieldChartContainer', this.chartOptions);
-      });
 
-    this.dataService.getStrategyByID(this.args)
+    this.id = parseInt(this.route.parent.params['_value'].id);
+    if (this.id) {
+      this.args = {
+        strategyId: this.id
+      };
+
+      this.dataService.getStrategyByID(this.args)
       .pipe(takeUntil(this.destroy$))
       .subscribe((strategy: Strategy) => {
         this.strategy = strategy;
-        console.log('my strategy', strategy);
       });
+    } else {
+      this.args = {
+        link: this.route.parent.params['_value'].id
+      };
 
-    if(!this.strategy.publicOffer && !this.strategy.isMyStrategy){
+      this.dataService.getStrategyByLink(this.args)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((strategy: Strategy) => {
+        this.strategy = strategy;
+      });
+    }
+
+    this.translateService.onDefaultLangChange
+    .pipe(takeUntil(this.destroy$))
+    .subscribe(() => {
+      Highcharts.chart('yieldChartContainer', this.chartOptions);
+    });
+    
+    if (!this.strategy.publicOffer && !this.strategy.isMyStrategy && !this.strategy.linkOffer && !this.strategy.account) {
       this.notificationsService.open('notify.strategy.access.error', {
         type: 'error',
         autoClose: true,
@@ -60,7 +75,11 @@ export class StrategyDetailsProfitabilityComponent implements OnInit , OnDestroy
       this.router.navigate(['/rating'], { relativeTo: this.route });
     }
 
-    this.dataService.getStrategyChart(new ChartOptions(this.route.parent.params['_value'].id))
+    this.getStrategyChart();
+  }
+
+  getStrategyChart() {
+    this.dataService.getStrategyChart(new ChartOptions(this.strategy.id))
       .pipe(takeUntil(this.destroy$))
       .subscribe(response => {
 
@@ -108,11 +127,11 @@ export class StrategyDetailsProfitabilityComponent implements OnInit , OnDestroy
           tooltip: {
             backgroundColor: '#ffffff',
             useHTML: true,
-            formatter: function() {
+            formatter: function () {
               return `<div class="arearange-tooltip-header ${this.y < 0 ? 'negative' : ''} ${this.y > 0 ? 'positive' : ''}">` +
                 `${Highcharts.numberFormat((this.y), 2, '.')}%</div>` +
                 `<div>${that.translateService.instant(getDayName(this.x + offset))}, ${Highcharts.dateFormat('%e %b %Y, %H:%M', this.x + offset)}</div>`;
-}
+            }
           },
           type: 'arearange',
           series: [{

@@ -9,7 +9,7 @@ import { StrategyDetailsSymbolsComponent } from './strategy-details/strategy-det
 import { StrategyDetailsInvestmentsComponent } from './strategy-details/strategy-details-investments/strategy-details-investments.component';
 import { StrategyDetailsInvestmentsActiveComponent } from './strategy-details/strategy-details-investments/strategy-details-investments-active/strategy-details-investments-active.component';
 import { StrategyDetailsInvestmentsClosedComponent } from './strategy-details/strategy-details-investments/strategy-details-investments-closed/strategy-details-investments-closed.component';
-import {StrategyOffersComponent} from './strategy-details/strategy-offers/strategy-offers.component';
+import { StrategyOffersComponent } from './strategy-details/strategy-offers/strategy-offers.component';
 
 const routes: Routes = [
   { path: '', component: StrategyComponent, children: [
@@ -24,7 +24,11 @@ const routes: Routes = [
         { path: '', component: StrategyDetailsInvestmentsActiveComponent },
         { path: 'closed', component: StrategyDetailsInvestmentsClosedComponent }
       ] }
-  ] }
+  ] },
+  { path: 'link/:id', component: StrategyDetailsComponent, children: [
+    { path: '', component: StrategyDetailsProfitabilityComponent},
+    { path: 'symbols', component: StrategyDetailsSymbolsComponent},
+  ] },
 ];
 
 @NgModule({
