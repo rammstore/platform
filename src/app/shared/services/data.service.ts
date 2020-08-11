@@ -620,7 +620,7 @@ export class DataService {
   }
 
    // Инвестировать в стратегию по cкрытой ссылке
-   addAccountLink(link: string, data: object): Observable<any> {
+   addAccountPrivateOffer(link: string, data: object): Observable<any> {
     this.loaderService.showLoader();
     const options: any = {
       Link: link,
@@ -634,6 +634,7 @@ export class DataService {
       map((response: any) => {
         // this.getActiveMyStrategies().subscribe();
         this.walletService.updateWallet().subscribe();
+        this.getStrategyByLink({link: link});
         // this.updateRatingList();
         this.notificationsService.open('notify.investment.created');
       })

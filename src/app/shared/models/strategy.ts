@@ -14,7 +14,8 @@ export class Strategy {
   accounts: number;  // Количество счетов
   symbols: string;        // Строка с перечислением самых используемых торговых инструментов (не более 3-х)
   account: Account;       // Инвестиция
-  publicOffer: Offer;           // Оффер
+  publicOffer: Offer;     // Публичный оффер
+  linkOffer: Offer;       // Частный оффер
   isMyStrategy: boolean;  // Признак собственной стратегии
   ageByDays: number;      // Возраст в днях
   monthlyYield: number;   // Месячная прибыль в %
@@ -53,6 +54,38 @@ export class Strategy {
     }
 
     return Math.floor((now - created) / (1000 * 3600 * 24 * 7));
+  }
+
+  getFeeRate(): number {
+    if (this.publicOffer) {
+      return this.publicOffer.feeRate;
+    }
+
+    if (this.linkOffer) {
+      return this.linkOffer.feeRate;
+    }
+
+    if (this.account) {
+      return this.account.offer.feeRate;
+    }
+
+    return 0;
+  }
+
+  getCommissionRate(): number {
+    if (this.publicOffer) {
+      return this.publicOffer.commissionRate;
+    }
+
+    if (this.linkOffer) {
+      return this.linkOffer.commissionRate;
+    }
+
+    if (this.account) {
+      return this.account.offer.commissionRate;
+    }
+
+    return 0;
   }
 
   isSecured(): boolean {

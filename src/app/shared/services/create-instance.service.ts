@@ -25,6 +25,7 @@ export class CreateInstanceService {
       symbols: options.Symbols,
       account: options.Account ? this.createAccount(options.Account) : null,
       publicOffer: options.PublicOffer ? this.createOffer(options.PublicOffer) : undefined,
+      linkOffer: options.LinkOffer ? this.createOffer(options.LinkOffer) : undefined,
       isMyStrategy: options.IsMyStrategy,
       ageByDays: options.AgeByDays,
       monthlyYield: options.MonthlyYield,

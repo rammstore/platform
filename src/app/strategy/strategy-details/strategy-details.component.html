@@ -22,7 +22,7 @@
       <span class="item" *ngIf="functionality['protectionShow']"><span><span translate>common.protection</span>:</span> <b>{{(strategy.account.protection || 0) | percent}}</b></span>
     </div>
 
-    <app-manage [data]="strategy" *ngIf="strategy.isActive()" [methodName]="'getStrategy'" [methodArgs]="args"></app-manage>
+    <app-manage [data]="strategy" *ngIf="strategy.isActive()" [methodName]="methodName" [methodArgs]="args"></app-manage>
   </div>
 
   <app-content-tabs [links]="links">
