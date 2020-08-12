@@ -536,9 +536,10 @@ export class DataService {
       response.Strategies
         .forEach((strategy: any) => {
           if (strategy.Account) {
-            const account = strategy.Account;
-            account.Strategy = strategy;
-            accounts.push(new Account(this.createInstanceService.createAccount(account)));
+            const createStrategy = this.createInstanceService.createStrategy(strategy);
+            const createAccount = this.createInstanceService.createAccount(strategy.Account);
+            createAccount.strategy = createStrategy;
+            accounts.push(createAccount);
           }
         });
 
