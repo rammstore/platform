@@ -168,7 +168,7 @@ export class DataService {
     this.loaderService.showLoader();
     this.http.post(`${this.apiUrl}/strategies.get`, {ID: args.strategyId}).subscribe((response: any) => {
       this.loaderService.hideLoader();
-      this.currentStrategyDetailsSubject.next(this.createInstanceService.createStrategy(response.Strategy));
+      this.currentStrategyDetailsSubject.next(this.createInstanceService.createStrategy(response));
     }, (error: HttpErrorResponse) => {
       if (error.status === 404) {
         this.router.navigate(['/rating']);
