@@ -11,22 +11,27 @@
         <td translate>investment.details.strategy.name</td>
         <td *ngIf="strategy"><a [routerLink]="['/strategies/details', strategy.id]">{{strategy.name}}</a></td>
       </tr>
-      <tr>
-        <td translate>investment.details.strategy.commission</td>
-        <td>
-          <span *ngIf="strategy">
-            {{strategy.publicOffer.getComission()}}
-          </span>
-        </td>
-      </tr>
-      <tr>
-        <td translate>investment.details.strategy.feeRate</td>
-        <td>
-          <span *ngIf="strategy">
-            {{strategy.publicOffer.feeRate | percent:'1.0-2'}}
-          </span>
-        </td>
-      </tr>
+    <h2 translate>common.offer</h2>
+    <tr>
+      <td>ID</td>
+      <td *ngIf="offer">{{offer.id}}</td>
+    </tr>
+    <tr>
+      <td translate>investment.details.strategy.feeRate</td>
+      <td>
+        <span *ngIf="offer">
+          {{offer.feeRate | percent:'1.0-2'}}
+        </span>
+      </td>
+    </tr>
+    <tr>
+      <td translate>investment.details.strategy.commission</td>
+      <td>
+        <span *ngIf="offer">
+          {{offer.getComission()}}
+        </span>
+      </td>
+    </tr>
 <!--      <tr>-->
 <!--        <td translate>investment.details.strategy.feePeriod</td>-->
 <!--        <td>1 <span translate>investment.details.strategy.feePeriod.week</span></td>-->
