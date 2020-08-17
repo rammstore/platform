@@ -10,6 +10,7 @@ import { StrategyDetailsInvestmentsComponent } from './strategy-details/strategy
 import { StrategyDetailsInvestmentsActiveComponent } from './strategy-details/strategy-details-investments/strategy-details-investments-active/strategy-details-investments-active.component';
 import { StrategyDetailsInvestmentsClosedComponent } from './strategy-details/strategy-details-investments/strategy-details-investments-closed/strategy-details-investments-closed.component';
 import { StrategyOffersComponent } from './strategy-details/strategy-offers/strategy-offers.component';
+import { StrategyDetailsMyInvestmentComponent } from './strategy-details/strategy-details-my-investment/strategy-details-my-investment.component';
 
 const routes: Routes = [
   { path: '', component: StrategyComponent, children: [
@@ -20,6 +21,7 @@ const routes: Routes = [
     { path: '', component: StrategyDetailsProfitabilityComponent},
     { path: 'offers', component: StrategyOffersComponent},
     { path: 'symbols', component: StrategyDetailsSymbolsComponent},
+    { path: 'my-investment', component: StrategyDetailsMyInvestmentComponent},
     { path: 'investments', component: StrategyDetailsInvestmentsComponent, children: [
         { path: '', component: StrategyDetailsInvestmentsActiveComponent },
         { path: 'closed', component: StrategyDetailsInvestmentsClosedComponent }

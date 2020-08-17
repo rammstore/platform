@@ -1,0 +1,91 @@
+<div class="details-container">
+    <div class="investment">
+        <h2 translate>common.investment</h2>
+        <table>
+            <tbody>
+                <tr>
+                    <td translate>investment.details.investment.id</td>
+                    <td *ngIf="account">{{account.id}}</td>
+                </tr>
+                <tr>
+                    <td translate>investment.details.investment.created</td>
+                    <td *ngIf="account">{{account.dtCreated | customDate }}</td>
+                </tr>
+                <tr *ngIf="account && !account.isActive()">
+                    <td translate>investment.details.investment.closed</td>
+                    <td>{{account.dtClosed | customDate }}</td>
+                </tr>
+                <tr>
+                    <td translate>investment.details.investment.currency</td>
+                    <td *ngIf="account">{{account.asset}}</td>
+                </tr>
+                <tr>
+                    <td translate>investment.details.investment.leverage</td>
+                    <td *ngIf="account">1:{{account.leverageMax}}</td>
+                </tr>
+                <tr>
+                    <td translate>investment.details.investment.stopOut</td>
+                    <td *ngIf="account">{{account.MCLevel}}%</td>
+                </tr>
+                <tr>
+                    <td translate>investment.details.investment.status</td>
+                    <td *ngIf="account">{{account.getStatus()}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="profile">
+        <h2 translate>investment.details.investmentProfile.title</h2>
+        <table>
+            <tbody>
+                <tr>
+                    <td translate>common.factor</td>
+                    <td *ngIf="account">{{account.factor | number:'1.1-1'}}</td>
+                </tr>
+                <tr *ngIf="functionality['targetShow']">
+                    <td translate>common.target</td>
+                    <td *ngIf="account">{{account.target | percent:'1.0-2'}}</td>
+                </tr>
+                <tr *ngIf="functionality['protectionShow']">
+                    <td translate>common.protection</td>
+                    <td *ngIf="account">{{account.protection | percent:'1.0-2'}}</td>
+                </tr>
+                <tr *ngIf="functionality['targetShow'] && functionality['protectionShow']">
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr *ngIf="functionality['targetShow']">
+                    <td><span translate>common.target</span>, USD</td>
+                    <td *ngIf="account">{{account.getTargetAmount() | customCurrency}}</td>
+                </tr>
+                <tr *ngIf="functionality['protectionShow']">
+                    <td><span translate>common.protection</span>, USD</td>
+                    <td *ngIf="account">{{account.getProtectionAmount() | customCurrency}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<table class="margin-info">
+    <tbody>
+    <tr>
+      <td><span translate>common.equity</span>, USD</td>
+      <td *ngIf="account">{{account.equity | customCurrency}}</td>
+      <td><span translate>common.balance</span>, USD</td>
+      <td *ngIf="account">{{account.balance | customCurrency}}</td>
+    </tr>
+    <tr>
+      <td><span translate>common.freeMargin</span>, USD</td>
+      <td *ngIf="account" class="{{account.getColorClass('freeMargin')}}">{{account.freeMargin | customCurrency}}</td>
+      <td><span translate>common.margin</span>, USD</td>
+      <td *ngIf="account">{{account.margin | customCurrency}}</td>
+    </tr>
+    <tr>
+      <td translate>common.marginLevel</td>
+      <td *ngIf="account && account.marginLevel" [class.positive]="account.marginLevel >= 1" [class.negative]="account.marginLevel < 1">{{account.marginLevel | number:'1.2-2'}} %</td>
+      <td *ngIf="account && !account.marginLevel">−</td>
+    </tr>
+    </tbody>
+  </table>
