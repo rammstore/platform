@@ -70,7 +70,7 @@ export class InvestmentsActiveComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe((accounts: Account[]) => {
         if (accounts) {
-          this.accounts = accounts; debugger
+          this.accounts = accounts;
         }
       });
   }

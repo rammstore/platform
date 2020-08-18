@@ -7,6 +7,8 @@ export class Offer {
   link: string;
   partnerShareRate: number;
   status: number;
+  activeAccounts: boolean;
+  totalAccounts: number;
 
   constructor(
     options: any
@@ -21,6 +23,8 @@ export class Offer {
     this.dTCreated = options.DTCreated;
     this.partnerShareRate = options.PartnerShareRate;
     this.status = options.Status;
+    this.activeAccounts = options.ActiveAccounts;
+    this.totalAccounts = options.TotalAccounts;
   }
 
   getComission(): string {
