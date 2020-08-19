@@ -20,7 +20,7 @@ export class StrategyDetailsMyInvestmentComponent implements OnInit, OnDestroy {
   account: Account;
   args: any;
   functionality: object;
-  publicOffer: any = null;
+  offer: Offer = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -41,6 +41,7 @@ export class StrategyDetailsMyInvestmentComponent implements OnInit, OnDestroy {
     this.dataService.getStrategyByID(this.args)
       .pipe(takeUntil(this.destroy$))
       .subscribe((item) => {
+        this.offer = item.account.offer;
         this.getAccountStatement({
           accountId: item.account.id
         });
@@ -57,7 +58,6 @@ export class StrategyDetailsMyInvestmentComponent implements OnInit, OnDestroy {
       .subscribe((response: any) => {
         if (response.account) {
           this.account = response.account;
-          this.publicOffer = response.strategy ? response.strategy.publicOffer : null;
           this.account.strategy = response.strategy;
         }
       });
