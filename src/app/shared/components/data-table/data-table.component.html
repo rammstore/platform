@@ -190,20 +190,6 @@
               <app-chart-yield-table *ngIf="item.strategy" [strategy]="item.strategy"></app-chart-yield-table>
             </ng-container>
 
-
-
-            <ng-container *ngSwitchCase="'link'">
-              <span class="link-container">
-                <span class="d-flex">{{item.link}}</span>
-                <button ngxClipboard
-                        class="d-flex empty-space"
-                        [cbContent]="getOfferLink(item.link)"
-                        *ngIf="item.link">
-                <i class="fa fa-copy"></i>
-              </button>
-              </span>
-            </ng-container>
-
             <ng-container *ngSwitchCase="'OfferStatus'">
               <span translate>
                 {{item.getStatus()}}

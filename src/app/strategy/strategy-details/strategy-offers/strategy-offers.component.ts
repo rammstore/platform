@@ -65,6 +65,10 @@ export class StrategyOffersComponent implements OnInit {
     this.getOffers();
   }
 
+  getOfferLink(link: string) {
+    return `${location.origin}/strategies/link/${link}`;
+  }
+
   getStrategy() {
     this.dataService.getStrategyByID(this.args)
       .pipe(takeUntil(this.destroy$))
