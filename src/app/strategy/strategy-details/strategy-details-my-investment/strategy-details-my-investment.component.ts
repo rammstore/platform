@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subject} from 'rxjs';
-import {Account} from '@app/models';
+import {Account, Offer} from '@app/models';
 import {ActivatedRoute} from '@angular/router';
 import {DataService} from '@app/services/data.service';
 import {BrandService} from '@app/services/brand.service';
@@ -20,6 +20,7 @@ export class StrategyDetailsMyInvestmentComponent implements OnInit, OnDestroy {
   account: Account;
   args: any;
   functionality: object;
+  publicOffer: any = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -54,8 +55,11 @@ export class StrategyDetailsMyInvestmentComponent implements OnInit, OnDestroy {
     this.dataService.getAccountStatement(json)
       .pipe(takeUntil(this.destroy$))
       .subscribe((response: any) => {
-        this.account = response.account;
-        this.account.strategy = response.strategy;
+        if (response.account) {
+          this.account = response.account;
+          this.publicOffer = response.strategy ? response.strategy.publicOffer : null;
+          this.account.strategy = response.strategy;
+        }
       });
   }
 
