@@ -1,6 +1,4 @@
 export class Offer {
-  commissionRate: number;
-  feeRate: number;
   id: number;
   dTCreated: string;
   isPublic: boolean;
@@ -9,6 +7,13 @@ export class Offer {
   status: number;
   activeAccounts: boolean;
   totalAccounts: number;
+
+  commissionPaid: number;
+  commissionRate: number;
+  commissionToPay: number;
+  feePaid: number;
+  feeRate: number;
+  feeToPay: number;
 
   constructor(
     options: any
@@ -25,6 +30,14 @@ export class Offer {
     this.status = options.Status;
     this.activeAccounts = options.ActiveAccounts;
     this.totalAccounts = options.TotalAccounts;
+
+    this.commissionPaid = options.CommissionPaid;
+    this.commissionRate = options.CommissionRate;
+    this.commissionToPay = options.CommissionToPay;
+
+    this.feePaid = options.FeePaid;
+    this.feeRate = options.FeeRate;
+    this.feeToPay = options.FeeToPay;
   }
 
   getComission(): string {

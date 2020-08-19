@@ -80,12 +80,11 @@
         <td [innerText]="strategy.publicOffer.id"></td>
         <td [innerText]="strategy.publicOffer.dTCreated | customDate"></td>
         <td [innerText]="strategy.publicOffer.feeRate"></td>
-        <td></td>
-        <td></td>
+        <td [innerText]="strategy.publicOffer.feePaid"></td>
+        <td [innerText]="strategy.publicOffer.feeToPay"></td>
         <td [innerText]="strategy.publicOffer.commissionRate"></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td [innerText]="strategy.publicOffer.commissionPaid"></td>
+        <td [innerText]="strategy.publicOffer.commissionToPay"></td>
         <td></td>
         <td></td>
         <td></td>
@@ -98,15 +97,15 @@
         <td [innerText]="offer.id"></td>
         <td [innerText]="offer.dTCreated | customDate"></td>
         <td [innerText]="offer.feeRate"></td>
-        <td></td>
-        <td></td>
+        <td [innerText]="offer.feePaid"></td>
+        <td [innerText]="offer.feeToPay"></td>
         <td [innerText]="offer.commissionRate"></td>
-        <td></td>
-        <td></td>
+        <td [innerText]="offer.commissionPaid"></td>
+        <td [innerText]="offer.commissionToPay"></td>
         <td [innerText]="offer.activeAccounts"></td>
         <td [innerText]="offer.totalAccounts"></td>
         <td></td>
-        <td></td>
+        <td [innerText]="offer.partnerShareRate || ''"></td>
         <td [innerText]="offer.link || ''"></td>
       </tr>
     </tbody>
