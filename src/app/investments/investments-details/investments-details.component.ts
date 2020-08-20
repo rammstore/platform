@@ -20,7 +20,7 @@ export class InvestmentsDetailsComponent implements OnInit, OnDestroy {
   // component data
   account: Account;
   strategy: Strategy;
-  offer: Offer;
+  publicOffer: Offer;
   links: ContentTabLink[] = [];
   args: any;
   functionality: object;
@@ -53,7 +53,7 @@ export class InvestmentsDetailsComponent implements OnInit, OnDestroy {
         this.strategy = response.strategy;
         this.account = response.account;
         this.account.strategy = response.strategy;
-        this.offer = this.strategy.publicOffer ? this.strategy.publicOffer : this.strategy.linkOffer;
+        this.publicOffer = this.strategy.publicOffer ? this.strategy.publicOffer : this.strategy.linkOffer;
 
         this.links = [
           new ContentTabLink('investment.positions.title', '/investments/details/' + this.account.id),
