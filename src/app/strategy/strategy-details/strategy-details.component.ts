@@ -25,7 +25,7 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
   args: any;
   functionality: object;
   id: number = 0;
-  methodName: string; 
+  methodName: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -65,7 +65,7 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
         });
         this.methodName = 'getStrategyByLink';
     }
-    
+
   }
 
   strategiesDetailsLinks() {
