@@ -7,7 +7,6 @@ import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common
 import { StorageService } from '@app/services/storage.service';
 import { AuthService } from '@app/services/auth.service';
 import { TokenInterceptor } from '@app/interceptors/token.interceptor';
-import { OuterConfigModule } from '@app/modules/outer-config/outer-config.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { WalletService } from '@app/services/wallet.service';
 import { CommandService } from '@app/services/command.service';

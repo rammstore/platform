@@ -123,10 +123,6 @@ export class DataTableComponent implements OnInit, OnDestroy {
     this.destroy$.next(true);
   }
 
-  getOfferLink(link: string) {
-    return `${location.origin}/strategies/link/${link}`;
-  }
-
   onRowManageClick($event: any) {
     this.rowManageClick.emit($event);
   }

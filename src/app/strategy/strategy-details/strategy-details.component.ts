@@ -7,10 +7,12 @@ import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/internal/operators';
 import {DataService} from '@app/services/data.service';
 import {BrandService} from '@app/services/brand.service';
+import {StrategyService} from '@app/services/strategy.service';
 
 @Component({
   selector: 'app-strategy-details',
   templateUrl: './strategy-details.component.html',
+  providers: [StrategyService],
   styleUrls: ['./strategy-details.component.scss']
 })
 export class StrategyDetailsComponent implements OnInit, OnDestroy {
@@ -25,7 +27,7 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
   args: any;
   functionality: object;
   id: number = 0;
-  methodName: string; 
+  methodName: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -65,13 +67,14 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
         });
         this.methodName = 'getStrategyByLink';
     }
-    
+
   }
 
   strategiesDetailsLinks() {
     this.links = [
       new ContentTabLink('common.yield', '/strategies/details/' + this.strategy.id),
-      new ContentTabLink('common.table.label.symbols', '/strategies/details/' + this.strategy.id + '/symbols')
+      new ContentTabLink('common.table.label.symbols', '/strategies/details/' + this.strategy.id + '/symbols'),
+      new ContentTabLink('common.table.label.myInvestment', '/strategies/details/' + this.strategy.id + '/my-investment')
     ];
 
     if (this.strategy.isMy()) {

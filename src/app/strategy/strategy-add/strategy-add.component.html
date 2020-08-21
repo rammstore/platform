@@ -18,7 +18,8 @@
         <label for="name" class="field-label" translate>strategy.add.form.label.name
         </label>
         <div class="input-wrapper">
-          <input id="name" formControlName="name" (change)="isStrategyNameUniq($event.target.value)">
+          <input id="name" formControlName="name"
+                 (change)="isStrategyNameUniq($event.target.value)">
           <div class="messages">
             <label *ngIf="formStep1.invalid && formStep1.get('name').hasError('required')"
                    class="error-message"
@@ -155,11 +156,11 @@
       <div class="form-field">
         <label for="fee" class="field-label"><span translate>strategy.add.form.label.fee</span>, %:</label>
         <div class="input-wrapper">
-          <input  id="fee" 
-                  type="number" 
-                  formControlName="fee" 
-                  [step]="1" 
-                  [min]="0" 
+          <input  id="fee"
+                  type="number"
+                  formControlName="fee"
+                  [step]="1"
+                  [min]="0"
                   [max]="50">
           <div class="messages">
             <label *ngIf="formStep3.invalid && formStep3.get('fee').hasError('required')" class="error-message" translate>
@@ -180,11 +181,11 @@
         <label for="commission" class="field-label"><span translate>strategy.add.form.label.commission</span>, USD /
           1mln.:</label>
         <div class="input-wrapper">
-          <input  id="commission" 
-                  type="number" 
-                  formControlName="commission" 
-                  [step]="1" 
-                  [min]="0" 
+          <input  id="commission"
+                  type="number"
+                  formControlName="commission"
+                  [step]="1"
+                  [min]="0"
                   [max]="100">
           <div class="messages">
             <label *ngIf="formStep3.invalid && formStep3.get('commission').hasError('required')" class="error-message" translate>

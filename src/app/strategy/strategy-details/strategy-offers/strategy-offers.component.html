@@ -1,47 +1,123 @@
 <div class="strategy-offer"
      *ngIf="strategy">
-  <div class="text-right">
+  <div class="text-right create-container">
     <button class="primary"
             (click)="createOffer()"
             translate>strategy.button.create.offer
     </button>
   </div>
-  <table *ngIf="strategy.publicOffer">
+<!--  <table *ngIf="strategy.publicOffer">-->
+<!--    <tbody>-->
+<!--    <tr>-->
+<!--      <td>ID</td>-->
+<!--      <td>-->
+<!--        {{strategy.publicOffer.id}}-->
+<!--        <span-->
+<!--          class="positive"-->
+<!--          translate>myStrategies.offers.type.public</span>-->
+<!--      </td>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--      <td colspan="2" class="text-right">-->
+<!--        <button-->
+<!--          class="primary"-->
+<!--          (click)="makeNotPublic()" translate>myStrategies.offers.type.create.not.public-->
+<!--        </button>-->
+<!--      </td>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--      <td translate>investment.details.strategy.feeRate</td>-->
+<!--      <td>{{strategy.publicOffer.feeRate  | percent}}</td>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--      <td translate>investment.details.strategy.commission</td>-->
+<!--      <td>{{strategy.publicOffer.getComission()}}</td>-->
+<!--    </tr>-->
+<!--    </tbody>-->
+<!--  </table>-->
+
+<!--  <app-data-table-->
+<!--    [tableHeader]="tableHeader"-->
+<!--    [data]="offers"-->
+<!--    (rowManageClick)="onRowManageClick($event)"-->
+<!--    (paginationChanged)="getOffers()"-->
+<!--    [methodArgs]="args">-->
+<!--  </app-data-table>-->
+
+  <table class="w-100">
+    <thead>
+      <tr>
+        <th translate rowspan="2">ID</th>
+        <th translate rowspan="2">common.table.label.dtCreate</th>
+        <th translate colspan="3">investment.details.strategy.feeRate</th>
+        <th translate colspan="3">common.table.label.commissionRate</th>
+        <th translate colspan="2">common.investments</th>
+        <th translate colspan="2">common.partners</th>
+        <th translate rowspan="2">link</th>
+      </tr>
+      <tr>
+        <th translate>%</th>
+        <th translate>investment.details.strategy.feeRatePaid</th>
+        <th translate>investment.details.strategy.feeRateToPay</th>
+
+        <th translate>%</th>
+        <th translate>common.table.label.commissionPaidUSD</th>
+        <th translate>common.table.label.commissionToPayUSD</th>
+
+        <th translate>myStrategies.active.title</th>
+        <th translate>table.cell.total</th>
+
+        <th translate>ID</th>
+        <th translate>common.table.label.partner.share</th>
+      </tr>
+    </thead>
+
     <tbody>
-    <tr>
-      <td>ID</td>
-      <td>
-        {{strategy.publicOffer.id}}
-        <span
-          class="positive"
-          translate>myStrategies.offers.type.public</span>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="2" class="text-right">
-        <button
-          class="primary"
-          (click)="makeNotPublic()" translate>myStrategies.offers.type.create.not.public
-        </button>
-      </td>
-    </tr>
-    <tr>
-      <td translate>investment.details.strategy.feeRate</td>
-      <td>{{strategy.publicOffer.feeRate  | percent}}</td>
-    </tr>
-    <tr>
-      <td translate>investment.details.strategy.commission</td>
-      <td>{{strategy.publicOffer.getComission()}}</td>
-    </tr>
+      <tr *ngIf="strategy.publicOffer">
+        <td colspan="13" translate>common.table.label.offer.public</td>
+      </tr>
+      <tr *ngIf="strategy.publicOffer">
+        <td [innerText]="strategy.publicOffer.id"></td>
+        <td [innerText]="strategy.publicOffer.dTCreated | customDate"></td>
+        <td [innerText]="strategy.publicOffer.feeRate"></td>
+        <td [innerText]="strategy.publicOffer.feePaid"></td>
+        <td [innerText]="strategy.publicOffer.feeToPay"></td>
+        <td [innerText]="strategy.publicOffer.commissionRate"></td>
+        <td [innerText]="strategy.publicOffer.commissionPaid"></td>
+        <td [innerText]="strategy.publicOffer.commissionToPay"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td [innerText]="strategy.publicOffer.link || ''"></td>
+      </tr>
+      <tr>
+        <td colspan="13" translate>common.table.label.offer.private</td>
+      </tr>
+      <tr *ngFor="let offer of offers">
+        <td [innerText]="offer.id"></td>
+        <td [innerText]="offer.dTCreated | customDate"></td>
+        <td [innerText]="offer.feeRate"></td>
+        <td [innerText]="offer.feePaid"></td>
+        <td [innerText]="offer.feeToPay"></td>
+        <td [innerText]="offer.commissionRate"></td>
+        <td [innerText]="offer.commissionPaid"></td>
+        <td [innerText]="offer.commissionToPay"></td>
+        <td [innerText]="offer.activeAccounts"></td>
+        <td [innerText]="offer.totalAccounts"></td>
+        <td></td>
+        <td [innerText]="offer.partnerShareRate || ''"></td>
+        <td>
+           <span class="link-container">
+                <span class="d-flex">{{offer.link || ''}}</span>
+                <button ngxClipboard
+                        class="d-flex empty-space"
+                        [cbContent]="getOfferLink(offer.link)"
+                        *ngIf="offer.link">
+                <i class="fa fa-copy"></i>
+              </button>
+              </span>
+        </td>
+      </tr>
     </tbody>
   </table>
-
-  <app-data-table
-    [tableHeader]="tableHeader"
-    [data]="offers"
-    (rowManageClick)="onRowManageClick($event)"
-    (paginationChanged)="getOffers()"
-    [methodArgs]="args">
-  </app-data-table>
-
 </div>

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Account, Strategy } from '@app/models';
+import { Account, Strategy, Offer } from '@app/models';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { ContentTabLink } from '@app/components/content-tabs/content-tab-link';
@@ -20,6 +20,7 @@ export class InvestmentsDetailsComponent implements OnInit, OnDestroy {
   // component data
   account: Account;
   strategy: Strategy;
+  publicOffer: Offer;
   links: ContentTabLink[] = [];
   args: any;
   functionality: object;
@@ -52,6 +53,7 @@ export class InvestmentsDetailsComponent implements OnInit, OnDestroy {
         this.strategy = response.strategy;
         this.account = response.account;
         this.account.strategy = response.strategy;
+        this.publicOffer = this.strategy.publicOffer ? this.strategy.publicOffer : this.strategy.linkOffer;
 
         this.links = [
           new ContentTabLink('investment.positions.title', '/investments/details/' + this.account.id),

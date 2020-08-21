@@ -168,7 +168,7 @@ export class DataService {
     this.loaderService.showLoader();
     this.http.post(`${this.apiUrl}/strategies.get`, {ID: args.strategyId}).subscribe((response: any) => {
       this.loaderService.hideLoader();
-      this.currentStrategyDetailsSubject.next(this.createInstanceService.createStrategy(response.Strategy));
+      this.currentStrategyDetailsSubject.next(this.createInstanceService.createStrategy(response));
     }, (error: HttpErrorResponse) => {
       if (error.status === 404) {
         this.router.navigate(['/rating']);
@@ -189,31 +189,32 @@ export class DataService {
     return this.currentStrategyDetailsSubject.asObservable();
   }
 
-    // Получение конкретной стратегии за ссылкой
-    getStrategyByLink(args: { link: string }): Observable<Strategy> {
-      this.loaderService.showLoader();
-      this.http.post(`${this.apiUrl}/strategies.get`, {Link: args.link}).subscribe((response: any) => {
-        this.loaderService.hideLoader();
-        this.currentStrategyDetailsSubject.next(this.createInstanceService.createStrategy(response.Strategy));
-      }, (error: HttpErrorResponse) => {
-        if (error.status === 404) {
-          this.router.navigate(['/rating']);
-          this.notificationsService.open('notify.strategy.access.error', {
-            type: 'error',
-            autoClose: true,
-            duration: 3000
-          });
-        } else {
-          this.notificationsService.open('notify.loading.error', {
-            type: 'error',
-            autoClose: true,
-            duration: 3000
-          });
-        }
-      });
-  
-      return this.currentStrategyDetailsSubject.asObservable();
-    }
+  // Получение конкретной стратегии за ссылкой
+  getStrategyByLink(args: { link: string }): Observable<Strategy> {
+    console.log('getStrategyByLink');
+    this.loaderService.showLoader();
+    this.http.post(`${this.apiUrl}/strategies.get`, {Link: args.link}).subscribe((response: any) => {
+      this.loaderService.hideLoader();
+      this.currentStrategyDetailsSubject.next(this.createInstanceService.createStrategy(response));
+    }, (error: HttpErrorResponse) => {
+      if (error.status === 404) {
+        this.router.navigate(['/rating']);
+        this.notificationsService.open('notify.strategy.access.error', {
+          type: 'error',
+          autoClose: true,
+          duration: 3000
+        });
+      } else {
+        this.notificationsService.open('notify.loading.error', {
+          type: 'error',
+          autoClose: true,
+          duration: 3000
+        });
+      }
+    });
+
+    return this.currentStrategyDetailsSubject.asObservable();
+  }
 
   // Создание новой стратегии
   addStrategy(strategy: object, methodName: string, methodArgs: any): Observable<Strategy> {
@@ -253,7 +254,7 @@ export class DataService {
         map((item: any) => {
           const array: Offer[] = [];
 
-          (item.Offers || []).forEach((item: any)=> {
+          (item.Offers || []).forEach((item: any) => {
             array.push(new Offer(item));
           });
           return array;
@@ -536,9 +537,10 @@ export class DataService {
       response.Strategies
         .forEach((strategy: any) => {
           if (strategy.Account) {
-            const account = strategy.Account;
-            account.Strategy = strategy;
-            accounts.push(new Account(this.createInstanceService.createAccount(account)));
+            const createStrategy = this.createInstanceService.createStrategy(strategy);
+            const createAccount = this.createInstanceService.createAccount(strategy.Account);
+            createAccount.strategy = createStrategy;
+            accounts.push(createAccount);
           }
         });
 
@@ -563,17 +565,24 @@ export class DataService {
   // Получение деталей инвестиции
   getAccountStatement(args: { accountId: number }): Observable<any> {
     this.http.post(`${this.apiUrl}/accounts.getStatement`, {AccountID: args.accountId}).subscribe((response: any) => {
-      response.Statement[0].Strategy.PublicOffer = {
-        CommissionRate: response.Statement[0].Strategy.Commission,
-        FeeRate: response.Statement[0].Strategy.Fee
-      };
+      if (response.Statement.length) {
+        response.Statement[0].Strategy.PublicOffer = {
+          CommissionRate: response.Statement[0].Strategy.Commission,
+          FeeRate: response.Statement[0].Strategy.Fee
+        };
 
-      response.Statement[0].Account.CurrentDate = new Date(response.Statement[0].CurrentDate);
+        response.Statement[0].Account.CurrentDate = new Date(response.Statement[0].CurrentDate);
 
-      this.currentAccountStatementSubject.next({
-        strategy: this.createInstanceService.createStrategy(response.Statement[0].Strategy),
-        account: this.createInstanceService.createAccount(response.Statement[0].Account)
-      });
+        this.currentAccountStatementSubject.next({
+          strategy: this.createInstanceService.createStrategy(response.Statement[0].Strategy),
+          account: this.createInstanceService.createAccount(response.Statement[0].Account)
+        });
+      } else {
+        this.currentAccountStatementSubject.next({
+          strategy: null,
+          account: null
+        });
+      }
 
       this.loaderService.hideLoader();
     }, (error: HttpErrorResponse) => {
@@ -619,8 +628,8 @@ export class DataService {
     );
   }
 
-   // Инвестировать в стратегию по cкрытой ссылке
-   addAccountPrivateOffer(link: string, data: object): Observable<any> {
+  // Инвестировать в стратегию по cкрытой ссылке
+  addAccountPrivateOffer(link: string, data: object): Observable<any> {
     this.loaderService.showLoader();
     const options: any = {
       Link: link,

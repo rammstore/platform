@@ -5,6 +5,7 @@ import * as Highcharts from 'highcharts';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
 import { DataService } from '@app/services/data.service';
+import {StrategyService} from "@app/services/strategy.service";
 
 @Component({
   selector: 'app-strategy-details-symbols',
@@ -24,33 +25,29 @@ export class StrategyDetailsSymbolsComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
+    private strategyService: StrategyService,
     private dataService: DataService
   ) { }
 
   ngOnInit(): void {
-    this.id = parseInt(this.route.parent.params['_value'].id);
-    if (this.id) {
-      this.args = {
-        strategyId: this.id
-      };
 
-      this.dataService.getStrategyByID(this.args)
-        .pipe(takeUntil(this.destroy$))
-        .subscribe((strategy: Strategy) => {
-          this.strategy = strategy;
-        });
-    }
-    else {
-      this.args = {
-        link: this.route.parent.params['_value'].id
-      };
+    if (!this.strategyService.strategy) {
+      this.id = parseInt(this.route.parent.params['_value'].id);
+      if (this.id) {
+        this.args = {
+          strategyId: this.id
+        };
 
-      this.dataService.getStrategyByLink(this.args)
-        .pipe(takeUntil(this.destroy$))
-        .subscribe((strategy: Strategy) => {
-          this.strategy = strategy;
-        });
+        this.dataService.getStrategyByID(this.args)
+          .pipe(takeUntil(this.destroy$))
+          .subscribe((strategy: Strategy) => {
+            this.strategy = strategy;
+          });
+      }
+    } else {
+      this.strategy = this.strategyService.strategy;
     }
+
 
     this.dataService.getSymbolsChart(this.strategy.id)
       .pipe(takeUntil(this.destroy$))

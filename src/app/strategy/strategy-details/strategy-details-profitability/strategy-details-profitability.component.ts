@@ -1,15 +1,17 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ChartOptions, Strategy } from '@app/models';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ChartOptions, Strategy} from '@app/models';
 import * as Highcharts from 'highcharts';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/internal/operators';
-import { DataService } from '@app/services/data.service';
-import { TranslateService } from '@ngx-translate/core';
-import { NotificationsService } from '@app/services/notifications.service';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/internal/operators';
+import {DataService} from '@app/services/data.service';
+import {TranslateService} from '@ngx-translate/core';
+import {NotificationsService} from '@app/services/notifications.service';
+import {StrategyService} from "@app/services/strategy.service";
 
 const offset = Math.abs(new Date().getTimezoneOffset()) * 60000;
 let that: StrategyDetailsProfitabilityComponent;
+
 @Component({
   selector: 'app-strategy-details-profitability',
   templateUrl: './strategy-details-profitability.component.html',
@@ -30,49 +32,44 @@ export class StrategyDetailsProfitabilityComponent implements OnInit, OnDestroy 
     private route: ActivatedRoute,
     private router: Router,
     private dataService: DataService,
+    private strategyService: StrategyService,
     private translateService: TranslateService,
     private notificationsService: NotificationsService,
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     that = this;
+    if (!this.strategyService.strategy) {
+      this.id = parseInt(this.route.parent.params['_value'].id);
+      if (this.id) {
+        this.args = {
+          strategyId: this.id
+        };
 
-    this.id = parseInt(this.route.parent.params['_value'].id);
-    if (this.id) {
-      this.args = {
-        strategyId: this.id
-      };
-
-      this.dataService.getStrategyByID(this.args)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((strategy: Strategy) => {
-        this.strategy = strategy;
-      });
+        this.dataService.getStrategyByID(this.args)
+          .pipe(takeUntil(this.destroy$))
+          .subscribe((strategy: Strategy) => {
+            this.strategy = strategy;
+          });
+      }
     } else {
-      this.args = {
-        link: this.route.parent.params['_value'].id
-      };
-
-      this.dataService.getStrategyByLink(this.args)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((strategy: Strategy) => {
-        this.strategy = strategy;
-      });
+      this.strategy = this.strategyService.strategy;
     }
 
     this.translateService.onDefaultLangChange
-    .pipe(takeUntil(this.destroy$))
-    .subscribe(() => {
-      Highcharts.chart('yieldChartContainer', this.chartOptions);
-    });
-    
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        Highcharts.chart('yieldChartContainer', this.chartOptions);
+      });
+
     if (!this.strategy.publicOffer && !this.strategy.isMyStrategy && !this.strategy.linkOffer && !this.strategy.account) {
       this.notificationsService.open('notify.strategy.access.error', {
         type: 'error',
         autoClose: true,
         duration: 3000
       });
-      this.router.navigate(['/rating'], { relativeTo: this.route });
+      this.router.navigate(['/rating'], {relativeTo: this.route});
     }
 
     this.getStrategyChart();

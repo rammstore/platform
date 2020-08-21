@@ -1,12 +1,19 @@
 export class Offer {
-  commissionRate: number;
-  feeRate: number;
   id: number;
   dTCreated: string;
   isPublic: boolean;
   link: string;
   partnerShareRate: number;
   status: number;
+  activeAccounts: boolean;
+  totalAccounts: number;
+
+  commissionPaid: number;
+  commissionRate: number;
+  commissionToPay: number;
+  feePaid: number;
+  feeRate: number;
+  feeToPay: number;
 
   constructor(
     options: any
@@ -21,10 +28,24 @@ export class Offer {
     this.dTCreated = options.DTCreated;
     this.partnerShareRate = options.PartnerShareRate;
     this.status = options.Status;
+    this.activeAccounts = options.ActiveAccounts;
+    this.totalAccounts = options.TotalAccounts;
+
+    this.commissionPaid = options.CommissionPaid;
+    this.commissionRate = options.CommissionRate;
+    this.commissionToPay = options.CommissionToPay;
+
+    this.feePaid = options.FeePaid;
+    this.feeRate = options.FeeRate;
+    this.feeToPay = options.FeeToPay;
   }
 
   getComission(): string {
     return (this.commissionRate * 1000000) + ' USD / 1 mln';
+  }
+
+  getFeeRate(): string {
+    return  `${(this.feeRate || 0) * 100}%`;
   }
 
   getStatus() {

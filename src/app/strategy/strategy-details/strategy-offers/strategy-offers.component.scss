@@ -1,5 +1,39 @@
-.strategy-offer{
-  table{
-    max-width: 300px;
+.strategy-offer {
+  .create-container {
+    margin-top: -80px;
+    margin-bottom: 35px;
+  }
+  table tbody tr td {
+    padding: 5px 0px!important;
+  }
+}
+
+
+
+.empty-space{
+  border: none;
+  background: none;
+}
+
+
+.link-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &>*{
+    display: flex;
+  }
+  &>span{
+    min-width: 80px;
+    padding-right: 10px;
+  }
+  button{
+    font-size: 20px;
+    width: 38px;
+    min-width: 38px;
+    align-items: center;
+    i{
+      font-size: 20px;
+    }
   }
 }
