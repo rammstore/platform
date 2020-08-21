@@ -139,6 +139,7 @@
   "common.table.label.commissionToPayUSD": "Due commission, USD",
   "common.table.label.commissionPaidUSD": "Paid commission, USD",
 	"common.table.label.commissionUSD": "Commission, USD",
+  "common.table.label.commission.unit": "USD / mln USD",
   	"common.table.label.created": "Created",
   	"common.table.label.deal": "Deal",
     "common.table.label.partner": "Partner",

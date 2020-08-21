@@ -139,6 +139,7 @@
 	"common.table.label.commissionToPayUSD": "Due commission, USD",
   "common.table.label.commissionPaidUSD": "کمیسیون پرداخت شده, دلار آمریکا",
 	"common.table.label.commissionUSD": "کمیسیون, دلار آمریکا",
+  "common.table.label.commission.unit": "USD / mln USD",
   "common.table.label.created": "ایجاد شده",
   "common.table.label.deal": "معامله",
   "common.table.label.partner": "همکار",
