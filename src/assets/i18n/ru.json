@@ -7,7 +7,7 @@
   "linkWithdraw.link": "#",
   "additionalInfo": "",
   "linkLogout": "/login",
-
+  
   "account.active.title": "Активные",
   "account.closed.title": "Закрытые",
   "account.lastTransfers.title": "Операции с кошельком",

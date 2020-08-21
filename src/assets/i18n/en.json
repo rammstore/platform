@@ -45,7 +45,7 @@
 
   	"account.withdraw.close.current-equity": "Current equity",
   	"account.withdraw.close.investment.title": "Close investment",
-  	"account.withdraw.close.investment.warning": " You can close your investment at any moment. Later you will be able to create a new investment into the same strategy. Note that after closing the investment drawdown will become 0.",
+  	"account.withdraw.close.investment.warning": "You can close your investment at any moment. Later you will be able to create a new investment into the same strategy. Note that after closing the investment drawdown will become 0.",
   	"account.withdraw.close.investment.warning2": "The current equity of your investment is calculated by indicative quotes. When your investment is closed, all open positions will be closed by current market quotes which can slightly differ from the indicative ones.",
   	"account.withdraw.close.strategy.title": "Сlose strategy",
   	"account.withdraw.close.strategy.warning": "You can close an investment into your strategy only by closing the strategy itself. Please note that this action is irreversible.",
