@@ -7,10 +7,12 @@ import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/internal/operators';
 import {DataService} from '@app/services/data.service';
 import {BrandService} from '@app/services/brand.service';
+import {StrategyService} from '@app/services/strategy.service';
 
 @Component({
   selector: 'app-strategy-details',
   templateUrl: './strategy-details.component.html',
+  providers: [StrategyService],
   styleUrls: ['./strategy-details.component.scss']
 })
 export class StrategyDetailsComponent implements OnInit, OnDestroy {

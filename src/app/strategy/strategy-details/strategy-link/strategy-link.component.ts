@@ -51,6 +51,8 @@ export class StrategyLinkComponent implements OnInit {
       this.dataService.getStrategyByLink(this.args)
         .pipe(takeUntil(this.destroy$))
         .subscribe((strategy: Strategy) => {
+          strategy.link = item.id;
+
           this.strategyService.strategy = strategy;
           this.strategy = strategy;
           this.strategiesLinks();
@@ -63,13 +65,13 @@ export class StrategyLinkComponent implements OnInit {
 
   strategiesLinks() {
     this.links = [
-      new ContentTabLink('common.yield', '/strategies/link/' + this.strategy.id),
-      new ContentTabLink('common.table.label.symbols', '/strategies/link/' + this.strategy.id + '/symbols'),
-      new ContentTabLink('common.table.label.myInvestment', '/strategies/link/' + this.strategy.id + '/my-investment')
+      new ContentTabLink('common.yield', '/strategies/link/' + this.strategy.link),
+      new ContentTabLink('common.table.label.symbols', '/strategies/link/' + this.strategy.link + '/symbols'),
+      new ContentTabLink('common.table.label.myInvestment', '/strategies/link/' + this.strategy.link + '/my-investment')
     ];
 
     if (this.strategy.isMy()) {
-      this.links.push(new ContentTabLink('common.investments', '/strategies/link/' + this.strategy.id + '/investments'));
+      this.links.push(new ContentTabLink('common.investments', '/strategies/link/' + this.strategy.link + '/investments'));
     }
 
   }

@@ -24,7 +24,7 @@ export class Strategy {
   commission: number;      // Комиссия за оборот
   chart: {Yield: number}[];
   masterAccount: string;
-
+  link: string;
 
   constructor(
     options: any

@@ -191,6 +191,7 @@ export class DataService {
 
   // Получение конкретной стратегии за ссылкой
   getStrategyByLink(args: { link: string }): Observable<Strategy> {
+    console.log('getStrategyByLink');
     this.loaderService.showLoader();
     this.http.post(`${this.apiUrl}/strategies.get`, {Link: args.link}).subscribe((response: any) => {
       this.loaderService.hideLoader();
