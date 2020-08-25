@@ -1,3 +1,5 @@
+import {MakePropertyLowercase} from '@app/handlers/make-property-lowercase' ;
+
 export class Offer {
   id: number;
   dTCreated: string;
@@ -18,26 +20,14 @@ export class Offer {
   constructor(
     options: any
   ) {
+    options = MakePropertyLowercase(options);
+
     Object.assign(this, options);
 
-    this.commissionRate = options.CommissionRate || 0;
-    this.link = options.Link;
-    this.feeRate = options.FeeRate;
-    this.id = options.ID;
-    this.isPublic = options.IsPublic;
-    this.dTCreated = options.DTCreated;
-    this.partnerShareRate = options.PartnerShareRate;
-    this.status = options.Status;
-    this.activeAccounts = options.ActiveAccounts;
-    this.totalAccounts = options.TotalAccounts;
-
-    this.commissionPaid = options.CommissionPaid;
-    this.commissionRate = options.CommissionRate;
-    this.commissionToPay = options.CommissionToPay;
-
-    this.feePaid = options.FeePaid;
-    this.feeRate = options.FeeRate;
-    this.feeToPay = options.FeeToPay;
+    this.commissionRate = options.commissionRate || 0;
+    this.link = options.link;
+    this.feeRate = options.feeRate;
+    this.id = options.iD;
   }
 
   getComission(): string {
@@ -46,6 +36,22 @@ export class Offer {
 
   getFeeRate(): string {
     return  `${(this.feeRate || 0) * 100}%`;
+  }
+
+  get FeePaid() {
+    return this.feePaid || '';
+  }
+
+  get FeeToPay() {
+    return this.feeToPay || '';
+  }
+
+  get CommissionToPay() {
+    return this.commissionToPay || '';
+  }
+
+  get CommissionPaid() {
+    return this.commissionPaid || '';
   }
 
   getStatus() {

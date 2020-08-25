@@ -17,7 +17,6 @@ export class ForbiddenSymbolsDirective {
     private digits = '0123456789';
 
     constructor(private el: ElementRef) {
-      debugger
     }
 
     @HostListener('keydown', ['$event'])
