@@ -109,6 +109,10 @@ export class StrategyOffersComponent implements OnInit {
                 .pipe(takeUntil(this.destroy$))
                 .subscribe((strategy: Strategy) => {
                     console.log('strategy', strategy);
+                    //TODO: убрать PublicOffer from starategy
+                    if (!status) {
+                        strategy.publicOffer = null;
+                    }
                     this.strategy = strategy;
                 });
             this.getOffers();
