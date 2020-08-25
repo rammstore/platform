@@ -79,7 +79,6 @@ export class StrategyOffersComponent implements OnInit {
   }
 
   getOffers(): void {
-    debugger
     this.dataService.getOffers(this.strategy.id)
       .pipe(takeUntil(this.destroy$))
       .subscribe((offers) => {
