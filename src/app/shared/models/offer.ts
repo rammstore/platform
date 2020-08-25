@@ -34,6 +34,10 @@ export class Offer {
     return (this.commissionRate * 1000000) + ' USD / 1 mln';
   }
 
+  get CommissionRate(): string {
+    return `${this.commissionRate} USD / 1 mln`;
+  }
+
   getFeeRate(): string {
     return  `${(this.feeRate || 0) * 100}%`;
   }

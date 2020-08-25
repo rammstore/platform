@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Route, Router} from '@angular/router';
 import {Strategy} from '@app/models';
 import {ContentTabLink} from '@app/components/content-tabs/content-tab-link';
 import {BsModalRef} from 'ngx-bootstrap';
@@ -31,6 +31,7 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private dataService: DataService,
     private brandService: BrandService
   ) {
@@ -73,9 +74,14 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
   strategiesDetailsLinks() {
     this.links = [
       new ContentTabLink('common.yield', '/strategies/details/' + this.strategy.id),
-      new ContentTabLink('common.table.label.symbols', '/strategies/details/' + this.strategy.id + '/symbols'),
-      new ContentTabLink('common.table.label.myInvestment', '/strategies/details/' + this.strategy.id + '/my-investment')
+      new ContentTabLink('common.table.label.symbols', '/strategies/details/' + this.strategy.id + '/symbols')
     ];
+
+    if (this.isNotInvest) {
+      this.router.navigate([`strategies/details/${this.strategy.id}`]);
+    } else {
+      this.links.push(new ContentTabLink('common.table.label.myInvestment', '/strategies/details/' + this.strategy.id + '/my-investment'));
+    }
 
     if (this.strategy.isMy()) {
       this.links.push(new ContentTabLink('common.investments', '/strategies/details/' + this.strategy.id + '/investments'));
@@ -83,6 +89,10 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
     if (this.strategy.isMyStrategy) {
       this.links.push(new ContentTabLink('common.offers', `/strategies/details/${this.strategy.id}/offers`));
     }
+  }
+
+  get isNotInvest() {
+    return this.strategy.isMy && !this.strategy.isSecured || !this.strategy.account;
   }
 
   strategiesLinks() {

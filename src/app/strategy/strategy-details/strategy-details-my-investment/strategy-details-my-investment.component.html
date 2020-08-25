@@ -1,4 +1,5 @@
-<div class="details-container">
+<div class="details-container"
+  *ngIf="loadStatus">
   <div *ngIf="account"
        class="investment">
     <h2 translate>common.investment</h2>
@@ -51,7 +52,7 @@
         </tr>
         <tr>
           <td translate>common.table.label.commission.percent</td>
-          <td>{{offer.getComission() }}</td>
+          <td>{{offer.CommissionRate }}</td>
         </tr>
       </tbody>
     </table>
