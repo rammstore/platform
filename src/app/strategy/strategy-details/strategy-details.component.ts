@@ -86,8 +86,11 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
     if (this.strategy.isMy()) {
       this.links.push(new ContentTabLink('common.investments', '/strategies/details/' + this.strategy.id + '/investments'));
     }
+
     if (this.strategy.isMyStrategy) {
       this.links.push(new ContentTabLink('common.offers', `/strategies/details/${this.strategy.id}/offers`));
+    } else {
+      this.router.navigate([`strategies/details/${this.strategy.id}`]);
     }
   }
 
