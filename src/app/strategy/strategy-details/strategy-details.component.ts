@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute, Route, Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Strategy} from '@app/models';
 import {ContentTabLink} from '@app/components/content-tabs/content-tab-link';
 import {BsModalRef} from 'ngx-bootstrap';
@@ -45,16 +45,16 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
       });
 
     this.id = parseInt(this.route.params['_value'].id);
-    if(this.id) {
+    if (this.id) {
       this.args = {
         strategyId: this.id
       };
       this.dataService.getStrategyByID(this.args)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((strategy: Strategy) => {
-        this.strategy = strategy;
-        this.strategiesDetailsLinks();
-      });
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((strategy: Strategy) => {
+          this.strategy = strategy;
+          this.strategiesDetailsLinks();
+        });
       this.methodName = 'getStrategyByID';
     } else {
       this.args = {
@@ -66,7 +66,7 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
           this.strategy = strategy;
           this.strategiesLinks();
         });
-        this.methodName = 'getStrategyByLink';
+      this.methodName = 'getStrategyByLink';
     }
 
   }
@@ -78,7 +78,9 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
     ];
 
     if (this.isNotInvest) {
-      this.router.navigate([`strategies/details/${this.strategy.id}`]);
+      if (!this.strategy.isMyStrategy) {
+        this.router.navigate([`strategies/details/${this.strategy.id}`]);
+      }
     } else {
       this.links.push(new ContentTabLink('common.table.label.myInvestment', '/strategies/details/' + this.strategy.id + '/my-investment'));
     }
@@ -87,7 +89,7 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
       this.links.push(new ContentTabLink('common.investments', '/strategies/details/' + this.strategy.id + '/investments'));
     }
 
-    if (this.strategy.isMyStrategy) {
+    if (this.strategy.isMyStrategy && (!this.strategy.account || !this.strategy.account.isSecurity)) {
       this.links.push(new ContentTabLink('common.offers', `/strategies/details/${this.strategy.id}/offers`));
     } else {
       this.router.navigate([`strategies/details/${this.strategy.id}`]);
