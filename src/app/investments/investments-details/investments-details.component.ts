@@ -51,6 +51,8 @@ export class InvestmentsDetailsComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe((response: any) => {
         this.strategy = response.strategy;
+        response.account.isMyStrategy = response.strategy.isMyStrategy;
+
         this.account = response.account;
         this.account.strategy = response.strategy;
         this.publicOffer = this.strategy.publicOffer ? this.strategy.publicOffer : this.strategy.linkOffer;
