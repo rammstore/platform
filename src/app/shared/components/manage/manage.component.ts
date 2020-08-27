@@ -31,6 +31,7 @@ export class ManageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log('manage', this.data);
     switch (true) {
       case (this.data instanceof Strategy): {
         this.dataType = 'strategy';

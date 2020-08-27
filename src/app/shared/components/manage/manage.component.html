@@ -90,7 +90,12 @@
           <i class="fa fa-list-alt"></i>
           common.investments
         </li>
-
+        <li
+          *ngIf="data.account"
+          (click)="openAccountCloseDialog()" translate>
+          <i class="fa fa-window-close"></i>
+          common.manage.closeInvestment
+        </li>
         <li (click)="openStrategyCloseDialog()" translate>
           <i class="fa fa-window-close"></i>
           common.manage.closeStrategy
