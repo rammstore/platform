@@ -115,7 +115,7 @@
 
             <div class="strategy-account"
                  *ngSwitchCase="'strategy.investmentInfo'">
-              <ng-container class="investmentInfo" *ngIf="item.account">
+              <ng-container class="investmentInfo" *ngIf="item.account && item.account.id">
                 <div class="strategy-account-intervalPnL hint-container">
                   <span><span translate>common.table.label.yield</span>
                      <span *ngIf="column.hint" class="hint">

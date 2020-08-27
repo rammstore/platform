@@ -99,7 +99,7 @@
           common.investments
         </li>
         <li
-          *ngIf="data.strategy['account']"
+          *ngIf="data.strategy && data.strategy['account']"
           (click)="openAccountCloseDialog()" translate>
           <i class="fa fa-window-close"></i>
           common.manage.closeInvestment
