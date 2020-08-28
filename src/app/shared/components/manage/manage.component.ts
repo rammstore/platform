@@ -68,7 +68,7 @@ export class ManageComponent implements OnInit {
     });
   }
 
-  openAccountResumeDialog(data): void {
+  openAccountResumeDialog(data?): void {
     this.modalRef = this.modalService.show(ManageAccountResumeComponent, this.getAccountDialogOptions());
     this.changeInvestment(this.modalRef, data, () => {
       data.status = 1;

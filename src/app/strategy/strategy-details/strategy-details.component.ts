@@ -87,7 +87,7 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
 
     if (this.strategy.isMy()) {
       if (!this.strategy.account) {
-        this.moveToDefaultRoute();
+        // this.moveToDefaultRoute();
       } else this.links.push(new ContentTabLink('common.investments', '/strategies/details/' + this.strategy.id + '/investments'));
     }
 
