@@ -11,8 +11,8 @@
       </ng-container>
 
       <ng-container *ngIf="!data.isSecured()">
-        <i (click)="openAccountPauseDialog()" *ngIf="!data.isPaused()" title="{{'common.pause' | translate}}" class="icon-pause"></i>
-        <i (click)="openAccountResumeDialog()" *ngIf="data.isPaused()" title="{{'account.form.resume.title' | translate}}" class="icon-start"></i>
+        <i (click)="openAccountPauseDialog(data)" *ngIf="!data.isPaused()" title="{{'common.pause' | translate}}" class="icon-pause"></i>
+        <i (click)="openAccountResumeDialog(data)" *ngIf="data.isPaused()" title="{{'account.form.resume.title' | translate}}" class="icon-start"></i>
       </ng-container>
     </ng-container>
 

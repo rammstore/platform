@@ -14,6 +14,7 @@ export class ManageAccountPauseComponent implements OnDestroy {
   // https://blog.strongbrew.io/rxjs-best-practices-in-angular/#avoiding-memory-leaks
   // here we will unsubscribe from all subscriptions
   destroy$ = new Subject();
+  successful$ = new Subject();
 
   // component data
   account: Account;
@@ -29,6 +30,7 @@ export class ManageAccountPauseComponent implements OnDestroy {
     this.dataService.pauseAccount(this.account.id, this.methodName, this.methodArgs)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
+        this.successful$.next(true);
         this.modalRef.hide();
       });
   }
