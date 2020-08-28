@@ -356,7 +356,7 @@
   "strategy.form.target.tooltip": "Target income. Upon reaching the target income, the investment will be paused.",
 
 	"strategy.invest.form.title": "Invest in strategy",
-  "strategy.invest.trader.form.text": "The trader (owner) of the strategy can only invest under the special conditions of the trader's offer, with zero fee and turnover commission . In case you confirm the investment, it will be created according to the trader's offer.",
+  "strategy.invest.trader.form.text": "The trader (owner) of the strategy can only invest under the special conditions of the trader's offer, with zero fee and turnover commission. In case you confirm the investment, it will be created according to the trader's offer.",
 
   "table.cell.accountNumberCopy": "The number of account from which copy trading is performed",
   "table.cell.loading": "Loading...",
