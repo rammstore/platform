@@ -108,10 +108,12 @@ export class StrategyOffersComponent implements OnInit {
             this.dataService.getStrategyByID(this.args)
                 .pipe(takeUntil(this.destroy$))
                 .subscribe((strategy: Strategy) => {
-                    console.log('strategy', strategy);
-                    //TODO: убрать PublicOffer from starategy
                     if (!status) {
                         strategy.publicOffer = null;
+                    } else {
+                      const data = offer;
+                      delete data.link;
+                      strategy.publicOffer = new Offer(data);
                     }
                     this.strategy = strategy;
                 });
