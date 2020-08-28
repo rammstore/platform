@@ -114,6 +114,10 @@
           <span>{{account.margin | customCurrency}}</span>
         </td>
       </tr>
+      <tr *ngIf="functionality['targetShow'] && functionality['protectionShow']">
+        <td></td>
+        <td></td>
+      </tr>
       <tr>
         <td><span translate>common.freeMargin</span>, USD</td>
         <td>

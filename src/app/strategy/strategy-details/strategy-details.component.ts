@@ -79,25 +79,31 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
 
     if (this.isNotInvest) {
       if (!this.strategy.isMyStrategy) {
-        this.router.navigate([`strategies/details/${this.strategy.id}`]);
+        this.moveToDefaultRoute();
       }
     } else {
       this.links.push(new ContentTabLink('common.table.label.myInvestment', '/strategies/details/' + this.strategy.id + '/my-investment'));
     }
 
     if (this.strategy.isMy()) {
-      this.links.push(new ContentTabLink('common.investments', '/strategies/details/' + this.strategy.id + '/investments'));
+      if (!this.strategy.account) {
+        this.moveToDefaultRoute();
+      } else this.links.push(new ContentTabLink('common.investments', '/strategies/details/' + this.strategy.id + '/investments'));
     }
 
     if (this.strategy.isMyStrategy && (!this.strategy.account || !this.strategy.account.isSecurity)) {
       this.links.push(new ContentTabLink('common.offers', `/strategies/details/${this.strategy.id}/offers`));
     } else {
-      this.router.navigate([`strategies/details/${this.strategy.id}`]);
+      if (!this.strategy.account) this.moveToDefaultRoute();
     }
   }
 
+  private moveToDefaultRoute() {
+    this.router.navigate([`strategies/details/${this.strategy.id}`]);
+  }
+
   get isNotInvest() {
-    return this.strategy.isMy && !this.strategy.isSecured || !this.strategy.account;
+    return this.strategy.isMy() && !this.strategy.isSecured || !this.strategy.account;
   }
 
   strategiesLinks() {

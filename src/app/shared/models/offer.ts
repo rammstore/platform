@@ -46,6 +46,10 @@ export class Offer {
     return this.feePaid || '';
   }
 
+  get FeeRate() {
+    return (this.feeRate || 0) * 100;
+  }
+
   get FeeToPay() {
     return this.feeToPay || '';
   }

@@ -70,11 +70,17 @@
           <i class="fa fa-window-close"></i>
           common.manage.closeInvestment
         </li>
-
-        <!--account active page-->
+        <li
+          *ngIf="(dataType === 'strategy' && data.account && !data.isMyStrategy)"
+          (click)="openAccountCloseDialog()" translate>
+          <!--invest on other strategy-->
+          <i class="fa fa-window-close"></i>
+          common.manage.closeInvestment
+        </li>
         <li
           *ngIf="(dataType === 'account' && data.id && !data.isSecurity && data.isMyStrategy)"
           (click)="openAccountCloseDialog()" translate>
+          <!--account active page-->
           <i class="fa fa-window-close"></i>
           common.manage.closeInvestment
         </li>
