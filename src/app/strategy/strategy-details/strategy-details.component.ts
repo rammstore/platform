@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Strategy} from '@app/models';
 import {ContentTabLink} from '@app/components/content-tabs/content-tab-link';
 import {BsModalRef} from 'ngx-bootstrap';
@@ -31,6 +31,7 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private dataService: DataService,
     private brandService: BrandService
   ) {
@@ -44,16 +45,16 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
       });
 
     this.id = parseInt(this.route.params['_value'].id);
-    if(this.id) {
+    if (this.id) {
       this.args = {
         strategyId: this.id
       };
       this.dataService.getStrategyByID(this.args)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((strategy: Strategy) => {
-        this.strategy = strategy;
-        this.strategiesDetailsLinks();
-      });
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((strategy: Strategy) => {
+          this.strategy = strategy;
+          this.strategiesDetailsLinks();
+        });
       this.methodName = 'getStrategyByID';
     } else {
       this.args = {
@@ -65,7 +66,7 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
           this.strategy = strategy;
           this.strategiesLinks();
         });
-        this.methodName = 'getStrategyByLink';
+      this.methodName = 'getStrategyByLink';
     }
 
   }
@@ -73,16 +74,36 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
   strategiesDetailsLinks() {
     this.links = [
       new ContentTabLink('common.yield', '/strategies/details/' + this.strategy.id),
-      new ContentTabLink('common.table.label.symbols', '/strategies/details/' + this.strategy.id + '/symbols'),
-      new ContentTabLink('common.table.label.myInvestment', '/strategies/details/' + this.strategy.id + '/my-investment')
+      new ContentTabLink('common.table.label.symbols', '/strategies/details/' + this.strategy.id + '/symbols')
     ];
 
+    if (this.isNotInvest) {
+      if (!this.strategy.isMyStrategy) {
+        this.moveToDefaultRoute();
+      }
+    } else {
+      this.links.push(new ContentTabLink('common.table.label.myInvestment', '/strategies/details/' + this.strategy.id + '/my-investment'));
+    }
+
     if (this.strategy.isMy()) {
-      this.links.push(new ContentTabLink('common.investments', '/strategies/details/' + this.strategy.id + '/investments'));
+      if (!this.strategy.account) {
+        this.moveToDefaultRoute();
+      } else this.links.push(new ContentTabLink('common.investments', '/strategies/details/' + this.strategy.id + '/investments'));
     }
-    if (this.strategy.isMyStrategy) {
+
+    if (this.strategy.isMyStrategy && (!this.strategy.account || !this.strategy.account.isSecurity)) {
       this.links.push(new ContentTabLink('common.offers', `/strategies/details/${this.strategy.id}/offers`));
+    } else {
+      if (!this.strategy.account) this.moveToDefaultRoute();
     }
+  }
+
+  private moveToDefaultRoute() {
+    this.router.navigate([`strategies/details/${this.strategy.id}`]);
+  }
+
+  get isNotInvest() {
+    return this.strategy.isMy() && !this.strategy.isSecured || !this.strategy.account;
   }
 
   strategiesLinks() {

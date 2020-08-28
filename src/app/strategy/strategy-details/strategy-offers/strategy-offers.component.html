@@ -47,13 +47,13 @@
   <table class="w-100">
     <thead>
       <tr>
-        <th translate rowspan="2">ID</th>
-        <th translate rowspan="2">common.table.label.dtCreate</th>
+        <th translate rowspan="2" style="width: 50px">ID</th>
         <th translate colspan="3">investment.details.strategy.feeRate</th>
         <th translate colspan="3">common.table.label.commissionRate</th>
         <th translate colspan="2">common.investments</th>
         <th translate colspan="2">common.table.label.partner</th>
         <th translate rowspan="2">link</th>
+        <th rowspan="2"></th>
       </tr>
       <tr>
         <th translate>%</th>
@@ -78,30 +78,33 @@
       </tr>
       <tr *ngIf="strategy.publicOffer">
         <td [innerText]="strategy.publicOffer.id"></td>
-        <td [innerText]="strategy.publicOffer.dTCreated | customDate"></td>
-        <td [innerText]="strategy.publicOffer.feeRate"></td>
-        <td [innerText]="strategy.publicOffer.feePaid"></td>
-        <td [innerText]="strategy.publicOffer.feeToPay"></td>
-        <td [innerText]="strategy.publicOffer.commissionRate"></td>
-        <td [innerText]="strategy.publicOffer.commissionPaid"></td>
-        <td [innerText]="strategy.publicOffer.commissionToPay"></td>
+        <td [innerText]="strategy.publicOffer.FeeRate"></td>
+        <td [innerText]="strategy.publicOffer.FeePaid"></td>
+        <td [innerText]="strategy.publicOffer.FeeToPay"></td>
+        <td [innerText]="(strategy.publicOffer.commissionRate || 0)*1000000"></td>
+        <td [innerText]="strategy.publicOffer.CommissionPaid"></td>
+        <td [innerText]="strategy.publicOffer.CommissionToPay"></td>
+        <td></td>
         <td></td>
         <td></td>
         <td></td>
         <td [innerText]="strategy.publicOffer.link || ''"></td>
+        <td>
+          <button class="primary btn-invest"
+                  (click)="onMakePublic(false, strategy.publicOffer)" translate>myStrategies.offers.type.create.not.public</button>
+        </td>
       </tr>
-      <tr>
+      <tr *ngIf="offers">
         <td colspan="13" translate>common.table.label.offer.private</td>
       </tr>
       <tr *ngFor="let offer of offers">
         <td [innerText]="offer.id"></td>
-        <td [innerText]="offer.dTCreated | customDate"></td>
-        <td [innerText]="offer.feeRate"></td>
-        <td [innerText]="offer.feePaid"></td>
-        <td [innerText]="offer.feeToPay"></td>
-        <td [innerText]="offer.commissionRate"></td>
-        <td [innerText]="offer.commissionPaid"></td>
-        <td [innerText]="offer.commissionToPay"></td>
+        <td [innerText]="offer.FeeRate"></td>
+        <td [innerText]="offer.FeePaid"></td>
+        <td [innerText]="offer.FeeToPay"></td>
+        <td [innerText]="(offer.commissionRate || 0) * 1000000"></td>
+        <td [innerText]="offer.CommissionPaid"></td>
+        <td [innerText]="offer.CommissionToPay"></td>
         <td [innerText]="offer.activeAccounts"></td>
         <td [innerText]="offer.totalAccounts"></td>
         <td></td>
@@ -116,6 +119,10 @@
                 <i class="fa fa-copy"></i>
               </button>
               </span>
+        </td>
+        <td>
+          <button class="primary btn-invest"
+                  (click)="onMakePublic(true, offer)" translate>myStrategies.offers.type.create.public</button>
         </td>
       </tr>
     </tbody>

@@ -1,16 +1,16 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Account, Offer, Strategy} from '@app/models';
-import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap';
-import { ManageAccountChangeProfileComponent } from './manage-account-change-profile/manage-account-change-profile.component';
-import { ManageAccountFundComponent } from './manage-account-fund/manage-account-fund.component';
-import { ManageAccountPauseComponent } from './manage-account-pause/manage-account-pause.component';
-import { ManageAccountResumeComponent } from './manage-account-resume/manage-account-resume.component';
-import { ManageAccountWithdrawComponent } from './manage-account-withdraw/manage-account-withdraw.component';
-import { ManageStrategyCloseComponent } from './manage-strategy-close/manage-strategy-close.component';
-import { ManageStrategyPauseComponent } from './manage-strategy-pause/manage-strategy-pause.component';
-import { ManageStrategyResumeComponent } from './manage-strategy-resume/manage-strategy-resume.component';
-import { ManageStrategyDownloadScriptComponent } from '@app/components/manage/manage-strategy-download-script/manage-strategy-download-script.component';
-import { ManageStrategyInvestComponent } from '@app/components/manage/manage-strategy-invest/manage-strategy-invest.component';
+import {BsModalRef, BsModalService, ModalOptions} from 'ngx-bootstrap';
+import {ManageAccountChangeProfileComponent} from './manage-account-change-profile/manage-account-change-profile.component';
+import {ManageAccountFundComponent} from './manage-account-fund/manage-account-fund.component';
+import {ManageAccountPauseComponent} from './manage-account-pause/manage-account-pause.component';
+import {ManageAccountResumeComponent} from './manage-account-resume/manage-account-resume.component';
+import {ManageAccountWithdrawComponent} from './manage-account-withdraw/manage-account-withdraw.component';
+import {ManageStrategyCloseComponent} from './manage-strategy-close/manage-strategy-close.component';
+import {ManageStrategyPauseComponent} from './manage-strategy-pause/manage-strategy-pause.component';
+import {ManageStrategyResumeComponent} from './manage-strategy-resume/manage-strategy-resume.component';
+import {ManageStrategyDownloadScriptComponent} from '@app/components/manage/manage-strategy-download-script/manage-strategy-download-script.component';
+import {ManageStrategyInvestComponent} from '@app/components/manage/manage-strategy-invest/manage-strategy-invest.component';
 
 @Component({
   selector: 'app-manage',
@@ -61,12 +61,28 @@ export class ManageComponent implements OnInit {
     this.modalRef = this.modalService.show(ManageAccountFundComponent, this.getAccountDialogOptions());
   }
 
-  openAccountPauseDialog(): void {
+  openAccountPauseDialog(data?: any): void {
     this.modalRef = this.modalService.show(ManageAccountPauseComponent, this.getAccountDialogOptions());
+    this.changeInvestment(this.modalRef, data, () => {
+      data.status = 4;
+    });
   }
 
-  openAccountResumeDialog(): void {
+  openAccountResumeDialog(data): void {
     this.modalRef = this.modalService.show(ManageAccountResumeComponent, this.getAccountDialogOptions());
+    this.changeInvestment(this.modalRef, data, () => {
+      data.status = 1;
+    });
+  }
+
+  private changeInvestment(modalRef, data, callback) {
+    if (modalRef.content.successful$ && data) {
+      modalRef.content.successful$.subscribe(result => {
+        if (result === true) {
+          callback();
+        }
+      });
+    }
   }
 
   openAccountWithdrawDialog(): void {

@@ -36,6 +36,10 @@ export class ManageStrategyInvestComponent implements OnInit, OnDestroy {
     private router: Router
   ) { }
 
+  get isSpecText(): boolean {
+    return (location.href.includes('/link/') && this.strategy && this.strategy.isMyStrategy);
+  }
+
   ngOnInit(): void {
     this.brandService.functionality
       .pipe(takeUntil(this.destroy$))
@@ -83,7 +87,7 @@ export class ManageStrategyInvestComponent implements OnInit, OnDestroy {
         this.modalRef.hide();
         this.getSwitch();
       });
-    } 
+    }
 
     if(this.methodArgs && this.methodArgs.link){
       this.dataService.addAccountPrivateOffer(this.methodArgs.link, values).subscribe(() => {

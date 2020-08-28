@@ -485,7 +485,7 @@ export class DataService {
           freeMargin: options.FreeMargin,
           MCLevel: options.MCLevel,
           state: options.State,
-          isMyStrategy: options.IsMyStrategy,
+          isMyStrategy: strategy.IsMyStrategy,
           profitCurrentIntervalGross: options.ProfitCurrentIntervalGross,
           feeToPay: options.FeeToPay,
           totalCommissionTrader: options.TotalCommissionTrader,

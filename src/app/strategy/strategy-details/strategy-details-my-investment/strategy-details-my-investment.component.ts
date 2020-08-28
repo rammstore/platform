@@ -16,6 +16,7 @@ export class StrategyDetailsMyInvestmentComponent implements OnInit, OnDestroy {
   // https://blog.strongbrew.io/rxjs-best-practices-in-angular/#avoiding-memory-leaks
   // here we will unsubscribe from all subscriptions
   destroy$ = new Subject();
+  loadStatus: boolean = false;
 
   // component data
   account: Account;
@@ -69,6 +70,7 @@ export class StrategyDetailsMyInvestmentComponent implements OnInit, OnDestroy {
     this.dataService.getAccountStatement(json)
       .pipe(takeUntil(this.destroy$))
       .subscribe((response: any) => {
+        this.loadStatus = true;
         if (response.account) {
           this.account = response.account;
           this.account.strategy = response.strategy;
