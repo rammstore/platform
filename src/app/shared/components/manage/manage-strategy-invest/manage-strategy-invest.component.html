@@ -1,6 +1,10 @@
 <app-dialog-wrapper titleText="{{'strategy.invest.form.title' | translate}}" [modalRef]="modalRef">
   <form [formGroup]="form">
 
+    <div class="spec-text"
+        translate
+         *ngIf="isSpecText">strategy.invest.trader.form.text</div>
+
     <div class="form-field">
       <label for="amount" class="field-label"><span translate>strategy.add.form.label.amount</span>, USD:</label>
       <div class="input-wrapper">
