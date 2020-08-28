@@ -356,6 +356,7 @@
   "strategy.form.target.tooltip": "Ingresos objetivo. Al alcanzar los ingresos objetivo, la inversión se detendrá",
 
 	"strategy.invest.form.title": "Invertir en estrategia",
+  "strategy.invest.trader.form.text": "El comerciante (propietario) de la estrategia solo puede invertir bajo las condiciones especiales de la oferta del comerciante, con tarifa cero y comisión de facturación. En caso de que confirme la inversión, se creará de acuerdo con la oferta del comerciante.",
 
   "table.cell.accountNumberCopy": "El número de cuenta desde la que se realiza el intercambio de copias",
   "table.cell.loading": "Cargando...",

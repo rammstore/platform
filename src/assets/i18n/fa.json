@@ -356,6 +356,7 @@
   "strategy.form.target.tooltip": "درآمد هدف. به محض رسیدن به درآمد هدف، سرمایه‌گذاری متوقف خواهد شد.",
 
   "strategy.invest.form.title": "سرمایه‌گذاری در استراتژی",
+  "strategy.invest.trader.form.text": "The trader (owner) of the strategy can only invest under the special conditions of the trader's offer, with zero fee and turnover commission . In case you confirm the investment, it will be created according to the trader's offer.",
 
   "table.cell.accountNumberCopy": "تعداد حسابی که از طریق آن کپی تریدینگ انجام می شود",
   "table.cell.loading": "در حال بارگیری",
