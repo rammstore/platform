@@ -6,43 +6,6 @@
             translate>strategy.button.create.offer
     </button>
   </div>
-<!--  <table *ngIf="strategy.publicOffer">-->
-<!--    <tbody>-->
-<!--    <tr>-->
-<!--      <td>ID</td>-->
-<!--      <td>-->
-<!--        {{strategy.publicOffer.id}}-->
-<!--        <span-->
-<!--          class="positive"-->
-<!--          translate>myStrategies.offers.type.public</span>-->
-<!--      </td>-->
-<!--    </tr>-->
-<!--    <tr>-->
-<!--      <td colspan="2" class="text-right">-->
-<!--        <button-->
-<!--          class="primary"-->
-<!--          (click)="makeNotPublic()" translate>myStrategies.offers.type.create.not.public-->
-<!--        </button>-->
-<!--      </td>-->
-<!--    </tr>-->
-<!--    <tr>-->
-<!--      <td translate>investment.details.strategy.feeRate</td>-->
-<!--      <td>{{strategy.publicOffer.feeRate  | percent}}</td>-->
-<!--    </tr>-->
-<!--    <tr>-->
-<!--      <td translate>investment.details.strategy.commission</td>-->
-<!--      <td>{{strategy.publicOffer.getComission()}}</td>-->
-<!--    </tr>-->
-<!--    </tbody>-->
-<!--  </table>-->
-
-<!--  <app-data-table-->
-<!--    [tableHeader]="tableHeader"-->
-<!--    [data]="offers"-->
-<!--    (rowManageClick)="onRowManageClick($event)"-->
-<!--    (paginationChanged)="getOffers()"-->
-<!--    [methodArgs]="args">-->
-<!--  </app-data-table>-->
 
   <table class="w-100">
     <thead>
@@ -84,14 +47,14 @@
         <td [innerText]="(strategy.publicOffer.commissionRate || 0)*1000000"></td>
         <td [innerText]="strategy.publicOffer.CommissionPaid"></td>
         <td [innerText]="strategy.publicOffer.CommissionToPay"></td>
+        <td [innerText]="strategy.publicOffer.activeAccounts"></td>
+        <td [innerText]="strategy.publicOffer.totalAccounts"></td>
         <td></td>
         <td></td>
         <td></td>
-        <td></td>
-        <td [innerText]="strategy.publicOffer.link || ''"></td>
         <td>
           <button class="primary btn-invest"
-                  (click)="onMakePublic(false, strategy.publicOffer)" translate>myStrategies.offers.type.create.not.public</button>
+                  (click)="onMakePublic(false, {})" translate>myStrategies.offers.type.create.not.public</button>
         </td>
       </tr>
       <tr *ngIf="offers">

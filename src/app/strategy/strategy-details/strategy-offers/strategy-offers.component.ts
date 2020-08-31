@@ -93,7 +93,8 @@ export class StrategyOffersComponent implements OnInit {
         map((item: any[]) => item.filter(_item => _item.link))
       )
       .subscribe((offers: any[]) => {
-        this.offers = offers;
+        this.strategy.publicOffer = offers.filter(item => item.isPublic)[0];
+        this.offers = offers.filter(item => !item.isPublic);
       });
   }
 
