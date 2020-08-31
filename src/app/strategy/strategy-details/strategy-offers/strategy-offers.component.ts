@@ -89,8 +89,8 @@ export class StrategyOffersComponent implements OnInit {
   getOffers(): void {
     this.dataService.getOffers(this.strategy.id)
       .pipe(
-        takeUntil(this.destroy$),
-        map((item: any[]) => item.filter(_item => _item.link))
+        takeUntil(this.destroy$)
+        //map((item: any[]) => item.filter(_item => _item.link))
       )
       .subscribe((offers: any[]) => {
         this.strategy.publicOffer = offers.filter(item => item.isPublic)[0];

@@ -73,7 +73,8 @@
         <td></td>
         <td [innerText]="offer.partnerShareRate || ''"></td>
         <td>
-           <span class="link-container">
+           <span class="link-container"
+                 *ngIf="offer.link">
                 <span class="d-flex">{{offer.link || ''}}</span>
                 <button ngxClipboard
                         class="d-flex empty-space"
@@ -85,6 +86,7 @@
         </td>
         <td>
           <button class="primary btn-invest"
+                  *ngIf="offer.link"
                   (click)="onMakePublic(true, offer)" translate>myStrategies.offers.type.create.public</button>
         </td>
       </tr>
