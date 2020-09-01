@@ -31,10 +31,6 @@ export class ManageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if (this.data.name === "Import001") {
-      console.log(this.data);
-    }
-
     switch (true) {
       case (this.data instanceof Strategy): {
         this.dataType = 'strategy';
@@ -49,6 +45,14 @@ export class ManageComponent implements OnInit {
         break;
       }
     }
+  }
+
+  get isInvestOtherStrategy(): boolean {
+    return this.dataType === 'account' && !this.data.isMyStrategy;
+  }
+
+  get isInvestStrategy(): boolean {
+    return this.dataType === 'account' && this.data.strategy.isMyStrategy && this.data.id && !this.data.isSecurity;
   }
 
   openAccountChangeProfileDialog(): void {
