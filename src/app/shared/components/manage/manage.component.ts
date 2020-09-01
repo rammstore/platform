@@ -47,6 +47,10 @@ export class ManageComponent implements OnInit {
     }
   }
 
+
+  get isStrategyDetail(): boolean {
+    return this.dataType === 'strategy' && !this.data.isMyStrategy && this.data.account && this.data.account.id;
+  }
   get isInvestOtherStrategy(): boolean {
     return this.dataType === 'account' && !this.data.isMyStrategy;
   }
