@@ -31,6 +31,10 @@ export class ManageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    if (this.data.name === "Import001") {
+      console.log(this.data);
+    }
+
     switch (true) {
       case (this.data instanceof Strategy): {
         this.dataType = 'strategy';
