@@ -65,33 +65,12 @@
           common.manage.signalScript
         </li>
         <li
-          *ngIf="(dataType === 'strategy' && data && data.account && !data.account.isSecurity && data.isMyStrategy)"
-          (click)="openAccountCloseDialog()" translate>
-          <i class="fa fa-window-close"></i>
-          common.manage.closeInvestment
-        </li>
-        <li
-          *ngIf="(dataType === 'account' && data.id)"
-          (click)="openAccountCloseDialog()" translate>
-          <!--invest active page-->
-          <i class="fa fa-window-close"></i>
-          common.manage.closeInvestment
-        </li>
-        <li
-          *ngIf="(dataType === 'strategy' && data.account)"
+          *ngIf="(dataType === 'strategy' && data.account && data.account.id) || ( dataType === 'account' && data.id)"
           (click)="openAccountCloseDialog()" translate>
           <!--invest on other strategy-->
           <i class="fa fa-window-close"></i>
           common.manage.closeInvestment
         </li>
-        <li
-          *ngIf="(dataType === 'account' && data.id && !data.isSecurity && data.isMyStrategy)"
-          (click)="openAccountCloseDialog()" translate>
-          <!--account active page-->
-          <i class="fa fa-window-close"></i>
-          common.manage.closeInvestment
-        </li>
-
         <li *ngIf="(dataType === 'strategy' && data.isMyStrategy) || (dataType === 'account' && data.isMyStrategy)" (click)="openStrategyCloseDialog()" translate>
           <i class="fa fa-window-close"></i>
           common.manage.closeStrategy

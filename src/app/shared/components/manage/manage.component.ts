@@ -31,8 +31,9 @@ export class ManageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    //console.log('data', this.data);
-    if (this.data.strategy && this.data.strategy.name == "Test2006 1") {
+    console.log('data', this.data);
+
+    if (this.data.strategy && this.data.strategy.name == "TestStr1_2011_t1") {
       console.log('data', this.data);
     }
 
