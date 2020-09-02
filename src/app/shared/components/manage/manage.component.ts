@@ -57,7 +57,9 @@ export class ManageComponent implements OnInit {
     return this.section === SectionEnum.strategy && this.dataType === 'strategy' && this.data.isMyStrategy && this.data.account && this.data.account.id && !this.data.account.isSecurity;
   }
   get isRatingPage(): boolean {
-    return this.section === SectionEnum.rating && this.dataType === 'strategy' && this.data.account && this.data.account.id;
+    const term = (this.section === SectionEnum.rating && this.dataType === 'strategy' && this.data.account && this.data.account.id)
+        && ( this.data.isMyStrategy && !this.data.account.isSecurity || !this.data.isMyStrategy);
+    return term;
   }
   get isInvestOtherStrategy(): boolean {
     return this.dataType === 'account' && !this.data.isMyStrategy;
