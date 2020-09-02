@@ -9,6 +9,7 @@ import {WalletService} from '@app/services/wallet.service';
 import {StrategyAddScriptComponent} from './strategy-add-script/strategy-add-script.component';
 import {BrandService} from '@app/services/brand.service';
 import {NotificationsService} from "@app/services/notifications.service";
+import {debug} from "util";
 
 @Component({
   selector: 'app-strategy-add',
@@ -155,6 +156,7 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
           if (status) {
             this.dataService.addOffer(newStrategy.id, strategy.FeeRate, strategy.CommissionRate).subscribe((item) => {
               this.modalRef.hide();
+              this.dataService.setPublicOffer(newStrategy.id, item.OfferID).subscribe();
               this.openAddStrategyScriptDialog(newStrategy);
             });
           } else {
