@@ -33,6 +33,10 @@ export class ManageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    if (this.data.name === "Import001") {
+      console.log(this.data);
+    }
+
     switch (true) {
       case (this.data instanceof Strategy): {
         this.dataType = 'strategy';
@@ -53,7 +57,7 @@ export class ManageComponent implements OnInit {
     return this.section === SectionEnum.strategy && this.dataType === 'strategy' && this.data.isMyStrategy && this.data.account && this.data.account.id && !this.data.account.isSecurity;
   }
   get isRatingPage(): boolean {
-    return this.section === SectionEnum.rating && this.dataType === 'strategy' && this.data.account && this.data.account.id && !this.data.account.isSecurity;
+    return this.section === SectionEnum.rating && this.dataType === 'strategy' && this.data.account && this.data.account.id;
   }
   get isInvestOtherStrategy(): boolean {
     return this.dataType === 'account' && !this.data.isMyStrategy;
