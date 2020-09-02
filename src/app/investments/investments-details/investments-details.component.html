@@ -1,15 +1,16 @@
 <div class="details-container">
-  <div class="strategy">
+  <div class="strategy"
+       *ngIf="strategy">
     <h2 translate>common.strategy</h2>
     <table>
       <tbody>
       <tr>
         <td>ID</td>
-        <td *ngIf="strategy">{{strategy.id}}</td>
+        <td>{{strategy.id}}</td>
       </tr>
       <tr>
         <td translate>investment.details.strategy.name</td>
-        <td *ngIf="strategy"><a [routerLink]="['/strategies/details', strategy.id]">{{strategy.name}}</a></td>
+        <td><a [routerLink]="['/strategies/details', strategy.id]">{{strategy.name}}</a></td>
       </tr>
       </tbody>
     </table>
@@ -47,17 +48,18 @@
     </div>
   </div>
 
-  <div class="investment">
+  <div class="investment"
+       *ngIf="account">
     <h2 translate>common.investment</h2>
     <table>
       <tbody>
       <tr>
         <td translate>investment.details.investment.id</td>
-        <td *ngIf="account">{{account.id}}</td>
+        <td>{{account.id}}</td>
       </tr>
       <tr>
         <td translate>investment.details.investment.created</td>
-        <td *ngIf="account">{{account.dtCreated | customDate }}</td>
+        <td>{{account.dtCreated | customDate }}</td>
       </tr>
       <tr *ngIf="account && !account.isActive()">
         <td translate>investment.details.investment.closed</td>
@@ -65,39 +67,40 @@
       </tr>
       <tr>
         <td translate>investment.details.investment.currency</td>
-        <td *ngIf="account">{{account.asset}}</td>
+        <td>{{account.asset}}</td>
       </tr>
       <tr>
         <td translate>investment.details.investment.leverage</td>
-        <td *ngIf="account">1:{{account.leverageMax}}</td>
+        <td>1:{{account.leverageMax}}</td>
       </tr>
       <tr>
         <td translate>investment.details.investment.stopOut</td>
-        <td *ngIf="account">{{account.MCLevel}}%</td>
+        <td>{{account.MCLevel}}%</td>
       </tr>
       <tr>
         <td translate>investment.details.investment.status</td>
-        <td *ngIf="account">{{account.getStatus()}}</td>
+        <td>{{account.getStatus()}}</td>
       </tr>
       </tbody>
     </table>
   </div>
 
-  <div class="profile">
+  <div class="profile"
+       *ngIf="account">
     <h2 translate>investment.details.investmentProfile.title</h2>
     <table>
       <tbody>
       <tr>
         <td translate>common.factor</td>
-        <td *ngIf="account">{{account.factor | number:'1.1-1'}}</td>
+        <td>{{account.factor | number:'1.1-1'}}</td>
       </tr>
       <tr *ngIf="functionality['targetShow']">
         <td translate>common.target</td>
-        <td *ngIf="account">{{account.target | percent:'1.0-2'}}</td>
+        <td>{{account.target | percent:'1.0-2'}}</td>
       </tr>
       <tr *ngIf="functionality['protectionShow']">
         <td translate>common.protection</td>
-        <td *ngIf="account">{{account.protection | percent:'1.0-2'}}</td>
+        <td>{{account.protection | percent:'1.0-2'}}</td>
       </tr>
       <tr *ngIf="functionality['targetShow'] && functionality['protectionShow']">
         <td></td>
@@ -105,11 +108,11 @@
       </tr>
       <tr *ngIf="functionality['targetShow']">
         <td><span translate>common.target</span>, USD</td>
-        <td *ngIf="account">{{account.getTargetAmount() | customCurrency}}</td>
+        <td>{{account.getTargetAmount() | customCurrency}}</td>
       </tr>
       <tr *ngIf="functionality['protectionShow']">
         <td><span translate>common.protection</span>, USD</td>
-        <td *ngIf="account">{{account.getProtectionAmount() | customCurrency}}</td>
+        <td>{{account.getProtectionAmount() | customCurrency}}</td>
       </tr>
       </tbody>
     </table>
