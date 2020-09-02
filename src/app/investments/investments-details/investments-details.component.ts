@@ -1,11 +1,12 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Account, Strategy, Offer } from '@app/models';
-import { ActivatedRoute } from '@angular/router';
-import { Subject } from 'rxjs';
-import { ContentTabLink } from '@app/components/content-tabs/content-tab-link';
-import { DataService } from '@app/services/data.service';
-import { BrandService } from '@app/services/brand.service';
-import { takeUntil } from 'rxjs/operators';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Account, Offer, Strategy} from '@app/models';
+import {ActivatedRoute} from '@angular/router';
+import {Subject} from 'rxjs';
+import {ContentTabLink} from '@app/components/content-tabs/content-tab-link';
+import {DataService} from '@app/services/data.service';
+import {BrandService} from '@app/services/brand.service';
+import {takeUntil} from 'rxjs/operators';
+import {SectionEnum} from "@app/enum/section.enum";
 
 @Component({
   selector: 'app-investments-details',
@@ -24,6 +25,7 @@ export class InvestmentsDetailsComponent implements OnInit, OnDestroy {
   links: ContentTabLink[] = [];
   args: any;
   functionality: object;
+  sectionEnum: SectionEnum = SectionEnum.statement;
 
   constructor(
     private route: ActivatedRoute,

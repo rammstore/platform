@@ -6,6 +6,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
 import { CustomCurrencyPipe } from '@app/pipes/custom-currency.pipe';
 import { DataService } from '@app/services/data.service';
+import {SectionEnum} from "@app/enum/section.enum";
 
 @Component({
   selector: 'app-strategy-active',
@@ -39,6 +40,7 @@ export class StrategyActiveComponent implements OnInit, OnDestroy {
     perPage: 10,
     currentPage: 1
   });
+  sectionEnum: SectionEnum = SectionEnum.strategy;
 
   constructor(
     private dataService: DataService

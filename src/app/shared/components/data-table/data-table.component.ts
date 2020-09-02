@@ -5,6 +5,7 @@ import { Paginator } from '@app/models/paginator';
 import { BrandService } from '@app/services/brand.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import {SectionEnum} from "@app/enum/section.enum";
 
 @Component({
   selector: 'app-data-table',
@@ -28,6 +29,7 @@ export class DataTableComponent implements OnInit, OnDestroy {
   @Input() methodName: string;
   @Input() methodArgs: any;
   @Input() totals: object;
+  @Input() section: SectionEnum = SectionEnum.default;
   functionality: object;
 
   constructor(

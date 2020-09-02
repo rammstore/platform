@@ -8,6 +8,7 @@ import {takeUntil} from 'rxjs/internal/operators';
 import {DataService} from '@app/services/data.service';
 import {BrandService} from '@app/services/brand.service';
 import {StrategyService} from '@app/services/strategy.service';
+import {SectionEnum} from "@app/enum/section.enum";
 
 @Component({
   selector: 'app-strategy-details',
@@ -28,6 +29,7 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
   functionality: object;
   id: number = 0;
   methodName: string;
+  sectionEnum: SectionEnum = SectionEnum.strategy;
 
   constructor(
     private route: ActivatedRoute,

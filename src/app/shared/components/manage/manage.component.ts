@@ -11,6 +11,7 @@ import {ManageStrategyPauseComponent} from './manage-strategy-pause/manage-strat
 import {ManageStrategyResumeComponent} from './manage-strategy-resume/manage-strategy-resume.component';
 import {ManageStrategyDownloadScriptComponent} from '@app/components/manage/manage-strategy-download-script/manage-strategy-download-script.component';
 import {ManageStrategyInvestComponent} from '@app/components/manage/manage-strategy-invest/manage-strategy-invest.component';
+import {SectionEnum} from "@app/enum/section.enum";
 
 @Component({
   selector: 'app-manage',
@@ -25,12 +26,17 @@ export class ManageComponent implements OnInit {
   @Input() methodArgs: any;
   @Input() hideInvestmentsButton: boolean;
   @Output() click: EventEmitter<any> = new EventEmitter<any>();
+  @Input() section: SectionEnum = SectionEnum.default;
 
   constructor(
     private modalService: BsModalService
   ) { }
 
   ngOnInit() {
+    if (this.data.name === "Import001") {
+      console.log(this.data);
+    }
+
     switch (true) {
       case (this.data instanceof Strategy): {
         this.dataType = 'strategy';
@@ -47,9 +53,11 @@ export class ManageComponent implements OnInit {
     }
   }
 
-
   get isStrategyDetail(): boolean {
-    return this.dataType === 'strategy' && !this.data.isMyStrategy && this.data.account && this.data.account.id;
+    return this.section === SectionEnum.strategy && this.dataType === 'strategy' && this.data.isMyStrategy && this.data.account && this.data.account.id && !this.data.account.isSecurity;
+  }
+  get isRatingPage(): boolean {
+    return this.section === SectionEnum.rating && this.dataType === 'strategy' && this.data.isMyStrategy && this.data.account && this.data.account.id && !this.data.account.isSecurity;
   }
   get isInvestOtherStrategy(): boolean {
     return this.dataType === 'account' && !this.data.isMyStrategy;

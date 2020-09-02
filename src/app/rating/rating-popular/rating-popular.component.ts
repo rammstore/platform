@@ -6,6 +6,7 @@ import { CustomCurrencyPipe } from '@app/pipes/custom-currency.pipe';
 import { PercentPipe } from '@angular/common';
 import { DataService } from '@app/services/data.service';
 import { takeUntil } from 'rxjs/operators';
+import {SectionEnum} from "@app/enum/section.enum";
 
 @Component({
   selector: 'app-rating-popular',
@@ -21,6 +22,7 @@ export class RatingPopularComponent implements  OnInit, OnDestroy {
   strategies: Strategy[];
   searchText: string = '';
   args: any;
+  section: SectionEnum = SectionEnum.rating;
 
   // table settings
   tableHeader: TableHeaderRow[] = [
