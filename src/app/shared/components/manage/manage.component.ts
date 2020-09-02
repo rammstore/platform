@@ -33,7 +33,7 @@ export class ManageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if (this.data.name === "Import001") {
+    if (this.data.name === "test2304 3") { //Test0702_1 dsfsdf
       console.log(this.data);
     }
 
@@ -62,7 +62,8 @@ export class ManageComponent implements OnInit {
     return term;
   }
   get isInvestOtherStrategy(): boolean {
-    return this.dataType === 'account' && !this.data.isMyStrategy;
+    return this.dataType === 'account' && !this.data.isMyStrategy
+      || (this.section === SectionEnum.strategy && this.dataType === 'strategy' && this.data.account && this.data.account.id && !this.data.isMyStrategy);
   }
 
   get isInvestStrategy(): boolean {
