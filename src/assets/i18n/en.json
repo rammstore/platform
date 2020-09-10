@@ -317,7 +317,7 @@
 	"strategy.button.create": "Create strategy",
   "strategy.button.create.offer": "Create offer",
   "strategy.public.offer.label": "Only one offer can be public; when creating a new public offer, the old offer will become non-public.",
-  "strategy.private.offer.label": "The strategy will not have public offers, the strategy will be removed from the ratings and investment will be possible only through hidden links.",
+  "strategy.private.offer.label": "The strategy will not have public offers, the strategy will be absent from the ratings and investment will only be possible through hidden links.",
 	
   "strategy.close.form.text": "Do you confirm closing your strategy?",
   "strategy.close.form.text2": "If you had invested in your own strategy your investment account would also be closed. Please note that this action is irreversible.",
