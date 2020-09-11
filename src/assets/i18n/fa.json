@@ -307,6 +307,7 @@
   "strategy.add.form.label.step2": "یک استراتژی نیاز به سرمایه‌گذاری شما در آن دارد. این سرمایه‌گذاری می‌تواند فقط با استراتژی بسته شود",
 	"strategy.add.form.label.step2.bottom": "شما می‌توانید شرایط سرمایه‌گذاری را تنظیم کرده و در مراحل بعد راهنما را دانلود کنید.",
   "strategy.add.form.label.step3": "این شرایط پیشنهادی برای سرمایه‌گذاری عمومی از طریق رتبه‌بندی پیشنهاد شده است و ممکن است در هر زمانی دچار تغییر شود؛ این امکان وجود دارد که اصلاً شرایط عمومی تنظیم نگردد. موارد غیر عمومی می‌بایست بعد از ایجاد استراتژی مشخص شوند.",
+    "strategy.add.form.label.step3.warning": "Attention! You can only create one offer per strategy, while you may change its publicity status as you wish later.",
   "strategy.add.script.button.download": "دریافت اسکریپت",
 	"strategy.add.script.download.platform.title": "پلتفرم معامله کردن",
 	"strategy.add.script.download.title": "دریافت اسکریپت سیگنال",
