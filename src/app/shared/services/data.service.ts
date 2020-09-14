@@ -432,7 +432,7 @@ export class DataService {
   getActiveMyAccounts(args: { paginator: Paginator, orderBy?: string }): Observable<Account[]> {
     this.loaderService.showLoader();
     const options: AccountsSearchOptions = new AccountsSearchOptions();
-    options.Filter = {MyActiveAccounts: true};
+    options.Filter = {SearchMode: 'MyActiveAccounts'};
     options.OrderBy = {Field: args.orderBy, Direction: 'Desc'};
 
     if (args.paginator) {
@@ -444,56 +444,69 @@ export class DataService {
 
     this.http.post(`${this.apiUrl}/strategies.search`, options).subscribe((response: any) => {
       const accounts: Account[] = [];
-
+      console.log('response', response);
       this.walletService.walletSubject.next(this.createInstanceService.createWallet(response.Wallets[0]));
+      debugger;
+      response.Strategies
+      .forEach((strategy: any) => {
+        if(strategy.Account){
+          const createStrategy = this.createInstanceService.createStrategy(strategy);
+          const createAccount = this.createInstanceService.createAccount(strategy.Account);
+          
+          createAccount.strategy = createStrategy;
+          createAccount.offer = strategy.offer ? this.createInstanceService.createOffer(strategy.Offer) : null;
 
-      response.Strategies.forEach((strategy: any) => {
-        const options: any = strategy.Account;
-
-        accounts.push(new Account(new Account({
-          id: options.ID,
-          strategy: this.createInstanceService.createStrategy(strategy),
-          isSecurity: options.IsSecurity,
-          type: options.Type,
-          accountSpecAssetID: options.AccountSpecAssetID,
-          asset: options.Asset || options.AssetName,
-          tradingIntervalCurrentID: options.TradingIntervalCurrentID,
-          dtCreated: options.DTCreated || options.DT,
-          balance: options.Balance,
-          equity: options.Equity,
-          margin: options.Margin,
-          marginLevel: options.MarginLevel,
-          intervalPnL: options.IntervalPnL || options.ProfitCurrentIntervalGross || options.ProfitCurrentIntervalNet,
-          status: options.Status,
-          factor: options.Factor,
-          offer: options.Offer ? new Offer(options.Offer) : null,
-          dtMCReached: options.MCReached,
-          protection: options.Protection,
-          protectionEquity: options.ProtectionEquity,
-          dtProtectionReached: options.ProtectionReached,
-          target: options.Target,
-          targetEquity: options.TargetEquity,
-          dtTargetReached: options.TargetReached,
-          dtClosed: options.DTClosed,
-          bonus: options.Bonus,
-          availableToWithDraw: options.AvailableToWithdraw,
-          profitBase: options.ProfitBase,
-          precision: options.Precision,
-          positionsCount: options.PositionsCount,
-          accountMinBalance: options.AccountMinBalance,
-          leverageMax: options.LeverageMax,
-          freeMargin: options.FreeMargin,
-          MCLevel: options.MCLevel,
-          state: options.State,
-          isMyStrategy: strategy.IsMyStrategy,
-          profitCurrentIntervalGross: options.ProfitCurrentIntervalGross,
-          feeToPay: options.FeeToPay,
-          totalCommissionTrader: options.TotalCommissionTrader,
-          feePaid: options.FeePaid,
-          isMyAccount: options.IsMyAccount,
-          currentDate: options.CurrentDate
-        })));
+          accounts.push(createAccount);
+        }
       });
+
+      // response.Strategies.forEach((strategy: any) => {
+      //   const options: any = strategy.Account;
+
+      //   accounts.push(new Account(new Account({
+      //     id: options.ID,
+      //     strategy: this.createInstanceService.createStrategy(strategy),
+      //     isSecurity: options.IsSecurity,
+      //     type: options.Type,
+      //     accountSpecAssetID: options.AccountSpecAssetID,
+      //     asset: options.Asset || options.AssetName,
+      //     tradingIntervalCurrentID: options.TradingIntervalCurrentID,
+      //     dtCreated: options.DTCreated || options.DT,
+      //     balance: options.Balance,
+      //     equity: options.Equity,
+      //     margin: options.Margin,
+      //     marginLevel: options.MarginLevel,
+      //     intervalPnL: options.IntervalPnL || options.ProfitCurrentIntervalGross || options.ProfitCurrentIntervalNet,
+      //     status: options.Status,
+      //     factor: options.Factor,
+      //     offer: options.Offer ? new Offer(options.Offer) : null,
+      //     dtMCReached: options.MCReached,
+      //     protection: options.Protection,
+      //     protectionEquity: options.ProtectionEquity,
+      //     dtProtectionReached: options.ProtectionReached,
+      //     target: options.Target,
+      //     targetEquity: options.TargetEquity,
+      //     dtTargetReached: options.TargetReached,
+      //     dtClosed: options.DTClosed,
+      //     bonus: options.Bonus,
+      //     availableToWithDraw: options.AvailableToWithdraw,
+      //     profitBase: options.ProfitBase,
+      //     precision: options.Precision,
+      //     positionsCount: options.PositionsCount,
+      //     accountMinBalance: options.AccountMinBalance,
+      //     leverageMax: options.LeverageMax,
+      //     freeMargin: options.FreeMargin,
+      //     MCLevel: options.MCLevel,
+      //     state: options.State,
+      //     isMyStrategy: strategy.IsMyStrategy,
+      //     profitCurrentIntervalGross: options.ProfitCurrentIntervalGross,
+      //     feeToPay: options.FeeToPay,
+      //     totalCommissionTrader: options.TotalCommissionTrader,
+      //     feePaid: options.FeePaid,
+      //     isMyAccount: options.IsMyAccount,
+      //     currentDate: options.CurrentDate
+      //   })));
+      // });
 
       if (args.paginator) {
         args.paginator.totalItems = response.Pagination.TotalRecords;

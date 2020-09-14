@@ -30,8 +30,8 @@
         <td *ngIf="account">{{account.MCLevel}}%</td>
       </tr>
       <tr>
-        <td translate>investment.details.investment.status</td>
-        <td *ngIf="account">{{account.getStatus()}}</td>
+        <td translate>investment.details.investment.state</td>
+        <td *ngIf="account" translate>investment.details.investment.state.{{account.getState()}}</td>
       </tr>
       </tbody>
     </table>

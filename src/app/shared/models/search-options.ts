@@ -23,6 +23,7 @@ export class StrategiesSearchOptions {
 
 export class AccountsSearchOptions {
   Filter: {
+    SearchMode?: string,
     MyActiveAccounts?: boolean,
     Value?: string
   };
