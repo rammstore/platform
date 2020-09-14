@@ -76,6 +76,7 @@ export class DataService {
     this.loaderService.showLoader();
     const options: StrategiesSearchOptions = new StrategiesSearchOptions();
     options.Filter = {
+      SearchMode: 'MyActiveStrategies',
       ActiveStrategies: 1,
       MyStrategies: 1
     };
@@ -446,7 +447,7 @@ export class DataService {
       const accounts: Account[] = [];
       console.log('response', response);
       this.walletService.walletSubject.next(this.createInstanceService.createWallet(response.Wallets[0]));
-      debugger;
+      
       response.Strategies
       .forEach((strategy: any) => {
         if(strategy.Account){

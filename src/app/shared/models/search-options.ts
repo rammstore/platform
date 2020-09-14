@@ -1,5 +1,6 @@
 export class StrategiesSearchOptions {
   Filter: {
+    SearchMode?: string,
     Name?: string,
     MyActiveAccounts?: boolean,
     MyStrategies?: number,
