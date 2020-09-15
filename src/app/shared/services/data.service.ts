@@ -76,9 +76,7 @@ export class DataService {
     this.loaderService.showLoader();
     const options: StrategiesSearchOptions = new StrategiesSearchOptions();
     options.Filter = {
-      SearchMode: 'MyActiveStrategies',
-      ActiveStrategies: 1,
-      MyStrategies: 1
+      SearchMode: 'MyActiveStrategies'
     };
 
     if (args.paginator) {
@@ -120,8 +118,7 @@ export class DataService {
     this.loaderService.showLoader();
     const options: StrategiesSearchOptions = new StrategiesSearchOptions();
     options.Filter = {
-      ActiveStrategies: 0,
-      MyStrategies: 1
+      SearchMode: 'MyClosedStrategies'
     };
     options.OrderBy = {
       Field: 'DTClosed',
@@ -925,7 +922,6 @@ export class DataService {
     const options: StrategiesSearchOptions = new StrategiesSearchOptions();
     options.Filter = {
       SearchMode: 'Rating',
-      ActiveStrategies: 1,
       AgeMin: args.ageMin,
       Yield: args.yield,
       DealsMin: args.dealsMin
