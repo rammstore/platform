@@ -924,6 +924,7 @@ export class DataService {
     this.loaderService.showLoader();
     const options: StrategiesSearchOptions = new StrategiesSearchOptions();
     options.Filter = {
+      SearchMode: 'Rating',
       ActiveStrategies: 1,
       AgeMin: args.ageMin,
       Yield: args.yield,
