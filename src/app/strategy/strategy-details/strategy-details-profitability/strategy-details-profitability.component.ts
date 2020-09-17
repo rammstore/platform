@@ -69,14 +69,14 @@ export class StrategyDetailsProfitabilityComponent implements OnInit, OnDestroy 
         autoClose: true,
         duration: 3000
       });
-      this.router.navigate(['/rating'], {relativeTo: this.route});
+      this.router.navigate(['/rating'], { relativeTo: this.route });
     }
 
     this.getStrategyChart();
   }
 
   getStrategyChart() {
-    this.dataService.getStrategyChart(new ChartOptions(this.strategy.id))
+    this.dataService.getStrategyChart(new ChartOptions(this.id))
       .pipe(takeUntil(this.destroy$))
       .subscribe(response => {
 

@@ -189,7 +189,7 @@ export class DataService {
 
   // Получение конкретной стратегии за ссылкой
   getStrategyByLink(args: { link: string }): Observable<Strategy> {
-    console.log('getStrategyByLink');
+    // console.log('getStrategyByLink');
     this.loaderService.showLoader();
     this.http.post(`${this.apiUrl}/strategies.get`, {Link: args.link}).subscribe((response: any) => {
       this.loaderService.hideLoader();
@@ -442,7 +442,7 @@ export class DataService {
 
     this.http.post(`${this.apiUrl}/strategies.search`, options).subscribe((response: any) => {
       const accounts: Account[] = [];
-      console.log('response', response);
+      //console.log('response', response);
       this.walletService.walletSubject.next(this.createInstanceService.createWallet(response.Wallets[0]));
       
       response.Strategies
@@ -542,7 +542,6 @@ export class DataService {
 
     this.http.post(`${this.apiUrl}/accounts.searchClosed`, options).subscribe((response: any) => {
       const accounts: Account[] = [];
-      console.log('response', response);
       this.walletService.walletSubject.next(this.createInstanceService.createWallet(response.Wallets[0]));
 
       response.Strategies
