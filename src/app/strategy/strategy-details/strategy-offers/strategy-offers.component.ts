@@ -81,7 +81,7 @@ export class StrategyOffersComponent implements OnInit {
     this.dataService.getStrategyByID(this.args)
       .pipe(takeUntil(this.destroy$))
       .subscribe((strategy: Strategy) => {
-        console.log('strategy', strategy);
+       // console.log('strategy', strategy);
         this.strategy = strategy;
       });
   }

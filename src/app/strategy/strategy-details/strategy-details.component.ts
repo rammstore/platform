@@ -1,14 +1,14 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Strategy} from '@app/models';
-import {ContentTabLink} from '@app/components/content-tabs/content-tab-link';
-import {BsModalRef} from 'ngx-bootstrap';
-import {Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/internal/operators';
-import {DataService} from '@app/services/data.service';
-import {BrandService} from '@app/services/brand.service';
-import {StrategyService} from '@app/services/strategy.service';
-import {SectionEnum} from "@app/enum/section.enum";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Strategy } from '@app/models';
+import { ContentTabLink } from '@app/components/content-tabs/content-tab-link';
+import { BsModalRef } from 'ngx-bootstrap';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/internal/operators';
+import { DataService } from '@app/services/data.service';
+import { BrandService } from '@app/services/brand.service';
+import { StrategyService } from '@app/services/strategy.service';
+import { SectionEnum } from "@app/enum/section.enum";
 
 @Component({
   selector: 'app-strategy-details',
@@ -83,8 +83,10 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
       this.links.push(new ContentTabLink('common.table.label.myInvestment', '/strategies/details/' + this.strategy.id + '/my-investment'));
     }
 
-    this.links.push(new ContentTabLink('common.investments', '/strategies/details/' + this.strategy.id + '/investments'));
-    this.links.push(new ContentTabLink('common.offers', `/strategies/details/${this.strategy.id}/offers`));
+    if (this.strategy.partnerInfo || this.strategy.traderInfo) {
+      this.links.push(new ContentTabLink('common.investments', '/strategies/details/' + this.strategy.id + '/investments'));
+      this.links.push(new ContentTabLink('common.offers', `/strategies/details/${this.strategy.id}/offers`));
+    }
   }
 
   strategiesLinks() {

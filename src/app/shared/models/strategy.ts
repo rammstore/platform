@@ -1,5 +1,6 @@
 import { Account } from './account';
 import { Offer } from './offer';
+import { PartnerInfo } from './partner-info';
 import { TraderInfo } from './trader-info';
 
 export class Strategy {
@@ -21,6 +22,7 @@ export class Strategy {
   monthlyYield: number;   // Месячная прибыль в %
   equity: number;         // Инвестиции
   traderInfo: TraderInfo; // Выплаченное вознаграждение и невыплаченное вознаграждение
+  partnerInfo: PartnerInfo; 
   commission: number;      // Комиссия за оборот
   chart: {Yield: number}[];
   masterAccount: string;

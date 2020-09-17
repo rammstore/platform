@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Account, AuthData, Company, Deal, Offer, Position, Session, Strategy, User, Wallet } from '@app/models';
 import { AccountSpecAsset } from '@app/models/account-spec-asset';
+import { PartnerInfo } from '@app/models/partner-info';
 import { TraderInfo } from '@app/models/trader-info';
 
 @Injectable({
@@ -32,6 +33,7 @@ export class CreateInstanceService {
       MCLevel: options.MCLevel,
       equity: options.Equity,
       traderInfo: options.TraderInfo ? this.createTraderInfo(options.TraderInfo) : null,
+      partnerInfo: options.PartnerInfo ? this.createPartnerInfo(options.PartnerInfo) : null,
       commission: options.Commission,
       chart: options.Chart,
       masterAccount: options.MasterAccount
@@ -196,5 +198,9 @@ export class CreateInstanceService {
 
   createTraderInfo(options: any): TraderInfo {
     return new TraderInfo(options);
+  }
+
+  createPartnerInfo(options: any): PartnerInfo {
+    return new PartnerInfo(options);
   }
 }
