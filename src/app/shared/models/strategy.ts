@@ -57,12 +57,12 @@ export class Strategy {
   }
 
   getFeeRate(): number {
-    if (this.publicOffer) {
-      return this.publicOffer.feeRate;
-    }
-
     if (this.linkOffer) {
       return this.linkOffer.feeRate;
+    }
+
+    if (this.publicOffer) {
+      return this.publicOffer.feeRate;
     }
 
     if (this.account) {
@@ -73,12 +73,12 @@ export class Strategy {
   }
 
   getCommissionRate(): number {
-    if (this.publicOffer) {
-      return this.publicOffer.commissionRate;
-    }
-
     if (this.linkOffer) {
       return this.linkOffer.commissionRate;
+    }
+    
+    if (this.publicOffer) {
+      return this.publicOffer.commissionRate;
     }
 
     if (this.account) {
