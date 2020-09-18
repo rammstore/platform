@@ -37,6 +37,7 @@ export class DataTableComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.data = null;
     this.brandService.functionality
       .pipe(takeUntil(this.destroy$))
       .subscribe((f: object) => {
