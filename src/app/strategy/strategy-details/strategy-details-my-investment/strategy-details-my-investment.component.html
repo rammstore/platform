@@ -125,10 +125,10 @@
         </td>
       </tr>
       <tr>
-        <td translate>common.marginLevel</td>
+        <td translate>common.marginLevel.percent</td>
         <td>
           <span *ngIf="account.marginLevel" [class.positive]="account.marginLevel >= 1"
-              [class.negative]="account.marginLevel < 1">{{account.marginLevel | number:'1.2-2'}} %
+              [class.negative]="account.marginLevel < 1">{{account.marginLevel | number:'1.2-2'}}
           </span>
           <span *ngIf="!account.marginLevel">−</span>
         </td>

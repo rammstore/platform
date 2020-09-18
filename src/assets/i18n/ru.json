@@ -88,6 +88,7 @@
   "common.investments": "Инвестиции",
   "common.margin": "Маржа",
   "common.marginLevel": "Уровень маржи",
+  "common.marginLevel.percent":  "Уровень маржи, %",
   "common.next": "Далее",
   "common.offers": "Оферты",
   "common.offer": "Оферта",

@@ -88,6 +88,7 @@
   "common.investments": "سرمایه‌گذاری‌ها",
   "common.margin": "مارجین",
   "common.marginLevel": "اندازه مارجین",
+  "common.marginLevel.percent":  "اندازه مارجین, %",
   "common.next": "بعدی",
   "common.offers": "پیشنهادها",
   "common.offer": "پیشنهاد",
