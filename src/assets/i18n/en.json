@@ -232,7 +232,10 @@
 	  "investment.details.investment.state.13":"Disabled",
 	  "investment.details.investment.state.14":"Closing",
 	  "investment.details.investment.state.15":"Closed",
-  	"investment.details.investment.stopOut": "StopOut",
+	"investment.details.investment.stopOut": "StopOut",
+	"investment.details.investment.stopOut.percent": "StopOut, %",
+	"investment.details.investment.target.percent":"Target, %",
+	"investment.details.investment.protection.percent":"Protection, %",
 
   	"investment.details.investmentProfile.factor": "Factor",
   	"investment.details.investmentProfile.protection": "Protection",

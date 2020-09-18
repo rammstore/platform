@@ -39,7 +39,7 @@ export class Offer {
   }
 
   getFeeRate(): string {
-    return  `${(this.feeRate || 0) * 100}%`;
+    return  `${(this.feeRate || 0) * 100}`;
   }
 
   get FeePaid() {

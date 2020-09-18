@@ -26,8 +26,8 @@
         <td *ngIf="account">1:{{account.leverageMax}}</td>
       </tr>
       <tr>
-        <td translate>investment.details.investment.stopOut</td>
-        <td *ngIf="account">{{account.MCLevel}}%</td>
+        <td translate>investment.details.investment.stopOut.percent</td>
+        <td *ngIf="account">{{account.MCLevel}}</td>
       </tr>
       <tr>
         <td translate>investment.details.investment.state</td>
@@ -47,8 +47,8 @@
           <td>{{offer.id}}</td>
         </tr>
         <tr>
-          <td translate>investment.details.strategy.feeRate</td>
-          <td>{{offer.getFeeRate() }}</td>
+          <td translate>investment.details.strategy.feeRate.percent</td>
+          <td>{{offer.getFeeRate()}}</td>
         </tr>
         <tr>
           <td translate>common.table.label.commission.percent</td>
@@ -68,12 +68,12 @@
         <td *ngIf="account">{{account.factor | number:'1.1-1'}}</td>
       </tr>
       <tr *ngIf="functionality['targetShow']">
-        <td translate>common.target</td>
-        <td *ngIf="account">{{account.target | percent:'1.0-2'}}</td>
+        <td translate>investment.details.investment.target.percent</td>
+        <td *ngIf="account">{{account.getTarget}}</td>
       </tr>
       <tr *ngIf="functionality['protectionShow']">
-        <td translate>common.protection</td>
-        <td *ngIf="account">{{account.protection | percent:'1.0-2'}}</td>
+        <td translate>investment.details.investment.protection.percent</td>
+        <td *ngIf="account">{{account.getProtection}}</td>
       </tr>
       <tr *ngIf="functionality['targetShow'] && functionality['protectionShow']">
         <td></td>

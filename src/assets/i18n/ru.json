@@ -233,6 +233,9 @@
 	  "investment.details.investment.state.14":"Закрытие",
 	  "investment.details.investment.state.15":"Закрыт",
   "investment.details.investment.stopOut": "StopOut",
+  "investment.details.investment.stopOut.percent": "StopOut, %",
+  "investment.details.investment.target.percent":"Цель, %",
+  "investment.details.investment.protection.percent":"Защита, %",
 
   "investment.details.investmentProfile.factor": "Множитель",
   "investment.details.investmentProfile.protection": "Защита",

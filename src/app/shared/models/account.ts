@@ -253,4 +253,12 @@ export class Account {
         return '';
     }
   }
+
+  get getProtection(): number{
+    return this.protection * 100;
+  }
+
+  get getTarget(): number{
+    return this.target * 100;
+  }
 }

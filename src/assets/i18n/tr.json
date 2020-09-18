@@ -232,7 +232,10 @@
 	  "investment.details.investment.state.13":"Disabled, no positions",
 	  "investment.details.investment.state.14":"Closed, with positions",
 	  "investment.details.investment.state.15":"Closed, no positions",
-  	"investment.details.investment.stopOut": "Pozisyon kapama",
+	"investment.details.investment.stopOut": "Pozisyon kapama",
+	  "investment.details.investment.stopOut.percent": "Pozisyon kapama, %",
+	"investment.details.investment.target.percent":"Hedef, %",
+	"investment.details.investment.protection.percent":"Koruma, %",
 
   	"investment.details.investmentProfile.factor": "Faktör",
   	"investment.details.investmentProfile.protection": "Koruma",
