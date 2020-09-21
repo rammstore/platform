@@ -574,18 +574,19 @@ export class DataService {
 
   // Получение деталей инвестиции
   getAccountStatement(args: { accountId: number }): Observable<any> {
-    this.http.post(`${this.apiUrl}/accounts.getStatement`, {AccountID: args.accountId}).subscribe((response: any) => {
-      if (response.Statement.length) {
-        response.Statement[0].Strategy.PublicOffer = {
-          CommissionRate: response.Statement[0].Strategy.Commission,
-          FeeRate: response.Statement[0].Strategy.Fee
+    this.http.post(`${this.apiUrl}/accounts.get`, {AccountID: args.accountId}).subscribe((response: any) => {
+      if (response.Strategy) {
+        response.Strategy.PublicOffer = {
+          CommissionRate: response.Strategy.Commission,
+          FeeRate: response.Strategy.Fee
         };
-
-        response.Statement[0].Account.CurrentDate = new Date(response.Statement[0].CurrentDate);
+        
+        response.Account.CurrentDate = new Date(response.CurrentDate);
 
         this.currentAccountStatementSubject.next({
-          strategy: this.createInstanceService.createStrategy(response.Statement[0].Strategy),
-          account: this.createInstanceService.createAccount(response.Statement[0].Account)
+          strategy: this.createInstanceService.createStrategy(response.Strategy),
+          account: this.createInstanceService.createAccount(response.Account)
+          
         });
       } else {
         this.currentAccountStatementSubject.next({
