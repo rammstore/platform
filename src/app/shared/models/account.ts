@@ -58,6 +58,54 @@ export class Account {
     return this.status === 4;
   }
 
+  isPauseButtonActice(): boolean{
+    if(this.state == 2){
+      return true;
+    }
+
+    if(this.state == 3){
+      return true;
+    }
+
+    return false;
+  }
+
+  isResumeButtonActive(): boolean{
+    if(this.state == 4){
+      return true;
+    }
+
+    if(this.state == 5){
+      return true;
+    }
+
+    if(this.state == 6){
+      return true;
+    }
+
+    if(this.state == 7){
+      return true;
+    }
+
+    if(this.state == 8){
+      return true;
+    }
+    
+    if(this.state == 9){
+      return true;
+    }
+
+    if(this.state == 10){
+      return true;
+    }
+    
+    if(this.state == 11){
+      return true;
+    }
+    
+    return false;
+  }
+
   isSecured(): boolean {
     return this.isSecurity;
   }
