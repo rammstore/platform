@@ -580,9 +580,6 @@ export class DataService {
           CommissionRate: response.Strategy.Commission,
           FeeRate: response.Strategy.Fee
         };
-        
-        response.Account.CurrentDate = new Date(response.CurrentDate);
-
         this.currentAccountStatementSubject.next({
           strategy: this.createInstanceService.createStrategy(response.Strategy),
           account: this.createInstanceService.createAccount(response.Account)

@@ -120,8 +120,6 @@
 
   <div class="manage-container">
     <div class="text-right">
-      <div *ngIf="account" class="mb-1"><span translate>common.refreshed</span> {{account.currentDate | customDate}}
-      </div>
       <div *ngIf="account && !account.isMyAccount">
         <span translate>investment.details.message.investor</span><br>
         <span translate>investment.details.message.owner</span>
