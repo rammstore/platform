@@ -1,11 +1,11 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Subject} from 'rxjs';
-import {Account, Offer, Strategy} from '@app/models';
-import {ActivatedRoute} from '@angular/router';
-import {DataService} from '@app/services/data.service';
-import {BrandService} from '@app/services/brand.service';
-import {takeUntil} from 'rxjs/operators';
-import {StrategyService} from "@app/services/strategy.service";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subject } from 'rxjs';
+import { Account, Offer, Strategy } from '@app/models';
+import { ActivatedRoute } from '@angular/router';
+import { DataService } from '@app/services/data.service';
+import { BrandService } from '@app/services/brand.service';
+import { takeUntil } from 'rxjs/operators';
+import { StrategyService } from "@app/services/strategy.service";
 
 @Component({
   selector: 'app-strategy-details-my-investment',
@@ -24,7 +24,7 @@ export class StrategyDetailsMyInvestmentComponent implements OnInit, OnDestroy {
   functionality: object;
   offer: Offer = null;
   strategy: Strategy;
-
+  accountId: number;
   constructor(
     private route: ActivatedRoute,
     private dataService: DataService,
@@ -50,10 +50,12 @@ export class StrategyDetailsMyInvestmentComponent implements OnInit, OnDestroy {
         .pipe(takeUntil(this.destroy$))
         .subscribe((item) => {
           this.offer = item.account.offer;
-          this.getAccountStatement({
-            accountId: item.account.id
-          });
+          this.accountId = item.account.id;
         });
+      this.getAccountStatement({
+        accountId: this.accountId
+      });
+
     } else {
       this.offer = this.strategy.account.offer;
       this.getAccountStatement({
