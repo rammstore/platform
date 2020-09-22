@@ -41,17 +41,27 @@
       </tr>
       <tr *ngIf="strategy.publicOffer">
         <td [innerText]="strategy.publicOffer.id"></td>
-        <td [innerText]="strategy.publicOffer.FeeRate"></td>
-        <td [innerText]="strategy.publicOffer.FeePaid"></td>
-        <td [innerText]="strategy.publicOffer.FeeToPay"></td>
+        <td [innerText]="(strategy.publicOffer.feeRate)*100"></td>
+        <td [innerText]="strategy.publicOffer.feePaid"></td>
+        <td [innerText]="strategy.publicOffer.feeToPay"></td>
         <td [innerText]="(strategy.publicOffer.commissionRate || 0)*1000000"></td>
-        <td [innerText]="strategy.publicOffer.CommissionPaid"></td>
-        <td [innerText]="strategy.publicOffer.CommissionToPay"></td>
+        <td [innerText]="strategy.publicOffer.commissionPaid"></td>
+        <td [innerText]="strategy.publicOffer.commissionToPay"></td>
         <td [innerText]="strategy.publicOffer.activeAccounts"></td>
         <td [innerText]="strategy.publicOffer.totalAccounts"></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td [innerText]="strategy.publicOffer.partnerID || ''"></td>
+        <td [innerText]="strategy.publicOffer.partnerShareRate || ''"></td>
+        <td>
+          <span class="link-container"
+                 *ngIf="strategy.publicOffer.link">
+                <span class="d-flex">{{strategy.publicOffer.link || ''}}</span>
+                <button ngxClipboard
+                        class="d-flex empty-space"
+                        [cbContent]="getOfferLink(strategy.publicOffer.link)">
+                <i class="fa fa-copy"></i>
+          </button>
+          </span>
+        </td>
         <td>
           <button class="primary btn-invest"
                   (click)="onMakePublic(false, {})" translate>myStrategies.offers.type.create.not.public</button>
@@ -62,15 +72,15 @@
       </tr>
       <tr *ngFor="let offer of offers">
         <td [innerText]="offer.id"></td>
-        <td [innerText]="offer.FeeRate"></td>
-        <td [innerText]="offer.FeePaid"></td>
-        <td [innerText]="offer.FeeToPay"></td>
+        <td [innerText]="(offer.feeRate)*100"></td>
+        <td [innerText]="offer.feePaid"></td>
+        <td [innerText]="offer.feeToPay"></td>
         <td [innerText]="(offer.commissionRate || 0) * 1000000"></td>
-        <td [innerText]="offer.CommissionPaid"></td>
-        <td [innerText]="offer.CommissionToPay"></td>
+        <td [innerText]="offer.commissionPaid"></td>
+        <td [innerText]="offer.commissionToPay"></td>
         <td [innerText]="offer.activeAccounts"></td>
         <td [innerText]="offer.totalAccounts"></td>
-        <td></td>
+        <td [innerText]="offer.partnerID || ''"></td>
         <td [innerText]="offer.partnerShareRate || ''"></td>
         <td>
            <span class="link-container"
@@ -78,8 +88,7 @@
                 <span class="d-flex">{{offer.link || ''}}</span>
                 <button ngxClipboard
                         class="d-flex empty-space"
-                        [cbContent]="getOfferLink(offer.link)"
-                        *ngIf="offer.link">
+                        [cbContent]="getOfferLink(offer.link)">
                 <i class="fa fa-copy"></i>
               </button>
               </span>
@@ -89,6 +98,34 @@
                   *ngIf="offer.link"
                   (click)="onMakePublic(true, offer)" translate>myStrategies.offers.type.create.public</button>
         </td>
+      </tr>
+      <tr *ngIf="traderOffer">
+        <td colspan="13" translate>common.table.label.offer.trader</td>
+      </tr>
+      <tr *ngIf="traderOffer">
+        <td [innerText]="traderOffer.id"></td>
+        <td [innerText]="(traderOffer.feeRate)*100"></td>
+        <td [innerText]="traderOffer.feePaid"></td>
+        <td [innerText]="traderOffer.feeToPay"></td>
+        <td [innerText]="(traderOffer.commissionRate || 0)*1000000"></td>
+        <td [innerText]="traderOffer.commissionPaid"></td>
+        <td [innerText]="traderOffer.commissionToPay"></td>
+        <td [innerText]="traderOffer.activeAccounts"></td>
+        <td [innerText]="traderOffer.totalAccounts"></td>
+        <td [innerText]="traderOffer.partnerID || ''"></td>
+        <td [innerText]="traderOffer.partnerShareRate || ''"></td>
+        <td>
+          <span class="link-container"
+                 *ngIf="traderOffer.link">
+                <span class="d-flex">{{traderOffer.link || ''}}</span>
+                <button ngxClipboard
+                        class="d-flex empty-space"
+                        [cbContent]="getOfferLink(traderOffer.link)">
+                <i class="fa fa-copy"></i>
+              </button>
+          </span>
+        </td>
+        <td></td>
       </tr>
     </tbody>
   </table>

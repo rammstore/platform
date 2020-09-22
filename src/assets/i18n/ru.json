@@ -148,6 +148,7 @@
   "common.table.label.status": "Статус",
   "common.table.label.offer.public": "Публичная оферта",
   "common.table.label.offer.private": "Непубличные оферты",
+  "common.table.label.offer.trader": "Оферта трейдера",
   "common.table.label.entry": "Направление",
   "common.table.label.link": "Ссылка",
   "common.table.label.commissionRate": "Комиссия",

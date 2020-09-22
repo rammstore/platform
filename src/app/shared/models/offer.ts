@@ -1,21 +1,22 @@
 import {MakePropertyLowercase} from '@app/handlers/make-property-lowercase' ;
 
 export class Offer {
-  id: number;
-  dTCreated: string;
-  isPublic: boolean;
-  link: string;
-  partnerShareRate: number;
-  status: number;
-  activeAccounts: boolean;
-  totalAccounts: number;
-
-  commissionPaid: number;
-  commissionRate: number;
-  commissionToPay: number;
-  feePaid: number;
-  feeRate: number;
-  feeToPay: number;
+  id: number;                 // ID оферты
+  dTCreated: string;          // Дата создания стратегии
+  feeRate: number;            // Вознаграждение с прибыли
+  commissionRate: number;     // Размер комиссии
+  partnerID: number;          // ID партнера
+  partnerShareRate: number;   // Доля вознаграждения партнера
+  link: string;               // Cсылка на оферту. Отображается партнеру и владельцу стратегии.
+  type: number;               // 0-оферта трейдера, 1-непубличная, 2-публичная
+  status: number;             // 0-active, 1-disabled (new investments prohibited), 2-closed (all active investments will closed)
+  description: string;        // Описание, заданное при создании оферты. Отображается только владельцу стратегии.
+  activeAccounts: number;     // Количество активных счетов
+  totalAccounts: number;      // Количество счетов всего
+  feePaid: number;            // Выплаченное вознаграждение
+  feeToPay: number;           // Невыплаченное вознаграждение
+  commissionPaid: number;     // Выплаченная комиссия
+  commissionToPay: number;    // Невыплаченная комиссия
 
   constructor(
     options: any

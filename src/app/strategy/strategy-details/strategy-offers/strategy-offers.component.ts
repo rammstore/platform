@@ -1,15 +1,15 @@
-import {Component, OnInit} from '@angular/core';
-import {DataService} from "@app/services/data.service";
-import {ActivatedRoute} from "@angular/router";
-import {map, takeUntil} from "rxjs/internal/operators";
-import {Subject} from "rxjs";
-import {Offer, Paginator, Strategy, TableColumn} from "@app/models";
-import {BsModalRef, BsModalService, ModalOptions} from "ngx-bootstrap";
-import {StrategyOfferCreateComponent} from "./strategy-offer-create/strategy-offer-create.component";
-import {NotificationsService} from "@app/services/notifications.service";
-import {TableHeaderRow} from "@app/models/table-header-row";
-import {CustomDatePipe} from "@app/pipes/custom-date.pipe";
-import {PercentPipe} from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { DataService } from "@app/services/data.service";
+import { ActivatedRoute } from "@angular/router";
+import { map, takeUntil } from "rxjs/internal/operators";
+import { Subject } from "rxjs";
+import { Offer, Paginator, Strategy, TableColumn } from "@app/models";
+import { BsModalRef, BsModalService, ModalOptions } from "ngx-bootstrap";
+import { StrategyOfferCreateComponent } from "./strategy-offer-create/strategy-offer-create.component";
+import { NotificationsService } from "@app/services/notifications.service";
+import { TableHeaderRow } from "@app/models/table-header-row";
+import { CustomDatePipe } from "@app/pipes/custom-date.pipe";
+import { PercentPipe } from '@angular/common';
 
 @Component({
   selector: 'app-strategy-offers',
@@ -25,27 +25,28 @@ export class StrategyOffersComponent implements OnInit {
 
   // component data
   offers: Offer[];
+  traderOffer: Offer;
 
   // table settings
   tableHeader: TableHeaderRow[] = [
     new TableHeaderRow([
-      new TableColumn({property: 'ID', label: 'ID'}),
+      new TableColumn({ property: 'ID', label: 'ID' }),
       new TableColumn({
         property: 'DTCreated',
         label: 'common.table.label.dtCreate',
-        pipe: {pipe: CustomDatePipe}
+        pipe: { pipe: CustomDatePipe }
       }),
-      new TableColumn({property: 'link', label: 'common.table.label.link'}),
-      new TableColumn({property: 'commissionRate', label: 'common.table.label.commissionRate'}),
+      new TableColumn({ property: 'link', label: 'common.table.label.link' }),
+      new TableColumn({ property: 'commissionRate', label: 'common.table.label.commissionRate' }),
       new TableColumn({
         property: 'FeeRate',
         label: 'investment.details.strategy.feeRate',
-        pipe: {pipe: PercentPipe}
+        pipe: { pipe: PercentPipe }
       }),
       // new TableColumn({property: 'PartnerShareRate', label: 'common.table.label.partner'}),
-      new TableColumn({property: 'OfferStatus', label: 'common.table.label.status'}),
-      new TableColumn({property: 'IsPublic', label: 'common.table.label.offer.public'}),
-      new TableColumn({property: 'offerManage', label: 'common.table.label.manage'})
+      new TableColumn({ property: 'OfferStatus', label: 'common.table.label.status' }),
+      new TableColumn({ property: 'IsPublic', label: 'common.table.label.offer.public' }),
+      new TableColumn({ property: 'offerManage', label: 'common.table.label.manage' })
     ]),
   ];
 
@@ -81,7 +82,6 @@ export class StrategyOffersComponent implements OnInit {
     this.dataService.getStrategyByID(this.args)
       .pipe(takeUntil(this.destroy$))
       .subscribe((strategy: Strategy) => {
-       // console.log('strategy', strategy);
         this.strategy = strategy;
       });
   }
@@ -93,8 +93,17 @@ export class StrategyOffersComponent implements OnInit {
         //map((item: any[]) => item.filter(_item => _item.link))
       )
       .subscribe((offers: any[]) => {
-        this.strategy.publicOffer = offers.filter(item => item.isPublic)[0];
-        this.offers = offers.filter(item => !item.isPublic);
+        this.offers = null;
+        
+        this.strategy.publicOffer = offers.filter(item => item.type === 2)[0];
+
+        const privateOffers = offers.filter(item => item.type === 1);
+
+        if (privateOffers.length) {
+          this.offers = privateOffers;
+        }
+
+        this.traderOffer = offers.filter(item => item.type === 0)[0];
       });
   }
 

@@ -25,6 +25,7 @@ export class StrategyDetailsMyInvestmentComponent implements OnInit, OnDestroy {
   offer: Offer = null;
   strategy: Strategy;
   accountId: number;
+  
   constructor(
     private route: ActivatedRoute,
     private dataService: DataService,
