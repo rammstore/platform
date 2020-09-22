@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Account, Offer, Strategy } from '@app/models';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { ContentTabLink } from '@app/components/content-tabs/content-tab-link';
 import { DataService } from '@app/services/data.service';
@@ -30,7 +30,8 @@ export class InvestmentsDetailsComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private dataService: DataService,
-    private brandService: BrandService
+    private brandService: BrandService,
+    private router: Router
   ) {
   }
 
@@ -40,8 +41,9 @@ export class InvestmentsDetailsComponent implements OnInit, OnDestroy {
       .subscribe((f: object) => {
         this.functionality = f;
       });
-    this.args = {accountId: this.route.params['_value'].id};
+    this.args = { accountId: this.route.params['_value'].id };
     this.getAccountStatement();
+
   }
 
   ngOnDestroy(): void {
@@ -54,8 +56,8 @@ export class InvestmentsDetailsComponent implements OnInit, OnDestroy {
       .subscribe((response: any) => {
         this.strategy = response.strategy;
         response.account.isMyStrategy = response.strategy.isMyStrategy;
-
         this.account = response.account;
+        this.account.currentDate = new Date();
         this.account.strategy = response.strategy;
         this.publicOffer = this.strategy.publicOffer ? this.strategy.publicOffer : this.strategy.linkOffer;
 
@@ -64,5 +66,9 @@ export class InvestmentsDetailsComponent implements OnInit, OnDestroy {
           new ContentTabLink('investment.deals.title', '/investments/details/' + this.account.id + '/deals')
         ];
       });
+  }
+
+  onReload() {
+    this.getAccountStatement();
   }
 }

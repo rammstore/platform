@@ -574,6 +574,7 @@ export class DataService {
 
   // Получение деталей инвестиции
   getAccountStatement(args: { accountId: number }): Observable<any> {
+    this.loaderService.showLoader();
     this.http.post(`${this.apiUrl}/accounts.get`, {AccountID: args.accountId}).subscribe((response: any) => {
       if (response.Strategy) {
         response.Strategy.PublicOffer = {
