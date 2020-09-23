@@ -36,7 +36,7 @@ export class Offer {
   }
 
   get CommissionRate(): number {
-    return this.commissionRate;
+    return this.commissionRate * 1000000;
   }
 
   getFeeRate(): string {
