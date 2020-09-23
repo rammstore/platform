@@ -97,6 +97,7 @@
   "common.perWeek": "в неделю",
   "common.profit-and-loss": "PL",
   "common.protection": "Защита",
+  "common.protection.percent": "Защита, %",
   "common.refreshed": "Обновлено",
   "common.step": "Шаг",
   "common.trading-info": "Торговая информация",
@@ -107,6 +108,7 @@
 
   "common.strategy": "Стратегия",
   "common.target": "Цель",
+  "common.target.percent": "Цель, %",
   "common.type": "Тип",
   "common.type0":"Пополнение",
   "common.type1":"Вывод",

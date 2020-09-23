@@ -97,6 +97,7 @@
   "common.perWeek": "هر هفته",
   "common.profit-and-loss": "سود و ضرر",
   "common.protection": "محافظت",
+  "common.protection.percent": "محافظت, %",
   "common.refreshed": "بازیابی شده",
   "common.step": "مرحله",
   "common.trading-info": "Trading information",
@@ -106,7 +107,8 @@
   "common.step 3: strategy.add.title.offer": "مرحله 3: پیشنهاد عمومی",
 
 	"common.strategy": "استراتژی",
-	"common.target": "هدف",
+  "common.target": "هدف",
+  "common.target.percent": "هدف, %",
 	"common.type": "نوع",
 	"common.type0": "واریز",
   "common.type1": "برداشت",

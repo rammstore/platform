@@ -96,7 +96,8 @@
   	"common.pause2": "duraklat",
   	"common.perWeek": "Hafta başına",
     "common.profit-and-loss": "PL",
-  	"common.protection": "Koruma",
+	"common.protection": "Koruma",
+  	"common.protection.percent": "Koruma, %",
   	"common.refreshed": "Yenilenmiş",
   	"common.step": "Adım",
     "common.trading-info": "Trading information",
@@ -107,6 +108,7 @@
 
 	  "common.strategy": "Strateji",
 	  "common.target": "Hedef",
+	  "common.target.percent": "Hedef, %",
 	  "common.type": "Tür",
     "common.type0": "Para yatırmak",
     "common.type1": "Para çekme",

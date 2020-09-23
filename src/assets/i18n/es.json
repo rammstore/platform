@@ -96,7 +96,8 @@
   	"common.pause2": "pausa",
   	"common.perWeek": "por semana",
     "common.profit-and-loss": "PL",
-  	"common.protection": "Proteccion",
+	  "common.protection": "Proteccion",
+	  "common.protection.percent": "Proteccion, %",
   	"common.refreshed": "Refrescar",
   	"common.step": "Paso",
     "common.trading-info": "Información comercial",
@@ -107,6 +108,7 @@
 
 	"common.strategy": "Estrategia",
 	"common.target": "Objetivo",
+	"common.target.percent": "Objetivo, %",
 	"common.type": "Tipo",
   "common.type0": "Depositar",
   "common.type1": "Retirar",

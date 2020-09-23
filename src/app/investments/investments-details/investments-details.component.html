@@ -24,10 +24,10 @@
           <td>{{account.offer.id}}</td>
         </tr>
         <tr>
-          <td translate>investment.details.strategy.feeRate</td>
+          <td translate>investment.details.strategy.feeRate.percent</td>
           <td>
             <span>
-              {{account.offer.feeRate | percent:'1.0-2'}}
+              {{account.offer.getFeeRate()}}
             </span>
           </td>
         </tr>
@@ -74,8 +74,8 @@
         <td>1:{{account.leverageMax}}</td>
       </tr>
       <tr>
-        <td translate>investment.details.investment.stopOut</td>
-        <td>{{account.MCLevel}}%</td>
+        <td translate>investment.details.investment.stopOut.percent</td>
+        <td>{{account.MCLevel}}</td>
       </tr>
       <tr>
         <td translate>investment.details.investment.state</td>
@@ -95,12 +95,12 @@
         <td>{{account.factor | number:'1.1-1'}}</td>
       </tr>
       <tr *ngIf="functionality['targetShow']">
-        <td translate>common.target</td>
-        <td>{{account.target | percent:'1.0-2'}}</td>
+        <td translate>common.target.percent</td>
+        <td>{{account.getTarget}}</td>
       </tr>
       <tr *ngIf="functionality['protectionShow']">
-        <td translate>common.protection</td>
-        <td>{{account.protection | percent:'1.0-2'}}</td>
+        <td translate>common.protection.percent</td>
+        <td>{{account.getProtection}}</td>
       </tr>
       <tr *ngIf="functionality['targetShow'] && functionality['protectionShow']">
         <td></td>
@@ -156,9 +156,9 @@
     <td *ngIf="account">{{account.margin | customCurrency}}</td>
   </tr>
   <tr>
-    <td translate>common.marginLevel</td>
+    <td translate>common.marginLevel.percent</td>
     <td *ngIf="account && account.marginLevel" [class.positive]="account.marginLevel >= 1"
-        [class.negative]="account.marginLevel < 1">{{account.marginLevel | number:'1.2-2'}} %
+        [class.negative]="account.marginLevel < 1">{{account.marginLevel | number:'1.2-2'}}
     </td>
     <td *ngIf="account && !account.marginLevel">−</td>
   </tr>
