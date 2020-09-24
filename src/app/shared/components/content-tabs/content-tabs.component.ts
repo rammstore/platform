@@ -29,7 +29,6 @@ export class ContentTabsComponent {
 
   isStrategyInvestmentsClosedCheck(url: string, link: ContentTabLink): boolean {
     if (this.router.url.includes('strategies/details') && this.router.url.includes('investments/closed') && url.includes('strategies/details') && url.includes('investments') && url.includes('ratings') && link.name === 'common.investments') {
-      debugger;
       return true;
     } else {
       return false;
