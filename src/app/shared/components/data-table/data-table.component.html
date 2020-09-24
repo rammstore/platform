@@ -4,9 +4,17 @@
     <th *ngFor="let column of row.columns"
         [attr.colspan]="column.colspan"
         [attr.rowspan]="column.rowspan"
-        class="{{column.property}}"
+        class="{{column.property + ' hint-container'}}"
         [class.colored]="column.colored">
       <span translate>{{column.label}}</span>
+      <span *ngIf="column.hint" class="hint">
+        *
+        <div
+             *ngIf="column.hint"
+             class="hint-content"
+             [innerText]="column.hint"
+             translate></div>
+      </span>
     </th>
   </tr>
   </thead>
@@ -50,6 +58,13 @@
               <div class="symbols">{{item.symbols}}</div>
             </ng-container>
 
+            <ng-container *ngSwitchCase="'DTCreated'">
+              <span [innerText]="item['dTCreated'] | dynamic:column.pipe.pipe:column.pipe.args"></span>
+            </ng-container>
+            <ng-container *ngSwitchCase="'commissionRate'">
+              <span [innerText]="item.getComission()"></span>
+            </ng-container>
+
             <ng-container *ngSwitchCase="'strategy.name'">
               <a class="detail-link" [routerLink]="[getItemLink(item.strategy)]">{{item.strategy.name}}</a>
               <div class="symbols">{{item.strategy.symbols}}</div>
@@ -67,8 +82,19 @@
 
             <div class="strategy-account"
                  *ngSwitchCase="'investmentInfo'">
-              <div class="strategy-account-intervalPnL">
-                <span><span translate>common.table.label.yield</span>:</span>
+              <div class="strategy-account-intervalPnL hint-container">
+                <span>
+                  <span translate>common.table.label.yield</span>
+                   <span *ngIf="column.hint" class="hint">
+                    *
+                    <div
+                      *ngIf="column.hint"
+                      class="hint-content"
+                      [innerText]="column.hint"
+                      translate></div>
+                  </span>:
+                </span>
+
                 <span class="{{item.getColorClass('intervalPnL')}}">
                   {{item.intervalPnL | customCurrency}}
                 </span>
@@ -89,9 +115,19 @@
 
             <div class="strategy-account"
                  *ngSwitchCase="'strategy.investmentInfo'">
-              <ng-container class="investmentInfo" *ngIf="item.account">
-                <div class="strategy-account-intervalPnL">
-                  <span><span translate>common.table.label.yield</span>:</span>
+              <ng-container class="investmentInfo" *ngIf="item.account && item.account.id">
+                <div class="strategy-account-intervalPnL hint-container">
+                  <span><span translate>common.table.label.yield</span>
+                     <span *ngIf="column.hint" class="hint">
+                      *
+                      <div
+                        *ngIf="column.hint"
+                        class="hint-content"
+                        [innerText]="column.hint"
+                        translate></div>
+                    </span>:
+                  </span>
+
                   <span [class.positive]="item.account.intervalPnL > 0" [class.negative]="item.account.intervalPnL < 0">
                   {{item.account.intervalPnL | customCurrency}}
                 </span>
@@ -112,7 +148,17 @@
             </div>
 
             <ng-container *ngSwitchCase="'manage'">
-              <app-manage [data]="item" [methodName]="methodName" [methodArgs]="methodArgs"></app-manage>
+              <app-manage [data]="item"
+                          [section]="section"
+                          (click)="onRowManageClick($event)"
+                          [methodName]="methodName" [methodArgs]="methodArgs"></app-manage>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'offerManage'">
+              <app-manage [data]="item"
+                          [section]="section"
+                          (click)="onRowManageClick($event)"
+                          [methodName]="methodName" [methodArgs]="methodArgs"></app-manage>
             </ng-container>
 
             <!-- Investment special data-->
@@ -121,7 +167,9 @@
             </ng-container>
 
             <ng-container *ngSwitchCase="'type'">
-              {{item.getType()}}
+              <span translate>
+                {{item.getType()}}
+              </span>
             </ng-container>
 
             <ng-container *ngSwitchCase="'entry'">
@@ -142,6 +190,17 @@
 
             <ng-container *ngSwitchCase="'yieldChart'">
               <app-chart-yield-table *ngIf="item.strategy" [strategy]="item.strategy"></app-chart-yield-table>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'OfferStatus'">
+              <span translate>
+                {{item.getStatus()}}
+              </span>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'IsPublic'">
+             <span translate
+                   [innerText]="item['IsPublic'] ? 'table.content.yes' : 'table.content.no'"></span>
             </ng-container>
 
             <ng-container *ngSwitchCase="'strategy.yieldChart'">
@@ -173,7 +232,19 @@
             *ngIf="i > 0"
             [class.positive]="totals[column.property] > 0 && isColored(column.property)"
             [class.negative]="totals[column.property] < 0 && isColored(column.property)">
-          {{totals[column.property]}}
+
+          <span [ngSwitch]="column.property">
+            <span *ngSwitchCase="'commission'">
+              {{ (totals[column.property] || 0).toFixed(2)}}
+            </span>
+            <span *ngSwitchCase="'swap'">
+              {{ (totals[column.property] || 0).toFixed(2)}}
+            </span>
+            <span *ngSwitchDefault>
+              {{totals[column.property]}}
+            </span>
+          </span>
+
         </td>
       </ng-container>
     </ng-container>
@@ -185,13 +256,13 @@
         <td class="total-cell" *ngIf="i === 0" translate>table.cell.total</td>
         <ng-container *ngIf="isTotal(column.property) && i > 0">
           <td class="total-cell"
-              *ngIf="column.property !== 'accountsCount'"
+              *ngIf="column.property !== 'accounts'"
               [class.positive]="getTotal(column.property) > 0 && isColored(column.property)"
               [class.negative]="getTotal(column.property) < 0 && isColored(column.property)">
             {{getTotal(column.property) | customCurrency}}
           </td>
           <td class="total-cell"
-              *ngIf="column.property === 'accountsCount'">
+              *ngIf="column.property === 'accounts'">
             {{getTotal(column.property)}}
           </td>
         </ng-container>

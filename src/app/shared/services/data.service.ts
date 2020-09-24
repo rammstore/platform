@@ -1,28 +1,31 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, forkJoin, Observable, of, ReplaySubject, Subject } from "rxjs";
+import {Injectable} from '@angular/core';
+import {BehaviorSubject, forkJoin, Observable, of, ReplaySubject, Subject} from "rxjs";
 import {
   Account,
   AccountsSearchOptions,
-  Paginator,
-  Strategy,
-  StrategiesSearchOptions,
+  ChartOptions,
   Command,
   Deal,
-  Position,
   DealsSearchOptions,
+  Offer,
+  Paginator,
+  Position,
   PositionsSearchOptions,
-  ChartOptions, RatingSearchOptions, StrategyAccontsOptions
+  RatingSearchOptions,
+  StrategiesSearchOptions,
+  Strategy,
+  StrategyAccontsOptions
 } from "@app/models";
-import { HttpClient, HttpErrorResponse } from "@angular/common/http";
-import { CreateInstanceService } from "@app/services/create-instance.service";
-import { CommandService } from "@app/services/command.service";
-import { CONFIG } from '@assets/config';
-import { map, takeUntil } from 'rxjs/operators';
-import { LoaderService } from '@app/services/loader.service';
-import { WalletService } from '@app/services/wallet.service';
-import { Router } from '@angular/router';
-import { NotificationsService } from '@app/services/notifications.service';
-import { AccountSpecAsset } from '@app/models/account-spec-asset';
+import {HttpClient, HttpErrorResponse} from "@angular/common/http";
+import {CreateInstanceService} from "@app/services/create-instance.service";
+import {CommandService} from "@app/services/command.service";
+import {CONFIG} from '@assets/config';
+import {map, takeUntil} from 'rxjs/operators';
+import {LoaderService} from '@app/services/loader.service';
+import {WalletService} from '@app/services/wallet.service';
+import {Router} from '@angular/router';
+import {NotificationsService} from '@app/services/notifications.service';
+import {AccountSpecAsset} from '@app/models/account-spec-asset';
 
 @Injectable({
   providedIn: 'root'
@@ -73,7 +76,7 @@ export class DataService {
     this.loaderService.showLoader();
     const options: StrategiesSearchOptions = new StrategiesSearchOptions();
     options.Filter = {
-      IsActive: true
+      SearchMode: 'MyActiveStrategies'
     };
 
     if (args.paginator) {
@@ -83,7 +86,7 @@ export class DataService {
       };
     }
 
-    this.http.post(`${this.apiUrl}/myStrategies.search`, options).subscribe((response: any) => {
+    this.http.post(`${this.apiUrl}/Strategies.search`, options).subscribe((response: any) => {
       const strategies: Strategy[] = [];
 
       this.walletService.walletSubject.next(this.createInstanceService.createWallet(response.Wallets[0]));
@@ -115,7 +118,7 @@ export class DataService {
     this.loaderService.showLoader();
     const options: StrategiesSearchOptions = new StrategiesSearchOptions();
     options.Filter = {
-      IsActive: false
+      SearchMode: 'MyClosedStrategies'
     };
     options.OrderBy = {
       Field: 'DTClosed',
@@ -129,13 +132,14 @@ export class DataService {
       };
     }
 
-    this.http.post(`${this.apiUrl}/myStrategies.search`, options).subscribe((response: any) => {
+    this.http.post(`${this.apiUrl}/Strategies.search`, options).subscribe((response: any) => {
       this.loaderService.showLoader();
       const strategies: Strategy[] = [];
 
       this.walletService.walletSubject.next(this.createInstanceService.createWallet(response.Wallets[0]));
 
       response.Strategies.forEach((s: any) => {
+        s.PublicOffer = s.PublicOffer || {};
         strategies.push(this.createInstanceService.createStrategy(s));
       });
 
@@ -157,16 +161,39 @@ export class DataService {
     return this.closedMyStrategiesSubject.asObservable();
   }
 
-  // Получение конкретной стратегии
-  getStrategy(args: { strategyId: number }): Observable<Strategy> {
+  // Получение конкретной стратегии за ID
+  getStrategyByID(args: { strategyId: number }): Observable<Strategy> {
     this.loaderService.showLoader();
     this.http.post(`${this.apiUrl}/strategies.get`, {ID: args.strategyId}).subscribe((response: any) => {
       this.loaderService.hideLoader();
-      if (response.MyAccount) {
-        response.Strategy.Account = response.MyAccount;
+      this.currentStrategyDetailsSubject.next(this.createInstanceService.createStrategy(response));
+    }, (error: HttpErrorResponse) => {
+      if (error.status === 404) {
+        this.router.navigate(['/rating']);
+        this.notificationsService.open('notify.strategy.access.error', {
+          type: 'error',
+          autoClose: true,
+          duration: 3000
+        });
+      } else {
+        this.notificationsService.open('notify.loading.error', {
+          type: 'error',
+          autoClose: true,
+          duration: 3000
+        });
       }
-      response.Strategy.Offer = {Fee: response.Strategy.Fee};
-      this.currentStrategyDetailsSubject.next(this.createInstanceService.createStrategy(response.Strategy));
+    });
+
+    return this.currentStrategyDetailsSubject.asObservable();
+  }
+
+  // Получение конкретной стратегии за ссылкой
+  getStrategyByLink(args: { link: string }): Observable<Strategy> {
+    // console.log('getStrategyByLink');
+    this.loaderService.showLoader();
+    this.http.post(`${this.apiUrl}/strategies.get`, {Link: args.link}).subscribe((response: any) => {
+      this.loaderService.hideLoader();
+      this.currentStrategyDetailsSubject.next(this.createInstanceService.createStrategy(response));
     }, (error: HttpErrorResponse) => {
       if (error.status === 404) {
         this.router.navigate(['/rating']);
@@ -196,10 +223,53 @@ export class DataService {
         // this.walletService.updateWallet().subscribe();
         // // this.getActiveMyStrategies().subscribe();
         // this.notificationsService.open('notify.strategy.created');
-        this.updateAccount(new Command(response.AccountCommand.ID, response.Account.ID), methodName, methodArgs, 'notify.strategy.created');
+        this.updateAccount(new Command(response.AccountCommandID, response.AccountID), methodName, methodArgs, 'notify.strategy.created');
 
-        response.Strategy.Account = response.Account;
-        return this.createInstanceService.createStrategy(response.Strategy);
+        return this.createInstanceService.createStrategy({
+          ID: response.StrategyID
+        });
+      })
+    );
+  }
+
+  setPublicOffer(strategyID: number, offerID?: number) {
+    const json: any = {
+      StrategyID: strategyID
+    };
+
+    if (offerID) {
+      json.OfferID = offerID;
+    }
+
+    return this.http.post(`${this.apiUrl}/myStrategies.setPublicOffer`, json);
+  }
+
+  getOffers(id: number) {
+    return this.http.post(`${this.apiUrl}/strategies.getOffers`, {
+      StrategyID: id
+    })
+      .pipe(
+        map((item: any) => {
+          const array: Offer[] = [];
+
+          (item.Offers || []).forEach((item: any) => {
+            array.push(new Offer(item));
+          });
+          return array;
+        }));
+  }
+
+  // Создать оферту
+  addOffer(id: number, feeRate: number, commissionRate: number): Observable<any> {
+    this.loaderService.showLoader();
+    return this.http.post(`${this.apiUrl}/myStrategies.addOffer`, {
+      StrategyID: id,
+      FeeRate: feeRate,
+      CommissionRate: commissionRate
+    }).pipe(
+      map((item) => {
+        //this.setPublicOffer(id, item['OfferID']).subscribe();
+        return item;
       })
     );
   }
@@ -360,7 +430,7 @@ export class DataService {
   getActiveMyAccounts(args: { paginator: Paginator, orderBy?: string }): Observable<Account[]> {
     this.loaderService.showLoader();
     const options: AccountsSearchOptions = new AccountsSearchOptions();
-    options.Filter = {MyActiveAccounts: true};
+    options.Filter = {SearchMode: 'MyActiveAccounts'};
     options.OrderBy = {Field: args.orderBy, Direction: 'Desc'};
 
     if (args.paginator) {
@@ -370,21 +440,76 @@ export class DataService {
       };
     }
 
-    this.http.post(`${this.apiUrl}/accounts.search`, options).subscribe((response: any) => {
+    this.http.post(`${this.apiUrl}/strategies.search`, options).subscribe((response: any) => {
       const accounts: Account[] = [];
-
+      //console.log('response', response);
       this.walletService.walletSubject.next(this.createInstanceService.createWallet(response.Wallets[0]));
+      
+      response.Strategies
+      .forEach((strategy: any) => {
+        if(strategy.Account){
+          const createStrategy = this.createInstanceService.createStrategy(strategy);
+          const createAccount = this.createInstanceService.createAccount(strategy.Account);
+          
+          createAccount.strategy = createStrategy;
+          createAccount.offer = strategy.offer ? this.createInstanceService.createOffer(strategy.Offer) : null;
 
-      response.Accounts.forEach((account: any) => {
-        account.Strategy.Chart = account.Chart;
-        accounts.push(new Account(this.createInstanceService.createAccount(account)));
+          accounts.push(createAccount);
+        }
       });
+
+      // response.Strategies.forEach((strategy: any) => {
+      //   const options: any = strategy.Account;
+
+      //   accounts.push(new Account(new Account({
+      //     id: options.ID,
+      //     strategy: this.createInstanceService.createStrategy(strategy),
+      //     isSecurity: options.IsSecurity,
+      //     type: options.Type,
+      //     accountSpecAssetID: options.AccountSpecAssetID,
+      //     asset: options.Asset || options.AssetName,
+      //     tradingIntervalCurrentID: options.TradingIntervalCurrentID,
+      //     dtCreated: options.DTCreated || options.DT,
+      //     balance: options.Balance,
+      //     equity: options.Equity,
+      //     margin: options.Margin,
+      //     marginLevel: options.MarginLevel,
+      //     intervalPnL: options.IntervalPnL || options.ProfitCurrentIntervalGross || options.ProfitCurrentIntervalNet,
+      //     status: options.Status,
+      //     factor: options.Factor,
+      //     offer: options.Offer ? new Offer(options.Offer) : null,
+      //     dtMCReached: options.MCReached,
+      //     protection: options.Protection,
+      //     protectionEquity: options.ProtectionEquity,
+      //     dtProtectionReached: options.ProtectionReached,
+      //     target: options.Target,
+      //     targetEquity: options.TargetEquity,
+      //     dtTargetReached: options.TargetReached,
+      //     dtClosed: options.DTClosed,
+      //     bonus: options.Bonus,
+      //     availableToWithDraw: options.AvailableToWithdraw,
+      //     profitBase: options.ProfitBase,
+      //     precision: options.Precision,
+      //     positionsCount: options.PositionsCount,
+      //     accountMinBalance: options.AccountMinBalance,
+      //     leverageMax: options.LeverageMax,
+      //     freeMargin: options.FreeMargin,
+      //     MCLevel: options.MCLevel,
+      //     state: options.State,
+      //     isMyStrategy: strategy.IsMyStrategy,
+      //     profitCurrentIntervalGross: options.ProfitCurrentIntervalGross,
+      //     feeToPay: options.FeeToPay,
+      //     totalCommissionTrader: options.TotalCommissionTrader,
+      //     feePaid: options.FeePaid,
+      //     isMyAccount: options.IsMyAccount,
+      //     currentDate: options.CurrentDate
+      //   })));
+      // });
 
       if (args.paginator) {
         args.paginator.totalItems = response.Pagination.TotalRecords;
         args.paginator.totalPages = response.Pagination.TotalPages;
       }
-
       this.loaderService.hideLoader();
       this.activeMyAccountsSubject.next(accounts.filter((a: Account) => a.isActive()));
     }, (error: HttpErrorResponse) => {
@@ -402,9 +527,7 @@ export class DataService {
   getClosedMyAccounts(pagination?: Paginator): Observable<Account[]> {
     this.loaderService.showLoader();
     const options: AccountsSearchOptions = new AccountsSearchOptions();
-    options.Filter = {
-      MyActiveAccounts: false
-    };
+
     options.OrderBy = {
       Field: 'DTClosed',
       Direction: 'Desc'
@@ -417,15 +540,18 @@ export class DataService {
       };
     }
 
-    this.http.post(`${this.apiUrl}/accounts.search`, options).subscribe((response: any) => {
+    this.http.post(`${this.apiUrl}/accounts.searchClosed`, options).subscribe((response: any) => {
       const accounts: Account[] = [];
-
       this.walletService.walletSubject.next(this.createInstanceService.createWallet(response.Wallets[0]));
 
-      response.Accounts
-        .filter((a: any) => a.Status === 6)
-        .forEach((account: any) => {
-          accounts.push(new Account(this.createInstanceService.createAccount(account)));
+      response.Strategies
+        .forEach((strategy: any) => {
+          if (strategy.Account) {
+            const createStrategy = this.createInstanceService.createStrategy(strategy);
+            const createAccount = this.createInstanceService.createAccount(strategy.Account);
+            createAccount.strategy = createStrategy;
+            accounts.push(createAccount);
+          }
         });
 
       if (pagination) {
@@ -434,7 +560,7 @@ export class DataService {
       }
 
       this.loaderService.hideLoader();
-      this.closedMyAccountsSubject.next(accounts.filter((a: Account) => !a.isActive()));
+      this.closedMyAccountsSubject.next(accounts);
     }, (error: HttpErrorResponse) => {
       this.notificationsService.open('notify.loading.error', {
         type: 'error',
@@ -448,18 +574,24 @@ export class DataService {
 
   // Получение деталей инвестиции
   getAccountStatement(args: { accountId: number }): Observable<any> {
-    this.http.post(`${this.apiUrl}/accounts.getStatement`, {AccountID: args.accountId}).subscribe((response: any) => {
-      response.Statement[0].Strategy.Offer = {
-        Commission: response.Statement[0].Strategy.Commission,
-        Fee: response.Statement[0].Strategy.Fee
-      };
-
-      response.Statement[0].Account.CurrentDate = new Date(response.Statement[0].CurrentDate);
-
-      this.currentAccountStatementSubject.next({
-        strategy: this.createInstanceService.createStrategy(response.Statement[0].Strategy),
-        account: this.createInstanceService.createAccount(response.Statement[0].Account)
-      });
+    this.loaderService.showLoader();
+    this.http.post(`${this.apiUrl}/accounts.get`, {AccountID: args.accountId}).subscribe((response: any) => {
+      if (response.Strategy) {
+        response.Strategy.PublicOffer = {
+          CommissionRate: response.Strategy.Commission,
+          FeeRate: response.Strategy.Fee
+        };
+        this.currentAccountStatementSubject.next({
+          strategy: this.createInstanceService.createStrategy(response.Strategy),
+          account: this.createInstanceService.createAccount(response.Account)
+          
+        });
+      } else {
+        this.currentAccountStatementSubject.next({
+          strategy: null,
+          account: null
+        });
+      }
 
       this.loaderService.hideLoader();
     }, (error: HttpErrorResponse) => {
@@ -482,11 +614,12 @@ export class DataService {
     return this.currentAccountStatementSubject.asObservable();
   }
 
-  // Инвестировать в стратегию (Создать инвестицию)
-  addAccount(id: number, data: object): Observable<any> {
+  // Инвестировать в стратегию по публичной оферте
+  addAccountPublicOffer(id: number, data: object): Observable<any> {
     this.loaderService.showLoader();
     const options: any = {
       StrategyID: id,
+      OfferID: data['offerId'],
       Factor: data['factor'],
       Protection: data['protection'],
       Target: data['target'],
@@ -497,7 +630,29 @@ export class DataService {
       map((response: any) => {
         // this.getActiveMyStrategies().subscribe();
         this.walletService.updateWallet().subscribe();
-        this.getStrategy({strategyId: id});
+        this.getStrategyByID({strategyId: id});
+        // this.updateRatingList();
+        this.notificationsService.open('notify.investment.created');
+      })
+    );
+  }
+
+  // Инвестировать в стратегию по cкрытой ссылке
+  addAccountPrivateOffer(link: string, data: object): Observable<any> {
+    this.loaderService.showLoader();
+    const options: any = {
+      Link: link,
+      Factor: data['factor'],
+      Protection: data['protection'],
+      Target: data['target'],
+      Money: data['amount']
+    };
+
+    return this.http.post(`${this.apiUrl}/accounts.add`, options).pipe(
+      map((response: any) => {
+        // this.getActiveMyStrategies().subscribe();
+        this.walletService.updateWallet().subscribe();
+        this.getStrategyByLink({link: link});
         // this.updateRatingList();
         this.notificationsService.open('notify.investment.created');
       })
@@ -643,7 +798,7 @@ export class DataService {
     }
 
     return this.http.post(`${this.apiUrl}/deals.search`, options).pipe(map((response: any) => {
-      const result: {deals: Deal[], totals: object} = {
+      const result: { deals: Deal[], totals: object } = {
         deals: [],
         totals: {
           yield: response.DealsTotal[0].Profit,
@@ -683,7 +838,7 @@ export class DataService {
     }
 
     return this.http.post(`${this.apiUrl}/positions.search`, options).pipe(map((response: any) => {
-      const result: {positions: Position[], totals: object} = {
+      const result: { positions: Position[], totals: object } = {
         positions: [],
         totals: {
           profit: response.PositionsTotal[0].Profit,
@@ -711,18 +866,73 @@ export class DataService {
   }
 
   //
-  // Методы ддля работы с рейтингом
+  // Методы для работы с рейтингом
   //
-  getRating(args: { ratingType: 0 | 1 | 2, paginator?: Paginator, searchText?: string }): Observable<Strategy[]> {
+  // getRating(args: { ratingType: 0 | 1 | 2, paginator?: Paginator, searchText?: string }): Observable<Strategy[]> {
+  //   this.loaderService.showLoader();
+  //   const options: RatingSearchOptions = new RatingSearchOptions();
+  //   options.Filter = {
+  //     RatingType: args.ratingType,
+  //   };
+
+  //   if (args.searchText) {
+  //     options.Filter.StrategyName = args.searchText;
+  //   }
+
+  //   if (args.paginator) {
+  //     options.Pagination = {
+  //       CurrentPage: args.paginator.currentPage,
+  //       PerPage: args.paginator.perPage
+  //     };
+  //   }
+
+  //   this.http.post(`${this.apiUrl}/ratings.get`, options).subscribe((response: any) => {
+  //     const strategies: Strategy[] = [];
+
+  //     response.Strategies.forEach((s: any) => {
+  //       if (s.Account) {
+  //         s.Strategy.Account = s.Account;
+  //       }
+  //       s.Strategy.Chart = s.Chart;
+  //       strategies.push(this.createInstanceService.createStrategy(s.Strategy));
+  //     });
+
+  //     if (args.paginator) {
+  //       args.paginator.totalItems = response.Pagination.TotalRecords;
+  //       args.paginator.totalPages = response.Pagination.TotalPages;
+  //     }
+
+  //     this.loaderService.hideLoader();
+  //     this.ratingStrategiesSubject.next(strategies);
+  //   }, (error: HttpErrorResponse) => {
+  //     this.notificationsService.open('notify.loading.error', {
+  //       type: 'error',
+  //       autoClose: true,
+  //       duration: 3000
+  //     });
+  //   });
+
+  //   return this.ratingStrategiesSubject.asObservable();
+  // }
+
+  getRating(args: { ageMin?: number, dealsMin?: number, yield?: number, field?: string, paginator?: Paginator, searchText?: string }): Observable<Strategy[]> {
     this.loaderService.showLoader();
-    const options: RatingSearchOptions = new RatingSearchOptions();
+    const options: StrategiesSearchOptions = new StrategiesSearchOptions();
     options.Filter = {
-      RatingType: args.ratingType,
+      SearchMode: 'Rating',
+      AgeMin: args.ageMin,
+      Yield: args.yield,
+      DealsMin: args.dealsMin
     };
 
     if (args.searchText) {
-      options.Filter.StrategyName = args.searchText;
+      options.Filter.Name = args.searchText;
     }
+
+    options.OrderBy = {
+      Field: args.field,
+      Direction: 'Desc'
+    };
 
     if (args.paginator) {
       options.Pagination = {
@@ -731,15 +941,13 @@ export class DataService {
       };
     }
 
-    this.http.post(`${this.apiUrl}/ratings.get`, options).subscribe((response: any) => {
+    this.http.post(`${this.apiUrl}/strategies.search`, options).subscribe((response: any) => {
       const strategies: Strategy[] = [];
 
+      this.walletService.walletSubject.next(this.createInstanceService.createWallet(response.Wallets[0]));
+
       response.Strategies.forEach((s: any) => {
-        if (s.Account) {
-          s.Strategy.Account = s.Account;
-        }
-        s.Strategy.Chart = s.Chart;
-        strategies.push(this.createInstanceService.createStrategy(s.Strategy));
+        strategies.push(this.createInstanceService.createStrategy(s));
       });
 
       if (args.paginator) {

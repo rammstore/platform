@@ -5,6 +5,7 @@ import { Paginator } from '@app/models/paginator';
 import { BrandService } from '@app/services/brand.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import {SectionEnum} from "@app/enum/section.enum";
 
 @Component({
   selector: 'app-data-table',
@@ -24,9 +25,11 @@ export class DataTableComponent implements OnInit, OnDestroy {
   @Input() shouldHighlightMyStrategies: boolean = false;
   @Input() emptyDataText: string = 'common.table.label.no-data';
   @Output() paginationChanged: EventEmitter<void> = new EventEmitter();
+  @Output() rowManageClick: EventEmitter<any> = new EventEmitter();
   @Input() methodName: string;
   @Input() methodArgs: any;
   @Input() totals: object;
+  @Input() section: SectionEnum = SectionEnum.default;
   functionality: object;
 
   constructor(
@@ -34,6 +37,7 @@ export class DataTableComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.data = null;
     this.brandService.functionality
       .pipe(takeUntil(this.destroy$))
       .subscribe((f: object) => {
@@ -76,7 +80,7 @@ export class DataTableComponent implements OnInit, OnDestroy {
       if (typeof res[key] === 'object') {
         Object.assign(res, res[key]);
       } else {
-        res = res[key];
+        res = res[key] || 0;
       }
     });
 
@@ -120,5 +124,9 @@ export class DataTableComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.destroy$.next(true);
+  }
+
+  onRowManageClick($event: any) {
+    this.rowManageClick.emit($event);
   }
 }

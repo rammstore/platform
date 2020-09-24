@@ -1,4 +1,4 @@
-# WARNING
+# Інструкція.
 
 You have to create `config.ts` file in the following path: `/src/assets/config.ts`. Put there the following code:
 ```

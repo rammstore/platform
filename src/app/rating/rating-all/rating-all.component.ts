@@ -1,10 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
-import { Paginator, Strategy, TableColumn } from '@app/models';
-import { TableHeaderRow } from '@app/models/table-header-row';
-import { PercentPipe } from '@angular/common';
-import { DataService } from '@app/services/data.service';
-import { takeUntil } from 'rxjs/operators';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Subject} from 'rxjs';
+import {Paginator, Strategy, TableColumn} from '@app/models';
+import {TableHeaderRow} from '@app/models/table-header-row';
+import {PercentPipe} from '@angular/common';
+import {DataService} from '@app/services/data.service';
+import {takeUntil} from 'rxjs/operators';
+import {SectionEnum} from "@app/enum/section.enum";
 
 @Component({
   selector: 'app-rating-all',
@@ -20,17 +21,27 @@ export class RatingAllComponent implements OnInit, OnDestroy {
   strategies: Strategy[];
   searchText: string = '';
   args: any;
+  section: SectionEnum = SectionEnum.rating;
 
   // table settings
   tableHeader: TableHeaderRow[] = [
     new TableHeaderRow([
-      new TableColumn({ property: 'nameRating', label: 'common.strategy', fontSize: 20}),
-      new TableColumn({ property: 'profit', label: 'common.table.label.yieldCommon', pipe: { pipe: PercentPipe, args: ['1.0-2'] }, fontSize: 24}),
-      new TableColumn({ property: 'strategy.yieldChart', label: 'common.chart' }),
-      new TableColumn({ property: 'accountsCount', label: 'common.table.label.investors', fontSize: 16}),
-      new TableColumn({ property: 'age', label: 'common.age', fontSize: 16 }),
-      new TableColumn({ property: 'strategy.investmentInfo', label: 'common.table.label.myInvestmentUSD', colored: true }),
-      new TableColumn({ property: 'manage', label: 'common.table.label.manage' })
+      new TableColumn({property: 'nameRating', label: 'common.strategy', fontSize: 20}),
+      new TableColumn({
+        property: 'profit',
+        label: 'common.table.label.yieldCommon',
+        pipe: {pipe: PercentPipe, args: ['1.0-2']},
+        fontSize: 24
+      }),
+      new TableColumn({property: 'strategy.yieldChart', label: 'common.chart'}),
+      new TableColumn({property: 'accounts', label: 'common.table.label.investors', fontSize: 16}),
+      new TableColumn({property: 'age', label: 'common.age', fontSize: 16}),
+      new TableColumn({
+        property: 'strategy.investmentInfo',
+        label: 'common.table.label.myInvestmentUSD',
+        colored: true
+      }),
+      new TableColumn({property: 'manage', label: 'common.table.label.manage'})
     ]),
   ];
   paginator: Paginator = new Paginator({
@@ -40,11 +51,12 @@ export class RatingAllComponent implements OnInit, OnDestroy {
 
   constructor(
     private dataService: DataService
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.args = {
-      ratingType: 1,
+      field: 'Yield',
       paginator: this.paginator,
       searchText: this.searchText
     };

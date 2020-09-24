@@ -1,20 +1,23 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { ChartOptions, Strategy } from '@app/models';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ChartOptions, Strategy} from '@app/models';
 import * as Highcharts from 'highcharts';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/internal/operators';
-import { DataService } from '@app/services/data.service';
-import { TranslateService } from '@ngx-translate/core';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/internal/operators';
+import {DataService} from '@app/services/data.service';
+import {TranslateService} from '@ngx-translate/core';
+import {NotificationsService} from '@app/services/notifications.service';
+import {StrategyService} from "@app/services/strategy.service";
 
 const offset = Math.abs(new Date().getTimezoneOffset()) * 60000;
 let that: StrategyDetailsProfitabilityComponent;
+
 @Component({
   selector: 'app-strategy-details-profitability',
   templateUrl: './strategy-details-profitability.component.html',
   styleUrls: ['./strategy-details-profitability.component.scss']
 })
-export class StrategyDetailsProfitabilityComponent implements OnInit , OnDestroy {
+export class StrategyDetailsProfitabilityComponent implements OnInit, OnDestroy {
   // https://blog.strongbrew.io/rxjs-best-practices-in-angular/#avoiding-memory-leaks
   // here we will unsubscribe from all subscriptions
   destroy$ = new Subject();
@@ -23,31 +26,57 @@ export class StrategyDetailsProfitabilityComponent implements OnInit , OnDestroy
   strategy: Strategy;
   chartOptions: any;
   args: any;
+  id: number = 0;
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private dataService: DataService,
-    private translateService: TranslateService
-  ) { }
+    private strategyService: StrategyService,
+    private translateService: TranslateService,
+    private notificationsService: NotificationsService,
+  ) {
+  }
 
   ngOnInit(): void {
     that = this;
-    this.args = {
-      strategyId: this.route.parent.params['_value'].id
-    };
+    if (!this.strategyService.strategy) {
+      this.id = parseInt(this.route.parent.params['_value'].id);
+      if (this.id) {
+        this.args = {
+          strategyId: this.id
+        };
+
+        this.dataService.getStrategyByID(this.args)
+          .pipe(takeUntil(this.destroy$))
+          .subscribe((strategy: Strategy) => {
+            this.strategy = strategy;
+          });
+      }
+    } else {
+      this.strategy = this.strategyService.strategy;
+    }
+
     this.translateService.onDefaultLangChange
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
         Highcharts.chart('yieldChartContainer', this.chartOptions);
       });
 
-    this.dataService.getStrategy(this.args)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((strategy: Strategy) => {
-        this.strategy = strategy;
+    if (!this.strategy.publicOffer && !this.strategy.isMyStrategy && !this.strategy.linkOffer && !this.strategy.account) {
+      this.notificationsService.open('notify.strategy.access.error', {
+        type: 'error',
+        autoClose: true,
+        duration: 3000
       });
+      this.router.navigate(['/rating'], { relativeTo: this.route });
+    }
 
-    this.dataService.getStrategyChart(new ChartOptions(this.route.parent.params['_value'].id))
+    this.getStrategyChart();
+  }
+
+  getStrategyChart() {
+    this.dataService.getStrategyChart(new ChartOptions(this.id))
       .pipe(takeUntil(this.destroy$))
       .subscribe(response => {
 
@@ -95,11 +124,11 @@ export class StrategyDetailsProfitabilityComponent implements OnInit , OnDestroy
           tooltip: {
             backgroundColor: '#ffffff',
             useHTML: true,
-            formatter: function() {
+            formatter: function () {
               return `<div class="arearange-tooltip-header ${this.y < 0 ? 'negative' : ''} ${this.y > 0 ? 'positive' : ''}">` +
                 `${Highcharts.numberFormat((this.y), 2, '.')}%</div>` +
                 `<div>${that.translateService.instant(getDayName(this.x + offset))}, ${Highcharts.dateFormat('%e %b %Y, %H:%M', this.x + offset)}</div>`;
-}
+            }
           },
           type: 'arearange',
           series: [{

@@ -6,6 +6,7 @@ import { CustomCurrencyPipe } from '@app/pipes/custom-currency.pipe';
 import { PercentPipe } from '@angular/common';
 import { DataService } from '@app/services/data.service';
 import { takeUntil } from 'rxjs/operators';
+import {SectionEnum} from "@app/enum/section.enum";
 
 @Component({
   selector: 'app-rating-rated',
@@ -21,6 +22,7 @@ export class RatingRatedComponent implements OnInit, OnDestroy {
   strategies: Strategy[];
   searchText: string = '';
   args: any;
+  section: SectionEnum = SectionEnum.rating;
 
   // table settings
   tableHeader: TableHeaderRow[] = [
@@ -28,9 +30,13 @@ export class RatingRatedComponent implements OnInit, OnDestroy {
       new TableColumn({ property: 'nameRating', label: 'common.strategy', fontSize: 20}),
       new TableColumn({ property: 'profit', label: 'common.table.label.yieldCommon', pipe: { pipe: PercentPipe, args: ['1.0-2'] }, fontSize: 24}),
       new TableColumn({ property: 'strategy.yieldChart', label: 'common.chart' }),
-      new TableColumn({ property: 'accountsCount', label: 'common.table.label.investors', fontSize: 16}),
+      new TableColumn({ property: 'accounts', label: 'common.table.label.investors', fontSize: 16}),
       new TableColumn({ property: 'age', label: 'common.age', fontSize: 16 }),
-      new TableColumn({ property: 'strategy.investmentInfo', label: 'common.table.label.myInvestmentUSD', colored: true }),
+      new TableColumn({
+        property: 'strategy.investmentInfo',
+        hint: 'account.label.profit.hint',
+        label: 'common.table.label.myInvestmentUSD',
+        colored: true }),
       new TableColumn({ property: 'manage', label: 'common.table.label.manage' })
     ]),
   ];
@@ -45,7 +51,9 @@ export class RatingRatedComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.args = {
-      ratingType: 0,
+      field: 'Yield',
+      ageMin: 30,
+      yield: 0,
       paginator: this.paginator,
       searchText: this.searchText
     };

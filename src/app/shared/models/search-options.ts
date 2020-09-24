@@ -1,10 +1,14 @@
 export class StrategiesSearchOptions {
   Filter: {
+    SearchMode?: string,
     Name?: string,
     MyActiveAccounts?: boolean,
-    MyStrategies?: boolean,
-    ActiveStrategies?: boolean,
-    IsActive?: boolean
+    MyStrategies?: number,
+    ActiveStrategies?: number,
+    IsActive?: boolean,
+    AgeMin?: number,
+    Yield?: number,
+    DealsMin?: number,
   };
 
   Pagination: {
@@ -20,6 +24,7 @@ export class StrategiesSearchOptions {
 
 export class AccountsSearchOptions {
   Filter: {
+    SearchMode?: string,
     MyActiveAccounts?: boolean,
     Value?: string
   };

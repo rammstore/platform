@@ -1,4 +1,5 @@
 import { Strategy } from '@app/models/strategy';
+import {Offer} from "@app/models/offer";
 
 export class Account {
   id: number;                       // ID счета (инвестиции)
@@ -25,6 +26,7 @@ export class Account {
   dtTargetReached: number;          // Дата/время достижения целевой доходности
   dtClosed: Date;                   // Дата закрытия
   bonus: number;                    // Бонус
+  offer: Offer;                    // Offer
   availableToWithDraw: number;      // Доступно для снятия
   profitBase: number;               // База для подсчета вознаграждения
   precision: number;                // Точность округления, знаки после запятой
@@ -54,6 +56,54 @@ export class Account {
 
   isPaused(): boolean {
     return this.status === 4;
+  }
+
+  isPauseButtonActice(): boolean{
+    if(this.state == 2){
+      return true;
+    }
+
+    if(this.state == 3){
+      return true;
+    }
+
+    return false;
+  }
+
+  isResumeButtonActive(): boolean{
+    if(this.state == 4){
+      return true;
+    }
+
+    if(this.state == 5){
+      return true;
+    }
+
+    if(this.state == 6){
+      return true;
+    }
+
+    if(this.state == 7){
+      return true;
+    }
+
+    if(this.state == 8){
+      return true;
+    }
+    
+    if(this.state == 9){
+      return true;
+    }
+
+    if(this.state == 10){
+      return true;
+    }
+    
+    if(this.state == 11){
+      return true;
+    }
+    
+    return false;
   }
 
   isSecured(): boolean {
@@ -120,7 +170,7 @@ export class Account {
   }
 
   getAgeWeeks(): number {
-    const now: number = new Date().getTime();
+    const now: number = this.dtClosed ? new Date(this.dtClosed).getTime() : new Date().getTime();
     const created: number = new Date(this.dtCreated).getTime();
     return Math.floor((now - created) / (1000 * 3600 * 24 * 7));
   }
@@ -135,55 +185,108 @@ export class Account {
     // return this.protection * this.equity;
   }
 
-  getState(): string {
+  // getState(): string {
+  //   switch (this.state) {
+  //     case 0:
+  //       return 'New';
+  //       break;
+  //     case 1:
+  //       return '(not used)';
+  //       break;
+  //     case 2:
+  //       return 'Active, no positions';
+  //       break;
+  //     case 3:
+  //       return 'Active, with positions';
+  //       break;
+  //     case 4:
+  //       return 'Margin call, with positions';
+  //       break;
+  //     case 5:
+  //       return 'Margin call, no positions';
+  //       break;
+  //     case 6:
+  //       return 'Protection, with positions';
+  //       break;
+  //     case 7:
+  //       return 'Protection, no positions';
+  //       break;
+  //     case 8:
+  //       return 'Target, with positions';
+  //       break;
+  //     case 9:
+  //       return 'Target, no positions';
+  //       break;
+  //     case 10:
+  //       return 'Pause, with positions';
+  //       break;
+  //     case 11:
+  //       return 'Pause, no positions';
+  //       break;
+  //     case 12:
+  //       return 'Disabled, with positions';
+  //       break;
+  //     case 13:
+  //       return 'Disabled, no positions';
+  //       break;
+  //     case 14:
+  //       return 'Closed, with positions';
+  //       break;
+  //     case 15:
+  //       return 'Closed, no positions';
+  //       break;
+  //   }
+  // }
+
+  getState(): number {
     switch (this.state) {
       case 0:
-        return 'New';
+        return 0;
         break;
       case 1:
-        return '(not used)';
+        return 1;
         break;
       case 2:
-        return 'Active, no positions';
+        return 2;
         break;
       case 3:
-        return 'Active, with positions';
+        return 3;
         break;
       case 4:
-        return 'Margin call, with positions';
+        return 4;
         break;
       case 5:
-        return 'Margin call, no positions';
+        return 5;
         break;
       case 6:
-        return 'Protection, with positions';
+        return 6;
         break;
       case 7:
-        return 'Protection, no positions';
+        return 7;
         break;
       case 8:
-        return 'Target, with positions';
+        return 8;
         break;
       case 9:
-        return 'Target, no positions';
+        return 9;
         break;
       case 10:
-        return 'Pause, with positions';
+        return 10;
         break;
       case 11:
-        return 'Pause, no positions';
+        return 11;
         break;
       case 12:
-        return 'Disabled, with positions';
+        return 12;
         break;
       case 13:
-        return 'Disabled, no positions';
+        return 13;
         break;
       case 14:
-        return 'Closed, with positions';
+        return 14;
         break;
       case 15:
-        return 'Closed, no positions';
+        return 15;
         break;
     }
   }
@@ -197,5 +300,13 @@ export class Account {
       default:
         return '';
     }
+  }
+
+  get getProtection(): number{
+    return this.protection * 100;
+  }
+
+  get getTarget(): number{
+    return this.target * 100;
   }
 }

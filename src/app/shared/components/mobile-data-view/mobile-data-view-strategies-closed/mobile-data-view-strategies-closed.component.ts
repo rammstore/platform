@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { Paginator, Strategy } from '@app/models';
 
 @Component({
@@ -6,7 +6,7 @@ import { Paginator, Strategy } from '@app/models';
   templateUrl: './mobile-data-view-strategies-closed.component.html',
   styleUrls: ['./mobile-data-view-strategies-closed.component.scss']
 })
-export class MobileDataViewStrategiesClosedComponent {
+export class MobileDataViewStrategiesClosedComponent{
   @Input() strategies: Strategy[];
   @Input() paginator: Paginator;
   @Output() paginationChanged: EventEmitter<void> = new EventEmitter();

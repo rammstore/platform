@@ -1,13 +1,13 @@
-import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
-import { User, Wallet } from '@app/models';
-import { StorageService } from '@app/services/storage.service';
-import { Router } from '@angular/router';
-import { AuthService } from '@app/services/auth.service';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/internal/operators';
-import { TranslateService } from '@ngx-translate/core';
-import { WalletService } from '@app/services/wallet.service';
-import { BrandService } from '@app/services/brand.service';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
+import {User, Wallet} from '@app/models';
+import {StorageService} from '@app/services/storage.service';
+import {Router} from '@angular/router';
+import {AuthService} from '@app/services/auth.service';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/internal/operators';
+import {TranslateService} from '@ngx-translate/core';
+import {WalletService} from '@app/services/wallet.service';
+import {BrandService} from '@app/services/brand.service';
 
 @Component({
   selector: 'app-main-header',
@@ -47,6 +47,10 @@ export class MainHeaderComponent implements OnInit, OnDestroy {
       return;
     }
 
+    if (event.target.className.toString().includes('lang-img')) {
+      return;
+    }
+
     this.closeAside();
   }
 
@@ -80,6 +84,10 @@ export class MainHeaderComponent implements OnInit, OnDestroy {
     } else {
       this.language = this.client.language;
     }
+  }
+
+  logoBlank(url: string) {
+    return url !== '/login' ? '_blank' : '';
   }
 
   isLinkActive(link: string): boolean {

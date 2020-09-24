@@ -11,8 +11,8 @@
       </ng-container>
 
       <ng-container *ngIf="!data.isSecured()">
-        <i (click)="openAccountPauseDialog()" *ngIf="!data.isPaused()" title="{{'common.pause' | translate}}" class="icon-pause"></i>
-        <i (click)="openAccountResumeDialog()" *ngIf="data.isPaused()" title="{{'account.form.resume.title' | translate}}" class="icon-start"></i>
+        <i (click)="openAccountPauseDialog(data)" *ngIf="data.isPauseButtonActice()" title="{{'common.pause' | translate}}" class="icon-pause"></i>
+        <i (click)="openAccountResumeDialog(data)" *ngIf="data.isResumeButtonActive()" title="{{'account.form.resume.title' | translate}}" class="icon-start"></i>
       </ng-container>
     </ng-container>
 
@@ -23,8 +23,8 @@
       </ng-container>
 
       <ng-container *ngIf="!data.isSecured()">
-        <i (click)="openAccountPauseDialog()" *ngIf="!data.account.isPaused()" title="{{'common.pause' | translate}}" class="icon-pause"></i>
-        <i (click)="openAccountResumeDialog()" *ngIf="data.account.isPaused()" title="{{'account.form.resume.title' | translate}}" class="icon-start"></i>
+        <i (click)="openAccountPauseDialog()" *ngIf="data.account.isPauseButtonActice()" title="{{'common.pause' | translate}}" class="icon-pause"></i>
+        <i (click)="openAccountResumeDialog()" *ngIf="data.account.isResumeButtonActive()" title="{{'account.form.resume.title' | translate}}" class="icon-start"></i>
       </ng-container>
     </ng-container>
 
@@ -64,14 +64,16 @@
           <i class="fa fa-download"></i>
           common.manage.signalScript
         </li>
-
-        <li *ngIf="(dataType === 'strategy' && data.isMyStrategy) || (dataType === 'account' && data.strategy.isMyStrategy)" (click)="openStrategyCloseDialog()" translate>
-          <i class="fa fa-window-close"></i>
-          common.manage.closeStrategy
-        </li>
-        <li *ngIf="(dataType === 'strategy' && !data.isMyStrategy) || (dataType === 'account' && !data.strategy.isMyStrategy)" (click)="openAccountCloseDialog()" translate>
+        <li
+          *ngIf="(isInvestOtherStrategy || isInvestStrategy || isStrategyDetail || isRatingPage)"
+          (click)="openAccountCloseDialog()" translate>
+          <!--invest on other strategy-->
           <i class="fa fa-window-close"></i>
           common.manage.closeInvestment
+        </li>
+        <li *ngIf="(dataType === 'strategy' && data.isMyStrategy) || (dataType === 'account' && data.isMyStrategy)" (click)="openStrategyCloseDialog()" translate>
+          <i class="fa fa-window-close"></i>
+          common.manage.closeStrategy
         </li>
       </ul>
     </div>
@@ -80,7 +82,7 @@
   <ng-container *ngIf="dataType === 'strategy' && (!data.account || !data.account.id)">
 
     <div class="btn-group dropdown-container" dropdown>
-      <button class="primary" (click)="openStrategyInvestDialog()" translate>common.manage.invest</button>
+      <button [disabled]="!data.publicOffer && !data.isMyStrategy && !data.linkOffer" class="primary btn-invest" (click)="openStrategyInvestDialog()" translate>common.manage.invest</button>
       <button class="primary caret" dropdownToggle *ngIf="data.isMy()"><i class="fa fa-caret-down"></i></button>
 
       <ul *dropdownMenu class="dropdown-menu" role="menu">
@@ -88,12 +90,21 @@
           <i class="fa fa-list-alt"></i>
           common.investments
         </li>
-
+        <li
+          *ngIf="data.strategy && data.strategy['account']"
+          (click)="openAccountCloseDialog()" translate>
+          <i class="fa fa-window-close"></i>
+          common.manage.closeInvestment
+        </li>
         <li (click)="openStrategyCloseDialog()" translate>
           <i class="fa fa-window-close"></i>
           common.manage.closeStrategy
         </li>
       </ul>
     </div>
+  </ng-container>
+
+  <ng-container *ngIf="dataType === 'offer'">
+    <button *ngIf="data.link && !data['isPublic']" class="primary btn-invest" (click)="onClick(data)" translate>myStrategies.offers.type.create.public</button>
   </ng-container>
 </div>

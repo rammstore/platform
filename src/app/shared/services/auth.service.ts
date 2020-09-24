@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CONFIG } from '@assets/config';
-import { map } from 'rxjs/internal/operators';
+import { map, catchError } from 'rxjs/internal/operators';
 import { Company, Session, User, Wallet } from '@app/models';
 import { AuthData } from '@app/models/auth-data';
 import { StorageService } from '@app/services/storage.service';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { LoaderService } from '@app/services/loader.service';
 import { CreateInstanceService } from '@app/services/create-instance.service';
@@ -37,8 +37,12 @@ export class AuthService {
 
   login(login: string, password: string): Observable<AuthData> {
     this.loaderService.showLoader();
-    return this.http.post(`${this.apiUrl}/session.login`, {Login: login.trim(), Password: password}).pipe(map((response: any) => {
-
+    return this.http.post(`${this.apiUrl}/session.login`, {Login: login.trim(), Password: password}).pipe(
+      catchError(err =>{
+        this.loaderService.hideLoader();
+        return throwError(err);
+      }),
+      map((response: any) => {
       const brand: object = {
         brand: {
           brandKey: `${response.Company.BrandKey}`,

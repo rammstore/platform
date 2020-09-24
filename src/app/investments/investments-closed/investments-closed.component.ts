@@ -32,7 +32,12 @@ export class InvestmentsClosedComponent implements OnInit, OnDestroy {
       new TableColumn({property: 'dtCreated', label: 'common.table.label.created', pipe: {pipe: CustomDatePipe}, colored: true}),
       new TableColumn({property: 'dtClosed', label: 'common.table.label.closed', pipe: {pipe: CustomDatePipe}, colored: true}),
       new TableColumn({property: 'age', label: 'common.age', colored: true}),
-      new TableColumn({property: 'intervalPnL', label: 'common.table.label.yield', pipe: {pipe: CustomCurrencyPipe}, colored: true}),
+      new TableColumn({
+        property: 'intervalPnL',
+        hint: 'account.label.profit.hint',
+        label: 'common.table.label.yield',
+        pipe: {pipe: CustomCurrencyPipe},
+        colored: true}),
       new TableColumn({property: 'investmentDetails', label: ''})
     ])
   ];
@@ -70,7 +75,9 @@ export class InvestmentsClosedComponent implements OnInit, OnDestroy {
     this.dataService.getClosedMyAccounts(this.paginator)
       .pipe(takeUntil(this.destroy$))
       .subscribe((accounts: Account[]) => {
-        this.accounts = accounts;
+        if (accounts ) {
+          this.accounts = accounts;
+        }
       });
   }
 

@@ -1,0 +1,34 @@
+<ng-container *ngIf="strategy">
+  <div class="caption">
+    <h2>
+      {{strategy.name}}
+      <span class="closed-info" *ngIf="!strategy.isActive()" translate>strategy.details.message.closed</span>
+    </h2>
+
+
+    <div class="info" *ngIf="strategy.account && strategy.account.id">
+    <span class="pnl item hint-container {{strategy.account.getColorClass('intervalPnL')}}">
+      {{strategy.account.intervalPnL | customCurrency}} USD
+      <span class="hint">
+        *
+        <div
+          class="hint-content"
+          [innerText]="'account.label.profit.hint'"
+          translate></div>
+      </span>
+    </span>
+      <span class="item"><span><span translate>common.equity</span>:</span> <b>{{strategy.account.equity | customCurrency}} USD</b></span>
+      <span class="item" *ngIf="functionality['targetShow']"><span><span translate>common.target</span>:</span> <b>{{(strategy.account.target || 0) | percent}}</b></span>
+      <span class="item" *ngIf="functionality['protectionShow']"><span><span translate>common.protection</span>:</span> <b>{{(strategy.account.protection || 0) | percent}}</b></span>
+    </div>
+
+    <app-manage [data]="strategy" *ngIf="strategy.isActive()" [methodName]="methodName" [methodArgs]="args"></app-manage>
+  </div>
+
+  <app-content-tabs [links]="links">
+    <router-outlet></router-outlet>
+  </app-content-tabs>
+</ng-container>
+
+<p><b translate>strategy.details.message.risk</b></p>
+

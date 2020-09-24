@@ -7,15 +7,24 @@
 
 
     <div class="info" *ngIf="strategy.account && strategy.account.id">
-    <span class="pnl item {{strategy.account.getColorClass('intervalPnL')}}">
+    <span class="pnl item hint-container {{strategy.account.getColorClass('intervalPnL')}}">
       {{strategy.account.intervalPnL | customCurrency}} USD
+      <span class="hint">
+        *
+        <div
+          class="hint-content"
+          [innerText]="'account.label.profit.hint'"
+          translate></div>
+      </span>
     </span>
       <span class="item"><span><span translate>common.equity</span>:</span> <b>{{strategy.account.equity | customCurrency}} USD</b></span>
       <span class="item" *ngIf="functionality['targetShow']"><span><span translate>common.target</span>:</span> <b>{{(strategy.account.target || 0) | percent}}</b></span>
       <span class="item" *ngIf="functionality['protectionShow']"><span><span translate>common.protection</span>:</span> <b>{{(strategy.account.protection || 0) | percent}}</b></span>
     </div>
 
-    <app-manage [data]="strategy" *ngIf="strategy.isActive()" [methodName]="'getStrategy'" [methodArgs]="args"></app-manage>
+    <app-manage [data]="strategy"
+                [section]="sectionEnum"
+                *ngIf="strategy.isActive()" [methodName]="methodName" [methodArgs]="args"></app-manage>
   </div>
 
   <app-content-tabs [links]="links">

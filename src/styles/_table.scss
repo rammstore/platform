@@ -100,3 +100,8 @@ table {
     }
   }
 }
+
+app-rating-rated app-data-table th.hint-container .hint,
+app-investments-active app-data-table th.hint-container .hint{
+  display: none!important;
+}

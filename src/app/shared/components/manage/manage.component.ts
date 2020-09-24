@@ -1,16 +1,17 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Account, Strategy } from '@app/models';
-import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap';
-import { ManageAccountChangeProfileComponent } from './manage-account-change-profile/manage-account-change-profile.component';
-import { ManageAccountFundComponent } from './manage-account-fund/manage-account-fund.component';
-import { ManageAccountPauseComponent } from './manage-account-pause/manage-account-pause.component';
-import { ManageAccountResumeComponent } from './manage-account-resume/manage-account-resume.component';
-import { ManageAccountWithdrawComponent } from './manage-account-withdraw/manage-account-withdraw.component';
-import { ManageStrategyCloseComponent } from './manage-strategy-close/manage-strategy-close.component';
-import { ManageStrategyPauseComponent } from './manage-strategy-pause/manage-strategy-pause.component';
-import { ManageStrategyResumeComponent } from './manage-strategy-resume/manage-strategy-resume.component';
-import { ManageStrategyDownloadScriptComponent } from '@app/components/manage/manage-strategy-download-script/manage-strategy-download-script.component';
-import { ManageStrategyInvestComponent } from '@app/components/manage/manage-strategy-invest/manage-strategy-invest.component';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Account, Offer, Strategy} from '@app/models';
+import {BsModalRef, BsModalService, ModalOptions} from 'ngx-bootstrap';
+import {ManageAccountChangeProfileComponent} from './manage-account-change-profile/manage-account-change-profile.component';
+import {ManageAccountFundComponent} from './manage-account-fund/manage-account-fund.component';
+import {ManageAccountPauseComponent} from './manage-account-pause/manage-account-pause.component';
+import {ManageAccountResumeComponent} from './manage-account-resume/manage-account-resume.component';
+import {ManageAccountWithdrawComponent} from './manage-account-withdraw/manage-account-withdraw.component';
+import {ManageStrategyCloseComponent} from './manage-strategy-close/manage-strategy-close.component';
+import {ManageStrategyPauseComponent} from './manage-strategy-pause/manage-strategy-pause.component';
+import {ManageStrategyResumeComponent} from './manage-strategy-resume/manage-strategy-resume.component';
+import {ManageStrategyDownloadScriptComponent} from '@app/components/manage/manage-strategy-download-script/manage-strategy-download-script.component';
+import {ManageStrategyInvestComponent} from '@app/components/manage/manage-strategy-invest/manage-strategy-invest.component';
+import {SectionEnum} from "@app/enum/section.enum";
 
 @Component({
   selector: 'app-manage',
@@ -24,19 +25,49 @@ export class ManageComponent implements OnInit {
   @Input() methodName: string;
   @Input() methodArgs: any;
   @Input() hideInvestmentsButton: boolean;
+  @Output() click: EventEmitter<any> = new EventEmitter<any>();
+  @Input() section: SectionEnum = SectionEnum.default;
 
   constructor(
     private modalService: BsModalService
   ) { }
 
   ngOnInit() {
+    // if (this.data.name === "test2304 3") { //Test0702_1 dsfsdf
+    //   console.log(this.data);
+    // }
+
     switch (true) {
-      case (this.data instanceof Strategy):
+      case (this.data instanceof Strategy): {
         this.dataType = 'strategy';
         break;
-      case (this.data instanceof Account):
+      }
+      case (this.data instanceof Account): {
         this.dataType = 'account';
+        break;
+      }
+      case (this.data instanceof Offer): {
+        this.dataType = 'offer';
+        break;
+      }
     }
+  }
+
+  get isStrategyDetail(): boolean {
+    return this.section === SectionEnum.strategy && this.dataType === 'strategy' && this.data.isMyStrategy && this.data.account && this.data.account.id && !this.data.account.isSecurity;
+  }
+  get isRatingPage(): boolean {
+    const term = (this.section === SectionEnum.rating && this.dataType === 'strategy' && this.data.account && this.data.account.id)
+        && ( this.data.isMyStrategy && !this.data.account.isSecurity || !this.data.isMyStrategy);
+    return term;
+  }
+  get isInvestOtherStrategy(): boolean {
+    return this.dataType === 'account' && !this.data.isMyStrategy
+      || (this.section === SectionEnum.strategy && this.dataType === 'strategy' && this.data.account && this.data.account.id && !this.data.isMyStrategy);
+  }
+
+  get isInvestStrategy(): boolean {
+    return this.dataType === 'account' && this.data.strategy.isMyStrategy && this.data.id && !this.data.isSecurity;
   }
 
   openAccountChangeProfileDialog(): void {
@@ -53,12 +84,28 @@ export class ManageComponent implements OnInit {
     this.modalRef = this.modalService.show(ManageAccountFundComponent, this.getAccountDialogOptions());
   }
 
-  openAccountPauseDialog(): void {
+  openAccountPauseDialog(data?: any): void {
     this.modalRef = this.modalService.show(ManageAccountPauseComponent, this.getAccountDialogOptions());
+    this.changeInvestment(this.modalRef, data, () => {
+      data.status = 4;
+    });
   }
 
-  openAccountResumeDialog(): void {
+  openAccountResumeDialog(data?): void {
     this.modalRef = this.modalService.show(ManageAccountResumeComponent, this.getAccountDialogOptions());
+    this.changeInvestment(this.modalRef, data, () => {
+      data.status = 1;
+    });
+  }
+
+  private changeInvestment(modalRef, data, callback) {
+    if (modalRef.content.successful$ && data) {
+      modalRef.content.successful$.subscribe(result => {
+        if (result === true) {
+          callback();
+        }
+      });
+    }
   }
 
   openAccountWithdrawDialog(): void {
@@ -71,6 +118,10 @@ export class ManageComponent implements OnInit {
 
   openStrategyDownloadScriptDialog(): void {
     this.modalRef = this.modalService.show(ManageStrategyDownloadScriptComponent, this.getStrategyDialogOptions());
+  }
+
+  onClick(data: any) {
+    this.click.emit(data);
   }
 
   openStrategyPauseDialog(): void {

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef } from 'ngx-bootstrap';
 import { Paginator, Strategy, Wallet } from '@app/models';
@@ -25,6 +25,7 @@ export class ManageStrategyInvestComponent implements OnInit, OnDestroy {
   strategy: Strategy;
   securityMinBalance: number;
   functionality: object;
+  @Input() methodArgs: any;
 
   constructor(
     private fb: FormBuilder,
@@ -34,6 +35,10 @@ export class ManageStrategyInvestComponent implements OnInit, OnDestroy {
     private brandService: BrandService,
     private router: Router
   ) { }
+
+  get isSpecText(): boolean {
+    return (location.href.includes('/link/') && this.strategy && this.strategy.isMyStrategy);
+  }
 
   ngOnInit(): void {
     this.brandService.functionality
@@ -75,51 +80,68 @@ export class ManageStrategyInvestComponent implements OnInit, OnDestroy {
     values.protection = values.protection / 100;
     values.target = values.target ? values.target / 100 : null;
 
-    this.dataService.addAccount(this.strategy.id, values).subscribe(() => {
-      this.modalRef.hide();
-      switch (true) {
-        case this.router.url.includes('strategies'):
-          this.dataService.getActiveMyStrategies({
-            paginator: new Paginator({
-              perPage: 10,
-              currentPage: 1
-            })
-          });
-          break;
+    if(this.strategy.publicOffer) {
+      values.offerId = this.strategy.publicOffer ? this.strategy.publicOffer.id : null;
 
-        case this.router.url.includes('rating/popular'):
-          this.dataService.getRating({
-            ratingType: 2,
-            searchText: '',
-            paginator: new Paginator({
-              perPage: 10,
-              currentPage: 1
-            })
-          });
-          break;
+      this.dataService.addAccountPublicOffer(this.strategy.id, values).subscribe(() => {
+        this.modalRef.hide();
+        this.getSwitch();
+      });
+    }
 
-        case this.router.url.includes('rating/all'):
-          this.dataService.getRating({
-            ratingType: 1,
-            searchText: '',
-            paginator: new Paginator({
-              perPage: 10,
-              currentPage: 1
-            })
-          });
-          break;
+    if(this.methodArgs && this.methodArgs.link){
+      this.dataService.addAccountPrivateOffer(this.methodArgs.link, values).subscribe(() => {
+        this.modalRef.hide();
+        this.getSwitch();
+      });
+    }
+  }
 
-        case this.router.url.includes('rating'):
-          this.dataService.getRating({
-            ratingType: 0,
-            paginator: new Paginator({
-              perPage: 10,
-              currentPage: 1
-            })
-          });
-          break;
-      }
-    });
+  getSwitch() {
+    switch (true) {
+      case this.router.url.includes('strategies'):
+        this.dataService.getActiveMyStrategies({
+          paginator: new Paginator({
+            perPage: 10,
+            currentPage: 1
+          })
+        });
+        break;
+
+      case this.router.url.includes('rating/popular'):
+        this.dataService.getRating({
+          field: 'Accounts',
+          searchText: '',
+          paginator: new Paginator({
+            perPage: 10,
+            currentPage: 1
+          })
+        });
+        break;
+
+      case this.router.url.includes('rating/all'):
+        this.dataService.getRating({
+          field: 'Yield',
+          searchText: '',
+          paginator: new Paginator({
+            perPage: 10,
+            currentPage: 1
+          })
+        });
+        break;
+
+      case this.router.url.includes('rating'):
+        this.dataService.getRating({
+          field: 'Yield',
+          ageMin: 30,
+          yield: 0,
+          paginator: new Paginator({
+            perPage: 10,
+            currentPage: 1
+          })
+        });
+        break;
+    }
   }
 
   setMoney(amount: number): void {

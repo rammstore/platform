@@ -1,43 +1,61 @@
 <div class="details-container">
-  <div class="strategy">
+  <div class="strategy"
+       *ngIf="strategy">
     <h2 translate>common.strategy</h2>
     <table>
       <tbody>
       <tr>
         <td>ID</td>
-        <td *ngIf="strategy">{{strategy.id}}</td>
+        <td>{{strategy.id}}</td>
       </tr>
       <tr>
         <td translate>investment.details.strategy.name</td>
-        <td *ngIf="strategy"><a [routerLink]="['/strategies/details', strategy.id]">{{strategy.name}}</a></td>
+        <td><a [routerLink]="['/strategies/details', strategy.id]">{{strategy.name}}</a></td>
       </tr>
-      <tr>
-        <td translate>investment.details.strategy.commission</td>
-        <td *ngIf="strategy">{{strategy.offer.getComission()}}</td>
-      </tr>
-      <tr>
-        <td translate>investment.details.strategy.feeRate</td>
-        <td *ngIf="strategy">{{strategy.offer.fee | percent:'1.0-2'}}</td>
-      </tr>
-<!--      <tr>-->
-<!--        <td translate>investment.details.strategy.feePeriod</td>-->
-<!--        <td>1 <span translate>investment.details.strategy.feePeriod.week</span></td>-->
-<!--      </tr>-->
       </tbody>
     </table>
+
+    <div *ngIf="account && account.offer">
+      <h2 translate>common.offer</h2>
+      <table>
+        <tbody>
+        <tr>
+          <td>ID</td>
+          <td>{{account.offer.id}}</td>
+        </tr>
+        <tr>
+          <td translate>investment.details.strategy.feeRate.percent</td>
+          <td>
+            <span>
+              {{account.offer.getFeeRate()}}
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td><span translate>investment.details.strategy.commission</span>, USD / 1 mln</td>
+          <td>
+            <span>
+              {{account.offer.CommissionRate}}
+            </span>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 
-  <div class="investment">
+  <div class="investment"
+       *ngIf="account">
     <h2 translate>common.investment</h2>
     <table>
       <tbody>
       <tr>
         <td translate>investment.details.investment.id</td>
-        <td *ngIf="account">{{account.id}}</td>
+        <td>{{account.id}}</td>
       </tr>
       <tr>
         <td translate>investment.details.investment.created</td>
-        <td *ngIf="account">{{account.dtCreated | customDate }}</td>
+        <td>{{account.dtCreated | customDate }}</td>
       </tr>
       <tr *ngIf="account && !account.isActive()">
         <td translate>investment.details.investment.closed</td>
@@ -45,48 +63,52 @@
       </tr>
       <tr>
         <td translate>investment.details.investment.currency</td>
-        <td *ngIf="account">{{account.asset}}</td>
+        <td>{{account.asset}}</td>
       </tr>
       <tr>
         <td translate>investment.details.investment.leverage</td>
-        <td *ngIf="account">1:{{account.leverageMax}}</td>
+        <td>1:{{account.leverageMax}}</td>
       </tr>
       <tr>
-        <td translate>investment.details.investment.stopOut</td>
-        <td *ngIf="account">{{account.MCLevel}}%</td>
+        <td translate>investment.details.investment.stopOut.percent</td>
+        <td>{{account.MCLevel}}</td>
       </tr>
       <tr>
-        <td translate>investment.details.investment.status</td>
-        <td *ngIf="account">{{account.getStatus()}}</td>
+        <td translate>investment.details.investment.state</td>
+        <td translate>investment.details.investment.state.{{account.getState()}}</td>
       </tr>
       </tbody>
     </table>
   </div>
 
-  <div class="profile">
+  <div class="profile"
+       *ngIf="account">
     <h2 translate>investment.details.investmentProfile.title</h2>
     <table>
       <tbody>
       <tr>
         <td translate>common.factor</td>
-        <td *ngIf="account">{{account.factor | number:'1.1-1'}}</td>
+        <td>{{account.factor | number:'1.1-1'}}</td>
       </tr>
       <tr *ngIf="functionality['targetShow']">
-        <td translate>common.target</td>
-        <td *ngIf="account">{{account.target | percent:'1.0-2'}}</td>
+        <td translate>common.target.percent</td>
+        <td>{{account.getTarget}}</td>
       </tr>
       <tr *ngIf="functionality['protectionShow']">
-        <td translate>common.protection</td>
-        <td *ngIf="account">{{account.protection | percent:'1.0-2'}}</td>
+        <td translate>common.protection.percent</td>
+        <td>{{account.getProtection}}</td>
       </tr>
-      <tr *ngIf="functionality['targetShow'] && functionality['protectionShow']"><td></td><td></td></tr>
+      <tr *ngIf="functionality['targetShow'] && functionality['protectionShow']">
+        <td></td>
+        <td></td>
+      </tr>
       <tr *ngIf="functionality['targetShow']">
         <td><span translate>common.target</span>, USD</td>
-        <td *ngIf="account">{{account.getTargetAmount() | customCurrency}}</td>
+        <td>{{account.getTargetAmount() | customCurrency}}</td>
       </tr>
       <tr *ngIf="functionality['protectionShow']">
         <td><span translate>common.protection</span>, USD</td>
-        <td *ngIf="account">{{account.getProtectionAmount() | customCurrency}}</td>
+        <td>{{account.getProtectionAmount() | customCurrency}}</td>
       </tr>
       </tbody>
     </table>
@@ -94,13 +116,20 @@
 
   <div class="manage-container">
     <div class="text-right">
-      <div *ngIf="account" class="mb-1"><span translate>common.refreshed</span> {{account.currentDate | customDate}}</div>
+      <div *ngIf="account" class="mb-1 refresh"><span translate> common.refreshed</span> 
+        {{account.currentDate | customDate}}
+        <i class="fa fa-refresh ml-2" (click)="onReload()"></i>
+      </div>
       <div *ngIf="account && !account.isMyAccount">
         <span translate>investment.details.message.investor</span><br>
         <span translate>investment.details.message.owner</span>
       </div>
     </div>
-    <app-manage *ngIf="account && account.isMyAccount && account.isActive()" [data]="account" [methodName]="'getAccountStatement'" [methodArgs]="args" [hideInvestmentsButton]="!account.strategy.isMyStrategy"></app-manage>
+    <app-manage *ngIf="account && account.isMyAccount && account.isActive()"
+                [data]="account"
+                [section]="sectionEnum"
+                [methodName]="'getAccountStatement'" [methodArgs]="args"
+                [hideInvestmentsButton]="!account.strategy.isMyStrategy"></app-manage>
   </div>
 </div>
 
@@ -123,8 +152,10 @@
     <td *ngIf="account">{{account.margin | customCurrency}}</td>
   </tr>
   <tr>
-    <td translate>common.marginLevel</td>
-    <td *ngIf="account && account.marginLevel" [class.positive]="account.marginLevel >= 1" [class.negative]="account.marginLevel < 1">{{account.marginLevel | number:'1.2-2'}} %</td>
+    <td translate>common.marginLevel.percent</td>
+    <td *ngIf="account && account.marginLevel" [class.positive]="account.marginLevel >= 1"
+        [class.negative]="account.marginLevel < 1">{{account.marginLevel | number:'1.2-2'}}
+    </td>
     <td *ngIf="account && !account.marginLevel">−</td>
   </tr>
   </tbody>
