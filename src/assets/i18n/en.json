@@ -322,7 +322,7 @@
   	"spec.rating.min-deals-number.title": "Minimum number of deals\t",
   	"spec.rating.min-yield.title": "Minimum yield",
   	"spec.rating.min-yield.value": "Positive",
-  	"spec.rating.title": "Rating",
+  	"spec.rating.title": "Ratings",
 
   	"strategy.add.form.label.amount": "Investment amount",
 	"strategy.add.form.label.commission": "Turnover fee",
