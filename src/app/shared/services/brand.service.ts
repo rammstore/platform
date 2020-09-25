@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Rating } from '@app/models/rating';
+import { LoaderService } from './loader.service';
+import { CreateInstanceService } from './create-instance.service';
+import { NotificationsService } from './notifications.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,11 +13,16 @@ export class BrandService {
   logoLinkSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
   footerLogoLinkSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
   faviconLinkSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  ratingsSubject: BehaviorSubject<Rating[]> = new BehaviorSubject<Rating[]>(null);
   url: string;
   functionality: BehaviorSubject<object> = new BehaviorSubject<object>({});
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private loaderService: LoaderService,
+    private createInstanceService: CreateInstanceService,
+    private notificationsService: NotificationsService
+
   ) {
   }
 
@@ -29,10 +38,34 @@ export class BrandService {
     });
     const linkOptions: string = `${this.url}/options.json`;
     this.http.get(linkOptions).subscribe((result: any) => {
-      console.log('options.json', linkOptions);
-      console.log(result);
       this.functionality.next(result);
     });
+  }
+
+  getBrandRatings(): Observable<Rating[]> {
+    this.loaderService.showLoader();
+
+    this.url = `${window.location.origin}/config/${JSON.parse(localStorage.getItem('brand')).brand.brandKey}`;
+    const linkOptions: string = `${this.url}/options.json`;
+
+    this.http.get(linkOptions).subscribe((result: any) => {
+      const ratings: Rating[] = [];
+
+      result.Ratings.forEach((rating: any) => {
+        ratings.push(this.createInstanceService.createRating(rating));
+      });
+
+      this.loaderService.hideLoader();
+      this.ratingsSubject.next(ratings);
+    }, (error: HttpErrorResponse) => {
+      this.notificationsService.open('notify.loading.error', {
+        type: 'error',
+        autoClose: true,
+        duration: 3000
+      });
+    });
+
+    return this.ratingsSubject.asObservable();
   }
 
   setLogoLink(link: string): void {
