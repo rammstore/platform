@@ -34,12 +34,13 @@ export class SpecificationRatingsRatedComponent implements OnInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe((ratings: Rating[]) => {
         if (ratings) {
+          const yieldMin = (ratings[0].YieldMin * 100) + '%';
           this.data = {
             title: 'spec.rating.conditions.title',
             items: [
               { label: 'spec.rating.life-term.title', value: ratings[0].AgeMin },
               { label: 'spec.rating.min-deals-number.title', value: ratings[0].DealsMin },
-              { label: 'spec.rating.min-yield.title', value: ratings[0].YieldMin },
+              { label: 'spec.rating.min-yield.title', value:  yieldMin },
               { label: 'spec.rating.min-yield.title', value: 'spec.rating.min-yield.value' }
             ]
           };

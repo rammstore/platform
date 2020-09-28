@@ -36,13 +36,13 @@ export class SpecificationRatingsAllComponent implements OnInit {
       .subscribe((ratings: Rating[]) => {
 
         if (ratings) {
-          debugger;
+          const yieldMin = (ratings[2].YieldMin * 100) + '%';
           this.data = {
             title: 'spec.rating.conditions.title',
             items: [
               { label: 'spec.rating.life-term.title', value: ratings[2].AgeMin },
               { label: 'spec.rating.min-deals-number.title', value: ratings[2].DealsMin },
-              { label: 'spec.rating.min-yield.title', value: ratings[2].YieldMin },
+              { label: 'spec.rating.min-yield.title', value: yieldMin },
               { label: 'spec.rating.min-yield.title', value: 'spec.rating.min-yield.value' }
 
             ]
