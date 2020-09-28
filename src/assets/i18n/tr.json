@@ -330,7 +330,7 @@
   	"strategy.add.form.label.step2": "Bir stratejinin oluşturulması ona yatırım yapmanızı gerektirmektedir. Bu yatırım sadece stratejiyle birlikte kapatılabilir.",
 	  "strategy.add.form.label.step2.bottom": "Yatırım koşullarını ayarlayabilir ve sonraki adımlarda danışmanı indirebilirsiniz.",
     "strategy.add.form.label.step3": "Bu teklif koşulları Derecelendirme yoluyla halka açık yatırımlara yöneliktir ve herhangi bir zamanda değiştirilebilir; halka açık koşulları hiçbir şekilde ayarlamamak mümkündür. Halka açık olmayan koşullar, stratejinin oluşturulmasından sonra belirlenebilir.",
-		"strategy.add.form.label.step3.warning": "Attention! You can only create one offer per strategy, while you may change its publicity status as you wish later.",
+		"strategy.add.form.label.step3.warning": "Attention! Сreation of additional offers is temporarily disabled!",
 	"strategy.add.script.button.download": "Scripti indir",
 	  "strategy.add.script.download.platform.title": "İşlem platformu",
 	  "strategy.add.script.download.title": "Sinyal scriptini indir",
