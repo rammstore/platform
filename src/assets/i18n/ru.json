@@ -314,7 +314,7 @@
   "spec.platform.trading-interval.period.title": "Период",
   "spec.platform.trading-interval.period.value": "Неделя",
   "spec.platform.trading-interval.title": "Торговый интервал",
-  "spec.rating.conditions.title": "Условия для попадания в рейтинг",
+  "spec.rating.conditions.title": "Условия публикации",
   "spec.rating.last-activity-time.title": "Время последней активности (открытие или закрытие рыночной позиции), не позднее",
   "spec.rating.last-activity-time.value": "365 календарных дней",
   "spec.rating.life-term.title": "Минимальный срок жизни стратегии, дней\t",
