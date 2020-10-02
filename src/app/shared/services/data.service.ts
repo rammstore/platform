@@ -26,11 +26,13 @@ import {WalletService} from '@app/services/wallet.service';
 import {Router} from '@angular/router';
 import {NotificationsService} from '@app/services/notifications.service';
 import {AccountSpecAsset} from '@app/models/account-spec-asset';
+import { Rating } from '@app/models/rating';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
+  ratingsSubject: BehaviorSubject<Rating[]> = new BehaviorSubject<Rating[]>(null);
   // Мои активные стратегии
   activeMyStrategiesSubject: BehaviorSubject<Strategy[]> = new BehaviorSubject<Strategy[]>(null);
   // Мои закрытые стратегии
@@ -972,5 +974,48 @@ export class DataService {
     this.http.get(`${this.apiUrl}/accounts.searchSpec`).subscribe((response: any) => {
       this.accountSpecAsset = this.createInstanceService.createAccountSpecAsset(response.AccountSpecAsset[0]);
     });
+  }
+
+  // getBrandRatings(linkOptions: string): Observable<Rating[]> {
+  //   this.loaderService.showLoader();
+
+  //   this.http.get(linkOptions).subscribe((result: any) => {
+  //     const ratings: Rating[] = [];
+
+  //     result.Ratings.forEach((rating: any) => {
+  //       ratings.push(this.createInstanceService.createRating(rating));
+  //     });
+      
+  //     this.loaderService.hideLoader();
+  //     this.ratingsSubject.next(ratings);
+  //   }, (error: HttpErrorResponse) => {
+  //     this.notificationsService.open('notify.loading.error', {
+  //       type: 'error',
+  //       autoClose: true,
+  //       duration: 3000
+  //     });
+  //   });
+
+  //   return this.ratingsSubject.asObservable();
+  // }
+
+   getBrandRatings(linkOptions: string): Observable<Rating[]> {
+    this.http.get(linkOptions).subscribe((result: any) => {
+      const ratings: Rating[] = [];
+  
+      result.Ratings.forEach((rating: any) => {
+        ratings.push(this.createInstanceService.createRating(rating));
+      });
+      console.log('sere',ratings)
+      this.ratingsSubject.next(ratings);
+    }, (error: HttpErrorResponse) => {
+      this.notificationsService.open('notify.loading.error', {
+        type: 'error',
+        autoClose: true,
+        duration: 3000
+      });
+    });
+
+    return this.ratingsSubject.asObservable();
   }
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Account, AuthData, Company, Deal, Offer, Position, Session, Strategy, User, Wallet } from '@app/models';
 import { AccountSpecAsset } from '@app/models/account-spec-asset';
 import { PartnerInfo } from '@app/models/partner-info';
+import { Rating } from '@app/models/rating';
 import { TraderInfo } from '@app/models/trader-info';
 
 @Injectable({
@@ -88,6 +89,10 @@ export class CreateInstanceService {
 
   createOffer(options: any): Offer {
     return new Offer(options);
+  }
+
+  createRating(options: any): Rating{
+    return new Rating(options);
   }
 
   createDeal(options: any): Deal {
