@@ -313,7 +313,7 @@
   	"spec.platform.trading-interval.period.title": "Period",
   	"spec.platform.trading-interval.period.value": "Week",
   	"spec.platform.trading-interval.title": "Trading interval",
-  	"spec.rating.conditions.title": "Conditions for publishing into rating",
+  	"spec.rating.conditions.title": "Conditions for publishing",
   	"spec.rating.last-activity-time.title": "Last activity (opening or closing a market position), not later than",
   	"spec.rating.last-activity-time.value": "365 calendar days",
   	"spec.rating.life-term.title": "Minimum age of a strategy, days\t",
