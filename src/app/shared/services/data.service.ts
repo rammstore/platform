@@ -1020,4 +1020,11 @@ export class DataService {
 
     return this.ratingsSubject.asObservable();
   }
+
+  getOptionsRatings(): Observable<any> {
+    const url = `${window.location.origin}/config/${JSON.parse(localStorage.getItem('brand')).brand.brandKey}`;
+    const linkOptions: string = `${url}/options.json`;
+
+    return this.http.get(linkOptions);
+  }
 }
