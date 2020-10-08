@@ -72,9 +72,18 @@ export class RatingAllComponent implements OnInit, OnDestroy {
             paginator: this.paginator,
             searchText: this.searchText
           };
-          
-          this.strategies$ = this.dataService.getRating(this.args);
+
+          this.getRating();
         }
+      });
+  }
+
+  getRating() {
+    this.args.searchText = this.searchText;
+    this.dataService.getRating(this.args)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((strategies: Strategy[]) => {
+      this.strategies = strategies;
       });
   }
 

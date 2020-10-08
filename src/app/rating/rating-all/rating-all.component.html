@@ -9,7 +9,7 @@
 <div class="rating-content-container">
   <app-data-table
     [tableHeader]="tableHeader"
-    [data]="strategies$ | async"
+    [data]="strategies"
     [paginator]="paginator"
     [shouldHighlightMyStrategies]="true"
     (paginationChanged)="getRating()"
