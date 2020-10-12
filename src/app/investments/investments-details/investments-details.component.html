@@ -118,7 +118,7 @@
     <div class="text-right">
       <div *ngIf="account" class="mb-1 refresh"><span translate> common.refreshed</span> 
         {{account.currentDate | customDate}}
-        <i class="fa fa-refresh ml-2" (click)="onReload()"></i>
+        <i class="fa fa-refresh ml-2"></i>
       </div>
       <div *ngIf="account && !account.isMyAccount">
         <span translate>investment.details.message.investor</span><br>
