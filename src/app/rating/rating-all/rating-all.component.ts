@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { Paginator, Strategy, TableColumn } from '@app/models';
 import { TableHeaderRow } from '@app/models/table-header-row';
 import { PercentPipe } from '@angular/common';
@@ -62,6 +62,7 @@ export class RatingAllComponent implements OnInit, OnDestroy {
       .subscribe((result: any) => {
         if (result) {
           this.all = result.Ratings.filter(item => item.Name === 'All')[0];
+          console.log('all', this.all);
           this.args = {
             searchMode: this.all.Filter.SearchMode,
             dealsMin: this.all.Filter.DealsMin,
@@ -80,11 +81,9 @@ export class RatingAllComponent implements OnInit, OnDestroy {
 
   getRating() {
     this.args.searchText = this.searchText;
-    this.dataService.getRating(this.args)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((strategies: Strategy[]) => {
-      this.strategies = strategies;
-      });
+    this.strategies$ = this.dataService.getRating(this.args);
+    console.log('all', this.strategies$);
+
   }
 
   ngOnDestroy(): void {

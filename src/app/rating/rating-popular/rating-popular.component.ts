@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { Paginator, Strategy, TableColumn } from '@app/models';
 import { TableHeaderRow } from '@app/models/table-header-row';
 import { CustomCurrencyPipe } from '@app/pipes/custom-currency.pipe';
@@ -71,11 +71,8 @@ export class RatingPopularComponent implements OnInit, OnDestroy {
 
   getRating() {
     this.args.searchText = this.searchText;
-    this.dataService.getRating(this.args)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((strategies: Strategy[]) => {
-      this.strategies = strategies;
-      });
+    this.strategies$ = this.dataService.getRating(this.args);
+    console.log('Popular', this.strategies$);
   }
 
   ngOnDestroy(): void {
