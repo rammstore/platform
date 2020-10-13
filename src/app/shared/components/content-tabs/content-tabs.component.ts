@@ -16,15 +16,11 @@ export class ContentTabsComponent {
   ) {}
 
   isLinkActive(url: string, link?: ContentTabLink): boolean {
-    let result: boolean = false;
+    return (this.isStrategyInvestmentsClosedCheck(url, link)) ? true : (this.router.url === url);
+  }
 
-    if (this.isStrategyInvestmentsClosedCheck(url, link)) {
-      result = true;
-    } else {
-      result = this.router.url === url;
-    }
-
-    return result;
+  onClick() {
+    this.change.emit();
   }
 
   isStrategyInvestmentsClosedCheck(url: string, link: ContentTabLink): boolean {

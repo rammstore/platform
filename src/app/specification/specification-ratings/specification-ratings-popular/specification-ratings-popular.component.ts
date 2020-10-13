@@ -30,7 +30,7 @@ export class SpecificationRatingsPopularComponent implements OnInit {
     this.dataService.getBrandRatings()
       .pipe(takeUntil(this.destroy$))
       .subscribe((ratings: any[]) => {
-        if (ratings) {
+        if (ratings && ratings.length) {
           this.data = {
             title: 'spec.rating.conditions.title',
             items: [
@@ -42,7 +42,7 @@ export class SpecificationRatingsPopularComponent implements OnInit {
           if(ratings[1].Filter.YieldMin){
             this.data.items.push({ label: 'spec.rating.min-yield.title', value: ratings[1].Filter.YieldMin * 100 });
           }
-        
+
           this.data.items.push({ label: 'spec.rating.orderBy.field', value: 'spec.rating.orderBy.field.' + ratings[1].OrderBy.Field });
           this.data.items.push({ label: 'spec.rating.orderBy.directions', value: 'spec.rating.orderBy.directions.value' });
         }

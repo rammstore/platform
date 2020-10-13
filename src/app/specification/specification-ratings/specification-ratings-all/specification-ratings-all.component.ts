@@ -33,8 +33,7 @@ export class SpecificationRatingsAllComponent implements OnInit {
     this.dataService.getBrandRatings()
       .pipe(takeUntil(this.destroy$))
       .subscribe((ratings: any[]) => {
-
-        if (ratings) {
+        if (ratings && ratings.length) {
           const yieldMin = (ratings[2].Filter.YieldMin * 100) + '%';
           this.data = {
             title: 'spec.rating.conditions.title',

@@ -30,7 +30,7 @@ export class SpecificationRatingsRatedComponent implements OnInit {
     this.dataService.getBrandRatings()
       .pipe(takeUntil(this.destroy$))
       .subscribe((ratings: any[]) => {
-        if (ratings) {
+        if (ratings && ratings.length) {
           this.data = {
             title: 'spec.rating.conditions.title',
             items: [

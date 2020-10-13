@@ -446,13 +446,13 @@ export class DataService {
       const accounts: Account[] = [];
       //console.log('response', response);
       this.walletService.walletSubject.next(this.createInstanceService.createWallet(response.Wallets[0]));
-      
+
       response.Strategies
       .forEach((strategy: any) => {
         if(strategy.Account){
           const createStrategy = this.createInstanceService.createStrategy(strategy);
           const createAccount = this.createInstanceService.createAccount(strategy.Account);
-          
+
           createAccount.strategy = createStrategy;
           createAccount.offer = strategy.offer ? this.createInstanceService.createOffer(strategy.Offer) : null;
 
@@ -586,7 +586,7 @@ export class DataService {
         this.currentAccountStatementSubject.next({
           strategy: this.createInstanceService.createStrategy(response.Strategy),
           account: this.createInstanceService.createAccount(response.Account)
-          
+
         });
       } else {
         this.currentAccountStatementSubject.next({
@@ -985,7 +985,7 @@ export class DataService {
   //     result.Ratings.forEach((rating: any) => {
   //       ratings.push(this.createInstanceService.createRating(rating));
   //     });
-      
+
   //     this.loaderService.hideLoader();
   //     this.ratingsSubject.next(ratings);
   //   }, (error: HttpErrorResponse) => {
@@ -1005,8 +1005,8 @@ export class DataService {
 
     this.http.get(linkOptions).subscribe((result: any) => {
       const ratings: any[] = [];
-      
-      result.Ratings.forEach((rating: any) => {      
+
+      (result.Ratings || []).forEach((rating: any) => {
         ratings.push(rating);
       });
       this.ratingsSubject.next(ratings);
