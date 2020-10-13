@@ -20,13 +20,15 @@ import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {CreateInstanceService} from "@app/services/create-instance.service";
 import {CommandService} from "@app/services/command.service";
 import {CONFIG} from '@assets/config';
-import {map, takeUntil} from 'rxjs/operators';
+import {catchError, map, takeUntil, tap} from 'rxjs/operators';
 import {LoaderService} from '@app/services/loader.service';
 import {WalletService} from '@app/services/wallet.service';
 import {Router} from '@angular/router';
 import {NotificationsService} from '@app/services/notifications.service';
 import {AccountSpecAsset} from '@app/models/account-spec-asset';
 import { Rating } from '@app/models/rating';
+import {Arguments} from "@app/interfaces/args.interface";
+import {RatingMapper} from "@app/mappers/rating.mapper";
 
 @Injectable({
   providedIn: 'root'
@@ -970,6 +972,24 @@ export class DataService {
     return this.ratingStrategiesSubject.asObservable();
   }
 
+  getBestRating<T>(args: Arguments): Observable<T> {
+    this.loaderService.showLoader();
+
+    const options: any = RatingMapper.formatArgumentsToOptions(args);
+
+    return this.http.post<T>(`${this.apiUrl}/strategies.search`, options)
+      .pipe(
+        tap(item => this.loaderService.hideLoader()),
+        // catchError(()=>{
+        //   this.notificationsService.open('notify.loading.error', {
+        //     type: 'error',
+        //     autoClose: true,
+        //     duration: 3000
+        //   });
+        // })
+      );
+  }
+
   getAccountSpecAsset(): void {
     this.http.get(`${this.apiUrl}/accounts.searchSpec`).subscribe((response: any) => {
       this.accountSpecAsset = this.createInstanceService.createAccountSpecAsset(response.AccountSpecAsset[0]);
@@ -1023,8 +1043,7 @@ export class DataService {
 
   getOptionsRatings(): Observable<any> {
     const url = `${window.location.origin}/config/${JSON.parse(localStorage.getItem('brand')).brand.brandKey}`;
-    const linkOptions: string = `${url}/options.json`;
 
-    return this.http.get(linkOptions);
+    return this.http.get(`${url}/options.json`);
   }
 }

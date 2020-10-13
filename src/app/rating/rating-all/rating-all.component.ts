@@ -4,7 +4,7 @@ import { Paginator, Strategy, TableColumn } from '@app/models';
 import { TableHeaderRow } from '@app/models/table-header-row';
 import { PercentPipe } from '@angular/common';
 import { DataService } from '@app/services/data.service';
-import { filter, takeUntil } from 'rxjs/operators';
+import {filter, map, takeUntil} from 'rxjs/operators';
 import { SectionEnum } from "@app/enum/section.enum";
 
 @Component({
@@ -58,10 +58,13 @@ export class RatingAllComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.dataService.getOptionsRatings()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((result: any) => {
-        if (result) {
-          this.all = result.Ratings.filter(item => item.Name === 'All')[0];
+      .pipe(
+        takeUntil(this.destroy$),
+        map(({Ratings}) => Ratings)
+      )
+      .subscribe((ratings: any) => {
+        if (ratings ) {
+          this.all = ratings.filter(item => item.Name === 'All')[0];
           console.log('all', this.all);
           this.args = {
             searchMode: this.all.Filter.SearchMode,

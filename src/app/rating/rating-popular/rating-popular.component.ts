@@ -5,7 +5,7 @@ import { TableHeaderRow } from '@app/models/table-header-row';
 import { CustomCurrencyPipe } from '@app/pipes/custom-currency.pipe';
 import { PercentPipe } from '@angular/common';
 import { DataService } from '@app/services/data.service';
-import { takeUntil } from 'rxjs/operators';
+import {map, takeUntil} from 'rxjs/operators';
 import { SectionEnum } from "@app/enum/section.enum";
 
 @Component({
@@ -48,10 +48,13 @@ export class RatingPopularComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.dataService.getOptionsRatings()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((result: any) => {
-        if (result) {
-          this.popular = result.Ratings.filter(item => item.Name === 'Popular')[0];
+      .pipe(
+        takeUntil(this.destroy$),
+        map(({Ratings}) => Ratings)
+      )
+      .subscribe((ratings: any) => {
+        if (ratings) {
+          this.popular = ratings.filter(item => item.Name === 'Popular')[0];
           console.log('Popular', this.popular);
           this.args = {
             searchMode: this.popular.Filter.SearchMode,
