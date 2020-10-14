@@ -62,7 +62,6 @@ export class RatingAllComponent implements OnInit, OnDestroy {
       .subscribe((result: any) => {
         if (result) {
           this.all = result.Ratings.filter(item => item.Name === 'All')[0];
-          console.log('all', this.all);
           this.args = {
             searchMode: this.all.Filter.SearchMode,
             dealsMin: this.all.Filter.DealsMin,
@@ -82,8 +81,6 @@ export class RatingAllComponent implements OnInit, OnDestroy {
   getRating() {
     this.args.searchText = this.searchText;
     this.strategies$ = this.dataService.getRating(this.args);
-    console.log('all', this.strategies$);
-
   }
 
   ngOnDestroy(): void {

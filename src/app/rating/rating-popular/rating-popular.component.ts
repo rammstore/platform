@@ -52,7 +52,6 @@ export class RatingPopularComponent implements OnInit, OnDestroy {
       .subscribe((result: any) => {
         if (result) {
           this.popular = result.Ratings.filter(item => item.Name === 'Popular')[0];
-          console.log('Popular', this.popular);
           this.args = {
             searchMode: this.popular.Filter.SearchMode,
             dealsMin: this.popular.Filter.DealsMin,
@@ -72,7 +71,6 @@ export class RatingPopularComponent implements OnInit, OnDestroy {
   getRating() {
     this.args.searchText = this.searchText;
     this.strategies$ = this.dataService.getRating(this.args);
-    console.log('Popular', this.strategies$);
   }
 
   ngOnDestroy(): void {

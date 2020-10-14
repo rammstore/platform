@@ -59,7 +59,6 @@ export class RatingRatedComponent implements OnInit, OnDestroy {
       .subscribe((result: any) => {
         if (result) {
           this.rating = result.Ratings.filter(item => item.Name === 'Rating')[0];
-          console.log('rating', this.rating);
           this.args = {
             searchMode: this.rating.Filter.SearchMode,
             dealsMin: this.rating.Filter.DealsMin,
@@ -79,7 +78,6 @@ export class RatingRatedComponent implements OnInit, OnDestroy {
   getRating() {
     this.args.searchText = this.searchText;
     this.strategies$ = this.dataService.getRating(this.args);
-    console.log('rating', this.strategies$);
   }
   
   ngOnDestroy(): void {
