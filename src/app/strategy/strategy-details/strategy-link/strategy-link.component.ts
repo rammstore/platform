@@ -1,13 +1,13 @@
-import {Component, OnInit} from '@angular/core';
-import {Subject} from "rxjs";
-import {Strategy} from "@app/models";
-import {BsModalRef} from "ngx-bootstrap";
-import {ContentTabLink} from "@app/components/content-tabs/content-tab-link";
-import {ActivatedRoute} from "@angular/router";
-import {DataService} from "@app/services/data.service";
-import {BrandService} from "@app/services/brand.service";
-import {takeUntil} from "rxjs/internal/operators";
-import {StrategyService} from "@app/services/strategy.service";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subject } from "rxjs";
+import { Strategy } from "@app/models";
+import { BsModalRef } from "ngx-bootstrap";
+import { ContentTabLink } from "@app/components/content-tabs/content-tab-link";
+import { ActivatedRoute } from "@angular/router";
+import { DataService } from "@app/services/data.service";
+import { BrandService } from "@app/services/brand.service";
+import { takeUntil } from "rxjs/internal/operators";
+import { StrategyService } from "@app/services/strategy.service";
 
 @Component({
   selector: 'app-strategy-link',
@@ -15,8 +15,8 @@ import {StrategyService} from "@app/services/strategy.service";
   providers: [StrategyService],
   styleUrls: ['./strategy-link.component.scss']
 })
-export class StrategyLinkComponent implements OnInit {
-// https://blog.strongbrew.io/rxjs-best-practices-in-angular/#avoiding-memory-leaks
+export class StrategyLinkComponent implements OnInit, OnDestroy {
+  // https://blog.strongbrew.io/rxjs-best-practices-in-angular/#avoiding-memory-leaks
   // here we will unsubscribe from all subscriptions
   destroy$ = new Subject();
 

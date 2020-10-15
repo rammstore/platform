@@ -67,8 +67,4 @@ export class InvestmentsDetailsComponent implements OnInit, OnDestroy {
         ];
       });
   }
-
-  onReload() {
-    this.getAccountStatement();
-  }
 }

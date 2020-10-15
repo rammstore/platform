@@ -76,7 +76,7 @@ export class StrategyDetailsProfitabilityComponent implements OnInit, OnDestroy 
   }
 
   getStrategyChart() {
-    this.dataService.getStrategyChart(new ChartOptions(this.id))
+    this.dataService.getStrategyChart(new ChartOptions(this.strategy.id))
       .pipe(takeUntil(this.destroy$))
       .subscribe(response => {
 

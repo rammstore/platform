@@ -28,7 +28,7 @@ export class StrategyDetailsInvestmentsClosedComponent implements OnInit, OnDest
       new TableColumn({ property: 'dtCreated', label: 'common.table.label.created', pipe: { pipe: CustomDatePipe }}),
       new TableColumn({ property: 'dtClosed', label: 'common.table.label.closed', pipe: { pipe: CustomDatePipe }}),
       new TableColumn({ property: 'age', label: 'common.age', pipe: { pipe: CustomCurrencyPipe } }),
-      new TableColumn({ property: 'profitCurrentIntervalGross', label: 'common.profit-and-loss', pipe: { pipe: CustomCurrencyPipe } })
+      new TableColumn({ property: 'profitCurrentIntervalGross', label: 'common.table.label.yieldTotalUSD', pipe: { pipe: CustomCurrencyPipe } })
     ]),
   ];
   paginator: Paginator = new Paginator({

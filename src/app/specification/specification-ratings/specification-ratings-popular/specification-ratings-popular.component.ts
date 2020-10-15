@@ -27,24 +27,24 @@ export class SpecificationRatingsPopularComponent implements OnInit {
   }
 
   getRating(): void {
-    this.url = `${window.location.origin}/config/${JSON.parse(localStorage.getItem('brand')).brand.brandKey}`;
-    const linkOptions: string = `${this.url}/options.json`;
-
-    this.dataService.getBrandRatings(linkOptions)
+    this.dataService.getBrandRatings()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((ratings: Rating[]) => {
-
-        if (ratings) {
-          const yieldMin = (ratings[1].YieldMin * 100) + '%';
+      .subscribe((ratings: any[]) => {
+        if (ratings && ratings.length) {
           this.data = {
             title: 'spec.rating.conditions.title',
             items: [
-              { label: 'spec.rating.life-term.title', value: ratings[1].AgeMin },
-              { label: 'spec.rating.min-deals-number.title', value: ratings[1].DealsMin },
-              { label: 'spec.rating.min-yield.title', value: yieldMin },
-              { label: 'spec.rating.min-yield.title', value: 'spec.rating.min-yield.value' }
+              { label: 'spec.rating.life-term.title', value: ratings[1].Filter.AgeMin },
+              { label: 'spec.rating.min-deals-number.title', value: ratings[1].Filter.DealsMin }
             ]
           };
+
+          if(ratings[1].Filter.YieldMin){
+            this.data.items.push({ label: 'spec.rating.min-yield.title', value: ratings[1].Filter.YieldMin * 100 });
+          }
+
+          this.data.items.push({ label: 'spec.rating.orderBy.field', value: 'spec.rating.orderBy.field.' + ratings[1].OrderBy.Field });
+          this.data.items.push({ label: 'spec.rating.orderBy.directions', value: 'spec.rating.orderBy.directions.value' });
         }
       });
   }

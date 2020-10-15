@@ -191,7 +191,6 @@ export class DataService {
 
   // Получение конкретной стратегии за ссылкой
   getStrategyByLink(args: { link: string }): Observable<Strategy> {
-    // console.log('getStrategyByLink');
     this.loaderService.showLoader();
     this.http.post(`${this.apiUrl}/strategies.get`, {Link: args.link}).subscribe((response: any) => {
       this.loaderService.hideLoader();
@@ -444,15 +443,14 @@ export class DataService {
 
     this.http.post(`${this.apiUrl}/strategies.search`, options).subscribe((response: any) => {
       const accounts: Account[] = [];
-      //console.log('response', response);
       this.walletService.walletSubject.next(this.createInstanceService.createWallet(response.Wallets[0]));
-      
+
       response.Strategies
       .forEach((strategy: any) => {
         if(strategy.Account){
           const createStrategy = this.createInstanceService.createStrategy(strategy);
           const createAccount = this.createInstanceService.createAccount(strategy.Account);
-          
+
           createAccount.strategy = createStrategy;
           createAccount.offer = strategy.offer ? this.createInstanceService.createOffer(strategy.Offer) : null;
 
@@ -586,7 +584,7 @@ export class DataService {
         this.currentAccountStatementSubject.next({
           strategy: this.createInstanceService.createStrategy(response.Strategy),
           account: this.createInstanceService.createAccount(response.Account)
-          
+
         });
       } else {
         this.currentAccountStatementSubject.next({
@@ -917,13 +915,13 @@ export class DataService {
   //   return this.ratingStrategiesSubject.asObservable();
   // }
 
-  getRating(args: { ageMin?: number, dealsMin?: number, yield?: number, field?: string, paginator?: Paginator, searchText?: string }): Observable<Strategy[]> {
+  getRating(args: { ageMin?: number, dealsMin?: number, yieldMin?: number, searchMode?: string, field?: string, paginator?: Paginator, searchText?: string, direction?: string }): Observable<Strategy[]> {
     this.loaderService.showLoader();
     const options: StrategiesSearchOptions = new StrategiesSearchOptions();
     options.Filter = {
-      SearchMode: 'Rating',
+      SearchMode: args.searchMode,
       AgeMin: args.ageMin,
-      Yield: args.yield,
+      YieldMin: args.yieldMin,
       DealsMin: args.dealsMin
     };
 
@@ -933,7 +931,7 @@ export class DataService {
 
     options.OrderBy = {
       Field: args.field,
-      Direction: 'Desc'
+      Direction: args.direction
     };
 
     if (args.paginator) {
@@ -985,7 +983,7 @@ export class DataService {
   //     result.Ratings.forEach((rating: any) => {
   //       ratings.push(this.createInstanceService.createRating(rating));
   //     });
-      
+
   //     this.loaderService.hideLoader();
   //     this.ratingsSubject.next(ratings);
   //   }, (error: HttpErrorResponse) => {
@@ -999,14 +997,16 @@ export class DataService {
   //   return this.ratingsSubject.asObservable();
   // }
 
-   getBrandRatings(linkOptions: string): Observable<Rating[]> {
+   getBrandRatings(): Observable<any[]> {
+    const url = `${window.location.origin}/config/${JSON.parse(localStorage.getItem('brand')).brand.brandKey}`;
+    const linkOptions: string = `${url}/options.json`;
+
     this.http.get(linkOptions).subscribe((result: any) => {
-      const ratings: Rating[] = [];
-  
-      result.Ratings.forEach((rating: any) => {
-        ratings.push(this.createInstanceService.createRating(rating));
+      const ratings: any[] = [];
+
+      (result.Ratings || []).forEach((rating: any) => {
+        ratings.push(rating);
       });
-      console.log('sere',ratings)
       this.ratingsSubject.next(ratings);
     }, (error: HttpErrorResponse) => {
       this.notificationsService.open('notify.loading.error', {
@@ -1017,5 +1017,12 @@ export class DataService {
     });
 
     return this.ratingsSubject.asObservable();
+  }
+
+  getOptionsRatings(): Observable<any> {
+    const url = `${window.location.origin}/config/${JSON.parse(localStorage.getItem('brand')).brand.brandKey}`;
+    const linkOptions: string = `${url}/options.json`;
+
+    return this.http.get(linkOptions);
   }
 }

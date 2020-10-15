@@ -7,7 +7,7 @@ export class StrategiesSearchOptions {
     ActiveStrategies?: number,
     IsActive?: boolean,
     AgeMin?: number,
-    Yield?: number,
+    YieldMin?: number,
     DealsMin?: number,
   };
 

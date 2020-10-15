@@ -134,7 +134,7 @@ export class ManageStrategyInvestComponent implements OnInit, OnDestroy {
         this.dataService.getRating({
           field: 'Yield',
           ageMin: 30,
-          yield: 0,
+          yieldMin: 0,
           paginator: new Paginator({
             perPage: 10,
             currentPage: 1
