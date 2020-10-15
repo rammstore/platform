@@ -62,7 +62,6 @@ export class InvestmentsDetailsPositionsComponent implements OnInit, OnDestroy {
     this.refreshService.refresh$
       .pipe(map((item) => item == 'positions'))
       .subscribe((status) => {
-        debugger;
         this.emptyDataText = "table.cell.loading";
         if (status) {
           this.positions = [];
