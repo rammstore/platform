@@ -324,8 +324,8 @@
 	"spec.rating.orderBy.field.Accounts": "Accounts",
 	"spec.rating.orderBy.field.Yield": "Yield",
 	"spec.rating.orderBy.directions": "Directions",
-  "spec.rating.orderBy.directions.value": "По убыванию",
-  	"spec.rating.title": "Ratings",
+  "spec.rating.orderBy.directions.value": "Descending",
+  "spec.rating.title": "Ratings",
 
   	"strategy.add.form.label.amount": "Investment amount",
 	"strategy.add.form.label.commission": "Turnover fee",
