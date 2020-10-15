@@ -50,7 +50,7 @@ export class RatingPopularComponent implements OnInit, OnDestroy {
     this.dataService.getOptionsRatings()
       .pipe(takeUntil(this.destroy$))
       .subscribe((result: any) => {
-        if (result) {
+        if (result && result.length) {
           this.popular = result.Ratings.filter(item => item.Name === 'Popular')[0];
           this.args = {
             searchMode: this.popular.Filter.SearchMode,

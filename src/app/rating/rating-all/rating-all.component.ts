@@ -60,7 +60,7 @@ export class RatingAllComponent implements OnInit, OnDestroy {
     this.dataService.getOptionsRatings()
       .pipe(takeUntil(this.destroy$))
       .subscribe((result: any) => {
-        if (result) {
+        if (result && result.length) {
           this.all = result.Ratings.filter(item => item.Name === 'All')[0];
           this.args = {
             searchMode: this.all.Filter.SearchMode,
