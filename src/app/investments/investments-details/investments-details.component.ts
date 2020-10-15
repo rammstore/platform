@@ -8,7 +8,6 @@ import { BrandService } from '@app/services/brand.service';
 import { takeUntil } from 'rxjs/operators';
 import { SectionEnum } from "@app/enum/section.enum";
 import { RefreshService } from '@app/services/refresh.service';
-import { IRefresh } from '@app/models/refresh.interface';
 
 @Component({
   selector: 'app-investments-details',
@@ -28,7 +27,6 @@ export class InvestmentsDetailsComponent implements OnInit, OnDestroy {
   args: any;
   functionality: object;
   sectionEnum: SectionEnum = SectionEnum.statement;
-  refresh: IRefresh;
 
   constructor(
     private route: ActivatedRoute,

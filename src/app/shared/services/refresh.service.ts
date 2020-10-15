@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { IRefresh } from '@app/models/refresh.interface';
 import { ReplaySubject } from 'rxjs';
 
 @Injectable({
