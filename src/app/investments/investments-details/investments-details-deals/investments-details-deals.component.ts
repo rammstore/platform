@@ -69,7 +69,6 @@ export class InvestmentsDetailsDealsComponent implements OnInit, OnDestroy {
         this.emptyDataText = "table.cell.loading";
         if (status) {
           this.deals = [];
-          console.log("refresh deals", status);
           this.getDeals();
         }
       });
@@ -89,7 +88,6 @@ export class InvestmentsDetailsDealsComponent implements OnInit, OnDestroy {
             deal.volume = Math.abs(deal.volume);
           }
         });
-        console.log('getDeals', result);
         this.emptyDataText = "common.table.label.no-data";
         this.deals = result.deals;
       });

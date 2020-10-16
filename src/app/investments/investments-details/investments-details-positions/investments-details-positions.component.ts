@@ -66,7 +66,6 @@ export class InvestmentsDetailsPositionsComponent implements OnInit, OnDestroy {
         this.emptyDataText = "table.cell.loading";
         if (status) {
           this.positions = [];
-          console.log("refresh positions", status);
           this.getPositions();
         }
       });
@@ -84,7 +83,6 @@ export class InvestmentsDetailsPositionsComponent implements OnInit, OnDestroy {
             position.volume = Math.abs(position.volume);
           }
         });
-        console.log('getPositions', result);
 
         this.emptyDataText = "common.table.label.no-data";
         this.positions = result.positions;
