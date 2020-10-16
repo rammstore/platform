@@ -1,9 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, DoCheck, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { Subject } from 'rxjs';
 import { TableHeaderRow } from '@app/models/table-header-row';
 import { Account, Deal, Paginator, Position, TableColumn } from '@app/models';
 import { ActivatedRoute } from '@angular/router';
-import { map, takeUntil } from 'rxjs/internal/operators';
+import { map, take, takeLast, takeUntil } from 'rxjs/internal/operators';
 import { DataService } from '@app/services/data.service';
 import { CustomCurrencyPipe } from '@app/pipes/custom-currency.pipe';
 import { RefreshService } from '@app/services/refresh.service';
@@ -24,6 +24,7 @@ export class InvestmentsDetailsPositionsComponent implements OnInit, OnDestroy {
   account: Account;
   id: number;
   totals: object;
+  subscriptions = [];
 
   // table settings
   tableHeader: TableHeaderRow[] = [
@@ -59,16 +60,17 @@ export class InvestmentsDetailsPositionsComponent implements OnInit, OnDestroy {
         this.getPositions();
       });
 
-    this.refreshService.refresh$
+    const subscription = this.refreshService.refresh$
       .pipe(map((item) => item == 'positions'))
       .subscribe((status) => {
         this.emptyDataText = "table.cell.loading";
         if (status) {
           this.positions = [];
+          console.log("refresh positions", status);
           this.getPositions();
         }
       });
-
+    this.subscriptions.push(subscription);
   }
 
   getPositions(): void {
@@ -82,6 +84,7 @@ export class InvestmentsDetailsPositionsComponent implements OnInit, OnDestroy {
             position.volume = Math.abs(position.volume);
           }
         });
+        console.log('getPositions', result);
 
         this.emptyDataText = "common.table.label.no-data";
         this.positions = result.positions;
@@ -91,5 +94,9 @@ export class InvestmentsDetailsPositionsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.destroy$.next(true);
+    this.subscriptions.forEach(sub=>{
+      sub.unsubscribe();
+      this.refreshService.refresh = "";
+    });
   }
 }

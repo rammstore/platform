@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Deal, Paginator, TableColumn } from '@app/models';
 import { TableHeaderRow } from '@app/models/table-header-row';
 import { Subject } from 'rxjs';
@@ -24,6 +24,7 @@ export class InvestmentsDetailsDealsComponent implements OnInit, OnDestroy {
   deals: Deal[];
   id: number;
   totals: object;
+  subscriptions = [];
 
   // table settings
   tableHeader: TableHeaderRow[] = [
@@ -62,15 +63,19 @@ export class InvestmentsDetailsDealsComponent implements OnInit, OnDestroy {
       this.getDeals();
     });
 
-    this.refreshService.refresh$
+    const subscription = this.refreshService.refresh$
       .pipe(map((item) => item == 'deals'))
       .subscribe((status) => {
         this.emptyDataText = "table.cell.loading";
         if (status) {
           this.deals = [];
+          console.log("refresh deals", status);
           this.getDeals();
         }
       });
+
+    this.subscriptions.push(subscription);
+
   }
 
   getDeals(): void {
@@ -84,13 +89,17 @@ export class InvestmentsDetailsDealsComponent implements OnInit, OnDestroy {
             deal.volume = Math.abs(deal.volume);
           }
         });
-        
-        this.deals = result.deals;
+        console.log('getDeals', result);
         this.emptyDataText = "common.table.label.no-data";
+        this.deals = result.deals;
       });
   }
 
   ngOnDestroy(): void {
     this.destroy$.next(true);
+    this.subscriptions.forEach(sub => {
+      sub.unsubscribe();
+      this.refreshService.refresh = "";
+    });
   }
 }

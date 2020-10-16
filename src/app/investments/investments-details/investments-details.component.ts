@@ -52,9 +52,12 @@ export class InvestmentsDetailsComponent implements OnInit, OnDestroy {
   }
 
   onClick(){
-    let key = "positions";
+    let key = "";
     if(this.router.url.includes('/deals')){
       key = "deals"
+    }
+    else{
+      key = "positions";
     }
 
     this.currentDate = new Date();
