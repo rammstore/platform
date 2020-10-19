@@ -1,5 +1,5 @@
-import {Injectable} from '@angular/core';
-import {BehaviorSubject, forkJoin, Observable, of, ReplaySubject, Subject} from "rxjs";
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, forkJoin, Observable, of, ReplaySubject, Subject } from "rxjs";
 import {
   Account,
   AccountsSearchOptions,
@@ -16,16 +16,16 @@ import {
   Strategy,
   StrategyAccontsOptions
 } from "@app/models";
-import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {CreateInstanceService} from "@app/services/create-instance.service";
-import {CommandService} from "@app/services/command.service";
-import {CONFIG} from '@assets/config';
-import {map, takeUntil} from 'rxjs/operators';
-import {LoaderService} from '@app/services/loader.service';
-import {WalletService} from '@app/services/wallet.service';
-import {Router} from '@angular/router';
-import {NotificationsService} from '@app/services/notifications.service';
-import {AccountSpecAsset} from '@app/models/account-spec-asset';
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
+import { CreateInstanceService } from "@app/services/create-instance.service";
+import { CommandService } from "@app/services/command.service";
+import { CONFIG } from '@assets/config';
+import { catchError, map, takeUntil, tap } from 'rxjs/operators';
+import { LoaderService } from '@app/services/loader.service';
+import { WalletService } from '@app/services/wallet.service';
+import { Router } from '@angular/router';
+import { NotificationsService } from '@app/services/notifications.service';
+import { AccountSpecAsset } from '@app/models/account-spec-asset';
 import { Rating } from '@app/models/rating';
 
 @Injectable({
@@ -166,33 +166,44 @@ export class DataService {
   // Получение конкретной стратегии за ID
   getStrategyByID(args: { strategyId: number }): Observable<Strategy> {
     this.loaderService.showLoader();
-    this.http.post(`${this.apiUrl}/strategies.get`, {ID: args.strategyId}).subscribe((response: any) => {
-      this.loaderService.hideLoader();
-      this.currentStrategyDetailsSubject.next(this.createInstanceService.createStrategy(response));
-    }, (error: HttpErrorResponse) => {
-      if (error.status === 404) {
-        this.router.navigate(['/rating']);
-        this.notificationsService.open('notify.strategy.access.error', {
-          type: 'error',
-          autoClose: true,
-          duration: 3000
+    this.http.post(`${this.apiUrl}/strategies.get`, { ID: args.strategyId })
+      .subscribe((response: any) => {
+        this.loaderService.hideLoader();
+        this.currentStrategyDetailsSubject.next(this.createInstanceService.createStrategy(response));
+      },
+        (error: HttpErrorResponse) => {
+          if (error.status === 404) {
+            this.router.navigate(['/rating']);
+            this.notificationsService.open('notify.strategy.access.error', {
+              type: 'error',
+              autoClose: true,
+              duration: 3000
+            });
+          } else {
+            this.notificationsService.open('notify.loading.error', {
+              type: 'error',
+              autoClose: true,
+              duration: 3000
+            });
+          }
         });
-      } else {
-        this.notificationsService.open('notify.loading.error', {
-          type: 'error',
-          autoClose: true,
-          duration: 3000
-        });
-      }
-    });
 
     return this.currentStrategyDetailsSubject.asObservable();
   }
 
+  getStrategyById(args: { strategyId: number }): Observable<any> {
+    this.loaderService.showLoader();
+    return this.http.post(`${this.apiUrl}/strategies.get`, { ID: args.strategyId })
+      .pipe(
+        map((item) => this.createInstanceService.createStrategy(item)),
+        tap(item => this.loaderService.hideLoader()));
+  }
+
   // Получение конкретной стратегии за ссылкой
   getStrategyByLink(args: { link: string }): Observable<Strategy> {
+    // console.log('getStrategyByLink');
     this.loaderService.showLoader();
-    this.http.post(`${this.apiUrl}/strategies.get`, {Link: args.link}).subscribe((response: any) => {
+    this.http.post(`${this.apiUrl}/strategies.get`, { Link: args.link }).subscribe((response: any) => {
       this.loaderService.hideLoader();
       this.currentStrategyDetailsSubject.next(this.createInstanceService.createStrategy(response));
     }, (error: HttpErrorResponse) => {
@@ -278,7 +289,7 @@ export class DataService {
   // Постановка стратегии на паузу
   pauseStrategy(strategyId: number, methodName: string, methodArgs: any): Observable<any> {
     this.loaderService.showLoader();
-    return this.http.post(`${this.apiUrl}/myStrategies.pause`, {StrategyID: strategyId}).pipe(
+    return this.http.post(`${this.apiUrl}/myStrategies.pause`, { StrategyID: strategyId }).pipe(
       map((response: any) => {
         this.updateStrategy(new Command(response.CommandID, strategyId), methodName, methodArgs, 'notify.strategy.paused');
       })
@@ -288,7 +299,7 @@ export class DataService {
   // Возобновление стратегии
   resumeStrategy(strategyId: number, methodName: string, methodArgs: any): Observable<any> {
     this.loaderService.showLoader();
-    return this.http.post(`${this.apiUrl}/myStrategies.resume`, {StrategyID: strategyId}).pipe(
+    return this.http.post(`${this.apiUrl}/myStrategies.resume`, { StrategyID: strategyId }).pipe(
       map((response: any) => {
         this.updateStrategy(new Command(response.CommandID, strategyId), methodName, methodArgs, 'notify.strategy.resumed');
       })
@@ -298,7 +309,7 @@ export class DataService {
   // Закрытие стратегии
   closeStrategy(strategyId: number, methodName: string, methodArgs: any): Observable<any> {
     this.loaderService.showLoader();
-    return this.http.post(`${this.apiUrl}/myStrategies.close`, {StrategyID: strategyId}).pipe(
+    return this.http.post(`${this.apiUrl}/myStrategies.close`, { StrategyID: strategyId }).pipe(
       map((response: any) => {
         this.updateStrategy(new Command(response.CommandID, strategyId), methodName, methodArgs, 'notify.strategy.closed');
       })
@@ -306,7 +317,7 @@ export class DataService {
   }
 
   getStrategyToken(strategyId: number): Observable<string> {
-    return this.http.post(`${this.apiUrl}/myStrategies.getToken`, {StrategyID: strategyId}).pipe(
+    return this.http.post(`${this.apiUrl}/myStrategies.getToken`, { StrategyID: strategyId }).pipe(
       map((response: any) => {
         return response.Token;
       })
@@ -314,7 +325,7 @@ export class DataService {
   }
 
   isStrategyNameUniq(searchQuery: string): Observable<boolean> {
-    return this.http.post(`${this.apiUrl}/myStrategies.checkName`, {Name: searchQuery}).pipe(
+    return this.http.post(`${this.apiUrl}/myStrategies.checkName`, { Name: searchQuery }).pipe(
       map((response: any) => {
         return !!response.StrategyNameAvailable;
       })
@@ -368,7 +379,7 @@ export class DataService {
       map((response: any) => {
         const chart: object[] = [];
         response.StrategySymbolStat.forEach((stat: any) => {
-          chart.push({name: stat.Symbol, y: stat.Share});
+          chart.push({ name: stat.Symbol, y: stat.Share });
         });
         this.loaderService.hideLoader();
         return chart;
@@ -431,8 +442,8 @@ export class DataService {
   getActiveMyAccounts(args: { paginator: Paginator, orderBy?: string }): Observable<Account[]> {
     this.loaderService.showLoader();
     const options: AccountsSearchOptions = new AccountsSearchOptions();
-    options.Filter = {SearchMode: 'MyActiveAccounts'};
-    options.OrderBy = {Field: args.orderBy, Direction: 'Desc'};
+    options.Filter = { SearchMode: 'MyActiveAccounts' };
+    options.OrderBy = { Field: args.orderBy, Direction: 'Desc' };
 
     if (args.paginator) {
       options.Pagination = {
@@ -443,20 +454,21 @@ export class DataService {
 
     this.http.post(`${this.apiUrl}/strategies.search`, options).subscribe((response: any) => {
       const accounts: Account[] = [];
+      //console.log('response', response);
       this.walletService.walletSubject.next(this.createInstanceService.createWallet(response.Wallets[0]));
 
       response.Strategies
-      .forEach((strategy: any) => {
-        if(strategy.Account){
-          const createStrategy = this.createInstanceService.createStrategy(strategy);
-          const createAccount = this.createInstanceService.createAccount(strategy.Account);
+        .forEach((strategy: any) => {
+          if (strategy.Account) {
+            const createStrategy = this.createInstanceService.createStrategy(strategy);
+            const createAccount = this.createInstanceService.createAccount(strategy.Account);
 
-          createAccount.strategy = createStrategy;
-          createAccount.offer = strategy.offer ? this.createInstanceService.createOffer(strategy.Offer) : null;
+            createAccount.strategy = createStrategy;
+            createAccount.offer = strategy.offer ? this.createInstanceService.createOffer(strategy.Offer) : null;
 
-          accounts.push(createAccount);
-        }
-      });
+            accounts.push(createAccount);
+          }
+        });
 
       // response.Strategies.forEach((strategy: any) => {
       //   const options: any = strategy.Account;
@@ -575,7 +587,7 @@ export class DataService {
   // Получение деталей инвестиции
   getAccountStatement(args: { accountId: number }): Observable<any> {
     this.loaderService.showLoader();
-    this.http.post(`${this.apiUrl}/accounts.get`, {AccountID: args.accountId}).subscribe((response: any) => {
+    this.http.post(`${this.apiUrl}/accounts.get`, { AccountID: args.accountId }).subscribe((response: any) => {
       if (response.Strategy) {
         response.Strategy.PublicOffer = {
           CommissionRate: response.Strategy.Commission,
@@ -630,7 +642,7 @@ export class DataService {
       map((response: any) => {
         // this.getActiveMyStrategies().subscribe();
         this.walletService.updateWallet().subscribe();
-        this.getStrategyByID({strategyId: id});
+        this.getStrategyByID({ strategyId: id });
         // this.updateRatingList();
         this.notificationsService.open('notify.investment.created');
       })
@@ -652,7 +664,7 @@ export class DataService {
       map((response: any) => {
         // this.getActiveMyStrategies().subscribe();
         this.walletService.updateWallet().subscribe();
-        this.getStrategyByLink({link: link});
+        this.getStrategyByLink({ link: link });
         // this.updateRatingList();
         this.notificationsService.open('notify.investment.created');
       })
@@ -662,7 +674,7 @@ export class DataService {
   // Пополнить инвестицию
   fundAccount(accountID: number, amount: number, methodName: string, methodArgs: any) {
     this.loaderService.showLoader();
-    return this.http.post(`${this.apiUrl}/accounts.fund`, {AccountID: accountID, Amount: amount}).pipe(
+    return this.http.post(`${this.apiUrl}/accounts.fund`, { AccountID: accountID, Amount: amount }).pipe(
       map((response: any) => {
         this.updateAccount(new Command(response.CommandBalanceID, accountID), methodName, methodArgs, 'notify.investment.funded');
       })
@@ -672,7 +684,7 @@ export class DataService {
   // Приостановить инвестицию
   pauseAccount(accountID: number, methodName: string, methodArgs: any): Observable<any> {
     this.loaderService.showLoader();
-    return this.http.post(`${this.apiUrl}/accounts.pause`, {AccountID: accountID}).pipe(
+    return this.http.post(`${this.apiUrl}/accounts.pause`, { AccountID: accountID }).pipe(
       map((response: any) => {
         this.updateAccount(new Command(response.CommandID, accountID), methodName, methodArgs, 'notify.investment.paused');
       })
@@ -682,7 +694,7 @@ export class DataService {
   // Возобновить инвестицию
   resumeAccount(accountID: number, methodName: string, methodArgs: any): Observable<any> {
     this.loaderService.showLoader();
-    return this.http.post(`${this.apiUrl}/accounts.resume`, {AccountID: accountID}).pipe(
+    return this.http.post(`${this.apiUrl}/accounts.resume`, { AccountID: accountID }).pipe(
       map((response: any) => {
         this.updateAccount(new Command(response.CommandID, accountID), methodName, methodArgs, 'notify.investment.resumed');
       })
@@ -745,7 +757,7 @@ export class DataService {
   // Вывести средства из инвестиции
   withdrawFromAccount(accountId: number, amount: number, methodName: string, methodArgs: any): Observable<any> {
     this.loaderService.showLoader();
-    return this.http.post(`${this.apiUrl}/accounts.withdraw`, {AccountID: accountId, Amount: amount}).pipe(
+    return this.http.post(`${this.apiUrl}/accounts.withdraw`, { AccountID: accountId, Amount: amount }).pipe(
       map((response: any) => {
         this.updateAccount(new Command(response.CommandBalanceID, accountId), methodName, methodArgs, 'notify.investment.withdrawn');
       })
@@ -755,7 +767,7 @@ export class DataService {
   // Закрыть инвестицию
   closeAccount(accountID: number, methodName: string, methodArgs: any): Observable<any> {
     this.loaderService.showLoader();
-    return this.http.post(`${this.apiUrl}/accounts.close`, {AccountID: accountID}).pipe(
+    return this.http.post(`${this.apiUrl}/accounts.close`, { AccountID: accountID }).pipe(
       map((response: any) => {
         this.updateAccount(new Command(response.CommandID, accountID), methodName, methodArgs, 'notify.investment.closed');
       })
@@ -788,7 +800,7 @@ export class DataService {
   getAccountDeals(id: number, pagination?: Paginator): Observable<object> {
     this.loaderService.showLoader();
     const options: DealsSearchOptions = new DealsSearchOptions();
-    options.Filter = {AccountID: id};
+    options.Filter = { AccountID: id };
 
     if (pagination) {
       options.Pagination = {
@@ -828,7 +840,7 @@ export class DataService {
   getAccountPositions(id: number, pagination?: Paginator): Observable<object> {
     this.loaderService.showLoader();
     const options: PositionsSearchOptions = new PositionsSearchOptions();
-    options.Filter = {AccountID: id};
+    options.Filter = { AccountID: id };
 
     if (pagination) {
       options.Pagination = {
@@ -997,7 +1009,7 @@ export class DataService {
   //   return this.ratingsSubject.asObservable();
   // }
 
-   getBrandRatings(): Observable<any[]> {
+  getBrandRatings(): Observable<any[]> {
     const url = `${window.location.origin}/config/${JSON.parse(localStorage.getItem('brand')).brand.brandKey}`;
     const linkOptions: string = `${url}/options.json`;
 
@@ -1021,8 +1033,7 @@ export class DataService {
 
   getOptionsRatings(): Observable<any> {
     const url = `${window.location.origin}/config/${JSON.parse(localStorage.getItem('brand')).brand.brandKey}`;
-    const linkOptions: string = `${url}/options.json`;
 
-    return this.http.get(linkOptions);
+    return this.http.get(`${url}/options.json`);
   }
 }
