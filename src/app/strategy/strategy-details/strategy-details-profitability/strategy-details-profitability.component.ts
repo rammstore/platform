@@ -91,7 +91,7 @@ export class StrategyDetailsProfitabilityComponent implements OnInit, OnDestroy 
         tap(item => {
           this.strategy = new Strategy(item);
         }));
-  } s
+  }
 
   getStrategyChart(id: number) {
     this.dataService.getStrategyChart(new ChartOptions(id))

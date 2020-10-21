@@ -3,8 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Strategy } from '@app/models';
 import { ContentTabLink } from '@app/components/content-tabs/content-tab-link';
 import { BsModalRef } from 'ngx-bootstrap';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/internal/operators';
+import { Observable, Subject } from 'rxjs';
+import { take, takeUntil, tap } from 'rxjs/internal/operators';
 import { DataService } from '@app/services/data.service';
 import { BrandService } from '@app/services/brand.service';
 import { StrategyService } from '@app/services/strategy.service';
@@ -20,7 +20,7 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
   // https://blog.strongbrew.io/rxjs-best-practices-in-angular/#avoiding-memory-leaks
   // here we will unsubscribe from all subscriptions
   destroy$ = new Subject();
-
+  strategy$: Observable<Strategy>;
   // component data
   strategy: Strategy;
   modalRef: BsModalRef;
@@ -35,7 +35,8 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private dataService: DataService,
-    private brandService: BrandService
+    private brandService: BrandService,
+    private strategyService: StrategyService
   ) {
   }
 
@@ -51,26 +52,51 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
       this.args = {
         strategyId: this.id
       };
-      this.dataService.getStrategyByID(this.args)
-        .pipe(takeUntil(this.destroy$))
-        .subscribe((strategy: Strategy) => {
-          this.strategy = strategy;
-          this.strategiesDetailsLinks();
-        });
-      this.methodName = 'getStrategyByID';
+
+      this.strategy$ = this.getStrategyById(this.args)
+        .pipe(
+          tap((item) => {
+            this.strategiesDetailsLinks();
+          })
+        );
+
+      this.methodName = 'getStrategyById';
     } else {
       this.args = {
         link: this.route.params['_value'].id
       };
-      this.dataService.getStrategyByLink(this.args)
-        .pipe(takeUntil(this.destroy$))
-        .subscribe((strategy: Strategy) => {
-          this.strategy = strategy;
-          this.strategiesLinks();
-        });
+      this.strategy$ = this.getStrategyByLink(this.args)
+        .pipe(
+          tap((item) => {
+            this.strategiesLinks();
+          })
+        );
+
       this.methodName = 'getStrategyByLink';
     }
 
+  }
+
+  private getStrategyByLink(args): Observable<any> {
+    return this.dataService.getStrategyByLinkAsObservable(args)
+      .pipe(
+        take(1),
+        tap((strategy) => {
+          this.strategyService.strategy = strategy;
+          this.strategy = strategy;
+        })
+      )
+  }
+
+  private getStrategyById(args): Observable<any> {
+    return this.dataService.getStrategyById(args)
+      .pipe(
+        take(1),
+        tap((strategy) => {
+          this.strategyService.strategy = strategy;
+          this.strategy = strategy;
+        })
+      );
   }
 
   strategiesDetailsLinks() {
@@ -98,5 +124,6 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.destroy$.next(true);
+    this.strategyService.getStrategyAsSubject.complete();
   }
 }

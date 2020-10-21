@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, forkJoin, Observable, of, ReplaySubject, Subject } from "rxjs";
+import { BehaviorSubject, forkJoin, Observable, of, pipe, ReplaySubject, Subject } from "rxjs";
 import {
   Account,
   AccountsSearchOptions,
@@ -199,6 +199,23 @@ export class DataService {
         tap(item => this.loaderService.hideLoader()));
   }
 
+  getStrategyByLinkAsObservable(args: { link: string }): Observable<any> {
+    this.loaderService.showLoader();
+    return this.http.post(`${this.apiUrl}/strategies.get`, { Link: args.link })
+      .pipe(
+        map((item) => this.createInstanceService.createStrategy(item)),
+        tap(item => this.loaderService.hideLoader())
+      );
+  }
+
+  // getOffers(id: number): Observable<any> {
+  //   this.loaderService.showLoader();
+  //   return this.http.post(`${this.apiUrl}/strategies.getOffers`, { StrategyID: id })
+  //     .pipe(
+  //       map((offers) => this.createInstanceService.createOffers(offers)),
+  //       tap(item => this.loaderService.hideLoader())
+  //     );
+  // }
   // Получение конкретной стратегии за ссылкой
   getStrategyByLink(args: { link: string }): Observable<Strategy> {
     // console.log('getStrategyByLink');

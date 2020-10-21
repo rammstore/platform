@@ -91,6 +91,12 @@ export class CreateInstanceService {
     return new Offer(options);
   }
 
+  createOffers(options: any): Offer[]{
+    const offers: Offer[] = [];
+    options.Offers.forEach((offer)=>offers.push(new Offer(offer)));
+    return offers;
+  }
+
   createRating(options: any): Rating{
     return new Rating(options);
   }
