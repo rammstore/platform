@@ -1,4 +1,4 @@
-<table *ngIf="strategy">
+<table *ngIf="strategy$ | async as strategy">
   <tbody>
   <tr>
     <td translate>common.yieldMonthly</td>

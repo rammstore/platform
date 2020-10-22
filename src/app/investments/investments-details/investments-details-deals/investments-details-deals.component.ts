@@ -2,11 +2,12 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Deal, Paginator, TableColumn } from '@app/models';
 import { TableHeaderRow } from '@app/models/table-header-row';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/internal/operators';
+import { map, takeUntil } from 'rxjs/internal/operators';
 import { ActivatedRoute } from '@angular/router';
 import { DataService } from '@app/services/data.service';
 import { CustomCurrencyPipe } from '@app/pipes/custom-currency.pipe';
 import { CustomDatePipe } from '@app/pipes/custom-date.pipe';
+import { RefreshService } from '@app/services/refresh.service';
 
 @Component({
   selector: 'app-investments-details-deals',
@@ -18,16 +19,18 @@ export class InvestmentsDetailsDealsComponent implements OnInit, OnDestroy {
   // here we will unsubscribe from all subscriptions
   destroy$ = new Subject();
 
+  emptyDataText: string;
   // component data
   deals: Deal[];
   id: number;
   totals: object;
+  subscriptions = [];
 
   // table settings
   tableHeader: TableHeaderRow[] = [
     new TableHeaderRow([
-      new TableColumn({ property: 'dtCreated', label: 'common.table.label.time', pipe: { pipe: CustomDatePipe }}),
-      new TableColumn({ property: 'id', label: 'common.table.label.deal'}),
+      new TableColumn({ property: 'dtCreated', label: 'common.table.label.time', pipe: { pipe: CustomDatePipe } }),
+      new TableColumn({ property: 'id', label: 'common.table.label.deal' }),
       new TableColumn({ property: 'symbol', label: 'common.table.label.symbol' }),
       new TableColumn({ property: 'type', label: 'common.type' }),
       new TableColumn({ property: 'entry', label: 'common.table.label.entry' }),
@@ -47,20 +50,37 @@ export class InvestmentsDetailsDealsComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private dataService: DataService
+    private dataService: DataService,
+    private refreshService: RefreshService
   ) { }
 
+
+
   ngOnInit() {
+    this.emptyDataText = "common.table.label.no-data";
     this.route.parent.params.subscribe((params) => {
       this.id = params['id'];
       this.getDeals();
     });
+
+    const subscription = this.refreshService.refresh$
+      .pipe(map((item) => item == 'deals'))
+      .subscribe((status) => {
+        this.emptyDataText = "table.cell.loading";
+        if (status) {
+          this.deals = [];
+          this.getDeals();
+        }
+      });
+
+    this.subscriptions.push(subscription);
+
   }
 
   getDeals(): void {
     this.dataService.getAccountDeals(this.id, this.paginator)
       .pipe(takeUntil(this.destroy$))
-      .subscribe((result: {deals: Deal[], totals: object}) => {
+      .subscribe((result: { deals: Deal[], totals: object }) => {
         this.totals = result.totals;
 
         result.deals.forEach((deal: Deal) => {
@@ -68,11 +88,16 @@ export class InvestmentsDetailsDealsComponent implements OnInit, OnDestroy {
             deal.volume = Math.abs(deal.volume);
           }
         });
+        this.emptyDataText = "common.table.label.no-data";
         this.deals = result.deals;
       });
   }
 
   ngOnDestroy(): void {
     this.destroy$.next(true);
+    this.subscriptions.forEach(sub => {
+      sub.unsubscribe();
+      this.refreshService.refresh = "";
+    });
   }
 }

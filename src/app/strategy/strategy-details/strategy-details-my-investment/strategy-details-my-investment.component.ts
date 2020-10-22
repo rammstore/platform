@@ -56,7 +56,6 @@ export class StrategyDetailsMyInvestmentComponent implements OnInit, OnDestroy {
       this.getAccountStatement({
         accountId: this.accountId
       });
-
     } else {
       this.offer = this.strategy.account.offer;
       this.getAccountStatement({

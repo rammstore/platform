@@ -75,7 +75,6 @@ export class RatingPopularComponent implements OnInit, OnDestroy {
   getRating() {
     this.args.searchText = this.searchText;
     this.strategies$ = this.dataService.getRating(this.args);
-    console.log('Popular', this.strategies$);
   }
 
   ngOnDestroy(): void {

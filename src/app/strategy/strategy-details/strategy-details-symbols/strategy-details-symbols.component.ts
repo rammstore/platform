@@ -2,10 +2,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Strategy } from '@app/models';
 import * as Highcharts from 'highcharts';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/internal/operators';
+import { Observable, pipe, Subject } from 'rxjs';
+import { take, takeUntil, tap } from 'rxjs/internal/operators';
 import { DataService } from '@app/services/data.service';
-import {StrategyService} from "@app/services/strategy.service";
+import { StrategyService } from "@app/services/strategy.service";
 
 @Component({
   selector: 'app-strategy-details-symbols',
@@ -16,7 +16,7 @@ export class StrategyDetailsSymbolsComponent implements OnInit, OnDestroy {
   // https://blog.strongbrew.io/rxjs-best-practices-in-angular/#avoiding-memory-leaks
   // here we will unsubscribe from all subscriptions
   destroy$ = new Subject();
-
+  strategy$: Observable<Strategy>;
   // component data
   strategy: Strategy;
   chartOptions: any;
@@ -38,18 +38,25 @@ export class StrategyDetailsSymbolsComponent implements OnInit, OnDestroy {
           strategyId: this.id
         };
 
-        this.dataService.getStrategyByID(this.args)
-          .pipe(takeUntil(this.destroy$))
-          .subscribe((strategy: Strategy) => {
-            this.strategy = strategy;
-          });
+        this.strategy$ = this.getStrategyById(this.args)
+          .pipe(
+            tap((strategy) => {
+              this.getCharts(strategy.id);
+            })
+          );
       }
     } else {
-      this.strategy = this.strategyService.strategy;
+      this.strategy$ = this.strategyService.strategy$
+        .pipe(
+          tap((strategy) => {
+            this.getCharts(strategy.id);
+          })
+        );
     }
+  }
 
-
-    this.dataService.getSymbolsChart(this.strategy.id)
+  getCharts(id: number) {
+    this.dataService.getSymbolsChart(id)
       .pipe(takeUntil(this.destroy$))
       .subscribe((strategySymbolsStat: object[]) => {
         if (strategySymbolsStat.length) {
@@ -79,6 +86,16 @@ export class StrategyDetailsSymbolsComponent implements OnInit, OnDestroy {
           Highcharts.chart('symbolsChartContainer', this.chartOptions);
         }
       });
+  }
+
+  private getStrategyById(args): Observable<any> {
+    return this.dataService.getStrategyById(args)
+      .pipe(
+        take(1),
+        tap((strategy) => {
+          this.strategy = strategy;
+        })
+      );
   }
 
   ngOnDestroy(): void {

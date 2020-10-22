@@ -85,8 +85,6 @@ export class RatingAllComponent implements OnInit, OnDestroy {
   getRating() {
     this.args.searchText = this.searchText;
     this.strategies$ = this.dataService.getRating(this.args);
-    console.log('all', this.strategies$);
-
   }
 
   ngOnDestroy(): void {

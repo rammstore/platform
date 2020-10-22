@@ -1,4 +1,4 @@
-<ng-container *ngIf="strategy">
+<ng-container *ngIf="strategy$ | async as strategy">
   <div class="caption">
     <h2>
       {{strategy.name}}
