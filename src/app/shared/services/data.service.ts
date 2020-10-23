@@ -830,10 +830,10 @@ export class DataService {
       const result: { deals: Deal[], totals: object } = {
         deals: [],
         totals: {
-          yield: response.DealsTotal[0].Profit,
-          totalProfit: response.DealsTotal[0].TotalProfit,
-          swap: response.DealsTotal[0].Swap,
-          commission: response.DealsTotal[0].Commission
+          yield: response.DealsTotal.Profit,
+          totalProfit: response.DealsTotal.TotalProfit,
+          swap: response.DealsTotal.Swap,
+          commission: response.DealsTotal.Commission
         }
       };
 
@@ -870,9 +870,9 @@ export class DataService {
       const result: { positions: Position[], totals: object } = {
         positions: [],
         totals: {
-          profit: response.PositionsTotal[0].Profit,
-          totalProfit: response.PositionsTotal[0].TotalProfit,
-          swap: response.PositionsTotal[0].Swap
+          profit: response.PositionsTotal.Profit,
+          totalProfit: response.PositionsTotal.TotalProfit,
+          swap: response.PositionsTotal.Swap
         }
       };
 
