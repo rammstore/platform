@@ -4,8 +4,11 @@ import { Paginator, Strategy, TableColumn } from '@app/models';
 import { TableHeaderRow } from '@app/models/table-header-row';
 import { PercentPipe } from '@angular/common';
 import { DataService } from '@app/services/data.service';
-import {filter, map, takeUntil} from 'rxjs/operators';
+import { filter, map, take, takeUntil, tap } from 'rxjs/operators';
 import { SectionEnum } from "@app/enum/section.enum";
+import { EntityInterface } from '@app/interfaces/entity.interface';
+import { CreateInstanceService } from '@app/services/create-instance.service';
+import { WalletService } from '@app/services/wallet.service';
 
 @Component({
   selector: 'app-rating-all',
@@ -24,6 +27,7 @@ export class RatingAllComponent implements OnInit, OnDestroy {
   args: any;
   section: SectionEnum = SectionEnum.rating;
   all: any;
+  optionsRatings$: Observable<any>;
 
   // table settings
   tableHeader: TableHeaderRow[] = [
@@ -52,34 +56,76 @@ export class RatingAllComponent implements OnInit, OnDestroy {
   });
 
   constructor(
-    private dataService: DataService
+    private dataService: DataService,
+    private createInstanceService: CreateInstanceService,
+    private walletService: WalletService
   ) {
   }
 
   ngOnInit(): void {
-    this.dataService.getOptionsRatings()
+    // this.dataService.getOptionsRatings()
+    //   .pipe(
+    //     takeUntil(this.destroy$),
+    //     map(({Ratings}) => Ratings)
+    //   )
+    //   .subscribe((ratings: any) => {
+    //     if (ratings ) {
+    //       this.all = ratings.filter(item => item.Name === 'All')[0];
+    //       console.log('all', this.all);
+    //       this.args = {
+    //         searchMode: this.all.Filter.SearchMode,
+    //         dealsMin: this.all.Filter.DealsMin,
+    //         ageMin: this.all.Filter.AgeMin,
+    //         yieldMin: this.all.Filter.YieldMin,
+    //         field: this.all.OrderBy.Field,
+    //         direction: this.all.OrderBy.Direction,
+    //         paginator: this.paginator,
+    //         searchText: this.searchText
+    //       };
+
+    //       this.getRating();
+    //     }
+    //   });
+    this.optionsRatings$ = this.dataService.getOptionsRatings()
       .pipe(
         takeUntil(this.destroy$),
-        map(({Ratings}) => Ratings)
-      )
-      .subscribe((ratings: any) => {
-        if (ratings ) {
-          this.all = ratings.filter(item => item.Name === 'All')[0];
-          console.log('all', this.all);
-          this.args = {
-            searchMode: this.all.Filter.SearchMode,
-            dealsMin: this.all.Filter.DealsMin,
-            ageMin: this.all.Filter.AgeMin,
-            yieldMin: this.all.Filter.YieldMin,
-            field: this.all.OrderBy.Field,
-            direction: this.all.OrderBy.Direction,
-            paginator: this.paginator,
-            searchText: this.searchText
-          };
+        map(({ Ratings }) => Ratings),
+        map(ratings => {
+          if (ratings) {
+            const all = ratings.filter(item => item.Name === 'All')[0];
 
-          this.getRating();
-        }
-      });
+            this.args = {
+              searchMode: all.Filter.SearchMode,
+              dealsMin: all.Filter.DealsMin,
+              ageMin: all.Filter.AgeMin,
+              yieldMin: all.Filter.YieldMin,
+              field: all.OrderBy.Field,
+              direction: all.OrderBy.Direction,
+              paginator: this.paginator
+            };
+          }
+          return {
+            ratings,
+            args: this.args
+          };
+        }),
+        tap(({ args }) => {
+          this.strategies$ = this.getStrategies();
+        })
+      );
+  }
+
+  getStrategies(): Observable<any> {
+    this.args.searchText = this.searchText;
+    return this.dataService.getBestRating<EntityInterface>(this.args)
+      .pipe(
+        take(1),
+        tap(item => {
+          this.walletService.walletSubject.next(this.createInstanceService.createWallet(item.Wallets[0]));
+          console.log('ratind-all', item)
+        }),
+        map(({ Strategies }) => Strategies.map((item) => this.createInstanceService.createStrategy(item)))
+      );
   }
 
   getRating() {

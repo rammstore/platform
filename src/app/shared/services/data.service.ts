@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { DefaultIterableDiffer, Injectable } from '@angular/core';
 import { BehaviorSubject, forkJoin, Observable, of, pipe, ReplaySubject, Subject } from "rxjs";
 import {
   Account,
@@ -20,15 +20,15 @@ import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { CreateInstanceService } from "@app/services/create-instance.service";
 import { CommandService } from "@app/services/command.service";
 import { CONFIG } from '@assets/config';
-import { catchError, map, takeUntil, tap } from 'rxjs/operators';
+import { catchError, map, takeUntil, tap, filter, take, takeLast } from 'rxjs/operators';
 import { LoaderService } from '@app/services/loader.service';
 import { WalletService } from '@app/services/wallet.service';
 import { Router } from '@angular/router';
 import { NotificationsService } from '@app/services/notifications.service';
 import { AccountSpecAsset } from '@app/models/account-spec-asset';
 import { Rating } from '@app/models/rating';
-import {Arguments} from "@app/interfaces/args.interface";
-import {RatingMapper} from "@app/mappers/rating.mapper";
+import { Arguments } from "@app/interfaces/args.interface";
+import { RatingMapper } from "@app/mappers/rating.mapper";
 
 @Injectable({
   providedIn: 'root'
@@ -869,6 +869,7 @@ export class DataService {
     }
 
     return this.http.post(`${this.apiUrl}/positions.search`, options).pipe(map((response: any) => {
+      debugger;
       const result: { positions: Position[], totals: object } = {
         positions: [],
         totals: {
@@ -1003,10 +1004,14 @@ export class DataService {
     this.loaderService.showLoader();
 
     const options: any = RatingMapper.formatArgumentsToOptions(args);
-
+    debugger;
     return this.http.post<T>(`${this.apiUrl}/strategies.search`, options)
       .pipe(
-        tap(item => this.loaderService.hideLoader()),
+        tap(item => {
+          debugger;
+          console.log('dataService', item)
+          this.loaderService.hideLoader()
+        })
         // catchError(()=>{
         //   this.notificationsService.open('notify.loading.error', {
         //     type: 'error',

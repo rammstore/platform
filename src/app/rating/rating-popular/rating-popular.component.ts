@@ -5,8 +5,11 @@ import { TableHeaderRow } from '@app/models/table-header-row';
 import { CustomCurrencyPipe } from '@app/pipes/custom-currency.pipe';
 import { PercentPipe } from '@angular/common';
 import { DataService } from '@app/services/data.service';
-import {map, takeUntil} from 'rxjs/operators';
+import { map, take, takeLast, takeUntil, tap } from 'rxjs/operators';
 import { SectionEnum } from "@app/enum/section.enum";
+import { EntityInterface } from '@app/interfaces/entity.interface';
+import { CreateInstanceService } from '@app/services/create-instance.service';
+import { WalletService } from '@app/services/wallet.service';
 
 @Component({
   selector: 'app-rating-popular',
@@ -24,6 +27,7 @@ export class RatingPopularComponent implements OnInit, OnDestroy {
   args: any;
   section: SectionEnum = SectionEnum.rating;
   popular: any;
+  optionsRatings$: Observable<any>;
 
   // table settings
   tableHeader: TableHeaderRow[] = [
@@ -43,36 +47,57 @@ export class RatingPopularComponent implements OnInit, OnDestroy {
   });
 
   constructor(
-    private dataService: DataService
+    private dataService: DataService,
+    private createInstanceService: CreateInstanceService,
+    private walletService: WalletService
   ) { }
 
   ngOnInit(): void {
-    this.dataService.getOptionsRatings()
+    this.optionsRatings$ = this.dataService.getOptionsRatings()
       .pipe(
         takeUntil(this.destroy$),
-        map(({Ratings}) => Ratings)
-      )
-      .subscribe((ratings: any) => {
-        if (ratings) {
-          this.popular = ratings.filter(item => item.Name === 'Popular')[0];
-          console.log('Popular', this.popular);
-          this.args = {
-            searchMode: this.popular.Filter.SearchMode,
-            dealsMin: this.popular.Filter.DealsMin,
-            ageMin: this.popular.Filter.AgeMin,
-            yieldMin: this.popular.Filter.YieldMin,
-            field: this.popular.OrderBy.Field,
-            direction: this.popular.OrderBy.Direction,
-            paginator: this.paginator,
-            searchText: this.searchText
-          };
+        map(({ Ratings }) => Ratings),
+        map(ratings => {
+          if (ratings) {
+            const all = ratings.filter(item => item.Name === 'Popular')[0];
 
-          this.getRating();
-        }
-      });
+            this.args = {
+              searchMode: all.Filter.SearchMode,
+              dealsMin: all.Filter.DealsMin,
+              ageMin: all.Filter.AgeMin,
+              yieldMin: all.Filter.YieldMin,
+              field: all.OrderBy.Field,
+              direction: all.OrderBy.Direction,
+              paginator: this.paginator
+            };
+          }
+          return {
+            ratings,
+            args: this.args
+          };
+        }),
+        tap(({ args }) => {
+          this.strategies$ = this.getStrategies();
+        })
+      );
+  }
+
+  getStrategies(): Observable<Strategy[]> {
+    this.args.searchText = this.searchText;
+    console.log('getStrategies')
+    return this.dataService.getBestRating<EntityInterface>(this.args)
+      .pipe(
+        take(1),
+        tap(item => {
+          this.walletService.walletSubject.next(this.createInstanceService.createWallet(item.Wallets[0]));
+          console.log('ratind-popular', item)
+        }),
+        map(({ Strategies }) => Strategies.map((item) => this.createInstanceService.createStrategy(item))),
+      );
   }
 
   getRating() {
+    debugger;
     this.args.searchText = this.searchText;
     this.strategies$ = this.dataService.getRating(this.args);
   }
