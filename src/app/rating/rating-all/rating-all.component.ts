@@ -9,6 +9,7 @@ import { SectionEnum } from "@app/enum/section.enum";
 import { EntityInterface } from '@app/interfaces/entity.interface';
 import { CreateInstanceService } from '@app/services/create-instance.service';
 import { WalletService } from '@app/services/wallet.service';
+import { ArgumentsService } from '@app/services/arguments.service';
 
 @Component({
   selector: 'app-rating-all',
@@ -27,7 +28,7 @@ export class RatingAllComponent implements OnInit, OnDestroy {
   args: any;
   section: SectionEnum = SectionEnum.rating;
   all: any;
-  optionsRatings$: Observable<any>;
+  ratingAll$: Observable<any>;
 
   // table settings
   tableHeader: TableHeaderRow[] = [
@@ -58,58 +59,25 @@ export class RatingAllComponent implements OnInit, OnDestroy {
   constructor(
     private dataService: DataService,
     private createInstanceService: CreateInstanceService,
-    private walletService: WalletService
+    private walletService: WalletService,
+    private argumentsService: ArgumentsService
   ) {
   }
 
   ngOnInit(): void {
-    // this.dataService.getOptionsRatings()
-    //   .pipe(
-    //     takeUntil(this.destroy$),
-    //     map(({Ratings}) => Ratings)
-    //   )
-    //   .subscribe((ratings: any) => {
-    //     if (ratings ) {
-    //       this.all = ratings.filter(item => item.Name === 'All')[0];
-    //       console.log('all', this.all);
-    //       this.args = {
-    //         searchMode: this.all.Filter.SearchMode,
-    //         dealsMin: this.all.Filter.DealsMin,
-    //         ageMin: this.all.Filter.AgeMin,
-    //         yieldMin: this.all.Filter.YieldMin,
-    //         field: this.all.OrderBy.Field,
-    //         direction: this.all.OrderBy.Direction,
-    //         paginator: this.paginator,
-    //         searchText: this.searchText
-    //       };
-
-    //       this.getRating();
-    //     }
-    //   });
-    this.optionsRatings$ = this.dataService.getOptionsRatings()
+    this.ratingAll$ = this.argumentsService.ratingAll$
       .pipe(
-        takeUntil(this.destroy$),
-        map(({ Ratings }) => Ratings),
-        map(ratings => {
-          if (ratings) {
-            const all = ratings.filter(item => item.Name === 'All')[0];
-
-            this.args = {
-              searchMode: all.Filter.SearchMode,
-              dealsMin: all.Filter.DealsMin,
-              ageMin: all.Filter.AgeMin,
-              yieldMin: all.Filter.YieldMin,
-              field: all.OrderBy.Field,
-              direction: all.OrderBy.Direction,
-              paginator: this.paginator
-            };
-          }
-          return {
-            ratings,
-            args: this.args
+        tap((argument) => {
+          this.args = {
+            searchMode: argument.searchMode,
+            dealsMin: argument.dealsMin,
+            ageMin: argument.ageMin,
+            yieldMin: argument.yieldMin,
+            field: argument.field,
+            direction: argument.direction,
+            paginator: this.paginator
           };
-        }),
-        tap(({ args }) => {
+
           this.strategies$ = this.getStrategies();
         })
       );
@@ -130,7 +98,7 @@ export class RatingAllComponent implements OnInit, OnDestroy {
 
   getRating() {
     this.args.searchText = this.searchText;
-    this.strategies$ = this.dataService.getRating(this.args);
+    this.strategies$ = this.getStrategies();
   }
 
   ngOnDestroy(): void {

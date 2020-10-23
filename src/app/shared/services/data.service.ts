@@ -1004,6 +1004,7 @@ export class DataService {
     this.loaderService.showLoader();
 
     const options: any = RatingMapper.formatArgumentsToOptions(args);
+    console.log('dataService');
     debugger;
     return this.http.post<T>(`${this.apiUrl}/strategies.search`, options)
       .pipe(

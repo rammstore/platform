@@ -9,6 +9,7 @@ import { SectionEnum } from "@app/enum/section.enum";
 import { EntityInterface } from "@app/interfaces/entity.interface";
 import { CreateInstanceService } from '@app/services/create-instance.service';
 import { WalletService } from '@app/services/wallet.service';
+import { ArgumentsService } from '@app/services/arguments.service';
 
 @Component({
   selector: 'app-rating-rated',
@@ -59,57 +60,45 @@ export class RatingRatedComponent implements OnInit, OnDestroy {
   constructor(
     private dataService: DataService,
     private createInstanceService: CreateInstanceService,
-    private walletService: WalletService
-
+    private walletService: WalletService,
+    private argumentsService: ArgumentsService
   ) {
   }
 
   ngOnInit(): void {
-    this.optionsRatings$ = this.dataService.getOptionsRatings()
+    this.optionsRatings$ = this.argumentsService.ratingRated$
       .pipe(
-        takeUntil(this.destroy$),
-        map(({ Ratings }) => Ratings),
-        map(ratings => {
-          if (ratings) {
-            this.rating = ratings.filter(item => item.Name === 'Rating')[0];
-            this.args = {
-              searchMode: this.rating.Filter.SearchMode,
-              dealsMin: this.rating.Filter.DealsMin,
-              ageMin: this.rating.Filter.AgeMin,
-              yieldMin: this.rating.Filter.YieldMin,
-              field: this.rating.OrderBy.Field,
-              direction: this.rating.OrderBy.Direction,
-              paginator: this.paginator
-            };
-          }
-          return {
-            ratings,
-            args: this.args
+        tap((argument) => {
+          this.args = {
+            searchMode: argument.searchMode,
+            dealsMin: argument.dealsMin,
+            ageMin: argument.ageMin,
+            yieldMin: argument.yieldMin,
+            field: argument.field,
+            direction: argument.direction,
+            paginator: this.paginator
           };
-        }),
-        tap(({ args }) => {
+
           this.strategies$ = this.getStrategies();
         })
       );
   }
 
-  getRating() {
-    this.args.searchText = this.searchText;
-    this.strategies$ = this.getStrategies();
-  }
-
   getStrategies(): Observable<any> {
-    this.args.searchText = this.searchText;
-    debugger;
+    console.log('getStrategies')
     return this.dataService.getBestRating<EntityInterface>(this.args)
       .pipe(
-        take(1),
         tap(item => {
           this.walletService.walletSubject.next(this.createInstanceService.createWallet(item.Wallets[0]));
           console.log('rating-rated', item)
         }),
         map(({ Strategies }) => Strategies.map((item) => this.createInstanceService.createStrategy(item)))
       );
+  }
+
+  getRating() {
+    this.args.searchText = this.searchText;
+    this.strategies$ = this.getStrategies();
   }
 
   ngOnDestroy(): void {

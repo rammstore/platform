@@ -1,7 +1,7 @@
 <div class="search-container" [class.filled]="!!searchText">
-  <input placeholder="{{'rating.search.placeholder' | translate}}" class="search" [(ngModel)]="searchText" (keyup.enter)="getStrategies()">
-  <span class="search-clear" (click)="searchText = ''; getStrategies()"><i class="icon-close"></i></span>
-  <button class="primary search-button" (click)="getStrategies()">
+  <input placeholder="{{'rating.search.placeholder' | translate}}" class="search" [(ngModel)]="searchText" (keyup.enter)="getRating()">
+  <span class="search-clear" (click)="searchText = ''; getRating()"><i class="icon-close"></i></span>
+  <button class="primary search-button" (click)="getRating()">
     <i class="fa fa-search"></i>
   </button>
 </div>
@@ -13,8 +13,8 @@
     [data]="strategies$ | async"
     [paginator]="paginator"
     [shouldHighlightMyStrategies]="true"
-    (paginationChanged)="getStrategies()"
-    [methodName]="'getStrategies'"
+    (paginationChanged)="getRating()"
+    [methodName]="'getRating'"
     [section]="section"
     [methodArgs]="args">
   </app-data-table>
@@ -22,8 +22,8 @@
   <app-mobile-data-view-rating
     [strategies]="strategies$ | async"
     [paginator]="paginator"
-    (paginationChanged)="getStrategies()"
-    [methodName]="'getStrategies'"
+    (paginationChanged)="getRating()"
+    [methodName]="'getRating'"
     [methodArgs]="args">
   </app-mobile-data-view-rating>
 </div>

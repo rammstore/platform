@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Account, AuthData, Company, Deal, Offer, Position, Session, Strategy, User, Wallet } from '@app/models';
 import { AccountSpecAsset } from '@app/models/account-spec-asset';
+import { Argument } from '@app/models/argument';
 import { PartnerInfo } from '@app/models/partner-info';
 import { Rating } from '@app/models/rating';
 import { TraderInfo } from '@app/models/trader-info';
@@ -38,6 +39,17 @@ export class CreateInstanceService {
       commission: options.Commission,
       chart: options.Chart,
       masterAccount: options.MasterAccount
+    });
+  }
+
+  createArgument(options: any): Argument{
+    return new Argument({
+      searchMode: options.Filter.SearchMode,
+      dealsMin: options.Filter.DealsMin,
+      ageMin: options.Filter.AgeMin,
+      yieldMin: options.Filter.YieldMin,
+      field: options.OrderBy.Field,
+      direction: options.OrderBy.Direction
     });
   }
 
