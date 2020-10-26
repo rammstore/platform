@@ -869,7 +869,7 @@ export class DataService {
     }
 
     return this.http.post(`${this.apiUrl}/positions.search`, options).pipe(map((response: any) => {
-      debugger;
+      // debugger;
       const result: { positions: Position[], totals: object } = {
         positions: [],
         totals: {
@@ -1005,11 +1005,11 @@ export class DataService {
 
     const options: any = RatingMapper.formatArgumentsToOptions(args);
     console.log('dataService');
-    debugger;
+    // debugger;
     return this.http.post<T>(`${this.apiUrl}/strategies.search`, options)
       .pipe(
         tap(item => {
-          debugger;
+          // debugger;
           console.log('dataService', item)
           this.loaderService.hideLoader()
         })

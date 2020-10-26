@@ -88,7 +88,7 @@ export class RatingPopularComponent implements OnInit, OnDestroy {
   }
 
   getRating() {
-    debugger;
+    // debugger;
     this.args.searchText = this.searchText;
     this.strategies$ = this.getStrategies();
   }
