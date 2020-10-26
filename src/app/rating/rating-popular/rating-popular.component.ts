@@ -75,7 +75,6 @@ export class RatingPopularComponent implements OnInit, OnDestroy {
 
   getStrategies(): Observable<Strategy[]> {
     this.args.searchText = this.searchText;
-    // console.log('getStrategies')
     return this.dataService.getBestRating<EntityInterface>(this.args)
       .pipe(
         take(1),
@@ -85,14 +84,12 @@ export class RatingPopularComponent implements OnInit, OnDestroy {
             this.args.paginator.totalPages = item.Pagination.TotalPages;
           }
           this.walletService.walletSubject.next(this.createInstanceService.createWallet(item.Wallets[0]));
-          // console.log('ratind-popular', item)
         }),
         map(({ Strategies }) => Strategies.map((item) => this.createInstanceService.createStrategy(item))),
       );
   }
 
   getRating() {
-    // debugger;
     this.args.searchText = this.searchText;
     this.strategies$ = this.getStrategies();
   }

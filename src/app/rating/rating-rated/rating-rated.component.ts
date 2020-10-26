@@ -85,7 +85,6 @@ export class RatingRatedComponent implements OnInit, OnDestroy {
   }
 
   getStrategies(): Observable<any> {
-    // console.log('getStrategies')
     return this.dataService.getBestRating<EntityInterface>(this.args)
       .pipe(
         tap(item => {
@@ -94,7 +93,6 @@ export class RatingRatedComponent implements OnInit, OnDestroy {
             this.args.paginator.totalItems = item.Pagination.TotalRecords;
             this.args.paginator.totalPages = item.Pagination.TotalPages;
           }
-          // console.log('rating-rated', item)
         }),
         map(({ Strategies }) => Strategies.map((item) => this.createInstanceService.createStrategy(item)))
       );
