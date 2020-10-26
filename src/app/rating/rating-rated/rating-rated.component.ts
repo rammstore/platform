@@ -85,12 +85,12 @@ export class RatingRatedComponent implements OnInit, OnDestroy {
   }
 
   getStrategies(): Observable<any> {
-    console.log('getStrategies')
+    // console.log('getStrategies')
     return this.dataService.getBestRating<EntityInterface>(this.args)
       .pipe(
         tap(item => {
           this.walletService.walletSubject.next(this.createInstanceService.createWallet(item.Wallets[0]));
-          console.log('rating-rated', item)
+          // console.log('rating-rated', item)
         }),
         map(({ Strategies }) => Strategies.map((item) => this.createInstanceService.createStrategy(item)))
       );
