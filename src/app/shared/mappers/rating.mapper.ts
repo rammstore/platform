@@ -1,5 +1,6 @@
 import {iStrategiesSearchOptions} from '@app/interfaces/rating';
 import {Arguments} from '@app/interfaces/args.interface';
+import { Paginator } from '@app/models';
 
 export class RatingMapper {
   static formatArgumentsToOptions(args: Arguments) {
@@ -8,6 +9,8 @@ export class RatingMapper {
       CurrentPage: args.paginator.currentPage,
       PerPage: args.paginator.perPage
     });
+
+    // const Pagination = new Paginator(args.paginator);
 
     const options: iStrategiesSearchOptions = {
       Filter: {

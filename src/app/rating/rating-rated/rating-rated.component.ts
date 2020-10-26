@@ -90,6 +90,10 @@ export class RatingRatedComponent implements OnInit, OnDestroy {
       .pipe(
         tap(item => {
           this.walletService.walletSubject.next(this.createInstanceService.createWallet(item.Wallets[0]));
+          if (this.args.paginator) {
+            this.args.paginator.totalItems = item.Pagination.TotalRecords;
+            this.args.paginator.totalPages = item.Pagination.TotalPages;
+          }
           // console.log('rating-rated', item)
         }),
         map(({ Strategies }) => Strategies.map((item) => this.createInstanceService.createStrategy(item)))

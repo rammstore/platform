@@ -80,6 +80,10 @@ export class RatingPopularComponent implements OnInit, OnDestroy {
       .pipe(
         take(1),
         tap(item => {
+          if (this.args.paginator) {
+            this.args.paginator.totalItems = item.Pagination.TotalRecords;
+            this.args.paginator.totalPages = item.Pagination.TotalPages;
+          }
           this.walletService.walletSubject.next(this.createInstanceService.createWallet(item.Wallets[0]));
           // console.log('ratind-popular', item)
         }),

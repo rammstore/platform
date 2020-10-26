@@ -15,8 +15,8 @@
     [data]="strategies$ | async"
     [paginator]="paginator"
     [shouldHighlightMyStrategies]="true"
-    (paginationChanged)="getStrategies()"
-    [methodName]="'getStrategies'"
+    (paginationChanged)="getRating()"
+    [methodName]="'getRating'"
     [section]="section"
     [methodArgs]="args">
   </app-data-table>
@@ -24,8 +24,8 @@
   <app-mobile-data-view-rating
     [strategies]="strategies$ | async"
     [paginator]="paginator"
-    (paginationChanged)="getStrategies()"
-    [methodName]="'getStrategies'"
+    (paginationChanged)="getRating()"
+    [methodName]="'getRating'"
     [methodArgs]="args">
   </app-mobile-data-view-rating>
 </div>
