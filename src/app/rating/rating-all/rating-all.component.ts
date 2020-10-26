@@ -94,7 +94,6 @@ export class RatingAllComponent implements OnInit, OnDestroy {
             this.args.paginator.totalPages = item.Pagination.TotalPages;
           }
           this.walletService.walletSubject.next(this.createInstanceService.createWallet(item.Wallets[0]));
-          // console.log('ratind-all', item)
         }),
         map(({ Strategies }) => Strategies.map((item) => this.createInstanceService.createStrategy(item)))
       );
