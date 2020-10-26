@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import { Account, Deal, Strategy, WalletTransfer, Position } from '@app/models';
 import { TableHeaderRow } from '@app/models/table-header-row';
 import { Paginator } from '@app/models/paginator';

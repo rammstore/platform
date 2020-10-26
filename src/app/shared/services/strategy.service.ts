@@ -20,6 +20,10 @@ export class StrategyService {
     return this.strategyData;
   }
 
+  get getStrategyAsSubject(){
+    return this._strategy;
+  }
+
   set strategy(value: Strategy) {
     this._strategy.next(value);
     this.strategyData = value;

@@ -10,6 +10,7 @@ import { NotificationsService } from "@app/services/notifications.service";
 import { TableHeaderRow } from "@app/models/table-header-row";
 import { CustomDatePipe } from "@app/pipes/custom-date.pipe";
 import { PercentPipe } from '@angular/common';
+import { StrategyService } from '@app/services/strategy.service';
 
 @Component({
   selector: 'app-strategy-offers',
@@ -60,7 +61,8 @@ export class StrategyOffersComponent implements OnInit {
     public dataService: DataService,
     private modalService: BsModalService,
     private notificationsService: NotificationsService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private strategyService: StrategyService
   ) {
   }
 
@@ -69,8 +71,12 @@ export class StrategyOffersComponent implements OnInit {
       strategyId: this.route.parent.params['_value'].id,
       paginator: this.paginator
     };
-
-    this.getStrategy();
+    if(!this.strategyService.strategy){
+      this.getStrategy();
+    }
+    else{
+      this.strategy = this.strategyService.strategy;
+    }
     this.getOffers();
   }
 
@@ -90,7 +96,6 @@ export class StrategyOffersComponent implements OnInit {
     this.dataService.getOffers(this.strategy.id)
       .pipe(
         takeUntil(this.destroy$)
-        //map((item: any[]) => item.filter(_item => _item.link))
       )
       .subscribe((offers: any[]) => {
         this.offers = null;

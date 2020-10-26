@@ -5,8 +5,12 @@ import { TableHeaderRow } from '@app/models/table-header-row';
 import { CustomCurrencyPipe } from '@app/pipes/custom-currency.pipe';
 import { PercentPipe } from '@angular/common';
 import { DataService } from '@app/services/data.service';
-import { takeUntil } from 'rxjs/operators';
+import { map, take, takeLast, takeUntil, tap } from 'rxjs/operators';
 import { SectionEnum } from "@app/enum/section.enum";
+import { EntityInterface } from '@app/interfaces/entity.interface';
+import { CreateInstanceService } from '@app/services/create-instance.service';
+import { WalletService } from '@app/services/wallet.service';
+import { ArgumentsService } from '@app/services/arguments.service';
 
 @Component({
   selector: 'app-rating-popular',
@@ -24,6 +28,7 @@ export class RatingPopularComponent implements OnInit, OnDestroy {
   args: any;
   section: SectionEnum = SectionEnum.rating;
   popular: any;
+  optionsRatings$: Observable<any>;
 
   // table settings
   tableHeader: TableHeaderRow[] = [
@@ -43,34 +48,53 @@ export class RatingPopularComponent implements OnInit, OnDestroy {
   });
 
   constructor(
-    private dataService: DataService
+    private dataService: DataService,
+    private createInstanceService: CreateInstanceService,
+    private walletService: WalletService,
+    private argumentsService: ArgumentsService
   ) { }
 
   ngOnInit(): void {
-    this.dataService.getOptionsRatings()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((result: any) => {
-        if (result) {
-          this.popular = result.Ratings.filter(item => item.Name === 'Popular')[0];
+    this.optionsRatings$ = this.argumentsService.ratingPopular$
+      .pipe(
+        tap((argument) => {
           this.args = {
-            searchMode: this.popular.Filter.SearchMode,
-            dealsMin: this.popular.Filter.DealsMin,
-            ageMin: this.popular.Filter.AgeMin,
-            yieldMin: this.popular.Filter.YieldMin,
-            field: this.popular.OrderBy.Field,
-            direction: this.popular.OrderBy.Direction,
-            paginator: this.paginator,
-            searchText: this.searchText
+            searchMode: argument.searchMode,
+            dealsMin: argument.dealsMin,
+            ageMin: argument.ageMin,
+            yieldMin: argument.yieldMin,
+            field: argument.field,
+            direction: argument.direction,
+            paginator: this.paginator
           };
 
-          this.getRating();
-        }
-      });
+          this.strategies$ = this.getStrategies();
+        })
+      );
+  }
+
+  getStrategies(): Observable<Strategy[]> {
+    this.args.searchText = this.searchText;
+    // console.log('getStrategies')
+    return this.dataService.getBestRating<EntityInterface>(this.args)
+      .pipe(
+        take(1),
+        tap(item => {
+          if (this.args.paginator) {
+            this.args.paginator.totalItems = item.Pagination.TotalRecords;
+            this.args.paginator.totalPages = item.Pagination.TotalPages;
+          }
+          this.walletService.walletSubject.next(this.createInstanceService.createWallet(item.Wallets[0]));
+          // console.log('ratind-popular', item)
+        }),
+        map(({ Strategies }) => Strategies.map((item) => this.createInstanceService.createStrategy(item))),
+      );
   }
 
   getRating() {
+    // debugger;
     this.args.searchText = this.searchText;
-    this.strategies$ = this.dataService.getRating(this.args);
+    this.strategies$ = this.getStrategies();
   }
 
   ngOnDestroy(): void {

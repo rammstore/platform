@@ -4,8 +4,12 @@ import { Paginator, Strategy, TableColumn } from '@app/models';
 import { TableHeaderRow } from '@app/models/table-header-row';
 import { PercentPipe } from '@angular/common';
 import { DataService } from '@app/services/data.service';
-import { filter, takeUntil } from 'rxjs/operators';
+import { filter, map, take, takeUntil, tap } from 'rxjs/operators';
 import { SectionEnum } from "@app/enum/section.enum";
+import { EntityInterface } from '@app/interfaces/entity.interface';
+import { CreateInstanceService } from '@app/services/create-instance.service';
+import { WalletService } from '@app/services/wallet.service';
+import { ArgumentsService } from '@app/services/arguments.service';
 
 @Component({
   selector: 'app-rating-all',
@@ -24,6 +28,7 @@ export class RatingAllComponent implements OnInit, OnDestroy {
   args: any;
   section: SectionEnum = SectionEnum.rating;
   all: any;
+  ratingAll$: Observable<any>;
 
   // table settings
   tableHeader: TableHeaderRow[] = [
@@ -52,35 +57,52 @@ export class RatingAllComponent implements OnInit, OnDestroy {
   });
 
   constructor(
-    private dataService: DataService
+    private dataService: DataService,
+    private createInstanceService: CreateInstanceService,
+    private walletService: WalletService,
+    private argumentsService: ArgumentsService
   ) {
   }
 
   ngOnInit(): void {
-    this.dataService.getOptionsRatings()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((result: any) => {
-        if (result) {
-          this.all = result.Ratings.filter(item => item.Name === 'All')[0];
+    this.ratingAll$ = this.argumentsService.ratingAll$
+      .pipe(
+        tap((argument) => {
           this.args = {
-            searchMode: this.all.Filter.SearchMode,
-            dealsMin: this.all.Filter.DealsMin,
-            ageMin: this.all.Filter.AgeMin,
-            yieldMin: this.all.Filter.YieldMin,
-            field: this.all.OrderBy.Field,
-            direction: this.all.OrderBy.Direction,
-            paginator: this.paginator,
-            searchText: this.searchText
+            searchMode: argument.searchMode,
+            dealsMin: argument.dealsMin,
+            ageMin: argument.ageMin,
+            yieldMin: argument.yieldMin,
+            field: argument.field,
+            direction: argument.direction,
+            paginator: this.paginator
           };
 
-          this.getRating();
-        }
-      });
+          this.strategies$ = this.getStrategies();
+        })
+      );
+  }
+
+  getStrategies(): Observable<any> {
+    this.args.searchText = this.searchText;
+    return this.dataService.getBestRating<EntityInterface>(this.args)
+      .pipe(
+        take(1),
+        tap(item => {
+          if (this.args.paginator) {
+            this.args.paginator.totalItems = item.Pagination.TotalRecords;
+            this.args.paginator.totalPages = item.Pagination.TotalPages;
+          }
+          this.walletService.walletSubject.next(this.createInstanceService.createWallet(item.Wallets[0]));
+          // console.log('ratind-all', item)
+        }),
+        map(({ Strategies }) => Strategies.map((item) => this.createInstanceService.createStrategy(item)))
+      );
   }
 
   getRating() {
     this.args.searchText = this.searchText;
-    this.strategies$ = this.dataService.getRating(this.args);
+    this.strategies$ = this.getStrategies();
   }
 
   ngOnDestroy(): void {

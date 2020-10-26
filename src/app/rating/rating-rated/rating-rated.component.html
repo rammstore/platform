@@ -6,7 +6,8 @@
   </button>
 </div>
 
-<div class="rating-content-container">
+<div class="rating-content-container"
+  *ngIf="optionsRatings$ | async as options">
   <app-data-table
     [tableHeader]="tableHeader"
     [data]="strategies$ | async"

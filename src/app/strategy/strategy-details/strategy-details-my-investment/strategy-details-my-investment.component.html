@@ -38,7 +38,7 @@
   </div>
 
   <div class="offer"
-      *ngIf="offer">
+      *ngIf="offer$ | async as offer">
     <h2 translate>common.offer</h2>
     <table>
       <tbody>

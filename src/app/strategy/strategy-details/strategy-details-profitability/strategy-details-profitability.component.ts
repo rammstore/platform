@@ -1,13 +1,13 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {ChartOptions, Strategy} from '@app/models';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ChartOptions, Strategy } from '@app/models';
 import * as Highcharts from 'highcharts';
-import {Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/internal/operators';
-import {DataService} from '@app/services/data.service';
-import {TranslateService} from '@ngx-translate/core';
-import {NotificationsService} from '@app/services/notifications.service';
-import {StrategyService} from "@app/services/strategy.service";
+import { Observable, Subject } from 'rxjs';
+import { take, takeUntil, tap } from 'rxjs/operators';
+import { DataService } from '@app/services/data.service';
+import { TranslateService } from '@ngx-translate/core';
+import { NotificationsService } from '@app/services/notifications.service';
+import { StrategyService } from "@app/services/strategy.service";
 
 const offset = Math.abs(new Date().getTimezoneOffset()) * 60000;
 let that: StrategyDetailsProfitabilityComponent;
@@ -21,7 +21,8 @@ export class StrategyDetailsProfitabilityComponent implements OnInit, OnDestroy 
   // https://blog.strongbrew.io/rxjs-best-practices-in-angular/#avoiding-memory-leaks
   // here we will unsubscribe from all subscriptions
   destroy$ = new Subject();
-
+  strategy$: Observable<Strategy>;
+  subscriptions = [];
   // component data
   strategy: Strategy;
   chartOptions: any;
@@ -47,23 +48,33 @@ export class StrategyDetailsProfitabilityComponent implements OnInit, OnDestroy 
           strategyId: this.id
         };
 
-        this.dataService.getStrategyByID(this.args)
-          .pipe(takeUntil(this.destroy$))
-          .subscribe((strategy: Strategy) => {
-            this.strategy = strategy;
-          });
+        this.strategy$ = this.getStrategyById(this.args)
+          .pipe(
+            tap((strategy) => {
+              this.checking(strategy);
+              this.getStrategyChart(strategy.id);
+            })
+          );
       }
     } else {
-      this.strategy = this.strategyService.strategy;
+      this.strategy$ = this.strategyService.strategy$
+        .pipe(
+          tap((strategy) => {
+            this.checking(strategy);
+            this.getStrategyChart(strategy.id);
+          })
+        );
     }
+  }
 
+  private checking(strategy: Strategy) {
     this.translateService.onDefaultLangChange
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
         Highcharts.chart('yieldChartContainer', this.chartOptions);
       });
 
-    if (!this.strategy.publicOffer && !this.strategy.isMyStrategy && !this.strategy.linkOffer && !this.strategy.account) {
+    if (!strategy.publicOffer && !strategy.isMyStrategy && !strategy.linkOffer && !strategy.account) {
       this.notificationsService.open('notify.strategy.access.error', {
         type: 'error',
         autoClose: true,
@@ -71,12 +82,19 @@ export class StrategyDetailsProfitabilityComponent implements OnInit, OnDestroy 
       });
       this.router.navigate(['/rating'], { relativeTo: this.route });
     }
-
-    this.getStrategyChart();
   }
 
-  getStrategyChart() {
-    this.dataService.getStrategyChart(new ChartOptions(this.strategy.id))
+  private getStrategyById(args): Observable<any> {
+    return this.dataService.getStrategyById(args)
+      .pipe(
+        take(1),
+        tap(item => {
+          this.strategy = new Strategy(item);
+        }));
+  }
+
+  getStrategyChart(id: number) {
+    this.dataService.getStrategyChart(new ChartOptions(id))
       .pipe(takeUntil(this.destroy$))
       .subscribe(response => {
 
