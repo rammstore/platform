@@ -6,14 +6,17 @@
   </button>
 </div>
 
-<div class="rating-content-container">
+<div 
+  class="rating-content-container"
+  *ngIf="ratingAll$ | async as all">
+
   <app-data-table
     [tableHeader]="tableHeader"
     [data]="strategies$ | async"
     [paginator]="paginator"
     [shouldHighlightMyStrategies]="true"
-    (paginationChanged)="getRating()"
-    [methodName]="'getRating'"
+    (paginationChanged)="getStrategies()"
+    [methodName]="'getStrategies'"
     [section]="section"
     [methodArgs]="args">
   </app-data-table>
@@ -21,8 +24,8 @@
   <app-mobile-data-view-rating
     [strategies]="strategies$ | async"
     [paginator]="paginator"
-    (paginationChanged)="getRating()"
-    [methodName]="'getRating'"
+    (paginationChanged)="getStrategies()"
+    [methodName]="'getStrategies'"
     [methodArgs]="args">
   </app-mobile-data-view-rating>
 </div>
