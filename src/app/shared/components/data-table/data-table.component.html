@@ -166,6 +166,12 @@
               <a [routerLink]="['/investments/details', item.id]"><i class="icon-doc"></i></a>
             </ng-container>
 
+            <ng-container *ngSwitchCase="'symbol'">
+              <span translate>
+                {{item.symbol}}
+              </span>
+            </ng-container>
+
             <ng-container *ngSwitchCase="'type'">
               <span translate>
                 {{item.getType()}}
