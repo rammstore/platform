@@ -29,6 +29,7 @@ import { AccountSpecAsset } from '@app/models/account-spec-asset';
 import { Rating } from '@app/models/rating';
 import { Arguments } from "@app/interfaces/args.interface";
 import { RatingMapper } from "@app/mappers/rating.mapper";
+import { EntityInterface } from '@app/interfaces/entity.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -947,7 +948,8 @@ export class DataService {
   //   return this.ratingStrategiesSubject.asObservable();
   // }
 
-  getRating(args: { ageMin?: number, dealsMin?: number, yieldMin?: number, searchMode?: string, field?: string, paginator?: Paginator, searchText?: string, direction?: string }): Observable<Strategy[]> {
+  getRating(args: { ageMin?: number, dealsMin?: number, yieldMin?: number, searchMode?: string, field?: string, paginator?: Paginator, searchText?: string, direction?: string })
+    : Observable<Strategy[]> {
     this.loaderService.showLoader();
     const options: StrategiesSearchOptions = new StrategiesSearchOptions();
     options.Filter = {
@@ -1000,15 +1002,20 @@ export class DataService {
     return this.ratingStrategiesSubject.asObservable();
   }
 
-  getBestRating<T>(args: Arguments): Observable<T> {
+  getBestRating(args: Arguments): Observable<EntityInterface> {
     this.loaderService.showLoader();
 
     const options: any = RatingMapper.formatArgumentsToOptions(args);
-    return this.http.post<T>(`${this.apiUrl}/strategies.search`, options)
+    return this.http.post(`${this.apiUrl}/strategies.search`, options)
       .pipe(
         take(1),
-        tap(item => {
-          this.loaderService.hideLoader()
+        tap((item: any) => {
+          if (args.paginator) {
+            args.paginator.totalItems = item.Pagination.TotalRecords;
+            args.paginator.totalPages = item.Pagination.TotalPages;
+          }
+          this.walletService.walletSubject.next(this.createInstanceService.createWallet(item.Wallets[0]));
+          this.loaderService.hideLoader();
         })
         // catchError(()=>{
         //   this.notificationsService.open('notify.loading.error', {
