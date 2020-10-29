@@ -2,8 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Paginator, Strategy, TableColumn } from '@app/models';
 import { TableHeaderRow } from '@app/models/table-header-row';
 import { PercentPipe } from '@angular/common';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/internal/operators';
+import { Observable, Subject } from 'rxjs';
 import { CustomCurrencyPipe } from '@app/pipes/custom-currency.pipe';
 import { DataService } from '@app/services/data.service';
 import {SectionEnum} from "@app/enum/section.enum";
@@ -13,13 +12,9 @@ import {SectionEnum} from "@app/enum/section.enum";
   templateUrl: './strategy-active.component.html',
   styleUrls: ['./strategy-active.component.scss']
 })
-export class StrategyActiveComponent implements OnInit, OnDestroy {
-  // https://blog.strongbrew.io/rxjs-best-practices-in-angular/#avoiding-memory-leaks
-  // here we will unsubscribe from all subscriptions
-  destroy$ = new Subject();
-
+export class StrategyActiveComponent implements OnInit {
   // component data
-  strategies: Strategy[];
+  strategies$: Observable<Strategy[]>;
   args: any;
 
   // table settings
@@ -48,21 +43,18 @@ export class StrategyActiveComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.args = {
+      searchMode: 'MyActiveStrategies',
       paginator: this.paginator
     };
 
-    this.getStrategies();
+    this.strategies$ = this.getActiveStrategy(this.args);
+  }
+
+  getActiveStrategy(args: any): Observable<any>{
+    return this.dataService.getActiveMyStrategies(args);
   }
 
   getStrategies(): void {
-    this.dataService.getActiveMyStrategies(this.args)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((strategies: Strategy[]) => {
-        this.strategies = strategies;
-      });
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next(true);
+    this.strategies$ = this.getActiveStrategy(this.args);
   }
 }

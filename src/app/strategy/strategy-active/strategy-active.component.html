@@ -1,19 +1,22 @@
-<app-data-table
-  [tableHeader]="tableHeader"
-  [data]="strategies"
-  [totalFields]="totalFields"
-  [paginator]="paginator"
-  (paginationChanged)="getStrategies()"
-  [section]="sectionEnum"
-  [methodName]="'getActiveMyStrategies'"
-  [methodArgs]="args">
-</app-data-table>
+<div *ngIf="strategies$ | async as strategies">
+  <app-data-table
+    [tableHeader]="tableHeader"
+    [data]="strategies"
+    [totalFields]="totalFields"
+    [paginator]="paginator"
+    (paginationChanged)="getStrategies()"
+    [section]="sectionEnum"
+    [methodName]="'getActiveMyStrategies'"
+    [methodArgs]="args">
+  </app-data-table>
 
-<app-mobile-data-view-strategy
-  [strategies]="strategies"
-  [paginator]="paginator"
-  (paginationChanged)="getStrategies()">
-</app-mobile-data-view-strategy>
+  <app-mobile-data-view-strategy
+    [strategies]="strategies"
+    [paginator]="paginator"
+    (paginationChanged)="getStrategies()">
+  </app-mobile-data-view-strategy>
+</div>
+
 
 <div [innerHTML]="'additionalInfo' | translate"></div>
 
