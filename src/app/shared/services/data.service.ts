@@ -30,6 +30,7 @@ import { Rating } from '@app/models/rating';
 import { Arguments } from "@app/interfaces/args.interface";
 import { RatingMapper } from "@app/mappers/rating.mapper";
 import { EntityInterface } from '@app/interfaces/entity.interface';
+import { AccountMapper } from '@app/mappers/account.mapper';
 
 @Injectable({
   providedIn: 'root'
@@ -459,150 +460,173 @@ export class DataService {
   // }
 
   // Получение списка активных инвестиций
-  getActiveMyAccounts(args: { paginator: Paginator, orderBy?: string }): Observable<Account[]> {
+  // getActiveMyAccounts(args: { paginator: Paginator, orderBy?: string }): Observable<Account[]> {
+  //   this.loaderService.showLoader();
+  //   const options: AccountsSearchOptions = new AccountsSearchOptions();
+  //   options.Filter = { SearchMode: 'MyActiveAccounts' };
+  //   options.OrderBy = { Field: args.orderBy, Direction: 'Desc' };
+
+  //   if (args.paginator) {
+  //     options.Pagination = {
+  //       CurrentPage: args.paginator.currentPage,
+  //       PerPage: args.paginator.perPage
+  //     };
+  //   }
+
+  //   this.http.post(`${this.apiUrl}/strategies.search`, options).subscribe((response: any) => {
+  //     const accounts: Account[] = [];
+  //     //console.log('response', response);
+  //     this.walletService.walletSubject.next(this.createInstanceService.createWallet(response.Wallets[0]));
+
+  //     response.Strategies
+  //       .forEach((strategy: any) => {
+  //         if (strategy.Account) {
+  //           const createStrategy = this.createInstanceService.createStrategy(strategy);
+  //           const createAccount = this.createInstanceService.createAccount(strategy.Account);
+
+  //           createAccount.strategy = createStrategy;
+  //           createAccount.offer = strategy.offer ? this.createInstanceService.createOffer(strategy.Offer) : null;
+
+  //           accounts.push(createAccount);
+  //         }
+  //       });
+
+  //     if (args.paginator) {
+  //       args.paginator.totalItems = response.Pagination.TotalRecords;
+  //       args.paginator.totalPages = response.Pagination.TotalPages;
+  //     }
+  //     this.loaderService.hideLoader();
+  //     this.activeMyAccountsSubject.next(accounts.filter((a: Account) => a.isActive()));
+  //   }, (error: HttpErrorResponse) => {
+  //     this.notificationsService.open('notify.loading.error', {
+  //       type: 'error',
+  //       autoClose: true,
+  //       duration: 3000
+  //     });
+  //   });
+
+  //   return this.activeMyAccountsSubject.asObservable();
+  // }
+
+  // Получение списка инвестиций
+  getActiveMyAccounts(args: Arguments): Observable<EntityInterface> {
     this.loaderService.showLoader();
-    const options: AccountsSearchOptions = new AccountsSearchOptions();
-    options.Filter = { SearchMode: 'MyActiveAccounts' };
-    options.OrderBy = { Field: args.orderBy, Direction: 'Desc' };
 
-    if (args.paginator) {
-      options.Pagination = {
-        CurrentPage: args.paginator.currentPage,
-        PerPage: args.paginator.perPage
-      };
-    }
+    const options: any = AccountMapper.formatArgumentsToOptions(args);
 
-    this.http.post(`${this.apiUrl}/strategies.search`, options).subscribe((response: any) => {
-      const accounts: Account[] = [];
-      //console.log('response', response);
-      this.walletService.walletSubject.next(this.createInstanceService.createWallet(response.Wallets[0]));
+    return this.http.post(`${this.apiUrl}/strategies.search`, options)
+      .pipe(
+        take(1),
+        tap((item: any) => {
+          this.walletService.walletSubject.next(this.createInstanceService.createWallet(item.Wallets[0]));
 
-      response.Strategies
-        .forEach((strategy: any) => {
+          if (args.paginator) {
+            args.paginator.totalItems = item.Pagination.TotalRecords;
+            args.paginator.totalPages = item.Pagination.TotalPages;
+          }
+
+          this.loaderService.hideLoader();
+        }),
+        map(({ Strategies }) => Strategies.map((strategy) => {
+          const createStrategy = this.createInstanceService.createStrategy(strategy);
+          const createAccount = this.createInstanceService.createAccount(strategy.Account);
+
+          createAccount.strategy = createStrategy;
+          createAccount.offer = strategy.offer ? this.createInstanceService.createOffer(strategy.Offer) : null;
+
+          return createAccount;
+        }))
+        // catchError(()=>{
+        //   this.notificationsService.open('notify.loading.error', {
+        //     type: 'error',
+        //     autoClose: true,
+        //     duration: 3000
+        //   });
+        // })
+      );
+  }
+
+  getClosedMyAccounts(args: Arguments): Observable<EntityInterface> {
+    this.loaderService.showLoader();
+
+    const options: any = AccountMapper.formatArgumentsToOptions(args);
+
+    return this.http.post(`${this.apiUrl}/accounts.searchClosed`, options)
+      .pipe(
+        take(1),
+        tap((item: any) => {
+          this.walletService.walletSubject.next(this.createInstanceService.createWallet(item.Wallets[0]));
+
+          if (args.paginator) {
+            args.paginator.totalItems = item.Pagination.TotalRecords;
+            args.paginator.totalPages = item.Pagination.TotalPages;
+          }
+
+          this.loaderService.hideLoader();
+        }),
+        map(({ Strategies }) => Strategies.map((strategy) => {
+          let account: Account;
+
           if (strategy.Account) {
             const createStrategy = this.createInstanceService.createStrategy(strategy);
-            const createAccount = this.createInstanceService.createAccount(strategy.Account);
-
-            createAccount.strategy = createStrategy;
-            createAccount.offer = strategy.offer ? this.createInstanceService.createOffer(strategy.Offer) : null;
-
-            accounts.push(createAccount);
+            account = this.createInstanceService.createAccount(strategy.Account);
+            account.strategy = createStrategy;
           }
-        });
 
-      // response.Strategies.forEach((strategy: any) => {
-      //   const options: any = strategy.Account;
-
-      //   accounts.push(new Account(new Account({
-      //     id: options.ID,
-      //     strategy: this.createInstanceService.createStrategy(strategy),
-      //     isSecurity: options.IsSecurity,
-      //     type: options.Type,
-      //     accountSpecAssetID: options.AccountSpecAssetID,
-      //     asset: options.Asset || options.AssetName,
-      //     tradingIntervalCurrentID: options.TradingIntervalCurrentID,
-      //     dtCreated: options.DTCreated || options.DT,
-      //     balance: options.Balance,
-      //     equity: options.Equity,
-      //     margin: options.Margin,
-      //     marginLevel: options.MarginLevel,
-      //     intervalPnL: options.IntervalPnL || options.ProfitCurrentIntervalGross || options.ProfitCurrentIntervalNet,
-      //     status: options.Status,
-      //     factor: options.Factor,
-      //     offer: options.Offer ? new Offer(options.Offer) : null,
-      //     dtMCReached: options.MCReached,
-      //     protection: options.Protection,
-      //     protectionEquity: options.ProtectionEquity,
-      //     dtProtectionReached: options.ProtectionReached,
-      //     target: options.Target,
-      //     targetEquity: options.TargetEquity,
-      //     dtTargetReached: options.TargetReached,
-      //     dtClosed: options.DTClosed,
-      //     bonus: options.Bonus,
-      //     availableToWithDraw: options.AvailableToWithdraw,
-      //     profitBase: options.ProfitBase,
-      //     precision: options.Precision,
-      //     positionsCount: options.PositionsCount,
-      //     accountMinBalance: options.AccountMinBalance,
-      //     leverageMax: options.LeverageMax,
-      //     freeMargin: options.FreeMargin,
-      //     MCLevel: options.MCLevel,
-      //     state: options.State,
-      //     isMyStrategy: strategy.IsMyStrategy,
-      //     profitCurrentIntervalGross: options.ProfitCurrentIntervalGross,
-      //     feeToPay: options.FeeToPay,
-      //     totalCommissionTrader: options.TotalCommissionTrader,
-      //     feePaid: options.FeePaid,
-      //     isMyAccount: options.IsMyAccount,
-      //     currentDate: options.CurrentDate
-      //   })));
-      // });
-
-      if (args.paginator) {
-        args.paginator.totalItems = response.Pagination.TotalRecords;
-        args.paginator.totalPages = response.Pagination.TotalPages;
-      }
-      this.loaderService.hideLoader();
-      this.activeMyAccountsSubject.next(accounts.filter((a: Account) => a.isActive()));
-    }, (error: HttpErrorResponse) => {
-      this.notificationsService.open('notify.loading.error', {
-        type: 'error',
-        autoClose: true,
-        duration: 3000
-      });
-    });
-
-    return this.activeMyAccountsSubject.asObservable();
+          return account;
+        }))
+      );
   }
 
   // Получение списка закрытых инвестиций
-  getClosedMyAccounts(pagination?: Paginator): Observable<Account[]> {
-    this.loaderService.showLoader();
-    const options: AccountsSearchOptions = new AccountsSearchOptions();
+  // getClosedMyAccounts(pagination?: Paginator): Observable<Account[]> {
+  //   this.loaderService.showLoader();
+  //   const options: AccountsSearchOptions = new AccountsSearchOptions();
 
-    options.OrderBy = {
-      Field: 'DTClosed',
-      Direction: 'Desc'
-    };
+  //   options.OrderBy = {
+  //     Field: 'DTClosed',
+  //     Direction: 'Desc'
+  //   };
 
-    if (pagination) {
-      options.Pagination = {
-        CurrentPage: pagination.currentPage,
-        PerPage: pagination.perPage
-      };
-    }
+  //   if (pagination) {
+  //     options.Pagination = {
+  //       CurrentPage: pagination.currentPage,
+  //       PerPage: pagination.perPage
+  //     };
+  //   }
 
-    this.http.post(`${this.apiUrl}/accounts.searchClosed`, options).subscribe((response: any) => {
-      const accounts: Account[] = [];
-      this.walletService.walletSubject.next(this.createInstanceService.createWallet(response.Wallets[0]));
+  //   this.http.post(`${this.apiUrl}/accounts.searchClosed`, options).subscribe((response: any) => {
+  //     const accounts: Account[] = [];
+  //     this.walletService.walletSubject.next(this.createInstanceService.createWallet(response.Wallets[0]));
+  //     debugger;
+  //     response.Strategies
+  //       .forEach((strategy: any) => {
+  //         if (strategy.Account) {
+  //           const createStrategy = this.createInstanceService.createStrategy(strategy);
+  //           const createAccount = this.createInstanceService.createAccount(strategy.Account);
+  //           createAccount.strategy = createStrategy;
+  //           accounts.push(createAccount);
+  //         }
+  //       });
 
-      response.Strategies
-        .forEach((strategy: any) => {
-          if (strategy.Account) {
-            const createStrategy = this.createInstanceService.createStrategy(strategy);
-            const createAccount = this.createInstanceService.createAccount(strategy.Account);
-            createAccount.strategy = createStrategy;
-            accounts.push(createAccount);
-          }
-        });
+  //     if (pagination) {
+  //       pagination.totalItems = response.Pagination.TotalRecords;
+  //       pagination.totalPages = response.Pagination.TotalPages;
+  //     }
 
-      if (pagination) {
-        pagination.totalItems = response.Pagination.TotalRecords;
-        pagination.totalPages = response.Pagination.TotalPages;
-      }
+  //     this.loaderService.hideLoader();
+  //     this.closedMyAccountsSubject.next(accounts);
+  //   }, (error: HttpErrorResponse) => {
+  //     this.notificationsService.open('notify.loading.error', {
+  //       type: 'error',
+  //       autoClose: true,
+  //       duration: 3000
+  //     });
+  //   });
 
-      this.loaderService.hideLoader();
-      this.closedMyAccountsSubject.next(accounts);
-    }, (error: HttpErrorResponse) => {
-      this.notificationsService.open('notify.loading.error', {
-        type: 'error',
-        autoClose: true,
-        duration: 3000
-      });
-    });
+  //   return this.closedMyAccountsSubject.asObservable();
+  // }
 
-    return this.closedMyAccountsSubject.asObservable();
-  }
 
   // Получение деталей инвестиции
   getAccountStatement(args: { accountId: number }): Observable<any> {
@@ -1016,7 +1040,8 @@ export class DataService {
           }
           this.walletService.walletSubject.next(this.createInstanceService.createWallet(item.Wallets[0]));
           this.loaderService.hideLoader();
-        })
+        }),
+        map(({ Strategies }) => Strategies.map((item) => this.createInstanceService.createStrategy(item)))
         // catchError(()=>{
         //   this.notificationsService.open('notify.loading.error', {
         //     type: 'error',

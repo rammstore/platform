@@ -7,7 +7,7 @@
 </div>
 
 <div class="rating-content-container"
-  *ngIf="optionsRatings$ | async as options">
+  *ngIf="ratingRated$ | async as options">
   <app-data-table
     [tableHeader]="tableHeader"
     [data]="strategies$ | async"

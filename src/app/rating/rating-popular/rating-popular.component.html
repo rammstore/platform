@@ -7,7 +7,7 @@
 </div>
 
 <div class="rating-content-container"
-    *ngIf="optionsRatings$ | async as options">
+    *ngIf="ratingPopular$ | async as options">
   <p translate>rating.message</p>
 
   <app-data-table

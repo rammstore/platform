@@ -1,10 +1,13 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Account, Paginator, Strategy, TableColumn} from '@app/models';
-import {TableHeaderRow} from '@app/models/table-header-row';
-import {Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/internal/operators';
-import {PercentPipe} from '@angular/common';
-import {DataService} from '@app/services/data.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Account, Paginator, Strategy, TableColumn } from '@app/models';
+import { TableHeaderRow } from '@app/models/table-header-row';
+import { Observable, Subject } from 'rxjs';
+import { filter, map, take, takeUntil, tap } from 'rxjs/internal/operators';
+import { PercentPipe } from '@angular/common';
+import { DataService } from '@app/services/data.service';
+import { Argument } from '@app/models/argument';
+import { CreateInstanceService } from '@app/services/create-instance.service';
+// import { Arguments } from '@app/interfaces/args.interface';
 
 @Component({
   selector: 'app-investments-active',
@@ -17,32 +20,31 @@ export class InvestmentsActiveComponent implements OnInit, OnDestroy {
   destroy$ = new Subject();
 
   // component data
-  accounts: Account[];
-  strategies: Strategy[];
+  accounts$: Observable<Account[]>;
   args: any;
 
   // table settings
   tableHeader: TableHeaderRow[] = [
     new TableHeaderRow([
-      new TableColumn({label: 'common.strategy', colspan: 3, fontSize: 20}),
-      new TableColumn({label: 'common.investment', colspan: 3, colored: true})
+      new TableColumn({ label: 'common.strategy', colspan: 3, fontSize: 20 }),
+      new TableColumn({ label: 'common.investment', colspan: 3, colored: true })
     ]),
     new TableHeaderRow([
-      new TableColumn({property: 'strategy.name', label: 'common.table.label.name'}),
+      new TableColumn({ property: 'strategy.name', label: 'common.table.label.name' }),
       new TableColumn({
         property: 'strategy.profit',
         label: 'common.yield',
-        pipe: {pipe: PercentPipe, args: ['1.0-2']},
+        pipe: { pipe: PercentPipe, args: ['1.0-2'] },
         fontSize: 24
       }),
-      new TableColumn({property: 'yieldChart', label: 'common.chart'}),
-      new TableColumn({property: 'age', label: 'common.age', colored: true, fontSize: 16}),
+      new TableColumn({ property: 'yieldChart', label: 'common.chart' }),
+      new TableColumn({ property: 'age', label: 'common.age', colored: true, fontSize: 16 }),
       new TableColumn({
         property: 'investmentInfo',
         hint: 'account.label.profit.hint',
         label: 'common.table.label.myInvestmentUSD', colored: true
       }),
-      new TableColumn({property: 'manage', label: 'common.table.label.manage'})
+      new TableColumn({ property: 'manage', label: 'common.table.label.manage' })
     ]),
   ];
 
@@ -58,21 +60,21 @@ export class InvestmentsActiveComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.args = {
-      paginator: this.paginator,
-      orderBy: 'ID'
+      searchMode: 'MyActiveAccounts',
+      field: 'ID',
+      direction: 'Desc',
+      paginator: this.paginator
     };
 
-    this.getAccounts();
+    this.accounts$ = this.getActiveAccounts(this.args);
+  }
+
+  getActiveAccounts(args: any): Observable<any> {
+    return this.dataService.getActiveMyAccounts(args);
   }
 
   getAccounts(): void {
-    this.dataService.getActiveMyAccounts(this.args)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((accounts: Account[]) => {
-        if (accounts) {
-          this.accounts = accounts;
-        }
-      });
+    this.accounts$ = this.getActiveAccounts(this.args);
   }
 
   ngOnDestroy(): void {
