@@ -1,20 +1,19 @@
-<div *ngIf="accounts$ | async as accounts">
-  <app-data-table
-    [tableHeader]="tableHeader"
-    [data]="accounts"
-    [paginator]="paginator"
-    [shouldHighlightMyStrategies]="true"
-    (paginationChanged)="getAccounts()"
-    [methodName]="'getActiveMyAccounts'"
-    [methodArgs]="args">
-  </app-data-table>
+<app-data-table
+  [tableHeader]="tableHeader"
+  [data]="accounts$ | async"
+  [paginator]="paginator"
+  [shouldHighlightMyStrategies]="true"
+  (paginationChanged)="getAccounts()"
+  [methodName]="'getActiveMyAccounts'"
+  [methodArgs]="args">
+</app-data-table>
 
-  <app-mobile-data-view-investment
-    [accounts]="accounts"
-    [paginator]="paginator"
-    (paginationChanged)="getAccounts()"
-    [methodName]="'getActiveMyAccounts'"
-    [methodArgs]="args">
-  </app-mobile-data-view-investment>
-</div>
+<app-mobile-data-view-investment
+  [accounts]="accounts$ | async"
+  [paginator]="paginator"
+  (paginationChanged)="getAccounts()"
+  [methodName]="'getActiveMyAccounts'"
+  [methodArgs]="args">
+</app-mobile-data-view-investment>
+
 

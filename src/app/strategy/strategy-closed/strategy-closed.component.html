@@ -1,15 +1,15 @@
-<div *ngIf="strategies$ | async as strategies">
+
   <app-data-table
     [tableHeader]="tableHeader"
-    [data]="strategies"
+    [data]="strategies$ | async"
     [paginator]="paginator"
     (paginationChanged)="getStrategies()">
   </app-data-table>
 
   <app-mobile-data-view-strategies-closed
-    [strategies]="strategies"
+    [strategies]="strategies$ | async"
     [paginator]="paginator"
     (paginationChanged)="getStrategies()">
   </app-mobile-data-view-strategies-closed>
-</div>
+
 

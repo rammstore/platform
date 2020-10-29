@@ -98,7 +98,15 @@ export class DataService {
 
           this.loaderService.hideLoader();
         }),
-        map(({ Strategies }) => Strategies.map((strategy: Strategy) => this.createInstanceService.createStrategy(strategy)))
+        map(({ Strategies }) => Strategies.map((strategy: Strategy) => this.createInstanceService.createStrategy(strategy))),
+        // catchError( (error: HttpErrorResponse)  => {
+        //   if(error.status)
+        //   this.notificationsService.open('notify.loading.error', {
+        //     type: 'error',
+        //     autoClose: true,
+        //     duration: 3000
+        //   });
+        // })
       );
   }
 
@@ -124,7 +132,14 @@ export class DataService {
         map(({ Strategies }) => Strategies.map((strategy) => {
           strategy.PublicOffer = strategy.PublicOffer || {};
           return this.createInstanceService.createStrategy(strategy);
-        }))
+        })),
+        // catchError(()=>{
+        //   this.notificationsService.open('notify.loading.error', {
+        //     type: 'error',
+        //     autoClose: true,
+        //     duration: 3000
+        //   });
+        // })
       )
   }
 
