@@ -18,16 +18,18 @@ export class ManageAccountPauseComponent implements OnDestroy {
 
   // component data
   account: Account;
-  @Input() methodName: string;
+  @Input() methodName: string | any;
   @Input() methodArgs: any;
-
+  updateStatus: string; 
   constructor(
     private dataService: DataService,
     public modalRef: BsModalRef
   ) { }
 
   pause(): void {
-    this.dataService.pauseAccount(this.account.id, this.methodName, this.methodArgs)
+    debugger;
+    this.updateStatus = "update";
+    this.dataService.pauseAccount(this.account.id, this.methodName, this.methodArgs, this.updateStatus)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
         this.successful$.next(true);

@@ -26,6 +26,7 @@ export class ManageAccountResumeComponent implements OnInit, OnDestroy {
   @Input() methodName: string;
   @Input() methodArgs: any;
   functionality: object;
+  updateStatus: "update";
 
   constructor(
     private fb: FormBuilder,
@@ -66,7 +67,7 @@ export class ManageAccountResumeComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const queries: any[] = [this.dataService.resumeAccount(this.account.id, this.methodName, this.methodArgs)];
+    const queries: any[] = [this.dataService.resumeAccount(this.account.id, this.methodName, this.methodArgs, this.updateStatus)];
 
     const values = this.form.getRawValue();
     values.protection = values.protection / 100;
@@ -79,7 +80,7 @@ export class ManageAccountResumeComponent implements OnInit, OnDestroy {
     };
 
     if (values.amount) {
-      queries.push(this.dataService.fundAccount(this.account.id, values.amount, this.methodName, this.methodArgs));
+      queries.push(this.dataService.fundAccount(this.account.id, values.amount, this.methodName, this.methodArgs, this.updateStatus));
     }
 
     if (values.protection !== this.account.protection) {
@@ -93,7 +94,7 @@ export class ManageAccountResumeComponent implements OnInit, OnDestroy {
     }
 
     if (newObj.protection || newObj.target || newObj.factor) {
-      queries.push(this.dataService.changeAccountProfile(this.account.id, newObj, this.methodName, this.methodArgs));
+      queries.push(this.dataService.changeAccountProfile(this.account.id, newObj, this.methodName, this.methodArgs, this.updateStatus));
     }
 
     forkJoin(queries).pipe(takeUntil(this.destroy$)).subscribe(() => {

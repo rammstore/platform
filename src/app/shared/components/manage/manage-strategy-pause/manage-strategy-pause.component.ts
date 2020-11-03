@@ -17,8 +17,11 @@ export class ManageStrategyPauseComponent implements OnDestroy {
 
   // component data
   strategy: Strategy;
-  @Input() methodName: string;
+
+  @Input() methodName: string | any;
   @Input() methodArgs: any;
+
+  updateStatus: string;
 
   constructor(
     private dataService: DataService,
@@ -26,7 +29,9 @@ export class ManageStrategyPauseComponent implements OnDestroy {
   ) { }
 
   pause(): void {
-    this.dataService.pauseStrategy(this.strategy.id, this.methodName, this.methodArgs)
+    this.updateStatus = "update";
+    debugger;
+    this.dataService.pauseStrategy(this.strategy.id, this.methodName, this.methodArgs, this.updateStatus)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
         this.modalRef.hide();

@@ -3,17 +3,15 @@
   [data]="accounts$ | async"
   [paginator]="paginator"
   [shouldHighlightMyStrategies]="true"
-  (paginationChanged)="getAccounts()"
-  [methodName]="'getActiveMyAccounts'"
-  [methodArgs]="args">
+  (paginationChanged)="getAccounts()">
 </app-data-table>
 
-<app-mobile-data-view-investment
+<!-- <app-mobile-data-view-investment
   [accounts]="accounts$ | async"
   [paginator]="paginator"
   (paginationChanged)="getAccounts()"
   [methodName]="'getActiveMyAccounts'"
   [methodArgs]="args">
-</app-mobile-data-view-investment>
+</app-mobile-data-view-investment> -->
 
 
