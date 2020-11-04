@@ -69,22 +69,19 @@ export class InvestmentsActiveComponent implements OnInit, OnDestroy {
     this.dataService.update$
       .pipe(takeUntil(this.destroy$))
       .subscribe((item) => {
-        console.log('.dataService.update$ item', item)
         if (item == "update") {          
           this.getAccounts();
         }
-      })
+      });
 
     this.accounts$ = this.getActiveAccounts(this.args);
   }
 
   getActiveAccounts(args: any): Observable<any> {
-    // debugger;
     return this.dataService.getActiveMyAccounts(args);
   }
 
   getAccounts(): void {
-    // debugger;
     this.accounts$ = this.getActiveAccounts(this.args);
   }
 

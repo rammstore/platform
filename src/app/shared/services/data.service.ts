@@ -75,7 +75,7 @@ export class DataService {
     }
   }
 
-  get update$(): Observable<any>{
+  get update$(): Observable<any> {
     return this._update.asObservable();
   }
 
@@ -283,21 +283,22 @@ export class DataService {
   // Постановка стратегии на паузу
   pauseStrategy(strategyId: number, methodName: string | any, methodArgs: any, updateStatus: string): Observable<any> {
     this.loaderService.showLoader();
-    return this.http.post(`${this.apiUrl}/myStrategies.pause`, { StrategyID: strategyId }).pipe(
-      tap(()=>{
-        this._update.next(updateStatus);
-      }),
-      map((response: any) => {
-        this.updateStrategy(new Command(response.CommandID, strategyId), methodName, methodArgs, 'notify.strategy.paused');
-      })
-    );
+    return this.http.post(`${this.apiUrl}/myStrategies.pause`, { StrategyID: strategyId })
+      .pipe(
+        tap(() => {
+          this._update.next(updateStatus);
+        }),
+        map((response: any) => {
+          this.updateStrategy(new Command(response.CommandID, strategyId), methodName, methodArgs, 'notify.strategy.paused');
+        })
+      );
   }
 
   // Возобновление стратегии
   resumeStrategy(strategyId: number, methodName: string, methodArgs: any, updateStatus: string): Observable<any> {
     this.loaderService.showLoader();
     return this.http.post(`${this.apiUrl}/myStrategies.resume`, { StrategyID: strategyId }).pipe(
-      tap(()=>{
+      tap(() => {
         this._update.next(updateStatus);
       }),
       map((response: any) => {
@@ -595,9 +596,9 @@ export class DataService {
   fundAccount(accountID: number, amount: number, methodName: string | any, methodArgs: any, updateStatus: string) {
     this.loaderService.showLoader();
     return this.http.post(`${this.apiUrl}/accounts.fund`, { AccountID: accountID, Amount: amount }).pipe(
-      tap(()=>{
-          this._update.next(updateStatus);
-      }), 
+      tap(() => {
+        this._update.next(updateStatus);
+      }),
       map((response: any) => {
         this.updateAccount(new Command(response.CommandBalanceID, accountID), methodName, methodArgs, 'notify.investment.funded');
       })
@@ -608,7 +609,7 @@ export class DataService {
   pauseAccount(accountID: number, methodName: string | any, methodArgs: any, updateStatus: string): Observable<any> {
     this.loaderService.showLoader();
     return this.http.post(`${this.apiUrl}/accounts.pause`, { AccountID: accountID }).pipe(
-      tap(()=>{
+      tap(() => {
         console.log('pauseAccount updateStatus', updateStatus)
         this._update.next(updateStatus);
       }),
@@ -622,7 +623,7 @@ export class DataService {
   resumeAccount(accountID: number, methodName: string | any, methodArgs: any, updateStatus: string): Observable<any> {
     this.loaderService.showLoader();
     return this.http.post(`${this.apiUrl}/accounts.resume`, { AccountID: accountID }).pipe(
-      tap(()=>{
+      tap(() => {
         this._update.next(updateStatus);
       }),
       map((response: any) => {
@@ -643,7 +644,7 @@ export class DataService {
           AccountID: accountID,
           Target: valueObj['target']
         }).pipe(
-          tap(()=>{
+          tap(() => {
             this._update.next(updateStatus);
           }),
           map((response: any) => {
@@ -659,7 +660,7 @@ export class DataService {
           AccountID: accountID,
           Protection: valueObj['protection']
         }).pipe(
-          tap(()=>{
+          tap(() => {
             this._update.next(updateStatus);
           }),
           map((response: any) => {
@@ -675,7 +676,7 @@ export class DataService {
           AccountID: accountID,
           Factor: valueObj['factor']
         }).pipe(
-          tap(()=>{
+          tap(() => {
             this._update.next(updateStatus);
           }),
           map((response: any) => {
