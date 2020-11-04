@@ -65,9 +65,8 @@
           common.manage.signalScript
         </li>
         <li
-          *ngIf="(isInvestOtherStrategy || isInvestStrategy || isStrategyDetail || isRatingPage)"
+          *ngIf="!isSecurity && (isInvestOtherStrategy || isInvestStrategy || isStrategyDetail || isRatingPage)"
           (click)="openAccountCloseDialog()" translate>
-          <!--invest on other strategy-->
           <i class="fa fa-window-close"></i>
           common.manage.closeInvestment
         </li>

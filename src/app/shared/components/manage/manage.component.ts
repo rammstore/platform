@@ -54,6 +54,11 @@ export class ManageComponent implements OnInit {
     return strategy && strategy.isMyStrategy && this.data.isSecurity;
   }
 
+  get isSecurity() {
+    return (this.dataType === 'strategy' && this.data.isSecurity) ||
+      (this.dataType === 'account' && this.data.strategy.account && this.data.strategy.account.isSecurity);
+  }
+
   get isStrategyDetail(): boolean {
     return this.section === SectionEnum.strategy && this.dataType === 'strategy' && this.data.isMyStrategy && this.data.account && this.data.account.id && !this.data.account.isSecurity;
   }
