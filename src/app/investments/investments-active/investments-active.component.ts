@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Account, Paginator, Strategy, TableColumn } from '@app/models';
 import { TableHeaderRow } from '@app/models/table-header-row';
-import { Observable, Subject } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { filter, map, take, takeUntil, tap } from 'rxjs/internal/operators';
 import { PercentPipe } from '@angular/common';
 import { DataService } from '@app/services/data.service';
@@ -21,7 +21,9 @@ export class InvestmentsActiveComponent implements OnInit, OnDestroy {
 
   // component data
   accounts$: Observable<Account[]>;
+  accounts: Account[];
   args: any;
+  strategy$: Observable<Strategy>;
 
   // table settings
   tableHeader: TableHeaderRow[] = [
@@ -69,20 +71,43 @@ export class InvestmentsActiveComponent implements OnInit, OnDestroy {
     this.dataService.update$
       .pipe(takeUntil(this.destroy$))
       .subscribe((item) => {
-        if (item == "update") {          
-          this.getAccounts();
+        if (item.status == "update") {
+          this.getStrategy(item.strategyId)
+            .pipe(take(1))
+            .subscribe((strategy: Strategy) => {
+
+              this.accounts.filter((item) => {
+                if (item.strategy.id == strategy.id) {
+                  item.strategy = strategy;
+                }
+              });
+
+              this.accounts$ = of(this.accounts);
+            });
         }
       });
 
     this.accounts$ = this.getActiveAccounts(this.args);
   }
 
+  getStrategy(strategyId: number): Observable<Strategy> {
+    let args = {
+      strategyId: strategyId
+    }
+
+    return this.dataService.getStrategyById(args);
+  }
+
   getActiveAccounts(args: any): Observable<any> {
-    return this.dataService.getActiveMyAccounts(args);
+    return this.dataService.getActiveMyAccounts(args)
+      .pipe(
+        tap(item => this.accounts = item)
+      );
   }
 
   getAccounts(): void {
-    this.accounts$ = this.getActiveAccounts(this.args);
+    this.accounts$ = this.getActiveAccounts(this.args)
+
   }
 
   ngOnDestroy(): void {

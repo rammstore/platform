@@ -5,6 +5,7 @@ export interface EntityInterface {
   Strategies?: any[];
   Wallets?: any[];
   Accounts?: any[];
+  Account?: Account;
 }
 
 interface Order{

@@ -229,7 +229,9 @@ export class DataService {
         // this.walletService.updateWallet().subscribe();
         // // this.getActiveMyStrategies().subscribe();
         // this.notificationsService.open('notify.strategy.created');
-        this.updateAccount(new Command(response.AccountCommandID, response.AccountID), methodName, methodArgs, 'notify.strategy.created');
+
+        // переробити
+        // this.updateAccount(new Command(response.AccountCommandID, response.AccountID), methodName, methodArgs, 'notify.strategy.created');
 
         return this.createInstanceService.createStrategy({
           ID: response.StrategyID
@@ -281,28 +283,22 @@ export class DataService {
   }
 
   // Постановка стратегии на паузу
-  pauseStrategy(strategyId: number, methodName: string | any, methodArgs: any, updateStatus: string): Observable<any> {
+  pauseStrategy(strategyId: number, updateStatus: string): Observable<any> {
     this.loaderService.showLoader();
     return this.http.post(`${this.apiUrl}/myStrategies.pause`, { StrategyID: strategyId })
       .pipe(
-        tap(() => {
-          this._update.next(updateStatus);
-        }),
         map((response: any) => {
-          this.updateStrategy(new Command(response.CommandID, strategyId), methodName, methodArgs, 'notify.strategy.paused');
+          this.updateStrategy(new Command(response.CommandID, strategyId), strategyId, updateStatus, 'notify.strategy.paused');
         })
       );
   }
 
   // Возобновление стратегии
-  resumeStrategy(strategyId: number, methodName: string, methodArgs: any, updateStatus: string): Observable<any> {
+  resumeStrategy(strategyId: number, updateStatus: string): Observable<any> {
     this.loaderService.showLoader();
     return this.http.post(`${this.apiUrl}/myStrategies.resume`, { StrategyID: strategyId }).pipe(
-      tap(() => {
-        this._update.next(updateStatus);
-      }),
       map((response: any) => {
-        this.updateStrategy(new Command(response.CommandID, strategyId), methodName, methodArgs, 'notify.strategy.resumed');
+        this.updateStrategy(new Command(response.CommandID, strategyId), strategyId, updateStatus, 'notify.strategy.resumed');
       })
     );
   }
@@ -312,7 +308,7 @@ export class DataService {
     this.loaderService.showLoader();
     return this.http.post(`${this.apiUrl}/myStrategies.close`, { StrategyID: strategyId }).pipe(
       map((response: any) => {
-        this.updateStrategy(new Command(response.CommandID, strategyId), methodName, methodArgs, 'notify.strategy.closed');
+        // this.updateStrategy(new Command(response.CommandID, strategyId), 'notify.strategy.closed');
       })
     );
   }
@@ -335,22 +331,21 @@ export class DataService {
 
   // Получение статуса команды стратегии и запрос обновленного списка стратегий после завершения обработки изменений
   // Работает с активными стратегиями, так как закрытые изменять нельзя
-  updateStrategy(command: Command, methodName: string | any, methodArgs: any, notificationText: string): void {
-    debugger;
+  updateStrategy(command: Command, strategyId: number, updateStatus: string, notificationText: string): void {
     const interval = setInterval(() => {
       this.commandService.checkStrategyCommand(command).subscribe((commandStatus: number) => {
         if (commandStatus !== 0) {
           clearInterval(interval);
-          // if (methodName instanceof Function) {
-          //   debugger;
-          //   methodName();
-          // }
-          // this[methodName](methodArgs)
-          //   .pipe(takeUntil(this.destroy$))
-          //   .subscribe(() => {
-          //     this.notificationsService.open(notificationText);
-          //     this.destroy$.next(true);
-          //   });
+
+          const data = {
+            strategyId: strategyId,
+            status: updateStatus
+          }
+
+          this._update.next(data);
+          debugger
+          this.notificationsService.open(notificationText);
+
           this.walletService.updateWallet()
             .pipe(takeUntil(this.destroy$))
             .subscribe(() => {
@@ -505,6 +500,24 @@ export class DataService {
       );
   }
 
+  getAccountById(accountId: number): Observable<any> {
+    this.loaderService.showLoader();
+    debugger
+    return this.http.post(`${this.apiUrl}/accounts.get`, { AccountID: accountId })
+      .pipe(
+        take(1),
+        map((response: any) => {
+          const data = {
+            strategy: this.createInstanceService.createStrategy(response.Strategy),
+            account: this.createInstanceService.createAccount(response.Account)
+          }
+          return data;
+        }
+        ),
+        tap(item => this.loaderService.hideLoader())
+      )
+  }
+
   // Получение деталей инвестиции
   getAccountStatement(args: { accountId: number }): Observable<any> {
     this.loaderService.showLoader();
@@ -593,47 +606,38 @@ export class DataService {
   }
 
   // Пополнить инвестицию
-  fundAccount(accountID: number, amount: number, methodName: string | any, methodArgs: any, updateStatus: string) {
+  fundAccount(accountId: number, amount: number, updateStatus: string) {
     this.loaderService.showLoader();
-    return this.http.post(`${this.apiUrl}/accounts.fund`, { AccountID: accountID, Amount: amount }).pipe(
-      tap(() => {
-        this._update.next(updateStatus);
-      }),
+    return this.http.post(`${this.apiUrl}/accounts.fund`, { AccountID: accountId, Amount: amount }).pipe(
       map((response: any) => {
-        this.updateAccount(new Command(response.CommandBalanceID, accountID), methodName, methodArgs, 'notify.investment.funded');
+        this.updateAccount(new Command(response.CommandBalanceID, accountId), accountId, updateStatus, 'notify.investment.funded');
       })
     );
   }
 
   // Приостановить инвестицию
-  pauseAccount(accountID: number, methodName: string | any, methodArgs: any, updateStatus: string): Observable<any> {
+  pauseAccount(accountId: number, updateStatus: string): Observable<any> {
     this.loaderService.showLoader();
-    return this.http.post(`${this.apiUrl}/accounts.pause`, { AccountID: accountID }).pipe(
-      tap(() => {
-        console.log('pauseAccount updateStatus', updateStatus)
-        this._update.next(updateStatus);
-      }),
-      map((response: any) => {
-        this.updateAccount(new Command(response.CommandID, accountID), methodName, methodArgs, 'notify.investment.paused');
-      })
-    );
+    return this.http.post(`${this.apiUrl}/accounts.pause`, { AccountID: accountId })
+      .pipe(
+        map((response: any) => {
+          this.updateAccount(new Command(response.CommandID, accountId), accountId, updateStatus, 'notify.investment.paused');
+        })
+      );
   }
 
   // Возобновить инвестицию
-  resumeAccount(accountID: number, methodName: string | any, methodArgs: any, updateStatus: string): Observable<any> {
+  resumeAccount(accountId: number, updateStatus: string): Observable<any> {
     this.loaderService.showLoader();
-    return this.http.post(`${this.apiUrl}/accounts.resume`, { AccountID: accountID }).pipe(
-      tap(() => {
-        this._update.next(updateStatus);
-      }),
+    return this.http.post(`${this.apiUrl}/accounts.resume`, { AccountID: accountId }).pipe(
       map((response: any) => {
-        this.updateAccount(new Command(response.CommandID, accountID), methodName, methodArgs, 'notify.investment.resumed');
+        this.updateAccount(new Command(response.CommandID, accountId), accountId, updateStatus, 'notify.investment.resumed');
       })
     );
   }
 
   // Изменить профиль инвестиции
-  changeAccountProfile(accountID: number, valueObj: { [key: string]: number }, methodName: string | any, methodArgs: any, updateStatus: string): Observable<any> {
+  changeAccountProfile(accountId: number, valueObj: { [key: string]: number }, updateStatus: string): Observable<any> {
     this.loaderService.showLoader();
 
     const requests: any[] = [];
@@ -641,14 +645,11 @@ export class DataService {
     if (valueObj.target) {
       requests.push(
         this.http.post(`${this.apiUrl}/accounts.setTarget`, {
-          AccountID: accountID,
+          AccountID: accountId,
           Target: valueObj['target']
         }).pipe(
-          tap(() => {
-            this._update.next(updateStatus);
-          }),
           map((response: any) => {
-            this.updateAccount(new Command(response.CommandID, accountID), methodName, methodArgs, 'notify.investment.target.changed');
+            this.updateAccount(new Command(response.CommandID, accountId), accountId, updateStatus, 'notify.investment.target.changed');
           })
         )
       );
@@ -657,14 +658,11 @@ export class DataService {
     if (valueObj.protection) {
       requests.push(
         this.http.post(`${this.apiUrl}/accounts.setProtection`, {
-          AccountID: accountID,
+          AccountID: accountId,
           Protection: valueObj['protection']
         }).pipe(
-          tap(() => {
-            this._update.next(updateStatus);
-          }),
           map((response: any) => {
-            this.updateAccount(new Command(response.CommandID, accountID), methodName, methodArgs, 'notify.investment.protection.changed');
+            this.updateAccount(new Command(response.CommandID, accountId), accountId, updateStatus, 'notify.investment.protection.changed');
           })
         )
       );
@@ -673,14 +671,11 @@ export class DataService {
     if (valueObj.factor) {
       requests.push(
         this.http.post(`${this.apiUrl}/accounts.setFactor`, {
-          AccountID: accountID,
+          AccountID: accountId,
           Factor: valueObj['factor']
         }).pipe(
-          tap(() => {
-            this._update.next(updateStatus);
-          }),
           map((response: any) => {
-            this.updateAccount(new Command(response.CommandID, accountID), methodName, methodArgs, 'notify.investment.factor.changed');
+            this.updateAccount(new Command(response.CommandID, accountId), accountId, updateStatus, 'notify.investment.factor.changed');
           })
         )
       );
@@ -699,7 +694,7 @@ export class DataService {
     this.loaderService.showLoader();
     return this.http.post(`${this.apiUrl}/accounts.withdraw`, { AccountID: accountId, Amount: amount }).pipe(
       map((response: any) => {
-        this.updateAccount(new Command(response.CommandBalanceID, accountId), methodName, methodArgs, 'notify.investment.withdrawn');
+        // this.updateAccount(new Command(response.CommandBalanceID, accountId), methodName, methodArgs, 'notify.investment.withdrawn');
       })
     );
   }
@@ -709,31 +704,25 @@ export class DataService {
     this.loaderService.showLoader();
     return this.http.post(`${this.apiUrl}/accounts.close`, { AccountID: accountID }).pipe(
       map((response: any) => {
-        this.updateAccount(new Command(response.CommandID, accountID), methodName, methodArgs, 'notify.investment.closed');
+        // this.updateAccount(new Command(response.CommandID, accountID), methodName, methodArgs, 'notify.investment.closed');
       })
     );
   }
 
   // Получение статуса команды и запрос обновленного списка дынных после завершения обработки изменений
-  updateAccount(command: Command, methodName: string | any, methodArgs: any, notificationText: string): void {
+  updateAccount(command: Command, accountId: number, updateStatus: string, notificationText: string): void {
     const interval = setInterval(() => {
       this.commandService.checkAccountCommand(command).subscribe((commandStatus: number) => {
-        if (commandStatus !== 0) {
-          // clearInterval(interval);
-          // if (methodName instanceof Function) {
-          //   methodName();
 
-          //   debugger
-          // }
-          // else {
-          //   this[methodName](methodArgs)
-          //     .pipe(takeUntil(this.destroy$))
-          //     .subscribe(() => {
-          //       this.notificationsService.open(notificationText);
-          //       this.destroy$.next(true);
-          //     });
-          // }
-          // debugger;
+        this._update.next({
+          accountId: accountId,
+          status: updateStatus
+        });
+
+        if (commandStatus !== 0) {
+          clearInterval(interval);
+
+          this.notificationsService.open(notificationText);
 
           this.walletService.updateWallet()
             .pipe(takeUntil(this.destroy$))
@@ -742,6 +731,7 @@ export class DataService {
             });
         }
       });
+
     }, 1000);
   }
 

@@ -74,7 +74,13 @@ export class RatingAllComponent implements OnInit{
 
   getStrategies(): Observable<any> {
     this.args.searchText = this.searchText;
-    return this.dataService.getBestRating(this.args);
+    return this.dataService.getBestRating(this.args)
+    .pipe(
+      tap(
+      (data)=>{
+        debugger
+      })
+    );
   }
 
   getRating() {

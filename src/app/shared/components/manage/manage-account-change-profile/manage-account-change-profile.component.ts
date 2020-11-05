@@ -82,7 +82,7 @@ export class ManageAccountChangeProfileComponent implements OnInit, OnDestroy {
       newObj.factor = values.factor;
     }
 
-    this.dataService.changeAccountProfile(this.account.id, newObj, this.methodName, this.methodArgs, this.updateStatus)
+    this.dataService.changeAccountProfile(this.account.id, newObj, this.updateStatus)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
         this.modalRef.hide();

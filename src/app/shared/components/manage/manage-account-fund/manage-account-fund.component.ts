@@ -56,7 +56,7 @@ export class ManageAccountFundComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.dataService.fundAccount(this.account.id, this.form.get('amount').value, this.methodName, this.methodArgs, this.updateStatus)
+    this.dataService.fundAccount(this.account.id, this.form.get('amount').value, this.updateStatus)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
         this.modalRef.hide();

@@ -63,8 +63,6 @@ export class StrategyDetailsProfitabilityComponent implements OnInit, OnDestroy 
     
   }
 
-  
-
   private getStrategyFromStrategyService(): void {
     this.strategy$ = this.strategyService.strategy$
       .pipe(
