@@ -3,12 +3,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Strategy } from '@app/models';
 import { ContentTabLink } from '@app/components/content-tabs/content-tab-link';
 import { BsModalRef } from 'ngx-bootstrap';
-import { Observable, Subject } from 'rxjs';
-import { take, takeUntil, tap } from 'rxjs/internal/operators';
+import {Observable, of, Subject} from 'rxjs';
+import {catchError, take, takeUntil, tap} from 'rxjs/internal/operators';
 import { DataService } from '@app/services/data.service';
 import { BrandService } from '@app/services/brand.service';
 import { StrategyService } from '@app/services/strategy.service';
 import { SectionEnum } from "@app/enum/section.enum";
+import {NotificationsService} from "@app/services/notifications.service";
 
 @Component({
   selector: 'app-strategy-details',
@@ -36,6 +37,7 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
     private router: Router,
     private dataService: DataService,
     private brandService: BrandService,
+    private notificationsService: NotificationsService,
     private strategyService: StrategyService
   ) {
   }
@@ -55,8 +57,11 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
 
       this.strategy$ = this.getStrategyById(this.args)
         .pipe(
-          tap((item) => {
-            this.strategiesDetailsLinks();
+          tap((item) => this.strategiesDetailsLinks()),
+          catchError(item => {
+            item.status === 404 ? this.notificationsService.open('empty.strategy.null', {type: 'error'}) : '';
+
+            return of();
           })
         );
 

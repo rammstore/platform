@@ -334,7 +334,7 @@
   "strategy.add.form.label.step2": "A strategy requires your investment into it. This investment can only be closed together with the strategy.",
   "strategy.add.form.label.step2.bottom": "You can set investment conditions and download the adviser in the next steps.",
   "strategy.add.form.label.step3": "Offers allow to set individual management conditions for different groups of investors. A public offer sets default conditions available through the Rating. Non-public offers set conditions which are available by using a corresponding link.",
- 	"strategy.add.form.label.step3.warning": "Attention! Сreation of additional offers is temporarily disabled!",	
+ 	"strategy.add.form.label.step3.warning": "Attention! Сreation of additional offers is temporarily disabled!",
   "strategy.add.script.button.download": "Download script",
 	"strategy.add.script.download.platform.title": "Trading platform",
 	"strategy.add.script.download.title": "Download signal script",
@@ -346,7 +346,7 @@
   "strategy.button.create.offer": "Create offer",
   "strategy.public.offer.label": "Only one offer can be public; when creating a new public offer, the old offer will become non-public.",
   "strategy.private.offer.label": "The strategy will not have public offers, the strategy will be absent from the ratings and investment will only be possible through hidden links.",
-	
+
   "strategy.close.form.text": "Do you confirm closing your strategy?",
   "strategy.close.form.text2": "If you had invested in your own strategy your investment account would also be closed. Please note that this action is irreversible.",
 
@@ -385,6 +385,8 @@
 
 	"strategy.invest.form.title": "Invest in strategy",
   "strategy.invest.trader.form.text": "The trader (owner) of the strategy can only invest under the special conditions of the trader's offer, with zero fee and turnover commission. In case you confirm the investment, it will be created according to the trader's offer.",
+
+  "empty.strategy.null": "Strategy not found",
 
   "table.cell.accountNumberCopy": "The number of account from which copy trading is performed",
   "table.cell.loading": "Loading...",
