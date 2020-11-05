@@ -36,16 +36,10 @@ export class MyStrategyGuard implements CanActivate {
 
     id = Number(str.substring(str.lastIndexOf('/') + 1) || 0);
 
-    return of<boolean>(id ? false : true).pipe(
-        switchMap((status) => {
-          if (status) {
-            return of(true);
-          }
-          return this.dataService.getStrategyById({strategyId: id}).pipe(
-            map(item => item.isMyStrategy ? true : false),
-            tap((check) => !check ? this.router.navigate(['/strategies/details/', id]) : '')
-          );
-        })
+    return this.dataService.getStrategyById({strategyId: id})
+      .pipe(
+        map(item => item.isMyStrategy),
+        tap((check) => !check ? this.router.navigate(['/strategies/details/', id]) : '')
       );
   }
 }
