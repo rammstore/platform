@@ -7,6 +7,7 @@ import {
   Command,
   Deal,
   DealsSearchOptions,
+  NotificationOptions,
   Offer,
   Paginator,
   Position,
@@ -607,7 +608,34 @@ export class DataService {
   // Получение деталей инвестиции
   getAccountStatement(args: { accountId: number }): Observable<any> {
     this.loaderService.showLoader();
-    this.http.post(`${this.apiUrl}/accounts.get`, { AccountID: args.accountId }).subscribe((response: any) => {
+    this.http.post(`${this.apiUrl}/accounts.get`, { AccountID: args.accountId })
+      .pipe(
+        catchError(error => {
+          const config: NotificationOptions = {
+            type: 'error',
+            autoClose: true,
+            duration: 3000
+          };
+
+          switch (error.status) {
+            case 404: {
+              this.notificationsService.open('empty.investment.null', config);
+              break;
+            }
+            case 401: {
+              this.router.navigate(['/investments']);
+              this.notificationsService.open('empty.investment.null', config);
+              break;
+            }
+            default: {
+              this.notificationsService.open('empty.investment.null', config);
+            }
+          }
+
+          return of();
+        })
+      )
+      .subscribe((response: any) => {
       if (response.Strategy) {
         response.Strategy.PublicOffer = {
           CommissionRate: response.Strategy.Commission,

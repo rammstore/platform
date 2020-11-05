@@ -1,8 +1,8 @@
 import {Injectable} from "@angular/core";
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from "@angular/router";
-import {Observable, of} from "rxjs";
+import {Observable} from "rxjs";
 import {DataService} from "@app/services/data.service";
-import {map, switchMap, tap} from "rxjs/operators";
+import {map, tap} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -20,21 +20,20 @@ export class MyStrategyGuard implements CanActivate {
     const isOffers = location.pathname.indexOf('offers');
     const isInvestment = location.pathname.indexOf('investments');
     let str = '';
-    let id: number = 0;
+    let id: number = Number(location.pathname.substring(location.pathname.lastIndexOf('/') + 1) || 0);
 
     switch (true) {
       case (isOffers > 0): {
         str = location.pathname.substring(0, isOffers - 1);
-
+        id = Number(str.substring(str.lastIndexOf('/') + 1) || 0);
         break;
       }
       case (isInvestment > 0): {
         str = location.pathname.substring(0, isInvestment - 1);
+        id = Number(str.substring(str.lastIndexOf('/') + 1) || 0);
         break;
       }
     }
-
-    id = Number(str.substring(str.lastIndexOf('/') + 1) || 0);
 
     return this.dataService.getStrategyById({strategyId: id})
       .pipe(

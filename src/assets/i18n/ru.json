@@ -305,6 +305,7 @@
   "rating.search.placeholder": "Поиск стратегий",
 
   "empty.strategy.null": "Стратегия не найдена",
+  "empty.investment.null": "Инвестиция не найдена",
 
   "spec.platform.account.currencies.title": "Доступные валюты счета",
   "spec.platform.account.min-deposit.title": "Минимальный депозит",

@@ -138,19 +138,20 @@
   <router-outlet></router-outlet>
 </app-content-tabs>
 
-<table class="margin-info">
+<table class="margin-info"
+       *ngIf="account">
   <tbody>
   <tr>
     <td><span translate>common.equity</span>, USD</td>
-    <td *ngIf="account">{{account.equity | customCurrency}}</td>
+    <td>{{account.equity | customCurrency}}</td>
     <td><span translate>common.balance</span>, USD</td>
-    <td *ngIf="account">{{account.balance | customCurrency}}</td>
+    <td>{{account.balance | customCurrency}}</td>
   </tr>
   <tr>
     <td><span translate>common.freeMargin</span>, USD</td>
-    <td *ngIf="account" class="{{account.getColorClass('freeMargin')}}">{{account.freeMargin | customCurrency}}</td>
+    <td class="{{account.getColorClass('freeMargin')}}">{{account.freeMargin | customCurrency}}</td>
     <td><span translate>common.margin</span>, USD</td>
-    <td *ngIf="account">{{account.margin | customCurrency}}</td>
+    <td>{{account.margin | customCurrency}}</td>
   </tr>
   <tr>
     <td translate>common.marginLevel.percent</td>
