@@ -47,6 +47,19 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
     this.functionality$ = this.brandService.functionality;
 
     this.id = parseInt(this.route.params['_value'].id);
+
+    this.getStrategies();
+
+    this.dataService.update$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((item) => {
+        if (item.status == "update") {
+          this.getStrategies();
+        }
+      });
+  }
+
+  private getStrategies(): void {
     if (this.id) {
       this.args = {
         strategyId: this.id
@@ -63,7 +76,6 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
           })
         );
 
-      this.methodName = 'getStrategyById';
     } else {
       this.args = {
         link: this.route.params['_value'].id
@@ -72,8 +84,6 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
           tap(item => console.log('DATA1', item)),
           tap((item) => this.strategiesLinks())
         );
-
-      this.methodName = 'getStrategyByLink';
     }
   }
 

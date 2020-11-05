@@ -1,14 +1,16 @@
 <app-data-table
   [tableHeader]="tableHeader"
-  [data]="accounts"
+  [data]="accounts$ | async"
   [paginator]="paginator"
   [shouldHighlightMyStrategies]="true"
   (paginationChanged)="getAccounts()">
 </app-data-table>
 
 <app-mobile-data-view-investment-closed
-  [accounts]="accounts"
+  [accounts]="accounts$ | async"
   [paginator]="paginator"
   (paginationChanged)="getAccounts()">
 </app-mobile-data-view-investment-closed>
+
+
 

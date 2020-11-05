@@ -1,16 +1,14 @@
 <app-data-table
   [tableHeader]="tableHeader"
-  [data]="strategies"
+  [data]="strategies$ | async"
   [totalFields]="totalFields"
   [paginator]="paginator"
   (paginationChanged)="getStrategies()"
-  [section]="sectionEnum"
-  [methodName]="'getActiveMyStrategies'"
-  [methodArgs]="args">
+  [section]="sectionEnum">
 </app-data-table>
 
 <app-mobile-data-view-strategy
-  [strategies]="strategies"
+  [strategies]="strategies$ | async"
   [paginator]="paginator"
   (paginationChanged)="getStrategies()">
 </app-mobile-data-view-strategy>
