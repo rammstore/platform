@@ -1,13 +1,15 @@
 import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { Account, Offer, Strategy } from '@app/models';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { Subject } from 'rxjs';
+import {Observable, of, Subject} from 'rxjs';
 import { ContentTabLink } from '@app/components/content-tabs/content-tab-link';
 import { DataService } from '@app/services/data.service';
 import { BrandService } from '@app/services/brand.service';
-import { takeUntil } from 'rxjs/operators';
+import {catchError, map, takeUntil, tap} from 'rxjs/operators';
 import { SectionEnum } from "@app/enum/section.enum";
 import { RefreshService } from '@app/services/refresh.service';
+import {StatementInterface} from "@app/interfaces/statement.interface";
+import {NotificationsService} from "@app/services/notifications.service";
 
 @Component({
   selector: 'app-investments-details',
@@ -21,6 +23,7 @@ export class InvestmentsDetailsComponent implements OnInit, OnDestroy {
   currentDate: Date;
   // component data
   account: Account;
+  source$: Observable<StatementInterface>;
   strategy: Strategy;
   publicOffer: Offer;
   links: ContentTabLink[] = [];
@@ -33,6 +36,7 @@ export class InvestmentsDetailsComponent implements OnInit, OnDestroy {
     private dataService: DataService,
     private brandService: BrandService,
     private refreshService: RefreshService,
+    private notificationsService: NotificationsService,
     private router: Router
   ) {
   }
@@ -65,19 +69,30 @@ export class InvestmentsDetailsComponent implements OnInit, OnDestroy {
   }
 
   getAccountStatement(): void {
-    this.dataService.getAccountStatement(this.args)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((response: any) => {
-        this.strategy = response.strategy;
-        response.account.isMyStrategy = response.strategy.isMyStrategy;
-        this.account = response.account;
-        this.account.strategy = response.strategy;
-        this.publicOffer = this.strategy.publicOffer ? this.strategy.publicOffer : this.strategy.linkOffer;
-        this.currentDate = new Date();
-        this.links = [
-          new ContentTabLink('investment.positions.title', '/investments/details/' + this.account.id),
-          new ContentTabLink('investment.deals.title', '/investments/details/' + this.account.id + '/deals')
-        ];
-      });
+    this.source$ =  this.dataService.getAccountStatement(this.args)
+      .pipe(
+        takeUntil(this.destroy$),
+        catchError(item => {
+          item.status === 404 ? this.notificationsService.open('empty.investment.null', {type: 'error'}) : '';
+
+          return of();
+        }),
+        tap(response => {
+          response.account.isMyStrategy = response.strategy.isMyStrategy;
+          this.strategy = response.strategy;
+          this.account = response.account;
+          this.account.strategy = response.strategy;
+          this.publicOffer = this.strategy.publicOffer ? this.strategy.publicOffer : this.strategy.linkOffer;
+          this.currentDate = new Date();
+          this.links = [
+            new ContentTabLink('investment.positions.title', '/investments/details/' + this.account.id),
+            new ContentTabLink('investment.deals.title', '/investments/details/' + this.account.id + '/deals')
+          ];
+        }),
+        map((item) => {
+          item.account.strategy = item.strategy;
+          return item;
+        })
+      );
   }
 }

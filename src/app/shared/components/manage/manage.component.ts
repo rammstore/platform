@@ -33,10 +33,6 @@ export class ManageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // if (this.data.name === "test2304 3") { //Test0702_1 dsfsdf
-    //   console.log(this.data);
-    // }
-
     switch (true) {
       case (this.data instanceof Strategy): {
         this.dataType = 'strategy';
@@ -51,6 +47,16 @@ export class ManageComponent implements OnInit {
         break;
       }
     }
+  }
+
+  get isCloseStrategyAndInvestment(): boolean {
+    const strategy = this.data.strategy;
+    return strategy && strategy.isMyStrategy && this.data.isSecurity;
+  }
+
+  get isSecurity() {
+    return (this.dataType === 'strategy' && this.data.isSecurity) ||
+      (this.dataType === 'account' && this.data.strategy.account && this.data.strategy.account.isSecurity);
   }
 
   get isStrategyDetail(): boolean {
