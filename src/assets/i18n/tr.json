@@ -387,6 +387,9 @@
 	  "strategy.invest.form.title": "Stratejiye yatırım yap",
     "strategy.invest.trader.form.text": "The trader (owner) of the strategy can only invest under the special conditions of the trader's offer, with zero fee and turnover commission. In case you confirm the investment, it will be created according to the trader's offer.",
 
+    "empty.strategy.null": "Strateji bulunamadı",
+    "empty.investment.null": "Yatırım bulunamadı",
+
     "table.cell.accountNumberCopy": "İşlem kopyalamanın gerçekleştirildiği hesabın numarası",
   	"table.cell.loading": "Yükleniyor...",
   	"table.cell.total": "Toplam",

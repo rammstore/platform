@@ -387,6 +387,9 @@
   "strategy.invest.form.title": "سرمایه‌گذاری در استراتژی",
   "strategy.invest.trader.form.text": "The trader (owner) of the strategy can only invest under the special conditions of the trader's offer, with zero fee and turnover commission. In case you confirm the investment, it will be created according to the trader's offer.",
 
+  "empty.strategy.null": "استراتژی یافت نشد",
+  "empty.investment.null": "سرمایه گذاری یافت نشد",
+
   "table.cell.accountNumberCopy": "تعداد حسابی که از طریق آن کپی تریدینگ انجام می شود",
   "table.cell.loading": "در حال بارگیری",
   "table.cell.total": "جمع",
