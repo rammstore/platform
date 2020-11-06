@@ -22,7 +22,9 @@
     </div>
 
     <app-manage [data]="strategy"
-                *ngIf="strategy.account & strategy.isActive()"
+
+                *ngIf="strategy.isActive()"
+                (action)="parseAction($event)"
                 [section]="sectionEnum"></app-manage>
   </div>
 
@@ -32,3 +34,4 @@
 
   <p><b translate>strategy.details.message.risk</b></p>
 </ng-container>
+  

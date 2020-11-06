@@ -86,6 +86,7 @@ export class InvestmentsActiveComponent implements OnInit, OnDestroy {
                 });
 
                 this.accounts$ = of(this.accounts);
+
               });
           }
         })
