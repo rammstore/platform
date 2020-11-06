@@ -1,15 +1,16 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Strategy } from '@app/models';
-import { ContentTabLink } from '@app/components/content-tabs/content-tab-link';
-import { BsModalRef } from 'ngx-bootstrap';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Strategy} from '@app/models';
+import {ContentTabLink} from '@app/components/content-tabs/content-tab-link';
+import {BsModalRef} from 'ngx-bootstrap';
 import {Observable, of, Subject} from 'rxjs';
 import {catchError, take, takeUntil, tap} from 'rxjs/internal/operators';
-import { DataService } from '@app/services/data.service';
-import { BrandService } from '@app/services/brand.service';
-import { StrategyService } from '@app/services/strategy.service';
-import { SectionEnum } from "@app/enum/section.enum";
+import {DataService} from '@app/services/data.service';
+import {BrandService} from '@app/services/brand.service';
+import {StrategyService} from '@app/services/strategy.service';
+import {SectionEnum} from "@app/enum/section.enum";
 import {NotificationsService} from "@app/services/notifications.service";
+import {ActionEnum} from "@app/enum/action.enum";
 
 @Component({
   selector: 'app-strategy-details',
@@ -53,10 +54,20 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
     this.dataService.update$
       .pipe(takeUntil(this.destroy$))
       .subscribe((item) => {
-        if (item.status == "update") {
+        if (item.status === 'update') {
           this.getStrategies();
         }
       });
+  }
+
+  parseAction(event: ActionEnum) {
+    switch (event) {
+      case ActionEnum.investment:
+      case ActionEnum.cancel: {
+        this.getStrategies();
+        break;
+      }
+    }
   }
 
   private getStrategies(): void {
@@ -68,7 +79,6 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
       this.strategy$ = this.getStrategyById(this.args)
         .pipe(
           tap((item) => this.strategiesDetailsLinks()),
-          tap(item => console.log('DATA', item)),
           catchError(item => {
             item.status === 404 ? this.notificationsService.open('empty.strategy.null', {type: 'error'}) : '';
 
@@ -81,9 +91,8 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
         link: this.route.params['_value'].id
       };
       this.strategy$ = this.getStrategyByLink(this.args).pipe(
-          tap(item => console.log('DATA1', item)),
-          tap((item) => this.strategiesLinks())
-        );
+        tap((item) => this.strategiesLinks())
+      );
     }
   }
 
