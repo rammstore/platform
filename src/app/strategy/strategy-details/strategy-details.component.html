@@ -22,7 +22,8 @@
     </div>
 
     <app-manage [data]="strategy"
-                *ngIf="strategy.account & strategy.isActive()"
+                *ngIf="strategy.isActive()"
+                (action)="parseAction($event)"
                 [section]="sectionEnum" [methodName]="methodName" [methodArgs]="args"></app-manage>
   </div>
 

@@ -71,13 +71,12 @@ export class InvestmentsActiveComponent implements OnInit, OnDestroy {
     this.dataService.update$
       .pipe(takeUntil(this.destroy$))
       .subscribe((item) => {
-        if (item.status == "update") {
+        if (item.status === "update") {
           this.getStrategy(item.strategyId)
             .pipe(take(1))
             .subscribe((strategy: Strategy) => {
-
-              this.accounts.filter((item) => {
-                if (item.strategy.id == strategy.id) {
+              (this.accounts || []).filter((item) => {
+                if (item.strategy.id === strategy.id) {
                   item.strategy = strategy;
                 }
               });
