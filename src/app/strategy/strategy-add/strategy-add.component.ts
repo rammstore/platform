@@ -29,6 +29,7 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
   wallet: Wallet;
   accountMinBalance: number;
   functionality: object;
+  onClose: Subject<boolean> = new Subject<boolean>();
   titleStep: string = '';
   @Input() methodName: string;
   @Input() methodArgs: any;
@@ -155,11 +156,13 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
 
           if (status) {
             this.dataService.addOffer(newStrategy.id, strategy.FeeRate, strategy.CommissionRate).subscribe((item) => {
+              this.onClose.next(true);
               this.modalRef.hide();
               this.dataService.setPublicOffer(newStrategy.id, item.OfferID).subscribe();
               this.openAddStrategyScriptDialog(newStrategy);
             });
           } else {
+            this.onClose.next(true);
             this.modalRef.hide();
             this.openAddStrategyScriptDialog(newStrategy);
           }
@@ -175,6 +178,7 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
   }
 
   skip(): void {
+    this.onClose.next(true);
     this.modalRef.hide();
     //this.openAddStrategyScriptDialog(newStrategy);
   }

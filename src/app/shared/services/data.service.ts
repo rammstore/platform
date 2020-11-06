@@ -1,5 +1,5 @@
 import { DefaultIterableDiffer, Injectable } from '@angular/core';
-import { BehaviorSubject, forkJoin, Observable, of, pipe, ReplaySubject, Subject } from "rxjs";
+import {BehaviorSubject, forkJoin, Observable, of, pipe, ReplaySubject, Subject, throwError} from "rxjs";
 import {
   Account,
   AccountsSearchOptions,
@@ -31,6 +31,7 @@ import { Rating } from '@app/models/rating';
 import { Arguments } from "@app/interfaces/args.interface";
 import { RatingMapper } from "@app/mappers/rating.mapper";
 import { EntityInterface } from '@app/interfaces/entity.interface';
+import {StrategyMapper} from "@app/mappers/strategy.mapper";
 
 @Injectable({
   providedIn: 'root'
@@ -122,49 +123,37 @@ export class DataService {
   // Получение списка закрытых стратегий
   getClosedMyStrategies(pagination?: Paginator): Observable<Strategy[]> {
     this.loaderService.showLoader();
-    const options: StrategiesSearchOptions = new StrategiesSearchOptions();
-    options.Filter = {
-      SearchMode: 'MyClosedStrategies'
-    };
-    options.OrderBy = {
-      Field: 'DTClosed',
-      Direction: 'Desc'
-    };
 
-    if (pagination) {
-      options.Pagination = {
-        CurrentPage: pagination.currentPage,
-        PerPage: pagination.perPage
-      };
-    }
+    const options = StrategyMapper.formatToCloseStrategyRequest(pagination);
 
-    this.http.post(`${this.apiUrl}/Strategies.search`, options).subscribe((response: any) => {
-      this.loaderService.showLoader();
-      const strategies: Strategy[] = [];
+    return this.http.post<EntityInterface>(`${this.apiUrl}/Strategies.search`, options)
+      .pipe(
+        tap(({Wallets}) => Wallets ? this.walletService.walletSubject.next(this.createInstanceService.createWallet(Wallets[0])) : ''),
+        tap((item) => this.loaderService.hideLoader()),
+        tap(({Pagination}) => {
+          if (pagination) {
+            pagination.totalItems = Pagination.TotalRecords;
+            pagination.totalPages = Pagination.TotalPages;
+          }
+        }),
+        catchError(err => {
+          this.notificationsService.open('notify.loading.error', {
+            type: 'error',
+            autoClose: true,
+            duration: 3000
+          });
+          return of();
+        }),
+        map(({Strategies}) => {
+          const strategies: Strategy[] = [];
+          Strategies.forEach((s: any) => {
+            s.PublicOffer = s.PublicOffer || {};
+            strategies.push(this.createInstanceService.createStrategy(s));
+          });
 
-      this.walletService.walletSubject.next(this.createInstanceService.createWallet(response.Wallets[0]));
-
-      response.Strategies.forEach((s: any) => {
-        s.PublicOffer = s.PublicOffer || {};
-        strategies.push(this.createInstanceService.createStrategy(s));
-      });
-
-      if (pagination) {
-        pagination.totalItems = response.Pagination.TotalRecords;
-        pagination.totalPages = response.Pagination.TotalPages;
-      }
-
-      this.loaderService.hideLoader();
-      this.closedMyStrategiesSubject.next(strategies);
-    }, (error: HttpErrorResponse) => {
-      this.notificationsService.open('notify.loading.error', {
-        type: 'error',
-        autoClose: true,
-        duration: 3000
-      });
-    });
-
-    return this.closedMyStrategiesSubject.asObservable();
+          return strategies;
+        })
+      );
   }
 
   // Получение конкретной стратегии за ID

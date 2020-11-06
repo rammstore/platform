@@ -1,4 +1,4 @@
-import {Account, Offer, Strategy} from "@app/models";
+import {Account, Offer, StrategiesSearchOptions, Strategy} from "@app/models";
 
 export class StrategyMapper {
 
@@ -27,6 +27,24 @@ export class StrategyMapper {
       chart: options.Chart,
       masterAccount: options.MasterAccount
     });
+  }
+
+  static formatToCloseStrategyRequest(pagination): any {
+    const options = {
+      Filter: {
+        SearchMode: 'MyClosedStrategies'
+      },
+      OrderBy: {
+        Field: 'DTClosed',
+        Direction: 'Desc'
+      },
+      Pagination: (pagination && {
+        CurrentPage: pagination.currentPage,
+        PerPage: pagination.perPage
+      })
+    };
+
+    return options;
   }
 
 }
