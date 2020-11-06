@@ -89,7 +89,7 @@ export class ManageComponent implements OnInit {
     const options: ModalOptions = this.getAccountDialogOptions();
     options.initialState['forClose'] = true;
     this.modalRef = this.modalService.show(ManageAccountWithdrawComponent, options);
-    this.modalRef.content.onClose.subscribe(result => { debugger;
+    this.modalRef.content.onClose.subscribe(result => {
       this.action.emit(result ? ActionEnum.cancel : ActionEnum.default);
     });
   }
