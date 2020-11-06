@@ -47,12 +47,7 @@ export class StrategyComponent implements OnInit, OnDestroy {
   }
 
   openAddStrategyDialog() {
-    const options: ModalOptions = new ModalOptions();
-    options.initialState = {
-      methodName: 'getActiveMyStrategies',
-      methodArgs: this.methodArgs
-    };
-    this.modalRef = this.modalService.show(StrategyAddComponent, options);
+    this.modalRef = this.modalService.show(StrategyAddComponent, new ModalOptions());
 
     this.modalRef.content.onClose.subscribe(result => {
       this.strategyService.update = true;

@@ -156,13 +156,11 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
 
           if (status) {
             this.dataService.addOffer(newStrategy.id, strategy.FeeRate, strategy.CommissionRate).subscribe((item) => {
-              this.onClose.next(true);
               this.modalRef.hide();
               this.dataService.setPublicOffer(newStrategy.id, item.OfferID).subscribe();
               this.openAddStrategyScriptDialog(newStrategy);
             });
           } else {
-            this.onClose.next(true);
             this.modalRef.hide();
             this.openAddStrategyScriptDialog(newStrategy);
           }
@@ -207,6 +205,10 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
     };
 
     this.modalRef = this.modalService.show(StrategyAddScriptComponent, options);
+    this.modalRef.content.onClose.subscribe(result => {
+      debugger;
+      this.onClose.next(true);
+    });
   }
 
   ngOnDestroy(): void {
