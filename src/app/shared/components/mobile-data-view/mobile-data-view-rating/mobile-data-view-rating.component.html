@@ -4,7 +4,10 @@
       <div class="name">
         <a [routerLink]="['/strategies/details', strategy.id]">{{strategy.name}}</a>
       </div>
-      <app-manage [data]="strategy"></app-manage>
+      <app-manage 
+      [data]="strategy"
+      [section]="section"
+      [key]="key"></app-manage>
     </div>
 
     <app-chart-yield-table [strategy]="strategy" [containerID]="'mobileYieldChartContainer' + strategy.id"></app-chart-yield-table>

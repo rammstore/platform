@@ -12,7 +12,8 @@
 <app-mobile-data-view-investment
   [accounts]="accounts$ | async"
   [paginator]="paginator"
-  (paginationChanged)="getAccounts()">
+  (paginationChanged)="getAccounts()"
+  [key]="key">
 </app-mobile-data-view-investment>
 
 
