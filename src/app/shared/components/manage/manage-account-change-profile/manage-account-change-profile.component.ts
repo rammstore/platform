@@ -24,6 +24,7 @@ export class ManageAccountChangeProfileComponent implements OnInit, OnDestroy {
   @Input() methodArgs: any;
   functionality: object;
   updateStatus: "update";
+  key: string;
 
   constructor(
     private fb: FormBuilder,
@@ -83,7 +84,7 @@ export class ManageAccountChangeProfileComponent implements OnInit, OnDestroy {
       newObj.factor = values.factor;
     }
 
-    this.dataService.changeAccountProfile(this.account.id, newObj, this.updateStatus)
+    this.dataService.changeAccountProfile(this.account.id, newObj, this.updateStatus, this.key)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
         this.modalRef.hide();

@@ -4,8 +4,11 @@
   [totalFields]="totalFields"
   [paginator]="paginator"
   (paginationChanged)="getStrategies()"
-  [section]="sectionEnum">
+  [section]="sectionEnum"
+  [key]="key">
 </app-data-table>
+
+<div *ngIf="update$ | async"></div>
 
 <app-mobile-data-view-strategy
   [strategies]="strategies$ | async"

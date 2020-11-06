@@ -3,8 +3,11 @@
   [data]="accounts$ | async"
   [paginator]="paginator"
   [shouldHighlightMyStrategies]="true"
-  (paginationChanged)="getAccounts()">
+  (paginationChanged)="getAccounts()"
+  [key]="key">
 </app-data-table>
+
+<div *ngIf="update$ | async"></div>
 
 <app-mobile-data-view-investment
   [accounts]="accounts$ | async"

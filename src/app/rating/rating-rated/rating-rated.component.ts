@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, of, Subject } from 'rxjs';
+import { Observable, of, Subject, Subscription } from 'rxjs';
 import { Paginator, Strategy, TableColumn } from '@app/models';
 import { TableHeaderRow } from '@app/models/table-header-row';
 import { PercentPipe } from '@angular/common';
@@ -7,6 +7,7 @@ import { DataService } from '@app/services/data.service';
 import { filter, map, take, takeUntil, tap } from 'rxjs/operators';
 import { SectionEnum } from "@app/enum/section.enum";
 import { ArgumentsService } from '@app/services/arguments.service';
+import { error } from 'protractor';
 
 @Component({
   selector: 'app-rating-rated',
@@ -22,6 +23,8 @@ export class RatingRatedComponent implements OnInit, OnDestroy {
   args: any;
   section: SectionEnum = SectionEnum.rating;
   ratingRated$: Observable<any>;
+  key: string;
+  update$: Observable<any>;
 
   // table settings
   tableHeader: TableHeaderRow[] = [
@@ -57,6 +60,7 @@ export class RatingRatedComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.key = "rating-rated";
     this.ratingRated$ = this.argumentsService.ratingRated$
       .pipe(
         tap((argument) => {
@@ -74,40 +78,40 @@ export class RatingRatedComponent implements OnInit, OnDestroy {
         })
       );
 
-    this.dataService.update$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((data) => {
-        if (data.status == "update") {
-          if (data.accountId) {
-            this.getAccountById(data.accountId)
-              .pipe(takeUntil(this.destroy$))
-              .subscribe((response) => {
-                (this.strategies || []).filter((strategy: Strategy) => {
-                  if (strategy.account && strategy.account.id == data.accountId) {
-                    strategy.account = response.account;
-                  }
+    this.update$ = this.dataService.update$
+      .pipe(
+        tap((data)=>{
+          if (data.key == "rating-rated" && data.status == "update") {
+            if (data.accountId) {
+              this.getAccountById(data.accountId)
+                .pipe(takeUntil(this.destroy$))
+                .subscribe((response) => {
+                  (this.strategies || []).filter((strategy: Strategy) => {
+                    if (strategy.account && strategy.account.id == data.accountId) {
+                      strategy.account = response.account;
+                    }
+                  });
+  
+                  this.strategies$ = of(this.strategies);
                 });
-
-                this.strategies$ = of(this.strategies);
-              });
-          }
-          else if (data.strategyId) {
-            this.getStrategyById(data.strategyId)
-              .pipe(takeUntil(this.destroy$))
-              .subscribe((strategy: Strategy) => {
-                (this.strategies || []).filter((item: Strategy) => {
-                  if (item.id == data.strategyId) {
-                    item.status = strategy.status;
-                debugger
-                  }
+            }
+            else if (data.strategyId) {
+              this.getStrategyById(data.strategyId)
+                .pipe(takeUntil(this.destroy$))
+                .subscribe((strategy: Strategy) => {
+                  (this.strategies || []).filter((item: Strategy) => {
+                    if (item.id == data.strategyId) {
+                      item.status = strategy.status;
+                    }
+                  });
+  
+                  this.strategies$ = of(this.strategies);
                 });
-                
-                this.strategies$ = of(this.strategies);
-              });
+            }
           }
-
-        }
-      });
+        })
+        );
+      
   }
 
   ngOnDestroy(): void {

@@ -23,6 +23,8 @@ export class RatingPopularComponent implements OnInit, OnDestroy {
   args: any;
   section: SectionEnum = SectionEnum.rating;
   ratingPopular$: Observable<any>;
+  key: string;
+  update$: Observable<any>;
 
   // table settings
   tableHeader: TableHeaderRow[] = [
@@ -46,8 +48,9 @@ export class RatingPopularComponent implements OnInit, OnDestroy {
     private dataService: DataService,
     private argumentsService: ArgumentsService
   ) { }
-
+  
   ngOnInit(): void {
+    this.key = "rating-popular";
     this.ratingPopular$ = this.argumentsService.ratingPopular$
       .pipe(
         tap((argument) => {
@@ -65,40 +68,44 @@ export class RatingPopularComponent implements OnInit, OnDestroy {
         })
       );
 
-    // this.dataService.update$
-    //   .pipe(takeUntil(this.destroy$))
-    //   .subscribe((data) => {
-    //     if (data.accountId) {
-    //       this.getAccountById(data.accountId)
-    //         .pipe(takeUntil(this.destroy$))
-    //         .subscribe((response) => {
-    //           (this.strategies || []).filter((strategy: Strategy) => {
-    //             if (strategy.account && strategy.account.id == data.accountId) {
-    //               strategy.account = response.account;
-    //             }
-    //           });
+      this.update$ = this.dataService.update$
+      .pipe(
+        tap((data) => {
+          if (data.status == "update" && data.key == "rating-popular") {
+            if (data.accountId) {
+              this.getAccountById(data.accountId)
+                .pipe(takeUntil(this.destroy$))
+                .subscribe((response) => {
+                  (this.strategies || []).filter((strategy: Strategy) => {
+                    if (strategy.account && strategy.account.id == data.accountId) {
+                      strategy.account = response.account;
+                    }
+                  });
 
-    //           this.strategies$ = of(this.strategies);
-    //         });
-    //     }
-    //     else if (data.strategyId) {
-    //       this.getStrategyById(data.strategyId)
-    //         .pipe(takeUntil(this.destroy$))
-    //         .subscribe((strategy: Strategy) => {
-    //           (this.strategies || []).filter((item: Strategy) => {
-    //             if (item.id == data.strategyId) {
-    //               item.status = strategy.status;
-    //             }
-    //           });
+                  this.strategies$ = of(this.strategies);
+                });
+            }
+            else if (data.strategyId) {
+              this.getStrategyById(data.strategyId)
+                .pipe(takeUntil(this.destroy$))
+                .subscribe((strategy: Strategy) => {
+                  (this.strategies || []).filter((item: Strategy) => {
+                    if (item.id == data.strategyId) {
+                      item.status = strategy.status;
+                    }
+                  });
 
-    //           this.strategies$ = of(this.strategies);
-    //         });
-    //     }
-    //   })
+                  this.strategies$ = of(this.strategies);
+                });
+            }
+          }
+        })
+      );
   }
 
   ngOnDestroy(): void {
     this.destroy$.next(true);
+
   }
 
   getStrategyById(strategyId: number): Observable<Strategy> {

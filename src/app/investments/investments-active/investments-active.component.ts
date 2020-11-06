@@ -24,6 +24,8 @@ export class InvestmentsActiveComponent implements OnInit, OnDestroy {
   accounts: Account[];
   args: any;
   strategy$: Observable<Strategy>;
+  key: string;
+  update$: Observable<any>;
 
   // table settings
   tableHeader: TableHeaderRow[] = [
@@ -61,6 +63,7 @@ export class InvestmentsActiveComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.key = "investments-active";
     this.args = {
       searchMode: 'MyActiveAccounts',
       field: 'ID',
@@ -68,24 +71,26 @@ export class InvestmentsActiveComponent implements OnInit, OnDestroy {
       paginator: this.paginator
     };
 
-    this.dataService.update$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((item) => {
-        if (item.status == "update") {
-          this.getStrategy(item.strategyId)
-            .pipe(take(1))
-            .subscribe((strategy: Strategy) => {
+    this.update$ = this.dataService.update$
+      .pipe(
+        tap((data) => {
+          if (data.status == "update" && data.key == "investments-active") {
+            this.getStrategy(data.strategyId)
+              .pipe(take(1))
+              .subscribe((strategy: Strategy) => {
 
-              this.accounts.filter((item) => {
-                if (item.strategy.id == strategy.id) {
-                  item.strategy = strategy;
-                }
+                (this.accounts || []).filter((item) => {
+                  if (item.strategy.id == strategy.id) {
+                    item.strategy = strategy;
+                  }
+                });
+
+                this.accounts$ = of(this.accounts);
               });
+          }
+        })
+      );
 
-              this.accounts$ = of(this.accounts);
-            });
-        }
-      });
 
     this.accounts$ = this.getActiveAccounts(this.args);
   }
@@ -112,5 +117,6 @@ export class InvestmentsActiveComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.destroy$.next(true);
+    this.dataService.getUpdateAsSubject.complete();
   }
 }

@@ -15,7 +15,7 @@ export class ManageAccountPauseComponent implements OnDestroy {
   // here we will unsubscribe from all subscriptions
   destroy$ = new Subject();
   successful$ = new Subject();
-
+  key: string;
   // component data
   account: Account;
 
@@ -27,10 +27,10 @@ export class ManageAccountPauseComponent implements OnDestroy {
 
   pause(): void {
     this.updateStatus = "update";
-    this.dataService.pauseAccount(this.account.id, this.updateStatus)
+    this.dataService.pauseAccount(this.account.id, this.updateStatus, this.key)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
-        // this.successful$.next(true);
+        this.successful$.next(true);
         this.modalRef.hide();
       });
   }

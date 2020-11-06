@@ -27,6 +27,7 @@ export class ManageComponent implements OnInit {
   @Input() hideInvestmentsButton: boolean;
   @Output() click: EventEmitter<any> = new EventEmitter<any>();
   @Input() section: SectionEnum = SectionEnum.default;
+  @Input() key: string;
 
   constructor(
     private modalService: BsModalService
@@ -173,8 +174,7 @@ export class ManageComponent implements OnInit {
 
     options.initialState = {
       strategy: data,
-      methodName: this.methodName,
-      methodArgs: this.methodArgs
+      key: this.key
     };
 
     return options;
@@ -193,8 +193,7 @@ export class ManageComponent implements OnInit {
 
     options.initialState = {
       account: data,
-      methodName: this.methodName,
-      methodArgs: this.methodArgs
+      key: this.key
     };
 
     return options;

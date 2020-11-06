@@ -23,8 +23,7 @@ export class ManageStrategyResumeComponent implements OnInit, OnDestroy {
   wallet: Wallet;
   strategy: Strategy;
   functionality: object;
-  @Input() methodName: string;
-  @Input() methodArgs: any;
+  key: string;
 
   updateStatus: string;
 
@@ -68,14 +67,14 @@ export class ManageStrategyResumeComponent implements OnInit, OnDestroy {
       return;
     }
     
-    const queries: any[] = [this.dataService.resumeStrategy(this.strategy.id, this.updateStatus)];
+    const queries: any[] = [this.dataService.resumeStrategy(this.strategy.id, this.updateStatus, this.key)];
 
     const values = this.form.getRawValue();
     values.protection = values.protection / 100;
     values.target = values.target ? values.target / 100 : null;
 
     if (values.amount) {
-      queries.push(this.dataService.fundAccount(this.strategy.account.id, values.amount, this.updateStatus));
+      queries.push(this.dataService.fundAccount(this.strategy.account.id, values.amount, this.updateStatus, this.key));
     }
 
     const newObj = {
@@ -95,8 +94,7 @@ export class ManageStrategyResumeComponent implements OnInit, OnDestroy {
     }
 
     if (newObj.protection || newObj.target || newObj.factor) {
-      debugger
-      queries.push(this.dataService.changeAccountProfile(this.strategy.account.id, newObj, this.updateStatus));
+      queries.push(this.dataService.changeAccountProfile(this.strategy.account.id, newObj, this.updateStatus, this.key));
     }
 
     forkJoin(queries).pipe(takeUntil(this.destroy$)).subscribe(() => {

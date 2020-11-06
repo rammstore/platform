@@ -21,7 +21,7 @@ import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { CreateInstanceService } from "@app/services/create-instance.service";
 import { CommandService } from "@app/services/command.service";
 import { CONFIG } from '@assets/config';
-import { catchError, map, takeUntil, tap, filter, take, takeLast } from 'rxjs/operators';
+import { catchError, map, takeUntil, tap, filter, take, takeLast, switchMap } from 'rxjs/operators';
 import { LoaderService } from '@app/services/loader.service';
 import { WalletService } from '@app/services/wallet.service';
 import { Router } from '@angular/router';
@@ -60,7 +60,7 @@ export class DataService {
   // here we will unsubscribe from all subscriptions
   destroy$ = new Subject();
   apiUrl: string = CONFIG.baseApiUrl;
-  private _update: ReplaySubject<any> = new ReplaySubject<any>(null);
+  _update$: ReplaySubject<any> = new ReplaySubject<any>(null);
 
   constructor(
     private http: HttpClient,
@@ -77,7 +77,11 @@ export class DataService {
   }
 
   get update$(): Observable<any> {
-    return this._update.asObservable();
+    return this._update$.asObservable();
+  }
+
+  get getUpdateAsSubject() {
+    return this._update$;
   }
 
   //
@@ -92,6 +96,17 @@ export class DataService {
 
     return this.http.post(`${this.apiUrl}/Strategies.search`, options)
       .pipe(
+        catchError(error => {
+          const config: NotificationOptions = {
+            type: 'error',
+            autoClose: true,
+            duration: 3000
+          };
+
+          this.notificationsService.open('notify.loading.error', config);
+
+          return of();
+        }),
         take(1),
         tap((item: any) => {
 
@@ -104,15 +119,7 @@ export class DataService {
 
           this.loaderService.hideLoader();
         }),
-        map(({ Strategies }) => Strategies.map((strategy: Strategy) => this.createInstanceService.createStrategy(strategy))),
-        // catchError( (error: HttpErrorResponse)  => {
-        //   if(error.status)
-        //   this.notificationsService.open('notify.loading.error', {
-        //     type: 'error',
-        //     autoClose: true,
-        //     duration: 3000
-        //   });
-        // })
+        map(({ Strategies }) => Strategies.map((strategy: Strategy) => this.createInstanceService.createStrategy(strategy)))
       );
   }
 
@@ -124,6 +131,17 @@ export class DataService {
 
     return this.http.post(`${this.apiUrl}/Strategies.search`, options)
       .pipe(
+        catchError(error => {
+          const config: NotificationOptions = {
+            type: 'error',
+            autoClose: true,
+            duration: 3000
+          };
+
+          this.notificationsService.open('notify.loading.error', config);
+
+          return of();
+        }),
         take(1),
         tap((item: any) => {
           this.walletService.walletSubject.next(this.createInstanceService.createWallet(item.Wallets[0]));
@@ -138,14 +156,7 @@ export class DataService {
         map(({ Strategies }) => Strategies.map((strategy) => {
           strategy.PublicOffer = strategy.PublicOffer || {};
           return this.createInstanceService.createStrategy(strategy);
-        })),
-        // catchError(()=>{
-        //   this.notificationsService.open('notify.loading.error', {
-        //     type: 'error',
-        //     autoClose: true,
-        //     duration: 3000
-        //   });
-        // })
+        }))
       )
   }
 
@@ -284,22 +295,22 @@ export class DataService {
   }
 
   // Постановка стратегии на паузу
-  pauseStrategy(strategyId: number, updateStatus: string): Observable<any> {
+  pauseStrategy(strategyId: number, updateStatus: string, key: string): Observable<any> {
     this.loaderService.showLoader();
     return this.http.post(`${this.apiUrl}/myStrategies.pause`, { StrategyID: strategyId })
       .pipe(
         map((response: any) => {
-          this.updateStrategy(new Command(response.CommandID, strategyId), strategyId, updateStatus, 'notify.strategy.paused');
+          this.updateStrategy(new Command(response.CommandID, strategyId), strategyId, updateStatus, key, 'notify.strategy.paused');
         })
       );
   }
 
   // Возобновление стратегии
-  resumeStrategy(strategyId: number, updateStatus: string): Observable<any> {
+  resumeStrategy(strategyId: number, updateStatus: string, key: string): Observable<any> {
     this.loaderService.showLoader();
     return this.http.post(`${this.apiUrl}/myStrategies.resume`, { StrategyID: strategyId }).pipe(
       map((response: any) => {
-        this.updateStrategy(new Command(response.CommandID, strategyId), strategyId, updateStatus, 'notify.strategy.resumed');
+        this.updateStrategy(new Command(response.CommandID, strategyId), strategyId, updateStatus, key, 'notify.strategy.resumed');
       })
     );
   }
@@ -332,7 +343,7 @@ export class DataService {
 
   // Получение статуса команды стратегии и запрос обновленного списка стратегий после завершения обработки изменений
   // Работает с активными стратегиями, так как закрытые изменять нельзя
-  updateStrategy(command: Command, strategyId: number, updateStatus: string, notificationText: string): void {
+  updateStrategy(command: Command, strategyId: number, updateStatus: string, key: string, notificationText: string): void {
     const interval = setInterval(() => {
       this.commandService.checkStrategyCommand(command).subscribe((commandStatus: number) => {
         if (commandStatus !== 0) {
@@ -340,11 +351,11 @@ export class DataService {
 
           const data = {
             strategyId: strategyId,
-            status: updateStatus
+            status: updateStatus,
+            key: key
           }
 
-          this._update.next(data);
-          debugger
+          this._update$.next(data);
           this.notificationsService.open(notificationText);
 
           this.walletService.updateWallet()
@@ -439,6 +450,17 @@ export class DataService {
 
     return this.http.post(`${this.apiUrl}/strategies.search`, options)
       .pipe(
+        catchError(error => {
+          const config: NotificationOptions = {
+            type: 'error',
+            autoClose: true,
+            duration: 3000
+          };
+
+          this.notificationsService.open('notify.loading.error', config);
+
+          return of();
+        }),
         take(1),
         tap((item: any) => {
           this.walletService.walletSubject.next(this.createInstanceService.createWallet(item.Wallets[0]));
@@ -459,13 +481,6 @@ export class DataService {
 
           return createAccount;
         }))
-        // catchError(()=>{
-        //   this.notificationsService.open('notify.loading.error', {
-        //     type: 'error',
-        //     autoClose: true,
-        //     duration: 3000
-        //   });
-        // })
       );
   }
 
@@ -476,6 +491,17 @@ export class DataService {
 
     return this.http.post(`${this.apiUrl}/accounts.searchClosed`, options)
       .pipe(
+        catchError(error => {
+          const config: NotificationOptions = {
+            type: 'error',
+            autoClose: true,
+            duration: 3000
+          };
+
+          this.notificationsService.open('notify.loading.error', config);
+
+          return of()
+        }),
         take(1),
         tap((item: any) => {
           this.walletService.walletSubject.next(this.createInstanceService.createWallet(item.Wallets[0]));
@@ -503,7 +529,6 @@ export class DataService {
 
   getAccountById(accountId: number): Observable<any> {
     this.loaderService.showLoader();
-    debugger
     return this.http.post(`${this.apiUrl}/accounts.get`, { AccountID: accountId })
       .pipe(
         take(1),
@@ -550,40 +575,40 @@ export class DataService {
         })
       )
       .subscribe((response: any) => {
-      if (response.Strategy) {
-        response.Strategy.PublicOffer = {
-          CommissionRate: response.Strategy.Commission,
-          FeeRate: response.Strategy.Fee
-        };
-        this.currentAccountStatementSubject.next({
-          strategy: this.createInstanceService.createStrategy(response.Strategy),
-          account: this.createInstanceService.createAccount(response.Account)
+        if (response.Strategy) {
+          response.Strategy.PublicOffer = {
+            CommissionRate: response.Strategy.Commission,
+            FeeRate: response.Strategy.Fee
+          };
+          this.currentAccountStatementSubject.next({
+            strategy: this.createInstanceService.createStrategy(response.Strategy),
+            account: this.createInstanceService.createAccount(response.Account)
 
-        });
-      } else {
-        this.currentAccountStatementSubject.next({
-          strategy: null,
-          account: null
-        });
-      }
+          });
+        } else {
+          this.currentAccountStatementSubject.next({
+            strategy: null,
+            account: null
+          });
+        }
 
-      this.loaderService.hideLoader();
-    }, (error: HttpErrorResponse) => {
-      if (error.status === 401) {
-        this.router.navigate(['/investments']);
-        this.notificationsService.open('notify.investment.access.error', {
-          type: 'error',
-          autoClose: true,
-          duration: 3000
-        });
-      } else {
-        this.notificationsService.open('notify.loading.error', {
-          type: 'error',
-          autoClose: true,
-          duration: 3000
-        });
-      }
-    });
+        this.loaderService.hideLoader();
+      }, (error: HttpErrorResponse) => {
+        if (error.status === 401) {
+          this.router.navigate(['/investments']);
+          this.notificationsService.open('notify.investment.access.error', {
+            type: 'error',
+            autoClose: true,
+            duration: 3000
+          });
+        } else {
+          this.notificationsService.open('notify.loading.error', {
+            type: 'error',
+            autoClose: true,
+            duration: 3000
+          });
+        }
+      });
 
     return this.currentAccountStatementSubject.asObservable();
   }
@@ -634,38 +659,38 @@ export class DataService {
   }
 
   // Пополнить инвестицию
-  fundAccount(accountId: number, amount: number, updateStatus: string) {
+  fundAccount(accountId: number, amount: number, updateStatus: string, key: string) {
     this.loaderService.showLoader();
     return this.http.post(`${this.apiUrl}/accounts.fund`, { AccountID: accountId, Amount: amount }).pipe(
       map((response: any) => {
-        this.updateAccount(new Command(response.CommandBalanceID, accountId), accountId, updateStatus, 'notify.investment.funded');
+        this.updateAccount(new Command(response.CommandBalanceID, accountId), accountId, updateStatus, key, 'notify.investment.funded');
       })
     );
   }
 
   // Приостановить инвестицию
-  pauseAccount(accountId: number, updateStatus: string): Observable<any> {
+  pauseAccount(accountId: number, updateStatus: string, key: string): Observable<any> {
     this.loaderService.showLoader();
     return this.http.post(`${this.apiUrl}/accounts.pause`, { AccountID: accountId })
       .pipe(
         map((response: any) => {
-          this.updateAccount(new Command(response.CommandID, accountId), accountId, updateStatus, 'notify.investment.paused');
+          this.updateAccount(new Command(response.CommandID, accountId), accountId, updateStatus, key, 'notify.investment.paused');
         })
       );
   }
 
   // Возобновить инвестицию
-  resumeAccount(accountId: number, updateStatus: string): Observable<any> {
+  resumeAccount(accountId: number, updateStatus: string, key: string): Observable<any> {
     this.loaderService.showLoader();
     return this.http.post(`${this.apiUrl}/accounts.resume`, { AccountID: accountId }).pipe(
       map((response: any) => {
-        this.updateAccount(new Command(response.CommandID, accountId), accountId, updateStatus, 'notify.investment.resumed');
+        this.updateAccount(new Command(response.CommandID, accountId), accountId, updateStatus, key, 'notify.investment.resumed');
       })
     );
   }
 
   // Изменить профиль инвестиции
-  changeAccountProfile(accountId: number, valueObj: { [key: string]: number }, updateStatus: string): Observable<any> {
+  changeAccountProfile(accountId: number, valueObj: { [key: string]: number }, updateStatus: string, key: string): Observable<any> {
     this.loaderService.showLoader();
 
     const requests: any[] = [];
@@ -677,7 +702,7 @@ export class DataService {
           Target: valueObj['target']
         }).pipe(
           map((response: any) => {
-            this.updateAccount(new Command(response.CommandID, accountId), accountId, updateStatus, 'notify.investment.target.changed');
+            this.updateAccount(new Command(response.CommandID, accountId), accountId, updateStatus, key, 'notify.investment.target.changed');
           })
         )
       );
@@ -690,7 +715,7 @@ export class DataService {
           Protection: valueObj['protection']
         }).pipe(
           map((response: any) => {
-            this.updateAccount(new Command(response.CommandID, accountId), accountId, updateStatus, 'notify.investment.protection.changed');
+            this.updateAccount(new Command(response.CommandID, accountId), accountId, updateStatus, key, 'notify.investment.protection.changed');
           })
         )
       );
@@ -703,7 +728,7 @@ export class DataService {
           Factor: valueObj['factor']
         }).pipe(
           map((response: any) => {
-            this.updateAccount(new Command(response.CommandID, accountId), accountId, updateStatus, 'notify.investment.factor.changed');
+            this.updateAccount(new Command(response.CommandID, accountId), accountId, updateStatus, key, 'notify.investment.factor.changed');
           })
         )
       );
@@ -738,13 +763,13 @@ export class DataService {
   }
 
   // Получение статуса команды и запрос обновленного списка дынных после завершения обработки изменений
-  updateAccount(command: Command, accountId: number, updateStatus: string, notificationText: string): void {
+  updateAccount(command: Command, accountId: number, updateStatus: string, key: string, notificationText: string): void {
     const interval = setInterval(() => {
       this.commandService.checkAccountCommand(command).subscribe((commandStatus: number) => {
-
-        this._update.next({
+        this._update$.next({
           accountId: accountId,
-          status: updateStatus
+          status: updateStatus,
+          key: key
         });
 
         if (commandStatus !== 0) {
@@ -905,27 +930,33 @@ export class DataService {
 
   getBestRating(args: Arguments): Observable<EntityInterface> {
     this.loaderService.showLoader();
-
     const options: any = RatingMapper.formatArgumentsToOptions(args);
+
     return this.http.post(`${this.apiUrl}/strategies.search`, options)
       .pipe(
         take(1),
+        catchError(error => {
+          const config: NotificationOptions = {
+            type: 'error',
+            autoClose: true,
+            duration: 3000
+          };
+
+          this.notificationsService.open('notify.loading.error', config);
+
+          return of();
+        }),
         tap((item: any) => {
           if (args.paginator) {
             args.paginator.totalItems = item.Pagination.TotalRecords;
             args.paginator.totalPages = item.Pagination.TotalPages;
           }
           this.walletService.walletSubject.next(this.createInstanceService.createWallet(item.Wallets[0]));
+          // debugger
           this.loaderService.hideLoader();
         }),
         map(({ Strategies }) => Strategies.map((item) => this.createInstanceService.createStrategy(item)))
-        // catchError(()=>{
-        //   this.notificationsService.open('notify.loading.error', {
-        //     type: 'error',
-        //     autoClose: true,
-        //     duration: 3000
-        //   });
-        // })
+
       );
   }
 

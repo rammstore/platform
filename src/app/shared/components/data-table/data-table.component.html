@@ -150,15 +150,14 @@
             <ng-container *ngSwitchCase="'manage'">
               <app-manage [data]="item"
                           [section]="section"
-                          (click)="onRowManageClick($event)"
-                          [methodName]="methodName" [methodArgs]="methodArgs"></app-manage>
+                          [key]="key"
+                          (click)="onRowManageClick($event)"></app-manage>
             </ng-container>
 
             <ng-container *ngSwitchCase="'offerManage'">
               <app-manage [data]="item"
                           [section]="section"
-                          (click)="onRowManageClick($event)"
-                          [methodName]="methodName" [methodArgs]="methodArgs"></app-manage>
+                          (click)="onRowManageClick($event)"></app-manage>
             </ng-container>
 
             <!-- Investment special data-->

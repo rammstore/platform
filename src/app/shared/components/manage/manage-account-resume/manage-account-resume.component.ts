@@ -7,6 +7,7 @@ import { Account, Wallet } from '@app/models';
 import { DataService } from '@app/services/data.service';
 import { WalletService } from '@app/services/wallet.service';
 import { BrandService } from '@app/services/brand.service';
+import { KeyedWrite } from '@angular/compiler';
 
 @Component({
   selector: 'app-manage-account-resume',
@@ -23,8 +24,7 @@ export class ManageAccountResumeComponent implements OnInit, OnDestroy {
   form: FormGroup;
   wallet: Wallet;
   account: Account;
-  @Input() methodName: string;
-  @Input() methodArgs: any;
+  key: string;
   functionality: object;
   updateStatus: string;
 
@@ -68,7 +68,7 @@ export class ManageAccountResumeComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const queries: any[] = [this.dataService.resumeAccount(this.account.id, this.updateStatus)];
+    const queries: any[] = [this.dataService.resumeAccount(this.account.id, this.updateStatus, this.key)];
 
     const values = this.form.getRawValue();
     values.protection = values.protection / 100;
@@ -81,7 +81,7 @@ export class ManageAccountResumeComponent implements OnInit, OnDestroy {
     };
 
     if (values.amount) {
-      queries.push(this.dataService.fundAccount(this.account.id, values.amount, this.updateStatus));
+      queries.push(this.dataService.fundAccount(this.account.id, values.amount, this.updateStatus, this.key));
     }
 
     if (values.protection !== this.account.protection) {
@@ -95,7 +95,7 @@ export class ManageAccountResumeComponent implements OnInit, OnDestroy {
     }
 
     if (newObj.protection || newObj.target || newObj.factor) {
-      queries.push(this.dataService.changeAccountProfile(this.account.id, newObj, this.updateStatus));
+      queries.push(this.dataService.changeAccountProfile(this.account.id, newObj, this.updateStatus, this.key));
     }
 
     forkJoin(queries).pipe(takeUntil(this.destroy$)).subscribe(() => {
