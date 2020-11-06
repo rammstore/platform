@@ -28,6 +28,7 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
   links: ContentTabLink[];
   args: any;
   functionality: object;
+  functionality$: Observable<object>;
   id: number = 0;
   methodName: string;
   sectionEnum: SectionEnum = SectionEnum.strategy;
@@ -43,11 +44,7 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.brandService.functionality
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((f: object) => {
-        this.functionality = f;
-      });
+    this.functionality$ = this.brandService.functionality;
 
     this.id = parseInt(this.route.params['_value'].id);
 
@@ -71,6 +68,7 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
       this.strategy$ = this.getStrategyById(this.args)
         .pipe(
           tap((item) => this.strategiesDetailsLinks()),
+          tap(item => console.log('DATA', item)),
           catchError(item => {
             item.status === 404 ? this.notificationsService.open('empty.strategy.null', {type: 'error'}) : '';
 
@@ -82,11 +80,9 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
       this.args = {
         link: this.route.params['_value'].id
       };
-      this.strategy$ = this.getStrategyByLink(this.args)
-        .pipe(
-          tap((item) => {
-            this.strategiesLinks();
-          })
+      this.strategy$ = this.getStrategyByLink(this.args).pipe(
+          tap(item => console.log('DATA1', item)),
+          tap((item) => this.strategiesLinks())
         );
     }
   }
