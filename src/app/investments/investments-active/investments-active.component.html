@@ -1,17 +1,18 @@
 <app-data-table
   [tableHeader]="tableHeader"
-  [data]="accounts"
+  [data]="accounts$ | async"
   [paginator]="paginator"
   [shouldHighlightMyStrategies]="true"
   (paginationChanged)="getAccounts()"
-  [methodName]="'getActiveMyAccounts'"
-  [methodArgs]="args">
+  [key]="key">
 </app-data-table>
 
+<div *ngIf="update$ | async"></div>
+
 <app-mobile-data-view-investment
-  [accounts]="accounts"
+  [accounts]="accounts$ | async"
   [paginator]="paginator"
-  (paginationChanged)="getAccounts()"
-  [methodName]="'getActiveMyAccounts'"
-  [methodArgs]="args">
+  (paginationChanged)="getAccounts()">
 </app-mobile-data-view-investment>
+
+

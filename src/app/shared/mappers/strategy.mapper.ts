@@ -1,4 +1,7 @@
-import {Account, Offer, StrategiesSearchOptions, Strategy} from "@app/models";
+
+import { Arguments } from '@app/interfaces/args.interface';
+import { iStrategiesSearchOptions } from '@app/interfaces/rating';
+import { Strategy } from '@app/models/strategy';
 
 export class StrategyMapper {
 
@@ -29,6 +32,7 @@ export class StrategyMapper {
     });
   }
 
+
   static formatToCloseStrategyRequest(pagination): any {
     const options = {
       Filter: {
@@ -47,4 +51,23 @@ export class StrategyMapper {
     return options;
   }
 
+    static formatArgumentsToOptions(args: Arguments){
+        const Pagination = (args.paginator && {
+            CurrentPage: args.paginator.currentPage,
+            PerPage: args.paginator.perPage
+          });
+
+          const options: iStrategiesSearchOptions = {
+              Filter: {
+                SearchMode: args.searchMode,
+              },
+              OrderBy: {
+                Field: args.field,
+                Direction: args.direction
+              },
+              Pagination
+          };
+
+          return options;
+    }
 }

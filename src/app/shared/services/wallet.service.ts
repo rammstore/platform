@@ -41,14 +41,14 @@ export class WalletService {
   }
 
   updateWallet(): Observable<Wallet> {
-    this.loaderService.showLoader();
+    // this.loaderService.showLoader();
     const walletID: number = this.storageService.getSession().walletID;
 
     return this.http.post(`${this.apiUrl}/wallets.get`, { ID: walletID }).pipe(
       map((response: any) => {
         const wallet: Wallet = this.createInstanceService.createWallet(response);
         this.walletSubject.next(wallet);
-        this.loaderService.hideLoader();
+        // this.loaderService.hideLoader();
         return wallet;
       })
     );

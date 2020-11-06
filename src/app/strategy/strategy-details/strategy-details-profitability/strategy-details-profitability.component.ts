@@ -57,14 +57,20 @@ export class StrategyDetailsProfitabilityComponent implements OnInit, OnDestroy 
           );
       }
     } else {
-      this.strategy$ = this.strategyService.strategy$
-        .pipe(
-          tap((strategy) => {
-            this.checking(strategy);
-            this.getStrategyChart(strategy.id);
-          })
-        );
+      this.getStrategyFromStrategyService();
     }
+
+    
+  }
+
+  private getStrategyFromStrategyService(): void {
+    this.strategy$ = this.strategyService.strategy$
+      .pipe(
+        tap((strategy) => {
+          this.checking(strategy);
+          this.getStrategyChart(strategy.id);
+        })
+      );
   }
 
   private checking(strategy: Strategy) {

@@ -30,6 +30,7 @@ export class DataTableComponent implements OnInit, OnDestroy {
   @Input() methodArgs: any;
   @Input() totals: object;
   @Input() section: SectionEnum = SectionEnum.default;
+  @Input() key: string;
   functionality: object;
 
   constructor(

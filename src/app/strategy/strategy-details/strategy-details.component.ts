@@ -10,6 +10,7 @@ import {BrandService} from '@app/services/brand.service';
 import {StrategyService} from '@app/services/strategy.service';
 import {SectionEnum} from "@app/enum/section.enum";
 import {NotificationsService} from "@app/services/notifications.service";
+import {ActionEnum} from "@app/enum/action.enum";
 
 @Component({
   selector: 'app-strategy-details',
@@ -28,6 +29,7 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
   links: ContentTabLink[];
   args: any;
   functionality: object;
+  functionality$: Observable<object>;
   id: number = 0;
   methodName: string;
   sectionEnum: SectionEnum = SectionEnum.strategy;
@@ -43,13 +45,32 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.brandService.functionality
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((f: object) => {
-        this.functionality = f;
-      });
+    this.functionality$ = this.brandService.functionality;
 
     this.id = parseInt(this.route.params['_value'].id);
+
+    this.getStrategies();
+
+    this.dataService.update$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((item) => {
+        if (item.status === 'update') {
+          this.getStrategies();
+        }
+      });
+  }
+
+  parseAction(event: ActionEnum) {
+    switch (event) {
+      case ActionEnum.investment:
+      case ActionEnum.cancel: {
+        this.getStrategies();
+        break;
+      }
+    }
+  }
+
+  private getStrategies(): void {
     if (this.id) {
       this.args = {
         strategyId: this.id
@@ -69,21 +90,14 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
           })
         );
 
-      this.methodName = 'getStrategyById';
     } else {
       this.args = {
         link: this.route.params['_value'].id
       };
-      this.strategy$ = this.getStrategyByLink(this.args)
-        .pipe(
-          tap((item) => {
-            this.strategiesLinks();
-          })
-        );
-
-      this.methodName = 'getStrategyByLink';
+      this.strategy$ = this.getStrategyByLink(this.args).pipe(
+        tap((item) => this.strategiesLinks())
+      );
     }
-
   }
 
   private getStrategyByLink(args): Observable<any> {

@@ -1,16 +1,13 @@
-import {iStrategiesSearchOptions} from '@app/interfaces/rating';
-import {Arguments} from '@app/interfaces/args.interface';
-import { Paginator } from '@app/models';
+import { iStrategiesSearchOptions } from '@app/interfaces/rating';
+import { Arguments } from '@app/interfaces/args.interface';
 
 export class RatingMapper {
   static formatArgumentsToOptions(args: Arguments) {
 
-    const Pagination = (args.paginator  && {
+    const Pagination = (args.paginator && {
       CurrentPage: args.paginator.currentPage,
       PerPage: args.paginator.perPage
     });
-
-    // const Pagination = new Paginator(args.paginator);
 
     const options: iStrategiesSearchOptions = {
       Filter: {
@@ -18,7 +15,7 @@ export class RatingMapper {
         AgeMin: args.ageMin,
         YieldMin: args.yieldMin,
         DealsMin: args.dealsMin,
-        ...(args.searchText && {Name: args.searchText })
+        ...(args.searchText && { Name: args.searchText })
       },
       OrderBy: {
         Field: args.field,

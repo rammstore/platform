@@ -1,15 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, of, Subject, Subscription } from 'rxjs';
 import { Paginator, Strategy, TableColumn } from '@app/models';
 import { TableHeaderRow } from '@app/models/table-header-row';
 import { PercentPipe } from '@angular/common';
 import { DataService } from '@app/services/data.service';
-import { map, take, takeUntil, tap } from 'rxjs/operators';
+import { filter, map, take, takeUntil, tap } from 'rxjs/operators';
 import { SectionEnum } from "@app/enum/section.enum";
-import { EntityInterface } from "@app/interfaces/entity.interface";
-import { CreateInstanceService } from '@app/services/create-instance.service';
-import { WalletService } from '@app/services/wallet.service';
 import { ArgumentsService } from '@app/services/arguments.service';
+import { error } from 'protractor';
 
 @Component({
   selector: 'app-rating-rated',
@@ -17,18 +15,16 @@ import { ArgumentsService } from '@app/services/arguments.service';
   styleUrls: ['./rating-rated.component.scss']
 })
 export class RatingRatedComponent implements OnInit, OnDestroy {
-  // https://blog.strongbrew.io/rxjs-best-practices-in-angular/#avoiding-memory-leaks
-  // here we will unsubscribe from all subscriptions
   destroy$ = new Subject();
-
   strategies$: Observable<Strategy[]>;
-  // component data
   strategies: Strategy[];
+  // component data
   searchText: string = '';
   args: any;
   section: SectionEnum = SectionEnum.rating;
-  rating: any;
-  optionsRatings$: Observable<any>;
+  ratingRated$: Observable<any>;
+  key: string;
+  update$: Observable<any>;
 
   // table settings
   tableHeader: TableHeaderRow[] = [
@@ -59,14 +55,13 @@ export class RatingRatedComponent implements OnInit, OnDestroy {
 
   constructor(
     private dataService: DataService,
-    private createInstanceService: CreateInstanceService,
-    private walletService: WalletService,
     private argumentsService: ArgumentsService
   ) {
   }
 
   ngOnInit(): void {
-    this.optionsRatings$ = this.argumentsService.ratingRated$
+    this.key = "rating-rated";
+    this.ratingRated$ = this.argumentsService.ratingRated$
       .pipe(
         tap((argument) => {
           this.args = {
@@ -82,12 +77,63 @@ export class RatingRatedComponent implements OnInit, OnDestroy {
           this.strategies$ = this.getStrategies();
         })
       );
+
+    this.update$ = this.dataService.update$
+      .pipe(
+        tap((data)=>{
+          if (data.key == "rating-rated" && data.status == "update") {
+            if (data.accountId) {
+              this.getAccountById(data.accountId)
+                .pipe(takeUntil(this.destroy$))
+                .subscribe((response) => {
+                  (this.strategies || []).filter((strategy: Strategy) => {
+                    if (strategy.account && strategy.account.id == data.accountId) {
+                      strategy.account = response.account;
+                    }
+                  });
+  
+                  this.strategies$ = of(this.strategies);
+                });
+            }
+            else if (data.strategyId) {
+              this.getStrategyById(data.strategyId)
+                .pipe(takeUntil(this.destroy$))
+                .subscribe((strategy: Strategy) => {
+                  (this.strategies || []).filter((item: Strategy) => {
+                    if (item.id == data.strategyId) {
+                      item.status = strategy.status;
+                    }
+                  });
+  
+                  this.strategies$ = of(this.strategies);
+                });
+            }
+          }
+        })
+        );
+      
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
+  }
+
+  getAccountById(accountId: number): Observable<any> {
+    return this.dataService.getAccountById(accountId);
+  }
+
+  getStrategyById(strategyId: number): Observable<Strategy> {
+    let args = {
+      strategyId: strategyId
+    }
+
+    return this.dataService.getStrategyById(args);
   }
 
   getStrategies(): Observable<any> {
     return this.dataService.getBestRating(this.args)
       .pipe(
-        map(({ Strategies }) => Strategies.map((item) => this.createInstanceService.createStrategy(item)))
+        tap((strategies) => this.strategies = strategies)
       );
   }
 
@@ -95,14 +141,10 @@ export class RatingRatedComponent implements OnInit, OnDestroy {
     this.args.searchText = this.searchText;
     this.strategies$ = this.getStrategies();
   }
-  
-  search(){
+
+  search() {
     this.args.searchText = this.searchText;
     this.args.paginator.currentPage = 1;
     this.strategies$ = this.getStrategies();
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next(true);
   }
 }

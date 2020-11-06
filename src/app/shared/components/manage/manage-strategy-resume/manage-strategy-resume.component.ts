@@ -23,8 +23,9 @@ export class ManageStrategyResumeComponent implements OnInit, OnDestroy {
   wallet: Wallet;
   strategy: Strategy;
   functionality: object;
-  @Input() methodName: string;
-  @Input() methodArgs: any;
+  key: string;
+
+  updateStatus: string;
 
   constructor(
     private fb: FormBuilder,
@@ -59,21 +60,22 @@ export class ManageStrategyResumeComponent implements OnInit, OnDestroy {
   }
 
   resume(): void {
+    this.updateStatus = "update";
     this.form.markAllAsTouched();
 
     if (!this.form.valid) {
       return;
     }
-    const queries: any[] = [this.dataService.resumeStrategy(this.strategy.id, this.methodName, this.methodArgs)];
+    
+    const queries: any[] = [this.dataService.resumeStrategy(this.strategy.id, this.updateStatus, this.key)];
 
     const values = this.form.getRawValue();
     values.protection = values.protection / 100;
     values.target = values.target ? values.target / 100 : null;
 
     if (values.amount) {
-      queries.push(this.dataService.fundAccount(this.strategy.account.id, values.amount, this.methodName, this.methodArgs));
+      queries.push(this.dataService.fundAccount(this.strategy.account.id, values.amount, this.updateStatus, this.key));
     }
-
 
     const newObj = {
       protection: undefined,
@@ -92,7 +94,7 @@ export class ManageStrategyResumeComponent implements OnInit, OnDestroy {
     }
 
     if (newObj.protection || newObj.target || newObj.factor) {
-      queries.push(this.dataService.changeAccountProfile(this.strategy.account.id, newObj, this.methodName, this.methodArgs));
+      queries.push(this.dataService.changeAccountProfile(this.strategy.account.id, newObj, this.updateStatus, this.key));
     }
 
     forkJoin(queries).pipe(takeUntil(this.destroy$)).subscribe(() => {

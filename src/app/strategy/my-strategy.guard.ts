@@ -16,24 +16,31 @@ export class MyStrategyGuard implements CanActivate {
     private dataService: DataService) {
   }
 
+  getId(str): number {
+    return Number(str.substring(str.lastIndexOf('/') + 1) || 0);
+  }
+
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> {
     const isOffers = location.pathname.indexOf('offers');
-    const isInvestment = location.pathname.indexOf('investments');
-    let str = '';
+    const investments = location.pathname.indexOf('investments');
+    const myInvestment = location.pathname.indexOf('my-investment');
+
     let id: number = Number(location.pathname.substring(location.pathname.lastIndexOf('/') + 1) || 0);
 
     switch (true) {
       case (isOffers > 0): {
-        str = location.pathname.substring(0, isOffers - 1);
-        id = Number(str.substring(str.lastIndexOf('/') + 1) || 0);
+        id = this.getId(location.pathname.substring(0, isOffers - 1));
         break;
       }
-      case (isInvestment > 0): {
-        str = location.pathname.substring(0, isInvestment - 1);
-        id = Number(str.substring(str.lastIndexOf('/') + 1) || 0);
+      case (investments > 0): {
+        id = this.getId(location.pathname.substring(0, investments - 1));
+        break;
+      }
+      case (myInvestment > 0): {
+        id = this.getId(location.pathname.substring(0, myInvestment - 1));
         break;
       }
     }
