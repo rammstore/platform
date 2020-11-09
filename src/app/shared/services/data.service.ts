@@ -124,7 +124,7 @@ export class DataService {
   }
 
   // Получение списка закрытых стратегий
-  getClosedMyStrategies(args: Arguments): Observable<EntityInterface> {
+  getClosedMyStrategies(args: Arguments): Observable<Strategy[]> {
     this.loaderService.showLoader();
 
     const options: any = StrategyMapper.formatArgumentsToOptions(args);
@@ -134,9 +134,9 @@ export class DataService {
         tap(({Wallets}) => Wallets ? this.walletService.walletSubject.next(this.createInstanceService.createWallet(Wallets[0])) : ''),
         tap((item) => this.loaderService.hideLoader()),
         tap(({Pagination}) => {
-          if (pagination) {
-            pagination.totalItems = Pagination.TotalRecords;
-            pagination.totalPages = Pagination.TotalPages;
+          if (args.paginator) {
+            args.paginator.totalItems = Pagination.TotalRecords;
+            args.paginator.totalPages = Pagination.TotalPages;
           }
         }),
         catchError(err => {

@@ -7,6 +7,7 @@ import { CustomCurrencyPipe } from '@app/pipes/custom-currency.pipe';
 import { DataService } from '@app/services/data.service';
 import { SectionEnum } from "@app/enum/section.enum";
 import { takeUntil, tap } from 'rxjs/operators';
+import {SettingsService} from "@app/services/settings.service";
 
 @Component({
   selector: 'app-strategy-active',
@@ -46,7 +47,8 @@ export class StrategyActiveComponent implements OnInit, OnDestroy {
   sectionEnum: SectionEnum = SectionEnum.strategy;
 
   constructor(
-    private dataService: DataService
+    private dataService: DataService,
+    public settingsService: SettingsService
   ) { }
 
   ngOnInit(): void {
@@ -99,11 +101,9 @@ export class StrategyActiveComponent implements OnInit, OnDestroy {
   }
 
   getStrategyById(strategyId: number): Observable<Strategy> {
-    let args = {
+    return this.dataService.getStrategyById({
       strategyId: strategyId
-    }
-
-    return this.dataService.getStrategyById(args);
+    });
   }
 
   getAccountById(accountId: number): Observable<any> {

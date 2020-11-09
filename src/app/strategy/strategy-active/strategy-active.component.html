@@ -1,4 +1,5 @@
 <app-data-table
+  *ngIf="!settingsService.isMobile"
   [tableHeader]="tableHeader"
   [data]="strategies$ | async"
   [totalFields]="totalFields"
@@ -11,6 +12,7 @@
 <div *ngIf="update$ | async"></div>
 
 <app-mobile-data-view-strategy
+  *ngIf="settingsService.isMobile"
   [strategies]="strategies$ | async"
   [paginator]="paginator"
   (paginationChanged)="getStrategies()">

@@ -1,10 +1,10 @@
-import {Injectable} from "@angular/core";
-import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from "@angular/router";
-import {Observable, of} from "rxjs";
-import {DataService} from "@app/services/data.service";
-import {catchError, map, tap} from "rxjs/operators";
-import {NotificationOptions} from "@app/models";
-import {NotificationsService} from "@app/services/notifications.service";
+import {Injectable} from '@angular/core';
+import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
+import {Observable, of} from 'rxjs';
+import {DataService} from '@app/services/data.service';
+import {catchError, map, tap} from 'rxjs/operators';
+import {NotificationOptions} from '@app/models';
+import {NotificationsService} from '@app/services/notifications.service';
 
 @Injectable({
   providedIn: 'root'
@@ -59,20 +59,19 @@ export class MyStrategyGuard implements CanActivate {
             case 401: {
               this.router.navigate(['/strategies/details/', id]);
 
-              if (isOffers > 0) this.setNotification(config, MessageEnum.offers);
-              if (isInvestment > 0) this.setNotification(config, MessageEnum.investment);
+              (isOffers > 0) ? this.setNotification(config, MessageEnum.offers) : '';
+              (investments > 0) ? this.setNotification(config, MessageEnum.investment) : '';
 
               break;
             }
             default: {
-              if (isOffers > 0) this.setNotification(config, MessageEnum.offers);
-              if (isInvestment > 0) this.setNotification(config, MessageEnum.investment);
+              (isOffers > 0) ? this.setNotification(config, MessageEnum.offers) : '';
+              (investments > 0) ? this.setNotification(config, MessageEnum.investment) : '';
             }
           }
 
           return of();
         }),
-        tap(item => console.log('DATA', item)),
         map(item => item.isMyStrategy),
         tap((check) => !check ? this.router.navigate(['/strategies/details/', id]) : '')
       );

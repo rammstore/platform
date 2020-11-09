@@ -31,6 +31,7 @@ export class StrategyAddScriptComponent implements OnInit {
   }
 
   close(): void {
+    this.onClose.next(true);
     this.modalRef.hide();
   }
 }
