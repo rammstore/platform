@@ -4,6 +4,7 @@ import { iStrategiesSearchOptions } from '@app/interfaces/rating';
 import { Strategy } from '@app/models/strategy';
 
 export class StrategyMapper {
+
   static formatToModel(options: any) {
     return new Strategy({
       id: options.ID || options.strategyID || options.IDStrategy,
@@ -29,6 +30,25 @@ export class StrategyMapper {
       chart: options.Chart,
       masterAccount: options.MasterAccount
     });
+  }
+
+
+  static formatToCloseStrategyRequest(pagination): any {
+    const options = {
+      Filter: {
+        SearchMode: 'MyClosedStrategies'
+      },
+      OrderBy: {
+        Field: 'DTClosed',
+        Direction: 'Desc'
+      },
+      Pagination: (pagination && {
+        CurrentPage: pagination.currentPage,
+        PerPage: pagination.perPage
+      })
+    };
+
+    return options;
   }
 
     static formatArgumentsToOptions(args: Arguments){

@@ -1,8 +1,10 @@
-import {Injectable} from "@angular/core";
-import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from "@angular/router";
-import {Observable} from "rxjs";
-import {DataService} from "@app/services/data.service";
-import {map, tap} from "rxjs/operators";
+import {Injectable} from '@angular/core';
+import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
+import {Observable, of} from 'rxjs';
+import {DataService} from '@app/services/data.service';
+import {catchError, map, tap} from 'rxjs/operators';
+import {NotificationOptions} from '@app/models';
+import {NotificationsService} from '@app/services/notifications.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +12,7 @@ import {map, tap} from "rxjs/operators";
 export class MyStrategyGuard implements CanActivate {
   constructor(
     private router: Router,
+    private notificationsService: NotificationsService,
     private dataService: DataService) {
   }
 
@@ -44,8 +47,47 @@ export class MyStrategyGuard implements CanActivate {
 
     return this.dataService.getStrategyById({strategyId: id})
       .pipe(
+        catchError(error => {
+          const config: NotificationOptions = {
+            type: 'error',
+            autoClose: true,
+            duration: 5000
+          };
+
+          switch (error.status) {
+            case 404:
+            case 401: {
+              this.router.navigate(['/strategies/details/', id]);
+
+              (isOffers > 0) ? this.setNotification(config, MessageEnum.offers) : '';
+              (investments > 0) ? this.setNotification(config, MessageEnum.investment) : '';
+
+              break;
+            }
+            default: {
+              (isOffers > 0) ? this.setNotification(config, MessageEnum.offers) : '';
+              (investments > 0) ? this.setNotification(config, MessageEnum.investment) : '';
+            }
+          }
+
+          return of();
+        }),
         map(item => item.isMyStrategy),
         tap((check) => !check ? this.router.navigate(['/strategies/details/', id]) : '')
       );
   }
+
+  setNotification(config: any, message: MessageEnum) {
+    this.notificationsService.open(Description[message], config);
+  }
+}
+
+const Description = {
+  offers: 'empty.offers.null',
+  investment: 'empty.investment.null'
+}
+
+enum MessageEnum {
+  offers = 'offers',
+  investment = 'investment'
 }

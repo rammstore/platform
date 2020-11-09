@@ -29,6 +29,7 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
   wallet: Wallet;
   accountMinBalance: number;
   functionality: object;
+  onClose: Subject<boolean> = new Subject<boolean>();
   titleStep: string = '';
   @Input() methodName: string;
   @Input() methodArgs: any;
@@ -175,6 +176,7 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
   }
 
   skip(): void {
+    this.onClose.next(true);
     this.modalRef.hide();
     //this.openAddStrategyScriptDialog(newStrategy);
   }
@@ -203,6 +205,9 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
     };
 
     this.modalRef = this.modalService.show(StrategyAddScriptComponent, options);
+    this.modalRef.content.onClose.subscribe(result => {
+      this.onClose.next(true);
+    });
   }
 
   ngOnDestroy(): void {

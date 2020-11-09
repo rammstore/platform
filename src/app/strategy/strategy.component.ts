@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { BrandService } from '@app/services/brand.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import {StrategyOfferCreateComponent} from "./strategy-details/strategy-offers/strategy-offer-create/strategy-offer-create.component";
+import {StrategyService} from "@app/services/strategy.service";
 
 @Component({
   selector: 'app-strategy',
@@ -28,6 +30,7 @@ export class StrategyComponent implements OnInit, OnDestroy {
   constructor(
     private modalService: BsModalService,
     private brandService: BrandService,
+    private strategyService: StrategyService,
     private router: Router
   ) { }
 
@@ -44,12 +47,11 @@ export class StrategyComponent implements OnInit, OnDestroy {
   }
 
   openAddStrategyDialog() {
-    const options: ModalOptions = new ModalOptions();
-    options.initialState = {
-      methodName: 'getActiveMyStrategies',
-      methodArgs: this.methodArgs
-    };
-    this.modalRef = this.modalService.show(StrategyAddComponent, options);
+    this.modalRef = this.modalService.show(StrategyAddComponent, new ModalOptions());
+
+    this.modalRef.content.onClose.subscribe(result => {
+      this.strategyService.update = true;
+    });
   }
 
   ngOnDestroy(): void {

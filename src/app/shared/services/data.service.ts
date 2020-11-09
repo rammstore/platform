@@ -1,5 +1,5 @@
 import { DefaultIterableDiffer, Injectable } from '@angular/core';
-import { BehaviorSubject, forkJoin, Observable, of, pipe, ReplaySubject, Subject } from "rxjs";
+import {BehaviorSubject, forkJoin, Observable, of, pipe, ReplaySubject, Subject, throwError} from "rxjs";
 import {
   Account,
   AccountsSearchOptions,
@@ -124,40 +124,39 @@ export class DataService {
   }
 
   // Получение списка закрытых стратегий
-  getClosedMyStrategies(args: Arguments): Observable<EntityInterface> {
+  getClosedMyStrategies(args: Arguments): Observable<Strategy[]> {
     this.loaderService.showLoader();
 
     const options: any = StrategyMapper.formatArgumentsToOptions(args);
 
-    return this.http.post(`${this.apiUrl}/Strategies.search`, options)
+    return this.http.post<EntityInterface>(`${this.apiUrl}/Strategies.search`, options)
       .pipe(
-        catchError(error => {
-          const config: NotificationOptions = {
+        tap(({Wallets}) => Wallets ? this.walletService.walletSubject.next(this.createInstanceService.createWallet(Wallets[0])) : ''),
+        tap((item) => this.loaderService.hideLoader()),
+        tap(({Pagination}) => {
+          if (args.paginator) {
+            args.paginator.totalItems = Pagination.TotalRecords;
+            args.paginator.totalPages = Pagination.TotalPages;
+          }
+        }),
+        catchError(err => {
+          this.notificationsService.open('notify.loading.error', {
             type: 'error',
             autoClose: true,
             duration: 3000
-          };
-
-          this.notificationsService.open('notify.loading.error', config);
-
+          });
           return of();
         }),
-        take(1),
-        tap((item: any) => {
-          this.walletService.walletSubject.next(this.createInstanceService.createWallet(item.Wallets[0]));
+        map(({Strategies}) => {
+          const strategies: Strategy[] = [];
+          Strategies.forEach((s: any) => {
+            s.PublicOffer = s.PublicOffer || {};
+            strategies.push(this.createInstanceService.createStrategy(s));
+          });
 
-          if (args.paginator) {
-            args.paginator.totalItems = item.Pagination.TotalRecords;
-            args.paginator.totalPages = item.Pagination.TotalPages;
-          }
-
-          this.loaderService.hideLoader();
-        }),
-        map(({ Strategies }) => Strategies.map((strategy) => {
-          strategy.PublicOffer = strategy.PublicOffer || {};
-          return this.createInstanceService.createStrategy(strategy);
-        }))
-      )
+          return strategies;
+        })
+      );
   }
 
   // Получение конкретной стратегии за ID
@@ -205,6 +204,14 @@ export class DataService {
       );
   }
 
+  // getOffers(id: number): Observable<any> {
+  //   this.loaderService.showLoader();
+  //   return this.http.post(`${this.apiUrl}/strategies.getOffers`, { StrategyID: id })
+  //     .pipe(
+  //       map((offers) => this.createInstanceService.createOffers(offers)),
+  //       tap(item => this.loaderService.hideLoader())
+  //     );
+  // }
   // Получение конкретной стратегии за ссылкой
   getStrategyByLink(args: { link: string }): Observable<Strategy> {
     // console.log('getStrategyByLink');
@@ -236,8 +243,8 @@ export class DataService {
   addStrategy(strategy: object, methodName: string, methodArgs: any): Observable<Strategy> {
     this.loaderService.showLoader();
     return this.http.post(`${this.apiUrl}/myStrategies.add`, strategy).pipe(
+      tap(() => this.loaderService.hideLoader()),
       map((response: any) => {
-        // this.loaderService.hideLoader();
         // this.walletService.updateWallet().subscribe();
         // // this.getActiveMyStrategies().subscribe();
         // this.notificationsService.open('notify.strategy.created');

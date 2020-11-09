@@ -1,4 +1,4 @@
-<div class="details-container">
+<div class="details-container" *ngIf="source$ | async as data">
   <div class="strategy"
        *ngIf="strategy">
     <h2 translate>common.strategy</h2>
@@ -45,7 +45,7 @@
   </div>
 
   <div class="investment"
-       *ngIf="account">
+       *ngIf="data.account">
     <h2 translate>common.investment</h2>
     <table>
       <tbody>
@@ -82,7 +82,7 @@
   </div>
 
   <div class="profile"
-       *ngIf="account">
+       *ngIf="data.account as account">
     <h2 translate>investment.details.investmentProfile.title</h2>
     <table>
       <tbody>
@@ -114,7 +114,7 @@
     </table>
   </div>
 
-  <div class="manage-container" *ngIf="source$ | async as data">
+  <div class="manage-container">
     <div class="text-right">
       <div class="mb-1 refresh"><span translate> common.refreshed</span>
         {{currentDate | customDate}}

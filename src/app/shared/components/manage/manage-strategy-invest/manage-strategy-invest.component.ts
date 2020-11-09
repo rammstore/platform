@@ -104,6 +104,7 @@ export class ManageStrategyInvestComponent implements OnInit, OnDestroy {
     switch (true) {
       case this.router.url.includes('strategies'):
         this.dataService.getActiveMyStrategies({
+          searchMode: 'MyActiveStrategies',
           paginator: new Paginator({
             perPage: 10,
             currentPage: 1

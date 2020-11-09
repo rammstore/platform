@@ -80,7 +80,11 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
         .pipe(
           tap((item) => this.strategiesDetailsLinks()),
           catchError(item => {
-            item.status === 404 ? this.notificationsService.open('empty.strategy.null', {type: 'error'}) : '';
+            item.status === 404 ? this.notificationsService.open('empty.strategy.null', {
+              type: 'error',
+              autoClose: true,
+              duration: 5000
+            }) : '';
 
             return of();
           })
