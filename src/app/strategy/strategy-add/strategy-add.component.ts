@@ -206,7 +206,6 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
 
     this.modalRef = this.modalService.show(StrategyAddScriptComponent, options);
     this.modalRef.content.onClose.subscribe(result => {
-      debugger;
       this.onClose.next(true);
     });
   }
