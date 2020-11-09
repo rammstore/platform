@@ -8,6 +8,7 @@ import { takeUntil, tap } from 'rxjs/operators';
 import { SectionEnum } from "@app/enum/section.enum";
 import { ArgumentsService } from '@app/services/arguments.service';
 import { SettingsService } from '@app/services/settings.service';
+import { ConstantPool } from '@angular/compiler';
 
 @Component({
   selector: 'app-rating-all',
@@ -99,10 +100,17 @@ export class RatingAllComponent implements OnInit {
             else if (data.strategyId) {
               this.getStrategyById(data.strategyId)
                 .pipe(takeUntil(this.destroy$))
-                .subscribe((strategy: Strategy) => {
-                  (this.strategies || []).filter((item: Strategy) => {
-                    if (item.id == data.strategyId) {
-                      item.status = strategy.status;
+                .subscribe((updatedStrategy: Strategy) => {
+                  (this.strategies || []).filter((itemToUpdate: Strategy) => {
+                    if (itemToUpdate.id == updatedStrategy.id) {
+                      // item.status = strategy.status;
+                      console.log('itemToUpdate before', itemToUpdate);
+
+                      itemToUpdate = Object.assign(itemToUpdate, updatedStrategy);
+
+                      console.log('itemToUpdate after', itemToUpdate);
+                      console.log('updatedStrategy', updatedStrategy);
+
                     }
                   });
 

@@ -99,10 +99,11 @@ export class RatingRatedComponent implements OnInit, OnDestroy {
             else if (data.strategyId) {
               this.getStrategyById(data.strategyId)
                 .pipe(takeUntil(this.destroy$))
-                .subscribe((strategy: Strategy) => {
-                  (this.strategies || []).filter((item: Strategy) => {
-                    if (item.id == data.strategyId) {
-                      item.status = strategy.status;
+                .subscribe((updatedStrategy: Strategy) => {
+                  (this.strategies || []).filter((itemToUpdate: Strategy) => {
+                    if (itemToUpdate.id == updatedStrategy.id) {
+                      // item.status = strategy.status;
+                      itemToUpdate = Object.assign(itemToUpdate, updatedStrategy);
                     }
                   });
   
