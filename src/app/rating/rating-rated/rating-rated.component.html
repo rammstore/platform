@@ -23,6 +23,8 @@
   <app-mobile-data-view-rating
     [strategies]="strategies$ | async"
     [paginator]="paginator"
-    (paginationChanged)="getRating()">
+    (paginationChanged)="getRating()"
+    [section]="section"
+    [key]="key">
   </app-mobile-data-view-rating>
 </div>

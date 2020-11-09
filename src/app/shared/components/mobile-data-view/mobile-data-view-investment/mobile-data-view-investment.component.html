@@ -2,7 +2,9 @@
   <div class="account" [class.my]="account.isMy()" *ngFor="let account of accounts">
     <div class="caption">
       <a [routerLink]="['/strategies/details', account.strategy.id]">{{account.strategy.name}}</a>
-      <app-manage [data]="account"></app-manage>
+      <app-manage 
+        [data]="account"
+        [key]="key"></app-manage>
     </div>
 
     <app-chart-yield-table [strategy]="account.strategy" [containerID]="'mobileYieldChartContainer' + account.strategy.id"></app-chart-yield-table>

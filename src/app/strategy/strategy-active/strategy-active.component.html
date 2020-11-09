@@ -15,7 +15,8 @@
   *ngIf="settingsService.isMobile"
   [strategies]="strategies$ | async"
   [paginator]="paginator"
-  (paginationChanged)="getStrategies()">
+  (paginationChanged)="getStrategies()"
+  [key]="key">
 </app-mobile-data-view-strategy>
 
 <div [innerHTML]="'additionalInfo' | translate"></div>

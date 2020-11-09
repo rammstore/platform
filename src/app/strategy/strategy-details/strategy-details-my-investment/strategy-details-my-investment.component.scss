@@ -1,10 +1,22 @@
 .details-container {
-    display: flex;
-    position: relative;
-    flex-wrap: wrap;
+  display: flex;
+  position: relative;
+  flex-wrap: wrap;
 
-  &>*{
-    width: 50%;
+  @media (min-width: 992px) {
+    & > * {
+      width: 50%;
+    }
+  }
+
+  @media (max-width: 576px) {
+    & > * {
+      width: 100%;
+    }
+
+    .phone{
+      margin: 0 10px;
+    }
   }
 
   table {
@@ -20,21 +32,21 @@
           }
         }
       }
-      h2{
+      h2 {
         margin-top: 20px;
       }
     }
   }
 
-    .profile table {
-      padding-right: 0 !important;
-    }
-
-    .manage-container {
-      position: absolute;
-      right: 0;
-      bottom: -40px;
-      display: flex;
-      align-items: center;
-    }
+  .profile table {
+    padding-right: 0 !important;
   }
+
+  .manage-container {
+    position: absolute;
+    right: 0;
+    bottom: -40px;
+    display: flex;
+    align-items: center;
+  }
+}
