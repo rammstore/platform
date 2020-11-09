@@ -243,8 +243,8 @@ export class DataService {
   addStrategy(strategy: object, methodName: string, methodArgs: any): Observable<Strategy> {
     this.loaderService.showLoader();
     return this.http.post(`${this.apiUrl}/myStrategies.add`, strategy).pipe(
+      tap(() => this.loaderService.hideLoader()),
       map((response: any) => {
-        // this.loaderService.hideLoader();
         // this.walletService.updateWallet().subscribe();
         // // this.getActiveMyStrategies().subscribe();
         // this.notificationsService.open('notify.strategy.created');
