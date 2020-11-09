@@ -1,4 +1,5 @@
 <app-data-table
+  *ngIf="!settingsService.isMobile"
   [tableHeader]="tableHeader"
   [data]="accounts$ | async"
   [paginator]="paginator"
@@ -7,6 +8,7 @@
 </app-data-table>
 
 <app-mobile-data-view-investment-closed
+  *ngIf="settingsService.isMobile"
   [accounts]="accounts$ | async"
   [paginator]="paginator"
   (paginationChanged)="getAccounts()">

@@ -7,6 +7,7 @@ import { DataService } from '@app/services/data.service';
 import { takeUntil, tap } from 'rxjs/operators';
 import { SectionEnum } from "@app/enum/section.enum";
 import { ArgumentsService } from '@app/services/arguments.service';
+import { SettingsService } from '@app/services/settings.service';
 
 @Component({
   selector: 'app-rating-all',
@@ -54,7 +55,8 @@ export class RatingAllComponent implements OnInit {
 
   constructor(
     private dataService: DataService,
-    private argumentsService: ArgumentsService
+    private argumentsService: ArgumentsService,
+    public settingsService: SettingsService
   ) {
   }
 

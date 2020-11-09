@@ -8,6 +8,7 @@ import { CustomCurrencyPipe } from '@app/pipes/custom-currency.pipe';
 import { DataService } from '@app/services/data.service';
 import { CustomDatePipe } from '@app/pipes/custom-date.pipe';
 import { BrandService } from '@app/services/brand.service';
+import { SettingsService } from '@app/services/settings.service';
 
 @Component({
   selector: 'app-investments-closed',
@@ -50,7 +51,8 @@ export class InvestmentsClosedComponent implements OnInit, OnDestroy {
 
   constructor(
     private dataService: DataService,
-    private brandService: BrandService
+    private brandService: BrandService,
+    public settingsService: SettingsService
   ) {
   }
 

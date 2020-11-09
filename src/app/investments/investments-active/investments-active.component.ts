@@ -7,6 +7,7 @@ import { PercentPipe } from '@angular/common';
 import { DataService } from '@app/services/data.service';
 import { Argument } from '@app/models/argument';
 import { CreateInstanceService } from '@app/services/create-instance.service';
+import { SettingsService } from '@app/services/settings.service';
 // import { Arguments } from '@app/interfaces/args.interface';
 
 @Component({
@@ -58,7 +59,8 @@ export class InvestmentsActiveComponent implements OnInit, OnDestroy {
   });
 
   constructor(
-    private dataService: DataService
+    private dataService: DataService,
+    public settingsService: SettingsService
   ) {
   }
 
