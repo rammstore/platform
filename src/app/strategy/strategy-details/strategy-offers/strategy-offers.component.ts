@@ -27,6 +27,7 @@ export class StrategyOffersComponent implements OnInit {
 
   // component data
   offers: Offer[];
+  privateOffers: Offer[] = [];
   offers$: Observable<Offer[]>;
   traderOffer: Offer;
 
@@ -99,6 +100,7 @@ export class StrategyOffersComponent implements OnInit {
         map((offers) => {
           const privateOffers = offers.filter(item => item.type === 1);
 
+          this.privateOffers = privateOffers;
           if (privateOffers.length) {
             this.offers = privateOffers;
           }

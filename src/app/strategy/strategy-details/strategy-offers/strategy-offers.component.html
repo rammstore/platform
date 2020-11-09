@@ -2,7 +2,7 @@
      *ngIf="strategy$ | async as strategy">
   <ng-container *ngIf="offers$ | async as offers">
     <div class="text-right create-container"
-         *ngIf="!traderOffer">
+         *ngIf="traderOffer && !privateOffers">
       <button class="primary"
               (click)="createOffer()"
               translate>strategy.button.create.offer
