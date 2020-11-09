@@ -389,6 +389,7 @@
 
     "empty.strategy.null": "Strateji bulunamadı",
     "empty.investment.null": "Yatırım bulunamadı",
+    "empty.offers.null": "Teklif bulunamadı",
 
     "table.cell.accountNumberCopy": "İşlem kopyalamanın gerçekleştirildiği hesabın numarası",
   	"table.cell.loading": "Yükleniyor...",

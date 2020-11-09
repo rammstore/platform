@@ -389,6 +389,7 @@
 
   "empty.strategy.null": "استراتژی یافت نشد",
   "empty.investment.null": "سرمایه گذاری یافت نشد",
+  "empty.offers.null": "پیشنهادات یافت نشد",
 
   "table.cell.accountNumberCopy": "تعداد حسابی که از طریق آن کپی تریدینگ انجام می شود",
   "table.cell.loading": "در حال بارگیری",
