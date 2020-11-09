@@ -1,14 +1,16 @@
 <div class="strategy-offer"
-     *ngIf="strategy">
-  <div class="text-right create-container">
-    <button class="primary"
-            (click)="createOffer()"
-            translate>strategy.button.create.offer
-    </button>
-  </div>
+     *ngIf="strategy$ | async as strategy">
+  <ng-container *ngIf="offers$ | async as offers">
+    <div class="text-right create-container"
+         *ngIf="!traderOffer">
+      <button class="primary"
+              (click)="createOffer()"
+              translate>strategy.button.create.offer
+      </button>
+    </div>
 
-  <table class="w-100">
-    <thead>
+    <table class="w-100">
+      <thead>
       <tr>
         <th translate rowspan="2" style="width: 50px; vertical-align: bottom; padding-bottom: 13px;">ID</th>
         <th translate colspan="3">investment.details.strategy.feeRate</th>
@@ -33,9 +35,9 @@
         <!-- <th translate>ID</th>
         <th translate>common.table.label.partner.share</th> -->
       </tr>
-    </thead>
+      </thead>
 
-    <tbody>
+      <tbody>
       <tr *ngIf="strategy.publicOffer">
         <td colspan="13" translate>common.table.label.offer.public</td>
       </tr>
@@ -53,7 +55,7 @@
         <td [innerText]="strategy.publicOffer.partnerShareRate || ''"></td> -->
         <td>
           <span class="link-container"
-                 *ngIf="strategy.publicOffer.link">
+                *ngIf="strategy.publicOffer.link">
                 <span class="d-flex">{{strategy.publicOffer.link || ''}}</span>
                 <button ngxClipboard
                         class="d-flex empty-space"
@@ -116,7 +118,7 @@
         <td [innerText]="traderOffer.partnerShareRate || ''"></td> -->
         <td>
           <span class="link-container"
-                 *ngIf="traderOffer.link">
+                *ngIf="traderOffer.link">
                 <span class="d-flex">{{traderOffer.link || ''}}</span>
                 <button ngxClipboard
                         class="d-flex empty-space"
@@ -127,6 +129,7 @@
         </td>
         <td></td>
       </tr>
-    </tbody>
-  </table>
+      </tbody>
+    </table>
+  </ng-container>
 </div>
