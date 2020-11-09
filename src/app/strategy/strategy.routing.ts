@@ -13,6 +13,7 @@ import {StrategyOffersComponent} from './strategy-details/strategy-offers/strate
 import {StrategyDetailsMyInvestmentComponent} from './strategy-details/strategy-details-my-investment/strategy-details-my-investment.component';
 import {StrategyLinkComponent} from './strategy-details/strategy-link/strategy-link.component';
 import {MyStrategyGuard} from './my-strategy.guard';
+import {MyInvestmentGuard} from "./my-investment.guard";
 
 const routes: Routes = [
   {
@@ -26,7 +27,7 @@ const routes: Routes = [
       {path: '', component: StrategyDetailsProfitabilityComponent},
       {path: 'offers', canActivate: [MyStrategyGuard], component: StrategyOffersComponent},
       {path: 'symbols', component: StrategyDetailsSymbolsComponent},
-      {path: 'my-investment', canActivate: [MyStrategyGuard], component: StrategyDetailsMyInvestmentComponent},
+      {path: 'my-investment', canActivate: [MyInvestmentGuard], component: StrategyDetailsMyInvestmentComponent},
       {
         path: 'investments',
         canActivate: [MyStrategyGuard],

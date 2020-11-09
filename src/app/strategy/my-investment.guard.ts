@@ -9,14 +9,14 @@ import {NotificationsService} from '@app/services/notifications.service';
 @Injectable({
   providedIn: 'root'
 })
-export class MyStrategyGuard implements CanActivate {
+export class MyInvestmentGuard implements CanActivate {
   constructor(
     private router: Router,
     private notificationsService: NotificationsService,
     private dataService: DataService) {
   }
 
-  getId(str): number {
+  private getId(str): number {
     return Number(str.substring(str.lastIndexOf('/') + 1) || 0);
   }
 
@@ -24,18 +24,13 @@ export class MyStrategyGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> {
-    const isOffers = location.pathname.indexOf('offers');
-    const investments = location.pathname.indexOf('investments');
+    const myInvestment = location.pathname.indexOf('my-investment');
 
     let id: number = Number(location.pathname.substring(location.pathname.lastIndexOf('/') + 1) || 0);
 
     switch (true) {
-      case (isOffers > 0): {
-        id = this.getId(location.pathname.substring(0, isOffers - 1));
-        break;
-      }
-      case (investments > 0): {
-        id = this.getId(location.pathname.substring(0, investments - 1));
+      case (myInvestment > 0): {
+        id = this.getId(location.pathname.substring(0, myInvestment - 1));
         break;
       }
     }
@@ -53,21 +48,15 @@ export class MyStrategyGuard implements CanActivate {
             case 404:
             case 401: {
               this.router.navigate(['/strategies/details/', id]);
-
-              (isOffers > 0) ? this.setNotification(config, MessageEnum.offers) : '';
-              (investments > 0) ? this.setNotification(config, MessageEnum.investment) : '';
-
               break;
             }
             default: {
-              (isOffers > 0) ? this.setNotification(config, MessageEnum.offers) : '';
-              (investments > 0) ? this.setNotification(config, MessageEnum.investment) : '';
             }
           }
 
           return of();
         }),
-        map(item => item.isMyStrategy),
+        map(item => item.account && item.account.status !== 6),
         tap((check) => !check ? this.router.navigate(['/strategies/details/', id]) : '')
       );
   }
