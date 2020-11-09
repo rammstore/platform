@@ -66,7 +66,7 @@ export class DataService {
     private http: HttpClient,
     private createInstanceService: CreateInstanceService,
     private commandService: CommandService,
-    private loaderService: LoaderService,
+    public loaderService: LoaderService,
     private walletService: WalletService,
     private router: Router,
     private notificationsService: NotificationsService
@@ -191,8 +191,9 @@ export class DataService {
     this.loaderService.showLoader();
     return this.http.post(`${this.apiUrl}/strategies.get`, { ID: args.strategyId })
       .pipe(
-        map((item) => this.createInstanceService.createStrategy(item)),
-        tap(item => this.loaderService.hideLoader()));
+        tap(item => this.loaderService.hideLoader()),
+        map((item) => this.createInstanceService.createStrategy(item))
+      );
   }
 
   getStrategyByLinkAsObservable(args: { link: string }): Observable<any> {
