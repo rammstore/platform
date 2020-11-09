@@ -28,6 +28,18 @@ export class Position {
     return this.type;
   }
 
+  get getSwap(){
+    return (this.swap || 0).toFixed(2);
+  }
+
+  get getProfit(){
+    return (this.profit || 0).toFixed(2);
+  }
+
+  get getTotalProfit(){
+    return (this.totalProfit || 0).toFixed(2);
+  }
+
   setType(): void {
     switch (true) {
       case (this.volume > 0):

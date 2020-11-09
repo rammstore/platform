@@ -22,7 +22,6 @@
     </div>
 
     <app-manage [data]="strategy"
-
                 *ngIf="strategy.isActive()"
                 (action)="parseAction($event)"
                 [section]="sectionEnum"></app-manage>
