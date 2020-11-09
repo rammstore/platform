@@ -389,6 +389,7 @@
 
   "empty.strategy.null": "Estrategia no encontrada",
   "empty.investment.null": "Inversión no encontrada",
+  "empty.offers.null": "Ofertas no encontradas",
 
   "table.cell.accountNumberCopy": "El número de cuenta desde la que se realiza el intercambio de copias",
   "table.cell.loading": "Cargando...",

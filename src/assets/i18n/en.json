@@ -388,6 +388,7 @@
 
   "empty.strategy.null": "Strategy not found",
   "empty.investment.null": "Investment not found",
+  "empty.offers.null": "Offers not found",
 
   "table.cell.accountNumberCopy": "The number of account from which copy trading is performed",
   "table.cell.loading": "Loading...",
