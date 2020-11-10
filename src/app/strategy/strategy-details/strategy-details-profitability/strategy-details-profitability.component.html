@@ -19,14 +19,6 @@
           <td></td>
           <td></td>
         </tr>
-        <!-- <tr>
-          <td translate>common.fee</td>
-          <td>{{strategy.getFeeRate() | percent}}</td>
-        </tr>
-        <tr>
-          <td><span translate>common.commission</span>, USD</td>
-          <td>{{strategy.getCommissionRate() * 1000000}} / 1 mln</td>
-        </tr>-->
         <tr>
           <td translate>common.age</td>
           <td>{{strategy.getAgeWeeks()}}</td>
@@ -50,7 +42,7 @@
         </tr>
         <tr>
           <td><span translate>common.commission</span>, USD</td>
-          <td>{{strategy.getCommissionRate() * 1000000}} / 1 mln</td>
+          <td>{{strategy.getCommissionRate()}} / 1 mln</td>
         </tr>
       </tbody>
     </table>
