@@ -1,5 +1,5 @@
 import { DefaultIterableDiffer, Injectable } from '@angular/core';
-import {BehaviorSubject, forkJoin, Observable, of, pipe, ReplaySubject, Subject, throwError} from "rxjs";
+import { BehaviorSubject, forkJoin, Observable, of, pipe, ReplaySubject, Subject, throwError } from "rxjs";
 import {
   Account,
   AccountsSearchOptions,
@@ -61,6 +61,7 @@ export class DataService {
   destroy$ = new Subject();
   apiUrl: string = CONFIG.baseApiUrl;
   _update$: ReplaySubject<any> = new ReplaySubject<any>(null);
+  _strategyPage$: ReplaySubject<any> = new ReplaySubject<any>(null);
 
   constructor(
     private http: HttpClient,
@@ -78,6 +79,14 @@ export class DataService {
 
   get update$(): Observable<any> {
     return this._update$.asObservable();
+  }
+
+  set strategyPage(value: any) {
+    this._strategyPage$.next(value);
+  }
+
+  get strategyPage$() {
+    return this._strategyPage$.asObservable();
   }
 
   get getUpdateAsSubject() {
@@ -131,9 +140,9 @@ export class DataService {
 
     return this.http.post<EntityInterface>(`${this.apiUrl}/Strategies.search`, options)
       .pipe(
-        tap(({Wallets}) => Wallets ? this.walletService.walletSubject.next(this.createInstanceService.createWallet(Wallets[0])) : ''),
+        tap(({ Wallets }) => Wallets ? this.walletService.walletSubject.next(this.createInstanceService.createWallet(Wallets[0])) : ''),
         tap((item) => this.loaderService.hideLoader()),
-        tap(({Pagination}) => {
+        tap(({ Pagination }) => {
           if (args.paginator) {
             args.paginator.totalItems = Pagination.TotalRecords;
             args.paginator.totalPages = Pagination.TotalPages;
@@ -147,7 +156,7 @@ export class DataService {
           });
           return of();
         }),
-        map(({Strategies}) => {
+        map(({ Strategies }) => {
           const strategies: Strategy[] = [];
           Strategies.forEach((s: any) => {
             s.PublicOffer = s.PublicOffer || {};
@@ -240,18 +249,15 @@ export class DataService {
   }
 
   // Создание новой стратегии
-  addStrategy(strategy: object, methodName: string, methodArgs: any): Observable<Strategy> {
+  addStrategy(strategy: object, updateStatus: string, key: string): Observable<Strategy> {
     this.loaderService.showLoader();
     return this.http.post(`${this.apiUrl}/myStrategies.add`, strategy).pipe(
       tap(() => this.loaderService.hideLoader()),
       map((response: any) => {
-        // this.walletService.updateWallet().subscribe();
-        // // this.getActiveMyStrategies().subscribe();
-        // this.notificationsService.open('notify.strategy.created');
 
         // переробити
-        // this.updateAccount(new Command(response.AccountCommandID, response.AccountID), methodName, methodArgs, 'notify.strategy.created');
-
+        this.updateAccount(new Command(response.AccountCommandID, response.AccountID), response.AccountID, updateStatus, key, 'notify.strategy.created');
+        this.loaderService.hideLoader();
         return this.createInstanceService.createStrategy({
           ID: response.StrategyID
         });
@@ -295,7 +301,8 @@ export class DataService {
       CommissionRate: commissionRate
     }).pipe(
       map((item) => {
-        //this.setPublicOffer(id, item['OfferID']).subscribe();
+        this.loaderService.hideLoader();
+
         return item;
       })
     );
@@ -778,7 +785,7 @@ export class DataService {
           status: updateStatus,
           key: key
         });
-
+        // debugger
         if (commandStatus !== 0) {
           clearInterval(interval);
 

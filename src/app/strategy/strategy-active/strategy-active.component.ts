@@ -7,7 +7,7 @@ import { CustomCurrencyPipe } from '@app/pipes/custom-currency.pipe';
 import { DataService } from '@app/services/data.service';
 import { SectionEnum } from "@app/enum/section.enum";
 import { takeUntil, tap } from 'rxjs/operators';
-import {SettingsService} from "@app/services/settings.service";
+import { SettingsService } from "@app/services/settings.service";
 
 @Component({
   selector: 'app-strategy-active',
@@ -53,6 +53,7 @@ export class StrategyActiveComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.key = "strategy-active";
+    this.dataService.strategyPage = this.key;
     this.args = {
       searchMode: 'MyActiveStrategies',
       paginator: this.paginator
@@ -64,6 +65,7 @@ export class StrategyActiveComponent implements OnInit, OnDestroy {
       .pipe(
         tap((data) => {
           if (data.status == "update" && data.key == "strategy-active") {
+            debugger
             if (data.accountId) {
               this.getAccountById(data.accountId)
                 .pipe(takeUntil(this.destroy$))
@@ -90,10 +92,12 @@ export class StrategyActiveComponent implements OnInit, OnDestroy {
                   this.strategies$ = of(this.strategies);
                 });
             }
+          } else if (data.status == "strategy-created" && data.key == "strategy-active" && data.strategyId) {
+            debugger
+            this.getStrategies();
           }
-
         })
-      )
+      );
   }
 
   ngOnDestroy(): void {

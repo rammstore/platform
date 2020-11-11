@@ -3,13 +3,13 @@ import { Strategy } from '@app/models/strategy';
 import { TableHeaderRow } from '@app/models/table-header-row';
 import { Paginator, TableColumn } from '@app/models';
 import { PercentPipe } from '@angular/common';
-import {Observable, Subject} from 'rxjs';
-import {map, take, takeUntil} from 'rxjs/internal/operators';
+import { Observable, Subject } from 'rxjs';
+import { map, take, takeUntil } from 'rxjs/internal/operators';
 import { DataService } from '@app/services/data.service';
 import { CustomCurrencyPipe } from '@app/pipes/custom-currency.pipe';
 import { CustomDatePipe } from '@app/pipes/custom-date.pipe';
-import {StrategyService} from '@app/services/strategy.service';
-import {SettingsService} from "@app/services/settings.service";
+import { StrategyService } from '@app/services/strategy.service';
+import { SettingsService } from "@app/services/settings.service";
 
 @Component({
   selector: 'app-strategy-closed',
@@ -48,7 +48,7 @@ export class StrategyClosedComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getStrategies();
-
+    this.dataService.strategyPage = "strategy-closed";
     this.strategyService.update$
       .pipe(take(1))
       .subscribe(item => {

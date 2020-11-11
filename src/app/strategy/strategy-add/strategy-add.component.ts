@@ -1,15 +1,15 @@
-import {ChangeDetectorRef, Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Strategy, Wallet} from '@app/models';
-import {BsModalRef, BsModalService, ModalOptions} from 'ngx-bootstrap';
-import {Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/internal/operators';
-import {DataService} from '@app/services/data.service';
-import {WalletService} from '@app/services/wallet.service';
-import {StrategyAddScriptComponent} from './strategy-add-script/strategy-add-script.component';
-import {BrandService} from '@app/services/brand.service';
-import {NotificationsService} from "@app/services/notifications.service";
-import {debug} from "util";
+import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Strategy, Wallet } from '@app/models';
+import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/internal/operators';
+import { DataService } from '@app/services/data.service';
+import { WalletService } from '@app/services/wallet.service';
+import { StrategyAddScriptComponent } from './strategy-add-script/strategy-add-script.component';
+import { BrandService } from '@app/services/brand.service';
+import { NotificationsService } from "@app/services/notifications.service";
+import { debug } from "util";
 
 @Component({
   selector: 'app-strategy-add',
@@ -31,8 +31,8 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
   functionality: object;
   onClose: Subject<boolean> = new Subject<boolean>();
   titleStep: string = '';
-  @Input() methodName: string;
-  @Input() methodArgs: any;
+  updateStatus: string;
+  key: string;
 
   constructor(
     private fb: FormBuilder,
@@ -46,28 +46,9 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
   ) {
   }
 
-  // get titleStep1() {
-  //   let value = '';
-  //
-  //   switch (this.currentStep) {
-  //     case 1: {
-  //
-  //       break;
-  //     }
-  //     case 2: {
-  //       value = 'common.step 2: strategy.add.title.investments';
-  //       break;
-  //     }
-  //     case 3: {
-  //       value = 'common.step 3: strategy.add.title.offer';
-  //       break;
-  //     }
-  //   }
-  //
-  //   return value;
-  // }
-
   ngOnInit(): void {
+    this.dataService._strategyPage$.next()
+
     this.brandService.functionality
       .pipe(takeUntil(this.destroy$))
       .subscribe((f: object) => {
@@ -88,7 +69,7 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
       name: ['', [Validators.required, Validators.pattern('^[0-9a-zA-Z_!,.? ]*$')]]
     });
 
-    this.formStep1.get('name').setErrors({isUniq: true});
+    this.formStep1.get('name').setErrors({ isUniq: true });
   }
 
   buildFormStep2(): void {
@@ -149,19 +130,26 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
       Money: this.formStep2.get('money').value,
     };
 
-    this.dataService.addStrategy(strategy, this.methodName, this.methodArgs)
+    this.dataService.addStrategy(strategy, this.updateStatus, this.key)
       .pipe(takeUntil(this.destroy$))
       .subscribe(
         (newStrategy: Strategy) => {
-
+          debugger
           if (status) {
             this.dataService.addOffer(newStrategy.id, strategy.FeeRate, strategy.CommissionRate).subscribe((item) => {
               this.modalRef.hide();
+
               this.dataService.setPublicOffer(newStrategy.id, item.OfferID).subscribe();
+
               this.openAddStrategyScriptDialog(newStrategy);
+
+              this.initializeUpdateSubject(newStrategy.id, this.updateStatus, this.key);
             });
           } else {
+            this.initializeUpdateSubject(newStrategy.id, this.updateStatus, this.key);
+
             this.modalRef.hide();
+
             this.openAddStrategyScriptDialog(newStrategy);
           }
         },
@@ -170,6 +158,15 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
         }
       );
   }
+
+  initializeUpdateSubject(id: number, updateStatus: string, key: string): void {
+    this.dataService._update$.next({
+      strategyId: id,
+      status: updateStatus,
+      key: key
+    });
+  }
+
 
   back(): void {
     this.currentStep = 1;
@@ -189,11 +186,11 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
     this.dataService.isStrategyNameUniq(name)
       .pipe(takeUntil(this.destroy$))
       .subscribe((isUniq: boolean) => {
-        if(isUniq && isSubmitClicked){
+        if (isUniq && isSubmitClicked) {
           this.submitStep1();
         }
         if (!isUniq) {
-          this.formStep1.get('name').setErrors({isUniq: true});
+          this.formStep1.get('name').setErrors({ isUniq: true });
         }
       });
   }
