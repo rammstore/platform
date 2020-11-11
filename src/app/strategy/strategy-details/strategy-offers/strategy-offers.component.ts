@@ -23,8 +23,7 @@ export class StrategyOffersComponent implements OnInit {
   strategy: Strategy;
   strategy$: Observable<Strategy>;
   modalRef: BsModalRef;
-
-
+  
   // component data
   offers: Offer[];
   privateOffers: Offer[] = [];
