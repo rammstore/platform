@@ -1,7 +1,7 @@
 import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { Account, Offer, Strategy } from '@app/models';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import {Observable, of, Subject} from 'rxjs';
+import {from, Observable, of, Subject} from 'rxjs';
 import { ContentTabLink } from '@app/components/content-tabs/content-tab-link';
 import { DataService } from '@app/services/data.service';
 import { BrandService } from '@app/services/brand.service';
@@ -10,6 +10,7 @@ import { SectionEnum } from "@app/enum/section.enum";
 import { RefreshService } from '@app/services/refresh.service';
 import {StatementInterface} from "@app/interfaces/statement.interface";
 import {NotificationsService} from "@app/services/notifications.service";
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-investments-details',
@@ -20,7 +21,7 @@ export class InvestmentsDetailsComponent implements OnInit, OnDestroy {
   // https://blog.strongbrew.io/rxjs-best-practices-in-angular/#avoiding-memory-leaks
   // here we will unsubscribe from all subscriptions
   destroy$ = new Subject();
-  currentDate: Date;
+  currentDate: any;
   // component data
   account: Account;
   source$: Observable<StatementInterface>;
@@ -52,7 +53,7 @@ export class InvestmentsDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.destroy$.next(true);
+    this.destroy$.next(true); 
   }
 
   onClick(){
@@ -64,7 +65,7 @@ export class InvestmentsDetailsComponent implements OnInit, OnDestroy {
       key = "positions";
     }
 
-    this.currentDate = new Date();
+    this.currentDate = moment().format();
     this.refreshService.refresh = key;
   }
 
@@ -83,7 +84,8 @@ export class InvestmentsDetailsComponent implements OnInit, OnDestroy {
           this.account = response.account;
           this.account.strategy = response.strategy;
           this.publicOffer = this.strategy.publicOffer ? this.strategy.publicOffer : this.strategy.linkOffer;
-          this.currentDate = new Date();
+          this.currentDate = moment().format();
+          console.log(this.currentDate)
           this.links = [
             new ContentTabLink('investment.positions.title', '/investments/details/' + this.account.id),
             new ContentTabLink('investment.deals.title', '/investments/details/' + this.account.id + '/deals')
