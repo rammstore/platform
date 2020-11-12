@@ -201,7 +201,17 @@ export class DataService {
     return this.http.post(`${this.apiUrl}/strategies.get`, { ID: args.strategyId })
       .pipe(
         map((item) => this.createInstanceService.createStrategy(item)),
-        tap(item => this.loaderService.hideLoader()));
+        tap(item => this.loaderService.hideLoader()),
+        catchError((err: HttpErrorResponse) => {
+          this.notificationsService.open('empty.strategy.null', {
+            type: 'error',
+            autoClose: true,
+            duration: 3000
+          });
+          this.router.navigate(['/rating']);
+          this.loaderService.hideLoader();
+          return of();
+        }),);
   }
 
   getStrategyByLinkAsObservable(args: { link: string }): Observable<any> {
@@ -213,14 +223,6 @@ export class DataService {
       );
   }
 
-  // getOffers(id: number): Observable<any> {
-  //   this.loaderService.showLoader();
-  //   return this.http.post(`${this.apiUrl}/strategies.getOffers`, { StrategyID: id })
-  //     .pipe(
-  //       map((offers) => this.createInstanceService.createOffers(offers)),
-  //       tap(item => this.loaderService.hideLoader())
-  //     );
-  // }
   // Получение конкретной стратегии за ссылкой
   getStrategyByLink(args: { link: string }): Observable<Strategy> {
     // console.log('getStrategyByLink');
@@ -229,6 +231,7 @@ export class DataService {
       this.loaderService.hideLoader();
       this.currentStrategyDetailsSubject.next(this.createInstanceService.createStrategy(response));
     }, (error: HttpErrorResponse) => {
+
       if (error.status === 404) {
         this.router.navigate(['/rating']);
         this.notificationsService.open('notify.strategy.access.error', {
@@ -545,7 +548,35 @@ export class DataService {
     this.loaderService.showLoader();
     return this.http.post(`${this.apiUrl}/accounts.get`, { AccountID: accountId })
       .pipe(
-        take(1),
+        
+        catchError(error => {
+          const config: NotificationOptions = {
+            type: 'error',
+            autoClose: true,
+            duration: 3000
+          };
+
+          switch (error.status) {
+            case 404: {
+              this.router.navigate(['/investments']);
+              this.notificationsService.open('empty.investment.null', config);
+              break;
+            }
+            case 401: {
+              this.router.navigate(['/investments']);
+              this.notificationsService.open('empty.investment.null', config);
+              break;
+            }
+            default: {
+              this.router.navigate(['/investments']);
+              this.notificationsService.open('empty.investment.null', config);
+            }
+          }
+          
+          this.loaderService.hideLoader();
+
+          return of();
+        }),take(1),
         map((response: any) => {
           const data = {
             strategy: this.createInstanceService.createStrategy(response.Strategy),
@@ -572,6 +603,7 @@ export class DataService {
 
           switch (error.status) {
             case 404: {
+              this.router.navigate(['/investments']);
               this.notificationsService.open('empty.investment.null', config);
               break;
             }
@@ -581,10 +613,12 @@ export class DataService {
               break;
             }
             default: {
+              this.router.navigate(['/investments']);
               this.notificationsService.open('empty.investment.null', config);
             }
           }
 
+          this.loaderService.hideLoader()
           return of();
         })
       )
@@ -607,22 +641,24 @@ export class DataService {
         }
 
         this.loaderService.hideLoader();
-      }, (error: HttpErrorResponse) => {
-        if (error.status === 401) {
-          this.router.navigate(['/investments']);
-          this.notificationsService.open('notify.investment.access.error', {
-            type: 'error',
-            autoClose: true,
-            duration: 3000
-          });
-        } else {
-          this.notificationsService.open('notify.loading.error', {
-            type: 'error',
-            autoClose: true,
-            duration: 3000
-          });
-        }
-      });
+      },
+        (error: HttpErrorResponse) => {
+          if (error.status === 401) {
+            this.router.navigate(['/investments']);
+            this.notificationsService.open('notify.investment.access.error', {
+              type: 'error',
+              autoClose: true,
+              duration: 3000
+            });
+          } else {
+            this.router.navigate(['/investments']);
+            this.notificationsService.open('notify.loading.error', {
+              type: 'error',
+              autoClose: true,
+              duration: 3000
+            });
+          }
+        });
 
     return this.currentAccountStatementSubject.asObservable();
   }

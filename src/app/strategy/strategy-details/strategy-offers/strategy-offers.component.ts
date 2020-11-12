@@ -87,8 +87,7 @@ export class StrategyOffersComponent implements OnInit {
   }
 
   getStrategy(): Observable<Strategy> {
-    return this.dataService.getStrategyByID(this.args)
-      .pipe(takeUntil(this.destroy$));
+    return this.dataService.getStrategyById(this.args);
   }
 
   getOffers(): void {
@@ -96,11 +95,10 @@ export class StrategyOffersComponent implements OnInit {
       .pipe(
         takeUntil(this.destroy$),
         tap((offers) => {
-          debugger
           this.strategy.publicOffer = offers.filter(item => item.type === 2)[0];
 
           this.privateOffers = offers.filter(item => item.type === 1);
-          debugger
+
           if (this.privateOffers.length) {
             this.offers = this.privateOffers;
           }
