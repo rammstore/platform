@@ -1,6 +1,6 @@
 <div class="strategy-offer"
      *ngIf="strategy$ | async as strategy">
-  <ng-container *ngIf="offers$ | async as offers">
+  <ng-container *ngIf="offers$ | async">
     <div class="text-right create-container"
          *ngIf="!strategy.publicOffer && !privateOffers">
       <button class="primary"
@@ -16,7 +16,6 @@
         <th translate colspan="3">investment.details.strategy.feeRate</th>
         <th translate colspan="3">common.table.label.commissionRate</th>
         <th translate colspan="2">common.investments</th>
-        <!-- <th translate colspan="2">common.table.label.partner</th> -->
         <th translate rowspan="2" style="vertical-align: bottom; padding-bottom: 13px;">link</th>
         <th rowspan="2"></th>
       </tr>
@@ -24,16 +23,11 @@
         <th translate>%</th>
         <th translate>investment.details.strategy.feeRatePaid</th>
         <th translate>investment.details.strategy.feeRateToPay</th>
-
         <th translate>common.table.label.commission.unit</th>
         <th translate>common.table.label.commissionPaidUSD</th>
         <th translate>common.table.label.commissionToPayUSD</th>
-
         <th translate>myStrategies.active.title</th>
         <th translate>table.cell.total</th>
-
-        <!-- <th translate>ID</th>
-        <th translate>common.table.label.partner.share</th> -->
       </tr>
       </thead>
 
@@ -51,8 +45,6 @@
         <td [innerText]="strategy.publicOffer.commissionToPay"></td>
         <td [innerText]="strategy.publicOffer.activeAccounts"></td>
         <td [innerText]="strategy.publicOffer.totalAccounts"></td>
-        <!-- <td [innerText]="strategy.publicOffer.partnerID || ''"></td>
-        <td [innerText]="strategy.publicOffer.partnerShareRate || ''"></td> -->
         <td>
           <span class="link-container"
                 *ngIf="strategy.publicOffer.link">
@@ -82,8 +74,6 @@
         <td [innerText]="offer.commissionToPay"></td>
         <td [innerText]="offer.activeAccounts"></td>
         <td [innerText]="offer.totalAccounts"></td>
-        <!-- <td [innerText]="offer.partnerID || ''"></td>
-        <td [innerText]="offer.partnerShareRate || ''"></td> -->
         <td>
            <span class="link-container"
                  *ngIf="offer.link">
@@ -114,8 +104,6 @@
         <td [innerText]="traderOffer.commissionToPay"></td>
         <td [innerText]="traderOffer.activeAccounts"></td>
         <td [innerText]="traderOffer.totalAccounts"></td>
-        <!-- <td [innerText]="traderOffer.partnerID || ''"></td>
-        <td [innerText]="traderOffer.partnerShareRate || ''"></td> -->
         <td>
           <span class="link-container"
                 *ngIf="traderOffer.link">

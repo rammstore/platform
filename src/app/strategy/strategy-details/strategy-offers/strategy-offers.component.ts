@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from "@app/services/data.service";
 import { ActivatedRoute } from "@angular/router";
-import {map, takeUntil, tap} from "rxjs/internal/operators";
-import {Observable, of, Subject} from "rxjs";
+import { map, takeUntil, tap } from "rxjs/internal/operators";
+import { Observable, of, Subject } from "rxjs";
 import { Offer, Paginator, Strategy, TableColumn } from "@app/models";
 import { BsModalRef, BsModalService, ModalOptions } from "ngx-bootstrap";
 import { StrategyOfferCreateComponent } from "./strategy-offer-create/strategy-offer-create.component";
@@ -23,7 +23,7 @@ export class StrategyOffersComponent implements OnInit {
   strategy: Strategy;
   strategy$: Observable<Strategy>;
   modalRef: BsModalRef;
-  
+
   // component data
   offers: Offer[];
   privateOffers: Offer[] = [];
@@ -95,17 +95,17 @@ export class StrategyOffersComponent implements OnInit {
     this.offers$ = this.dataService.getOffers(this.strategy.id)
       .pipe(
         takeUntil(this.destroy$),
-        tap((offers) => this.strategy.publicOffer = offers.filter(item => item.type === 2)[0]),
-        map((offers) => {
-          const privateOffers = offers.filter(item => item.type === 1);
+        tap((offers) => {
+          debugger
+          this.strategy.publicOffer = offers.filter(item => item.type === 2)[0];
 
-          this.privateOffers = privateOffers;
-          if (privateOffers.length) {
-            this.offers = privateOffers;
+          this.privateOffers = offers.filter(item => item.type === 1);
+          debugger
+          if (this.privateOffers.length) {
+            this.offers = this.privateOffers;
           }
-          this.traderOffer = offers.filter(item => item.type === 0)[0];
 
-          return offers;
+          this.traderOffer = offers.filter(item => item.type === 0)[0];
         })
       );
   }
@@ -150,7 +150,7 @@ export class StrategyOffersComponent implements OnInit {
       if (result === true) {
         this.dataService.getStrategyByID(this.args);
         this.getOffers();
-      } else if (result === false) {}
+      } else if (result === false) { }
     });
 
   }
