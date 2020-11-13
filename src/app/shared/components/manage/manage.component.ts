@@ -31,7 +31,8 @@ export class ManageComponent implements OnInit {
 
   @Output() click: EventEmitter<any> = new EventEmitter<any>();
   @Output() action: EventEmitter<ActionEnum> = new EventEmitter<ActionEnum>();
-
+  tooltipMessage: string  = "strategy.hasnot.public.offer";
+  
   constructor(
     private modalService: BsModalService
   ) { }

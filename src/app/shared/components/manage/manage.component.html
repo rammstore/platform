@@ -80,9 +80,27 @@
 
   <ng-container *ngIf="dataType === 'strategy' && (!data.account || !data.account.id)">
 
-    <div class="btn-group dropdown-container" dropdown>
-      <button [disabled]="!data.publicOffer && !data.isMyStrategy && !data.linkOffer" class="primary btn-invest" (click)="openStrategyInvestDialog()" translate>common.manage.invest</button>
-      <button class="primary caret" dropdownToggle *ngIf="data.isMy()"><i class="fa fa-caret-down"></i></button>
+    <div class="btn-group dropdown-container" dropdown>      
+      
+      
+      <div class="hint-container">
+             <button [disabled]="!data.publicOffer && !data.isMyStrategy && !data.linkOffer" 
+              class="primary btn-invest" 
+              (click)="openStrategyInvestDialog()"
+              translate>
+              <span *ngIf="!data.publicOffer && !data.isMyStrategy && !data.linkOffer" class="hint">
+                <div class="hint-content"
+                     [innerText]="tooltipMessage"
+                     translate></div>
+              </span>
+              common.manage.invest</button> 
+
+      </div>
+
+
+      <button class="primary caret" 
+              dropdownToggle 
+              *ngIf="data.isMy()"><i class="fa fa-caret-down"></i></button>
 
       <ul *dropdownMenu class="dropdown-menu" role="menu">
         <li [routerLink]="['/strategies/details', data.id, 'investments']" translate>

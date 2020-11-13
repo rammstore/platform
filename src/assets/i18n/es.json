@@ -350,6 +350,7 @@
   "strategy.button.create.offer": "Crear oferta",
   "strategy.public.offer.label": "Solo una oferta puede ser pública; al crear una nueva oferta pública, la oferta anterior dejará de ser pública.",
   "strategy.private.offer.label": "La estrategia no tendrá ofertas públicas, la estrategia se eliminará de las clasificación y la inversión será posible solo a través de enlaces ocultos.",
+  "strategy.hasnot.public.offer": "This strategy does not have a public offer",
   
 	"strategy.close.form.text": "¿Confirmas cerrar tu estrategia?",
   "strategy.close.form.text2": "Si hubiera invertido en su propia estrategia, su cuenta de inversión también se cerraría. Tenga en cuenta que esta acción es irreversible",

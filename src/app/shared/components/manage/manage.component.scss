@@ -17,6 +17,10 @@
     }
   }
 
+  .hint-content{
+    text-transform: none;
+  }
+
   button {
     &:first-child {
       display: inline-block;

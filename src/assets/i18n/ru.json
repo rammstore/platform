@@ -386,16 +386,15 @@
   "strategy.form.target.error.pattern": "Пожалуйста, введите корректное значение цели.",
   "strategy.form.target.error.required": "Цель не задана",
   "strategy.form.target.tooltip": "Целевой доход. При достижении целевого дохода инвестиция будет приостановлена.",
+  "strategy.hasnot.public.offer": "У данной стратегии нет публичной оферты",
 
   "strategy.invest.form.title": "Инвестировать в стратегию",
   "strategy.invest.trader.form.text": "Трейдер (владелец) стратегии может инвестировать только по специальным условиям оферты трейдера, с нулевыми вознаграждением и комиссией с оборота. При подтверждении инвестирования инвестиция будет создана по оферте трейдера.",
 
-  "empty.strategy.null": "Стратегия не найдена",
-  "empty.investment.null": "Инвестиция не найдена",
-  "empty.offers.null": "Оферты не найдены",
 
   "empty.strategy.null": "Стратегия не найдена",
   "empty.investment.null": "Инвестиция не найдена",
+  "empty.offers.null": "Оферты не найдены",
 
   "table.cell.accountNumberCopy": "Номер счета, с которого идет копирование",
   "table.cell.loading": "Загрузка...",
