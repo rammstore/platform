@@ -86,6 +86,7 @@
   "common.invested": "Инвестировано",
   "common.investment": "Инвестиция",
   "common.investments": "Инвестиции",
+  "common.investments.mobile": "Инв-ции",
   "common.margin": "Маржа",
   "common.marginLevel": "Уровень маржи",
   "common.marginLevel.percent":  "Уровень маржи, %",
@@ -120,6 +121,7 @@
   "common.type7":"Комиссия от",
   "common.type8":"Партнеры",
   "common.yield": "Доходность",
+  "common.yield.mobile": "Доходн.",
   "common.yieldMonthly": "Доходность в месяц",
 
   "common.label.iWant": "Я хочу:",
@@ -163,6 +165,7 @@
   "common.table.label.manage": "Управление",
   "common.table.label.myInvestmentUSD": "Моя инвестиция, USD",
   "common.table.label.myInvestment": "Моя инвестиция",
+  "common.table.label.myInvestment.mobile": "Моя инв-ция",
   "common.table.label.name": "Название",
   "common.table.label.no-data": "Нет данных для отображения",
   "common.table.label.price": "Цена",

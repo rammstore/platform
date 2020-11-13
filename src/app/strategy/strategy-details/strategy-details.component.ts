@@ -1,16 +1,17 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Strategy} from '@app/models';
-import {ContentTabLink} from '@app/components/content-tabs/content-tab-link';
-import {BsModalRef} from 'ngx-bootstrap';
-import {Observable, of, Subject} from 'rxjs';
-import {catchError, take, takeUntil, tap} from 'rxjs/internal/operators';
-import {DataService} from '@app/services/data.service';
-import {BrandService} from '@app/services/brand.service';
-import {StrategyService} from '@app/services/strategy.service';
-import {SectionEnum} from "@app/enum/section.enum";
-import {NotificationsService} from "@app/services/notifications.service";
-import {ActionEnum} from "@app/enum/action.enum";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Strategy } from '@app/models';
+import { ContentTabLink } from '@app/components/content-tabs/content-tab-link';
+import { BsModalRef } from 'ngx-bootstrap';
+import { Observable, of, Subject, VirtualTimeScheduler } from 'rxjs';
+import { catchError, take, takeUntil, tap } from 'rxjs/internal/operators';
+import { DataService } from '@app/services/data.service';
+import { BrandService } from '@app/services/brand.service';
+import { StrategyService } from '@app/services/strategy.service';
+import { SectionEnum } from "@app/enum/section.enum";
+import { NotificationsService } from "@app/services/notifications.service";
+import { ActionEnum } from "@app/enum/action.enum";
+import { SettingsService } from '@app/services/settings.service';
 
 @Component({
   selector: 'app-strategy-details',
@@ -34,20 +35,38 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
   methodName: string;
   sectionEnum: SectionEnum = SectionEnum.strategy;
 
+  //tabs names
+  myIinvestment: string;
+  yield: string;
+  investments: string;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private dataService: DataService,
     private brandService: BrandService,
     private notificationsService: NotificationsService,
-    private strategyService: StrategyService
+    private strategyService: StrategyService,
+    private settingsService: SettingsService
   ) {
   }
 
   ngOnInit(): void {
+
     this.functionality$ = this.brandService.functionality;
 
     this.id = parseInt(this.route.params['_value'].id);
+
+    // if (this.settingsService.isMobile) {
+    //   this.myIinvestment = "common.table.label.myInvestment.mobile";
+    //   this.yield = "common.yield.mobile";
+    //   this.investments = "common.investments.mobile";
+    // }
+    // else {
+    //   this.myIinvestment = "common.table.label.myInvestment";
+    //   this.yield = "common.yield";
+    //   this.investments = "common.investments";
+    // }
 
     this.getStrategies();
 
@@ -123,18 +142,38 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
   }
 
   strategiesDetailsLinks() {
-    this.links = [
-      new ContentTabLink('common.yield', '/strategies/details/' + this.strategy.id),
-      new ContentTabLink('common.table.label.symbols', '/strategies/details/' + this.strategy.id + '/symbols')
-    ];
+    switch (true) {
+      case this.settingsService.isMobile:
+        this.links = [
+          new ContentTabLink('common.yield.mobile', '/strategies/details/' + this.strategy.id),
+          new ContentTabLink('common.table.label.symbols', '/strategies/details/' + this.strategy.id + '/symbols')
+        ];
 
-    if (this.strategy.account && this.strategy.account.id) {
-      this.links.push(new ContentTabLink('common.table.label.myInvestment', '/strategies/details/' + this.strategy.id + '/my-investment'));
-    }
+        if (this.strategy.account && this.strategy.account.id) {
+          this.links.push(new ContentTabLink('common.table.label.myInvestment.mobile', '/strategies/details/' + this.strategy.id + '/my-investment'));
+        }
 
-    if (this.strategy.partnerInfo || this.strategy.traderInfo) {
-      this.links.push(new ContentTabLink('common.investments', '/strategies/details/' + this.strategy.id + '/investments'));
-      this.links.push(new ContentTabLink('common.offers', `/strategies/details/${this.strategy.id}/offers`));
+        if (this.strategy.partnerInfo || this.strategy.traderInfo) {
+          this.links.push(new ContentTabLink('common.investments.mobile', '/strategies/details/' + this.strategy.id + '/investments'));
+        }
+        break;
+
+      default:
+        this.links = [
+          new ContentTabLink('common.yield', '/strategies/details/' + this.strategy.id),
+          new ContentTabLink('common.table.label.symbols', '/strategies/details/' + this.strategy.id + '/symbols')
+        ];
+
+        if (this.strategy.account && this.strategy.account.id) {
+          this.links.push(new ContentTabLink('common.table.label.myInvestment', '/strategies/details/' + this.strategy.id + '/my-investment'));
+        }
+
+        if (this.strategy.partnerInfo || this.strategy.traderInfo) {
+          this.links.push(new ContentTabLink('common.investments', '/strategies/details/' + this.strategy.id + '/investments'));
+          this.links.push(new ContentTabLink('common.offers', `/strategies/details/${this.strategy.id}/offers`));
+
+        }
+        break;
     }
   }
 

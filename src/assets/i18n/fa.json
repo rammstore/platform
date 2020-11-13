@@ -86,6 +86,7 @@
 	"common.invested": "سرمایه‌گذاری شده",
 	"common.investment": "سرمایه‌گذاری",
   "common.investments": "سرمایه‌گذاری‌ها",
+  "common.investments.mobile": "سرمایه‌گذاری‌ها",
   "common.margin": "مارجین",
   "common.marginLevel": "اندازه مارجین",
   "common.marginLevel.percent":  "اندازه مارجین, %",
@@ -120,6 +121,7 @@
   "common.type7": "کمیسیون از",
   "common.type8": "همکاران",
   "common.yield": "بازده",
+  "common.yield.mobile": "بازده",
   "common.yieldMonthly": "بازده ماهانه",
 
 	"common.label.iWant": "من می‌خواهم تا:",
@@ -163,6 +165,7 @@
   "common.table.label.manage": "مدیریت",
   "common.table.label.myInvestmentUSD": "سرمایه‌گذاری من, دلار آمریکا",
   "common.table.label.myInvestment": "سرمایه گذاری من",
+  "common.table.label.myInvestment.mobile": "سرمایه گذاری من",
   "common.table.label.name": "نام",
   "common.table.label.no-data": "اطلاعاتی برای نمایش وجود ندارد",
   "common.table.label.price": "قیمت",
