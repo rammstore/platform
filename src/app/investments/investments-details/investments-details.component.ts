@@ -1,15 +1,15 @@
 import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { Account, Offer, Strategy } from '@app/models';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import {from, Observable, of, Subject} from 'rxjs';
+import { from, Observable, of, Subject } from 'rxjs';
 import { ContentTabLink } from '@app/components/content-tabs/content-tab-link';
 import { DataService } from '@app/services/data.service';
 import { BrandService } from '@app/services/brand.service';
-import {catchError, map, takeUntil, tap} from 'rxjs/operators';
+import { catchError, map, takeUntil, tap } from 'rxjs/operators';
 import { SectionEnum } from "@app/enum/section.enum";
 import { RefreshService } from '@app/services/refresh.service';
-import {StatementInterface} from "@app/interfaces/statement.interface";
-import {NotificationsService} from "@app/services/notifications.service";
+import { StatementInterface } from "@app/interfaces/statement.interface";
+import { NotificationsService } from "@app/services/notifications.service";
 import * as moment from 'moment';
 
 @Component({
@@ -53,28 +53,28 @@ export class InvestmentsDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.destroy$.next(true); 
+    this.destroy$.next(true);
   }
 
-  onClick(){
+  onClick() {
     let key = "";
-    if(this.router.url.includes('/deals')){
+    if (this.router.url.includes('/deals')) {
       key = "deals"
     }
-    else{
+    else {
       key = "positions";
     }
 
-    this.currentDate = moment().format();
+    this.currentDate = moment.utc().format("yyyy-MM-DD HH:mm:ss");
     this.refreshService.refresh = key;
   }
 
   getAccountStatement(): void {
-    this.source$ =  this.dataService.getAccountStatement(this.args)
+    this.source$ = this.dataService.getAccountStatement(this.args)
       .pipe(
         takeUntil(this.destroy$),
         catchError(item => {
-          item.status === 404 ? this.notificationsService.open('empty.investment.null', {type: 'error'}) : '';
+          item.status === 404 ? this.notificationsService.open('empty.investment.null', { type: 'error' }) : '';
 
           return of();
         }),
@@ -84,8 +84,9 @@ export class InvestmentsDetailsComponent implements OnInit, OnDestroy {
           this.account = response.account;
           this.account.strategy = response.strategy;
           this.publicOffer = this.strategy.publicOffer ? this.strategy.publicOffer : this.strategy.linkOffer;
-          this.currentDate = moment().format();
-          console.log(this.currentDate)
+
+          this.currentDate = moment.utc().format("yyyy-MM-DD HH:mm:ss");
+
           this.links = [
             new ContentTabLink('investment.positions.title', '/investments/details/' + this.account.id),
             new ContentTabLink('investment.deals.title', '/investments/details/' + this.account.id + '/deals')
