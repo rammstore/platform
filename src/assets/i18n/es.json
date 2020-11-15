@@ -350,7 +350,6 @@
   "strategy.button.create.offer": "Crear oferta",
   "strategy.public.offer.label": "Solo una oferta puede ser pública; al crear una nueva oferta pública, la oferta anterior dejará de ser pública.",
   "strategy.private.offer.label": "La estrategia no tendrá ofertas públicas, la estrategia se eliminará de las clasificación y la inversión será posible solo a través de enlaces ocultos.",
-  "strategy.hasnot.public.offer": "This strategy does not have a public offer",
   
 	"strategy.close.form.text": "¿Confirmas cerrar tu estrategia?",
   "strategy.close.form.text2": "Si hubiera invertido en su propia estrategia, su cuenta de inversión también se cerraría. Tenga en cuenta que esta acción es irreversible",
@@ -387,6 +386,7 @@
   "strategy.form.target.error.pattern": "Ingrese el valor objetivo correcto",
   "strategy.form.target.error.required": "El objetivo no está definido",
   "strategy.form.target.tooltip": "Ingresos objetivo. Al alcanzar los ingresos objetivo, la inversión se detendrá",
+  "strategy.hasnot.public.offer": "Esta estrategia no tiene oferta pública",
 
 	"strategy.invest.form.title": "Invertir en estrategia",
   "strategy.invest.trader.form.text": "El comerciante (propietario) de la estrategia solo puede invertir bajo las condiciones especiales de la oferta del comerciante, con tarifa cero y comisión de facturación. En caso de que confirme la inversión, se creará de acuerdo con la oferta del comerciante.",

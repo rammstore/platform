@@ -386,7 +386,7 @@
   	"strategy.form.target.error.pattern": "Lütfen doğru hedef değerini girin",
   	"strategy.form.target.error.required": "Hedef belirlenmemiş",
   	"strategy.form.target.tooltip": "Hedef gelir. Hedef gelire ulaşılması durumunda yatırım duraklatılacaktır.",
-	"strategy.hasnot.public.offer": "This strategy does not have a public offer",
+	  "strategy.hasnot.public.offer": "Bu stratejinin halka açık bir teklifi yok",
 
 	  "strategy.invest.form.title": "Stratejiye yatırım yap",
     "strategy.invest.trader.form.text": "The trader (owner) of the strategy can only invest under the special conditions of the trader's offer, with zero fee and turnover commission. In case you confirm the investment, it will be created according to the trader's offer.",
