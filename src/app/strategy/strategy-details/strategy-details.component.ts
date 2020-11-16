@@ -57,17 +57,6 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
 
     this.id = parseInt(this.route.params['_value'].id);
 
-    // if (this.settingsService.isMobile) {
-    //   this.myIinvestment = "common.table.label.myInvestment.mobile";
-    //   this.yield = "common.yield.mobile";
-    //   this.investments = "common.investments.mobile";
-    // }
-    // else {
-    //   this.myIinvestment = "common.table.label.myInvestment";
-    //   this.yield = "common.yield";
-    //   this.investments = "common.investments";
-    // }
-
     this.getStrategies();
 
     this.dataService.update$

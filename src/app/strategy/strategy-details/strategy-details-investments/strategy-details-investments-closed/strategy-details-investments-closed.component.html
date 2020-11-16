@@ -1,5 +1,6 @@
 <app-data-table
-  [data]="accounts"
+  *ngIf="!settingsService.isMobile"
+  [data]="accounts$ | async"
   [tableHeader]="tableHeader"
   [paginator]="paginator"
   (paginationChanged)="getAccounts()"
@@ -7,7 +8,8 @@
 ></app-data-table>
 
 <app-mobile-data-view-strategy-investment-closed
-  [accounts]="accounts"
+  *ngIf="settingsService.isMobile"
+  [accounts]="accounts$ | async"
   [paginator]="paginator"
   (paginationChanged)="getAccounts()"
 ></app-mobile-data-view-strategy-investment-closed>

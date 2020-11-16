@@ -32,6 +32,29 @@ export class StrategyMapper {
     });
   }
 
+  static formatToInvestmentsActiveAccountsOptions(args: Arguments) {
+    const options = {
+      StrategyID: args.strategyId,
+      Pagination: {
+        CurrentPage: args.paginator.currentPage,
+        PerPage: args.paginator.perPage
+      }
+    };
+
+    return options;
+  }
+
+  static formatToInvestmentsClosedAccountsOptions(args: Arguments) {
+    const options = {
+      StrategyID: args.strategyId,
+      Pagination: {
+        CurrentPage: args.paginator.currentPage,
+        PerPage: args.paginator.perPage
+      }
+    };
+
+    return options;
+  }
 
   static formatToCloseStrategyRequest(pagination): any {
     const options = {
@@ -51,23 +74,23 @@ export class StrategyMapper {
     return options;
   }
 
-    static formatArgumentsToOptions(args: Arguments){
-        const Pagination = (args.paginator && {
-            CurrentPage: args.paginator.currentPage,
-            PerPage: args.paginator.perPage
-          });
+  static formatArgumentsToOptions(args: Arguments) {
+    const Pagination = (args.paginator && {
+      CurrentPage: args.paginator.currentPage,
+      PerPage: args.paginator.perPage
+    });
 
-          const options: iStrategiesSearchOptions = {
-              Filter: {
-                SearchMode: args.searchMode,
-              },
-              OrderBy: {
-                Field: args.field,
-                Direction: args.direction
-              },
-              Pagination
-          };
+    const options: iStrategiesSearchOptions = {
+      Filter: {
+        SearchMode: args.searchMode,
+      },
+      OrderBy: {
+        Field: args.field,
+        Direction: args.direction
+      },
+      Pagination
+    };
 
-          return options;
-    }
+    return options;
+  }
 }

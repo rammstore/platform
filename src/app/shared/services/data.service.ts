@@ -211,7 +211,7 @@ export class DataService {
           this.router.navigate(['/rating']);
           this.loaderService.hideLoader();
           return of();
-        }),);
+        }));
   }
 
   getStrategyByLinkAsObservable(args: { link: string }): Observable<any> {
@@ -417,6 +417,68 @@ export class DataService {
     );
   }
 
+  getInvestmentsActiveAccounts(args: any): Observable<EntityInterface> {
+    this.loaderService.showLoader();
+
+    const options: any = StrategyMapper.formatToInvestmentsActiveAccountsOptions(args);
+
+    return this.http.post(`${this.apiUrl}/myStrategies.getActiveAccounts`, options).pipe(
+      catchError(error => {
+        const config: NotificationOptions = {
+          type: 'error',
+          autoClose: true,
+          duration: 3000
+        };
+
+        this.notificationsService.open('notify.loading.error', config);
+
+        return of();
+      }),
+      take(1),
+      tap((response: any) => {
+
+        if (args.paginator) {
+          args.paginator.totalItems = response.Pagination.TotalRecords;
+          args.paginator.totalPages = response.Pagination.TotalPages;
+        }
+
+        this.loaderService.hideLoader();
+      }),
+      map(({ Accounts }) => Accounts.map((account: Account) => this.createInstanceService.createAccount(account)))
+    )
+  }
+
+  getInvestmentsClosedAccounts(args: any): Observable<EntityInterface> {
+    this.loaderService.showLoader();
+
+    const options: any = StrategyMapper.formatToInvestmentsActiveAccountsOptions(args);
+
+    return this.http.post(`${this.apiUrl}/myStrategies.getClosedAccounts`, options).pipe(
+      catchError(error => {
+        const config: NotificationOptions = {
+          type: 'error',
+          autoClose: true,
+          duration: 3000
+        };
+
+        this.notificationsService.open('notify.loading.error', config);
+
+        return of();
+      }),
+      take(1),
+      tap((response: any) => {
+
+        if (args.paginator) {
+          args.paginator.totalItems = response.Pagination.TotalRecords;
+          args.paginator.totalPages = response.Pagination.TotalPages;
+        }
+
+        this.loaderService.hideLoader();
+      }),
+      map(({ Accounts }) => Accounts.map((account: Account) => this.createInstanceService.createAccount(account)))
+    )
+  }
+
   getStrategyAccounts(strategyID: number, isActive: boolean = true, pagination?: Paginator): Observable<Account[]> {
     const method: string = isActive ? 'myStrategies.getActiveAccounts' : 'myStrategies.getClosedAccounts';
     this.loaderService.showLoader();
@@ -548,7 +610,7 @@ export class DataService {
     this.loaderService.showLoader();
     return this.http.post(`${this.apiUrl}/accounts.get`, { AccountID: accountId })
       .pipe(
-        
+
         catchError(error => {
           const config: NotificationOptions = {
             type: 'error',
@@ -572,11 +634,11 @@ export class DataService {
               this.notificationsService.open('empty.investment.null', config);
             }
           }
-          
+
           this.loaderService.hideLoader();
 
           return of();
-        }),take(1),
+        }), take(1),
         map((response: any) => {
           const data = {
             strategy: this.createInstanceService.createStrategy(response.Strategy),

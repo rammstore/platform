@@ -10,4 +10,5 @@ export interface Arguments {
   paginator?: Paginator | Pagination;
   searchText?: string;
   direction?: string;
+  strategyId?: number
 }

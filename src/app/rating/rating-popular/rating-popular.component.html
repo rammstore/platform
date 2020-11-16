@@ -11,7 +11,7 @@
   <p translate>rating.message</p>
 
   <app-data-table
-  *ngIf="!settingsService.isMobile"
+    *ngIf="!settingsService.isMobile"
     [tableHeader]="tableHeader"
     [data]="strategies$ | async"
     [paginator]="paginator"
