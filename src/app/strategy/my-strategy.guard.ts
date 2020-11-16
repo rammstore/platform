@@ -26,6 +26,8 @@ export class MyStrategyGuard implements CanActivate {
   ): Observable<boolean> {
     const isOffers = location.pathname.indexOf('offers');
     const investments = location.pathname.indexOf('investments');
+    const myInvestments = location.pathname.indexOf('my-investment');
+    const symbols = location.pathname.indexOf('symbols');
 
     let id: number = Number(location.pathname.substring(location.pathname.lastIndexOf('/') + 1) || 0);
 
@@ -36,6 +38,14 @@ export class MyStrategyGuard implements CanActivate {
       }
       case (investments > 0): {
         id = this.getId(location.pathname.substring(0, investments - 1));
+        break;
+      }
+      case (myInvestments > 0): {
+        id = this.getId(location.pathname.substring(0, myInvestments - 1));
+        break;
+      }
+      case(symbols > 0):{
+        id = this.getId(location.pathname.substring(0, symbols - 1));
         break;
       }
     }

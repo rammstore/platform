@@ -883,7 +883,6 @@ export class DataService {
           status: updateStatus,
           key: key
         });
-        // debugger
         if (commandStatus !== 0) {
           clearInterval(interval);
 
@@ -954,7 +953,6 @@ export class DataService {
     }
 
     return this.http.post(`${this.apiUrl}/positions.search`, options).pipe(map((response: any) => {
-      // debugger;
       const result: { positions: Position[], totals: object } = {
         positions: [],
         totals: {
@@ -1064,7 +1062,7 @@ export class DataService {
             args.paginator.totalPages = item.Pagination.TotalPages;
           }
           this.walletService.walletSubject.next(this.createInstanceService.createWallet(item.Wallets[0]));
-          // debugger
+
           this.loaderService.hideLoader();
         }),
         map(({ Strategies }) => Strategies.map((item) => this.createInstanceService.createStrategy(item)))

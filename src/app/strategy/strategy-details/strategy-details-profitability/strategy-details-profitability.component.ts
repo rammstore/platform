@@ -59,8 +59,6 @@ export class StrategyDetailsProfitabilityComponent implements OnInit, OnDestroy 
     } else {
       this.getStrategyFromStrategyService();
     }
-
-    
   }
 
   private getStrategyFromStrategyService(): void {

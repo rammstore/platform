@@ -134,7 +134,7 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe(
         (newStrategy: Strategy) => {
-          debugger
+          
           if (status) {
             this.dataService.addOffer(newStrategy.id, strategy.FeeRate, strategy.CommissionRate).subscribe((item) => {
               this.modalRef.hide();
