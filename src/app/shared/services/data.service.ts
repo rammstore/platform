@@ -479,44 +479,6 @@ export class DataService {
     )
   }
 
-  getStrategyAccounts(strategyID: number, isActive: boolean = true, pagination?: Paginator): Observable<Account[]> {
-    const method: string = isActive ? 'myStrategies.getActiveAccounts' : 'myStrategies.getClosedAccounts';
-    this.loaderService.showLoader();
-    const options: StrategyAccontsOptions = new StrategyAccontsOptions();
-    options.StrategyID = strategyID;
-
-    if (pagination) {
-      options.Pagination = {
-        CurrentPage: pagination.currentPage,
-        PerPage: pagination.perPage
-      };
-    }
-
-    this.http.post(`${this.apiUrl}/${method}`, options).subscribe((response: any) => {
-      const accounts: Account[] = [];
-
-      response.Accounts.forEach((a: any) => {
-        accounts.push(this.createInstanceService.createAccount(a));
-      });
-
-      if (pagination) {
-        pagination.totalItems = response.Pagination.TotalRecords;
-        pagination.totalPages = response.Pagination.TotalPages;
-      }
-
-      this.loaderService.hideLoader();
-      this.currentStrategyAccountsSubject.next(accounts);
-    }, (error: HttpErrorResponse) => {
-      this.notificationsService.open('notify.loading.error', {
-        type: 'error',
-        autoClose: true,
-        duration: 3000
-      });
-    });
-
-    return this.currentStrategyAccountsSubject.asObservable();
-  }
-
   //
   // Методы работы с инвестициями
   //

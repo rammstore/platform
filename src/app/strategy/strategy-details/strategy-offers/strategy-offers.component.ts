@@ -23,12 +23,13 @@ export class StrategyOffersComponent implements OnInit {
   strategy: Strategy;
   strategy$: Observable<Strategy>;
   modalRef: BsModalRef;
+  canCreateOffer: boolean = false;
 
   // component data
-  offers: Offer[];
-  privateOffers: Offer[] = [];
-  offers$: Observable<Offer[]>;
-  traderOffer: Offer;
+  privateOffers$: Observable<Offer[]>;
+  offers$: Observable<any>;
+  traderOffer$: Observable<Offer>;
+  
 
   // table settings
   tableHeader: TableHeaderRow[] = [
@@ -77,7 +78,6 @@ export class StrategyOffersComponent implements OnInit {
     this.strategy$ = ((!this.strategyService.strategy) ? this.getStrategy() : of(this.strategyService.strategy))
       .pipe(
         tap((item) => this.strategy = item),
-        tap((item) => console.log('DATA', this.strategy)),
         tap((item) => this.getOffers())
       );
   }
@@ -93,18 +93,21 @@ export class StrategyOffersComponent implements OnInit {
   getOffers(): void {
     this.offers$ = this.dataService.getOffers(this.strategy.id)
       .pipe(
-        takeUntil(this.destroy$),
-        tap((offers) => {
-          this.strategy.publicOffer = offers.filter(item => item.type === 2)[0];
-
-          this.privateOffers = offers.filter(item => item.type === 1);
-
-          if (this.privateOffers.length) {
-            this.offers = this.privateOffers;
+        tap((offers: Offer[]) => {
+          const publicOffer = offers.filter(item => item.type === 2)[0];
+          const privateOffers = offers.filter(item => item.type === 1)
+          
+          if(!publicOffer && !privateOffers.length){
+            this.canCreateOffer = true;
           }
+          this.strategy.publicOffer = publicOffer;
+          this.strategy$ = of(this.strategy);
+ 
+          this.privateOffers$ = of(privateOffers);
 
-          this.traderOffer = offers.filter(item => item.type === 0)[0];
+          this.traderOffer$ = of(offers.filter(item => item.type === 0)[0]);
         })
+
       );
   }
 

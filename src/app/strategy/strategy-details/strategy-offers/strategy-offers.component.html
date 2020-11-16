@@ -2,7 +2,7 @@
      *ngIf="strategy$ | async as strategy">
   <ng-container *ngIf="offers$ | async">
     <div class="text-right create-container"
-         *ngIf="!strategy.publicOffer && !privateOffers.length">
+         *ngIf="canCreateOffer">
       <button class="primary"
               (click)="createOffer()"
               translate>strategy.button.create.offer
@@ -61,40 +61,43 @@
                   (click)="onMakePublic(false, {})" translate>myStrategies.offers.type.create.not.public</button>
         </td>
       </tr>
-      <tr *ngIf="offers">
-        <td colspan="13" translate>common.table.label.offer.private</td>
-      </tr>
-      <tr *ngFor="let offer of offers">
-        <td [innerText]="offer.id"></td>
-        <td [innerText]="(offer.feeRate)*100"></td>
-        <td [innerText]="offer.feePaid"></td>
-        <td [innerText]="offer.feeToPay"></td>
-        <td [innerText]="(offer.commissionRate || 0)"></td>
-        <td [innerText]="offer.commissionPaid"></td>
-        <td [innerText]="offer.commissionToPay"></td>
-        <td [innerText]="offer.activeAccounts"></td>
-        <td [innerText]="offer.totalAccounts"></td>
-        <td>
-           <span class="link-container"
-                 *ngIf="offer.link">
-                <span class="d-flex">{{offer.link || ''}}</span>
-                <button ngxClipboard
-                        class="d-flex empty-space"
-                        [cbContent]="getOfferLink(offer.link)">
-                <i class="fa fa-copy"></i>
-              </button>
-              </span>
-        </td>
-        <td>
-          <button class="primary btn-invest"
-                  *ngIf="offer.link"
-                  (click)="onMakePublic(true, offer)" translate>myStrategies.offers.type.create.public</button>
-        </td>
-      </tr>
-      <tr *ngIf="traderOffer">
+      <ng-container *ngIf="privateOffers$ | async as privateOffers">
+        <tr>
+          <td colspan="13" translate *ngIf="privateOffers.length">common.table.label.offer.private</td>
+        </tr>
+        <tr *ngFor="let offer of privateOffers">
+          <td [innerText]="offer.id"></td>
+          <td [innerText]="(offer.feeRate)*100"></td>
+          <td [innerText]="offer.feePaid"></td>
+          <td [innerText]="offer.feeToPay"></td>
+          <td [innerText]="(offer.commissionRate || 0)"></td>
+          <td [innerText]="offer.commissionPaid"></td>
+          <td [innerText]="offer.commissionToPay"></td>
+          <td [innerText]="offer.activeAccounts"></td>
+          <td [innerText]="offer.totalAccounts"></td>
+          <td>
+            <span class="link-container"
+                  *ngIf="offer.link">
+                  <span class="d-flex">{{offer.link || ''}}</span>
+                  <button ngxClipboard
+                          class="d-flex empty-space"
+                          [cbContent]="getOfferLink(offer.link)">
+                  <i class="fa fa-copy"></i>
+                </button>
+                </span>
+          </td>
+          <td>
+            <button class="primary btn-invest"
+                    *ngIf="offer.link"
+                    (click)="onMakePublic(true, offer)" translate>myStrategies.offers.type.create.public</button>
+          </td>
+        </tr>
+      </ng-container>
+      
+      <tr *ngIf="traderOffer$ | async">
         <td colspan="13" translate>common.table.label.offer.trader</td>
       </tr>
-      <tr *ngIf="traderOffer">
+      <tr *ngIf="traderOffer$ | async as traderOffer">
         <td [innerText]="traderOffer.id"></td>
         <td [innerText]="(traderOffer.feeRate)*100"></td>
         <td [innerText]="traderOffer.feePaid"></td>
