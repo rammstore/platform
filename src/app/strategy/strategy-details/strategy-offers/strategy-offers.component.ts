@@ -100,6 +100,9 @@ export class StrategyOffersComponent implements OnInit {
           if(!publicOffer && !privateOffers.length){
             this.canCreateOffer = true;
           }
+          else{
+            this.canCreateOffer = false;
+          }
           this.strategy.publicOffer = publicOffer;
           this.strategy$ = of(this.strategy);
  
