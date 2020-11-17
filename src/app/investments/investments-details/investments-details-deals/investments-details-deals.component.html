@@ -48,17 +48,22 @@
 
       <div class="item">
         <span><span translate>common.table.label.yield</span>, USD</span>
-        <span class="{{deal.getColorClass('yield')}}">{{deal.yield}}</span>
+        <span class="{{deal.getColorClass('yield')}}">{{deal.getYield}}</span>
+      </div>
+
+      <div class="item">
+        <span><span translate>common.table.label.commissionUSD</span></span>
+        <span>{{deal.getCommission}}</span>
       </div>
 
       <div class="item">
         <span><span translate>common.table.label.swap</span>, USD</span>
-        <span>{{deal.swap}}</span>
+        <span>{{deal.getSwap}}</span>
       </div>
 
       <div class="item">
         <span><span translate>common.table.label.yieldTotal</span>, USD</span>
-        <span class="{{deal.getColorClass('totalProfit')}}">{{deal.totalProfit}}</span>
+        <span class="{{deal.getColorClass('totalProfit')}}">{{deal.getTotalProfit}}</span>
       </div>
     </div>
   </div>
@@ -67,7 +72,7 @@
 <div class="totals" *ngIf="deals && deals.length">
   <div class="total">
     <div translate class="text-center total-title"><span translate>Прибыль</span>, USD</div>
-    <div class="text-center">{{(totals['profit'] || 0).toFixed(2)}}</div>
+    <div class="text-center">{{(totals['yield'] || 0).toFixed(2)}}</div>
   </div>
   <div class="total">
     <div translate class="text-center total-title"><span translate>Своп</span>, USD</div>

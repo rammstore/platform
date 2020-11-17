@@ -12,6 +12,8 @@ import {StrategyDetailsInvestmentsClosedComponent} from './strategy-details/stra
 import {StrategyOffersComponent} from './strategy-details/strategy-offers/strategy-offers.component';
 import {StrategyDetailsMyInvestmentComponent} from './strategy-details/strategy-details-my-investment/strategy-details-my-investment.component';
 import {StrategyLinkComponent} from './strategy-details/strategy-link/strategy-link.component';
+import {MyStrategyGuard} from './my-strategy.guard';
+import {MyInvestmentGuard} from "./my-investment.guard";
 
 const routes: Routes = [
   {
@@ -23,11 +25,13 @@ const routes: Routes = [
   {
     path: 'details/:id', component: StrategyDetailsComponent, children: [
       {path: '', component: StrategyDetailsProfitabilityComponent},
-      {path: 'offers', component: StrategyOffersComponent},
+      {path: 'offers', canActivate: [MyStrategyGuard], component: StrategyOffersComponent},
       {path: 'symbols', component: StrategyDetailsSymbolsComponent},
-      {path: 'my-investment', component: StrategyDetailsMyInvestmentComponent},
+      {path: 'my-investment', canActivate: [MyStrategyGuard], component: StrategyDetailsMyInvestmentComponent},
       {
-        path: 'investments', component: StrategyDetailsInvestmentsComponent, children: [
+        path: 'investments',
+        canActivate: [MyStrategyGuard],
+        component: StrategyDetailsInvestmentsComponent, children: [
           {path: '', component: StrategyDetailsInvestmentsActiveComponent},
           {path: 'closed', component: StrategyDetailsInvestmentsClosedComponent}
         ]

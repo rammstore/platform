@@ -1,4 +1,14 @@
-import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild
+} from '@angular/core';
 import { Account } from '@app/models';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap';
@@ -7,6 +17,7 @@ import { takeUntil } from 'rxjs/internal/operators';
 import { ManageStrategyPauseComponent } from '@app/components/manage/manage-strategy-pause/manage-strategy-pause.component';
 import { DataService } from '@app/services/data.service';
 import { ManageAccountPauseComponent } from '@app/components/manage/manage-account-pause/manage-account-pause.component';
+import {ActionEnum} from "@app/enum/action.enum";
 
 @Component({
   selector: 'app-manage-account-withdraw',
@@ -20,10 +31,14 @@ export class ManageAccountWithdrawComponent implements OnInit, AfterViewInit, On
   // component data
   account: Account;
   form: FormGroup;
+  onClose: Subject<any> = new Subject<any>();
+
   @Input() forClose: boolean = false;
   @Input() methodName: string;
   @Input() methodArgs: any;
   @ViewChild('withdrawRadio', {static: false}) withdrawRadio: ElementRef;
+
+  @Output() action: EventEmitter<ActionEnum> = new EventEmitter<ActionEnum>();
 
   constructor(
     public modalRef: BsModalRef,
@@ -89,6 +104,7 @@ export class ManageAccountWithdrawComponent implements OnInit, AfterViewInit, On
     this.dataService.closeAccount(this.account.id, this.methodName, this.methodArgs)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
+        this.onClose.next(true);
         this.modalRef.hide();
       });
   }

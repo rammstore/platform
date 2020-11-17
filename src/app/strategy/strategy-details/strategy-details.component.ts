@@ -3,12 +3,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Strategy } from '@app/models';
 import { ContentTabLink } from '@app/components/content-tabs/content-tab-link';
 import { BsModalRef } from 'ngx-bootstrap';
-import { Observable, Subject } from 'rxjs';
-import { take, takeUntil, tap } from 'rxjs/internal/operators';
+import { Observable, of, Subject, VirtualTimeScheduler } from 'rxjs';
+import { catchError, take, takeUntil, tap } from 'rxjs/internal/operators';
 import { DataService } from '@app/services/data.service';
 import { BrandService } from '@app/services/brand.service';
 import { StrategyService } from '@app/services/strategy.service';
 import { SectionEnum } from "@app/enum/section.enum";
+import { NotificationsService } from "@app/services/notifications.service";
+import { ActionEnum } from "@app/enum/action.enum";
+import { SettingsService } from '@app/services/settings.service';
 
 @Component({
   selector: 'app-strategy-details',
@@ -27,27 +30,55 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
   links: ContentTabLink[];
   args: any;
   functionality: object;
+  functionality$: Observable<object>;
   id: number = 0;
   methodName: string;
   sectionEnum: SectionEnum = SectionEnum.strategy;
+
+  //tabs names
+  myIinvestment: string;
+  yield: string;
+  investments: string;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private dataService: DataService,
     private brandService: BrandService,
-    private strategyService: StrategyService
+    private notificationsService: NotificationsService,
+    private strategyService: StrategyService,
+    private settingsService: SettingsService
   ) {
   }
 
   ngOnInit(): void {
-    this.brandService.functionality
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((f: object) => {
-        this.functionality = f;
-      });
+
+    this.functionality$ = this.brandService.functionality;
 
     this.id = parseInt(this.route.params['_value'].id);
+
+    this.getStrategies();
+
+    this.dataService.update$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((item) => {
+        if (item.status === 'update') {
+          this.getStrategies();
+        }
+      });
+  }
+
+  parseAction(event: ActionEnum) {
+    switch (event) {
+      case ActionEnum.investment:
+      case ActionEnum.cancel: {
+        this.getStrategies();
+        break;
+      }
+    }
+  }
+
+  private getStrategies(): void {
     if (this.id) {
       this.args = {
         strategyId: this.id
@@ -55,26 +86,26 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
 
       this.strategy$ = this.getStrategyById(this.args)
         .pipe(
-          tap((item) => {
-            this.strategiesDetailsLinks();
+          tap((item) => this.strategiesDetailsLinks()),
+          catchError(item => {
+            item.status === 404 ? this.notificationsService.open('empty.strategy.null', {
+              type: 'error',
+              autoClose: true,
+              duration: 5000
+            }) : '';
+
+            return of();
           })
         );
 
-      this.methodName = 'getStrategyById';
     } else {
       this.args = {
         link: this.route.params['_value'].id
       };
-      this.strategy$ = this.getStrategyByLink(this.args)
-        .pipe(
-          tap((item) => {
-            this.strategiesLinks();
-          })
-        );
-
-      this.methodName = 'getStrategyByLink';
+      this.strategy$ = this.getStrategyByLink(this.args).pipe(
+        tap((item) => this.strategiesLinks())
+      );
     }
-
   }
 
   private getStrategyByLink(args): Observable<any> {
@@ -100,18 +131,38 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
   }
 
   strategiesDetailsLinks() {
-    this.links = [
-      new ContentTabLink('common.yield', '/strategies/details/' + this.strategy.id),
-      new ContentTabLink('common.table.label.symbols', '/strategies/details/' + this.strategy.id + '/symbols')
-    ];
+    switch (true) {
+      case this.settingsService.isMobile:
+        this.links = [
+          new ContentTabLink('common.yield.mobile', '/strategies/details/' + this.strategy.id),
+          new ContentTabLink('common.table.label.symbols', '/strategies/details/' + this.strategy.id + '/symbols')
+        ];
 
-    if (this.strategy.account && this.strategy.account.id) {
-      this.links.push(new ContentTabLink('common.table.label.myInvestment', '/strategies/details/' + this.strategy.id + '/my-investment'));
-    }
+        if (this.strategy.account && this.strategy.account.id) {
+          this.links.push(new ContentTabLink('common.table.label.myInvestment.mobile', '/strategies/details/' + this.strategy.id + '/my-investment'));
+        }
 
-    if (this.strategy.partnerInfo || this.strategy.traderInfo) {
-      this.links.push(new ContentTabLink('common.investments', '/strategies/details/' + this.strategy.id + '/investments'));
-      this.links.push(new ContentTabLink('common.offers', `/strategies/details/${this.strategy.id}/offers`));
+        if (this.strategy.partnerInfo || this.strategy.traderInfo) {
+          this.links.push(new ContentTabLink('common.investments.mobile', '/strategies/details/' + this.strategy.id + '/investments'));
+        }
+        break;
+
+      default:
+        this.links = [
+          new ContentTabLink('common.yield', '/strategies/details/' + this.strategy.id),
+          new ContentTabLink('common.table.label.symbols', '/strategies/details/' + this.strategy.id + '/symbols')
+        ];
+
+        if (this.strategy.account && this.strategy.account.id) {
+          this.links.push(new ContentTabLink('common.table.label.myInvestment', '/strategies/details/' + this.strategy.id + '/my-investment'));
+        }
+
+        if (this.strategy.partnerInfo || this.strategy.traderInfo) {
+          this.links.push(new ContentTabLink('common.investments', '/strategies/details/' + this.strategy.id + '/investments'));
+          this.links.push(new ContentTabLink('common.offers', `/strategies/details/${this.strategy.id}/offers`));
+
+        }
+        break;
     }
   }
 

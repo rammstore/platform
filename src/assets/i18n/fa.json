@@ -86,6 +86,7 @@
 	"common.invested": "سرمایه‌گذاری شده",
 	"common.investment": "سرمایه‌گذاری",
   "common.investments": "سرمایه‌گذاری‌ها",
+  "common.investments.mobile": "سرمایه‌گذاری‌ها",
   "common.margin": "مارجین",
   "common.marginLevel": "اندازه مارجین",
   "common.marginLevel.percent":  "اندازه مارجین, %",
@@ -120,6 +121,7 @@
   "common.type7": "کمیسیون از",
   "common.type8": "همکاران",
   "common.yield": "بازده",
+  "common.yield.mobile": "بازده",
   "common.yieldMonthly": "بازده ماهانه",
 
 	"common.label.iWant": "من می‌خواهم تا:",
@@ -162,7 +164,8 @@
   "common.table.label.investors": "سرمایه‌گذاران",
   "common.table.label.manage": "مدیریت",
   "common.table.label.myInvestmentUSD": "سرمایه‌گذاری من, دلار آمریکا",
-  "common.table.label.myInvestment": "My investment",
+  "common.table.label.myInvestment": "سرمایه گذاری من",
+  "common.table.label.myInvestment.mobile": "سرمایه گذاری من",
   "common.table.label.name": "نام",
   "common.table.label.no-data": "اطلاعاتی برای نمایش وجود ندارد",
   "common.table.label.price": "قیمت",
@@ -383,9 +386,14 @@
   "strategy.form.target.error.pattern": "لطفاً مقدار هدف صحیح را وارد کنید",
   "strategy.form.target.error.required": "هدف مشخص نشده است",
   "strategy.form.target.tooltip": "درآمد هدف. به محض رسیدن به درآمد هدف، سرمایه‌گذاری متوقف خواهد شد.",
+  "strategy.hasnot.public.offer": "این استراتژی پیشنهادی عمومی ندارد",
 
   "strategy.invest.form.title": "سرمایه‌گذاری در استراتژی",
-  "strategy.invest.trader.form.text": "The trader (owner) of the strategy can only invest under the special conditions of the trader's offer, with zero fee and turnover commission. In case you confirm the investment, it will be created according to the trader's offer.",
+  "strategy.invest.trader.form.text": "تاجر (صاحب) استراتژی فقط در شرایط خاص پیشنهاد تاجر ، با کارمزد صفر و کارمزد گردش مالی می تواند سرمایه گذاری کند. در صورت تأیید سرمایه گذاری ، طبق پیشنهاد تاجر ایجاد خواهد شد.",
+
+  "empty.strategy.null": "استراتژی یافت نشد",
+  "empty.investment.null": "سرمایه گذاری یافت نشد",
+  "empty.offers.null": "پیشنهادات یافت نشد",
 
   "table.cell.accountNumberCopy": "تعداد حسابی که از طریق آن کپی تریدینگ انجام می شود",
   "table.cell.loading": "در حال بارگیری",

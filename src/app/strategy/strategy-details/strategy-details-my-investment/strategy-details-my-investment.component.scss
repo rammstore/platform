@@ -1,11 +1,31 @@
 .details-container {
-    display: flex;
-    position: relative;
-    flex-wrap: wrap;
+  display: flex;
+  position: relative;
+  flex-wrap: wrap;
 
-  &>*{
-    width: 50%;
+  @media (min-width: 1366px) {
+    & > * {
+      width: 50%;
+    }
   }
+
+  @media (max-width: 1100px) {
+    & > * {
+      width: 100%;
+    }
+
+    .investment, .offer, .profile, .trading-info { 
+      table{
+        width: 100%;
+      }
+      
+      h2{
+        margin-left: 10px;
+      }
+    }
+  }
+
+  
 
   table {
     width: 80%;
@@ -20,21 +40,21 @@
           }
         }
       }
-      h2{
+      h2 {
         margin-top: 20px;
       }
     }
   }
 
-    .profile table {
-      padding-right: 0 !important;
-    }
-
-    .manage-container {
-      position: absolute;
-      right: 0;
-      bottom: -40px;
-      display: flex;
-      align-items: center;
-    }
+  .profile table {
+    padding-right: 0 !important;
   }
+
+  .manage-container {
+    position: absolute;
+    right: 0;
+    bottom: -40px;
+    display: flex;
+    align-items: center;
+  }
+}

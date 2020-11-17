@@ -54,6 +54,9 @@
                  *ngIf="form.get('target').touched && form.get('target').hasError('min') && !form.get('target').hasError('pattern')">
             <span translate>account.form.target.error.min</span> - 0.
           </label>
+          <label class="details-message" *ngIf="form.get('amount').value && form.get('target').value && form.valid">
+            {{((form.get('amount').value * form.get('target').value) / 100) | customCurrency}}
+          </label>
         </div>
       </div>
     </div>
@@ -74,7 +77,8 @@
             account.form.protection.error.required
           </label>
           <label class="error-message"
-                 *ngIf="form.get('protection').touched && form.get('protection').hasError('min') && !form.get('protection').hasError('pattern')" translate>
+                 *ngIf="form.get('protection').touched && form.get('protection').hasError('min') && !form.get('protection').hasError('pattern')"
+                 translate>
             account.form.protection.error.min
           </label>
           <label class="error-message"
@@ -84,6 +88,10 @@
           <label class="error-message"
                  *ngIf="form.get('protection').touched && form.get('protection').hasError('max') && !form.get('protection').hasError('pattern')">
             <span translate>account.form.protection.error.max</span> - 99.
+          </label>
+
+          <label class="details-message" *ngIf="form.get('amount').value && form.get('protection').value && form.valid">
+            {{((form.get('amount').value * form.get('protection').value) / 100) | customCurrency}}
           </label>
         </div>
       </div>

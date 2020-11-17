@@ -12,6 +12,7 @@ import {ManageStrategyResumeComponent} from './manage-strategy-resume/manage-str
 import {ManageStrategyDownloadScriptComponent} from '@app/components/manage/manage-strategy-download-script/manage-strategy-download-script.component';
 import {ManageStrategyInvestComponent} from '@app/components/manage/manage-strategy-invest/manage-strategy-invest.component';
 import {SectionEnum} from "@app/enum/section.enum";
+import {ActionEnum} from "@app/enum/action.enum";
 
 @Component({
   selector: 'app-manage',
@@ -25,18 +26,18 @@ export class ManageComponent implements OnInit {
   @Input() methodName: string;
   @Input() methodArgs: any;
   @Input() hideInvestmentsButton: boolean;
-  @Output() click: EventEmitter<any> = new EventEmitter<any>();
   @Input() section: SectionEnum = SectionEnum.default;
+  @Input() key: string;
 
+  @Output() click: EventEmitter<any> = new EventEmitter<any>();
+  @Output() action: EventEmitter<ActionEnum> = new EventEmitter<ActionEnum>();
+  tooltipMessage: string  = "strategy.hasnot.public.offer";
+  
   constructor(
     private modalService: BsModalService
   ) { }
 
   ngOnInit() {
-    // if (this.data.name === "test2304 3") { //Test0702_1 dsfsdf
-    //   console.log(this.data);
-    // }
-
     switch (true) {
       case (this.data instanceof Strategy): {
         this.dataType = 'strategy';
@@ -53,14 +54,26 @@ export class ManageComponent implements OnInit {
     }
   }
 
+  get isCloseStrategyAndInvestment(): boolean {
+    const strategy = this.data.strategy;
+    return strategy && strategy.isMyStrategy && this.data.isSecurity;
+  }
+
+  get isSecurity() {
+    return (this.dataType === 'strategy' && this.data.isSecurity) ||
+      (this.dataType === 'account' && this.data.strategy.account && this.data.strategy.account.isSecurity);
+  }
+
   get isStrategyDetail(): boolean {
     return this.section === SectionEnum.strategy && this.dataType === 'strategy' && this.data.isMyStrategy && this.data.account && this.data.account.id && !this.data.account.isSecurity;
   }
+
   get isRatingPage(): boolean {
     const term = (this.section === SectionEnum.rating && this.dataType === 'strategy' && this.data.account && this.data.account.id)
-        && ( this.data.isMyStrategy && !this.data.account.isSecurity || !this.data.isMyStrategy);
+      && (this.data.isMyStrategy && !this.data.account.isSecurity || !this.data.isMyStrategy);
     return term;
   }
+
   get isInvestOtherStrategy(): boolean {
     return this.dataType === 'account' && !this.data.isMyStrategy
       || (this.section === SectionEnum.strategy && this.dataType === 'strategy' && this.data.account && this.data.account.id && !this.data.isMyStrategy);
@@ -78,6 +91,9 @@ export class ManageComponent implements OnInit {
     const options: ModalOptions = this.getAccountDialogOptions();
     options.initialState['forClose'] = true;
     this.modalRef = this.modalService.show(ManageAccountWithdrawComponent, options);
+    this.modalRef.content.onClose.subscribe(result => {
+      this.action.emit(result ? ActionEnum.cancel : ActionEnum.default);
+    });
   }
 
   openAccountFundDialog(): void {
@@ -134,6 +150,9 @@ export class ManageComponent implements OnInit {
 
   openStrategyInvestDialog(): void {
     this.modalRef = this.modalService.show(ManageStrategyInvestComponent, this.getStrategyDialogOptions());
+    this.modalRef.content.onClose.subscribe(result => {
+      this.action.emit(result ? ActionEnum.investment : ActionEnum.cancel);
+    });
   }
 
   // Приведение инвестиции с вложенной стратегией к стратегии с вложенной инвестицией
@@ -167,8 +186,7 @@ export class ManageComponent implements OnInit {
 
     options.initialState = {
       strategy: data,
-      methodName: this.methodName,
-      methodArgs: this.methodArgs
+      key: this.key
     };
 
     return options;
@@ -187,8 +205,7 @@ export class ManageComponent implements OnInit {
 
     options.initialState = {
       account: data,
-      methodName: this.methodName,
-      methodArgs: this.methodArgs
+      key: this.key
     };
 
     return options;

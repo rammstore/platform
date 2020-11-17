@@ -1,16 +1,13 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 import { Paginator, Strategy, TableColumn } from '@app/models';
 import { TableHeaderRow } from '@app/models/table-header-row';
-import { CustomCurrencyPipe } from '@app/pipes/custom-currency.pipe';
 import { PercentPipe } from '@angular/common';
 import { DataService } from '@app/services/data.service';
-import { map, take, takeLast, takeUntil, tap } from 'rxjs/operators';
+import { subscribeOn, take, takeUntil, tap } from 'rxjs/operators';
 import { SectionEnum } from "@app/enum/section.enum";
-import { EntityInterface } from '@app/interfaces/entity.interface';
-import { CreateInstanceService } from '@app/services/create-instance.service';
-import { WalletService } from '@app/services/wallet.service';
 import { ArgumentsService } from '@app/services/arguments.service';
+import { SettingsService } from '@app/services/settings.service';
 
 @Component({
   selector: 'app-rating-popular',
@@ -18,17 +15,17 @@ import { ArgumentsService } from '@app/services/arguments.service';
   styleUrls: ['./rating-popular.component.scss']
 })
 export class RatingPopularComponent implements OnInit, OnDestroy {
-  // https://blog.strongbrew.io/rxjs-best-practices-in-angular/#avoiding-memory-leaks
-  // here we will unsubscribe from all subscriptions
   destroy$ = new Subject();
+
   strategies$: Observable<Strategy[]>;
-  // component data
   strategies: Strategy[];
+  // component data
   searchText: string = '';
   args: any;
   section: SectionEnum = SectionEnum.rating;
-  popular: any;
-  optionsRatings$: Observable<any>;
+  ratingPopular$: Observable<any>;
+  key: string;
+  update$: Observable<any>;
 
   // table settings
   tableHeader: TableHeaderRow[] = [
@@ -42,6 +39,7 @@ export class RatingPopularComponent implements OnInit, OnDestroy {
       new TableColumn({ property: 'manage', label: 'common.table.label.manage' })
     ]),
   ];
+
   paginator: Paginator = new Paginator({
     perPage: 10,
     currentPage: 1
@@ -49,13 +47,13 @@ export class RatingPopularComponent implements OnInit, OnDestroy {
 
   constructor(
     private dataService: DataService,
-    private createInstanceService: CreateInstanceService,
-    private walletService: WalletService,
-    private argumentsService: ArgumentsService
+    private argumentsService: ArgumentsService,
+    public settingsService: SettingsService
   ) { }
-
+  
   ngOnInit(): void {
-    this.optionsRatings$ = this.argumentsService.ratingPopular$
+    this.key = "rating-popular";
+    this.ratingPopular$ = this.argumentsService.ratingPopular$
       .pipe(
         tap((argument) => {
           this.args = {
@@ -71,21 +69,65 @@ export class RatingPopularComponent implements OnInit, OnDestroy {
           this.strategies$ = this.getStrategies();
         })
       );
+
+      this.update$ = this.dataService.update$
+      .pipe(
+        tap((data) => {
+          if (data.status == "update" && data.key == "rating-popular") {
+            if (data.accountId) {
+              this.getAccountById(data.accountId)
+                .pipe(takeUntil(this.destroy$))
+                .subscribe((response) => {
+                  (this.strategies || []).filter((strategy: Strategy) => {
+                    if (strategy.account && strategy.account.id == data.accountId) {
+                      strategy.account = response.account;
+                    }
+                  });
+
+                  this.strategies$ = of(this.strategies);
+                });
+            }
+            else if (data.strategyId) {
+              this.getStrategyById(data.strategyId)
+                .pipe(takeUntil(this.destroy$))
+                .subscribe((updatedStrategy: Strategy) => {
+                  (this.strategies || []).filter((itemToUpdate: Strategy) => {
+                    if (itemToUpdate.id == updatedStrategy.id) {
+                      // item.status = strategy.status;
+                      itemToUpdate = Object.assign(itemToUpdate, updatedStrategy)
+                    }
+                  });
+
+                  this.strategies$ = of(this.strategies);
+                });
+            }
+          }
+        })
+      );
   }
 
-  getStrategies(): Observable<Strategy[]> {
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
+
+  }
+
+  getStrategyById(strategyId: number): Observable<Strategy> {
+    let args = {
+      strategyId: strategyId
+    }
+
+    return this.dataService.getStrategyById(args);
+  }
+
+  getAccountById(accountId: number): Observable<any> {
+    return this.dataService.getAccountById(accountId);
+  }
+
+  getStrategies(): Observable<any> {
     this.args.searchText = this.searchText;
-    return this.dataService.getBestRating<EntityInterface>(this.args)
+    return this.dataService.getBestRating(this.args)
       .pipe(
-        take(1),
-        tap(item => {
-          if (this.args.paginator) {
-            this.args.paginator.totalItems = item.Pagination.TotalRecords;
-            this.args.paginator.totalPages = item.Pagination.TotalPages;
-          }
-          this.walletService.walletSubject.next(this.createInstanceService.createWallet(item.Wallets[0]));
-        }),
-        map(({ Strategies }) => Strategies.map((item) => this.createInstanceService.createStrategy(item))),
+        tap((strategies) => this.strategies = strategies)
       );
   }
 
@@ -94,7 +136,9 @@ export class RatingPopularComponent implements OnInit, OnDestroy {
     this.strategies$ = this.getStrategies();
   }
 
-  ngOnDestroy(): void {
-    this.destroy$.next(true);
+  search() {
+    this.args.searchText = this.searchText;
+    this.args.paginator.currentPage = 1;
+    this.strategies$ = this.getStrategies();
   }
 }

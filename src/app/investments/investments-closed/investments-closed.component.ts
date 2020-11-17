@@ -2,13 +2,13 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Account, Paginator, TableColumn } from '@app/models';
 import { TableHeaderRow } from '@app/models/table-header-row';
 import { PercentPipe } from '@angular/common';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/internal/operators';
 import { CustomCurrencyPipe } from '@app/pipes/custom-currency.pipe';
 import { DataService } from '@app/services/data.service';
 import { CustomDatePipe } from '@app/pipes/custom-date.pipe';
 import { BrandService } from '@app/services/brand.service';
-import { log } from 'util';
+import { SettingsService } from '@app/services/settings.service';
 
 @Component({
   selector: 'app-investments-closed',
@@ -21,24 +21,26 @@ export class InvestmentsClosedComponent implements OnInit, OnDestroy {
   destroy$ = new Subject();
 
   // component data
-  accounts: Account[];
+  accounts$: Observable<Account[]>;
   functionality: object;
+  args: any;
 
   // table settings
   tableHeader: TableHeaderRow[] = [
     new TableHeaderRow([
-      new TableColumn({property: 'strategy.name', label: 'common.strategy'}),
-      new TableColumn({property: 'id', label: 'common.investment', colored: true}),
-      new TableColumn({property: 'dtCreated', label: 'common.table.label.created', pipe: {pipe: CustomDatePipe}, colored: true}),
-      new TableColumn({property: 'dtClosed', label: 'common.table.label.closed', pipe: {pipe: CustomDatePipe}, colored: true}),
-      new TableColumn({property: 'age', label: 'common.age', colored: true}),
+      new TableColumn({ property: 'strategy.name', label: 'common.strategy' }),
+      new TableColumn({ property: 'id', label: 'common.investment', colored: true }),
+      new TableColumn({ property: 'dtCreated', label: 'common.table.label.created', pipe: { pipe: CustomDatePipe }, colored: true }),
+      new TableColumn({ property: 'dtClosed', label: 'common.table.label.closed', pipe: { pipe: CustomDatePipe }, colored: true }),
+      new TableColumn({ property: 'age', label: 'common.age', colored: true }),
       new TableColumn({
         property: 'intervalPnL',
         hint: 'account.label.profit.hint',
         label: 'common.table.label.yield',
-        pipe: {pipe: CustomCurrencyPipe},
-        colored: true}),
-      new TableColumn({property: 'investmentDetails', label: ''})
+        pipe: { pipe: CustomCurrencyPipe },
+        colored: true
+      }),
+      new TableColumn({ property: 'investmentDetails', label: '' })
     ])
   ];
 
@@ -49,7 +51,8 @@ export class InvestmentsClosedComponent implements OnInit, OnDestroy {
 
   constructor(
     private dataService: DataService,
-    private brandService: BrandService
+    private brandService: BrandService,
+    public settingsService: SettingsService
   ) {
   }
 
@@ -63,22 +66,27 @@ export class InvestmentsClosedComponent implements OnInit, OnDestroy {
           this.tableHeader[0].columns.splice(5, 0, new TableColumn({
             property: 'protection',
             label: 'common.protection',
-            pipe: {pipe: PercentPipe},
+            pipe: { pipe: PercentPipe },
             colored: true
           }));
         }
       });
-    this.getAccounts();
+
+    this.args = {
+      field: 'DTClosed',
+      direction: 'Desc',
+      paginator: this.paginator
+    }
+
+    this.accounts$ = this.getClosedAccounts(this.args);
+  }
+
+  getClosedAccounts(args: any): Observable<any> {
+    return this.dataService.getClosedMyAccounts(args);
   }
 
   getAccounts(): void {
-    this.dataService.getClosedMyAccounts(this.paginator)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((accounts: Account[]) => {
-        if (accounts ) {
-          this.accounts = accounts;
-        }
-      });
+    this.accounts$ = this.getClosedAccounts(this.args)
   }
 
   ngOnDestroy(): void {

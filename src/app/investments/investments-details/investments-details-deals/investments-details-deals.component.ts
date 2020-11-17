@@ -89,6 +89,7 @@ export class InvestmentsDetailsDealsComponent implements OnInit, OnDestroy {
           }
         });
         this.emptyDataText = "common.table.label.no-data";
+
         this.deals = result.deals;
       });
   }

@@ -7,6 +7,7 @@ import { Account, Wallet } from '@app/models';
 import { DataService } from '@app/services/data.service';
 import { WalletService } from '@app/services/wallet.service';
 import { BrandService } from '@app/services/brand.service';
+import { KeyedWrite } from '@angular/compiler';
 
 @Component({
   selector: 'app-manage-account-resume',
@@ -23,9 +24,9 @@ export class ManageAccountResumeComponent implements OnInit, OnDestroy {
   form: FormGroup;
   wallet: Wallet;
   account: Account;
-  @Input() methodName: string;
-  @Input() methodArgs: any;
+  key: string;
   functionality: object;
+  updateStatus: string;
 
   constructor(
     private fb: FormBuilder,
@@ -53,20 +54,21 @@ export class ManageAccountResumeComponent implements OnInit, OnDestroy {
   buildForm(): void {
     this.form = this.fb.group({
       amount: [0.00, [Validators.required, Validators.min(0), Validators.max(this.wallet.balance), Validators.pattern('^[0-9]+([\\,\\.][0-9]{1,2})?$')]],
-      factor: [{value: this.account.factor, disabled: this.account.isSecured() && this.account.isMy()}, [Validators.min(0.1), Validators.max(10), Validators.required, Validators.pattern('[0-9]+(\\.[0-9]?)?')]],
+      factor: [{ value: this.account.factor, disabled: this.account.isSecured() && this.account.isMy() }, [Validators.min(0.1), Validators.max(10), Validators.required, Validators.pattern('[0-9]+(\\.[0-9]?)?')]],
       target: [Math.round(this.account.target * 100), [Validators.required, Validators.min(0), Validators.pattern('^[0-9]*')]],
       protection: [Math.round(this.account.protection * 100), [Validators.required, Validators.min(0), Validators.max(99), Validators.pattern('^[0-9]*')]]
     });
   }
 
   resume(): void {
+    this.updateStatus = "update";
     this.form.markAllAsTouched();
 
     if (!this.form.valid) {
       return;
     }
 
-    const queries: any[] = [this.dataService.resumeAccount(this.account.id, this.methodName, this.methodArgs)];
+    const queries: any[] = [this.dataService.resumeAccount(this.account.id, this.updateStatus, this.key)];
 
     const values = this.form.getRawValue();
     values.protection = values.protection / 100;
@@ -79,7 +81,7 @@ export class ManageAccountResumeComponent implements OnInit, OnDestroy {
     };
 
     if (values.amount) {
-      queries.push(this.dataService.fundAccount(this.account.id, values.amount, this.methodName, this.methodArgs));
+      queries.push(this.dataService.fundAccount(this.account.id, values.amount, this.updateStatus, this.key));
     }
 
     if (values.protection !== this.account.protection) {
@@ -93,7 +95,7 @@ export class ManageAccountResumeComponent implements OnInit, OnDestroy {
     }
 
     if (newObj.protection || newObj.target || newObj.factor) {
-      queries.push(this.dataService.changeAccountProfile(this.account.id, newObj, this.methodName, this.methodArgs));
+      queries.push(this.dataService.changeAccountProfile(this.account.id, newObj, this.updateStatus, this.key));
     }
 
     forkJoin(queries).pipe(takeUntil(this.destroy$)).subscribe(() => {

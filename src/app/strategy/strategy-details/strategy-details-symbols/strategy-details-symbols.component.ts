@@ -32,12 +32,11 @@ export class StrategyDetailsSymbolsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
 
     if (!this.strategyService.strategy) {
-      this.id = parseInt(this.route.parent.params['_value'].id);
       if (this.id) {
         this.args = {
-          strategyId: this.id
+          strategyId: parseInt(this.route.parent.params['_value'].id)
         };
-
+        
         this.strategy$ = this.getStrategyById(this.args)
           .pipe(
             tap((strategy) => {
@@ -46,6 +45,7 @@ export class StrategyDetailsSymbolsComponent implements OnInit, OnDestroy {
           );
       }
     } else {
+
       this.strategy$ = this.strategyService.strategy$
         .pipe(
           tap((strategy) => {

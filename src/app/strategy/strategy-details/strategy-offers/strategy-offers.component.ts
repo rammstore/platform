@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from "@app/services/data.service";
 import { ActivatedRoute } from "@angular/router";
-import { map, takeUntil } from "rxjs/internal/operators";
-import { Subject } from "rxjs";
+import { map, takeUntil, tap } from "rxjs/internal/operators";
+import { Observable, of, Subject } from "rxjs";
 import { Offer, Paginator, Strategy, TableColumn } from "@app/models";
 import { BsModalRef, BsModalService, ModalOptions } from "ngx-bootstrap";
 import { StrategyOfferCreateComponent } from "./strategy-offer-create/strategy-offer-create.component";
@@ -21,12 +21,15 @@ export class StrategyOffersComponent implements OnInit {
   destroy$ = new Subject();
   args: any;
   strategy: Strategy;
+  strategy$: Observable<Strategy>;
   modalRef: BsModalRef;
-
+  canCreateOffer: boolean = false;
 
   // component data
-  offers: Offer[];
-  traderOffer: Offer;
+  privateOffers$: Observable<Offer[]>;
+  offers$: Observable<any>;
+  traderOffer$: Observable<Offer>;
+  
 
   // table settings
   tableHeader: TableHeaderRow[] = [
@@ -71,45 +74,41 @@ export class StrategyOffersComponent implements OnInit {
       strategyId: this.route.parent.params['_value'].id,
       paginator: this.paginator
     };
-    if(!this.strategyService.strategy){
-      this.getStrategy();
-    }
-    else{
-      this.strategy = this.strategyService.strategy;
-    }
-    this.getOffers();
+
+    this.strategy$ = ((!this.strategyService.strategy) ? this.getStrategy() : of(this.strategyService.strategy))
+      .pipe(
+        tap((item) => this.strategy = item),
+        tap((item) => this.getOffers())
+      );
   }
 
   getOfferLink(link: string) {
     return `${location.origin}/strategies/link/${link}`;
   }
 
-  getStrategy() {
-    this.dataService.getStrategyByID(this.args)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((strategy: Strategy) => {
-        this.strategy = strategy;
-      });
+  getStrategy(): Observable<Strategy> {
+    return this.dataService.getStrategyById(this.args);
   }
 
   getOffers(): void {
-    this.dataService.getOffers(this.strategy.id)
+    this.offers$ = this.dataService.getOffers(this.strategy.id)
       .pipe(
-        takeUntil(this.destroy$)
-      )
-      .subscribe((offers: any[]) => {
-        this.offers = null;
-        
-        this.strategy.publicOffer = offers.filter(item => item.type === 2)[0];
+        tap((offers: Offer[]) => {
+          const publicOffer = offers.filter(item => item.type === 2)[0];
+          const privateOffers = offers.filter(item => item.type === 1)
+          
+          if(!publicOffer && !privateOffers.length){
+            this.canCreateOffer = true;
+          }
+          this.strategy.publicOffer = publicOffer;
+          this.strategy$ = of(this.strategy);
+ 
+          this.privateOffers$ = of(privateOffers);
 
-        const privateOffers = offers.filter(item => item.type === 1);
+          this.traderOffer$ = of(offers.filter(item => item.type === 0)[0]);
+        })
 
-        if (privateOffers.length) {
-          this.offers = privateOffers;
-        }
-
-        this.traderOffer = offers.filter(item => item.type === 0)[0];
-      });
+      );
   }
 
   onMakePublic(status: boolean, offer: any) {
@@ -148,16 +147,11 @@ export class StrategyOffersComponent implements OnInit {
 
     this.modalRef = this.modalService.show(StrategyOfferCreateComponent, options);
 
-    (<StrategyOfferCreateComponent>this.modalRef.content).onClose.subscribe(result => {
+    this.modalRef.content.onClose.subscribe(result => {
       if (result === true) {
         this.dataService.getStrategyByID(this.args);
         this.getOffers();
-        // when pressed Yes
-      } else if (result === false) {
-        // when pressed No
-      } else {
-        // When closing the modal without no or yes
-      }
+      } else if (result === false) { }
     });
 
   }

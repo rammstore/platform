@@ -86,11 +86,27 @@ export class Deal {
   }
 
   get Volume() {
-    return (this.volume || 0).toFixed(this.precisionVolume || 2);
+    return this.volume || 0;
   }
 
   get Price() {
-    return (this.price || 0).toFixed(this.precisionPrice || 2);
+    return this.price || 0;
+  }
+
+  get getCommission(){
+    return (this.commission || 0).toFixed(2);
+  }
+
+  get getSwap(){
+    return (this.swap || 0).toFixed(2);
+  }
+
+  get getTotalProfit(){
+    return (this.totalProfit || 0).toFixed(2);
+  }
+
+  get getYield(){
+    return (this.yield || 0).toFixed(2);
   }
 
   getColorClass(property: string): string {

@@ -5,7 +5,9 @@
       <div class="master-account" *ngIf="strategy.masterAccount" [title]="'Номер счета, с которого идет копирование' | translate">
         {{strategy.masterAccount}}
       </div>
-      <app-manage [data]="strategy"></app-manage>
+      <app-manage 
+      [data]="strategy"
+      [key]="key"></app-manage>
     </div>
 
     <div class="info">

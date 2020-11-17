@@ -23,6 +23,8 @@ export class ManageAccountChangeProfileComponent implements OnInit, OnDestroy {
   @Input() methodName: string;
   @Input() methodArgs: any;
   functionality: object;
+  updateStatus: "update";
+  key: string;
 
   constructor(
     private fb: FormBuilder,
@@ -43,6 +45,7 @@ export class ManageAccountChangeProfileComponent implements OnInit, OnDestroy {
 
   buildForm(): void {
     this.form = this.fb.group({
+      amount: [this.account.equity],
       factor: [{value: this.account.factor, disabled: this.account.isSecured() && this.account.isMy()}, [Validators.min(0.1), Validators.max(10), Validators.required, Validators.pattern('[0-9]+(\\.[0-9]?)?')]],
       target: [Math.round(this.account.target * 100), [Validators.required, Validators.min(0), Validators.pattern('^[0-9]*')]],
       protection: [Math.round(this.account.protection * 100), [Validators.required, Validators.min(0), Validators.max(99), Validators.pattern('^[0-9]*')]]
@@ -81,7 +84,7 @@ export class ManageAccountChangeProfileComponent implements OnInit, OnDestroy {
       newObj.factor = values.factor;
     }
 
-    this.dataService.changeAccountProfile(this.account.id, newObj, this.methodName, this.methodArgs)
+    this.dataService.changeAccountProfile(this.account.id, newObj, this.updateStatus, this.key)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
         this.modalRef.hide();

@@ -2,8 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ChartOptions, Strategy } from '@app/models';
 import * as Highcharts from 'highcharts';
-import { Observable, Subject } from 'rxjs';
-import { take, takeUntil, tap } from 'rxjs/operators';
+import { Observable, of, Subject } from 'rxjs';
+import { catchError, take, takeUntil, tap } from 'rxjs/operators';
 import { DataService } from '@app/services/data.service';
 import { TranslateService } from '@ngx-translate/core';
 import { NotificationsService } from '@app/services/notifications.service';
@@ -57,14 +57,18 @@ export class StrategyDetailsProfitabilityComponent implements OnInit, OnDestroy 
           );
       }
     } else {
-      this.strategy$ = this.strategyService.strategy$
-        .pipe(
-          tap((strategy) => {
-            this.checking(strategy);
-            this.getStrategyChart(strategy.id);
-          })
-        );
+      this.getStrategyFromStrategyService();
     }
+  }
+
+  private getStrategyFromStrategyService(): void {
+    this.strategy$ = this.strategyService.strategy$
+      .pipe(
+        tap((strategy) => {
+          this.checking(strategy);
+          this.getStrategyChart(strategy.id);
+        })
+      );
   }
 
   private checking(strategy: Strategy) {
@@ -73,15 +77,6 @@ export class StrategyDetailsProfitabilityComponent implements OnInit, OnDestroy 
       .subscribe(() => {
         Highcharts.chart('yieldChartContainer', this.chartOptions);
       });
-
-    if (!strategy.publicOffer && !strategy.isMyStrategy && !strategy.linkOffer && !strategy.account) {
-      this.notificationsService.open('notify.strategy.access.error', {
-        type: 'error',
-        autoClose: true,
-        duration: 3000
-      });
-      this.router.navigate(['/rating'], { relativeTo: this.route });
-    }
   }
 
   private getStrategyById(args): Observable<any> {

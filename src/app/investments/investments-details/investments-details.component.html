@@ -1,4 +1,4 @@
-<div class="details-container">
+<div class="details-container" *ngIf="source$ | async as data">
   <div class="strategy"
        *ngIf="strategy">
     <h2 translate>common.strategy</h2>
@@ -35,7 +35,7 @@
           <td><span translate>investment.details.strategy.commission</span>, USD / 1 mln</td>
           <td>
             <span>
-              {{account.offer.CommissionRate}}
+              {{account.offer.commissionRate}}
             </span>
           </td>
         </tr>
@@ -45,7 +45,7 @@
   </div>
 
   <div class="investment"
-       *ngIf="account">
+       *ngIf="data.account">
     <h2 translate>common.investment</h2>
     <table>
       <tbody>
@@ -82,7 +82,7 @@
   </div>
 
   <div class="profile"
-       *ngIf="account">
+       *ngIf="data.account as account">
     <h2 translate>investment.details.investmentProfile.title</h2>
     <table>
       <tbody>
@@ -116,20 +116,21 @@
 
   <div class="manage-container">
     <div class="text-right">
-      <div *ngIf="account" class="mb-1 refresh"><span translate> common.refreshed</span> 
-        {{currentDate | customDate}}
+      <div class="mb-1 refresh"><span translate> common.refreshed</span>
+        {{currentDate}}
         <i class="fa fa-refresh ml-2" (click)="onClick()"></i>
       </div>
-      <div *ngIf="account && !account.isMyAccount">
+      <div *ngIf="!data.account.isMyAccount">
         <span translate>investment.details.message.investor</span><br>
         <span translate>investment.details.message.owner</span>
       </div>
     </div>
-    <app-manage *ngIf="account && account.isMyAccount && account.isActive()"
-                [data]="account"
+    <app-manage *ngIf="data.account && data.account.isMyAccount && data.account.status != 6"
+                [data]="data.account"
                 [section]="sectionEnum"
-                [methodName]="'getAccountStatement'" [methodArgs]="args"
-                [hideInvestmentsButton]="!account.strategy.isMyStrategy"></app-manage>
+                [methodName]="'getAccountStatement'"
+                [methodArgs]="args"
+                [hideInvestmentsButton]="!data.account.strategy.isMyStrategy"></app-manage>
   </div>
 </div>
 
@@ -137,19 +138,20 @@
   <router-outlet></router-outlet>
 </app-content-tabs>
 
-<table class="margin-info">
+<table class="margin-info"
+       *ngIf="account">
   <tbody>
   <tr>
     <td><span translate>common.equity</span>, USD</td>
-    <td *ngIf="account">{{account.equity | customCurrency}}</td>
+    <td>{{account.equity | customCurrency}}</td>
     <td><span translate>common.balance</span>, USD</td>
-    <td *ngIf="account">{{account.balance | customCurrency}}</td>
+    <td>{{account.balance | customCurrency}}</td>
   </tr>
   <tr>
     <td><span translate>common.freeMargin</span>, USD</td>
-    <td *ngIf="account" class="{{account.getColorClass('freeMargin')}}">{{account.freeMargin | customCurrency}}</td>
+    <td class="{{account.getColorClass('freeMargin')}}">{{account.freeMargin | customCurrency}}</td>
     <td><span translate>common.margin</span>, USD</td>
-    <td *ngIf="account">{{account.margin | customCurrency}}</td>
+    <td>{{account.margin | customCurrency}}</td>
   </tr>
   <tr>
     <td translate>common.marginLevel.percent</td>

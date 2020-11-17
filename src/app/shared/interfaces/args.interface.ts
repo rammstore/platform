@@ -1,4 +1,5 @@
 import {Paginator} from "@app/models";
+import {Pagination} from "@app/interfaces/pagination.interface";
 
 export interface Arguments {
   ageMin?: number;
@@ -6,7 +7,8 @@ export interface Arguments {
   yieldMin?: number;
   searchMode?: string;
   field?: string;
-  paginator?: Paginator;
+  paginator?: Paginator | Pagination;
   searchText?: string;
   direction?: string;
+  strategyId?: number
 }

@@ -18,7 +18,7 @@ export class ManageStrategyInvestComponent implements OnInit, OnDestroy {
   // https://blog.strongbrew.io/rxjs-best-practices-in-angular/#avoiding-memory-leaks
   // here we will unsubscribe from all subscriptions
   destroy$ = new Subject();
-
+  onClose: Subject<boolean> = new Subject();
   // component data
   form: FormGroup;
   wallet: Wallet;
@@ -66,6 +66,7 @@ export class ManageStrategyInvestComponent implements OnInit, OnDestroy {
   }
 
   cancel(): void {
+    this.onClose.next(false);
     this.modalRef.hide();
   }
 
@@ -84,13 +85,15 @@ export class ManageStrategyInvestComponent implements OnInit, OnDestroy {
       values.offerId = this.strategy.publicOffer ? this.strategy.publicOffer.id : null;
 
       this.dataService.addAccountPublicOffer(this.strategy.id, values).subscribe(() => {
+        this.onClose.next(true);
         this.modalRef.hide();
         this.getSwitch();
       });
     }
 
-    if(this.methodArgs && this.methodArgs.link){
+    if (this.methodArgs && this.methodArgs.link){
       this.dataService.addAccountPrivateOffer(this.methodArgs.link, values).subscribe(() => {
+        this.onClose.next(true);
         this.modalRef.hide();
         this.getSwitch();
       });
@@ -101,6 +104,7 @@ export class ManageStrategyInvestComponent implements OnInit, OnDestroy {
     switch (true) {
       case this.router.url.includes('strategies'):
         this.dataService.getActiveMyStrategies({
+          searchMode: 'MyActiveStrategies',
           paginator: new Paginator({
             perPage: 10,
             currentPage: 1

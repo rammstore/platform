@@ -1,5 +1,5 @@
 import { DefaultIterableDiffer, Injectable } from '@angular/core';
-import { BehaviorSubject, forkJoin, Observable, of, pipe, ReplaySubject, Subject } from "rxjs";
+import { BehaviorSubject, forkJoin, Observable, of, pipe, ReplaySubject, Subject, throwError } from "rxjs";
 import {
   Account,
   AccountsSearchOptions,
@@ -7,6 +7,7 @@ import {
   Command,
   Deal,
   DealsSearchOptions,
+  NotificationOptions,
   Offer,
   Paginator,
   Position,
@@ -20,7 +21,7 @@ import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { CreateInstanceService } from "@app/services/create-instance.service";
 import { CommandService } from "@app/services/command.service";
 import { CONFIG } from '@assets/config';
-import { catchError, map, takeUntil, tap, filter, take, takeLast } from 'rxjs/operators';
+import { catchError, map, takeUntil, tap, filter, take, takeLast, switchMap } from 'rxjs/operators';
 import { LoaderService } from '@app/services/loader.service';
 import { WalletService } from '@app/services/wallet.service';
 import { Router } from '@angular/router';
@@ -29,6 +30,9 @@ import { AccountSpecAsset } from '@app/models/account-spec-asset';
 import { Rating } from '@app/models/rating';
 import { Arguments } from "@app/interfaces/args.interface";
 import { RatingMapper } from "@app/mappers/rating.mapper";
+import { EntityInterface } from '@app/interfaces/entity.interface';
+import { AccountMapper } from '@app/mappers/account.mapper';
+import { StrategyMapper } from '@app/mappers/strategy.mapper';
 
 @Injectable({
   providedIn: 'root'
@@ -56,6 +60,8 @@ export class DataService {
   // here we will unsubscribe from all subscriptions
   destroy$ = new Subject();
   apiUrl: string = CONFIG.baseApiUrl;
+  _update$: ReplaySubject<any> = new ReplaySubject<any>(null);
+  _strategyPage$: ReplaySubject<any> = new ReplaySubject<any>(null);
 
   constructor(
     private http: HttpClient,
@@ -71,98 +77,95 @@ export class DataService {
     }
   }
 
+  get update$(): Observable<any> {
+    return this._update$.asObservable();
+  }
+
+  set strategyPage(value: any) {
+    this._strategyPage$.next(value);
+  }
+
+  get strategyPage$() {
+    return this._strategyPage$.asObservable();
+  }
+
+  get getUpdateAsSubject() {
+    return this._update$;
+  }
+
   //
   // Методы работы со стратегиями
   //
 
   // Получение списка активных стратегий
-  getActiveMyStrategies(args: { paginator: Paginator }): Observable<Strategy[]> {
+  getActiveMyStrategies(args: Arguments): Observable<EntityInterface> {
     this.loaderService.showLoader();
-    const options: StrategiesSearchOptions = new StrategiesSearchOptions();
-    options.Filter = {
-      SearchMode: 'MyActiveStrategies'
-    };
 
-    if (args.paginator) {
-      options.Pagination = {
-        CurrentPage: args.paginator.currentPage,
-        PerPage: args.paginator.perPage
-      };
-    }
+    const options: any = StrategyMapper.formatArgumentsToOptions(args);
 
-    this.http.post(`${this.apiUrl}/Strategies.search`, options).subscribe((response: any) => {
-      const strategies: Strategy[] = [];
+    return this.http.post(`${this.apiUrl}/Strategies.search`, options)
+      .pipe(
+        catchError(error => {
+          const config: NotificationOptions = {
+            type: 'error',
+            autoClose: true,
+            duration: 3000
+          };
 
-      this.walletService.walletSubject.next(this.createInstanceService.createWallet(response.Wallets[0]));
+          this.notificationsService.open('notify.loading.error', config);
 
-      response.Strategies.forEach((s: any) => {
-        strategies.push(this.createInstanceService.createStrategy(s));
-      });
+          return of();
+        }),
+        take(1),
+        tap((item: any) => {
 
-      if (args.paginator) {
-        args.paginator.totalItems = response.Pagination.TotalRecords;
-        args.paginator.totalPages = response.Pagination.TotalPages;
-      }
+          this.walletService.walletSubject.next(this.createInstanceService.createWallet(item.Wallets[0]));
 
-      this.loaderService.hideLoader();
-      this.activeMyStrategiesSubject.next(strategies);
-    }, (error: HttpErrorResponse) => {
-      this.notificationsService.open('notify.loading.error', {
-        type: 'error',
-        autoClose: true,
-        duration: 3000
-      });
-    });
+          if (args.paginator) {
+            args.paginator.totalItems = item.Pagination.TotalRecords;
+            args.paginator.totalPages = item.Pagination.TotalPages;
+          }
 
-    return this.activeMyStrategiesSubject.asObservable();
+          this.loaderService.hideLoader();
+        }),
+        map(({ Strategies }) => Strategies.map((strategy: Strategy) => this.createInstanceService.createStrategy(strategy)))
+      );
   }
 
   // Получение списка закрытых стратегий
-  getClosedMyStrategies(pagination?: Paginator): Observable<Strategy[]> {
+  getClosedMyStrategies(args: Arguments): Observable<Strategy[]> {
     this.loaderService.showLoader();
-    const options: StrategiesSearchOptions = new StrategiesSearchOptions();
-    options.Filter = {
-      SearchMode: 'MyClosedStrategies'
-    };
-    options.OrderBy = {
-      Field: 'DTClosed',
-      Direction: 'Desc'
-    };
 
-    if (pagination) {
-      options.Pagination = {
-        CurrentPage: pagination.currentPage,
-        PerPage: pagination.perPage
-      };
-    }
+    const options: any = StrategyMapper.formatArgumentsToOptions(args);
 
-    this.http.post(`${this.apiUrl}/Strategies.search`, options).subscribe((response: any) => {
-      this.loaderService.showLoader();
-      const strategies: Strategy[] = [];
+    return this.http.post<EntityInterface>(`${this.apiUrl}/Strategies.search`, options)
+      .pipe(
+        tap(({ Wallets }) => Wallets ? this.walletService.walletSubject.next(this.createInstanceService.createWallet(Wallets[0])) : ''),
+        tap((item) => this.loaderService.hideLoader()),
+        tap(({ Pagination }) => {
+          if (args.paginator) {
+            args.paginator.totalItems = Pagination.TotalRecords;
+            args.paginator.totalPages = Pagination.TotalPages;
+          }
+        }),
+        catchError(err => {
+          this.notificationsService.open('notify.loading.error', {
+            type: 'error',
+            autoClose: true,
+            duration: 3000
+          });
+          return of();
+        }),
+        map(({ Strategies }) => {
+          const strategies: Strategy[] = [];
+          Strategies.forEach((s: any) => {
+            s.PublicOffer = s.PublicOffer || {};
+            strategies.push(this.createInstanceService.createStrategy(s));
+          });
 
-      this.walletService.walletSubject.next(this.createInstanceService.createWallet(response.Wallets[0]));
-
-      response.Strategies.forEach((s: any) => {
-        s.PublicOffer = s.PublicOffer || {};
-        strategies.push(this.createInstanceService.createStrategy(s));
-      });
-
-      if (pagination) {
-        pagination.totalItems = response.Pagination.TotalRecords;
-        pagination.totalPages = response.Pagination.TotalPages;
-      }
-
-      this.loaderService.hideLoader();
-      this.closedMyStrategiesSubject.next(strategies);
-    }, (error: HttpErrorResponse) => {
-      this.notificationsService.open('notify.loading.error', {
-        type: 'error',
-        autoClose: true,
-        duration: 3000
-      });
-    });
-
-    return this.closedMyStrategiesSubject.asObservable();
+          return strategies;
+        })
+      );
   }
 
   // Получение конкретной стратегии за ID
@@ -198,7 +201,17 @@ export class DataService {
     return this.http.post(`${this.apiUrl}/strategies.get`, { ID: args.strategyId })
       .pipe(
         map((item) => this.createInstanceService.createStrategy(item)),
-        tap(item => this.loaderService.hideLoader()));
+        tap(item => this.loaderService.hideLoader()),
+        catchError((err: HttpErrorResponse) => {
+          this.notificationsService.open('empty.strategy.null', {
+            type: 'error',
+            autoClose: true,
+            duration: 3000
+          });
+          this.router.navigate(['/rating']);
+          this.loaderService.hideLoader();
+          return of();
+        }));
   }
 
   getStrategyByLinkAsObservable(args: { link: string }): Observable<any> {
@@ -210,14 +223,6 @@ export class DataService {
       );
   }
 
-  // getOffers(id: number): Observable<any> {
-  //   this.loaderService.showLoader();
-  //   return this.http.post(`${this.apiUrl}/strategies.getOffers`, { StrategyID: id })
-  //     .pipe(
-  //       map((offers) => this.createInstanceService.createOffers(offers)),
-  //       tap(item => this.loaderService.hideLoader())
-  //     );
-  // }
   // Получение конкретной стратегии за ссылкой
   getStrategyByLink(args: { link: string }): Observable<Strategy> {
     // console.log('getStrategyByLink');
@@ -226,6 +231,7 @@ export class DataService {
       this.loaderService.hideLoader();
       this.currentStrategyDetailsSubject.next(this.createInstanceService.createStrategy(response));
     }, (error: HttpErrorResponse) => {
+
       if (error.status === 404) {
         this.router.navigate(['/rating']);
         this.notificationsService.open('notify.strategy.access.error', {
@@ -246,16 +252,15 @@ export class DataService {
   }
 
   // Создание новой стратегии
-  addStrategy(strategy: object, methodName: string, methodArgs: any): Observable<Strategy> {
+  addStrategy(strategy: object, updateStatus: string, key: string): Observable<Strategy> {
     this.loaderService.showLoader();
     return this.http.post(`${this.apiUrl}/myStrategies.add`, strategy).pipe(
+      tap(() => this.loaderService.hideLoader()),
       map((response: any) => {
-        // this.loaderService.hideLoader();
-        // this.walletService.updateWallet().subscribe();
-        // // this.getActiveMyStrategies().subscribe();
-        // this.notificationsService.open('notify.strategy.created');
-        this.updateAccount(new Command(response.AccountCommandID, response.AccountID), methodName, methodArgs, 'notify.strategy.created');
 
+        // переробити
+        this.updateAccount(new Command(response.AccountCommandID, response.AccountID), response.AccountID, updateStatus, key, 'notify.strategy.created');
+        this.loaderService.hideLoader();
         return this.createInstanceService.createStrategy({
           ID: response.StrategyID
         });
@@ -299,28 +304,30 @@ export class DataService {
       CommissionRate: commissionRate
     }).pipe(
       map((item) => {
-        //this.setPublicOffer(id, item['OfferID']).subscribe();
+        this.loaderService.hideLoader();
+
         return item;
       })
     );
   }
 
   // Постановка стратегии на паузу
-  pauseStrategy(strategyId: number, methodName: string, methodArgs: any): Observable<any> {
+  pauseStrategy(strategyId: number, updateStatus: string, key: string): Observable<any> {
     this.loaderService.showLoader();
-    return this.http.post(`${this.apiUrl}/myStrategies.pause`, { StrategyID: strategyId }).pipe(
-      map((response: any) => {
-        this.updateStrategy(new Command(response.CommandID, strategyId), methodName, methodArgs, 'notify.strategy.paused');
-      })
-    );
+    return this.http.post(`${this.apiUrl}/myStrategies.pause`, { StrategyID: strategyId })
+      .pipe(
+        map((response: any) => {
+          this.updateStrategy(new Command(response.CommandID, strategyId), strategyId, updateStatus, key, 'notify.strategy.paused');
+        })
+      );
   }
 
   // Возобновление стратегии
-  resumeStrategy(strategyId: number, methodName: string, methodArgs: any): Observable<any> {
+  resumeStrategy(strategyId: number, updateStatus: string, key: string): Observable<any> {
     this.loaderService.showLoader();
     return this.http.post(`${this.apiUrl}/myStrategies.resume`, { StrategyID: strategyId }).pipe(
       map((response: any) => {
-        this.updateStrategy(new Command(response.CommandID, strategyId), methodName, methodArgs, 'notify.strategy.resumed');
+        this.updateStrategy(new Command(response.CommandID, strategyId), strategyId, updateStatus, key, 'notify.strategy.resumed');
       })
     );
   }
@@ -330,7 +337,7 @@ export class DataService {
     this.loaderService.showLoader();
     return this.http.post(`${this.apiUrl}/myStrategies.close`, { StrategyID: strategyId }).pipe(
       map((response: any) => {
-        this.updateStrategy(new Command(response.CommandID, strategyId), methodName, methodArgs, 'notify.strategy.closed');
+        // this.updateStrategy(new Command(response.CommandID, strategyId), 'notify.strategy.closed');
       })
     );
   }
@@ -353,17 +360,21 @@ export class DataService {
 
   // Получение статуса команды стратегии и запрос обновленного списка стратегий после завершения обработки изменений
   // Работает с активными стратегиями, так как закрытые изменять нельзя
-  updateStrategy(command: Command, methodName: string, methodArgs: any, notificationText: string): void {
+  updateStrategy(command: Command, strategyId: number, updateStatus: string, key: string, notificationText: string): void {
     const interval = setInterval(() => {
       this.commandService.checkStrategyCommand(command).subscribe((commandStatus: number) => {
         if (commandStatus !== 0) {
           clearInterval(interval);
-          this[methodName](methodArgs)
-            .pipe(takeUntil(this.destroy$))
-            .subscribe(() => {
-              this.notificationsService.open(notificationText);
-              this.destroy$.next(true);
-            });
+
+          const data = {
+            strategyId: strategyId,
+            status: updateStatus,
+            key: key
+          }
+
+          this._update$.next(data);
+          this.notificationsService.open(notificationText);
+
           this.walletService.updateWallet()
             .pipe(takeUntil(this.destroy$))
             .subscribe(() => {
@@ -406,241 +417,272 @@ export class DataService {
     );
   }
 
-  getStrategyAccounts(strategyID: number, isActive: boolean = true, pagination?: Paginator): Observable<Account[]> {
-    const method: string = isActive ? 'myStrategies.getActiveAccounts' : 'myStrategies.getClosedAccounts';
+  getInvestmentsActiveAccounts(args: any): Observable<EntityInterface> {
     this.loaderService.showLoader();
-    const options: StrategyAccontsOptions = new StrategyAccontsOptions();
-    options.StrategyID = strategyID;
 
-    if (pagination) {
-      options.Pagination = {
-        CurrentPage: pagination.currentPage,
-        PerPage: pagination.perPage
-      };
-    }
+    const options: any = StrategyMapper.formatToInvestmentsActiveAccountsOptions(args);
 
-    this.http.post(`${this.apiUrl}/${method}`, options).subscribe((response: any) => {
-      const accounts: Account[] = [];
+    return this.http.post(`${this.apiUrl}/myStrategies.getActiveAccounts`, options).pipe(
+      catchError(error => {
+        const config: NotificationOptions = {
+          type: 'error',
+          autoClose: true,
+          duration: 3000
+        };
 
-      response.Accounts.forEach((a: any) => {
-        accounts.push(this.createInstanceService.createAccount(a));
-      });
+        this.notificationsService.open('notify.loading.error', config);
 
-      if (pagination) {
-        pagination.totalItems = response.Pagination.TotalRecords;
-        pagination.totalPages = response.Pagination.TotalPages;
-      }
+        return of();
+      }),
+      take(1),
+      tap((response: any) => {
 
-      this.loaderService.hideLoader();
-      this.currentStrategyAccountsSubject.next(accounts);
-    }, (error: HttpErrorResponse) => {
-      this.notificationsService.open('notify.loading.error', {
-        type: 'error',
-        autoClose: true,
-        duration: 3000
-      });
-    });
+        if (args.paginator) {
+          args.paginator.totalItems = response.Pagination.TotalRecords;
+          args.paginator.totalPages = response.Pagination.TotalPages;
+        }
 
-    return this.currentStrategyAccountsSubject.asObservable();
+        this.loaderService.hideLoader();
+      }),
+      map(({ Accounts }) => Accounts.map((account: Account) => this.createInstanceService.createAccount(account)))
+    )
+  }
+
+  getInvestmentsClosedAccounts(args: any): Observable<EntityInterface> {
+    this.loaderService.showLoader();
+
+    const options: any = StrategyMapper.formatToInvestmentsActiveAccountsOptions(args);
+
+    return this.http.post(`${this.apiUrl}/myStrategies.getClosedAccounts`, options).pipe(
+      catchError(error => {
+        const config: NotificationOptions = {
+          type: 'error',
+          autoClose: true,
+          duration: 3000
+        };
+
+        this.notificationsService.open('notify.loading.error', config);
+
+        return of();
+      }),
+      take(1),
+      tap((response: any) => {
+
+        if (args.paginator) {
+          args.paginator.totalItems = response.Pagination.TotalRecords;
+          args.paginator.totalPages = response.Pagination.TotalPages;
+        }
+
+        this.loaderService.hideLoader();
+      }),
+      map(({ Accounts }) => Accounts.map((account: Account) => this.createInstanceService.createAccount(account)))
+    )
   }
 
   //
   // Методы работы с инвестициями
   //
 
-  // // Получение инвестиции по ID
-  // getAccount(id: number): Observable<Account> {
-  //   this.loaderService.showLoader();
-  //   return this.http.post(`${CONFIG.baseApiUrl}/accounts.get`, { AccountID: id }).pipe(map((response: any) => {
-  //     this.loaderService.hideLoader();
-  //     return this.createInstanceService.createAccount(response);
-  //   }));
-  // }
-
   // Получение списка активных инвестиций
-  getActiveMyAccounts(args: { paginator: Paginator, orderBy?: string }): Observable<Account[]> {
+  getActiveMyAccounts(args: Arguments): Observable<EntityInterface> {
     this.loaderService.showLoader();
-    const options: AccountsSearchOptions = new AccountsSearchOptions();
-    options.Filter = { SearchMode: 'MyActiveAccounts' };
-    options.OrderBy = { Field: args.orderBy, Direction: 'Desc' };
 
-    if (args.paginator) {
-      options.Pagination = {
-        CurrentPage: args.paginator.currentPage,
-        PerPage: args.paginator.perPage
-      };
-    }
+    const options: any = AccountMapper.formatArgumentsToOptions(args);
 
-    this.http.post(`${this.apiUrl}/strategies.search`, options).subscribe((response: any) => {
-      const accounts: Account[] = [];
-      //console.log('response', response);
-      this.walletService.walletSubject.next(this.createInstanceService.createWallet(response.Wallets[0]));
+    return this.http.post(`${this.apiUrl}/strategies.search`, options)
+      .pipe(
+        catchError(error => {
+          const config: NotificationOptions = {
+            type: 'error',
+            autoClose: true,
+            duration: 3000
+          };
 
-      response.Strategies
-        .forEach((strategy: any) => {
-          if (strategy.Account) {
-            const createStrategy = this.createInstanceService.createStrategy(strategy);
-            const createAccount = this.createInstanceService.createAccount(strategy.Account);
+          this.notificationsService.open('notify.loading.error', config);
 
-            createAccount.strategy = createStrategy;
-            createAccount.offer = strategy.offer ? this.createInstanceService.createOffer(strategy.Offer) : null;
+          return of();
+        }),
+        take(1),
+        tap((item: any) => {
+          this.walletService.walletSubject.next(this.createInstanceService.createWallet(item.Wallets[0]));
 
-            accounts.push(createAccount);
+          if (args.paginator) {
+            args.paginator.totalItems = item.Pagination.TotalRecords;
+            args.paginator.totalPages = item.Pagination.TotalPages;
           }
-        });
 
-      // response.Strategies.forEach((strategy: any) => {
-      //   const options: any = strategy.Account;
+          this.loaderService.hideLoader();
+        }),
+        map(({ Strategies }) => Strategies.map((strategy) => {
+          const createStrategy = this.createInstanceService.createStrategy(strategy);
+          const createAccount = this.createInstanceService.createAccount(strategy.Account);
 
-      //   accounts.push(new Account(new Account({
-      //     id: options.ID,
-      //     strategy: this.createInstanceService.createStrategy(strategy),
-      //     isSecurity: options.IsSecurity,
-      //     type: options.Type,
-      //     accountSpecAssetID: options.AccountSpecAssetID,
-      //     asset: options.Asset || options.AssetName,
-      //     tradingIntervalCurrentID: options.TradingIntervalCurrentID,
-      //     dtCreated: options.DTCreated || options.DT,
-      //     balance: options.Balance,
-      //     equity: options.Equity,
-      //     margin: options.Margin,
-      //     marginLevel: options.MarginLevel,
-      //     intervalPnL: options.IntervalPnL || options.ProfitCurrentIntervalGross || options.ProfitCurrentIntervalNet,
-      //     status: options.Status,
-      //     factor: options.Factor,
-      //     offer: options.Offer ? new Offer(options.Offer) : null,
-      //     dtMCReached: options.MCReached,
-      //     protection: options.Protection,
-      //     protectionEquity: options.ProtectionEquity,
-      //     dtProtectionReached: options.ProtectionReached,
-      //     target: options.Target,
-      //     targetEquity: options.TargetEquity,
-      //     dtTargetReached: options.TargetReached,
-      //     dtClosed: options.DTClosed,
-      //     bonus: options.Bonus,
-      //     availableToWithDraw: options.AvailableToWithdraw,
-      //     profitBase: options.ProfitBase,
-      //     precision: options.Precision,
-      //     positionsCount: options.PositionsCount,
-      //     accountMinBalance: options.AccountMinBalance,
-      //     leverageMax: options.LeverageMax,
-      //     freeMargin: options.FreeMargin,
-      //     MCLevel: options.MCLevel,
-      //     state: options.State,
-      //     isMyStrategy: strategy.IsMyStrategy,
-      //     profitCurrentIntervalGross: options.ProfitCurrentIntervalGross,
-      //     feeToPay: options.FeeToPay,
-      //     totalCommissionTrader: options.TotalCommissionTrader,
-      //     feePaid: options.FeePaid,
-      //     isMyAccount: options.IsMyAccount,
-      //     currentDate: options.CurrentDate
-      //   })));
-      // });
+          createAccount.strategy = createStrategy;
+          createAccount.offer = strategy.offer ? this.createInstanceService.createOffer(strategy.Offer) : null;
 
-      if (args.paginator) {
-        args.paginator.totalItems = response.Pagination.TotalRecords;
-        args.paginator.totalPages = response.Pagination.TotalPages;
-      }
-      this.loaderService.hideLoader();
-      this.activeMyAccountsSubject.next(accounts.filter((a: Account) => a.isActive()));
-    }, (error: HttpErrorResponse) => {
-      this.notificationsService.open('notify.loading.error', {
-        type: 'error',
-        autoClose: true,
-        duration: 3000
-      });
-    });
-
-    return this.activeMyAccountsSubject.asObservable();
+          return createAccount;
+        }))
+      );
   }
 
-  // Получение списка закрытых инвестиций
-  getClosedMyAccounts(pagination?: Paginator): Observable<Account[]> {
+  getClosedMyAccounts(args: Arguments): Observable<EntityInterface> {
     this.loaderService.showLoader();
-    const options: AccountsSearchOptions = new AccountsSearchOptions();
 
-    options.OrderBy = {
-      Field: 'DTClosed',
-      Direction: 'Desc'
-    };
+    const options: any = AccountMapper.formatArgumentsToOptions(args);
 
-    if (pagination) {
-      options.Pagination = {
-        CurrentPage: pagination.currentPage,
-        PerPage: pagination.perPage
-      };
-    }
+    return this.http.post(`${this.apiUrl}/accounts.searchClosed`, options)
+      .pipe(
+        catchError(error => {
+          const config: NotificationOptions = {
+            type: 'error',
+            autoClose: true,
+            duration: 3000
+          };
 
-    this.http.post(`${this.apiUrl}/accounts.searchClosed`, options).subscribe((response: any) => {
-      const accounts: Account[] = [];
-      this.walletService.walletSubject.next(this.createInstanceService.createWallet(response.Wallets[0]));
+          this.notificationsService.open('notify.loading.error', config);
 
-      response.Strategies
-        .forEach((strategy: any) => {
+          return of()
+        }),
+        take(1),
+        tap((item: any) => {
+          this.walletService.walletSubject.next(this.createInstanceService.createWallet(item.Wallets[0]));
+
+          if (args.paginator) {
+            args.paginator.totalItems = item.Pagination.TotalRecords;
+            args.paginator.totalPages = item.Pagination.TotalPages;
+          }
+
+          this.loaderService.hideLoader();
+        }),
+        map(({ Strategies }) => Strategies.map((strategy) => {
+          let account: Account;
+
           if (strategy.Account) {
             const createStrategy = this.createInstanceService.createStrategy(strategy);
-            const createAccount = this.createInstanceService.createAccount(strategy.Account);
-            createAccount.strategy = createStrategy;
-            accounts.push(createAccount);
+            account = this.createInstanceService.createAccount(strategy.Account);
+            account.strategy = createStrategy;
           }
-        });
 
-      if (pagination) {
-        pagination.totalItems = response.Pagination.TotalRecords;
-        pagination.totalPages = response.Pagination.TotalPages;
-      }
+          return account;
+        }))
+      );
+  }
 
-      this.loaderService.hideLoader();
-      this.closedMyAccountsSubject.next(accounts);
-    }, (error: HttpErrorResponse) => {
-      this.notificationsService.open('notify.loading.error', {
-        type: 'error',
-        autoClose: true,
-        duration: 3000
-      });
-    });
+  getAccountById(accountId: number): Observable<any> {
+    this.loaderService.showLoader();
+    return this.http.post(`${this.apiUrl}/accounts.get`, { AccountID: accountId })
+      .pipe(
 
-    return this.closedMyAccountsSubject.asObservable();
+        catchError(error => {
+          const config: NotificationOptions = {
+            type: 'error',
+            autoClose: true,
+            duration: 3000
+          };
+
+          switch (error.status) {
+            case 404: {
+              this.router.navigate(['/investments']);
+              this.notificationsService.open('empty.investment.null', config);
+              break;
+            }
+            case 401: {
+              this.router.navigate(['/investments']);
+              this.notificationsService.open('empty.investment.null', config);
+              break;
+            }
+            default: {
+              this.router.navigate(['/investments']);
+              this.notificationsService.open('empty.investment.null', config);
+            }
+          }
+
+          this.loaderService.hideLoader();
+
+          return of();
+        }), take(1),
+        map((response: any) => {
+          const data = {
+            strategy: this.createInstanceService.createStrategy(response.Strategy),
+            account: this.createInstanceService.createAccount(response.Account)
+          }
+          return data;
+        }
+        ),
+        tap(item => this.loaderService.hideLoader())
+      )
   }
 
   // Получение деталей инвестиции
   getAccountStatement(args: { accountId: number }): Observable<any> {
     this.loaderService.showLoader();
-    this.http.post(`${this.apiUrl}/accounts.get`, { AccountID: args.accountId }).subscribe((response: any) => {
-      if (response.Strategy) {
-        response.Strategy.PublicOffer = {
-          CommissionRate: response.Strategy.Commission,
-          FeeRate: response.Strategy.Fee
-        };
-        this.currentAccountStatementSubject.next({
-          strategy: this.createInstanceService.createStrategy(response.Strategy),
-          account: this.createInstanceService.createAccount(response.Account)
+    this.http.post(`${this.apiUrl}/accounts.get`, { AccountID: args.accountId })
+      .pipe(
+        catchError(error => {
+          const config: NotificationOptions = {
+            type: 'error',
+            autoClose: true,
+            duration: 3000
+          };
 
-        });
-      } else {
-        this.currentAccountStatementSubject.next({
-          strategy: null,
-          account: null
-        });
-      }
+          switch (error.status) {
+            case 404: {
+              this.router.navigate(['/investments']);
+              this.notificationsService.open('empty.investment.null', config);
+              break;
+            }
+            case 401: {
+              this.router.navigate(['/investments']);
+              this.notificationsService.open('empty.investment.null', config);
+              break;
+            }
+            default: {
+              this.router.navigate(['/investments']);
+              this.notificationsService.open('empty.investment.null', config);
+            }
+          }
 
-      this.loaderService.hideLoader();
-    }, (error: HttpErrorResponse) => {
-      if (error.status === 401) {
-        this.router.navigate(['/investments']);
-        this.notificationsService.open('notify.investment.access.error', {
-          type: 'error',
-          autoClose: true,
-          duration: 3000
+          this.loaderService.hideLoader()
+          return of();
+        })
+      )
+      .subscribe((response: any) => {
+        if (response.Strategy) {
+          response.Strategy.PublicOffer = {
+            CommissionRate: response.Strategy.Commission,
+            FeeRate: response.Strategy.Fee
+          };
+          this.currentAccountStatementSubject.next({
+            strategy: this.createInstanceService.createStrategy(response.Strategy),
+            account: this.createInstanceService.createAccount(response.Account)
+
+          });
+        } else {
+          this.currentAccountStatementSubject.next({
+            strategy: null,
+            account: null
+          });
+        }
+
+        this.loaderService.hideLoader();
+      },
+        (error: HttpErrorResponse) => {
+          if (error.status === 401) {
+            this.router.navigate(['/investments']);
+            this.notificationsService.open('notify.investment.access.error', {
+              type: 'error',
+              autoClose: true,
+              duration: 3000
+            });
+          } else {
+            this.router.navigate(['/investments']);
+            this.notificationsService.open('notify.loading.error', {
+              type: 'error',
+              autoClose: true,
+              duration: 3000
+            });
+          }
         });
-      } else {
-        this.notificationsService.open('notify.loading.error', {
-          type: 'error',
-          autoClose: true,
-          duration: 3000
-        });
-      }
-    });
 
     return this.currentAccountStatementSubject.asObservable();
   }
@@ -691,37 +733,38 @@ export class DataService {
   }
 
   // Пополнить инвестицию
-  fundAccount(accountID: number, amount: number, methodName: string, methodArgs: any) {
+  fundAccount(accountId: number, amount: number, updateStatus: string, key: string) {
     this.loaderService.showLoader();
-    return this.http.post(`${this.apiUrl}/accounts.fund`, { AccountID: accountID, Amount: amount }).pipe(
+    return this.http.post(`${this.apiUrl}/accounts.fund`, { AccountID: accountId, Amount: amount }).pipe(
       map((response: any) => {
-        this.updateAccount(new Command(response.CommandBalanceID, accountID), methodName, methodArgs, 'notify.investment.funded');
+        this.updateAccount(new Command(response.CommandBalanceID, accountId), accountId, updateStatus, key, 'notify.investment.funded');
       })
     );
   }
 
   // Приостановить инвестицию
-  pauseAccount(accountID: number, methodName: string, methodArgs: any): Observable<any> {
+  pauseAccount(accountId: number, updateStatus: string, key: string): Observable<any> {
     this.loaderService.showLoader();
-    return this.http.post(`${this.apiUrl}/accounts.pause`, { AccountID: accountID }).pipe(
-      map((response: any) => {
-        this.updateAccount(new Command(response.CommandID, accountID), methodName, methodArgs, 'notify.investment.paused');
-      })
-    );
+    return this.http.post(`${this.apiUrl}/accounts.pause`, { AccountID: accountId })
+      .pipe(
+        map((response: any) => {
+          this.updateAccount(new Command(response.CommandID, accountId), accountId, updateStatus, key, 'notify.investment.paused');
+        })
+      );
   }
 
   // Возобновить инвестицию
-  resumeAccount(accountID: number, methodName: string, methodArgs: any): Observable<any> {
+  resumeAccount(accountId: number, updateStatus: string, key: string): Observable<any> {
     this.loaderService.showLoader();
-    return this.http.post(`${this.apiUrl}/accounts.resume`, { AccountID: accountID }).pipe(
+    return this.http.post(`${this.apiUrl}/accounts.resume`, { AccountID: accountId }).pipe(
       map((response: any) => {
-        this.updateAccount(new Command(response.CommandID, accountID), methodName, methodArgs, 'notify.investment.resumed');
+        this.updateAccount(new Command(response.CommandID, accountId), accountId, updateStatus, key, 'notify.investment.resumed');
       })
     );
   }
 
   // Изменить профиль инвестиции
-  changeAccountProfile(accountID: number, valueObj: { [key: string]: number }, methodName: string, methodArgs: any): Observable<any> {
+  changeAccountProfile(accountId: number, valueObj: { [key: string]: number }, updateStatus: string, key: string): Observable<any> {
     this.loaderService.showLoader();
 
     const requests: any[] = [];
@@ -729,11 +772,11 @@ export class DataService {
     if (valueObj.target) {
       requests.push(
         this.http.post(`${this.apiUrl}/accounts.setTarget`, {
-          AccountID: accountID,
+          AccountID: accountId,
           Target: valueObj['target']
         }).pipe(
           map((response: any) => {
-            this.updateAccount(new Command(response.CommandID, accountID), methodName, methodArgs, 'notify.investment.target.changed');
+            this.updateAccount(new Command(response.CommandID, accountId), accountId, updateStatus, key, 'notify.investment.target.changed');
           })
         )
       );
@@ -742,11 +785,11 @@ export class DataService {
     if (valueObj.protection) {
       requests.push(
         this.http.post(`${this.apiUrl}/accounts.setProtection`, {
-          AccountID: accountID,
+          AccountID: accountId,
           Protection: valueObj['protection']
         }).pipe(
           map((response: any) => {
-            this.updateAccount(new Command(response.CommandID, accountID), methodName, methodArgs, 'notify.investment.protection.changed');
+            this.updateAccount(new Command(response.CommandID, accountId), accountId, updateStatus, key, 'notify.investment.protection.changed');
           })
         )
       );
@@ -755,11 +798,11 @@ export class DataService {
     if (valueObj.factor) {
       requests.push(
         this.http.post(`${this.apiUrl}/accounts.setFactor`, {
-          AccountID: accountID,
+          AccountID: accountId,
           Factor: valueObj['factor']
         }).pipe(
           map((response: any) => {
-            this.updateAccount(new Command(response.CommandID, accountID), methodName, methodArgs, 'notify.investment.factor.changed');
+            this.updateAccount(new Command(response.CommandID, accountId), accountId, updateStatus, key, 'notify.investment.factor.changed');
           })
         )
       );
@@ -778,7 +821,7 @@ export class DataService {
     this.loaderService.showLoader();
     return this.http.post(`${this.apiUrl}/accounts.withdraw`, { AccountID: accountId, Amount: amount }).pipe(
       map((response: any) => {
-        this.updateAccount(new Command(response.CommandBalanceID, accountId), methodName, methodArgs, 'notify.investment.withdrawn');
+        // this.updateAccount(new Command(response.CommandBalanceID, accountId), methodName, methodArgs, 'notify.investment.withdrawn');
       })
     );
   }
@@ -788,23 +831,25 @@ export class DataService {
     this.loaderService.showLoader();
     return this.http.post(`${this.apiUrl}/accounts.close`, { AccountID: accountID }).pipe(
       map((response: any) => {
-        this.updateAccount(new Command(response.CommandID, accountID), methodName, methodArgs, 'notify.investment.closed');
+        // this.updateAccount(new Command(response.CommandID, accountID), methodName, methodArgs, 'notify.investment.closed');
       })
     );
   }
 
   // Получение статуса команды и запрос обновленного списка дынных после завершения обработки изменений
-  updateAccount(command: Command, methodName: string, methodArgs: any, notificationText: string): void {
+  updateAccount(command: Command, accountId: number, updateStatus: string, key: string, notificationText: string): void {
     const interval = setInterval(() => {
       this.commandService.checkAccountCommand(command).subscribe((commandStatus: number) => {
+        this._update$.next({
+          accountId: accountId,
+          status: updateStatus,
+          key: key
+        });
         if (commandStatus !== 0) {
           clearInterval(interval);
-          this[methodName](methodArgs)
-            .pipe(takeUntil(this.destroy$))
-            .subscribe(() => {
-              this.notificationsService.open(notificationText);
-              this.destroy$.next(true);
-            });
+
+          this.notificationsService.open(notificationText);
+
           this.walletService.updateWallet()
             .pipe(takeUntil(this.destroy$))
             .subscribe(() => {
@@ -812,6 +857,7 @@ export class DataService {
             });
         }
       });
+
     }, 1000);
   }
 
@@ -869,7 +915,6 @@ export class DataService {
     }
 
     return this.http.post(`${this.apiUrl}/positions.search`, options).pipe(map((response: any) => {
-      // debugger;
       const result: { positions: Position[], totals: object } = {
         positions: [],
         totals: {
@@ -900,54 +945,9 @@ export class DataService {
   //
   // Методы для работы с рейтингом
   //
-  // getRating(args: { ratingType: 0 | 1 | 2, paginator?: Paginator, searchText?: string }): Observable<Strategy[]> {
-  //   this.loaderService.showLoader();
-  //   const options: RatingSearchOptions = new RatingSearchOptions();
-  //   options.Filter = {
-  //     RatingType: args.ratingType,
-  //   };
 
-  //   if (args.searchText) {
-  //     options.Filter.StrategyName = args.searchText;
-  //   }
-
-  //   if (args.paginator) {
-  //     options.Pagination = {
-  //       CurrentPage: args.paginator.currentPage,
-  //       PerPage: args.paginator.perPage
-  //     };
-  //   }
-
-  //   this.http.post(`${this.apiUrl}/ratings.get`, options).subscribe((response: any) => {
-  //     const strategies: Strategy[] = [];
-
-  //     response.Strategies.forEach((s: any) => {
-  //       if (s.Account) {
-  //         s.Strategy.Account = s.Account;
-  //       }
-  //       s.Strategy.Chart = s.Chart;
-  //       strategies.push(this.createInstanceService.createStrategy(s.Strategy));
-  //     });
-
-  //     if (args.paginator) {
-  //       args.paginator.totalItems = response.Pagination.TotalRecords;
-  //       args.paginator.totalPages = response.Pagination.TotalPages;
-  //     }
-
-  //     this.loaderService.hideLoader();
-  //     this.ratingStrategiesSubject.next(strategies);
-  //   }, (error: HttpErrorResponse) => {
-  //     this.notificationsService.open('notify.loading.error', {
-  //       type: 'error',
-  //       autoClose: true,
-  //       duration: 3000
-  //     });
-  //   });
-
-  //   return this.ratingStrategiesSubject.asObservable();
-  // }
-
-  getRating(args: { ageMin?: number, dealsMin?: number, yieldMin?: number, searchMode?: string, field?: string, paginator?: Paginator, searchText?: string, direction?: string }): Observable<Strategy[]> {
+  getRating(args: { ageMin?: number, dealsMin?: number, yieldMin?: number, searchMode?: string, field?: string, paginator?: Paginator, searchText?: string, direction?: string })
+    : Observable<Strategy[]> {
     this.loaderService.showLoader();
     const options: StrategiesSearchOptions = new StrategiesSearchOptions();
     options.Filter = {
@@ -1000,23 +1000,35 @@ export class DataService {
     return this.ratingStrategiesSubject.asObservable();
   }
 
-  getBestRating<T>(args: Arguments): Observable<T> {
+  getBestRating(args: Arguments): Observable<EntityInterface> {
     this.loaderService.showLoader();
-
     const options: any = RatingMapper.formatArgumentsToOptions(args);
-    return this.http.post<T>(`${this.apiUrl}/strategies.search`, options)
+
+    return this.http.post(`${this.apiUrl}/strategies.search`, options)
       .pipe(
         take(1),
-        tap(item => {
-          this.loaderService.hideLoader()
-        })
-        // catchError(()=>{
-        //   this.notificationsService.open('notify.loading.error', {
-        //     type: 'error',
-        //     autoClose: true,
-        //     duration: 3000
-        //   });
-        // })
+        catchError(error => {
+          const config: NotificationOptions = {
+            type: 'error',
+            autoClose: true,
+            duration: 3000
+          };
+
+          this.notificationsService.open('notify.loading.error', config);
+
+          return of();
+        }),
+        tap((item: any) => {
+          if (args.paginator) {
+            args.paginator.totalItems = item.Pagination.TotalRecords;
+            args.paginator.totalPages = item.Pagination.TotalPages;
+          }
+          this.walletService.walletSubject.next(this.createInstanceService.createWallet(item.Wallets[0]));
+
+          this.loaderService.hideLoader();
+        }),
+        map(({ Strategies }) => Strategies.map((item) => this.createInstanceService.createStrategy(item)))
+
       );
   }
 
@@ -1025,29 +1037,6 @@ export class DataService {
       this.accountSpecAsset = this.createInstanceService.createAccountSpecAsset(response.AccountSpecAsset[0]);
     });
   }
-
-  // getBrandRatings(linkOptions: string): Observable<Rating[]> {
-  //   this.loaderService.showLoader();
-
-  //   this.http.get(linkOptions).subscribe((result: any) => {
-  //     const ratings: Rating[] = [];
-
-  //     result.Ratings.forEach((rating: any) => {
-  //       ratings.push(this.createInstanceService.createRating(rating));
-  //     });
-
-  //     this.loaderService.hideLoader();
-  //     this.ratingsSubject.next(ratings);
-  //   }, (error: HttpErrorResponse) => {
-  //     this.notificationsService.open('notify.loading.error', {
-  //       type: 'error',
-  //       autoClose: true,
-  //       duration: 3000
-  //     });
-  //   });
-
-  //   return this.ratingsSubject.asObservable();
-  // }
 
   getBrandRatings(): Observable<any[]> {
     const url = `${window.location.origin}/config/${JSON.parse(localStorage.getItem('brand')).brand.brandKey}`;
