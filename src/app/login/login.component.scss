@@ -5,6 +5,10 @@
   top: 40px;
   right: 40px;
 
+  button{
+    outline: none;
+  }
+
   .toggle-lang {
     min-width: 40px;
     height: 40px;
@@ -142,6 +146,7 @@
             background-image: linear-gradient(180deg, #35bee5, #18a6dc);
             margin-top: 20px;
             cursor: pointer;
+            outline: none;
           }
         }
 
@@ -221,14 +226,24 @@
           .field{
             label{
               font-size: 18px !important;
+              
+              &.error {
+                font-size: 13px !important;
+               
+              }
             }
           }
         }
 
-        .links{
+        .links{ 
+          margin-top: 0 !important;
           padding: 0 5px !important;
         }
       }
+    }
+
+    button {
+      margin-top: 0px !important;
     }
   }
 }
