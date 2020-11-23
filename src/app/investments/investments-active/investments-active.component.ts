@@ -8,6 +8,7 @@ import { DataService } from '@app/services/data.service';
 import { Argument } from '@app/models/argument';
 import { CreateInstanceService } from '@app/services/create-instance.service';
 import { SettingsService } from '@app/services/settings.service';
+import { iUpdateOptions } from '@app/interfaces/update';
 // import { Arguments } from '@app/interfaces/args.interface';
 
 @Component({
@@ -72,15 +73,17 @@ export class InvestmentsActiveComponent implements OnInit, OnDestroy {
       direction: 'Desc',
       paginator: this.paginator
     };
-
+    // debugger
     this.update$ = this.dataService.update$
       .pipe(
-        tap((data) => {
-          if (data.status == "update" && data.key == "investments-active") {
+        tap((data: iUpdateOptions) => {
+          // debugger
+          if (data && data.status == "update" && data.key == "investments-active") {
             this.getStrategy(data.strategyId)
               .pipe(take(1))
               .subscribe((strategy: Strategy) => {
 
+                // debugger
                 (this.accounts || []).filter((item) => {
                   if (item.strategy.id == strategy.id) {
                     item.strategy = strategy;
@@ -94,8 +97,39 @@ export class InvestmentsActiveComponent implements OnInit, OnDestroy {
         })
       );
 
+    // this.dataService.getUpdateAsSubject.complete();
+    // debugger
+    // this.updateData();
 
     this.accounts$ = this.getActiveAccounts(this.args);
+  }
+
+  updateData(): void {
+    debugger
+    this.dataService.update$
+      .pipe(take(1))
+      .subscribe(
+        (data: iUpdateOptions) => {
+          debugger
+          if (data && data.status == "update" && data.key == "investments-active") {
+            this.getStrategy(data.strategyId)
+              .pipe(takeUntil(this.destroy$))
+              .subscribe((strategy: Strategy) => {
+
+                (this.accounts || []).filter((item) => {
+                  if (item.strategy.id == strategy.id) {
+                    item.strategy = strategy;
+                  }
+                });
+
+                this.accounts$ = of(this.accounts);
+
+              });
+          }
+        }
+      );
+
+    this.dataService.getUpdateAsSubject.complete();
   }
 
   getStrategy(strategyId: number): Observable<Strategy> {
@@ -115,11 +149,9 @@ export class InvestmentsActiveComponent implements OnInit, OnDestroy {
 
   getAccounts(): void {
     this.accounts$ = this.getActiveAccounts(this.args)
-
   }
 
   ngOnDestroy(): void {
     this.destroy$.next(true);
-    this.dataService.getUpdateAsSubject.complete();
   }
 }

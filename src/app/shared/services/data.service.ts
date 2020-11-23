@@ -33,6 +33,7 @@ import { RatingMapper } from "@app/mappers/rating.mapper";
 import { EntityInterface } from '@app/interfaces/entity.interface';
 import { AccountMapper } from '@app/mappers/account.mapper';
 import { StrategyMapper } from '@app/mappers/strategy.mapper';
+import { iUpdateOptions } from '@app/interfaces/update';
 
 @Injectable({
   providedIn: 'root'
@@ -60,7 +61,7 @@ export class DataService {
   // here we will unsubscribe from all subscriptions
   destroy$ = new Subject();
   apiUrl: string = CONFIG.baseApiUrl;
-  _update$: ReplaySubject<any> = new ReplaySubject<any>(null);
+  _update$: BehaviorSubject<iUpdateOptions> = new BehaviorSubject<iUpdateOptions>(null);
   _strategyPage$: ReplaySubject<any> = new ReplaySubject<any>(null);
 
   constructor(
@@ -201,7 +202,10 @@ export class DataService {
     return this.http.post(`${this.apiUrl}/strategies.get`, { ID: args.strategyId })
       .pipe(
         map((item) => this.createInstanceService.createStrategy(item)),
-        tap(item => this.loaderService.hideLoader()),
+        tap(item => {
+          // debugger
+          this.loaderService.hideLoader()
+        }),
         catchError((err: HttpErrorResponse) => {
           this.notificationsService.open('empty.strategy.null', {
             type: 'error',
@@ -318,6 +322,7 @@ export class DataService {
       .pipe(
         map((response: any) => {
           this.updateStrategy(new Command(response.CommandID, strategyId), strategyId, updateStatus, key, 'notify.strategy.paused');
+          this.loaderService.hideLoader();
         })
       );
   }
@@ -328,6 +333,7 @@ export class DataService {
     return this.http.post(`${this.apiUrl}/myStrategies.resume`, { StrategyID: strategyId }).pipe(
       map((response: any) => {
         this.updateStrategy(new Command(response.CommandID, strategyId), strategyId, updateStatus, key, 'notify.strategy.resumed');
+        this.loaderService.hideLoader();
       })
     );
   }
@@ -366,13 +372,12 @@ export class DataService {
         if (commandStatus !== 0) {
           clearInterval(interval);
 
-          const data = {
+          this._update$.next({
             strategyId: strategyId,
             status: updateStatus,
             key: key
-          }
+          });
 
-          this._update$.next(data);
           this.notificationsService.open(notificationText);
 
           this.walletService.updateWallet()
@@ -840,6 +845,7 @@ export class DataService {
   updateAccount(command: Command, accountId: number, updateStatus: string, key: string, notificationText: string): void {
     const interval = setInterval(() => {
       this.commandService.checkAccountCommand(command).subscribe((commandStatus: number) => {
+        // debugger
         this._update$.next({
           accountId: accountId,
           status: updateStatus,
