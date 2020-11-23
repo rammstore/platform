@@ -217,6 +217,12 @@
 
         form{
           padding: 10px;
+
+          .field{
+            label{
+              font-size: 18px !important;
+            }
+          }
         }
 
         .links{
