@@ -73,7 +73,8 @@ export class RatingPopularComponent implements OnInit, OnDestroy {
       this.update$ = this.dataService.update$
       .pipe(
         tap((data) => {
-          if (data.status == "update" && data.key == "rating-popular") {
+          // debugger
+          if (data && data.status == "update" && data.key == "rating-popular") {
             if (data.accountId) {
               this.getAccountById(data.accountId)
                 .pipe(takeUntil(this.destroy$))
@@ -101,6 +102,8 @@ export class RatingPopularComponent implements OnInit, OnDestroy {
                   this.strategies$ = of(this.strategies);
                 });
             }
+
+            this.dataService._update$.next(null);
           }
         })
       );

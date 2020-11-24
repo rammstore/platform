@@ -62,7 +62,7 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
     this.dataService.update$
       .pipe(takeUntil(this.destroy$))
       .subscribe((item) => {
-        if (item.status === 'update') {
+        if (item && item.status === 'update') {
           this.getStrategies();
         }
       });

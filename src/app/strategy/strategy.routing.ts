@@ -13,7 +13,6 @@ import {StrategyOffersComponent} from './strategy-details/strategy-offers/strate
 import {StrategyDetailsMyInvestmentComponent} from './strategy-details/strategy-details-my-investment/strategy-details-my-investment.component';
 import {StrategyLinkComponent} from './strategy-details/strategy-link/strategy-link.component';
 import {MyStrategyGuard} from './my-strategy.guard';
-import {MyInvestmentGuard} from "./my-investment.guard";
 
 const routes: Routes = [
   {

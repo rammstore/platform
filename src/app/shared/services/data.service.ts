@@ -207,6 +207,7 @@ export class DataService {
           this.loaderService.hideLoader()
         }),
         catchError((err: HttpErrorResponse) => {
+          // debugger
           this.notificationsService.open('empty.strategy.null', {
             type: 'error',
             autoClose: true,
@@ -377,7 +378,7 @@ export class DataService {
             status: updateStatus,
             key: key
           });
-
+// debugger
           this.notificationsService.open(notificationText);
 
           this.walletService.updateWallet()
@@ -497,6 +498,7 @@ export class DataService {
     return this.http.post(`${this.apiUrl}/strategies.search`, options)
       .pipe(
         catchError(error => {
+          // debugger
           const config: NotificationOptions = {
             type: 'error',
             autoClose: true,
@@ -509,6 +511,7 @@ export class DataService {
         }),
         take(1),
         tap((item: any) => {
+          // debugger
           this.walletService.walletSubject.next(this.createInstanceService.createWallet(item.Wallets[0]));
 
           if (args.paginator) {
