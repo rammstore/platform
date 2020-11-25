@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { Account, Offer, Strategy } from '@app/models';
 import { ActivatedRoute } from '@angular/router';
 import { DataService } from '@app/services/data.service';
 import { BrandService } from '@app/services/brand.service';
-import { takeUntil } from 'rxjs/operators';
+import { map, takeUntil } from 'rxjs/operators';
 import { StrategyService } from "@app/services/strategy.service";
 
 @Component({
@@ -16,16 +16,15 @@ export class StrategyDetailsMyInvestmentComponent implements OnInit, OnDestroy {
   // https://blog.strongbrew.io/rxjs-best-practices-in-angular/#avoiding-memory-leaks
   // here we will unsubscribe from all subscriptions
   destroy$ = new Subject();
-  loadStatus: boolean = false;
 
   // component data
-  account: Account;
+  account$: Observable<Account>;
+  offer$: Observable<Offer>;
+  strategy: Strategy;
   args: any;
   functionality: object;
-  offer: Offer = null;
-  strategy: Strategy;
   accountId: number;
-  
+
   constructor(
     private route: ActivatedRoute,
     private dataService: DataService,
@@ -47,38 +46,43 @@ export class StrategyDetailsMyInvestmentComponent implements OnInit, OnDestroy {
     this.strategy = this.strategyService.strategy;
 
     if (!this.strategy) {
-      this.dataService.getStrategyByID(this.args)
+      this.getStrategyById(this.args)
         .pipe(takeUntil(this.destroy$))
         .subscribe((item) => {
-          this.offer = item.account.offer;
+          this.offer$ = of(item.account.offer);
           this.accountId = item.account.id;
         });
 
-      this.getAccountStatement({
-        accountId: this.accountId
-      });
+      this.getAccountStatement({ accountId: this.accountId });
     } else {
-      this.offer = this.strategy.account.offer;
-      this.getAccountStatement({
-        accountId: this.strategy.account.id
-      });
+      this.offer$ = of(this.strategy.account.offer);
+      this.getAccountStatement({ accountId: this.strategy.account.id });
     }
+  }
+
+  getStrategyById(args: any): Observable<Strategy> {
+    return this.dataService.getStrategyById(args);
+  }
+
+  getAccountStatement(args: any): void {
+    this.account$ = this.getStatement(args);
+  }
+
+  getStatement(args: any): Observable<Account> {
+    return this.dataService.getAccountStatement(args)
+      .pipe(
+        map((response: any) => {
+          if (response) {
+            const account = response.account;
+            account.strategy = response.strategy;
+
+            return account;
+          }
+        })
+      );
   }
 
   ngOnDestroy(): void {
     this.destroy$.next(true);
   }
-
-  getAccountStatement(json: any): void {
-    this.dataService.getAccountStatement(json)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((response: any) => {
-        this.loadStatus = true;
-        if (response.account) {
-          this.account = response.account;
-          this.account.strategy = response.strategy;
-        }
-      });
-  }
-
 }

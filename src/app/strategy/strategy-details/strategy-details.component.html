@@ -1,4 +1,4 @@
-<ng-container *ngIf="strategy$ | async as strategy">
+<div *ngIf="strategy$ | async as strategy">
   <div class="caption" *ngIf="functionality$ | async as functionality">
     <h2>
       {{strategy.name}}
@@ -21,10 +21,11 @@
         <span class="item" *ngIf="functionality['protectionShow']"><span><span translate>common.protection</span>:</span> <b>{{(strategy.account.protection || 0) | percent}}</b></span>
     </div>
 
-    <app-manage [data]="strategy"
-                *ngIf="strategy.isActive()"
-                (action)="parseAction($event)"
-                [section]="sectionEnum"></app-manage>
+    <app-manage 
+      *ngIf="strategy.isActive()"
+      [data]="strategy"
+      (action)="parseAction($event)"
+      [section]="sectionEnum"></app-manage>
   </div>
 
   <app-content-tabs [links]="links">
@@ -32,5 +33,4 @@
   </app-content-tabs>
 
   <p><b translate>strategy.details.message.risk</b></p>
-</ng-container>
-  
+</div>  

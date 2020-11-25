@@ -201,11 +201,6 @@ export class DataService {
     this.loaderService.showLoader();
     return this.http.post(`${this.apiUrl}/strategies.get`, { ID: args.strategyId })
       .pipe(
-        map((item) => this.createInstanceService.createStrategy(item)),
-        tap(item => {
-          // debugger
-          this.loaderService.hideLoader()
-        }),
         catchError((err: HttpErrorResponse) => {
           // debugger
           this.notificationsService.open('empty.strategy.null', {
@@ -216,7 +211,13 @@ export class DataService {
           this.router.navigate(['/rating']);
           this.loaderService.hideLoader();
           return of();
-        }));
+        }),
+        map((item) => this.createInstanceService.createStrategy(item)),
+        tap(item => {
+          // debugger
+          this.loaderService.hideLoader()
+        })
+      );
   }
 
   getStrategyByLinkAsObservable(args: { link: string }): Observable<any> {
@@ -374,11 +375,9 @@ export class DataService {
           clearInterval(interval);
 
           this._update$.next({
-            strategyId: strategyId,
-            status: updateStatus,
-            key: key
+            strategyId: strategyId
           });
-// debugger
+          // debugger
           this.notificationsService.open(notificationText);
 
           this.walletService.updateWallet()
@@ -624,7 +623,7 @@ export class DataService {
   // Получение деталей инвестиции
   getAccountStatement(args: { accountId: number }): Observable<any> {
     this.loaderService.showLoader();
-    this.http.post(`${this.apiUrl}/accounts.get`, { AccountID: args.accountId })
+    return this.http.post(`${this.apiUrl}/accounts.get`, { AccountID: args.accountId })
       .pipe(
         catchError(error => {
           const config: NotificationOptions = {
@@ -641,7 +640,7 @@ export class DataService {
             }
             case 401: {
               this.router.navigate(['/investments']);
-              this.notificationsService.open('empty.investment.null', config);
+              this.notificationsService.open('notify.investment.access.error', config);
               break;
             }
             default: {
@@ -652,47 +651,26 @@ export class DataService {
 
           this.loaderService.hideLoader()
           return of();
-        })
-      )
-      .subscribe((response: any) => {
-        if (response.Strategy) {
-          response.Strategy.PublicOffer = {
-            CommissionRate: response.Strategy.Commission,
-            FeeRate: response.Strategy.Fee
-          };
-          this.currentAccountStatementSubject.next({
-            strategy: this.createInstanceService.createStrategy(response.Strategy),
-            account: this.createInstanceService.createAccount(response.Account)
+        }),
+        map((response: any) => {
+          if (response.Strategy) {
+            response.Strategy.PublicOffer = {
+              CommissionRate: response.Strategy.Commission,
+              FeeRate: response.Strategy.Fee
+            };
 
-          });
-        } else {
-          this.currentAccountStatementSubject.next({
-            strategy: null,
-            account: null
-          });
-        }
+            let newRespons = {
+              strategy: this.createInstanceService.createStrategy(response.Strategy),
+              account: this.createInstanceService.createAccount(response.Account)
+            }
 
-        this.loaderService.hideLoader();
-      },
-        (error: HttpErrorResponse) => {
-          if (error.status === 401) {
-            this.router.navigate(['/investments']);
-            this.notificationsService.open('notify.investment.access.error', {
-              type: 'error',
-              autoClose: true,
-              duration: 3000
-            });
-          } else {
-            this.router.navigate(['/investments']);
-            this.notificationsService.open('notify.loading.error', {
-              type: 'error',
-              autoClose: true,
-              duration: 3000
-            });
+            return newRespons;
           }
-        });
-
-    return this.currentAccountStatementSubject.asObservable();
+        }),
+        tap(() => {
+          this.loaderService.hideLoader();
+        })
+      );
   }
 
   // Инвестировать в стратегию по публичной оферте
@@ -865,6 +843,7 @@ export class DataService {
               this.destroy$.next(true);
             });
         }
+        this.loaderService.hideLoader();
       });
 
     }, 1000);

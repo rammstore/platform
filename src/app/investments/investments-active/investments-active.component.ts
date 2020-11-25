@@ -70,17 +70,14 @@ export class InvestmentsActiveComponent implements OnInit, OnDestroy {
       direction: 'Desc',
       paginator: this.paginator
     };
-    // debugger
     this.update$ = this.dataService.update$
       .pipe(
         tap((data: iUpdateOptions) => {
-          // debugger
           if (data && data.status == "update" && data.key == "investments-active") {
             if (data.strategyId) {
               this.getStrategyById(data.strategyId)
                 .pipe(take(1))
                 .subscribe((strategy: Strategy) => {
-                  // debugger
                   (this.accounts || []).filter((item) => {
                     if (item.strategy.id == strategy.id) {
                       item.strategy.status = strategy.status;
@@ -92,18 +89,15 @@ export class InvestmentsActiveComponent implements OnInit, OnDestroy {
                 });
             }
             else if (data.accountId) {
-              // debugger
               this.getAccountById(data.accountId)
                 .pipe(take(1))
                 .subscribe((data: any) => {
                   (this.accounts || []).filter((item: Account) => {
                     if (item.id == data.account.id) {
-                      // debugger
                       const accountStrategy = item.strategy;
 
                       item = Object.assign(item, data.account);
-                      item.isMyAccount = null
-                      // debugger
+                      item.isMyAccount = null;
                       item.strategy = accountStrategy;
                     }
 
@@ -112,8 +106,6 @@ export class InvestmentsActiveComponent implements OnInit, OnDestroy {
                   });
                 })
             }
-
-
           }
         })
       );
