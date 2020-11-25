@@ -80,10 +80,12 @@ export class RatingAllComponent implements OnInit {
         })
       );
 
-      this.update$ = this.dataService.update$
+    // debugger
+    this.update$ = this.dataService.update$
       .pipe(
         tap((data) => {
-          if (data.status == "update" && data.key == "rating-all") {
+          if (data && data.status == "update" && data.key == "rating-all") {
+            // debugger
             if (data.accountId) {
               this.getAccountById(data.accountId)
                 .pipe(takeUntil(this.destroy$))
@@ -103,20 +105,15 @@ export class RatingAllComponent implements OnInit {
                 .subscribe((updatedStrategy: Strategy) => {
                   (this.strategies || []).filter((itemToUpdate: Strategy) => {
                     if (itemToUpdate.id == updatedStrategy.id) {
-                      // item.status = strategy.status;
-                      console.log('itemToUpdate before', itemToUpdate);
-
                       itemToUpdate = Object.assign(itemToUpdate, updatedStrategy);
-
-                      console.log('itemToUpdate after', itemToUpdate);
-                      console.log('updatedStrategy', updatedStrategy);
-
                     }
                   });
 
                   this.strategies$ = of(this.strategies);
                 });
             }
+
+            this.dataService._update$.next(null);
           }
         })
       )

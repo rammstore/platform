@@ -40,7 +40,7 @@ export class StrategyOfferCreateComponent implements OnInit {
 
   submit(): void {
     this.form.markAllAsTouched();
-
+    
     if (!this.form.valid) {
       return;
     }

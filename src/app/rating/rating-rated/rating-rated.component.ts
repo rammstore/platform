@@ -8,6 +8,7 @@ import { takeUntil, tap } from 'rxjs/operators';
 import { SectionEnum } from "@app/enum/section.enum";
 import { ArgumentsService } from '@app/services/arguments.service';
 import { SettingsService } from '@app/services/settings.service';
+import { iUpdateOptions } from '@app/interfaces/update';
 
 @Component({
   selector: 'app-rating-rated',
@@ -79,10 +80,12 @@ export class RatingRatedComponent implements OnInit, OnDestroy {
         })
       );
 
+    // debugger
     this.update$ = this.dataService.update$
       .pipe(
-        tap((data)=>{
-          if (data.key == "rating-rated" && data.status == "update") {
+        tap((data: iUpdateOptions) => {
+          // debugger
+          if (data && data.key == "rating-rated" && data.status == "update") {
             if (data.accountId) {
               this.getAccountById(data.accountId)
                 .pipe(takeUntil(this.destroy$))
@@ -92,7 +95,7 @@ export class RatingRatedComponent implements OnInit, OnDestroy {
                       strategy.account = response.account;
                     }
                   });
-  
+
                   this.strategies$ = of(this.strategies);
                 });
             }
@@ -102,22 +105,17 @@ export class RatingRatedComponent implements OnInit, OnDestroy {
                 .subscribe((updatedStrategy: Strategy) => {
                   (this.strategies || []).filter((itemToUpdate: Strategy) => {
                     if (itemToUpdate.id == updatedStrategy.id) {
-                      // item.status = strategy.status;
                       itemToUpdate = Object.assign(itemToUpdate, updatedStrategy);
                     }
                   });
-  
+
                   this.strategies$ = of(this.strategies);
                 });
             }
+            this.dataService._update$.next(null);
           }
         })
-        );
-      
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next(true);
+      );
   }
 
   getAccountById(accountId: number): Observable<any> {
@@ -148,5 +146,9 @@ export class RatingRatedComponent implements OnInit, OnDestroy {
     this.args.searchText = this.searchText;
     this.args.paginator.currentPage = 1;
     this.strategies$ = this.getStrategies();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
   }
 }

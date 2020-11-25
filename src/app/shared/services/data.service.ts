@@ -33,6 +33,7 @@ import { RatingMapper } from "@app/mappers/rating.mapper";
 import { EntityInterface } from '@app/interfaces/entity.interface';
 import { AccountMapper } from '@app/mappers/account.mapper';
 import { StrategyMapper } from '@app/mappers/strategy.mapper';
+import { iUpdateOptions } from '@app/interfaces/update';
 
 @Injectable({
   providedIn: 'root'
@@ -60,7 +61,7 @@ export class DataService {
   // here we will unsubscribe from all subscriptions
   destroy$ = new Subject();
   apiUrl: string = CONFIG.baseApiUrl;
-  _update$: ReplaySubject<any> = new ReplaySubject<any>(null);
+  _update$: BehaviorSubject<iUpdateOptions> = new BehaviorSubject<iUpdateOptions>(null);
   _strategyPage$: ReplaySubject<any> = new ReplaySubject<any>(null);
 
   constructor(
@@ -200,9 +201,8 @@ export class DataService {
     this.loaderService.showLoader();
     return this.http.post(`${this.apiUrl}/strategies.get`, { ID: args.strategyId })
       .pipe(
-        map((item) => this.createInstanceService.createStrategy(item)),
-        tap(item => this.loaderService.hideLoader()),
         catchError((err: HttpErrorResponse) => {
+          // debugger
           this.notificationsService.open('empty.strategy.null', {
             type: 'error',
             autoClose: true,
@@ -211,7 +211,13 @@ export class DataService {
           this.router.navigate(['/rating']);
           this.loaderService.hideLoader();
           return of();
-        }));
+        }),
+        map((item) => this.createInstanceService.createStrategy(item)),
+        tap(item => {
+          // debugger
+          this.loaderService.hideLoader()
+        })
+      );
   }
 
   getStrategyByLinkAsObservable(args: { link: string }): Observable<any> {
@@ -318,6 +324,7 @@ export class DataService {
       .pipe(
         map((response: any) => {
           this.updateStrategy(new Command(response.CommandID, strategyId), strategyId, updateStatus, key, 'notify.strategy.paused');
+          this.loaderService.hideLoader();
         })
       );
   }
@@ -328,6 +335,7 @@ export class DataService {
     return this.http.post(`${this.apiUrl}/myStrategies.resume`, { StrategyID: strategyId }).pipe(
       map((response: any) => {
         this.updateStrategy(new Command(response.CommandID, strategyId), strategyId, updateStatus, key, 'notify.strategy.resumed');
+        this.loaderService.hideLoader();
       })
     );
   }
@@ -366,13 +374,10 @@ export class DataService {
         if (commandStatus !== 0) {
           clearInterval(interval);
 
-          const data = {
-            strategyId: strategyId,
-            status: updateStatus,
-            key: key
-          }
-
-          this._update$.next(data);
+          this._update$.next({
+            strategyId: strategyId
+          });
+          // debugger
           this.notificationsService.open(notificationText);
 
           this.walletService.updateWallet()
@@ -492,6 +497,7 @@ export class DataService {
     return this.http.post(`${this.apiUrl}/strategies.search`, options)
       .pipe(
         catchError(error => {
+          // debugger
           const config: NotificationOptions = {
             type: 'error',
             autoClose: true,
@@ -504,6 +510,7 @@ export class DataService {
         }),
         take(1),
         tap((item: any) => {
+          // debugger
           this.walletService.walletSubject.next(this.createInstanceService.createWallet(item.Wallets[0]));
 
           if (args.paginator) {
@@ -616,7 +623,7 @@ export class DataService {
   // Получение деталей инвестиции
   getAccountStatement(args: { accountId: number }): Observable<any> {
     this.loaderService.showLoader();
-    this.http.post(`${this.apiUrl}/accounts.get`, { AccountID: args.accountId })
+    return this.http.post(`${this.apiUrl}/accounts.get`, { AccountID: args.accountId })
       .pipe(
         catchError(error => {
           const config: NotificationOptions = {
@@ -633,7 +640,7 @@ export class DataService {
             }
             case 401: {
               this.router.navigate(['/investments']);
-              this.notificationsService.open('empty.investment.null', config);
+              this.notificationsService.open('notify.investment.access.error', config);
               break;
             }
             default: {
@@ -644,47 +651,26 @@ export class DataService {
 
           this.loaderService.hideLoader()
           return of();
-        })
-      )
-      .subscribe((response: any) => {
-        if (response.Strategy) {
-          response.Strategy.PublicOffer = {
-            CommissionRate: response.Strategy.Commission,
-            FeeRate: response.Strategy.Fee
-          };
-          this.currentAccountStatementSubject.next({
-            strategy: this.createInstanceService.createStrategy(response.Strategy),
-            account: this.createInstanceService.createAccount(response.Account)
+        }),
+        map((response: any) => {
+          if (response.Strategy) {
+            response.Strategy.PublicOffer = {
+              CommissionRate: response.Strategy.Commission,
+              FeeRate: response.Strategy.Fee
+            };
 
-          });
-        } else {
-          this.currentAccountStatementSubject.next({
-            strategy: null,
-            account: null
-          });
-        }
+            let newRespons = {
+              strategy: this.createInstanceService.createStrategy(response.Strategy),
+              account: this.createInstanceService.createAccount(response.Account)
+            }
 
-        this.loaderService.hideLoader();
-      },
-        (error: HttpErrorResponse) => {
-          if (error.status === 401) {
-            this.router.navigate(['/investments']);
-            this.notificationsService.open('notify.investment.access.error', {
-              type: 'error',
-              autoClose: true,
-              duration: 3000
-            });
-          } else {
-            this.router.navigate(['/investments']);
-            this.notificationsService.open('notify.loading.error', {
-              type: 'error',
-              autoClose: true,
-              duration: 3000
-            });
+            return newRespons;
           }
-        });
-
-    return this.currentAccountStatementSubject.asObservable();
+        }),
+        tap(() => {
+          this.loaderService.hideLoader();
+        })
+      );
   }
 
   // Инвестировать в стратегию по публичной оферте
@@ -840,6 +826,7 @@ export class DataService {
   updateAccount(command: Command, accountId: number, updateStatus: string, key: string, notificationText: string): void {
     const interval = setInterval(() => {
       this.commandService.checkAccountCommand(command).subscribe((commandStatus: number) => {
+        // debugger
         this._update$.next({
           accountId: accountId,
           status: updateStatus,
@@ -856,6 +843,7 @@ export class DataService {
               this.destroy$.next(true);
             });
         }
+        this.loaderService.hideLoader();
       });
 
     }, 1000);

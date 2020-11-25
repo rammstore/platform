@@ -5,6 +5,10 @@
   top: 40px;
   right: 40px;
 
+  button{
+    outline: none;
+  }
+
   .toggle-lang {
     min-width: 40px;
     height: 40px;
@@ -52,10 +56,9 @@
   width: 100%;
   height: 100%;
 
-  background-image: url('/assets/images/loginBackground.png');
+  background-image: url("/assets/images/loginBackground.png");
   background-size: cover;
   background-position: center;
-
 
   .overlay {
     position: fixed;
@@ -63,20 +66,20 @@
     left: 0;
     height: 100%;
     width: 100%;
-    background-color: rgba(0,0,0,.3);
+    background-color: rgba(0, 0, 0, 0.3);
     display: flex;
     align-items: center;
     justify-content: center;
 
     .content-container {
       padding: 40px 35px;
-      background-color: rgba(0,0,0,.2);
+      background-color: rgba(0, 0, 0, 0.2);
       width: 678px;
       border-radius: 10px;
       border: 1px solid $text-color;
 
       .content {
-        font-family: 'Proxima Nova Regular';
+        font-family: "Proxima Nova Regular";
         text-align: center;
         text-transform: uppercase;
         background-color: white;
@@ -143,6 +146,7 @@
             background-image: linear-gradient(180deg, #35bee5, #18a6dc);
             margin-top: 20px;
             cursor: pointer;
+            outline: none;
           }
         }
 
@@ -155,11 +159,91 @@
 
           a {
             img {
-
             }
           }
         }
       }
+    }
+  }
+
+  @media (max-width: 576px) {
+    .language-dropdown {
+      top: 10px;
+      right: 10px;
+    }
+
+    .content-container {
+      padding: 5px 5px;
+      width: 100% !important;
+
+      .content {
+        padding: 10px 0;
+        h1 {
+          color: $text-color-dark;
+          font-size: 30px;
+          margin-top: 0;
+          margin-bottom: 5px;
+        }
+      }
+    }
+
+    button {
+      margin-top: 0px !important;
+    }
+
+    .links {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: center;
+
+      a {
+        img {
+          width: 100%;
+          height: 40px;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 420px) {
+    .content-container {
+      margin: auto 10px;
+      padding: 20px !important;
+
+      .content {
+        padding: 10px !important;
+
+        h1 {
+          color: $text-color-dark;
+          font-size: 30px !important;
+          margin-top: 10px !important;
+          margin-bottom: 20px !important;
+        }
+
+        form{
+          padding: 10px;
+
+          .field{
+            label{
+              font-size: 18px !important;
+              
+              &.error {
+                font-size: 13px !important;
+               
+              }
+            }
+          }
+        }
+
+        .links{ 
+          margin-top: 0 !important;
+          padding: 0 5px !important;
+        }
+      }
+    }
+
+    button {
+      margin-top: 0px !important;
     }
   }
 }

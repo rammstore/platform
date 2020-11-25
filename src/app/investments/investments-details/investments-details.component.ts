@@ -11,6 +11,7 @@ import { RefreshService } from '@app/services/refresh.service';
 import { StatementInterface } from "@app/interfaces/statement.interface";
 import { NotificationsService } from "@app/services/notifications.service";
 import * as moment from 'moment';
+import { iUpdateOptions } from '@app/interfaces/update';
 
 @Component({
   selector: 'app-investments-details',
@@ -23,10 +24,10 @@ export class InvestmentsDetailsComponent implements OnInit, OnDestroy {
   destroy$ = new Subject();
   currentDate: any;
   // component data
-  account: Account;
+  // account: Account;
   source$: Observable<StatementInterface>;
-  strategy: Strategy;
-  publicOffer: Offer;
+  // strategy: Strategy;
+  // publicOffer: Offer;
   links: ContentTabLink[] = [];
   args: any;
   functionality: object;
@@ -49,6 +50,17 @@ export class InvestmentsDetailsComponent implements OnInit, OnDestroy {
         this.functionality = f;
       });
     this.args = { accountId: this.route.params['_value'].id };
+
+    this.dataService.update$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((item: iUpdateOptions) => {
+        if (item) {
+          this.getAccountStatement();
+
+          this.dataService._update$.next(null);
+        }
+      });
+
     this.getAccountStatement();
   }
 
@@ -70,31 +82,64 @@ export class InvestmentsDetailsComponent implements OnInit, OnDestroy {
   }
 
   getAccountStatement(): void {
-    this.source$ = this.dataService.getAccountStatement(this.args)
+    this.source$ = this.getStatement();
+    // this.dataService.getAccountStatement(this.args)
+    //   .pipe(
+    //     takeUntil(this.destroy$),
+    //     catchError(item => {
+    //       item.status === 404 ? this.notificationsService.open('empty.investment.null', { type: 'error' }) : '';
+
+    //       return of();
+    //     }),
+    //     tap(response => {
+    //       response.account.isMyStrategy = response.strategy.isMyStrategy;
+
+    //       this.strategy = response.strategy;
+    //       this.account = response.account;
+    //       this.account.strategy = response.strategy;
+    //       // this.publicOffer = this.strategy.publicOffer ? this.strategy.publicOffer : this.strategy.linkOffer;
+
+    //       this.currentDate = moment.utc().format("yyyy-MM-DD HH:mm:ss");
+
+    //       this.links = [
+    //         new ContentTabLink('investment.positions.title', '/investments/details/' + this.account.id),
+    //         new ContentTabLink('investment.deals.title', '/investments/details/' + this.account.id + '/deals')
+    //       ];
+    //     }),
+    //     map((item) => {
+    //       item.account.strategy = item.strategy;
+    //       return item;
+    //     })
+    //   );
+  }
+
+  getStatement(): Observable<any> {
+    const args = {
+      accountId: this.route.params['_value'].id
+    };
+
+    return this.dataService.getAccountStatement(args)
       .pipe(
-        takeUntil(this.destroy$),
-        catchError(item => {
-          item.status === 404 ? this.notificationsService.open('empty.investment.null', { type: 'error' }) : '';
-
-          return of();
-        }),
-        tap(response => {
-          response.account.isMyStrategy = response.strategy.isMyStrategy;
-          this.strategy = response.strategy;
-          this.account = response.account;
-          this.account.strategy = response.strategy;
-          this.publicOffer = this.strategy.publicOffer ? this.strategy.publicOffer : this.strategy.linkOffer;
-
+        tap((response: any) => {
           this.currentDate = moment.utc().format("yyyy-MM-DD HH:mm:ss");
 
           this.links = [
-            new ContentTabLink('investment.positions.title', '/investments/details/' + this.account.id),
-            new ContentTabLink('investment.deals.title', '/investments/details/' + this.account.id + '/deals')
+            new ContentTabLink('investment.positions.title', '/investments/details/' + response.account.id),
+            new ContentTabLink('investment.deals.title', '/investments/details/' + response.account.id + '/deals')
           ];
         }),
-        map((item) => {
-          item.account.strategy = item.strategy;
-          return item;
+        map((response: any) => {
+          if (response) {
+            const account = response.account;
+            account.strategy = response.strategy;
+
+            let object = {
+              strategy: response.strategy,
+              account: account
+            };
+
+            return object;
+          }
         })
       );
   }

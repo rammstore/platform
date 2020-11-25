@@ -24,15 +24,15 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
   // here we will unsubscribe from all subscriptions
   destroy$ = new Subject();
   strategy$: Observable<Strategy>;
+  update$: Observable<any>;
+
   // component data
-  strategy: Strategy;
   modalRef: BsModalRef;
   links: ContentTabLink[];
   args: any;
   functionality: object;
   functionality$: Observable<object>;
   id: number = 0;
-  methodName: string;
   sectionEnum: SectionEnum = SectionEnum.strategy;
 
   //tabs names
@@ -52,33 +52,38 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-
     this.functionality$ = this.brandService.functionality;
 
     this.id = parseInt(this.route.params['_value'].id);
 
-    this.getStrategies();
-
     this.dataService.update$
       .pipe(takeUntil(this.destroy$))
       .subscribe((item) => {
-        if (item.status === 'update') {
-          this.getStrategies();
+        if (item) {
+          this.strategy$ = this.getStrategyById(this.args)
+            .pipe(
+              tap(() => {
+                this.dataService._update$.next(null);
+              })
+            );
         }
       });
+
+
+    this.getStrategy();
   }
 
   parseAction(event: ActionEnum) {
     switch (event) {
       case ActionEnum.investment:
       case ActionEnum.cancel: {
-        this.getStrategies();
+        this.getStrategy();
         break;
       }
     }
   }
 
-  private getStrategies(): void {
+  private getStrategy(): void {
     if (this.id) {
       this.args = {
         strategyId: this.id
@@ -86,15 +91,8 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
 
       this.strategy$ = this.getStrategyById(this.args)
         .pipe(
-          tap((item) => this.strategiesDetailsLinks()),
-          catchError(item => {
-            item.status === 404 ? this.notificationsService.open('empty.strategy.null', {
-              type: 'error',
-              autoClose: true,
-              duration: 5000
-            }) : '';
-
-            return of();
+          tap((strategy) => {
+            this.strategiesDetailsLinks(strategy)
           })
         );
 
@@ -102,9 +100,10 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
       this.args = {
         link: this.route.params['_value'].id
       };
-      this.strategy$ = this.getStrategyByLink(this.args).pipe(
-        tap((item) => this.strategiesLinks())
-      );
+      this.strategy$ = this.getStrategyByLink(this.args)
+        .pipe(
+          tap((item) => this.strategiesLinks())
+        );
     }
   }
 
@@ -114,7 +113,6 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
         take(1),
         tap((strategy) => {
           this.strategyService.strategy = strategy;
-          this.strategy = strategy;
         })
       )
   }
@@ -125,41 +123,40 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
         take(1),
         tap((strategy) => {
           this.strategyService.strategy = strategy;
-          this.strategy = strategy;
         })
       );
   }
 
-  strategiesDetailsLinks() {
+  strategiesDetailsLinks(strategy: Strategy) {
     switch (true) {
       case this.settingsService.isMobile:
         this.links = [
-          new ContentTabLink('common.yield.mobile', '/strategies/details/' + this.strategy.id),
-          new ContentTabLink('common.table.label.symbols', '/strategies/details/' + this.strategy.id + '/symbols')
+          new ContentTabLink('common.yield.mobile', '/strategies/details/' + strategy.id),
+          new ContentTabLink('common.table.label.symbols', '/strategies/details/' + strategy.id + '/symbols')
         ];
 
-        if (this.strategy.account && this.strategy.account.id) {
-          this.links.push(new ContentTabLink('common.table.label.myInvestment.mobile', '/strategies/details/' + this.strategy.id + '/my-investment'));
+        if (strategy.account && strategy.account.id) {
+          this.links.push(new ContentTabLink('common.table.label.myInvestment.mobile', '/strategies/details/' + strategy.id + '/my-investment'));
         }
 
-        if (this.strategy.partnerInfo || this.strategy.traderInfo) {
-          this.links.push(new ContentTabLink('common.investments.mobile', '/strategies/details/' + this.strategy.id + '/investments'));
+        if (strategy.partnerInfo || strategy.traderInfo) {
+          this.links.push(new ContentTabLink('common.investments.mobile', '/strategies/details/' + strategy.id + '/investments'));
         }
         break;
 
       default:
         this.links = [
-          new ContentTabLink('common.yield', '/strategies/details/' + this.strategy.id),
-          new ContentTabLink('common.table.label.symbols', '/strategies/details/' + this.strategy.id + '/symbols')
+          new ContentTabLink('common.yield', '/strategies/details/' + strategy.id),
+          new ContentTabLink('common.table.label.symbols', '/strategies/details/' + strategy.id + '/symbols')
         ];
 
-        if (this.strategy.account && this.strategy.account.id) {
-          this.links.push(new ContentTabLink('common.table.label.myInvestment', '/strategies/details/' + this.strategy.id + '/my-investment'));
+        if (strategy.account && strategy.account.id) {
+          this.links.push(new ContentTabLink('common.table.label.myInvestment', '/strategies/details/' + strategy.id + '/my-investment'));
         }
 
-        if (this.strategy.partnerInfo || this.strategy.traderInfo) {
-          this.links.push(new ContentTabLink('common.investments', '/strategies/details/' + this.strategy.id + '/investments'));
-          this.links.push(new ContentTabLink('common.offers', `/strategies/details/${this.strategy.id}/offers`));
+        if (strategy.partnerInfo || strategy.traderInfo) {
+          this.links.push(new ContentTabLink('common.investments', '/strategies/details/' + strategy.id + '/investments'));
+          this.links.push(new ContentTabLink('common.offers', `/strategies/details/${strategy.id}/offers`));
 
         }
         break;
