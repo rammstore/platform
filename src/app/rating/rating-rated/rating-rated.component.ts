@@ -85,35 +85,34 @@ export class RatingRatedComponent implements OnInit, OnDestroy {
       .pipe(
         tap((data: iUpdateOptions) => {
           // debugger
-          if (data && data.key == "rating-rated" && data.status == "update") {
-            if (data.accountId) {
-              this.getAccountById(data.accountId)
-                .pipe(takeUntil(this.destroy$))
-                .subscribe((response) => {
-                  (this.strategies || []).filter((strategy: Strategy) => {
-                    if (strategy.account && strategy.account.id == data.accountId) {
-                      strategy.account = response.account;
-                    }
-                  });
-
-                  this.strategies$ = of(this.strategies);
+          
+          if (data && data.accountId ) {
+            this.getAccountById(data.accountId)
+              .pipe(takeUntil(this.destroy$))
+              .subscribe((response) => {
+                (this.strategies || []).filter((strategy: Strategy) => {
+                  if (strategy.account && strategy.account.id == data.accountId) {
+                    strategy.account = response.account;
+                  }
                 });
-            }
-            else if (data.strategyId) {
-              this.getStrategyById(data.strategyId)
-                .pipe(takeUntil(this.destroy$))
-                .subscribe((updatedStrategy: Strategy) => {
-                  (this.strategies || []).filter((itemToUpdate: Strategy) => {
-                    if (itemToUpdate.id == updatedStrategy.id) {
-                      itemToUpdate = Object.assign(itemToUpdate, updatedStrategy);
-                    }
-                  });
 
-                  this.strategies$ = of(this.strategies);
-                });
-            }
-            this.dataService._update$.next(null);
+                this.strategies$ = of(this.strategies);
+              });
           }
+          else if (data && data.strategyId ) {
+            this.getStrategyById(data.strategyId)
+              .pipe(takeUntil(this.destroy$))
+              .subscribe((updatedStrategy: Strategy) => {
+                (this.strategies || []).filter((itemToUpdate: Strategy) => {
+                  if (itemToUpdate.id == updatedStrategy.id) {
+                    itemToUpdate = Object.assign(itemToUpdate, updatedStrategy);
+                  }
+                });
+
+                this.strategies$ = of(this.strategies);
+              });
+          }
+          this.dataService._update$.next(null);
         })
       );
   }

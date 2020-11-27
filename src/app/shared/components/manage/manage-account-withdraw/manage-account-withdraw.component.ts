@@ -34,8 +34,7 @@ export class ManageAccountWithdrawComponent implements OnInit, AfterViewInit, On
   onClose: Subject<any> = new Subject<any>();
 
   @Input() forClose: boolean = false;
-  @Input() methodName: string;
-  @Input() methodArgs: any;
+ 
   @ViewChild('withdrawRadio', {static: false}) withdrawRadio: ElementRef;
 
   @Output() action: EventEmitter<ActionEnum> = new EventEmitter<ActionEnum>();
@@ -89,11 +88,13 @@ export class ManageAccountWithdrawComponent implements OnInit, AfterViewInit, On
   }
 
   withdraw(): void {
+    const updateStatus = "update";
+
     if (this.form.get('amount').value < 0.01 && this.form.get('amount').value > this.account.availableToWithDraw) {
       return;
     }
 
-    this.dataService.withdrawFromAccount(this.account.id, this.form.get('amount').value, this.methodName, this.methodArgs)
+    this.dataService.withdrawFromAccount(this.account.id, updateStatus, this.form.get('amount').value)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
         this.modalRef.hide();
@@ -101,7 +102,9 @@ export class ManageAccountWithdrawComponent implements OnInit, AfterViewInit, On
   }
 
   close(): void {
-    this.dataService.closeAccount(this.account.id, this.methodName, this.methodArgs)
+    const updateStatus = "close";
+
+    this.dataService.closeAccount(this.account.id, updateStatus)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
         this.onClose.next(true);

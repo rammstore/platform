@@ -60,8 +60,11 @@ export class InvestmentsDetailsPositionsComponent implements OnInit, OnDestroy {
         this.getPositions();
       });
 
-    const subscription = this.refreshService.refresh$
-      .pipe(map((item) => item == 'positions'))
+    this.refreshService.refresh$
+      .pipe(
+        takeUntil(this.destroy$),
+        map((item) => item == 'positions')
+      )
       .subscribe((status) => {
         this.emptyDataText = "table.cell.loading";
         if (status) {
@@ -69,7 +72,6 @@ export class InvestmentsDetailsPositionsComponent implements OnInit, OnDestroy {
           this.getPositions();
         }
       });
-    this.subscriptions.push(subscription);
   }
 
   getPositions(): void {
@@ -77,9 +79,9 @@ export class InvestmentsDetailsPositionsComponent implements OnInit, OnDestroy {
     this.dataService.getAccountPositions(this.route.parent.params['_value'].id, this.paginator)
       .pipe(takeUntil(this.destroy$))
       .subscribe((result: { positions: Position[], totals: object }) => {
-        
+
         this.totals = result.totals;
-        console.log('result.totals', result.totals)
+
         result.positions.forEach((position: Position) => {
           if (position.volume) {
             position.volume = Math.abs(position.volume);
@@ -94,9 +96,6 @@ export class InvestmentsDetailsPositionsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.destroy$.next(true);
-    this.subscriptions.forEach(sub=>{
-      sub.unsubscribe();
-      this.refreshService.refresh = "";
-    });
+    this.refreshService.refresh = null;
   }
 }

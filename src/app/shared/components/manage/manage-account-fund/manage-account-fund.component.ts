@@ -22,8 +22,7 @@ export class ManageAccountFundComponent implements OnInit, OnDestroy {
   form: FormGroup;
   wallet: Wallet;
   key: string;
-
-  updateStatus: "update";
+  updateStatus: string;
 
   constructor(
     public modalRef: BsModalRef,
@@ -33,6 +32,7 @@ export class ManageAccountFundComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.updateStatus = "update"
     this.walletService.getWallet().subscribe((wallet: Wallet) => {
       this.wallet = wallet;
       this.buildForm();

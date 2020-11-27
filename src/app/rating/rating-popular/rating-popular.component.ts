@@ -4,10 +4,11 @@ import { Paginator, Strategy, TableColumn } from '@app/models';
 import { TableHeaderRow } from '@app/models/table-header-row';
 import { PercentPipe } from '@angular/common';
 import { DataService } from '@app/services/data.service';
-import { subscribeOn, take, takeUntil, tap } from 'rxjs/operators';
+import { takeUntil, tap } from 'rxjs/operators';
 import { SectionEnum } from "@app/enum/section.enum";
 import { ArgumentsService } from '@app/services/arguments.service';
 import { SettingsService } from '@app/services/settings.service';
+import { iUpdateOptions } from '@app/interfaces/update';
 
 @Component({
   selector: 'app-rating-popular',
@@ -50,7 +51,7 @@ export class RatingPopularComponent implements OnInit, OnDestroy {
     private argumentsService: ArgumentsService,
     public settingsService: SettingsService
   ) { }
-  
+
   ngOnInit(): void {
     this.key = "rating-popular";
     this.ratingPopular$ = this.argumentsService.ratingPopular$
@@ -70,22 +71,25 @@ export class RatingPopularComponent implements OnInit, OnDestroy {
         })
       );
 
-      this.update$ = this.dataService.update$
+    this.update$ = this.dataService.update$
       .pipe(
-        tap((data) => {
+        tap((data: iUpdateOptions) => {
           // debugger
-          if (data && data.status == "update" && data.key == "rating-popular") {
+          if (data && data.updateStatus == "update") {
             if (data.accountId) {
               this.getAccountById(data.accountId)
                 .pipe(takeUntil(this.destroy$))
                 .subscribe((response) => {
                   (this.strategies || []).filter((strategy: Strategy) => {
                     if (strategy.account && strategy.account.id == data.accountId) {
+                      // debugger
                       strategy.account = response.account;
                     }
                   });
 
                   this.strategies$ = of(this.strategies);
+
+                  this.dataService._update$.next(null);
                 });
             }
             else if (data.strategyId) {
@@ -94,16 +98,18 @@ export class RatingPopularComponent implements OnInit, OnDestroy {
                 .subscribe((updatedStrategy: Strategy) => {
                   (this.strategies || []).filter((itemToUpdate: Strategy) => {
                     if (itemToUpdate.id == updatedStrategy.id) {
-                      // item.status = strategy.status;
                       itemToUpdate = Object.assign(itemToUpdate, updatedStrategy)
                     }
                   });
 
                   this.strategies$ = of(this.strategies);
+
+                  this.dataService._update$.next(null);
                 });
             }
+          }
+          else if (data && data.updateStatus == "") {
 
-            this.dataService._update$.next(null);
           }
         })
       );
@@ -111,7 +117,7 @@ export class RatingPopularComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.destroy$.next(true);
-
+    this.dataService._update$.next(null);
   }
 
   getStrategyById(strategyId: number): Observable<Strategy> {

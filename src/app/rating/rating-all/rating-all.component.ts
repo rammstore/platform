@@ -84,7 +84,7 @@ export class RatingAllComponent implements OnInit {
     this.update$ = this.dataService.update$
       .pipe(
         tap((data) => {
-          if (data && data.status == "update" && data.key == "rating-all") {
+          if (data) {
             // debugger
             if (data.accountId) {
               this.getAccountById(data.accountId)

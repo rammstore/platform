@@ -73,7 +73,8 @@ export class InvestmentsActiveComponent implements OnInit, OnDestroy {
     this.update$ = this.dataService.update$
       .pipe(
         tap((data: iUpdateOptions) => {
-          if (data && data.status == "update" && data.key == "investments-active") {
+          // debugger
+          if (data && data.updateStatus == "update") {
             if (data.strategyId) {
               this.getStrategyById(data.strategyId)
                 .pipe(take(1))
@@ -95,7 +96,7 @@ export class InvestmentsActiveComponent implements OnInit, OnDestroy {
                   (this.accounts || []).filter((item: Account) => {
                     if (item.id == data.account.id) {
                       const accountStrategy = item.strategy;
-
+                      // debugger
                       item = Object.assign(item, data.account);
                       item.isMyAccount = null;
                       item.strategy = accountStrategy;
@@ -106,6 +107,16 @@ export class InvestmentsActiveComponent implements OnInit, OnDestroy {
                   });
                 })
             }
+          }
+          else if (data && data.updateStatus == "close") {
+            if (data.strategyId) {
+              this.accounts = (this.accounts || []).filter((item: Account) => item.strategy.id != data.strategyId);
+            }
+            else if (data.accountId) {
+              this.accounts = (this.accounts || []).filter((item: Account) => item.id != data.accountId);
+            }
+            // debugger
+            this.accounts$ = of(this.accounts);
           }
         })
       );
@@ -137,6 +148,7 @@ export class InvestmentsActiveComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.dataService._update$.next(null);
     this.destroy$.next(true);
   }
 }

@@ -63,8 +63,11 @@ export class InvestmentsDetailsDealsComponent implements OnInit, OnDestroy {
       this.getDeals();
     });
 
-    const subscription = this.refreshService.refresh$
-      .pipe(map((item) => item == 'deals'))
+    this.refreshService.refresh$
+      .pipe(
+        takeUntil(this.destroy$),
+        map((item) => item == 'deals')
+      )
       .subscribe((status) => {
         this.emptyDataText = "table.cell.loading";
         if (status) {
@@ -72,8 +75,6 @@ export class InvestmentsDetailsDealsComponent implements OnInit, OnDestroy {
           this.getDeals();
         }
       });
-
-    this.subscriptions.push(subscription);
 
   }
 
@@ -96,9 +97,6 @@ export class InvestmentsDetailsDealsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.destroy$.next(true);
-    this.subscriptions.forEach(sub => {
-      sub.unsubscribe();
-      this.refreshService.refresh = "";
-    });
+    this.refreshService.refresh = null
   }
 }
