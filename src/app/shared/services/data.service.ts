@@ -391,7 +391,7 @@ export class DataService {
               });
           }
         },
-        () => { },
+        () => { this.loaderService.hideLoader(); },
         () => {
           this.loaderService.hideLoader();
         });
@@ -628,61 +628,8 @@ export class DataService {
       )
   }
 
-  // Получение деталей инвестиции
-  getAccountStatement(args: { accountId: number }): Observable<any> {
-    this.loaderService.showLoader();
-    return this.http.post(`${this.apiUrl}/accounts.get`, { AccountID: args.accountId })
-      .pipe(
-        catchError(error => {
-          const config: NotificationOptions = {
-            type: 'error',
-            autoClose: true,
-            duration: 3000
-          };
-
-          switch (error.status) {
-            case 404: {
-              this.router.navigate(['/investments']);
-              this.notificationsService.open('empty.investment.null', config);
-              break;
-            }
-            case 401: {
-              this.router.navigate(['/investments']);
-              this.notificationsService.open('notify.investment.access.error', config);
-              break;
-            }
-            default: {
-              this.router.navigate(['/investments']);
-              this.notificationsService.open('empty.investment.null', config);
-            }
-          }
-
-          this.loaderService.hideLoader()
-          return of();
-        }),
-        map((response: any) => {
-          if (response.Strategy) {
-            response.Strategy.PublicOffer = {
-              CommissionRate: response.Strategy.Commission,
-              FeeRate: response.Strategy.Fee
-            };
-
-            let newRespons = {
-              strategy: this.createInstanceService.createStrategy(response.Strategy),
-              account: this.createInstanceService.createAccount(response.Account)
-            }
-
-            return newRespons;
-          }
-        }),
-        tap(() => {
-          this.loaderService.hideLoader();
-        })
-      );
-  }
-
   // Инвестировать в стратегию по публичной оферте
-  addAccountPublicOffer(id: number, data: object): Observable<any> {
+  addAccountPublicOffer(id: number, data: object, updateStatus: string): Observable<any> {
     this.loaderService.showLoader();
     const options: any = {
       StrategyID: id,
@@ -695,11 +642,13 @@ export class DataService {
 
     return this.http.post(`${this.apiUrl}/accounts.add`, options).pipe(
       map((response: any) => {
-        // this.getActiveMyStrategies().subscribe();
         this.walletService.updateWallet().subscribe();
-        this._update$.next({ strategyId: id });
-        this.getStrategyByID({ strategyId: id });
-        // this.updateRatingList();
+        
+        this._update$.next({
+          strategyId: id,
+          updateStatus: updateStatus
+        });
+
         this.notificationsService.open('notify.investment.created');
       })
     );
@@ -835,28 +784,32 @@ export class DataService {
   // Получение статуса команды и запрос обновленного списка дынных после завершения обработки изменений
   updateAccount(command: Command, updateStatus: string, key: string, notificationText: string): void {
     const interval = setInterval(() => {
-      this.commandService.checkAccountCommand(command).subscribe((commandStatus: number) => {
-        // debugger
-        this._update$.next({
-          accountId: command.dataID,
-          updateStatus: updateStatus,
-          key: key
-        });
-        // debugger
-        if (commandStatus !== 0) {
-          clearInterval(interval);
- 
-          this.notificationsService.open(notificationText);
+      this.commandService.checkAccountCommand(command).subscribe(
+        (commandStatus: number) => {
+          // debugger
+          this._update$.next({
+            accountId: command.dataID,
+            updateStatus: updateStatus,
+            key: key
+          });
+          // debugger
+          if (commandStatus !== 0) {
+            clearInterval(interval);
 
-          this.walletService.updateWallet()
-            .pipe(takeUntil(this.destroy$))
-            .subscribe(() => {
-              this.destroy$.next(true);
-            });
-        }
-        
-        this.loaderService.hideLoader();
-      });
+            this.notificationsService.open(notificationText);
+
+            this.walletService.updateWallet()
+              .pipe(takeUntil(this.destroy$))
+              .subscribe(() => {
+                this.destroy$.next(true);
+              });
+          }
+
+          this.loaderService.hideLoader();
+        },
+        () => { this.loaderService.hideLoader() },
+        () => { this.loaderService.hideLoader() }
+      );
 
     }, 1000);
   }

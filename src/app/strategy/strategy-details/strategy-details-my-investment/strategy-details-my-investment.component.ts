@@ -65,11 +65,11 @@ export class StrategyDetailsMyInvestmentComponent implements OnInit, OnDestroy {
   }
 
   getAccountStatement(args: any): void {
-    this.account$ = this.getStatement(args);
+    this.account$ = this.getAccount(args);
   }
 
-  getStatement(args: any): Observable<Account> {
-    return this.dataService.getAccountStatement(args)
+  getAccount(args: any): Observable<Account> {
+    return this.dataService.getAccountById(args)
       .pipe(
         map((response: any) => {
           if (response) {

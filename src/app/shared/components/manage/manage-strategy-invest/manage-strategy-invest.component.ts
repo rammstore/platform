@@ -27,6 +27,8 @@ export class ManageStrategyInvestComponent implements OnInit, OnDestroy {
   functionality: object;
   @Input() methodArgs: any;
 
+  updateStatus: string;
+
   constructor(
     private fb: FormBuilder,
     private dataService: DataService,
@@ -51,9 +53,9 @@ export class ManageStrategyInvestComponent implements OnInit, OnDestroy {
     this.walletService.getWallet()
       .pipe(takeUntil(this.destroy$))
       .subscribe((wallet: Wallet) => {
-      this.wallet = wallet;
-      this.buildForm();
-    });
+        this.wallet = wallet;
+        this.buildForm();
+      });
   }
 
   buildForm(): void {
@@ -71,6 +73,7 @@ export class ManageStrategyInvestComponent implements OnInit, OnDestroy {
   }
 
   invest(): void {
+    this.updateStatus = "update";
     this.form.markAllAsTouched();
 
     if (!this.form.valid) {
@@ -81,17 +84,17 @@ export class ManageStrategyInvestComponent implements OnInit, OnDestroy {
     values.protection = values.protection / 100;
     values.target = values.target ? values.target / 100 : null;
 
-    if(this.strategy.publicOffer) {
+    if (this.strategy.publicOffer) {
       values.offerId = this.strategy.publicOffer ? this.strategy.publicOffer.id : null;
 
-      this.dataService.addAccountPublicOffer(this.strategy.id, values).subscribe(() => {
+      this.dataService.addAccountPublicOffer(this.strategy.id, values, this.updateStatus).subscribe(() => {
         this.onClose.next(true);
         this.modalRef.hide();
         this.getSwitch();
       });
     }
 
-    if (this.methodArgs && this.methodArgs.link){
+    if (this.methodArgs && this.methodArgs.link) {
       this.dataService.addAccountPrivateOffer(this.methodArgs.link, values).subscribe(() => {
         this.onClose.next(true);
         this.modalRef.hide();

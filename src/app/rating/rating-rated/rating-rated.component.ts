@@ -28,27 +28,8 @@ export class RatingRatedComponent implements OnInit, OnDestroy {
   update$: Observable<any>;
 
   // table settings
-  tableHeader: TableHeaderRow[] = [
-    new TableHeaderRow([
-      new TableColumn({ property: 'nameRating', label: 'common.strategy', fontSize: 20 }),
-      new TableColumn({
-        property: 'profit',
-        label: 'common.table.label.yieldCommon',
-        pipe: { pipe: PercentPipe, args: ['1.0-2'] },
-        fontSize: 24
-      }),
-      new TableColumn({ property: 'strategy.yieldChart', label: 'common.chart' }),
-      new TableColumn({ property: 'accounts', label: 'common.table.label.investors', fontSize: 16 }),
-      new TableColumn({ property: 'age', label: 'common.age', fontSize: 16 }),
-      new TableColumn({
-        property: 'strategy.investmentInfo',
-        hint: 'account.label.profit.hint',
-        label: 'common.table.label.myInvestmentUSD',
-        colored: true
-      }),
-      new TableColumn({ property: 'manage', label: 'common.table.label.manage' })
-    ]),
-  ];
+  tableHeader: TableHeaderRow[];
+
   paginator: Paginator = new Paginator({
     perPage: 10,
     currentPage: 1
@@ -62,7 +43,10 @@ export class RatingRatedComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.key = "rating-rated";
+    this.setTableHeader();
+
+    // this.key = "rating-rated";
+
     this.ratingRated$ = this.argumentsService.ratingRated$
       .pipe(
         tap((argument) => {
@@ -85,36 +69,99 @@ export class RatingRatedComponent implements OnInit, OnDestroy {
       .pipe(
         tap((data: iUpdateOptions) => {
           // debugger
-          
-          if (data && data.accountId ) {
-            this.getAccountById(data.accountId)
-              .pipe(takeUntil(this.destroy$))
-              .subscribe((response) => {
-                (this.strategies || []).filter((strategy: Strategy) => {
-                  if (strategy.account && strategy.account.id == data.accountId) {
-                    strategy.account = response.account;
-                  }
-                });
+          if (data && data.updateStatus == "update") {
+            if (data.accountId) {
+              // update strategy after investment was set on pause/resume
+              this.getAccountById(data.accountId)
+                .pipe(takeUntil(this.destroy$))
+                .subscribe((response) => {
+                  // debugger
+                  (this.strategies || []).filter((strategy: Strategy) => {
+                    if (strategy.account && strategy.account.id == data.accountId) {
+                      strategy = Object.assign(strategy, response.strategy);
+                      strategy.account = response.account;
+                    }
+                  });
 
-                this.strategies$ = of(this.strategies);
-              });
-          }
-          else if (data && data.strategyId ) {
-            this.getStrategyById(data.strategyId)
-              .pipe(takeUntil(this.destroy$))
-              .subscribe((updatedStrategy: Strategy) => {
-                (this.strategies || []).filter((itemToUpdate: Strategy) => {
-                  if (itemToUpdate.id == updatedStrategy.id) {
-                    itemToUpdate = Object.assign(itemToUpdate, updatedStrategy);
-                  }
-                });
+                  this.strategies$ = of(this.strategies);
 
-                this.strategies$ = of(this.strategies);
-              });
+                  this.dataService._update$.next(null);
+                });
+            }
+            else if (data.strategyId) {
+              // update strategy after strategy was set on pause/resume
+              this.getStrategyById(data.strategyId)
+                .pipe(takeUntil(this.destroy$))
+                .subscribe((updatedStrategy: Strategy) => {
+                  // debugger
+                  (this.strategies || []).filter((itemToUpdate: Strategy) => {
+                    if (itemToUpdate.id == updatedStrategy.id) {
+                      itemToUpdate = Object.assign(itemToUpdate, updatedStrategy);
+                    }
+                  });
+
+                  this.strategies$ = of(this.strategies);
+
+                  this.dataService._update$.next(null);
+                });
+            }
           }
-          this.dataService._update$.next(null);
+          else if (data && data.updateStatus == "close") {
+            if (data.accountId) {
+              // update strategy after investrment was closed
+              (this.strategies || []).filter((strategy: Strategy) => {
+                if (strategy.account && strategy.account.id == data.accountId) {
+                  strategy.account = null;
+
+                  this.strategies$ = of(this.strategies);
+
+                  this.setTableHeader();
+                }
+              });
+            }
+            else if (data.strategyId) {
+              // update strategy after this strategy was closed
+              (this.strategies || []).filter((strategy: Strategy) => {
+                if (strategy.account && strategy.id == data.strategyId) {
+                  this.getStrategyById(data.strategyId)
+                    .pipe(takeUntil(this.destroy$))
+                    .subscribe((strategyById: Strategy) => {
+                      strategy = Object.assign(strategy, strategyById);
+                      // debugger
+                      this.strategies$ = of(this.strategies);
+                    })
+
+                  this.setTableHeader();
+                }
+              });
+            }
+          }
         })
       );
+  }
+
+  setTableHeader(): void {
+    this.tableHeader = [
+      new TableHeaderRow([
+        new TableColumn({ property: 'nameRating', label: 'common.strategy', fontSize: 20 }),
+        new TableColumn({
+          property: 'profit',
+          label: 'common.table.label.yieldCommon',
+          pipe: { pipe: PercentPipe, args: ['1.0-2'] },
+          fontSize: 24
+        }),
+        new TableColumn({ property: 'strategy.yieldChart', label: 'common.chart' }),
+        new TableColumn({ property: 'accounts', label: 'common.table.label.investors', fontSize: 16 }),
+        new TableColumn({ property: 'age', label: 'common.age', fontSize: 16 }),
+        new TableColumn({
+          property: 'strategy.investmentInfo',
+          hint: 'account.label.profit.hint',
+          label: 'common.table.label.myInvestmentUSD',
+          colored: true
+        }),
+        new TableColumn({ property: 'manage', label: 'common.table.label.manage' })
+      ]),
+    ];
   }
 
   getAccountById(accountId: number): Observable<any> {
@@ -149,5 +196,6 @@ export class RatingRatedComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.destroy$.next(true);
+    this.dataService._update$.next(null);
   }
 }
