@@ -1,5 +1,5 @@
 import { Strategy } from '@app/models/strategy';
-import {Offer} from "@app/models/offer";
+import { Offer } from "@app/models/offer";
 
 export class Account {
   id: number;                       // ID счета (инвестиции)
@@ -55,54 +55,59 @@ export class Account {
   }
 
   isPaused(): boolean {
-    return this.status === 4;
+
+    if (this.state == 10)
+      return true;
+
+    if (this.state == 11)
+      return true;
   }
 
-  isPauseButtonActice(): boolean{
-    if(this.state == 2){
+  isPauseButtonActice(): boolean {
+    if (this.state == 2) {
       return true;
     }
 
-    if(this.state == 3){
+    if (this.state == 3) {
       return true;
     }
 
     return false;
   }
 
-  isResumeButtonActive(): boolean{
-    if(this.state == 4){
+  isResumeButtonActive(): boolean {
+    if (this.state == 4) {
       return true;
     }
 
-    if(this.state == 5){
+    if (this.state == 5) {
       return true;
     }
 
-    if(this.state == 6){
+    if (this.state == 6) {
       return true;
     }
 
-    if(this.state == 7){
+    if (this.state == 7) {
       return true;
     }
 
-    if(this.state == 8){
-      return true;
-    }
-    
-    if(this.state == 9){
+    if (this.state == 8) {
       return true;
     }
 
-    if(this.state == 10){
+    if (this.state == 9) {
       return true;
     }
-    
-    if(this.state == 11){
+
+    if (this.state == 10) {
       return true;
     }
-    
+
+    if (this.state == 11) {
+      return true;
+    }
+
     return false;
   }
 
@@ -302,11 +307,11 @@ export class Account {
     }
   }
 
-  get getProtection(): number{
+  get getProtection(): number {
     return this.protection * 100;
   }
 
-  get getTarget(): number{
+  get getTarget(): number {
     return this.target * 100;
   }
 }
