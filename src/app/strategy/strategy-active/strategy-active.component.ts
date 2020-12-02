@@ -8,6 +8,7 @@ import { DataService } from '@app/services/data.service';
 import { SectionEnum } from "@app/enum/section.enum";
 import { takeUntil, tap } from 'rxjs/operators';
 import { SettingsService } from "@app/services/settings.service";
+import { iUpdateOptions } from '@app/interfaces/update';
 
 @Component({
   selector: 'app-strategy-active',
@@ -63,8 +64,8 @@ export class StrategyActiveComponent implements OnInit, OnDestroy {
 
     this.update$ = this.dataService.update$
       .pipe(
-        tap((data) => {
-          if (data && data.status == "update" && data.key == "strategy-active") {
+        tap((data: iUpdateOptions) => {
+          if (data && data.updateStatus == "update" && data.key == "strategy-active") {
             if (data.accountId) {
               this.getAccountById(data.accountId)
                 .pipe(takeUntil(this.destroy$))
