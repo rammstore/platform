@@ -26,7 +26,7 @@ const routes: Routes = [
       { path: '', component: StrategyDetailsProfitabilityComponent },
       { path: 'offers', canActivate: [MyStrategyGuard], component: StrategyOffersComponent },
       { path: 'symbols', component: StrategyDetailsSymbolsComponent },
-      { path: 'my-investment', canActivate: [MyStrategyGuard], component: StrategyDetailsMyInvestmentComponent },
+      { path: 'my-investment', component: StrategyDetailsMyInvestmentComponent },
       {
         path: 'investments',
         canActivate: [MyStrategyGuard],
