@@ -64,13 +64,14 @@ export class StrategyActiveComponent implements OnInit, OnDestroy {
     this.update$ = this.dataService.update$
       .pipe(
         tap((data) => {
-          // debugger
+          debugger
           if (data && data.status == "update" && data.key == "strategy-active") {
             if (data.accountId) {
               this.getAccountById(data.accountId)
                 .pipe(takeUntil(this.destroy$))
                 .subscribe((response) => {
                   (this.strategies || []).filter((strategy: Strategy) => {
+                    debugger
                     if (strategy.account && strategy.account.id == data.accountId) {
                       strategy.account = response.account;
                     }
@@ -85,6 +86,7 @@ export class StrategyActiveComponent implements OnInit, OnDestroy {
                 .subscribe((strategy: Strategy) => {
                   (this.strategies || []).filter((item: Strategy) => {
                     if (item.id == data.strategyId) {
+                      debugger
                       item.status = strategy.status;
                     }
                   });
@@ -112,7 +114,10 @@ export class StrategyActiveComponent implements OnInit, OnDestroy {
   }
 
   getAccountById(accountId: number): Observable<any> {
-    return this.dataService.getAccountById(accountId);
+    let args: any = {
+      accountId: accountId
+    }
+    return this.dataService.getAccountById(args);
   }
 
   getActiveStrategy(args: any): Observable<any> {

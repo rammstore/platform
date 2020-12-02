@@ -583,12 +583,13 @@ export class DataService {
       );
   }
 
-  getAccountById(accountId: number): Observable<any> {
+  getAccountById(args: { accountId: number }): Observable<any> {
     this.loaderService.showLoader();
-    return this.http.post(`${this.apiUrl}/accounts.get`, { AccountID: accountId })
-      .pipe(
 
+    return this.http.post(`${this.apiUrl}/accounts.get`, { AccountID: args.accountId })
+      .pipe(
         catchError(error => {
+          debugger
           const config: NotificationOptions = {
             type: 'error',
             autoClose: true,
@@ -617,6 +618,7 @@ export class DataService {
           return of();
         }), take(1),
         map((response: any) => {
+          debugger
           const data = {
             strategy: this.createInstanceService.createStrategy(response.Strategy),
             account: this.createInstanceService.createAccount(response.Account)
@@ -643,7 +645,7 @@ export class DataService {
     return this.http.post(`${this.apiUrl}/accounts.add`, options).pipe(
       map((response: any) => {
         this.walletService.updateWallet().subscribe();
-        
+
         this._update$.next({
           strategyId: id,
           updateStatus: updateStatus

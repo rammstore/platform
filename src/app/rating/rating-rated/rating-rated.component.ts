@@ -165,7 +165,11 @@ export class RatingRatedComponent implements OnInit, OnDestroy {
   }
 
   getAccountById(accountId: number): Observable<any> {
-    return this.dataService.getAccountById(accountId);
+    let args: any = {
+      accountId: accountId
+    }
+
+    return this.dataService.getAccountById(args);
   }
 
   getStrategyById(strategyId: number): Observable<Strategy> {

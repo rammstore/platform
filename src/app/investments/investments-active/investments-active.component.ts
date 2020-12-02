@@ -133,7 +133,10 @@ export class InvestmentsActiveComponent implements OnInit, OnDestroy {
   }
 
   getAccountById(accountId: number): Observable<Account> {
-    return this.dataService.getAccountById(accountId);
+    let args = {
+      accountId: accountId
+    }
+    return this.dataService.getAccountById(args);
   }
 
   getActiveAccounts(args: any): Observable<any> {

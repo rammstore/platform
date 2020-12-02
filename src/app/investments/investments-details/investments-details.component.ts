@@ -86,9 +86,11 @@ export class InvestmentsDetailsComponent implements OnInit, OnDestroy {
   }
 
   getAccount(): Observable<any> {
-    const accountId = this.route.params['_value'].id
+    let args: any = {
+      accountId: this.route.params['_value'].id
+    }
 
-    return this.dataService.getAccountById(accountId)
+    return this.dataService.getAccountById(args)
       .pipe(
         tap((response: any) => {
           this.currentDate = moment.utc().format("yyyy-MM-DD HH:mm:ss");
