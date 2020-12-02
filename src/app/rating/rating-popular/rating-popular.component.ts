@@ -65,7 +65,6 @@ export class RatingPopularComponent implements OnInit, OnDestroy {
     this.update$ = this.dataService.update$
       .pipe(
         tap((data: iUpdateOptions) => {
-          // debugger
           if (data && data.updateStatus == "update") {
             if (data.accountId) {
               // update strategy after investment was set on pause/resume
@@ -74,7 +73,6 @@ export class RatingPopularComponent implements OnInit, OnDestroy {
                 .subscribe((response) => {
                   (this.strategies || []).filter((strategy: Strategy) => {
                     if (strategy.account && strategy.account.id == data.accountId) {
-                      // debugger
                       strategy.account = response.account;
                     }
                   });
@@ -122,11 +120,8 @@ export class RatingPopularComponent implements OnInit, OnDestroy {
                     .pipe(takeUntil(this.destroy$))
                     .subscribe((strategyById: Strategy) => {
                       strategy = Object.assign(strategy, strategyById);
-                      // debugger
                       this.strategies$ = of(this.strategies);
                     })
-
-                  // this.setTableHeader();
                 }
               });
             }

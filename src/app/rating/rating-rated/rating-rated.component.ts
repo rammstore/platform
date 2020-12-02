@@ -64,18 +64,15 @@ export class RatingRatedComponent implements OnInit, OnDestroy {
         })
       );
 
-    // debugger
     this.update$ = this.dataService.update$
       .pipe(
         tap((data: iUpdateOptions) => {
-          // debugger
           if (data && data.updateStatus == "update") {
             if (data.accountId) {
               // update strategy after investment was set on pause/resume
               this.getAccountById(data.accountId)
                 .pipe(takeUntil(this.destroy$))
                 .subscribe((response) => {
-                  // debugger
                   (this.strategies || []).filter((strategy: Strategy) => {
                     if (strategy.account && strategy.account.id == data.accountId) {
                       strategy = Object.assign(strategy, response.strategy);
@@ -93,7 +90,6 @@ export class RatingRatedComponent implements OnInit, OnDestroy {
               this.getStrategyById(data.strategyId)
                 .pipe(takeUntil(this.destroy$))
                 .subscribe((updatedStrategy: Strategy) => {
-                  // debugger
                   (this.strategies || []).filter((itemToUpdate: Strategy) => {
                     if (itemToUpdate.id == updatedStrategy.id) {
                       itemToUpdate = Object.assign(itemToUpdate, updatedStrategy);
@@ -127,7 +123,6 @@ export class RatingRatedComponent implements OnInit, OnDestroy {
                     .pipe(takeUntil(this.destroy$))
                     .subscribe((strategyById: Strategy) => {
                       strategy = Object.assign(strategy, strategyById);
-                      // debugger
                       this.strategies$ = of(this.strategies);
                     })
 

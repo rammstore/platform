@@ -63,7 +63,6 @@ export class RatingAllComponent implements OnInit, OnDestroy {
         })
       );
 
-    // debugger
     this.update$ = this.dataService.update$
       .pipe(
         tap((data) => {
@@ -75,7 +74,6 @@ export class RatingAllComponent implements OnInit, OnDestroy {
                 .subscribe((response) => {
                   (this.strategies || []).filter((strategy: Strategy) => {
                     if (strategy.account && strategy.account.id == data.accountId) {
-                      // debugger
                       strategy.account = response.account;
                     }
                   });
@@ -89,7 +87,6 @@ export class RatingAllComponent implements OnInit, OnDestroy {
               this.getStrategyById(data.strategyId)
                 .pipe(takeUntil(this.destroy$))
                 .subscribe((updatedStrategy: Strategy) => {
-                  // debugger
                   (this.strategies || []).filter((itemToUpdate: Strategy) => {
                     if (itemToUpdate.id == updatedStrategy.id) {
                       itemToUpdate = Object.assign(itemToUpdate, updatedStrategy);
@@ -122,11 +119,8 @@ export class RatingAllComponent implements OnInit, OnDestroy {
                     .pipe(takeUntil(this.destroy$))
                     .subscribe((strategyById: Strategy) => {
                       strategy = Object.assign(strategy, strategyById);
-                      // debugger
                       this.strategies$ = of(this.strategies);
                     })
-
-                  // this.setTableHeader();
                 }
               });
             }
@@ -182,7 +176,7 @@ export class RatingAllComponent implements OnInit, OnDestroy {
     let args: any = {
       accountId: accountId
     }
-    
+
     return this.dataService.getAccountById(args);
   }
 

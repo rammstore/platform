@@ -202,7 +202,6 @@ export class DataService {
     return this.http.post(`${this.apiUrl}/strategies.get`, { ID: args.strategyId })
       .pipe(
         catchError((err: HttpErrorResponse) => {
-          // debugger
           this.notificationsService.open('empty.strategy.null', {
             type: 'error',
             autoClose: true,
@@ -214,7 +213,6 @@ export class DataService {
         }),
         map((item) => this.createInstanceService.createStrategy(item)),
         tap(item => {
-          // debugger
           this.loaderService.hideLoader()
         })
       );
@@ -369,19 +367,18 @@ export class DataService {
   // Получение статуса команды стратегии и запрос обновленного списка стратегий после завершения обработки изменений
   // Работает с активными стратегиями, так как закрытые изменять нельзя
   updateStrategy(command: Command, updateStatus: string, key: string, notificationText: string): void {
-    // debugger
     const interval = setInterval(() => {
       this.commandService.checkStrategyCommand(command).subscribe(
         (commandStatus: number) => {
           if (commandStatus !== 0) {
             clearInterval(interval);
-            // debugger
+
             this._update$.next({
               strategyId: command.dataID,
               updateStatus: updateStatus,
               key: key
             });
-            // debugger
+
             this.notificationsService.open(notificationText);
 
             this.walletService.updateWallet()
@@ -392,9 +389,8 @@ export class DataService {
           }
         },
         () => { this.loaderService.hideLoader(); },
-        () => {
-          this.loaderService.hideLoader();
-        });
+        () => { this.loaderService.hideLoader(); }
+      );
     }, 1000);
   }
 
@@ -505,7 +501,6 @@ export class DataService {
     return this.http.post(`${this.apiUrl}/strategies.search`, options)
       .pipe(
         catchError(error => {
-          // debugger
           const config: NotificationOptions = {
             type: 'error',
             autoClose: true,
@@ -518,7 +513,6 @@ export class DataService {
         }),
         take(1),
         tap((item: any) => {
-          // debugger
           this.walletService.walletSubject.next(this.createInstanceService.createWallet(item.Wallets[0]));
 
           if (args.paginator) {
@@ -589,7 +583,6 @@ export class DataService {
     return this.http.post(`${this.apiUrl}/accounts.get`, { AccountID: args.accountId })
       .pipe(
         catchError(error => {
-          debugger
           const config: NotificationOptions = {
             type: 'error',
             autoClose: true,
@@ -618,7 +611,6 @@ export class DataService {
           return of();
         }), take(1),
         map((response: any) => {
-          debugger
           const data = {
             strategy: this.createInstanceService.createStrategy(response.Strategy),
             account: this.createInstanceService.createAccount(response.Account)
@@ -788,13 +780,12 @@ export class DataService {
     const interval = setInterval(() => {
       this.commandService.checkAccountCommand(command).subscribe(
         (commandStatus: number) => {
-          // debugger
           this._update$.next({
             accountId: command.dataID,
             updateStatus: updateStatus,
             key: key
           });
-          // debugger
+
           if (commandStatus !== 0) {
             clearInterval(interval);
 

@@ -29,7 +29,7 @@ export class MyStrategyGuard implements CanActivate {
     const investments = location.pathname.indexOf('investments');
     const myInvestments = location.pathname.indexOf('my-investment');
     const symbols = location.pathname.indexOf('symbols');
-    debugger
+
     let id: number;
 
     this.dataService.update$
@@ -75,7 +75,7 @@ export class MyStrategyGuard implements CanActivate {
             autoClose: true,
             duration: 5000
           };
-debugger
+
           switch (error.status) {
             case 404:
             case 401: {
