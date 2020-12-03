@@ -94,8 +94,14 @@ export class StrategyActiveComponent implements OnInit, OnDestroy {
             }
 
             this.dataService._update$.next(null);
-          } else if (data && data.status == "strategy-created" && data.key == "strategy-active" && data.strategyId) {
+          }
+          else if (data && data.updateStatus == "strategy-created" && data.key == "strategy-active" && data.strategyId) {
             this.getStrategies();
+          }
+          else if (data && data.updateStatus == "close" && data.strategyId) {
+            this.strategies = (this.strategies || []).filter((strategy: Strategy) => strategy.id != data.strategyId);
+
+            this.strategies$ = of(this.strategies);
           }
         })
       );
