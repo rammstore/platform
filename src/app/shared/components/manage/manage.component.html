@@ -119,7 +119,7 @@
           common.manage.closeInvestment
         </li>
         <li (click)="openStrategyCloseDialog()" translate>
-          <i class="fa fa-window-close"></i>
+          <i class="fa fa-window-close"  (click)="onInvestmentsClick(data.id)"></i>
           common.manage.closeStrategy
         </li>
       </ul>

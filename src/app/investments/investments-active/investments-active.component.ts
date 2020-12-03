@@ -22,7 +22,6 @@ export class InvestmentsActiveComponent implements OnInit, OnDestroy {
   accounts$: Observable<Account[]>;
   accounts: Account[];
   args: any;
-  strategy$: Observable<Strategy>;
   key: string;
   update$: Observable<any>;
 
@@ -64,16 +63,19 @@ export class InvestmentsActiveComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.key = "investments-active";
+
     this.args = {
       searchMode: 'MyActiveAccounts',
       field: 'ID',
       direction: 'Desc',
       paginator: this.paginator
     };
+
     this.update$ = this.dataService.update$
       .pipe(
         tap((data: iUpdateOptions) => {
           if (data && data.updateStatus == "update") {
+            
             if (data.strategyId) {
               this.getStrategyById(data.strategyId)
                 .pipe(take(1))
@@ -85,6 +87,7 @@ export class InvestmentsActiveComponent implements OnInit, OnDestroy {
                   });
 
                   this.accounts$ = of(this.accounts);
+
                   this.dataService._update$.next(null);
                 });
             }
@@ -95,12 +98,16 @@ export class InvestmentsActiveComponent implements OnInit, OnDestroy {
                   (this.accounts || []).filter((item: Account) => {
                     if (item.id == data.account.id) {
                       const accountStrategy = item.strategy;
+
                       item = Object.assign(item, data.account);
+
                       item.isMyAccount = null;
+
                       item.strategy = accountStrategy;
                     }
 
                     this.accounts$ = of(this.accounts);
+
                     this.dataService._update$.next(null);
                   });
                 })
@@ -113,7 +120,7 @@ export class InvestmentsActiveComponent implements OnInit, OnDestroy {
             else if (data.accountId) {
               this.accounts = (this.accounts || []).filter((item: Account) => item.id != data.accountId);
             }
-            
+
             this.accounts$ = of(this.accounts);
           }
         })
@@ -126,7 +133,6 @@ export class InvestmentsActiveComponent implements OnInit, OnDestroy {
     let args = {
       strategyId: strategyId
     }
-
     return this.dataService.getStrategyById(args);
   }
 

@@ -17,7 +17,7 @@ import { takeUntil } from 'rxjs/internal/operators';
 import { ManageStrategyPauseComponent } from '@app/components/manage/manage-strategy-pause/manage-strategy-pause.component';
 import { DataService } from '@app/services/data.service';
 import { ManageAccountPauseComponent } from '@app/components/manage/manage-account-pause/manage-account-pause.component';
-import {ActionEnum} from "@app/enum/action.enum";
+import { ActionEnum } from "@app/enum/action.enum";
 
 @Component({
   selector: 'app-manage-account-withdraw',
@@ -34,8 +34,8 @@ export class ManageAccountWithdrawComponent implements OnInit, AfterViewInit, On
   onClose: Subject<any> = new Subject<any>();
 
   @Input() forClose: boolean = false;
- 
-  @ViewChild('withdrawRadio', {static: false}) withdrawRadio: ElementRef;
+  
+  @ViewChild('withdrawRadio', { static: false }) withdrawRadio: ElementRef;
 
   @Output() action: EventEmitter<ActionEnum> = new EventEmitter<ActionEnum>();
 
@@ -103,13 +103,20 @@ export class ManageAccountWithdrawComponent implements OnInit, AfterViewInit, On
 
   close(): void {
     const updateStatus = "close";
-
-    this.dataService.closeAccount(this.account.id, updateStatus)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(() => {
-        this.onClose.next(true);
-        this.modalRef.hide();
-      });
+    if (this.account.isSecured() && this.account.isMy()) {
+      this.dataService.closeStrategy(this.account.strategy.id, updateStatus)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(() => {
+          this.modalRef.hide();
+        });
+    } else {
+      this.dataService.closeAccount(this.account.id, updateStatus)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(() => {
+          this.onClose.next(true);
+          this.modalRef.hide();
+        });
+    }
   }
 
   setAllMoney(): void {
