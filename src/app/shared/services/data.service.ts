@@ -258,18 +258,19 @@ export class DataService {
   // Создание новой стратегии
   addStrategy(strategy: object, updateStatus: string, key: string): Observable<Strategy> {
     this.loaderService.showLoader();
-    return this.http.post(`${this.apiUrl}/myStrategies.add`, strategy).pipe(
-      tap(() => this.loaderService.hideLoader()),
-      map((response: any) => {
+    return this.http.post(`${this.apiUrl}/myStrategies.add`, strategy)
+      .pipe(
+        tap(() => this.loaderService.hideLoader()),
+        map((response: any) => {
 
-        // переробити
-        this.updateAccount(new Command(response.AccountCommandID, response.AccountID), updateStatus, key, 'notify.strategy.created');
-        this.loaderService.hideLoader();
-        return this.createInstanceService.createStrategy({
-          ID: response.StrategyID
-        });
-      })
-    );
+          // переробити
+          this.updateAccount(new Command(response.AccountCommandID, response.AccountID), updateStatus, key, 'notify.strategy.created');
+          this.loaderService.hideLoader();
+          return this.createInstanceService.createStrategy({
+            ID: response.StrategyID
+          });
+        })
+      );
   }
 
   setPublicOffer(strategyID: number, offerID?: number) {

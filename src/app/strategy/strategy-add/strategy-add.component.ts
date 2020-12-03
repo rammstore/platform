@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Strategy, Wallet } from '@app/models';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/internal/operators';
+import { take, takeUntil } from 'rxjs/internal/operators';
 import { DataService } from '@app/services/data.service';
 import { WalletService } from '@app/services/wallet.service';
 import { StrategyAddScriptComponent } from './strategy-add-script/strategy-add-script.component';
@@ -131,10 +131,10 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
     };
 
     this.dataService.addStrategy(strategy, this.updateStatus, this.key)
-      .pipe(takeUntil(this.destroy$))
+      .pipe(take(1))
       .subscribe(
         (newStrategy: Strategy) => {
-          
+
           if (status) {
             this.dataService.addOffer(newStrategy.id, strategy.FeeRate, strategy.CommissionRate).subscribe((item) => {
               this.modalRef.hide();
@@ -162,7 +162,7 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
   initializeUpdateSubject(id: number, updateStatus: string, key: string): void {
     this.dataService._update$.next({
       strategyId: id,
-      status: updateStatus,
+      updateStatus: updateStatus,
       key: key
     });
   }
