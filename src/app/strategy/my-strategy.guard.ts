@@ -53,7 +53,7 @@ export class MyStrategyGuard implements CanActivate {
         id = this.getId(location.pathname.substring(0, isOffers - 1));
         break;
       }
-      case (investments > 0): {
+      case (investments > 0 && investments != 1): {
         id = this.getId(location.pathname.substring(0, investments - 1));
         break;
       }

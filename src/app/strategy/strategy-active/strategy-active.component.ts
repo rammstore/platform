@@ -97,7 +97,6 @@ export class StrategyActiveComponent implements OnInit, OnDestroy {
             this.dataService._update$.next(null);
           }
           else if (data && data.updateStatus == "strategy-created" && data.key == "strategy-active" && data.strategyId) {
-            debugger
             this.getStrategies();
           }
           else if (data && data.updateStatus == "close" && data.strategyId) {
@@ -131,6 +130,7 @@ export class StrategyActiveComponent implements OnInit, OnDestroy {
       .pipe(
         tap((strategies) => {
           this.strategies = strategies;
+
           this.dataService._update$.next(null);
         })
       );

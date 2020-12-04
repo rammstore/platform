@@ -62,7 +62,7 @@ export class InvestmentsActiveComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.key = "investments-active";
+    // this.key = "investments-active";
 
     this.args = {
       searchMode: 'MyActiveAccounts',

@@ -52,14 +52,14 @@
         </li>
 
         <li *ngIf="dataType === 'strategy' && data.isMy()" 
-        (click)="onInvestmentsClick(data.id)"
         [routerLink]="['/strategies/details', data.id, 'investments']" 
+        (click)="onInvestmentsClick(data.id)"
         translate>
           <i class="fa fa-list-alt"></i>
           common.investments
         </li>
         <li *ngIf="dataType === 'account' && data.isMy() && !hideInvestmentsButton" [routerLink]="['/strategies/details', data.strategy.id, 'investments']" 
-        (onclick)="onInvestmentsClick(data.strategy.id)"
+        (click)="onInvestmentsClick(data.strategy.id)"
         translate>
           <i class="fa fa-list-alt"></i>
           common.investments
@@ -108,6 +108,7 @@
       <ul *dropdownMenu class="dropdown-menu" role="menu">
         <li 
           [routerLink]="['/strategies/details', data.id, 'investments']" 
+          (click)="onInvestmentsClick(data.id)"
           translate>
           <i class="fa fa-list-alt"></i>
           common.investments
