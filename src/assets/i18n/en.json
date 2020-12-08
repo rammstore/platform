@@ -336,7 +336,7 @@
 	"strategy.add.form.label.name": "Strategy name",
   "strategy.add.form.label.step2": "A strategy requires your investment into it. This investment can only be closed together with the strategy.",
   "strategy.add.form.label.step2.bottom": "You can set investment conditions and download the adviser in the next steps.",
-  "strategy.add.form.label.step3": "A strategy will become available for investing after the creation of investment Conditions. If these Conditions are public, a strategy will appear in Rating. If they are not made public, a strategy will be available by using a unique link. Be advised that Conditions can't be change after the creation, but you can change their visibility at any time.",
+  "strategy.add.form.label.step3": "A strategy will become available for investing after the creation of investment Conditions. If these Conditions are public, a strategy will appear in Rating. If they are not made public, a strategy will be available by using a unique link. Be advised that Conditions can't be changed after the creation, but you can change their visibility at any time.",
  	"strategy.add.form.label.step3.warning": "",
   "strategy.add.script.button.download": "Download script",
 	"strategy.add.script.download.platform.title": "Trading platform",
