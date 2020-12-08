@@ -38,7 +38,8 @@ export class CreateInstanceService {
       partnerInfo: options.PartnerInfo ? this.createPartnerInfo(options.PartnerInfo) : null,
       commission: options.Commission,
       chart: options.Chart,
-      masterAccount: options.MasterAccount
+      masterAccount: options.MasterAccount,
+      youTubeVideoId: options.Tags.YouTube ? options.Tags.YouTube : null
     });
   }
 
