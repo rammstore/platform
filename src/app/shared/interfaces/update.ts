@@ -3,4 +3,5 @@ export interface iUpdateOptions{
     key?: string;
     strategyId?: number;
     accountId?: number;
+    updateStatus?: string;
 }

@@ -1,18 +1,19 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Account, Offer, Strategy} from '@app/models';
-import {BsModalRef, BsModalService, ModalOptions} from 'ngx-bootstrap';
-import {ManageAccountChangeProfileComponent} from './manage-account-change-profile/manage-account-change-profile.component';
-import {ManageAccountFundComponent} from './manage-account-fund/manage-account-fund.component';
-import {ManageAccountPauseComponent} from './manage-account-pause/manage-account-pause.component';
-import {ManageAccountResumeComponent} from './manage-account-resume/manage-account-resume.component';
-import {ManageAccountWithdrawComponent} from './manage-account-withdraw/manage-account-withdraw.component';
-import {ManageStrategyCloseComponent} from './manage-strategy-close/manage-strategy-close.component';
-import {ManageStrategyPauseComponent} from './manage-strategy-pause/manage-strategy-pause.component';
-import {ManageStrategyResumeComponent} from './manage-strategy-resume/manage-strategy-resume.component';
-import {ManageStrategyDownloadScriptComponent} from '@app/components/manage/manage-strategy-download-script/manage-strategy-download-script.component';
-import {ManageStrategyInvestComponent} from '@app/components/manage/manage-strategy-invest/manage-strategy-invest.component';
-import {SectionEnum} from "@app/enum/section.enum";
-import {ActionEnum} from "@app/enum/action.enum";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Account, Offer, Strategy } from '@app/models';
+import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap';
+import { ManageAccountChangeProfileComponent } from './manage-account-change-profile/manage-account-change-profile.component';
+import { ManageAccountFundComponent } from './manage-account-fund/manage-account-fund.component';
+import { ManageAccountPauseComponent } from './manage-account-pause/manage-account-pause.component';
+import { ManageAccountResumeComponent } from './manage-account-resume/manage-account-resume.component';
+import { ManageAccountWithdrawComponent } from './manage-account-withdraw/manage-account-withdraw.component';
+import { ManageStrategyCloseComponent } from './manage-strategy-close/manage-strategy-close.component';
+import { ManageStrategyPauseComponent } from './manage-strategy-pause/manage-strategy-pause.component';
+import { ManageStrategyResumeComponent } from './manage-strategy-resume/manage-strategy-resume.component';
+import { ManageStrategyDownloadScriptComponent } from '@app/components/manage/manage-strategy-download-script/manage-strategy-download-script.component';
+import { ManageStrategyInvestComponent } from '@app/components/manage/manage-strategy-invest/manage-strategy-invest.component';
+import { SectionEnum } from "@app/enum/section.enum";
+import { ActionEnum } from "@app/enum/action.enum";
+import { DataService } from '@app/services/data.service';
 
 @Component({
   selector: 'app-manage',
@@ -31,10 +32,11 @@ export class ManageComponent implements OnInit {
 
   @Output() click: EventEmitter<any> = new EventEmitter<any>();
   @Output() action: EventEmitter<ActionEnum> = new EventEmitter<ActionEnum>();
-  tooltipMessage: string  = "strategy.hasnot.public.offer";
-  
+  tooltipMessage: string = "strategy.hasnot.public.offer";
+
   constructor(
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private dataService: DataService
   ) { }
 
   ngOnInit() {
@@ -209,5 +211,9 @@ export class ManageComponent implements OnInit {
     };
 
     return options;
+  }
+
+  onInvestmentsClick(id: number) {
+      this.dataService._update$.next({ strategyId: id, key: "my-strategy_guard" });
   }
 }

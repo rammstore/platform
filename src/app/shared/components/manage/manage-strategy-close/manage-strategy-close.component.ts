@@ -17,8 +17,8 @@ export class ManageStrategyCloseComponent implements OnDestroy {
 
   // component data
   strategy: Strategy;
-  @Input() methodName: string;
-  @Input() methodArgs: any;
+
+  updateStatus: string;
 
   constructor(
     private dataService: DataService,
@@ -26,7 +26,8 @@ export class ManageStrategyCloseComponent implements OnDestroy {
   ) { }
 
   close(): void {
-    this.dataService.closeStrategy(this.strategy.id, this.methodName, this.methodArgs)
+    this.updateStatus = "close";
+    this.dataService.closeStrategy(this.strategy.id, this.updateStatus)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
         this.modalRef.hide();

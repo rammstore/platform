@@ -82,43 +82,15 @@ export class InvestmentsDetailsComponent implements OnInit, OnDestroy {
   }
 
   getAccountStatement(): void {
-    this.source$ = this.getStatement();
-    // this.dataService.getAccountStatement(this.args)
-    //   .pipe(
-    //     takeUntil(this.destroy$),
-    //     catchError(item => {
-    //       item.status === 404 ? this.notificationsService.open('empty.investment.null', { type: 'error' }) : '';
-
-    //       return of();
-    //     }),
-    //     tap(response => {
-    //       response.account.isMyStrategy = response.strategy.isMyStrategy;
-
-    //       this.strategy = response.strategy;
-    //       this.account = response.account;
-    //       this.account.strategy = response.strategy;
-    //       // this.publicOffer = this.strategy.publicOffer ? this.strategy.publicOffer : this.strategy.linkOffer;
-
-    //       this.currentDate = moment.utc().format("yyyy-MM-DD HH:mm:ss");
-
-    //       this.links = [
-    //         new ContentTabLink('investment.positions.title', '/investments/details/' + this.account.id),
-    //         new ContentTabLink('investment.deals.title', '/investments/details/' + this.account.id + '/deals')
-    //       ];
-    //     }),
-    //     map((item) => {
-    //       item.account.strategy = item.strategy;
-    //       return item;
-    //     })
-    //   );
+    this.source$ = this.getAccount();
   }
 
-  getStatement(): Observable<any> {
-    const args = {
+  getAccount(): Observable<any> {
+    let args: any = {
       accountId: this.route.params['_value'].id
-    };
+    }
 
-    return this.dataService.getAccountStatement(args)
+    return this.dataService.getAccountById(args)
       .pipe(
         tap((response: any) => {
           this.currentDate = moment.utc().format("yyyy-MM-DD HH:mm:ss");

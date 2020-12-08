@@ -22,7 +22,6 @@ export class InvestmentsActiveComponent implements OnInit, OnDestroy {
   accounts$: Observable<Account[]>;
   accounts: Account[];
   args: any;
-  strategy$: Observable<Strategy>;
   key: string;
   update$: Observable<any>;
 
@@ -63,28 +62,32 @@ export class InvestmentsActiveComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.key = "investments-active";
+    // this.key = "investments-active";
+
     this.args = {
       searchMode: 'MyActiveAccounts',
       field: 'ID',
       direction: 'Desc',
       paginator: this.paginator
     };
+
     this.update$ = this.dataService.update$
       .pipe(
         tap((data: iUpdateOptions) => {
-          if (data && data.status == "update" && data.key == "investments-active") {
+          if (data && data.updateStatus == "update") {
+            
             if (data.strategyId) {
               this.getStrategyById(data.strategyId)
                 .pipe(take(1))
                 .subscribe((strategy: Strategy) => {
-                  (this.accounts || []).filter((item) => {
+                  (this.accounts || []).filter((item: Account) => {
                     if (item.strategy.id == strategy.id) {
                       item.strategy.status = strategy.status;
                     }
                   });
 
                   this.accounts$ = of(this.accounts);
+
                   this.dataService._update$.next(null);
                 });
             }
@@ -97,15 +100,28 @@ export class InvestmentsActiveComponent implements OnInit, OnDestroy {
                       const accountStrategy = item.strategy;
 
                       item = Object.assign(item, data.account);
+
                       item.isMyAccount = null;
+
                       item.strategy = accountStrategy;
                     }
 
                     this.accounts$ = of(this.accounts);
+
                     this.dataService._update$.next(null);
                   });
                 })
             }
+          }
+          else if (data && data.updateStatus == "close") {
+            if (data.strategyId) {
+              this.accounts = (this.accounts || []).filter((item: Account) => item.strategy.id != data.strategyId);
+            }
+            else if (data.accountId) {
+              this.accounts = (this.accounts || []).filter((item: Account) => item.id != data.accountId);
+            }
+
+            this.accounts$ = of(this.accounts);
           }
         })
       );
@@ -117,12 +133,14 @@ export class InvestmentsActiveComponent implements OnInit, OnDestroy {
     let args = {
       strategyId: strategyId
     }
-
     return this.dataService.getStrategyById(args);
   }
 
   getAccountById(accountId: number): Observable<Account> {
-    return this.dataService.getAccountById(accountId);
+    let args = {
+      accountId: accountId
+    }
+    return this.dataService.getAccountById(args);
   }
 
   getActiveAccounts(args: any): Observable<any> {
@@ -137,6 +155,7 @@ export class InvestmentsActiveComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.dataService._update$.next(null);
     this.destroy$.next(true);
   }
 }

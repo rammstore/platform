@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 import { Paginator, Strategy, TableColumn } from '@app/models';
 import { TableHeaderRow } from '@app/models/table-header-row';
@@ -8,14 +8,13 @@ import { takeUntil, tap } from 'rxjs/operators';
 import { SectionEnum } from "@app/enum/section.enum";
 import { ArgumentsService } from '@app/services/arguments.service';
 import { SettingsService } from '@app/services/settings.service';
-import { ConstantPool } from '@angular/compiler';
 
 @Component({
   selector: 'app-rating-all',
   templateUrl: './rating-all.component.html',
   styleUrls: ['./rating-all.component.scss']
 })
-export class RatingAllComponent implements OnInit {
+export class RatingAllComponent implements OnInit, OnDestroy {
   strategies$: Observable<Strategy[]>;
   strategies: Strategy[];
   destroy$ = new Subject();
@@ -29,26 +28,8 @@ export class RatingAllComponent implements OnInit {
   update$: Observable<any>;
 
   // table settings
-  tableHeader: TableHeaderRow[] = [
-    new TableHeaderRow([
-      new TableColumn({ property: 'nameRating', label: 'common.strategy', fontSize: 20 }),
-      new TableColumn({
-        property: 'profit',
-        label: 'common.table.label.yieldCommon',
-        pipe: { pipe: PercentPipe, args: ['1.0-2'] },
-        fontSize: 24
-      }),
-      new TableColumn({ property: 'strategy.yieldChart', label: 'common.chart' }),
-      new TableColumn({ property: 'accounts', label: 'common.table.label.investors', fontSize: 16 }),
-      new TableColumn({ property: 'age', label: 'common.age', fontSize: 16 }),
-      new TableColumn({
-        property: 'strategy.investmentInfo',
-        label: 'common.table.label.myInvestmentUSD',
-        colored: true
-      }),
-      new TableColumn({ property: 'manage', label: 'common.table.label.manage' })
-    ]),
-  ];
+  tableHeader: TableHeaderRow[];
+
   paginator: Paginator = new Paginator({
     perPage: 10,
     currentPage: 1
@@ -61,8 +42,10 @@ export class RatingAllComponent implements OnInit {
   ) {
   }
 
+
   ngOnInit(): void {
-    this.key = "rating-all";
+    this.setTableHeader();
+    // this.key = "rating-all";
     this.ratingAll$ = this.argumentsService.ratingAll$
       .pipe(
         tap((argument) => {
@@ -80,12 +63,11 @@ export class RatingAllComponent implements OnInit {
         })
       );
 
-    // debugger
     this.update$ = this.dataService.update$
       .pipe(
         tap((data) => {
-          if (data && data.status == "update" && data.key == "rating-all") {
-            // debugger
+          if (data && data.updateStatus == "update") {
+            // update strategy after investment was set on pause/resume
             if (data.accountId) {
               this.getAccountById(data.accountId)
                 .pipe(takeUntil(this.destroy$))
@@ -97,9 +79,11 @@ export class RatingAllComponent implements OnInit {
                   });
 
                   this.strategies$ = of(this.strategies);
+                  this.dataService._update$.next(null);
                 });
             }
             else if (data.strategyId) {
+              // update strategy after strategy was set on pause/resume
               this.getStrategyById(data.strategyId)
                 .pipe(takeUntil(this.destroy$))
                 .subscribe((updatedStrategy: Strategy) => {
@@ -110,13 +94,66 @@ export class RatingAllComponent implements OnInit {
                   });
 
                   this.strategies$ = of(this.strategies);
+                  this.dataService._update$.next(null);
                 });
             }
+          }
+          else if (data && data.updateStatus == "close") {
+            if (data.accountId) {
+              // update strategy after investrment was closed
+              (this.strategies || []).filter((strategy: Strategy) => {
+                if (strategy.account && strategy.account.id == data.accountId) {
+                  strategy.account = null;
 
-            this.dataService._update$.next(null);
+                  this.strategies$ = of(this.strategies);
+
+                  this.setTableHeader();
+                }
+              });
+            }
+            else if (data.strategyId) {
+              // update strategy after this strategy was closed
+              (this.strategies || []).filter((strategy: Strategy) => {
+                if (strategy.account && strategy.id == data.strategyId) {
+                  this.getStrategyById(data.strategyId)
+                    .pipe(takeUntil(this.destroy$))
+                    .subscribe((strategyById: Strategy) => {
+                      strategy = Object.assign(strategy, strategyById);
+                      this.strategies$ = of(this.strategies);
+                    })
+                }
+              });
+            }
           }
         })
       )
+  }
+
+  ngOnDestroy(): void {
+    this.dataService._update$.next(null);
+  }
+
+  setTableHeader(): void {
+    this.tableHeader = [
+      new TableHeaderRow([
+        new TableColumn({ property: 'nameRating', label: 'common.strategy', fontSize: 20 }),
+        new TableColumn({
+          property: 'profit',
+          label: 'common.table.label.yieldCommon',
+          pipe: { pipe: PercentPipe, args: ['1.0-2'] },
+          fontSize: 24
+        }),
+        new TableColumn({ property: 'strategy.yieldChart', label: 'common.chart' }),
+        new TableColumn({ property: 'accounts', label: 'common.table.label.investors', fontSize: 16 }),
+        new TableColumn({ property: 'age', label: 'common.age', fontSize: 16 }),
+        new TableColumn({
+          property: 'strategy.investmentInfo',
+          label: 'common.table.label.myInvestmentUSD',
+          colored: true
+        }),
+        new TableColumn({ property: 'manage', label: 'common.table.label.manage' })
+      ]),
+    ];
   }
 
   getStrategies(): Observable<any> {
@@ -136,7 +173,11 @@ export class RatingAllComponent implements OnInit {
   }
 
   getAccountById(accountId: number): Observable<any> {
-    return this.dataService.getAccountById(accountId);
+    let args: any = {
+      accountId: accountId
+    }
+
+    return this.dataService.getAccountById(args);
   }
 
   getRating() {

@@ -20,10 +20,9 @@ export class ManageAccountChangeProfileComponent implements OnInit, OnDestroy {
   // component data
   form: FormGroup;
   account: Account;
-  @Input() methodName: string;
   @Input() methodArgs: any;
   functionality: object;
-  updateStatus: "update";
+  updateStatus: string;
   key: string;
 
   constructor(
@@ -46,13 +45,14 @@ export class ManageAccountChangeProfileComponent implements OnInit, OnDestroy {
   buildForm(): void {
     this.form = this.fb.group({
       amount: [this.account.equity],
-      factor: [{value: this.account.factor, disabled: this.account.isSecured() && this.account.isMy()}, [Validators.min(0.1), Validators.max(10), Validators.required, Validators.pattern('[0-9]+(\\.[0-9]?)?')]],
+      factor: [{ value: this.account.factor, disabled: this.account.isSecured() && this.account.isMy() }, [Validators.min(0.1), Validators.max(10), Validators.required, Validators.pattern('[0-9]+(\\.[0-9]?)?')]],
       target: [Math.round(this.account.target * 100), [Validators.required, Validators.min(0), Validators.pattern('^[0-9]*')]],
       protection: [Math.round(this.account.protection * 100), [Validators.required, Validators.min(0), Validators.max(99), Validators.pattern('^[0-9]*')]]
     });
   }
 
   changeProfile(): void {
+    this.updateStatus = "update";
     this.form.markAllAsTouched();
 
     if (!this.form.valid) {
@@ -60,7 +60,7 @@ export class ManageAccountChangeProfileComponent implements OnInit, OnDestroy {
     }
 
     if (!this.form.get('factor').value) {
-      this.form.get('factor').setErrors({incorrect: true});
+      this.form.get('factor').setErrors({ incorrect: true });
       return;
     }
 

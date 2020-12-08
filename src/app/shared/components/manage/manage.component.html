@@ -51,11 +51,16 @@
           common.manage.statement
         </li>
 
-        <li *ngIf="dataType === 'strategy' && data.isMy()" [routerLink]="['/strategies/details', data.id, 'investments']" translate>
+        <li *ngIf="dataType === 'strategy' && data.isMy()" 
+        [routerLink]="['/strategies/details', data.id, 'investments']" 
+        (click)="onInvestmentsClick(data.id)"
+        translate>
           <i class="fa fa-list-alt"></i>
           common.investments
         </li>
-        <li *ngIf="dataType === 'account' && data.isMy() && !hideInvestmentsButton" [routerLink]="['/strategies/details', data.strategy.id, 'investments']" translate>
+        <li *ngIf="dataType === 'account' && data.isMy() && !hideInvestmentsButton" [routerLink]="['/strategies/details', data.strategy.id, 'investments']" 
+        (click)="onInvestmentsClick(data.strategy.id)"
+        translate>
           <i class="fa fa-list-alt"></i>
           common.investments
         </li>
@@ -82,7 +87,6 @@
 
     <div class="btn-group dropdown-container" dropdown>      
       
-      
       <div class="hint-container">
              <button [disabled]="!data.publicOffer && !data.isMyStrategy && !data.linkOffer" 
               class="primary btn-invest" 
@@ -94,7 +98,6 @@
                      translate></div>
               </span>
               common.manage.invest</button> 
-
       </div>
 
 
@@ -103,7 +106,10 @@
               *ngIf="data.isMy()"><i class="fa fa-caret-down"></i></button>
 
       <ul *dropdownMenu class="dropdown-menu" role="menu">
-        <li [routerLink]="['/strategies/details', data.id, 'investments']" translate>
+        <li 
+          [routerLink]="['/strategies/details', data.id, 'investments']" 
+          (click)="onInvestmentsClick(data.id)"
+          translate>
           <i class="fa fa-list-alt"></i>
           common.investments
         </li>
@@ -114,7 +120,7 @@
           common.manage.closeInvestment
         </li>
         <li (click)="openStrategyCloseDialog()" translate>
-          <i class="fa fa-window-close"></i>
+          <i class="fa fa-window-close"  (click)="onInvestmentsClick(data.id)"></i>
           common.manage.closeStrategy
         </li>
       </ul>

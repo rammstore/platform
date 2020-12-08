@@ -8,6 +8,7 @@ import { DataService } from '@app/services/data.service';
 import { SectionEnum } from "@app/enum/section.enum";
 import { takeUntil, tap } from 'rxjs/operators';
 import { SettingsService } from "@app/services/settings.service";
+import { iUpdateOptions } from '@app/interfaces/update';
 
 @Component({
   selector: 'app-strategy-active',
@@ -63,9 +64,9 @@ export class StrategyActiveComponent implements OnInit, OnDestroy {
 
     this.update$ = this.dataService.update$
       .pipe(
-        tap((data) => {
-          // debugger
-          if (data && data.status == "update" && data.key == "strategy-active") {
+        tap((data: iUpdateOptions) => {
+          debugger
+          if (data && data.updateStatus == "update" && data.key == "strategy-active") {
             if (data.accountId) {
               this.getAccountById(data.accountId)
                 .pipe(takeUntil(this.destroy$))
@@ -94,8 +95,14 @@ export class StrategyActiveComponent implements OnInit, OnDestroy {
             }
 
             this.dataService._update$.next(null);
-          } else if (data && data.status == "strategy-created" && data.key == "strategy-active" && data.strategyId) {
+          }
+          else if (data && data.updateStatus == "strategy-created" && data.key == "strategy-active" && data.strategyId) {
             this.getStrategies();
+          }
+          else if (data && data.updateStatus == "close" && data.strategyId) {
+            this.strategies = (this.strategies || []).filter((strategy: Strategy) => strategy.id != data.strategyId);
+
+            this.strategies$ = of(this.strategies);
           }
         })
       );
@@ -112,13 +119,20 @@ export class StrategyActiveComponent implements OnInit, OnDestroy {
   }
 
   getAccountById(accountId: number): Observable<any> {
-    return this.dataService.getAccountById(accountId);
+    let args: any = {
+      accountId: accountId
+    }
+    return this.dataService.getAccountById(args);
   }
 
   getActiveStrategy(args: any): Observable<any> {
     return this.dataService.getActiveMyStrategies(args)
       .pipe(
-        tap((strategies) => this.strategies = strategies)
+        tap((strategies) => {
+          this.strategies = strategies;
+
+          this.dataService._update$.next(null);
+        })
       );
   }
 

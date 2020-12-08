@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { ReplaySubject } from 'rxjs';
+import { BehaviorSubject, ReplaySubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class RefreshService {
-  private _refresh$: ReplaySubject<any> = new ReplaySubject<any>(null);
+  private _refresh$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
   constructor() { }
 
