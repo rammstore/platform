@@ -39,7 +39,7 @@ export class CreateInstanceService {
       commission: options.Commission,
       chart: options.Chart,
       masterAccount: options.MasterAccount,
-      youTubeVideoId: options.Tags.YouTube ? options.Tags.YouTube : null
+      youTubeVideoId: options.Tags ? options.Tags.YouTube : null
     });
   }
 

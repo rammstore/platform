@@ -108,7 +108,7 @@ export class Strategy {
   }
 
   getYouTubeLink(){
-    const link: string = "https://www.youtube.com/watch?v=";
+    const link: string = "https://www.youtube.com/embed/";
 
     return link + this.youTubeVideoId;
   }
