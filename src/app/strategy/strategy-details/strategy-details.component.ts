@@ -161,7 +161,7 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
         }
         
         if(strategy.youTubeVideoId){
-          this.links.push(new ContentTabLink('Video', '/strategies/details/' + strategy.id + '/video'));
+          this.links.push(new ContentTabLink('common.table.label.video', '/strategies/details/' + strategy.id + '/video'));
         }
 
         break;

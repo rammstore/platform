@@ -29,6 +29,7 @@ export class MyStrategyGuard implements CanActivate {
     const investments = location.pathname.indexOf('investments');
     const myInvestments = location.pathname.indexOf('my-investment');
     const symbols = location.pathname.indexOf('symbols');
+    const video = location.pathname.indexOf('video');
 
     let id: number;
 
@@ -64,6 +65,9 @@ export class MyStrategyGuard implements CanActivate {
       case (symbols > 0): {
         id = this.getId(location.pathname.substring(0, symbols - 1));
         break;
+      }
+      case (video > 0): {
+        id = this.getId(location.pathname.substring(0, video - 1));
       }
     }
 
