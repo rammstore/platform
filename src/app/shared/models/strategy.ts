@@ -35,6 +35,10 @@ export class Strategy {
     Object.assign(this, options);
   }
 
+  get getVideoLink(){
+    return `https://www.youtube.com/embed/${this.youTubeVideoId}`
+  }
+
   isActive(): boolean {
     // @TODO: declare type or create enum for status possible values
     return this.status !== 4;

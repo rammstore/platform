@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { Strategy } from '@app/models';
 import { DataService } from '@app/services/data.service';
 import { StrategyService } from '@app/services/strategy.service';
 import { of } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
-import { tap } from 'rxjs/operators';
+import { take, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-strategy-details-video',
@@ -15,14 +16,14 @@ import { tap } from 'rxjs/operators';
 export class StrategyDetailsVideoComponent implements OnInit {
 
   strategy: Strategy;
-  strategy$: Observable<Strategy>;
-
+  videolink: SafeResourceUrl;
   args: any;
 
   constructor(
     private route: ActivatedRoute,
     private dataService: DataService,
-    private strategyService: StrategyService
+    private strategyService: StrategyService,
+    private sanitizer: DomSanitizer
   ) { }
 
   ngOnInit() {
@@ -33,19 +34,18 @@ export class StrategyDetailsVideoComponent implements OnInit {
     this.strategy = this.strategyService.strategy;
 
     if (this.strategy) {
-      this.strategy$ = of(this.strategy);
+      this.videolink = this.sanitizer.bypassSecurityTrustResourceUrl(this.strategy.getVideoLink);
     }
     else {
       this.args = {
         strategyId: this.route.parent.params['_value'].id,
       };
 
-      this.strategy$ = this.getStrategyById(this.args)
-      .pipe(
-        tap((strategy: Strategy)=>{
-          console.log(strategy.getYouTubeLink())
-        })
-      );
+      this.getStrategyById(this.args)
+        .pipe(take(1))
+        .subscribe((strategy: Strategy) => {
+          this.videolink = this.sanitizer.bypassSecurityTrustResourceUrl(strategy.getVideoLink);
+        });
     }
   }
 
