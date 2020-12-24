@@ -94,6 +94,7 @@ export class StrategyOffersComponent implements OnInit {
     this.offers$ = this.dataService.getOffers(this.strategy.id)
       .pipe(
         tap((offers: Offer[]) => {
+          debugger
           const publicOffer = offers.filter(item => item.type === 2)[0];
           const privateOffers = offers.filter(item => item.type === 1)
           
