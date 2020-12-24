@@ -111,7 +111,6 @@ export class RatingRatedComponent implements OnInit, OnDestroy {
                     .pipe(takeUntil(this.destroy$))
                     .subscribe(responce => {
                       strategy = Object.assign(strategy, responce.strategy);
-                      // strategy.account = responce.account;
                     });
 
                   this.setTableHeader();

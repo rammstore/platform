@@ -103,13 +103,17 @@ export class RatingAllComponent implements OnInit, OnDestroy {
               // update strategy after investrment was closed
               (this.strategies || []).filter((strategy: Strategy) => {
                 if (strategy.account && strategy.account.id == data.accountId) {
-                  strategy.account = null;
-
-                  this.strategies$ = of(this.strategies);
+                  this.getAccountById(data.accountId)
+                    .pipe(takeUntil(this.destroy$))
+                    .subscribe(responce => {
+                      strategy = Object.assign(strategy, responce.strategy);
+                    });
 
                   this.setTableHeader();
                 }
               });
+
+              this.strategies$ = of(this.strategies);
             }
             else if (data.strategyId) {
               // update strategy after this strategy was closed

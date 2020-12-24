@@ -615,6 +615,8 @@ export class DataService {
             strategy: this.createInstanceService.createStrategy(response.Strategy),
             account: this.createInstanceService.createAccount(response.Account)
           }
+
+          data.strategy.publicOffer = this.createInstanceService.createOffer(response.PublicOffer)
           return data;
         }
         ),
@@ -966,8 +968,10 @@ export class DataService {
         tap((item: any) => {
           if (args.paginator) {
             args.paginator.totalItems = item.Pagination.TotalRecords;
+            
             args.paginator.totalPages = item.Pagination.TotalPages;
           }
+
           this.walletService.walletSubject.next(this.createInstanceService.createWallet(item.Wallets[0]));
 
           this.loaderService.hideLoader();
