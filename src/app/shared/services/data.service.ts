@@ -716,7 +716,6 @@ export class DataService {
           Target: valueObj['target']
         }).pipe(
           map((response: any) => {
-            debugger
             this.updateAccount(new Command(response.CommandID, accountId), updateStatus, key, 'notify.investment.target.changed');
           })
         )
@@ -743,7 +742,6 @@ export class DataService {
           Factor: valueObj['factor']
         }).pipe(
           map((response: any) => {
-            debugger
             this.updateAccount(new Command(response.CommandID, accountId), updateStatus, key, 'notify.investment.factor.changed');
           })
         )

@@ -65,7 +65,6 @@ export class StrategyActiveComponent implements OnInit, OnDestroy {
     this.update$ = this.dataService.update$
       .pipe(
         tap((data: iUpdateOptions) => {
-          debugger
           if (data && data.updateStatus == "update" && data.key == "strategy-active") {
             if (data.accountId) {
               this.getAccountById(data.accountId)

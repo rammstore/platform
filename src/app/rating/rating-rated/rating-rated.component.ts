@@ -67,7 +67,6 @@ export class RatingRatedComponent implements OnInit, OnDestroy {
     this.update$ = this.dataService.update$
       .pipe(
         tap((data: iUpdateOptions) => {
-          debugger
           if (data && data.updateStatus == "update") {
             if (data.accountId) {
               // update strategy after investment was set on pause/resume
