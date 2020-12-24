@@ -229,7 +229,6 @@ export class DataService {
 
   // Получение конкретной стратегии за ссылкой
   getStrategyByLink(args: { link: string }): Observable<Strategy> {
-    // console.log('getStrategyByLink');
     this.loaderService.showLoader();
     this.http.post(`${this.apiUrl}/strategies.get`, { Link: args.link }).subscribe((response: any) => {
       this.loaderService.hideLoader();
@@ -684,7 +683,6 @@ export class DataService {
   // Приостановить инвестицию
   pauseAccount(accountId: number, updateStatus: string, key: string): Observable<any> {
     this.loaderService.showLoader();
-    console.log('accountId', accountId);
     return this.http.post(`${this.apiUrl}/accounts.pause`, { AccountID: accountId })
       .pipe(
         map((response: any) => {

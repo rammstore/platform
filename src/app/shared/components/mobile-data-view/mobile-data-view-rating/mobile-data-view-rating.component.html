@@ -3,6 +3,11 @@
     <div class="caption">
       <div class="name">
         <a [routerLink]="['/strategies/details', strategy.id]">{{strategy.name}}</a>
+        <div class="video" *ngIf="checkStrategyVideo(strategy)">
+          <a [routerLink]="[getStrategyVideoLink(strategy)]">
+            <img src="assets/images/youtube.png">
+          </a>
+        </div>
       </div>
       <app-manage 
       [data]="strategy"

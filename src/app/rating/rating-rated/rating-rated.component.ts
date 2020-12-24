@@ -182,10 +182,7 @@ export class RatingRatedComponent implements OnInit, OnDestroy {
   getStrategies(): Observable<any> {
     return this.dataService.getBestRating(this.args)
       .pipe(
-        tap((strategies) => {
-          console.log(strategies[1])
-          this.strategies = strategies
-        })
+        tap((strategies) => this.strategies = strategies)
       );
   }
 
