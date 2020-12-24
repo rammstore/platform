@@ -176,6 +176,7 @@
   	"common.table.label.swapUSD": "Swap, USD",
  	"common.table.label.symbol": "Symbol",
 	"common.table.label.symbols": "Symbols",
+	"common.table.label.symbols.mobile": "Symbols",
   	"common.table.label.time": "Time",
   	"common.table.label.type": "Type",
   	"common.table.label.volume": "Volume",

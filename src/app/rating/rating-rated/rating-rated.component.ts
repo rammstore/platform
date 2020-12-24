@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, of, Subject, Subscription } from 'rxjs';
-import { Paginator, Strategy, TableColumn } from '@app/models';
+import { Account, Paginator, Strategy, TableColumn } from '@app/models';
 import { TableHeaderRow } from '@app/models/table-header-row';
 import { PercentPipe } from '@angular/common';
 import { DataService } from '@app/services/data.service';
@@ -67,6 +67,7 @@ export class RatingRatedComponent implements OnInit, OnDestroy {
     this.update$ = this.dataService.update$
       .pipe(
         tap((data: iUpdateOptions) => {
+          debugger
           if (data && data.updateStatus == "update") {
             if (data.accountId) {
               // update strategy after investment was set on pause/resume
@@ -107,13 +108,17 @@ export class RatingRatedComponent implements OnInit, OnDestroy {
               // update strategy after investrment was closed
               (this.strategies || []).filter((strategy: Strategy) => {
                 if (strategy.account && strategy.account.id == data.accountId) {
-                  strategy.account = null;
-
-                  this.strategies$ = of(this.strategies);
+                  this.getAccountById(data.accountId)
+                    .pipe(takeUntil(this.destroy$))
+                    .subscribe(responce => {
+                      strategy = Object.assign(strategy, responce.strategy);
+                      // strategy.account = responce.account;
+                    });
 
                   this.setTableHeader();
                 }
               });
+              this.strategies$ = of(this.strategies);
             }
             else if (data.strategyId) {
               // update strategy after this strategy was closed
@@ -178,7 +183,10 @@ export class RatingRatedComponent implements OnInit, OnDestroy {
   getStrategies(): Observable<any> {
     return this.dataService.getBestRating(this.args)
       .pipe(
-        tap((strategies) => this.strategies = strategies)
+        tap((strategies) => {
+          console.log(strategies[1])
+          this.strategies = strategies
+        })
       );
   }
 

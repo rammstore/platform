@@ -176,6 +176,7 @@
   "common.table.label.swapUSD": "Своп, USD",
   "common.table.label.symbol": "Инструмент",
   "common.table.label.symbols": "Инструменты",
+  "common.table.label.symbols.mobile": "Инструм.",
   "common.table.label.time": "Время",
   "common.table.label.type": "Тип",
   "common.table.label.volume": "Объем",

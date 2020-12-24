@@ -132,7 +132,7 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
       case this.settingsService.isMobile:
         this.links = [
           new ContentTabLink('common.yield.mobile', '/strategies/details/' + strategy.id),
-          new ContentTabLink('common.table.label.symbols', '/strategies/details/' + strategy.id + '/symbols')
+          new ContentTabLink('common.table.label.symbols.mobile', '/strategies/details/' + strategy.id + '/symbols')
         ];
 
         if (strategy.account && strategy.account.id) {
@@ -141,6 +141,10 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
 
         if (strategy.partnerInfo || strategy.traderInfo) {
           this.links.push(new ContentTabLink('common.investments.mobile', '/strategies/details/' + strategy.id + '/investments'));
+        }
+
+        if(strategy.youTubeVideoId){
+          this.links.push(new ContentTabLink('common.table.label.video', '/strategies/details/' + strategy.id + '/video'));
         }
         break;
 

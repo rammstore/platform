@@ -75,7 +75,6 @@ export class DataTableComponent implements OnInit, OnDestroy {
         hasStrategyVideo = false;
     }
 
-    console.log(hasStrategyVideo);
     return hasStrategyVideo;
   }
 

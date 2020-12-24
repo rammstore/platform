@@ -176,6 +176,7 @@
   	"common.table.label.swapUSD": "Swap, USD",
  	  "common.table.label.symbol": "Sembol",
 	  "common.table.label.symbols": "Semboller",
+	  "common.table.label.symbols.mobile": "Semboller",
   	"common.table.label.time": "Süre",
   	"common.table.label.type": "Tür",
   	"common.table.label.volume": "Hacim",
