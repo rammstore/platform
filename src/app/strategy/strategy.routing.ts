@@ -13,6 +13,7 @@ import { StrategyOffersComponent } from './strategy-details/strategy-offers/stra
 import { StrategyDetailsMyInvestmentComponent } from './strategy-details/strategy-details-my-investment/strategy-details-my-investment.component';
 import { StrategyLinkComponent } from './strategy-details/strategy-link/strategy-link.component';
 import { MyStrategyGuard } from './my-strategy.guard';
+import { StrategyDetailsVideoComponent } from './strategy-details/strategy-details-video/strategy-details-video.component';
 
 const routes: Routes = [
   {
@@ -34,7 +35,8 @@ const routes: Routes = [
           { path: '', component: StrategyDetailsInvestmentsActiveComponent },
           { path: 'closed', component: StrategyDetailsInvestmentsClosedComponent }
         ]
-      }
+      },
+      { path: 'video', component: StrategyDetailsVideoComponent }
     ]
   },
   {

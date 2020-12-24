@@ -27,11 +27,16 @@ export class Strategy {
   chart: {Yield: number}[];
   masterAccount: string;
   link: string;
+  youTubeVideoId: string;  // id видео из YouTube для формирования ссылки на видео 
 
   constructor(
     options: any
   ) {
     Object.assign(this, options);
+  }
+
+  get getVideoLink(){
+    return `https://www.youtube.com/embed/${this.youTubeVideoId}`
   }
 
   isActive(): boolean {
@@ -104,5 +109,11 @@ export class Strategy {
     }
 
     return this[property] > 0 ? 'positive' : 'negative';
+  }
+
+  getYouTubeLink(){
+    const link: string = "https://www.youtube.com/embed/";
+
+    return link + this.youTubeVideoId;
   }
 }

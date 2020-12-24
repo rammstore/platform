@@ -28,7 +28,7 @@ export class StrategyLinkComponent implements OnInit, OnDestroy {
   args: any;
   functionality: object;
   id: number = 0;
-  methodName: string;
+  // methodName: string;
 
   sectionEnum = SectionEnum;
 
@@ -60,7 +60,7 @@ export class StrategyLinkComponent implements OnInit, OnDestroy {
           this.strategy = strategy;
           this.strategiesLinks();
         });
-      this.methodName = 'getStrategyByLink';
+      // this.methodName = 'getStrategyByLink';
     })
 
   }
