@@ -24,7 +24,7 @@ export class ManageComponent implements OnInit {
   @Input() data: any;
   dataType: string;
   modalRef: BsModalRef;
-  @Input() methodName: string;
+  // @Input() methodName: string;
   @Input() methodArgs: any;
   @Input() hideInvestmentsButton: boolean;
   @Input() section: SectionEnum = SectionEnum.default;

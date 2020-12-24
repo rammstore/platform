@@ -1,11 +1,12 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Account, Deal, Strategy, WalletTransfer, Position } from '@app/models';
 import { TableHeaderRow } from '@app/models/table-header-row';
 import { Paginator } from '@app/models/paginator';
 import { BrandService } from '@app/services/brand.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import {SectionEnum} from "@app/enum/section.enum";
+import { SectionEnum } from "@app/enum/section.enum";
+import { DefaultValueAccessor } from '@angular/forms';
 
 @Component({
   selector: 'app-data-table',
@@ -26,8 +27,8 @@ export class DataTableComponent implements OnInit, OnDestroy {
   @Input() emptyDataText: string = 'common.table.label.no-data';
   @Output() paginationChanged: EventEmitter<void> = new EventEmitter();
   @Output() rowManageClick: EventEmitter<any> = new EventEmitter();
-  @Input() methodName: string;
-  @Input() methodArgs: any;
+  // @Input() methodName: string;
+  // @Input() methodArgs: any;
   @Input() totals: object;
   @Input() section: SectionEnum = SectionEnum.default;
   @Input() key: string;
@@ -41,8 +42,8 @@ export class DataTableComponent implements OnInit, OnDestroy {
     this.brandService.functionality
       .pipe(takeUntil(this.destroy$))
       .subscribe((f: object) => {
-      this.functionality = f;
-    });
+        this.functionality = f;
+      });
   }
 
   getItemLink(item: any): string {
@@ -60,6 +61,36 @@ export class DataTableComponent implements OnInit, OnDestroy {
     }
 
     return `/${link}/${item.id}`;
+  }
+
+  checkStrategyVideo(item): boolean {
+    let hasStrategyVideo: boolean = false;
+    var isRatingPage = location.pathname.includes('rating');
+    
+    switch (isRatingPage) {
+      case (item instanceof Strategy):
+        hasStrategyVideo = item.youTubeVideoId ? true : false;
+        break;
+      default:
+        hasStrategyVideo = false;
+    }
+
+    console.log(hasStrategyVideo);
+    return hasStrategyVideo;
+  }
+
+  getStrategyVideoLink(item): string{
+    let link: string = '';
+
+    switch (true) {
+      case (item instanceof Strategy):
+        link = `strategies/details/${item.id}/video`;
+        break;
+      default:
+        link = '';
+    }
+
+    return `/${link}`;
   }
 
   /**

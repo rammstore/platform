@@ -24,7 +24,10 @@
 
     <app-manage [data]="strategy"
                 [section]="sectionEnum.strategy"
-                *ngIf="strategy.isActive()" [methodName]="methodName" [methodArgs]="args"></app-manage>
+                *ngIf="strategy.isActive()"></app-manage>
+    <!-- <app-manage [data]="strategy"
+                [section]="sectionEnum.strategy"
+                *ngIf="strategy.isActive()" [methodName]="methodName" [methodArgs]="args"></app-manage> -->
   </div>
 
   <app-content-tabs [links]="links">

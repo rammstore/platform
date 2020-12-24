@@ -56,6 +56,11 @@
             <ng-container *ngSwitchCase="'nameRating'">
               <a class="detail-link" [routerLink]="[getItemLink(item)]">{{item.name}}</a>
               <div class="symbols">{{item.symbols}}</div>
+              <div class="youtube" *ngIf="checkStrategyVideo(item)">
+                <a [routerLink]="[getStrategyVideoLink(item)]">
+                  <img src="assets/images/youtube.png">
+                </a>
+              </div>
             </ng-container>
 
             <ng-container *ngSwitchCase="'DTCreated'">
