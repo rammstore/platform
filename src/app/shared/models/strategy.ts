@@ -72,10 +72,6 @@ export class Strategy {
       return this.publicOffer.feeRate;
     }
 
-    if (this.account) {
-      return this.account.offer.feeRate;
-    }
-
     return 0;
   }
 
@@ -86,10 +82,6 @@ export class Strategy {
     
     if (this.publicOffer) {
       return this.publicOffer.commissionRate;
-    }
-
-    if (this.account) {
-      return this.account.offer.commissionRate;
     }
 
     return 0;

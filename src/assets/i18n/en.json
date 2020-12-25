@@ -93,6 +93,7 @@
 	 	"common.next": "Next",
 	"common.offers": "Conditions",
 	"common.offer": "Conditions",
+	"public.offer.does.not.exist": "Отсутствует",
   	"common.pause": "Pause",
   	"common.pause2": "pause",
   	"common.perWeek": "per week",

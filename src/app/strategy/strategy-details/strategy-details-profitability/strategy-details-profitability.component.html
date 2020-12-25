@@ -13,7 +13,6 @@
           <td class="yield {{strategy.getColorClass('profit')}}">
             {{strategy.profit | percent:'1.2-2'}}
           </td>
-          <!--        <td *ngIf="!strategy.account">{{0 | percent:'1.2-2'}}</td>-->
         </tr>
         <tr>
           <td></td>
@@ -36,13 +35,22 @@
           <td><b translate>common.offer</b></td>
           <td></td>
         </tr>
-        <tr>
-          <td translate>common.fee</td>
+        <tr *ngIf="strategy.publicOffer || strategy.linkOffer">
+          <td  translate>common.fee</td>
           <td>{{strategy.getFeeRate() | percent}}</td>
         </tr>
-        <tr>
+        <tr *ngIf="strategy.publicOffer || strategy.linkOffer">
           <td><span translate>common.commission</span>, USD</td>
           <td>{{strategy.getCommissionRate()}} / 1 mln</td>
+        </tr>
+        <tr *ngIf="!strategy.publicOffer && !strategy.linkOffer">
+          <td translate>public.offer.does.not.exist</td>
+          <td *ngIf="!strategy.isMy()"></td>
+          <td *ngIf="strategy.isMy()">
+            <button class="primary btn-invest" 
+                    [routerLink]="[getOfferPageLink(strategy)]" 
+                    translate>strategy.button.create.offer</button>
+          </td>
         </tr>
       </tbody>
     </table>

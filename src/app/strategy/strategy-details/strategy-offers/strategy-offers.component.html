@@ -1,5 +1,5 @@
 <div class="strategy-offer"
-     *ngIf="strategy$ | async as strategy">
+     *ngIf="strategy$ | async as item">
   <ng-container *ngIf="offers$ | async">
     <div class="text-right create-container"
          *ngIf="canCreateOffer">
@@ -32,26 +32,26 @@
       </thead>
 
       <tbody>
-      <tr *ngIf="strategy.publicOffer">
+      <tr *ngIf="item.publicOffer">
         <td colspan="13" translate>common.table.label.offer.public</td>
       </tr>
-      <tr *ngIf="strategy.publicOffer">
+      <tr *ngIf="item.publicOffer">
         <!-- <td [innerText]="strategy.publicOffer.id"></td> -->
-        <td [innerText]="(strategy.publicOffer.feeRate)*100"></td>
-        <td [innerText]="strategy.publicOffer.feePaid"></td>
-        <td [innerText]="strategy.publicOffer.feeToPay"></td>
-        <td [innerText]="(strategy.publicOffer.commissionRate || 0)"></td>
-        <td [innerText]="strategy.publicOffer.commissionPaid"></td>
-        <td [innerText]="strategy.publicOffer.commissionToPay"></td>
-        <td [innerText]="strategy.publicOffer.activeAccounts"></td>
-        <td [innerText]="strategy.publicOffer.totalAccounts"></td>
+        <td [innerText]="(item.publicOffer.feeRate)*100"></td>
+        <td [innerText]="item.publicOffer.feePaid"></td>
+        <td [innerText]="item.publicOffer.feeToPay"></td>
+        <td [innerText]="(item.publicOffer.commissionRate || 0)"></td>
+        <td [innerText]="item.publicOffer.commissionPaid"></td>
+        <td [innerText]="item.publicOffer.commissionToPay"></td>
+        <td [innerText]="item.publicOffer.activeAccounts"></td>
+        <td [innerText]="item.publicOffer.totalAccounts"></td>
         <td>
           <span class="link-container"
-                *ngIf="strategy.publicOffer.link">
-                <span class="d-flex">{{strategy.publicOffer.link || ''}}</span>
+                *ngIf="item.publicOffer.link">
+                <span class="d-flex">{{item.publicOffer.link || ''}}</span>
                 <button ngxClipboard
                         class="d-flex empty-space"
-                        [cbContent]="getOfferLink(strategy.publicOffer.link)">
+                        [cbContent]="getOfferLink(item.publicOffer.link)">
                 <i class="fa fa-copy"></i>
           </button>
           </span>

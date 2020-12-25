@@ -616,7 +616,8 @@ export class DataService {
             account: this.createInstanceService.createAccount(response.Account)
           }
 
-          data.strategy.publicOffer = this.createInstanceService.createOffer(response.PublicOffer)
+          data.strategy.traderInfo = response.TraderInfo ? this.createInstanceService.createTraderInfo(response.TraderInfo) : null;
+          data.strategy.publicOffer = response.PublicOffer ? this.createInstanceService.createOffer(response.PublicOffer) : null;
           return data;
         }
         ),
@@ -968,7 +969,7 @@ export class DataService {
         tap((item: any) => {
           if (args.paginator) {
             args.paginator.totalItems = item.Pagination.TotalRecords;
-            
+
             args.paginator.totalPages = item.Pagination.TotalPages;
           }
 

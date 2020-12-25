@@ -46,6 +46,7 @@ export class StrategyDetailsMyInvestmentComponent implements OnInit, OnDestroy {
     this.strategy = this.strategyService.strategy;
 
     if (!this.strategy) {
+      debugger
       this.getStrategyById(this.args)
         .pipe(takeUntil(this.destroy$))
         .subscribe((item) => {
@@ -55,6 +56,7 @@ export class StrategyDetailsMyInvestmentComponent implements OnInit, OnDestroy {
 
       this.getAccountStatement({ accountId: this.accountId });
     } else {
+      debugger
       this.offer$ = of(this.strategy.account.offer);
       this.getAccountStatement({ accountId: this.strategy.account.id });
     }
