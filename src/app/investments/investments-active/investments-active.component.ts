@@ -22,7 +22,7 @@ export class InvestmentsActiveComponent implements OnInit, OnDestroy {
   accounts$: Observable<Account[]>;
   accounts: Account[];
   args: any;
-  key: string;
+  // key: string;
   update$: Observable<any>;
 
   // table settings

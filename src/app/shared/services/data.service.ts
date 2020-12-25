@@ -169,34 +169,34 @@ export class DataService {
       );
   }
 
+  // getStrategyByID(args: { strategyId: number }): Observable<Strategy> {
+  //   this.loaderService.showLoader();
+  //   this.http.post(`${this.apiUrl}/strategies.get`, { ID: args.strategyId })
+  //     .subscribe((response: any) => {
+  //       this.loaderService.hideLoader();
+  //       this.currentStrategyDetailsSubject.next(this.createInstanceService.createStrategy(response));
+  //     },
+  //       (error: HttpErrorResponse) => {
+  //         if (error.status === 404) {
+  //           this.router.navigate(['/rating']);
+  //           this.notificationsService.open('notify.strategy.access.error', {
+  //             type: 'error',
+  //             autoClose: true,
+  //             duration: 3000
+  //           });
+  //         } else {
+  //           this.notificationsService.open('notify.loading.error', {
+  //             type: 'error',
+  //             autoClose: true,
+  //             duration: 3000
+  //           });
+  //         }
+  //       });
+
+  //   return this.currentStrategyDetailsSubject.asObservable();
+  // }
+
   // Получение конкретной стратегии за ID
-  getStrategyByID(args: { strategyId: number }): Observable<Strategy> {
-    this.loaderService.showLoader();
-    this.http.post(`${this.apiUrl}/strategies.get`, { ID: args.strategyId })
-      .subscribe((response: any) => {
-        this.loaderService.hideLoader();
-        this.currentStrategyDetailsSubject.next(this.createInstanceService.createStrategy(response));
-      },
-        (error: HttpErrorResponse) => {
-          if (error.status === 404) {
-            this.router.navigate(['/rating']);
-            this.notificationsService.open('notify.strategy.access.error', {
-              type: 'error',
-              autoClose: true,
-              duration: 3000
-            });
-          } else {
-            this.notificationsService.open('notify.loading.error', {
-              type: 'error',
-              autoClose: true,
-              duration: 3000
-            });
-          }
-        });
-
-    return this.currentStrategyDetailsSubject.asObservable();
-  }
-
   getStrategyById(args: { strategyId: number }): Observable<any> {
     this.loaderService.showLoader();
     return this.http.post(`${this.apiUrl}/strategies.get`, { ID: args.strategyId })

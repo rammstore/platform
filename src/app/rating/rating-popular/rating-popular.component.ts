@@ -25,7 +25,7 @@ export class RatingPopularComponent implements OnInit, OnDestroy {
   args: any;
   section: SectionEnum = SectionEnum.rating;
   ratingPopular$: Observable<any>;
-  key: string;
+  // key: string;
   update$: Observable<any>;
 
   // table settings

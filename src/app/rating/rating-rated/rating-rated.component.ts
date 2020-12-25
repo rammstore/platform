@@ -24,7 +24,7 @@ export class RatingRatedComponent implements OnInit, OnDestroy {
   args: any;
   section: SectionEnum = SectionEnum.rating;
   ratingRated$: Observable<any>;
-  key: string;
+  // key: string;
   update$: Observable<any>;
 
   // table settings
