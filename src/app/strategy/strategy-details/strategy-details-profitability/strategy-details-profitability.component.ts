@@ -8,6 +8,7 @@ import { DataService } from '@app/services/data.service';
 import { TranslateService } from '@ngx-translate/core';
 import { NotificationsService } from '@app/services/notifications.service';
 import { StrategyService } from "@app/services/strategy.service";
+import { SettingsService } from '@app/services/settings.service';
 
 const offset = Math.abs(new Date().getTimezoneOffset()) * 60000;
 let that: StrategyDetailsProfitabilityComponent;
@@ -36,6 +37,7 @@ export class StrategyDetailsProfitabilityComponent implements OnInit, OnDestroy 
     private strategyService: StrategyService,
     private translateService: TranslateService,
     private notificationsService: NotificationsService,
+    public settingsService: SettingsService
   ) {
   }
 

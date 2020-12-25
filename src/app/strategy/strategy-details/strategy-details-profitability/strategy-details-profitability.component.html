@@ -46,11 +46,12 @@
         <tr *ngIf="!strategy.publicOffer && !strategy.linkOffer">
           <td translate>public.offer.does.not.exist</td>
           <td *ngIf="!strategy.isMy()"></td>
-          <td *ngIf="strategy.isMy()">
+          <td *ngIf="strategy.isMy() && !settingsService.isMobile">
             <button class="primary btn-invest" 
                     [routerLink]="[getOfferPageLink(strategy)]" 
                     translate>strategy.button.create.offer</button>
           </td>
+          <td *ngIf="settingsService.isMobile"></td>
         </tr>
       </tbody>
     </table>
