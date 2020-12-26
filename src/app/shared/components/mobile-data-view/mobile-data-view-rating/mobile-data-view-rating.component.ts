@@ -17,4 +17,12 @@ export class MobileDataViewRatingComponent {
   paginatorChanged(): void {
     this.paginationChanged.emit();
   }
+
+  checkStrategyVideo(strategy: Strategy): boolean {
+    return strategy.youTubeVideoId ? true : false;
+  }
+
+  getStrategyVideoLink(strategy: Strategy): string {
+    return `/strategies/details/${strategy.id}/video`;
+  }
 }

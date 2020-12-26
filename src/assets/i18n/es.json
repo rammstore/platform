@@ -92,7 +92,8 @@
 	"common.marginLevel.percent": "Nivel de margen, %",
   	"common.next": "Proximo",
     "common.offers": "Ofertas",
-    "common.offer": "Oferta",
+	"common.offer": "Oferta",
+	"public.offer.does.not.exist": "Отсутствует",
    	"common.pause": "Pausa",
   	"common.pause2": "pausa",
   	"common.perWeek": "por semana",
@@ -176,6 +177,7 @@
   	"common.table.label.swapUSD": "Swap, USD",
  	"common.table.label.symbol": "Simbolo",
 	"common.table.label.symbols": "Simbolos",
+	
   	"common.table.label.time": "Hora",
   	"common.table.label.type": "Tipo",
   	"common.table.label.volume": "Volumen",

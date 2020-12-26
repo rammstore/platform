@@ -169,34 +169,34 @@ export class DataService {
       );
   }
 
+  // getStrategyByID(args: { strategyId: number }): Observable<Strategy> {
+  //   this.loaderService.showLoader();
+  //   this.http.post(`${this.apiUrl}/strategies.get`, { ID: args.strategyId })
+  //     .subscribe((response: any) => {
+  //       this.loaderService.hideLoader();
+  //       this.currentStrategyDetailsSubject.next(this.createInstanceService.createStrategy(response));
+  //     },
+  //       (error: HttpErrorResponse) => {
+  //         if (error.status === 404) {
+  //           this.router.navigate(['/rating']);
+  //           this.notificationsService.open('notify.strategy.access.error', {
+  //             type: 'error',
+  //             autoClose: true,
+  //             duration: 3000
+  //           });
+  //         } else {
+  //           this.notificationsService.open('notify.loading.error', {
+  //             type: 'error',
+  //             autoClose: true,
+  //             duration: 3000
+  //           });
+  //         }
+  //       });
+
+  //   return this.currentStrategyDetailsSubject.asObservable();
+  // }
+
   // Получение конкретной стратегии за ID
-  getStrategyByID(args: { strategyId: number }): Observable<Strategy> {
-    this.loaderService.showLoader();
-    this.http.post(`${this.apiUrl}/strategies.get`, { ID: args.strategyId })
-      .subscribe((response: any) => {
-        this.loaderService.hideLoader();
-        this.currentStrategyDetailsSubject.next(this.createInstanceService.createStrategy(response));
-      },
-        (error: HttpErrorResponse) => {
-          if (error.status === 404) {
-            this.router.navigate(['/rating']);
-            this.notificationsService.open('notify.strategy.access.error', {
-              type: 'error',
-              autoClose: true,
-              duration: 3000
-            });
-          } else {
-            this.notificationsService.open('notify.loading.error', {
-              type: 'error',
-              autoClose: true,
-              duration: 3000
-            });
-          }
-        });
-
-    return this.currentStrategyDetailsSubject.asObservable();
-  }
-
   getStrategyById(args: { strategyId: number }): Observable<any> {
     this.loaderService.showLoader();
     return this.http.post(`${this.apiUrl}/strategies.get`, { ID: args.strategyId })
@@ -229,7 +229,6 @@ export class DataService {
 
   // Получение конкретной стратегии за ссылкой
   getStrategyByLink(args: { link: string }): Observable<Strategy> {
-    // console.log('getStrategyByLink');
     this.loaderService.showLoader();
     this.http.post(`${this.apiUrl}/strategies.get`, { Link: args.link }).subscribe((response: any) => {
       this.loaderService.hideLoader();
@@ -616,6 +615,9 @@ export class DataService {
             strategy: this.createInstanceService.createStrategy(response.Strategy),
             account: this.createInstanceService.createAccount(response.Account)
           }
+
+          data.strategy.traderInfo = response.TraderInfo ? this.createInstanceService.createTraderInfo(response.TraderInfo) : null;
+          data.strategy.publicOffer = response.PublicOffer ? this.createInstanceService.createOffer(response.PublicOffer) : null;
           return data;
         }
         ),
@@ -684,7 +686,6 @@ export class DataService {
   // Приостановить инвестицию
   pauseAccount(accountId: number, updateStatus: string, key: string): Observable<any> {
     this.loaderService.showLoader();
-    console.log('accountId', accountId);
     return this.http.post(`${this.apiUrl}/accounts.pause`, { AccountID: accountId })
       .pipe(
         map((response: any) => {
@@ -968,8 +969,10 @@ export class DataService {
         tap((item: any) => {
           if (args.paginator) {
             args.paginator.totalItems = item.Pagination.TotalRecords;
+
             args.paginator.totalPages = item.Pagination.TotalPages;
           }
+
           this.walletService.walletSubject.next(this.createInstanceService.createWallet(item.Wallets[0]));
 
           this.loaderService.hideLoader();

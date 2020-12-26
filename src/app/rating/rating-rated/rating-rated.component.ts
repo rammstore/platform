@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, of, Subject, Subscription } from 'rxjs';
-import { Paginator, Strategy, TableColumn } from '@app/models';
+import { Account, Paginator, Strategy, TableColumn } from '@app/models';
 import { TableHeaderRow } from '@app/models/table-header-row';
 import { PercentPipe } from '@angular/common';
 import { DataService } from '@app/services/data.service';
@@ -24,7 +24,7 @@ export class RatingRatedComponent implements OnInit, OnDestroy {
   args: any;
   section: SectionEnum = SectionEnum.rating;
   ratingRated$: Observable<any>;
-  key: string;
+  // key: string;
   update$: Observable<any>;
 
   // table settings
@@ -107,13 +107,16 @@ export class RatingRatedComponent implements OnInit, OnDestroy {
               // update strategy after investrment was closed
               (this.strategies || []).filter((strategy: Strategy) => {
                 if (strategy.account && strategy.account.id == data.accountId) {
-                  strategy.account = null;
-
-                  this.strategies$ = of(this.strategies);
+                  this.getAccountById(data.accountId)
+                    .pipe(takeUntil(this.destroy$))
+                    .subscribe(responce => {
+                      strategy = Object.assign(strategy, responce.strategy);
+                    });
 
                   this.setTableHeader();
                 }
               });
+              this.strategies$ = of(this.strategies);
             }
             else if (data.strategyId) {
               // update strategy after this strategy was closed

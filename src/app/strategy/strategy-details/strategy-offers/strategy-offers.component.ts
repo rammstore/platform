@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from "@app/services/data.service";
 import { ActivatedRoute } from "@angular/router";
-import { map, takeUntil, tap } from "rxjs/internal/operators";
+import { map, take, takeUntil, tap } from "rxjs/internal/operators";
 import { Observable, of, Subject } from "rxjs";
 import { Offer, Paginator, Strategy, TableColumn } from "@app/models";
 import { BsModalRef, BsModalService, ModalOptions } from "ngx-bootstrap";
@@ -29,7 +29,7 @@ export class StrategyOffersComponent implements OnInit {
   privateOffers$: Observable<Offer[]>;
   offers$: Observable<any>;
   traderOffer$: Observable<Offer>;
-  
+
 
   // table settings
   tableHeader: TableHeaderRow[] = [
@@ -75,7 +75,7 @@ export class StrategyOffersComponent implements OnInit {
       paginator: this.paginator
     };
 
-    this.strategy$ = ((!this.strategyService.strategy) ? this.getStrategy() : of(this.strategyService.strategy))
+    this.strategy$ = ((!this.strategyService.strategy) ? this.getStrategyById(this.args) : of(this.strategyService.strategy))
       .pipe(
         tap((item) => this.strategy = item),
         tap((item) => this.getOffers())
@@ -86,26 +86,22 @@ export class StrategyOffersComponent implements OnInit {
     return `${location.origin}/strategies/link/${link}`;
   }
 
-  getStrategy(): Observable<Strategy> {
-    return this.dataService.getStrategyById(this.args);
-  }
-
   getOffers(): void {
     this.offers$ = this.dataService.getOffers(this.strategy.id)
       .pipe(
         tap((offers: Offer[]) => {
           const publicOffer = offers.filter(item => item.type === 2)[0];
-          const privateOffers = offers.filter(item => item.type === 1)
           
-          if(!publicOffer && !privateOffers.length){
-            this.canCreateOffer = true;
-          }
-          else{
-            this.canCreateOffer = false;
-          }
+          const privateOffers = offers.filter(item => item.type === 1)
+
+          this.canCreateOffer = !publicOffer && !privateOffers.length ? true : false;
+
           this.strategy.publicOffer = publicOffer;
+          
+          this.strategyService.strategy = this.strategy;
+
           this.strategy$ = of(this.strategy);
- 
+
           this.privateOffers$ = of(privateOffers);
 
           this.traderOffer$ = of(offers.filter(item => item.type === 0)[0]);
@@ -116,6 +112,7 @@ export class StrategyOffersComponent implements OnInit {
 
   onMakePublic(status: boolean, offer: any) {
     let observer;
+    
     if (!status) {
       observer = this.dataService.setPublicOffer(this.strategy.id);
     }
@@ -123,20 +120,9 @@ export class StrategyOffersComponent implements OnInit {
       observer = this.dataService.setPublicOffer(this.strategy.id, offer.id);
     }
 
-    observer.subscribe((item) => {
+    observer.subscribe(() => {
       this.notificationsService.open('notify.strategy.offer.change');
-      this.dataService.getStrategyByID(this.args)
-        .pipe(takeUntil(this.destroy$))
-        .subscribe((strategy: Strategy) => {
-          if (!status) {
-            strategy.publicOffer = null;
-          } else {
-            const data = offer;
-            delete data.link;
-            strategy.publicOffer = new Offer(data);
-          }
-          this.strategy = strategy;
-        });
+
       this.getOffers();
     });
   }
@@ -152,10 +138,19 @@ export class StrategyOffersComponent implements OnInit {
 
     this.modalRef.content.onClose.subscribe(result => {
       if (result === true) {
-        this.dataService.getStrategyByID(this.args);
-        this.getOffers();
-      } else if (result === false) { }
-    });
+        this.getStrategyById(this.args)
+          .pipe(take(1))
+          .subscribe((strategy: Strategy) => {
+            this.strategyService.strategy = strategy;
+            this.strategy = strategy;
+          });
 
+        this.getOffers();
+      }
+    });
+  }
+
+  private getStrategyById(args): Observable<Strategy> {
+    return this.dataService.getStrategyById(args);
   }
 }

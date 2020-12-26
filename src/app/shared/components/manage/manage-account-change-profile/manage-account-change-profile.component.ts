@@ -20,7 +20,7 @@ export class ManageAccountChangeProfileComponent implements OnInit, OnDestroy {
   // component data
   form: FormGroup;
   account: Account;
-  @Input() methodArgs: any;
+  // @Input() methodArgs: any;
   functionality: object;
   updateStatus: string;
   key: string;

@@ -97,7 +97,7 @@ export class MainHeaderComponent implements OnInit, OnDestroy {
     if (this.router.url.split('/').length > 3) {
       return false;
     }
-    // console.log('isLinkActive ' + link + ' '+ this.router.url.startsWith(link))
+    
     return this.router.url.startsWith(link);
   }
 
