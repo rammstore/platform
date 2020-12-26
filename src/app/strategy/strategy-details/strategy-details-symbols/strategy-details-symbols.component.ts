@@ -2,9 +2,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Strategy } from '@app/models';
 import * as Highcharts from 'highcharts';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/internal/operators';
+import { Observable, pipe, Subject } from 'rxjs';
+import { take, takeUntil, tap } from 'rxjs/internal/operators';
 import { DataService } from '@app/services/data.service';
+import { StrategyService } from "@app/services/strategy.service";
 
 @Component({
   selector: 'app-strategy-details-symbols',
@@ -15,57 +16,86 @@ export class StrategyDetailsSymbolsComponent implements OnInit, OnDestroy {
   // https://blog.strongbrew.io/rxjs-best-practices-in-angular/#avoiding-memory-leaks
   // here we will unsubscribe from all subscriptions
   destroy$ = new Subject();
-
+  strategy$: Observable<Strategy>;
   // component data
   strategy: Strategy;
   chartOptions: any;
   args: any;
+  id: number = 0;
 
   constructor(
     private route: ActivatedRoute,
+    private strategyService: StrategyService,
     private dataService: DataService
   ) { }
 
   ngOnInit(): void {
-    this.args = {
-      strategyId: this.route.parent.params['_value'].id
-    };
-    this.dataService.getStrategy(this.args)
+
+    if (!this.strategyService.strategy) {
+      if (this.id) {
+        this.args = {
+          strategyId: parseInt(this.route.parent.params['_value'].id)
+        };
+        
+        this.strategy$ = this.getStrategyById(this.args)
+          .pipe(
+            tap((strategy) => {
+              this.getCharts(strategy.id);
+            })
+          );
+      }
+    } else {
+
+      this.strategy$ = this.strategyService.strategy$
+        .pipe(
+          tap((strategy) => {
+            this.getCharts(strategy.id);
+          })
+        );
+    }
+  }
+
+  getCharts(id: number) {
+    this.dataService.getSymbolsChart(id)
       .pipe(takeUntil(this.destroy$))
-      .subscribe((strategy: Strategy) => {
-        this.strategy = strategy;
+      .subscribe((strategySymbolsStat: object[]) => {
+        if (strategySymbolsStat.length) {
+          this.chartOptions = {
+            credits: {
+              enabled: false
+            },
+            title: {
+              text: ''
+            },
+            legend: {
+              enabled: false
+            },
+            tooltip: {
+              useHTML: true,
+              headerFormat: '',
+              pointFormatter: function () {
+                return `<div class="arearange-tooltip-header">${Highcharts.numberFormat((this.y * 100), 2, '.')}%</div>`;
+              }
+            },
+            series: [{
+              type: 'pie',
+              data: strategySymbolsStat
+            }]
+          };
 
-        this.dataService.getSymbolsChart(this.route.parent.params['_value'].id)
-          .pipe(takeUntil(this.destroy$))
-          .subscribe((strategySymbolsStat: object[]) => {
-            if (strategySymbolsStat.length) {
-              this.chartOptions = {
-                credits: {
-                  enabled: false
-                },
-                title: {
-                  text: ''
-                },
-                legend: {
-                  enabled: false
-                },
-                tooltip: {
-                  useHTML: true,
-                  headerFormat: '',
-                  pointFormatter: function() {
-                    return `<div class="arearange-tooltip-header">${Highcharts.numberFormat((this.y * 100), 2, '.')}%</div>`;
-                  }
-                },
-                series: [{
-                  type: 'pie',
-                  data: strategySymbolsStat
-                }]
-              };
-
-              Highcharts.chart('symbolsChartContainer', this.chartOptions);
-            }
-          });
+          Highcharts.chart('symbolsChartContainer', this.chartOptions);
+        }
       });
+  }
+
+  private getStrategyById(args): Observable<any> {
+    return this.dataService.getStrategyById(args)
+      .pipe(
+        take(1),
+        tap((strategy) => {
+          this.strategy = strategy;
+        })
+      );
   }
 
   ngOnDestroy(): void {

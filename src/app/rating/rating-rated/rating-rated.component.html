@@ -1,27 +1,30 @@
 <div class="search-container" [class.filled]="!!searchText">
-  <input placeholder="{{'rating.search.placeholder' | translate}}" class="search" [(ngModel)]="searchText" (keyup.enter)="getRating()">
-  <span class="search-clear" (click)="searchText = ''; getRating()"><i class="icon-close"></i></span>
-  <button class="primary search-button" (click)="getRating()">
+  <input placeholder="{{'rating.search.placeholder' | translate}}" class="search" [(ngModel)]="searchText" (keyup.enter)="search()">
+  <span class="search-clear" (click)="searchText = ''; search()"><i class="icon-close"></i></span>
+  <button class="primary search-button" (click)="search()">
     <i class="fa fa-search"></i>
   </button>
 </div>
 
-<div class="rating-content-container">
+<div class="rating-content-container"
+  *ngIf="ratingRated$ | async as options">
   <app-data-table
+    *ngIf="!settingsService.isMobile"
     [tableHeader]="tableHeader"
-    [data]="strategies"
+    [data]="strategies$ | async"
     [paginator]="paginator"
     [shouldHighlightMyStrategies]="true"
     (paginationChanged)="getRating()"
-    [methodName]="'getRating'"
-    [methodArgs]="args">
+    [section]="section">
   </app-data-table>
 
+  <div *ngIf="update$ | async"></div>
+  
   <app-mobile-data-view-rating
-    [strategies]="strategies"
+    *ngIf="settingsService.isMobile"
+    [strategies]="strategies$ | async"
     [paginator]="paginator"
     (paginationChanged)="getRating()"
-    [methodName]="'getRating'"
-    [methodArgs]="args">
+    [section]="section">
   </app-mobile-data-view-rating>
 </div>

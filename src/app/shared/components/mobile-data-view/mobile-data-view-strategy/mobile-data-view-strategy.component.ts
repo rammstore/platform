@@ -10,6 +10,7 @@ export class MobileDataViewStrategyComponent {
   @Input() strategies: Strategy[];
   @Input() paginator: Paginator;
   @Output() paginationChanged: EventEmitter<void> = new EventEmitter();
+  @Input() key: string;
 
   paginatorChanged(): void {
     this.paginationChanged.emit();

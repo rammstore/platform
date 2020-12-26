@@ -1,0 +1,129 @@
+@import 'styles';
+
+.caption {
+  display: flex;
+  align-items: center;
+  margin-bottom: 40px;
+
+  h2 {
+    margin-bottom: 0;
+    flex-grow: 1;
+
+    .closed-info {
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: .020em;
+      color: rgba(0,0,0,.54);
+    }
+  }
+
+  .info {
+    background-color: $background-color;
+    padding: 10px 15px;
+
+    .pnl {
+      font-size: 24px;
+      font-weight: 300;
+    }
+
+    .item {
+      margin-right: 30px;
+      vertical-align: middle;
+
+      b {
+        margin-left: 15px;
+        font-weight: 500 !important;
+      }
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+@media (max-width: 1200px) {
+  .caption {
+    display: block;
+
+    h2 {
+      display: block;
+      margin-bottom: 15px;
+    }
+
+    .info {
+      display: inline-block;
+    }
+
+    app-manage {
+      display: inline-block;
+      float: right;
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  .caption {
+    position: relative;
+
+    .info {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    app-manage {
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .caption {
+
+    .info {
+      display: flex;
+      justify-content: space-between;
+
+      .item {
+        margin-right: 10px;
+
+        b {
+          margin-left: 0;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .caption {
+    margin-top: 30px;
+    margin-bottom: 0;
+
+    .info {
+      display: block;
+      padding-top: 20px;
+
+      .item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        margin-right: 0;
+
+        &.pnl {
+          display: block;
+          text-align: center;
+          margin-bottom: 15px;
+        }
+
+        b {
+          margin-left: 0;
+          display: block;
+        }
+      }
+    }
+  }
+}

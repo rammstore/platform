@@ -1,6 +1,7 @@
 <header>
   <div class="container">
-    <a href="{{'linkLogout' | translate}}">
+    <a href="{{'linkLogout' | translate}}"
+        [target]="logoBlank('linkLogout' | translate)">
       <img class="logo" [src]="logoLink" alt="company_logo">
     </a>
 
@@ -31,6 +32,8 @@
             <li role="menuitem lang" (click)="setLanguage('en')"><img class="lang-img" src="/assets/images/flags/en.png"></li>
             <li role="menuitem lang" (click)="setLanguage('ru')"><img class="lang-img" src="/assets/images/flags/ru.png"></li>
             <li role="menuitem lang" (click)="setLanguage('es')"><img class="lang-img" src="/assets/images/flags/es.png"></li>
+            <li role="menuitem lang" (click)="setLanguage('tr')"><img class="lang-img" src="/assets/images/flags/tr.png"></li>
+            <li role="menuitem lang" (click)="setLanguage('fa')"><img class="lang-img" src="/assets/images/flags/fa.png"></li>
           </ul>
         </li>
         <li role="menuitem">
@@ -79,7 +82,7 @@
         <li><a [routerLink]="['/rating']" [class.active]="isLinkActive('/rating')" translate>header.item.rating</a></li>
         <li><a [routerLink]="['/strategies']" [class.active]="isLinkActive('/strategies')" translate>header.item.myStrategies</a>
         </li>
-        <li><a [routerLink]="['/spec']" [class.active]="isLinkActive('/specification')" translate>header.item.specification</a></li>
+        <li><a [routerLink]="['/spec']" [class.active]="isLinkActive('/spec')" translate>header.item.specification</a></li>
         <li><a [routerLink]="['/help']" [class.active]="isLinkActive('/help')" translate>header.item.help</a></li>
       </ul>
 
@@ -98,6 +101,10 @@
             <li role="menuitem lang" (click)="setLanguage('ru')"><img class="lang-img" src="/assets/images/flags/ru.png"></li>
             <li class="divider dropdown-divider"></li>
             <li role="menuitem lang" (click)="setLanguage('es')"><img class="lang-img" src="/assets/images/flags/es.png"></li>
+            <li class="divider dropdown-divider"></li>
+            <li role="menuitem lang" (click)="setLanguage('tr')"><img class="lang-img" src="/assets/images/flags/tr.png"></li>
+            <li class="divider dropdown-divider"></li>
+            <li role="menuitem lang" (click)="setLanguage('fa')"><img class="lang-img" src="/assets/images/flags/fa.png"></li>
           </ul>
         </li>
 

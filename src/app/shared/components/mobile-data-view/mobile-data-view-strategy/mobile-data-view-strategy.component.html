@@ -5,7 +5,9 @@
       <div class="master-account" *ngIf="strategy.masterAccount" [title]="'Номер счета, с которого идет копирование' | translate">
         {{strategy.masterAccount}}
       </div>
-      <app-manage [data]="strategy"></app-manage>
+      <app-manage 
+      [data]="strategy"
+      [key]="key"></app-manage>
     </div>
 
     <div class="info">
@@ -16,12 +18,13 @@
 
       <div class="item">
         <span translate>common.table.label.investors</span>
-        <span>{{strategy.accountsCount}}</span>
+        <span>{{strategy.accounts}}</span>
       </div>
 
-      <div class="item">
+      <div class="item"
+           *ngIf="strategy.publicOffer">
         <span translate>common.fee</span>
-        <span>{{strategy.offer.fee | percent}}</span>
+        <span>{{strategy.publicOffer.feeRate | percent}}</span>
       </div>
 
       <div class="item">

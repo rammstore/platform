@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Account, AuthData, Company, Deal, Offer, Position, Session, Strategy, User, Wallet } from '@app/models';
 import { AccountSpecAsset } from '@app/models/account-spec-asset';
+import { Argument } from '@app/models/argument';
+import { PartnerInfo } from '@app/models/partner-info';
+import { Rating } from '@app/models/rating';
+import { TraderInfo } from '@app/models/trader-info';
 
 @Injectable({
   providedIn: 'root'
@@ -17,23 +21,36 @@ export class CreateInstanceService {
       dtCreated: options.DTCreated,
       dtStat: options.DTStat,
       dtClosed: options.DTClosed,
-      partnerShare: options.PartnerShare,
+      //partnerShare: options.PartnerShare,
       status: options.Status,
       profit: options.Yield,
-      accountsCount: options.Accounts,
+      accounts: options.Accounts,
       symbols: options.Symbols,
       account: options.Account ? this.createAccount(options.Account) : null,
-      offer: options.Offer ? this.createOffer(options.Offer) : undefined,
+      publicOffer: options.PublicOffer ? this.createOffer(options.PublicOffer) : null,
+      linkOffer: options.LinkOffer ? this.createOffer(options.LinkOffer) : null,
       isMyStrategy: options.IsMyStrategy,
       ageByDays: options.AgeByDays,
       monthlyYield: options.MonthlyYield,
       MCLevel: options.MCLevel,
       equity: options.Equity,
-      feePaid: options.FeePaid,
-      feeToPay: options.FeeToPay,
+      traderInfo: options.TraderInfo ? this.createTraderInfo(options.TraderInfo) : null,
+      partnerInfo: options.PartnerInfo ? this.createPartnerInfo(options.PartnerInfo) : null,
       commission: options.Commission,
       chart: options.Chart,
-      masterAccount: options.MasterAccount
+      masterAccount: options.MasterAccount,
+      youTubeVideoId: options.Tags ? options.Tags.YouTube : null
+    });
+  }
+
+  createArgument(options: any): Argument{
+    return new Argument({
+      searchMode: options.Filter.SearchMode,
+      dealsMin: options.Filter.DealsMin,
+      ageMin: options.Filter.AgeMin,
+      yieldMin: options.Filter.YieldMin,
+      field: options.OrderBy.Field,
+      direction: options.OrderBy.Direction
     });
   }
 
@@ -54,6 +71,7 @@ export class CreateInstanceService {
       intervalPnL: options.IntervalPnL || options.ProfitCurrentIntervalGross || options.ProfitCurrentIntervalNet,
       status: options.Status,
       factor: options.Factor,
+      offer: options.Offer ? new Offer(options.Offer) : null,
       dtMCReached: options.MCReached,
       protection: options.Protection,
       protectionEquity: options.ProtectionEquity,
@@ -83,10 +101,17 @@ export class CreateInstanceService {
   }
 
   createOffer(options: any): Offer {
-    return new Offer({
-      commission: options.Commission,
-      fee: options.Fee
-    });
+    return new Offer(options);
+  }
+
+  createOffers(options: any): Offer[]{
+    const offers: Offer[] = [];
+    options.Offers.forEach((offer)=>offers.push(new Offer(offer)));
+    return offers;
+  }
+
+  createRating(options: any): Rating{
+    return new Rating(options);
   }
 
   createDeal(options: any): Deal {
@@ -193,5 +218,13 @@ export class CreateInstanceService {
       precision: options.Precision,
       aBook: options.ABook
     });
+  }
+
+  createTraderInfo(options: any): TraderInfo {
+    return new TraderInfo(options);
+  }
+
+  createPartnerInfo(options: any): PartnerInfo {
+    return new PartnerInfo(options);
   }
 }

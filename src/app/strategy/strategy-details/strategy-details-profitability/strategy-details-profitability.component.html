@@ -1,42 +1,58 @@
 <div class="profitability-container">
-  <div class="statistics" *ngIf="strategy">
+  <div class="statistics" *ngIf="strategy$ | async as strategy">
     <table>
       <tbody>
-      <tr>
-        <td translate>common.yieldMonthly</td>
-        <td class="yield {{strategy.getColorClass('monthlyYield')}}">
-          {{strategy.monthlyYield | percent:'1.2-2'}}
-        </td>
-      </tr>
-      <tr>
-        <td translate>common.yield</td>
-        <td class="yield {{strategy.getColorClass('profit')}}">
-          {{strategy.profit | percent:'1.2-2'}}
-        </td>
-<!--        <td *ngIf="!strategy.account">{{0 | percent:'1.2-2'}}</td>-->
-      </tr>
-      <tr><td></td><td></td></tr>
-      <tr>
-        <td translate>common.fee</td>
-        <td>{{strategy.offer.fee | percent}}</td>
-      </tr>
-      <tr *ngIf="strategy.commission">
-        <td><span translate>common.commission</span>, USD</td>
-        <td>{{strategy.commission * 1000000}} / 1 mln</td>
-      </tr>
-      <tr>
-        <td translate>common.age</td>
-        <td>{{strategy.getAgeWeeks()}}</td>
-      </tr>
-      <tr>
-        <td><span translate>common.investments</span>, USD</td>
-        <td *ngIf="strategy.equity">{{strategy.equity | customCurrency}}</td>
-        <td *ngIf="!strategy.equity">{{0 | customCurrency}}</td>
-      </tr>
-      <tr>
-        <td translate>common.accountsCount</td>
-        <td>{{strategy.accountsCount}}</td>
-      </tr>
+        <tr>
+          <td translate>common.yieldMonthly</td>
+          <td class="yield {{strategy.getColorClass('monthlyYield')}}">
+            {{strategy.monthlyYield | percent:'1.2-2'}}
+          </td>
+        </tr>
+        <tr>
+          <td translate>common.yield</td>
+          <td class="yield {{strategy.getColorClass('profit')}}">
+            {{strategy.profit | percent:'1.2-2'}}
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td translate>common.age</td>
+          <td>{{strategy.getAgeWeeks()}}</td>
+        </tr>
+        <tr>
+          <td><span translate>common.investments</span>, USD</td>
+          <td *ngIf="strategy.equity">{{strategy.equity | customCurrency}}</td>
+          <td *ngIf="!strategy.equity">{{0 | customCurrency}}</td>
+        </tr>
+        <tr>
+          <td translate>common.accountsCount</td>
+          <td>{{strategy.accounts}}</td>
+        </tr>
+        <tr>
+          <td><b translate>common.offer</b></td>
+          <td></td>
+        </tr>
+        <tr *ngIf="strategy.publicOffer || strategy.linkOffer">
+          <td  translate>common.fee</td>
+          <td>{{strategy.getFeeRate() | percent}}</td>
+        </tr>
+        <tr *ngIf="strategy.publicOffer || strategy.linkOffer">
+          <td><span translate>common.commission</span>, USD</td>
+          <td>{{strategy.getCommissionRate()}} / 1 mln</td>
+        </tr>
+        <tr *ngIf="!strategy.publicOffer && !strategy.linkOffer">
+          <td translate>public.offer.does.not.exist</td>
+          <td *ngIf="!strategy.isMy()"></td>
+          <td *ngIf="strategy.isMy() && !settingsService.isMobile">
+            <button class="primary btn-invest" 
+                    [routerLink]="[getOfferPageLink(strategy)]" 
+                    translate>strategy.button.create.offer</button>
+          </td>
+          <td *ngIf="settingsService.isMobile"></td>
+        </tr>
       </tbody>
     </table>
   </div>

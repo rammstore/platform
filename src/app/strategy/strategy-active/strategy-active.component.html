@@ -1,17 +1,22 @@
 <app-data-table
+  *ngIf="!settingsService.isMobile"
   [tableHeader]="tableHeader"
-  [data]="strategies"
+  [data]="strategies$ | async"
   [totalFields]="totalFields"
   [paginator]="paginator"
   (paginationChanged)="getStrategies()"
-  [methodName]="'getActiveMyStrategies'"
-  [methodArgs]="args">
+  [section]="sectionEnum"
+  [key]="key">
 </app-data-table>
 
+<div *ngIf="update$ | async"></div>
+
 <app-mobile-data-view-strategy
-  [strategies]="strategies"
+  *ngIf="settingsService.isMobile"
+  [strategies]="strategies$ | async"
   [paginator]="paginator"
-  (paginationChanged)="getStrategies()">
+  (paginationChanged)="getStrategies()"
+  [key]="key">
 </app-mobile-data-view-strategy>
 
 <div [innerHTML]="'additionalInfo' | translate"></div>

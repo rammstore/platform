@@ -9,24 +9,56 @@ import { StrategyDetailsSymbolsComponent } from './strategy-details/strategy-det
 import { StrategyDetailsInvestmentsComponent } from './strategy-details/strategy-details-investments/strategy-details-investments.component';
 import { StrategyDetailsInvestmentsActiveComponent } from './strategy-details/strategy-details-investments/strategy-details-investments-active/strategy-details-investments-active.component';
 import { StrategyDetailsInvestmentsClosedComponent } from './strategy-details/strategy-details-investments/strategy-details-investments-closed/strategy-details-investments-closed.component';
+import { StrategyOffersComponent } from './strategy-details/strategy-offers/strategy-offers.component';
+import { StrategyDetailsMyInvestmentComponent } from './strategy-details/strategy-details-my-investment/strategy-details-my-investment.component';
+import { StrategyLinkComponent } from './strategy-details/strategy-link/strategy-link.component';
+import { MyStrategyGuard } from './my-strategy.guard';
+import { StrategyDetailsVideoComponent } from './strategy-details/strategy-details-video/strategy-details-video.component';
 
 const routes: Routes = [
-  { path: '', component: StrategyComponent, children: [
-    { path: '', component: StrategyActiveComponent },
-    { path: 'closed', component: StrategyClosedComponent }
-  ] },
-  { path: 'details/:id', component: StrategyDetailsComponent, children: [
-    { path: '', component: StrategyDetailsProfitabilityComponent},
-    { path: 'symbols', component: StrategyDetailsSymbolsComponent},
-    { path: 'investments', component: StrategyDetailsInvestmentsComponent, children: [
-        { path: '', component: StrategyDetailsInvestmentsActiveComponent },
-        { path: 'closed', component: StrategyDetailsInvestmentsClosedComponent }
-      ] }
-  ] }
+  {
+    path: '', component: StrategyComponent, children: [
+      { path: '', component: StrategyActiveComponent },
+      { path: 'closed', component: StrategyClosedComponent }
+    ]
+  },
+  {
+    path: 'details/:id', component: StrategyDetailsComponent, children: [
+      { path: '', component: StrategyDetailsProfitabilityComponent },
+      { path: 'offers', canActivate: [MyStrategyGuard], component: StrategyOffersComponent },
+      { path: 'symbols', component: StrategyDetailsSymbolsComponent },
+      { path: 'my-investment', component: StrategyDetailsMyInvestmentComponent },
+      {
+        path: 'investments',
+        canActivate: [MyStrategyGuard],
+        component: StrategyDetailsInvestmentsComponent, children: [
+          { path: '', component: StrategyDetailsInvestmentsActiveComponent },
+          { path: 'closed', component: StrategyDetailsInvestmentsClosedComponent }
+        ]
+      },
+      { path: 'video', component: StrategyDetailsVideoComponent }
+    ]
+  },
+  {
+    path: 'link/:id', component: StrategyLinkComponent, children: [
+      { path: '', component: StrategyDetailsProfitabilityComponent },
+      { path: 'offers', component: StrategyOffersComponent },
+      { path: 'symbols', component: StrategyDetailsSymbolsComponent },
+      { path: 'my-investment', component: StrategyDetailsMyInvestmentComponent },
+      {
+        path: 'investments', component: StrategyDetailsInvestmentsComponent, children: [
+          { path: '', component: StrategyDetailsInvestmentsActiveComponent },
+          { path: 'closed', component: StrategyDetailsInvestmentsClosedComponent }
+        ]
+      },
+      { path: 'symbols', component: StrategyDetailsSymbolsComponent },
+    ]
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class StrategyRoutingModule { }
+export class StrategyRoutingModule {
+}

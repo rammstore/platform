@@ -7,7 +7,6 @@ import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common
 import { StorageService } from '@app/services/storage.service';
 import { AuthService } from '@app/services/auth.service';
 import { TokenInterceptor } from '@app/interceptors/token.interceptor';
-import { OuterConfigModule } from '@app/modules/outer-config/outer-config.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { WalletService } from '@app/services/wallet.service';
 import { CommandService } from '@app/services/command.service';
@@ -20,9 +19,13 @@ import { registerLocaleData } from '@angular/common';
 import { BrandService } from '@app/services/brand.service';
 import localeRu from '@angular/common/locales/ru';
 import localeEs from '@angular/common/locales/es';
+import localeTr from '@angular/common/locales/tr';
+import localeFa from '@angular/common/locales/fa';
 
 registerLocaleData(localeRu, 'ru');
 registerLocaleData(localeEs, 'es');
+registerLocaleData(localeTr, 'tr');
+registerLocaleData(localeFa, 'fa');
 
 
 export function HttpLoaderFactory(http: HttpClient) {

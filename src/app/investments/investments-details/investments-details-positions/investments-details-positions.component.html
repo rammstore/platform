@@ -2,8 +2,8 @@
                 [tableHeader]="tableHeader"
                 [paginator]="paginator"
                 (paginationChanged)="getPositions()"
-                [emptyDataText]="'common.table.empty.positions' | translate"
-                [totals]="totals">
+                [totals]="totals"
+                [emptyDataText]="emptyDataText">
 </app-data-table>
 
 
@@ -37,17 +37,17 @@
 
       <div class="item">
         <span><span translate>common.table.label.yield</span>, USD</span>
-        <span>{{position.profit}}</span>
+        <span>{{position.getProfit}}</span>
       </div>
 
       <div class="item">
         <span><span translate>common.table.label.swap</span>, USD</span>
-        <span>{{position.swap}}</span>
+        <span>{{position.getSwap}}</span>
       </div>
 
       <div class="item">
         <span><span translate>common.table.label.yieldTotal</span>, USD</span>
-        <span>{{position.totalProfit}}</span>
+        <span>{{position.getTotalProfit}}</span>
       </div>
     </div>
   </div>
@@ -56,15 +56,15 @@
 <div class="totals" *ngIf="positions && positions.length">
   <div class="total">
     <div class="text-center total-title"><span translate>common.table.label.yield</span>, USD</div>
-    <div class="text-center">{{totals['profit']}}</div>
+    <div class="text-center">{{(totals['profit']).toFixed(2)}}</div>
   </div>
   <div class="total">
     <div translate class="text-center total-title"><span translate>common.table.label.swap</span>, USD</div>
-    <div class="text-center">{{totals['swap']}}</div>
+    <div class="text-center">{{(totals['swap']).toFixed(2)}}</div>
   </div>
   <div class="total">
     <div translate class="text-center total-title"><span translate>common.table.label.yieldTotal</span>, USD</div>
-    <div class="text-center">{{totals['totalProfit']}}</div>
+    <div class="text-center">{{(totals['totalProfit']).toFixed(2)}}</div>
   </div>
 </div>
 

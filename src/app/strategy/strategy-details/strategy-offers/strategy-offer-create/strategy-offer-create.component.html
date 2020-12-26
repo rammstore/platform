@@ -1,0 +1,75 @@
+<div class="dialog-content">
+  <div class="dialog-header">
+    <h1 class="dialog-title">
+      <span translate>myStrategies.offers.title.create</span>
+    </h1>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="dialog-body">
+    <form [formGroup]="form"
+          *ngIf="form"
+          class="step3">
+      <p class="text-danger" translate>strategy.add.form.label.step3.warning</p>
+      <p translate>strategy.add.form.label.step3</p>
+
+      <div class="form-field">
+        <label for="fee" class="field-label"><span translate>strategy.add.form.label.fee</span>, %:</label>
+        <div class="input-wrapper">
+          <input id="fee" type="number" formControlName="fee" [min]="0" [max]="50">
+          <div class="messages">
+            <label *ngIf="form.get('fee').hasError('min')" class="error-message"
+                   translate>
+              <span translate>strategy.form.fee.error.min</span> - 0
+            </label>
+            <label *ngIf="form.get('fee').hasError('max')" class="error-message"
+                   translate>
+              <span translate>strategy.form.fee.error.max</span> — 50%
+            </label>
+            <label class="details-message" translate>strategy.form.fee.hint</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-field">
+        <label for="commission" class="field-label"><span translate>strategy.add.form.label.commission</span>, USD /
+          1mln.:</label>
+        <div class="input-wrapper">
+          <input id="commission" type="number" formControlName="commission" [min]="0" [max]="100">
+          <div class="messages">
+            <label *ngIf="form.get('commission').hasError('min')"
+                   class="error-message">
+              <span translate>strategy.form.commission.error.min</span> — 0
+            </label>
+            <label *ngIf="form.get('commission').hasError('max')"
+                   class="error-message">
+              <span translate>strategy.form.commission.error.max</span> — 100 USD
+            </label>
+            <label class="details-message" translate>strategy.form.commission.hint</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-field d-flex flex-column">
+        <div class="d-flex">
+          <label for="makePublic" class="label-check cursor-pointer">
+            <input id="makePublic" type="checkbox"
+                   formControlName="type">
+            <span translate>myStrategies.offers.type.create.public</span>
+          </label>
+        </div>
+        <div class="d-flex">
+          <span *ngIf="form.get('type').value" translate>strategy.public.offer.label</span>
+          <span *ngIf="!form.get('type').value" translate>strategy.private.offer.label</span>
+        </div>
+
+      </div>
+
+      <div class="dialog-actions">
+        <button (click)="submit()" class="primary" [disabled]="!form.valid" translate>button.create</button>
+        <button (click)="close()" class="primary" translate>button.cancel</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -21,8 +21,8 @@ export class ManageAccountFundComponent implements OnInit, OnDestroy {
   account: Account;
   form: FormGroup;
   wallet: Wallet;
-  @Input() methodName: string;
-  @Input() methodArgs: any;
+  key: string;
+  updateStatus: string;
 
   constructor(
     public modalRef: BsModalRef,
@@ -32,6 +32,7 @@ export class ManageAccountFundComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.updateStatus = "update"
     this.walletService.getWallet().subscribe((wallet: Wallet) => {
       this.wallet = wallet;
       this.buildForm();
@@ -54,7 +55,7 @@ export class ManageAccountFundComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.dataService.fundAccount(this.account.id, this.form.get('amount').value, this.methodName, this.methodArgs)
+    this.dataService.fundAccount(this.account.id, this.form.get('amount').value, this.updateStatus, this.key)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
         this.modalRef.hide();

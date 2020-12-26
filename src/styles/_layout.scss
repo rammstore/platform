@@ -64,3 +64,56 @@ body {
     }
   }
 }
+
+
+.language-dropdown{
+  z-index: 10;
+}
+
+
+
+.wallet-container .tooltip{
+  font-size: 13px!important;
+}
+
+.fa.fa-question-circle-o{
+  font-size: 23px!important;
+}
+
+.hint-container{
+  &:hover .hint-content{
+    display: inline-block!important;
+    position: absolute;
+    right: 0;
+    opacity: 0.95;
+    padding: 10px;
+    border-radius: 5px;
+    background: gray;
+    width: auto;
+    height: auto;
+    white-space: normal;
+    min-width: 150px;
+    min-height: 25px;
+    color: white;
+  }
+
+  .hint-content{
+    display: none;
+    left: 10px;
+    right: inherit;
+    top: 0;
+    line-height: 18px;
+    white-space: normal;
+    text-align: left;
+    font-size: 13px;
+    z-index: 50;
+  }
+
+  .hint{
+    position: relative;
+  }
+}
+
+.cursor-pointer{
+  cursor: pointer!important;
+}
