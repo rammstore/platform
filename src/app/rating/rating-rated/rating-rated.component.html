@@ -15,8 +15,7 @@
     [paginator]="paginator"
     [shouldHighlightMyStrategies]="true"
     (paginationChanged)="getRating()"
-    [section]="section"
-    [key]="key">
+    [section]="section">
   </app-data-table>
 
   <div *ngIf="update$ | async"></div>
@@ -26,7 +25,6 @@
     [strategies]="strategies$ | async"
     [paginator]="paginator"
     (paginationChanged)="getRating()"
-    [section]="section"
-    [key]="key">
+    [section]="section">
   </app-mobile-data-view-rating>
 </div>
