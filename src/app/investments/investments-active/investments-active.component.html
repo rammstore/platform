@@ -4,8 +4,7 @@
   [data]="accounts$ | async"
   [paginator]="paginator"
   [shouldHighlightMyStrategies]="true"
-  (paginationChanged)="getAccounts()"
-  [key]="key">
+  (paginationChanged)="getAccounts()">
 </app-data-table>
 
 <div *ngIf="update$ | async"></div>
@@ -14,8 +13,7 @@
   *ngIf="settingsService.isMobile"
   [accounts]="accounts$ | async"
   [paginator]="paginator"
-  (paginationChanged)="getAccounts()"
-  [key]="key">
+  (paginationChanged)="getAccounts()">
 </app-mobile-data-view-investment>
 
 
