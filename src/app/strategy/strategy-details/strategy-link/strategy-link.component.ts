@@ -1,14 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject } from "rxjs";
+import { Observable, Subject } from "rxjs";
 import { Strategy } from "@app/models";
 import { BsModalRef } from "ngx-bootstrap";
 import { ContentTabLink } from "@app/components/content-tabs/content-tab-link";
 import { ActivatedRoute } from "@angular/router";
 import { DataService } from "@app/services/data.service";
 import { BrandService } from "@app/services/brand.service";
-import { takeUntil } from "rxjs/internal/operators";
+import { take, takeUntil, tap } from "rxjs/internal/operators";
 import { StrategyService } from "@app/services/strategy.service";
-import {SectionEnum} from "@app/enum/section.enum";
+import { SectionEnum } from "@app/enum/section.enum";
 
 @Component({
   selector: 'app-strategy-link',
@@ -22,7 +22,8 @@ export class StrategyLinkComponent implements OnInit, OnDestroy {
   destroy$ = new Subject();
 
   // component data
-  strategy: Strategy;
+  // strategy: Strategy;
+  strategy$: Observable<Strategy>;
   modalRef: BsModalRef;
   links: ContentTabLink[];
   args: any;
@@ -51,32 +52,44 @@ export class StrategyLinkComponent implements OnInit, OnDestroy {
       this.args = {
         link: item.id
       };
-      this.dataService.getStrategyByLink(this.args)
-        .pipe(takeUntil(this.destroy$))
-        .subscribe((strategy: Strategy) => {
-          strategy.link = item.id;
 
-          this.strategyService.strategy = strategy;
-          this.strategy = strategy;
-          this.strategiesLinks();
-        });
-      // this.methodName = 'getStrategyByLink';
-    })
+      this.strategy$ = this.getStrategyByLink(this.args);
+    });
 
+    this.dataService.update$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((item) => {
+        if (item) {
+          this.strategy$ = this.getStrategyByLink(this.args);
+        }
+      });
   }
 
+  private getStrategyByLink(args: any): Observable<Strategy> {
+    return this.dataService.getStrategyByLink(args)
+      .pipe(
+        take(1),
+        tap((strategy: Strategy) => {
+          strategy.link = args.link;
+          this.strategyService.strategy = strategy;
+          this.strategiesLinks(strategy);
+        })
+      );
+  }
 
-  strategiesLinks() {
+  strategiesLinks(strategy: Strategy) {
     this.links = [
-      new ContentTabLink('common.yield', '/strategies/link/' + this.strategy.link),
-      new ContentTabLink('common.table.label.symbols', '/strategies/link/' + this.strategy.link + '/symbols'),
-      new ContentTabLink('common.table.label.myInvestment', '/strategies/link/' + this.strategy.link + '/my-investment')
+      new ContentTabLink('common.yield', '/strategies/link/' + strategy.link),
+      new ContentTabLink('common.table.label.symbols', '/strategies/link/' + strategy.link + '/symbols')
     ];
 
-    if (this.strategy.isMy()) {
-      this.links.push(new ContentTabLink('common.investments', '/strategies/link/' + this.strategy.link + '/investments'));
+    if(strategy.account && strategy.account.id){
+      this.links.push(new ContentTabLink('common.table.label.myInvestment', '/strategies/link/' + strategy.link + '/my-investment'));
     }
 
+    if (strategy.isMy()) {
+      this.links.push(new ContentTabLink('common.investments', '/strategies/link/' + strategy.link + '/investments'));
+    }
   }
 
   ngOnDestroy(): void {

@@ -169,33 +169,6 @@ export class DataService {
       );
   }
 
-  // getStrategyByID(args: { strategyId: number }): Observable<Strategy> {
-  //   this.loaderService.showLoader();
-  //   this.http.post(`${this.apiUrl}/strategies.get`, { ID: args.strategyId })
-  //     .subscribe((response: any) => {
-  //       this.loaderService.hideLoader();
-  //       this.currentStrategyDetailsSubject.next(this.createInstanceService.createStrategy(response));
-  //     },
-  //       (error: HttpErrorResponse) => {
-  //         if (error.status === 404) {
-  //           this.router.navigate(['/rating']);
-  //           this.notificationsService.open('notify.strategy.access.error', {
-  //             type: 'error',
-  //             autoClose: true,
-  //             duration: 3000
-  //           });
-  //         } else {
-  //           this.notificationsService.open('notify.loading.error', {
-  //             type: 'error',
-  //             autoClose: true,
-  //             duration: 3000
-  //           });
-  //         }
-  //       });
-
-  //   return this.currentStrategyDetailsSubject.asObservable();
-  // }
-
   // Получение конкретной стратегии за ID
   getStrategyById(args: { strategyId: number }): Observable<any> {
     this.loaderService.showLoader();
@@ -230,28 +203,34 @@ export class DataService {
   // Получение конкретной стратегии за ссылкой
   getStrategyByLink(args: { link: string }): Observable<Strategy> {
     this.loaderService.showLoader();
-    this.http.post(`${this.apiUrl}/strategies.get`, { Link: args.link }).subscribe((response: any) => {
-      this.loaderService.hideLoader();
-      this.currentStrategyDetailsSubject.next(this.createInstanceService.createStrategy(response));
-    }, (error: HttpErrorResponse) => {
+    return this.http.post(`${this.apiUrl}/strategies.get`, { Link: args.link })
+      .pipe(
+        catchError(err => {
+          const config: NotificationOptions = {
+            type: 'error',
+            autoClose: true,
+            duration: 3000
+          };
 
-      if (error.status === 404) {
-        this.router.navigate(['/rating']);
-        this.notificationsService.open('notify.strategy.access.error', {
-          type: 'error',
-          autoClose: true,
-          duration: 3000
-        });
-      } else {
-        this.notificationsService.open('notify.loading.error', {
-          type: 'error',
-          autoClose: true,
-          duration: 3000
-        });
-      }
-    });
+          switch (err.status) {
+            case 404: {
+              this.router.navigate(['/rating']);
+              this.notificationsService.open('notify.strategy.access.error', config);
+            }
+            default: {
+              this.router.navigate(['/rating']);
+              this.notificationsService.open('notify.loading.error', config);
+            }
+          }
 
-    return this.currentStrategyDetailsSubject.asObservable();
+          this.loaderService.hideLoader();
+
+          return of();
+        }),
+        take(1),
+        map((response: any) => this.createInstanceService.createStrategy(response)),
+        tap(() => this.loaderService.hideLoader())
+      );
   }
 
   // Создание новой стратегии
@@ -661,13 +640,10 @@ export class DataService {
       Target: data['target'],
       Money: data['amount']
     };
-
     return this.http.post(`${this.apiUrl}/accounts.add`, options).pipe(
       map((response: any) => {
-        // this.getActiveMyStrategies().subscribe();
         this.walletService.updateWallet().subscribe();
-        this.getStrategyByLink({ link: link });
-        // this.updateRatingList();
+
         this.notificationsService.open('notify.investment.created');
       })
     );
@@ -892,7 +868,6 @@ export class DataService {
 
   //
   // Методы для работы с рейтингом
-  //
 
   getRating(args: { ageMin?: number, dealsMin?: number, yieldMin?: number, searchMode?: string, field?: string, paginator?: Paginator, searchText?: string, direction?: string })
     : Observable<Strategy[]> {

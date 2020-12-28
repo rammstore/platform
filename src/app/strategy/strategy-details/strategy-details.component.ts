@@ -69,7 +69,6 @@ export class StrategyDetailsComponent implements OnInit, OnDestroy {
         }
       });
 
-
     this.getStrategy();
   }
 

@@ -188,8 +188,11 @@ export class ManageComponent implements OnInit {
 
     options.initialState = {
       strategy: data,
-      key: this.key
+      key: this.key,
+      link: this.data.link ? this.data.link : null
     };
+
+    
 
     return options;
   }
