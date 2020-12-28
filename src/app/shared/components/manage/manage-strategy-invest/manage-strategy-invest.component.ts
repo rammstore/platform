@@ -95,7 +95,7 @@ export class ManageStrategyInvestComponent implements OnInit, OnDestroy {
     }
 
     if (this.link) {
-      this.dataService.addAccountPrivateOffer(this.link, values).subscribe(() => {
+      this.dataService.addAccountPrivateOffer(this.link, values, this.updateStatus).subscribe(() => {
         this.onClose.next(true);
         this.modalRef.hide();
         this.getSwitch();

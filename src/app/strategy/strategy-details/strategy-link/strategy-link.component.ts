@@ -61,6 +61,7 @@ export class StrategyLinkComponent implements OnInit, OnDestroy {
       .subscribe((item) => {
         if (item) {
           this.strategy$ = this.getStrategyByLink(this.args);
+          this.dataService._update$.next(null);
         }
       });
   }
