@@ -21,11 +21,13 @@ import localeRu from '@angular/common/locales/ru';
 import localeEs from '@angular/common/locales/es';
 import localeTr from '@angular/common/locales/tr';
 import localeFa from '@angular/common/locales/fa';
+import localeIn from '@angular/common/locales/in';
 
 registerLocaleData(localeRu, 'ru');
 registerLocaleData(localeEs, 'es');
 registerLocaleData(localeTr, 'tr');
 registerLocaleData(localeFa, 'fa');
+registerLocaleData(localeIn, 'in');
 
 
 export function HttpLoaderFactory(http: HttpClient) {
