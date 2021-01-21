@@ -304,8 +304,11 @@
     "notify.strategy.offer.create": "Teklif oluşturuldu",
     "notify.strategy.offer.change": "Teklif değiştirildi",
 
- 	  "rating.all.title": "Tüm stratejiler",
-	  "rating.message": "Bu sayfa geçtiğimiz hafta yatırım sayısı en fazla artan en iyi stratejileri göstermektedir.",
+	"rating.popular.message": "На странице показаны стратегии с наибольшим приростом количества инвестиций в течение последней недели.",
+	"rating.all.message": "На странице показаны стратегии с наибольшим приростом количества инвестиций в течение последней недели.",
+	"rating.rated.message": "На странице показаны стратегии с наибольшим приростом количества инвестиций в течение последней недели.",
+
+ 	"rating.all.title": "Tüm stratejiler",
     "rating.popular.title": "Popüler",
     "rating.rating.title": "Derecelendirme",
     "rating.search.placeholder": "Strateji ara",

@@ -25,7 +25,7 @@ export class ManageStrategyInvestComponent implements OnInit, OnDestroy {
   strategy: Strategy;
   securityMinBalance: number;
   functionality: object;
-  @Input() methodArgs: any;
+  link: string;
 
   updateStatus: string;
 
@@ -94,8 +94,8 @@ export class ManageStrategyInvestComponent implements OnInit, OnDestroy {
       });
     }
 
-    if (this.methodArgs && this.methodArgs.link) {
-      this.dataService.addAccountPrivateOffer(this.methodArgs.link, values).subscribe(() => {
+    if (this.link) {
+      this.dataService.addAccountPrivateOffer(this.link, values, this.updateStatus).subscribe(() => {
         this.onClose.next(true);
         this.modalRef.hide();
         this.getSwitch();
