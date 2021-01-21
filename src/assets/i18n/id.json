@@ -205,7 +205,7 @@
   "investment.details.investment.currency": "Mata Uang",
   "investment.details.investment.id": "ID",
   "investment.details.investment.leverage": "Leverage",
-  "investment.details.investment.state": "Negara",
+  "investment.details.investment.state": "Status",
   "investment.details.investment.state.0": "Baru",
   "investment.details.investment.state.1": "(Tidak Digunakan)",
   "investment.details.investment.state.2": "Aktif, tidak ada posisi",
