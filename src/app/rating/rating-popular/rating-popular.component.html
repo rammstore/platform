@@ -8,7 +8,7 @@
 
 <div class="rating-content-container"
     *ngIf="ratingPopular$ | async as options">
-  <p translate>rating.message</p>
+  <p translate>rating.popular.message</p>
 
   <app-data-table
     *ngIf="!settingsService.isMobile"

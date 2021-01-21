@@ -8,10 +8,12 @@
 
 <div class="rating-content-container"
   *ngIf="ratingRated$ | async as options">
+  <p translate>rating.rated.message</p>
+
   <app-data-table
     *ngIf="!settingsService.isMobile"
     [tableHeader]="tableHeader"
-    [data]="strategies$ | async"
+    [data]="strategies$ | async" 
     [paginator]="paginator"
     [shouldHighlightMyStrategies]="true"
     (paginationChanged)="getRating()"

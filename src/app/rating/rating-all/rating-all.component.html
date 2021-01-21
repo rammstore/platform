@@ -6,9 +6,9 @@
   </button>
 </div>
 
-<div 
-  class="rating-content-container"
+<div class="rating-content-container"
   *ngIf="ratingAll$ | async as all">
+  <p translate>rating.all.message</p>
 
   <app-data-table
     *ngIf="!settingsService.isMobile"

@@ -303,8 +303,11 @@
   "notify.strategy.offer.create": "Conditions were created",
   "notify.strategy.offer.change": "Conditions were changed",
 
+  "rating.popular.message": "The page shows top strategies with the maximum increase of number of investments during the last week.",
+  "rating.all.message": "The page shows top strategies with the maximum increase of number of investments during the last week.",
+  "rating.rated.message": "The page shows top strategies with the maximum increase of number of investments during the last week.",
+
  	"rating.all.title": "All strategies",
-	"rating.message": "The page shows top strategies with the maximum increase of number of investments during the last week.",
     "rating.popular.title": "Popular",
     "rating.rating.title": "Rating",
     "rating.search.placeholder": "Search strategies",

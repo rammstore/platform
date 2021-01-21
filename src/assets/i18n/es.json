@@ -304,11 +304,14 @@
   "notify.strategy.offer.create": "Se creó la oferta",
   "notify.strategy.offer.change": "La oferta fue cambiada",
 
+  "rating.popular.message": "La página muestra las principales estrategias con el aumento máximo del número de inversiones durante la última semana",
+  "rating.all.message": "La página muestra las principales estrategias con el aumento máximo del número de inversiones durante la última semana",
+  "rating.rated.message": "La página muestra las principales estrategias con el aumento máximo del número de inversiones durante la última semana",
+
  	"rating.all.title": "Todas las estrategias",
-	"rating.message": "La página muestra las principales estrategias con el aumento máximo del número de inversiones durante la última semana",
-    	"rating.popular.title": "Popular",
-    	"rating.rating.title": "Clasificación",
-    	"rating.search.placeholder": "Estrategias de búsqueda",
+    "rating.popular.title": "Popular",
+    "rating.rating.title": "Clasificación",
+    "rating.search.placeholder": "Estrategias de búsqueda",
 
     	"spec.platform.account.currencies.title": "Monedas de depósito disponibles",
 	"spec.platform.account.min-deposit.title": "Deposito mínimo",
