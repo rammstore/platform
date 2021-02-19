@@ -27,7 +27,6 @@ export class StrategyAddComponent implements OnInit, OnDestroy {
   formStep2: FormGroup;
   formStep3: FormGroup;
   wallet: Wallet;
-  // accountMinBalance: number;
   securityMinBalance: number;
   functionality: object;
   onClose: Subject<boolean> = new Subject<boolean>();
