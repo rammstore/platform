@@ -30,6 +30,7 @@ export class StrategyDetailsInvestmentsActiveComponent implements OnInit {
   // table settings
   tableHeader: TableHeaderRow[] = [
     new TableHeaderRow([
+      new TableColumn({ property: 'clientID', label: 'common.clientId' }),
       new TableColumn({ property: 'account.id', label: 'common.investment' }),
       new TableColumn({ property: 'dtCreated', label: 'common.date', pipe: { pipe: CustomDatePipe } }),
       new TableColumn({ property: 'equity', label: 'common.table.label.equityUSD', pipe: { pipe: CustomCurrencyPipe } }),

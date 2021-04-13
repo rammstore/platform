@@ -85,6 +85,7 @@
   "common.fund": "Пополнить",
   "common.invested": "Инвестировано",
   "common.investment": "Инвестиция",
+  "common.clientId":"ID Клиента",
   "common.investments": "Инвестиции",
   "common.investments.mobile": "Инв-ции",
   "common.margin": "Маржа",

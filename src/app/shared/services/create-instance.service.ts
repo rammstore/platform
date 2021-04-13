@@ -57,6 +57,7 @@ export class CreateInstanceService {
   createAccount(options: any): Account {
     return new Account({
       id: options.ID,
+      clientID:options.ClientID,
       strategy: options.Strategy ? this.createStrategy(options.Strategy) : undefined,
       isSecurity: options.IsSecurity,
       type: options.Type,

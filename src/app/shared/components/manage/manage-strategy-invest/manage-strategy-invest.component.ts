@@ -23,7 +23,7 @@ export class ManageStrategyInvestComponent implements OnInit, OnDestroy {
   form: FormGroup;
   wallet: Wallet;
   strategy: Strategy;
-  securityMinBalance: number;
+  accountMinBalance: number;
   functionality: object;
   link: string;
 
@@ -49,7 +49,7 @@ export class ManageStrategyInvestComponent implements OnInit, OnDestroy {
         this.functionality = f;
       });
 
-    this.securityMinBalance = this.dataService.accountSpecAsset.securityMinBalance;
+    this.accountMinBalance = this.dataService.accountSpecAsset.accountMinBalance;
     this.walletService.getWallet()
       .pipe(takeUntil(this.destroy$))
       .subscribe((wallet: Wallet) => {
@@ -60,7 +60,7 @@ export class ManageStrategyInvestComponent implements OnInit, OnDestroy {
 
   buildForm(): void {
     this.form = this.fb.group({
-      amount: [(this.wallet.balance / 10).toFixed(2), [Validators.required, Validators.min(this.securityMinBalance), Validators.max(this.wallet.balance), Validators.pattern('^[0-9]+([\\,\\.][0-9]{1,2})?$')]],
+      amount: [(this.wallet.balance / 10).toFixed(2), [Validators.required, Validators.min(this.accountMinBalance), Validators.max(this.wallet.balance), Validators.pattern('^[0-9]+([\\,\\.][0-9]{1,2})?$')]],
       factor: [1, [Validators.min(0.1), Validators.max(10), Validators.required, Validators.pattern('[0-9]+(\\.[0-9]?)?')]],
       target: [this.functionality['TargetChangeAllow'] ? 100 : 0, [Validators.required, Validators.min(0), Validators.pattern('^[0-9]*')]],
       protection: [this.functionality['ProtectionChangeAllow'] ? 50 : 0, [Validators.required, Validators.min(0), Validators.max(99), Validators.pattern('^[0-9]*')]]

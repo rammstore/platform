@@ -409,7 +409,6 @@ export class DataService {
     this.loaderService.showLoader();
 
     const options: any = StrategyMapper.formatToInvestmentsActiveAccountsOptions(args);
-
     return this.http.post(`${this.apiUrl}/myStrategies.getActiveAccounts`, options).pipe(
       catchError(error => {
         const config: NotificationOptions = {

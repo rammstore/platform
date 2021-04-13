@@ -30,6 +30,7 @@ export class StrategyDetailsInvestmentsClosedComponent implements OnInit {
   // table settings
   tableHeader: TableHeaderRow[] = [
     new TableHeaderRow([
+      new TableColumn({ property: 'clientID', label: 'common.clientId' }),
       new TableColumn({ property: 'account.id', label: 'common.investment'}),
       new TableColumn({ property: 'dtCreated', label: 'common.table.label.created', pipe: { pipe: CustomDatePipe }}),
       new TableColumn({ property: 'dtClosed', label: 'common.table.label.closed', pipe: { pipe: CustomDatePipe }}),

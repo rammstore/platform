@@ -3,6 +3,7 @@ import { Offer } from "@app/models/offer";
 
 export class Account {
   id: number;                       // ID счета (инвестиции)
+  clientID:number;                  // Номер клиента
   strategy: Strategy;               // Стратегия
   isSecurity: boolean;              // Признак счета управляющего
   type: number;                     // Тип инвестиции

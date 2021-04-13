@@ -85,6 +85,7 @@
 	"common.fund": "سرمایه",
 	"common.invested": "سرمایه‌گذاری شده",
 	"common.investment": "سرمایه‌گذاری",
+  "common.clientId":"شناسه مشتری",
   "common.investments": "سرمایه‌گذاری‌ها",
   "common.investments.mobile": "سرمایه‌گذاری‌ها",
   "common.margin": "مارجین",
