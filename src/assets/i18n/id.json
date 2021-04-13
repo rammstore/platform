@@ -85,6 +85,7 @@
   "common.marginLevel.percent": "level Margin, %",
   "common.next": "Selanjutnya",
   "common.offers": "Kondisi",
+  "common.clientId":"ID klien",
   "common.offer": "Kondisi Publik",
   "public.offer.does.not.exist": "Tidak ada",
   "common.pause": "Jeda",

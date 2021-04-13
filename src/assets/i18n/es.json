@@ -84,6 +84,7 @@
 	"common.freeMargin": "Margen libre",
 	"common.fund": "Fondo",
 	"common.invested": "Invertido",
+	"common.clientId":"ID del cliente",
 	"common.investment": "Inversión",
 	  "common.investments": "Inversiones",
 	  "common.investments.mobile": "Inversiones",

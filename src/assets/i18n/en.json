@@ -84,6 +84,7 @@
 	"common.freeMargin": "Free margin",
 	"common.fund": "Fund",
 	"common.invested": "Invested",
+	"common.clientId":"Client ID",
 	"common.investment": "Investment",
 	"common.investments": "Investments",
 	  "common.investments.mobile": "Investments",
