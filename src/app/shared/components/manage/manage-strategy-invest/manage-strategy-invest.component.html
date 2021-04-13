@@ -20,7 +20,7 @@
           </label>
           <label class="error-message"
                  *ngIf="form.get('amount').touched && form.get('amount').hasError('min')">
-            <span translate>strategy.form.amount.error.min</span><span class="available-clickable" (click)="setMoney(securityMinBalance)"> {{securityMinBalance | customCurrency}}</span>
+            <span translate>strategy.form.amount.error.min</span><span class="available-clickable" (click)="setMoney(accountMinBalance)"> {{accountMinBalance | customCurrency}}</span>
           </label>
           <label class="error-message"
                  *ngIf="form.get('amount').touched && form.get('amount').hasError('max')" translate>

@@ -51,7 +51,7 @@
             <label *ngIf="formStep2.invalid && formStep2.get('money').hasError('min')"
                    class="error-message" translate>
               <span translate>strategy.form.amount.error.min</span><span class="available-clickable"
-                                                                         (click)="setMoney(accountMinBalance)"> - {{accountMinBalance | customCurrency}}</span>
+                                                                         (click)="setMoney(securityMinBalance)"> {{securityMinBalance | customCurrency}}</span>
             </label>
             <label *ngIf="formStep2.invalid && formStep2.get('money').hasError('max')"
                    class="error-message" translate>

@@ -85,6 +85,7 @@
 	  "common.fund": "Fon",
 	  "common.invested": "Yatırım yapılan",
 	  "common.investment": "Yatırım",
+	  "common.clientId":"Müşteri Kimliği",
 	  "common.investments": "Yatırımlar",
 	  "common.investments.mobile": "Yatırımlar",
   	"common.margin": "Marjin",
