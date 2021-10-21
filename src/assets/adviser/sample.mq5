@@ -1,5 +1,5 @@
 /* This EA sends signals from MT account into RAMM strategy*/
-#define EAVersion "2.18"
+#define EAVersion "2.19"
 #property version EAVersion
 
 string StrategyName = "<strategy_name>";
@@ -8,7 +8,7 @@ string protocol = "<api_protocol>";
 string host = "<api_host>";
 string path = "/api/trading/v1/signals.send";
 bool MarketOnly = true; //Copy only market orders
-string AppToken = "be1dbecb-cb4e-4c79-82de-7ba875bf440e";
+string AppToken = "92eb6a06-9a7f-4f3a-a917-9a8bac298196";
 input bool UseSymCoeff = false; //Use individual symbol coefficients?
 bool EnableBalanceSynch = true;
 double MinDiffPercent =  3; //minimum balance change in % to synchronize
@@ -232,7 +232,7 @@ double GetSymCoeff(string Sym)
    return 1;
 }
 
-bool SendSignalJSON(Signal &SignalTable[], const int s_type)
+bool SendSignalJSON(Signal &SignalTable[], const int s_type, bool IsBal = false)
 {
 	uchar   data[];
 	int pos=0;
@@ -289,6 +289,11 @@ bool SendSignalJSON(Signal &SignalTable[], const int s_type)
 		} 
 		str="]";
 		pos+=StringToCharArray(str,data,pos,StringLen(str)); 	
+		if (IsBal) 
+		{
+		   str=",\"Ticket\":\"Balance\"";
+		   pos+=StringToCharArray(str,data,pos,StringLen(str));  
+		}		
 	   str=",\"Comment\":\""+IntegerToString(AccountInfoInteger(ACCOUNT_LOGIN))+"\"";
 		pos+=StringToCharArray(str,data,pos,StringLen(str));   	     
 	}	
@@ -320,7 +325,12 @@ bool SendSignalJSON(Signal &SignalTable[], const int s_type)
 		if (s_type == 0)
 		{
 		   //Message("Signal sent OK at " + TimeToString(TimeLocal(),TIME_DATE|TIME_SECONDS));
-   		string res_str = CharArrayToString(data);		
+		   string res_str = "";
+         for (int i = 2; i < ArraySize(data); i++)
+         {
+            res_str += CharToString(data[i]);
+            i++;
+         }		
          int tmp_pos1   = StringFind(res_str,"\"CurrentVersion\":\"",0);
          if (tmp_pos1<0) return(false);
          int tmp_pos2   = StringFind(res_str,"\"NewestVersion\":\"",tmp_pos1+1);
@@ -405,7 +415,7 @@ bool SendSignalJSON(Signal &SignalTable[], const int s_type)
 	return(true);
 }
 
-bool Synchronize(const int synch_type) //0-hard, 1-soft
+bool Synchronize(const int synch_type, bool IsBal = false) //0-hard, 1-soft
 {
    Position tmpPosArray[],tmpNetPosArray[];
    Signal tmpSignalArray[];
@@ -508,7 +518,7 @@ bool Synchronize(const int synch_type) //0-hard, 1-soft
 		
 	int api_synchtype = 3; //hard
 	if (synch_type == 1) api_synchtype =2; //soft
-	if (!SendSignalJSON(tmpSignalArray,api_synchtype)) 
+	if (!SendSignalJSON(tmpSignalArray,api_synchtype,IsBal)) 
 	{
 		return(false);
 	}    
@@ -714,7 +724,7 @@ void OnTimer()
       }
       if (MathAbs(Balance_Change / (Equity - Balance_Change)) >= MinDiffPercent/100)
       {
-   		if (Synchronize(0))
+   		if (Synchronize(0,true))
    			Print("Synchronization successful at " + TimeToString(TimeLocal(),TIME_DATE|TIME_SECONDS));
    		else
    			Print("Synchronization failed at " + TimeToString(TimeLocal(),TIME_DATE|TIME_SECONDS));
