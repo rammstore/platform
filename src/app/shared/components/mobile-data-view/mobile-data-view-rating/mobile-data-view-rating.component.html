@@ -3,8 +3,16 @@
     <div class="caption">
       <div class="name">
         <a [routerLink]="['/strategies/details', strategy.id]">{{strategy.name}}</a>
+        <div class="video" *ngIf="checkStrategyVideo(strategy)">
+          <a [routerLink]="[getStrategyVideoLink(strategy)]">
+            <img src="assets/images/youtube.png">
+          </a>
+        </div>
       </div>
-      <app-manage [data]="strategy"></app-manage>
+      <app-manage 
+      [data]="strategy"
+      [section]="section"
+      [key]="key"></app-manage>
     </div>
 
     <app-chart-yield-table [strategy]="strategy" [containerID]="'mobileYieldChartContainer' + strategy.id"></app-chart-yield-table>
@@ -40,7 +48,7 @@
       </div>
       <div class="property">
         <div class="property-name" translate>common.accountsCount</div>
-        <div class="property-value">{{strategy.accountsCount}}</div>
+        <div class="property-value">{{strategy.accounts}}</div>
       </div>
       <div class="property">
         <div class="property-name" translate>common.age</div>

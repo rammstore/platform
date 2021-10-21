@@ -1,0 +1,148 @@
+<div class="details-container" 
+  *ngIf="account$ | async as account">
+  <div 
+    *ngIf="account" 
+    class="investment">
+    <h2 translate>common.investment</h2>
+    <table>
+      <tbody>
+        <tr>
+          <td translate>investment.details.investment.id</td>
+          <td >{{account.id}}</td>
+        </tr>
+        <tr>
+          <td translate>investment.details.investment.created</td>
+          <td >{{account.dtCreated | customDate }}</td>
+        </tr>
+        <tr *ngIf="account && !account.isActive()">
+          <td translate>investment.details.investment.closed</td>
+          <td>{{account.dtClosed | customDate }}</td>
+        </tr>
+        <tr>
+          <td translate>investment.details.investment.currency</td>
+          <td >{{account.asset}}</td>
+        </tr>
+        <tr>
+          <td translate>investment.details.investment.leverage</td>
+          <td >1:{{account.leverageMax}}</td>
+        </tr>
+        <tr>
+          <td translate>investment.details.investment.stopOut.percent</td>
+          <td >{{account.MCLevel}}</td>
+        </tr>
+        <tr>
+          <td translate>investment.details.investment.state</td>
+          <td translate>investment.details.investment.state.{{account.getState()}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div 
+    class="offer" 
+    *ngIf="offer$ | async as offer">
+    <h2 translate>common.offer</h2>
+    <table>
+      <tbody>
+        <!-- <tr>
+          <td translate>investment.details.investment.id</td>
+          <td>{{offer.id}}</td>
+        </tr> -->
+        <tr>
+          <td translate>investment.details.strategy.feeRate.percent</td>
+          <td>{{offer.getFeeRate()}}</td>
+        </tr>
+        <tr>
+          <td translate>common.table.label.commission.percent</td>
+          <td>{{offer.commissionRate}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div 
+    class="profile" 
+    *ngIf="account">
+    <h2 translate>investment.details.investmentProfile.title</h2>
+    <table>
+      <tbody>
+        <tr>
+          <td translate>common.factor</td>
+          <td >{{account.factor | number:'1.1-1'}}</td>
+        </tr>
+        <tr *ngIf="functionality['targetShow']">
+          <td translate>investment.details.investment.target.percent</td>
+          <td >{{account.getTarget}}</td>
+        </tr>
+        <tr *ngIf="functionality['protectionShow']">
+          <td translate>investment.details.investment.protection.percent</td>
+          <td >{{account.getProtection}}</td>
+        </tr>
+        <tr *ngIf="functionality['targetShow'] && functionality['protectionShow']">
+          <td></td>
+          <td></td>
+        </tr>
+        <tr *ngIf="functionality['targetShow']">
+          <td><span translate>common.target</span>, USD</td>
+          <td >{{account.getTargetAmount() | customCurrency}}</td>
+        </tr>
+        <tr *ngIf="functionality['protectionShow']">
+          <td><span translate>common.protection</span>, USD</td>
+          <td >{{account.getProtectionAmount() | customCurrency}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div 
+    class="trading-info" 
+    *ngIf="account">
+    <h2 translate>common.trading-info</h2>
+    <table>
+      <tbody>
+        <tr>
+          <td><span translate>common.equity</span>, USD</td>
+          <td>
+            <span>{{account.equity | customCurrency}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td><span translate>common.balance</span>, USD</td>
+          <td>
+            <span>{{account.balance | customCurrency}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td><span translate>common.margin</span>, USD</td>
+          <td>
+            <span>{{account.margin | customCurrency}}</span>
+          </td>
+        </tr>
+        <tr *ngIf="functionality['targetShow'] && functionality['protectionShow']">
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td><span translate>common.freeMargin</span>, USD</td>
+          <td>
+            <span class="{{account.getColorClass('freeMargin')}}">{{account.freeMargin | customCurrency}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td translate>common.marginLevel.percent</td>
+          <td>
+            <span 
+              *ngIf="account.marginLevel" 
+              [class.positive]="account.marginLevel >= 1"
+              [class.negative]="account.marginLevel < 1">{{account.marginLevel | number:'1.2-2'}}
+            </span>
+            <span *ngIf="!account.marginLevel">−</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<!-- <div *ngIf="!account && !offer" translate>common.table.label.no-data</div> -->

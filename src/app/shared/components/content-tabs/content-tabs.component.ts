@@ -16,19 +16,15 @@ export class ContentTabsComponent {
   ) {}
 
   isLinkActive(url: string, link?: ContentTabLink): boolean {
-    let result: boolean = false;
+    return (this.isStrategyInvestmentsClosedCheck(url, link)) ? true : (this.router.url === url);
+  }
 
-    if (this.isStrategyInvestmentsClosedCheck(url, link)) {
-      result = true;
-    } else {
-      result = this.router.url === url;
-    }
-
-    return result;
+  onClick() {
+    this.change.emit();
   }
 
   isStrategyInvestmentsClosedCheck(url: string, link: ContentTabLink): boolean {
-    if (this.router.url.includes('strategies/details') && this.router.url.includes('investments/closed') && url.includes('strategies/details') && url.includes('investments') && link.name === 'common.investments') {
+    if (this.router.url.includes('strategies/details') && this.router.url.includes('investments/closed') && url.includes('strategies/details') && url.includes('investments') && url.includes('ratings') && link.name === 'common.investments') {
       return true;
     } else {
       return false;

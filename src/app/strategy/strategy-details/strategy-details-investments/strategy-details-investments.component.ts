@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ContentTabLink } from '@app/components/content-tabs/content-tab-link';
 import { ActivatedRoute } from '@angular/router';
-import { Paginator } from '@app/models';
 
 @Component({
   selector: 'app-strategy-details-investments',

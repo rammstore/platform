@@ -8,13 +8,15 @@ table {
   }
 }
 
-
 .profitability-container {
   display: flex;
 
   .statistics {
     width: 400px;
     margin-right: 10px;
+    b {
+      margin-top: 10px;
+    }
   }
 
   .chart-container {

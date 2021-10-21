@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef } from 'ngx-bootstrap';
 import { Paginator, Strategy, Wallet } from '@app/models';
@@ -18,13 +18,16 @@ export class ManageStrategyInvestComponent implements OnInit, OnDestroy {
   // https://blog.strongbrew.io/rxjs-best-practices-in-angular/#avoiding-memory-leaks
   // here we will unsubscribe from all subscriptions
   destroy$ = new Subject();
-
+  onClose: Subject<boolean> = new Subject();
   // component data
   form: FormGroup;
   wallet: Wallet;
   strategy: Strategy;
-  securityMinBalance: number;
+  accountMinBalance: number;
   functionality: object;
+  link: string;
+
+  updateStatus: string;
 
   constructor(
     private fb: FormBuilder,
@@ -35,6 +38,10 @@ export class ManageStrategyInvestComponent implements OnInit, OnDestroy {
     private router: Router
   ) { }
 
+  get isSpecText(): boolean {
+    return (location.href.includes('/link/') && this.strategy && this.strategy.isMyStrategy);
+  }
+
   ngOnInit(): void {
     this.brandService.functionality
       .pipe(takeUntil(this.destroy$))
@@ -42,18 +49,18 @@ export class ManageStrategyInvestComponent implements OnInit, OnDestroy {
         this.functionality = f;
       });
 
-    this.securityMinBalance = this.dataService.accountSpecAsset.securityMinBalance;
+    this.accountMinBalance = this.dataService.accountSpecAsset.accountMinBalance;
     this.walletService.getWallet()
       .pipe(takeUntil(this.destroy$))
       .subscribe((wallet: Wallet) => {
-      this.wallet = wallet;
-      this.buildForm();
-    });
+        this.wallet = wallet;
+        this.buildForm();
+      });
   }
 
   buildForm(): void {
     this.form = this.fb.group({
-      amount: [(this.wallet.balance / 10).toFixed(2), [Validators.required, Validators.min(this.securityMinBalance), Validators.max(this.wallet.balance), Validators.pattern('^[0-9]+([\\,\\.][0-9]{1,2})?$')]],
+      amount: [(this.wallet.balance / 10).toFixed(2), [Validators.required, Validators.min(this.accountMinBalance), Validators.max(this.wallet.balance), Validators.pattern('^[0-9]+([\\,\\.][0-9]{1,2})?$')]],
       factor: [1, [Validators.min(0.1), Validators.max(10), Validators.required, Validators.pattern('[0-9]+(\\.[0-9]?)?')]],
       target: [this.functionality['TargetChangeAllow'] ? 100 : 0, [Validators.required, Validators.min(0), Validators.pattern('^[0-9]*')]],
       protection: [this.functionality['ProtectionChangeAllow'] ? 50 : 0, [Validators.required, Validators.min(0), Validators.max(99), Validators.pattern('^[0-9]*')]]
@@ -61,10 +68,12 @@ export class ManageStrategyInvestComponent implements OnInit, OnDestroy {
   }
 
   cancel(): void {
+    this.onClose.next(false);
     this.modalRef.hide();
   }
 
   invest(): void {
+    this.updateStatus = "update";
     this.form.markAllAsTouched();
 
     if (!this.form.valid) {
@@ -75,51 +84,71 @@ export class ManageStrategyInvestComponent implements OnInit, OnDestroy {
     values.protection = values.protection / 100;
     values.target = values.target ? values.target / 100 : null;
 
-    this.dataService.addAccount(this.strategy.id, values).subscribe(() => {
-      this.modalRef.hide();
-      switch (true) {
-        case this.router.url.includes('strategies'):
-          this.dataService.getActiveMyStrategies({
-            paginator: new Paginator({
-              perPage: 10,
-              currentPage: 1
-            })
-          });
-          break;
+    if (this.strategy.publicOffer) {
+      values.offerId = this.strategy.publicOffer ? this.strategy.publicOffer.id : null;
 
-        case this.router.url.includes('rating/popular'):
-          this.dataService.getRating({
-            ratingType: 2,
-            searchText: '',
-            paginator: new Paginator({
-              perPage: 10,
-              currentPage: 1
-            })
-          });
-          break;
+      this.dataService.addAccountPublicOffer(this.strategy.id, values, this.updateStatus).subscribe(() => {
+        this.onClose.next(true);
+        this.modalRef.hide();
+        this.getSwitch();
+      });
+    }
 
-        case this.router.url.includes('rating/all'):
-          this.dataService.getRating({
-            ratingType: 1,
-            searchText: '',
-            paginator: new Paginator({
-              perPage: 10,
-              currentPage: 1
-            })
-          });
-          break;
+    if (this.link) {
+      this.dataService.addAccountPrivateOffer(this.link, values, this.updateStatus).subscribe(() => {
+        this.onClose.next(true);
+        this.modalRef.hide();
+        this.getSwitch();
+      });
+    }
+  }
 
-        case this.router.url.includes('rating'):
-          this.dataService.getRating({
-            ratingType: 0,
-            paginator: new Paginator({
-              perPage: 10,
-              currentPage: 1
-            })
-          });
-          break;
-      }
-    });
+  getSwitch() {
+    switch (true) {
+      case this.router.url.includes('strategies'):
+        this.dataService.getActiveMyStrategies({
+          searchMode: 'MyActiveStrategies',
+          paginator: new Paginator({
+            perPage: 10,
+            currentPage: 1
+          })
+        });
+        break;
+
+      case this.router.url.includes('rating/popular'):
+        this.dataService.getRating({
+          field: 'Accounts',
+          searchText: '',
+          paginator: new Paginator({
+            perPage: 10,
+            currentPage: 1
+          })
+        });
+        break;
+
+      case this.router.url.includes('rating/all'):
+        this.dataService.getRating({
+          field: 'Yield',
+          searchText: '',
+          paginator: new Paginator({
+            perPage: 10,
+            currentPage: 1
+          })
+        });
+        break;
+
+      case this.router.url.includes('rating'):
+        this.dataService.getRating({
+          field: 'Yield',
+          ageMin: 30,
+          yieldMin: 0,
+          paginator: new Paginator({
+            perPage: 10,
+            currentPage: 1
+          })
+        });
+        break;
+    }
   }
 
   setMoney(amount: number): void {

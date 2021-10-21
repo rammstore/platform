@@ -7,20 +7,22 @@ import { PipesModule } from '@app/pipes/pipes.module';
 import { ManageModule } from '@app/components/manage/manage.module';
 import { ChartModule } from '@app/components/chart/chart.module';
 import { TranslateModule } from '@ngx-translate/core';
+import {ClipboardModule} from "ngx-clipboard";
 
 @NgModule({
   declarations: [
     DataTableComponent,
     DataTablePaginatorComponent
   ],
-  imports: [
-    CommonModule,
-    RouterModule,
-    PipesModule,
-    ManageModule,
-    ChartModule,
-    TranslateModule
-  ],
+    imports: [
+        CommonModule,
+        RouterModule,
+        PipesModule,
+        ManageModule,
+        ChartModule,
+        TranslateModule,
+        ClipboardModule
+    ],
   exports: [
     DataTableComponent,
     DataTablePaginatorComponent

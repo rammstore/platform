@@ -1,6 +1,10 @@
 <app-dialog-wrapper titleText="{{'strategy.invest.form.title' | translate}}" [modalRef]="modalRef">
   <form [formGroup]="form">
 
+    <div class="spec-text"
+        translate
+         *ngIf="isSpecText">strategy.invest.trader.form.text</div>
+
     <div class="form-field">
       <label for="amount" class="field-label"><span translate>strategy.add.form.label.amount</span>, USD:</label>
       <div class="input-wrapper">
@@ -16,7 +20,7 @@
           </label>
           <label class="error-message"
                  *ngIf="form.get('amount').touched && form.get('amount').hasError('min')">
-            <span translate>strategy.form.amount.error.min</span><span class="available-clickable" (click)="setMoney(securityMinBalance)"> {{securityMinBalance | customCurrency}}</span>
+            <span translate>strategy.form.amount.error.min</span><span class="available-clickable" (click)="setMoney(accountMinBalance)"> {{accountMinBalance | customCurrency}}</span>
           </label>
           <label class="error-message"
                  *ngIf="form.get('amount').touched && form.get('amount').hasError('max')" translate>
@@ -131,7 +135,7 @@
     </div>
 
     <div class="dialog-actions">
-      <button class="primary"
+      <button class="primary btn-invest"
               [disabled]="!form.valid"
               (click)="invest()">
         <span translate>common.manage.invest</span> {{form.valid ? '(' + (form.get('amount').value | customCurrency) + ')' : ''}}

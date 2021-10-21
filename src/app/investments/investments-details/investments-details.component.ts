@@ -1,11 +1,17 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Account, Strategy } from '@app/models';
-import { ActivatedRoute } from '@angular/router';
-import { Subject } from 'rxjs';
+import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Account, Offer, Strategy } from '@app/models';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { from, Observable, of, Subject } from 'rxjs';
 import { ContentTabLink } from '@app/components/content-tabs/content-tab-link';
 import { DataService } from '@app/services/data.service';
 import { BrandService } from '@app/services/brand.service';
-import { takeUntil } from 'rxjs/operators';
+import { catchError, map, takeUntil, tap } from 'rxjs/operators';
+import { SectionEnum } from "@app/enum/section.enum";
+import { RefreshService } from '@app/services/refresh.service';
+import { StatementInterface } from "@app/interfaces/statement.interface";
+import { NotificationsService } from "@app/services/notifications.service";
+import * as moment from 'moment';
+import { iUpdateOptions } from '@app/interfaces/update';
 
 @Component({
   selector: 'app-investments-details',
@@ -16,18 +22,24 @@ export class InvestmentsDetailsComponent implements OnInit, OnDestroy {
   // https://blog.strongbrew.io/rxjs-best-practices-in-angular/#avoiding-memory-leaks
   // here we will unsubscribe from all subscriptions
   destroy$ = new Subject();
-
+  currentDate: any;
   // component data
-  account: Account;
-  strategy: Strategy;
+  // account: Account;
+  source$: Observable<StatementInterface>;
+  // strategy: Strategy;
+  // publicOffer: Offer;
   links: ContentTabLink[] = [];
   args: any;
   functionality: object;
+  sectionEnum: SectionEnum = SectionEnum.statement;
 
   constructor(
     private route: ActivatedRoute,
     private dataService: DataService,
-    private brandService: BrandService
+    private brandService: BrandService,
+    private refreshService: RefreshService,
+    private notificationsService: NotificationsService,
+    private router: Router
   ) {
   }
 
@@ -37,7 +49,18 @@ export class InvestmentsDetailsComponent implements OnInit, OnDestroy {
       .subscribe((f: object) => {
         this.functionality = f;
       });
-    this.args = {accountId: this.route.params['_value'].id};
+    this.args = { accountId: this.route.params['_value'].id };
+
+    this.dataService.update$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((item: iUpdateOptions) => {
+        if (item) {
+          this.getAccountStatement();
+
+          this.dataService._update$.next(null);
+        }
+      });
+
     this.getAccountStatement();
   }
 
@@ -45,18 +68,51 @@ export class InvestmentsDetailsComponent implements OnInit, OnDestroy {
     this.destroy$.next(true);
   }
 
-  getAccountStatement(): void {
-    this.dataService.getAccountStatement(this.args)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((response: any) => {
-        this.strategy = response.strategy;
-        this.account = response.account;
-        this.account.strategy = response.strategy;
+  onClick() {
+    let key = "";
+    if (this.router.url.includes('/deals')) {
+      key = "deals"
+    }
+    else {
+      key = "positions";
+    }
 
-        this.links = [
-          new ContentTabLink('investment.positions.title', '/investments/details/' + this.account.id),
-          new ContentTabLink('investment.deals.title', '/investments/details/' + this.account.id + '/deals')
-        ];
-      });
+    this.currentDate = moment.utc().format("yyyy-MM-DD HH:mm:ss");
+    this.refreshService.refresh = key;
+  }
+
+  getAccountStatement(): void {
+    this.source$ = this.getAccount();
+  }
+
+  getAccount(): Observable<any> {
+    let args: any = {
+      accountId: this.route.params['_value'].id
+    }
+
+    return this.dataService.getAccountById(args)
+      .pipe(
+        tap((response: any) => {
+          this.currentDate = moment.utc().format("yyyy-MM-DD HH:mm:ss");
+
+          this.links = [
+            new ContentTabLink('investment.positions.title', '/investments/details/' + response.account.id),
+            new ContentTabLink('investment.deals.title', '/investments/details/' + response.account.id + '/deals')
+          ];
+        }),
+        map((response: any) => {
+          if (response) {
+            const account = response.account;
+            account.strategy = response.strategy;
+
+            let object = {
+              strategy: response.strategy,
+              account: account
+            };
+
+            return object;
+          }
+        })
+      );
   }
 }

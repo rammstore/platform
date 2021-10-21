@@ -10,8 +10,7 @@ export class MobileDataViewInvestmentComponent {
   @Input() accounts: Account[];
   @Input() paginator: Paginator;
   @Output() paginationChanged: EventEmitter<void> = new EventEmitter();
-  @Input() methodName: string;
-  @Input() methodArgs: any;
+  @Input() key: string;
 
   paginatorChanged(): void {
     this.paginationChanged.emit();

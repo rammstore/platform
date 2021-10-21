@@ -21,6 +21,9 @@
             }
           }
         }
+        h2{
+          margin-top: 20px;
+        }
       }
     }
   }
@@ -36,6 +39,10 @@
     display: flex;
     align-items: center;
   }
+}
+
+.refresh i{
+  cursor: pointer;
 }
 
 .margin-info {
@@ -71,3 +78,4 @@ app-data-table-paginator {
     }
   }
 }
+

@@ -4,7 +4,8 @@
   text-align: center;
   width: 160px;
   margin: 0 auto;
-
+  margin-right: 10px;
+  
   i[class^="icon-"],
   i[class*=" icon-"] {
     vertical-align: middle;
@@ -14,6 +15,10 @@
     &:last-child {
       margin-right: 0;
     }
+  }
+
+  .hint-content{
+    text-transform: none;
   }
 
   button {
