@@ -23,20 +23,6 @@
       <ul id="dropdown-nested" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-nested">
         <li role="menuitem"><a [routerLink]="['/manage']" class="dropdown-item" translate>header.menu.item.changePassword</a>
         </li>
-        <li role="menuitem" dropdown triggers="mouseenter" placement="right" container="body">
-          <a class="dropdown-item" dropdownToggle (click)="false" translate>header.menu.item.changeLanguage
-            <img class="lang-img" src="/assets/images/flags/{{language}}.png" (click)="false">
-          </a>
-
-          <ul *dropdownMenu class="dropdown-menu langmenu" role="menu">
-            <li role="menuitem lang" (click)="setLanguage('en')"><img class="lang-img" src="/assets/images/flags/en.png"></li>
-            <li role="menuitem lang" (click)="setLanguage('ru')"><img class="lang-img" src="/assets/images/flags/ru.png"></li>
-            <li role="menuitem lang" (click)="setLanguage('es')"><img class="lang-img" src="/assets/images/flags/es.png"></li>
-            <li role="menuitem lang" (click)="setLanguage('tr')"><img class="lang-img" src="/assets/images/flags/tr.png"></li>
-            <li role="menuitem lang" (click)="setLanguage('fa')"><img class="lang-img" src="/assets/images/flags/fa.png"></li>
-			<li role="menuitem lang" (click)="setLanguage('id')"><img class="lang-img" src="/assets/images/flags/id.png"></li>
-          </ul>
-        </li>
         <li role="menuitem">
           <a (click)="logout()" href="{{'linkLogout' | translate}}" class="dropdown-item"
              title="{{client.id}} - {{client.idCompany}}" translate>
@@ -89,28 +75,6 @@
 
       <ul>
         <li><a [routerLink]="['/manage']" class="dropdown-item" translate>header.menu.item.changePassword</a></li>
-
-        <li dropdown triggers="tap" placement="right" container="body" (click)="false" [dropup]="true">
-          <a dropdownToggle class="dropdown-item mobile-lang" (click)="false" translate>
-            header.menu.item.changeLanguage
-            <img class="lang-img" src="/assets/images/flags/{{language}}.png" (click)="false">
-          </a>
-
-          <ul *dropdownMenu class="dropdown-menu langmenu" role="menu">
-            <li role="menuitem lang" (click)="setLanguage('en')"><img class="lang-img" src="/assets/images/flags/en.png"></li>
-            <li class="divider dropdown-divider"></li>
-            <li role="menuitem lang" (click)="setLanguage('ru')"><img class="lang-img" src="/assets/images/flags/ru.png"></li>
-            <li class="divider dropdown-divider"></li>
-            <li role="menuitem lang" (click)="setLanguage('es')"><img class="lang-img" src="/assets/images/flags/es.png"></li>
-            <li class="divider dropdown-divider"></li>
-            <li role="menuitem lang" (click)="setLanguage('tr')"><img class="lang-img" src="/assets/images/flags/tr.png"></li>
-            <li class="divider dropdown-divider"></li>
-            <li role="menuitem lang" (click)="setLanguage('fa')"><img class="lang-img" src="/assets/images/flags/fa.png"></li>
-			<li class="divider dropdown-divider"></li>
-			<li role="menuitem lang" (click)="setLanguage('id')"><img class="lang-img" src="/assets/images/flags/id.png"></li>
-          </ul>
-        </li>
-
         <li><a (click)="logout()" href="{{'linkLogout' | translate}}" translate>header.menu.item.logout</a></li>
 
         <li><a *ngIf="client" class="login">{{client.login}}</a></li>
